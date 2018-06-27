@@ -4,7 +4,7 @@
     xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="278dp"
+    android:layout_height="238dp"
     android:background="@android:color/white">
 
     <ImageView
@@ -62,26 +62,9 @@
         android:layout_height="@dimen/dp1"
         android:layout_below="@+id/button" />
 
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/slidingTabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp40"
-        android:layout_below="@+id/line"
-        tl:tl_indicator_color="@color/color_6ed7af"
-        tl:tl_indicator_height="2dp"
-        tl:tl_indicator_width_equal_title="true"
-        tl:tl_tab_padding="@dimen/dp15"
-        tl:tl_tab_space_equal="true"
-        tl:tl_textAllCaps="true"
-        tl:tl_textSelectColor="@color/color_6ed7af"
-        tl:tl_textUnselectColor="@color/color_999"
-        tl:tl_textsize="@dimen/sp14" />
 
-    <include
-        layout="@layout/line_color_eee"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        android:layout_below="@+id/slidingTabLayout" />
+
+
 </RelativeLayout>
 
 
