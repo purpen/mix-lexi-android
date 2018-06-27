@@ -1,4 +1,4 @@
-package com.thn.lexi.login
+package com.thn.lexi.user.password
 
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI
@@ -6,35 +6,28 @@ import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
 import java.io.IOException
 
-open class LoginModel{
-    open fun loginUser(phone: String, password: String, callBack: IDataSource.HttpRequestCallBack) {
+open class ForgetPasswordModel {
 
-        val params = ClientParamsAPI.getLoginParams(phone,password)
+    fun registerUser(phone: String, password: String,checkCode:String,callback: IDataSource.HttpRequestCallBack) {
 
-        HttpRequest.sendRequest(HttpRequest.POST,URL.LOGIN_URL,params,object : IDataSource.HttpRequestCallBack{
+        val params = ClientParamsAPI.getRegisterParams(phone,password,checkCode)
+
+        HttpRequest.sendRequest(HttpRequest.POST,URL.REGISTER_URL,params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                callBack.onStart()
+                callback.onStart()
             }
 
             override fun onSuccess(json: String) {
-                callBack.onSuccess(json)
+                callback.onSuccess(json)
             }
 
             override fun onFailure(e: IOException) {
-                callBack.onFailure(e)
+                callback.onFailure(e)
             }
         })
     }
 
-    open fun weChatLogin(){
-
-    }
-
-    open fun qqLogin(){
-
-    }
-
-    open fun sinaLogin(){
+    fun sendCheckCode() {
 
     }
 
@@ -55,4 +48,6 @@ open class LoginModel{
             }
         })
     }
+
 }
+

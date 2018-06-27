@@ -39,4 +39,5 @@
     <string name="bottom_bar_title2">收件箱</string>
     <string name="bottom_bar_title3">我的</string>
     <string name="text_mine_register_login">登录或注册</string>
+    <string name="title_forget_password">忘记密码</string>
 </resources>

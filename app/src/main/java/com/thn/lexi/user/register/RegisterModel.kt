@@ -1,4 +1,4 @@
-package com.thn.lexi.register
+package com.thn.lexi.user.register
 
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI

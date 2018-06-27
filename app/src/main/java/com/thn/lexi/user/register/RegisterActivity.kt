@@ -1,4 +1,4 @@
-package com.thn.lexi.register
+package com.thn.lexi.user.register
 
 import android.content.Intent
 import android.view.View

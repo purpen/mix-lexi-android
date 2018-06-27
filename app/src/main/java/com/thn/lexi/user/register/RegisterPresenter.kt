@@ -1,4 +1,4 @@
-package com.thn.lexi.register
+package com.thn.lexi.user.register
 
 import android.text.TextUtils
 import com.basemodule.tools.Constants
@@ -8,6 +8,7 @@ import com.basemodule.tools.SPUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.user.password.ForgetPasswordBean
 import java.io.IOException
 
 
@@ -44,7 +45,7 @@ class RegisterPresenter : RegisterContract.Presenter {
             override fun onSuccess(json: String) {
                 LogUtil.e(json)
                 view.dismissLoadingView()
-                val registerBean = JsonUtil.fromJson(json, RegisterBean::class.java)
+                val registerBean = JsonUtil.fromJson(json, ForgetPasswordBean::class.java)
                 if (registerBean.success) {
                     getToken(phone, password)
                 } else {

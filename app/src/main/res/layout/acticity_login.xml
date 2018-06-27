@@ -145,8 +145,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@mipmap/icon_login_wechat" />
 
                 <TextView
@@ -168,8 +168,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@mipmap/icon_login_qq" />
 
                 <TextView
@@ -190,8 +190,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@mipmap/icon_login_sina" />
                 <TextView
                     android:layout_width="wrap_content"

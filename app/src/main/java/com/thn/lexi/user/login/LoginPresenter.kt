@@ -1,4 +1,4 @@
-package com.thn.lexi.login
+package com.thn.lexi.user.login
 
 import com.basemodule.tools.Constants
 import com.basemodule.tools.JsonUtil
@@ -7,15 +7,15 @@ import com.basemodule.tools.SPUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.register.TokenBean
+import com.thn.lexi.user.register.TokenBean
 import java.io.IOException
 
-class LoginPresenter : LoginContract.Presenter {
+class LoginPresenter : com.thn.lexi.user.login.LoginContract.Presenter {
 
-    private var view:LoginContract.View
+    private var view: com.thn.lexi.user.login.LoginContract.View
     private val dataSource: LoginModel by lazy { LoginModel() }
 
-    constructor(view:LoginContract.View){
+    constructor(view: com.thn.lexi.user.login.LoginContract.View){
         this.view = checkNotNull(view)
     }
 

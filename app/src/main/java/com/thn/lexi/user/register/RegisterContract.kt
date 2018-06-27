@@ -1,4 +1,4 @@
-package com.thn.lexi.register
+package com.thn.lexi.user.register
 
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView

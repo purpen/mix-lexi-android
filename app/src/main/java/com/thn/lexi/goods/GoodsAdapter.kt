@@ -4,11 +4,9 @@ import android.support.annotation.LayoutRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.LogUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
@@ -22,7 +20,7 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
         val imageView = helper.getView<ImageView>(R.id.imageView)
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, imageView.context.resources.getDimensionPixelSize(R.dimen.dp385))
         imageView.layoutParams = params
-        GlideUtil.loadImage(item.cover,imageView)
+        GlideUtil.loadImageWithTopRadius(item.cover,imageView,mContext.resources.getDimensionPixelSize(R.dimen.dp5))
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
         recyclerView.setHasFixedSize(true)

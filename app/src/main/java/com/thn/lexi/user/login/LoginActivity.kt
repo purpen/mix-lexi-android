@@ -1,4 +1,4 @@
-package com.thn.lexi.login
+package com.thn.lexi.user.login
 
 import android.content.Intent
 import android.view.View
@@ -7,13 +7,14 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.thn.lexi.MainActivity
 import com.thn.lexi.R
-import com.thn.lexi.register.RegisterActivity
+import com.thn.lexi.user.password.ForgetPasswordActivity
+import com.thn.lexi.user.register.RegisterActivity
 import kotlinx.android.synthetic.main.acticity_login.*
 
 /**
  * 登录
  */
-class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
+class LoginActivity : BaseActivity(), View.OnClickListener, com.thn.lexi.user.login.LoginContract.View {
 
     private val dialog:WaitingDialog? by lazy { WaitingDialog(this) }
 
@@ -39,16 +40,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
     }
 
 
-    override fun setPresenter(presenter: LoginContract.Presenter?) {
+    override fun setPresenter(presenter: com.thn.lexi.user.login.LoginContract.Presenter?) {
         setPresenter(presenter)
     }
 
     override fun onClick(v: View?) {
         val id = v?.id
         when (id) {
-            R.id.tv_head_right -> startActivity(Intent(applicationContext,RegisterActivity::class.java))
+            R.id.tv_head_right -> startActivity(Intent(applicationContext, RegisterActivity::class.java))
 
-            R.id.textViewForgetPassword -> ToastUtil.showInfo("忘记密码")
+            R.id.textViewForgetPassword -> startActivity(Intent(applicationContext, ForgetPasswordActivity::class.java))
 
             R.id.btnLogin -> presenter.loginUser(etPhone.text.toString(),etPassword.text.toString())
 

@@ -3,7 +3,7 @@ package com.thn.lexi
 import android.content.Intent
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
-import com.thn.lexi.login.LoginActivity
+import com.thn.lexi.user.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_main0.*
 import kotlinx.android.synthetic.main.view_main_head_nav.*
 
@@ -38,7 +38,7 @@ class MainFragment0 : BaseFragment() {
 
     override fun installListener() {
         textView.setOnClickListener {
-            startActivity(Intent(activity, LoginActivity::class.java))
+            startActivity(Intent(activity, com.thn.lexi.user.login.LoginActivity::class.java))
         }
     }
 

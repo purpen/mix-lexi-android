@@ -1,13 +1,13 @@
 package com.basemodule.tools;
-
 import android.content.Context;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.thn.basemodule.R;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 /**
  * 图片加载工具类
@@ -26,6 +26,35 @@ public class GlideUtil {
         Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
     }
 
+
+    /**
+     * 使加载图片带有上圆角
+     * @param t
+     * @param imageView
+     * @param radius
+     * @param <T>
+     */
+    public static <T> void loadImageWithTopRadius(T t, ImageView imageView, int radius) {
+        RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.TOP));
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
+        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+    }
+
+    /**
+     * 使加载图片带有圆角
+     * @param t
+     * @param imageView
+     * @param radius
+     * @param <T>
+     */
+    public static <T> void loadImageWithRadius(T t, ImageView imageView, int radius) {
+        RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
+        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+    }
+
+
+
     /**
      * @param t
      * @param imageView
@@ -36,7 +65,6 @@ public class GlideUtil {
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Glide.with(imageView.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
-
 
 
     /**
@@ -65,6 +93,7 @@ public class GlideUtil {
 
     /**
      * 加载指定宽高图片
+     *
      * @param t
      * @param imageView
      * @param width
@@ -79,6 +108,7 @@ public class GlideUtil {
 
     /**
      * 加载指定宽高同size图片
+     *
      * @param t
      * @param imageView
      * @param size
