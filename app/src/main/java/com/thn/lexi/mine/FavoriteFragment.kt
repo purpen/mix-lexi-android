@@ -1,19 +1,10 @@
 package com.thn.lexi.mine
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.OnScrollListener
-import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.basemodule.tools.Constants
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
-import com.thn.lexi.MainFragment3
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.goods.CharacteristicContract
@@ -23,8 +14,6 @@ import com.thn.lexi.goods.GoodsData
 import kotlinx.android.synthetic.main.fragment_mine_favorite.*
 
 class FavoriteFragment : BaseFragment(), CharacteristicContract.View {
-    private lateinit var headView: View
-    private var isSetScroll:Boolean?=null
     private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_mine_favorite
     private lateinit var presenter: CharacteristicPresenter
@@ -39,11 +28,6 @@ class FavoriteFragment : BaseFragment(), CharacteristicContract.View {
     override fun initView() {
         presenter = CharacteristicPresenter(this)
         adapter = GoodsAdapter(R.layout.layout_goods_adapter)
-
-        headView = View(activity)
-        headView.background = ColorDrawable(Color.TRANSPARENT)
-        headView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,resources.getDimensionPixelSize(R.dimen.dp278))
-//        adapter.addHeaderView(headView)
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(activity)
@@ -59,19 +43,6 @@ class FavoriteFragment : BaseFragment(), CharacteristicContract.View {
 
 
     override fun installListener() {
-
-        recyclerView.addOnScrollListener(object : OnScrollListener(){
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-//                if (parentFragment is MainFragment3) (parentFragment as MainFragment3).onScrollStateChanged(recyclerView,newState)
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-//                if (parentFragment is MainFragment3) (parentFragment as MainFragment3).onScrolled(recyclerView, dx, dy)
-            }
-        })
 
         swipeRefreshLayout.setOnRefreshListener {
             adapter.setEnableLoadMore(false)
@@ -131,8 +102,4 @@ class FavoriteFragment : BaseFragment(), CharacteristicContract.View {
 
     }
 
-    fun setScrollHeight(distance: Float, isSetScroll: Boolean) {
-//        val deltaPadding = resources.getDimensionPixelSize(R.dimen.dp278) - distance
-//        headView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,deltaPadding.toInt())
-    }
 }
