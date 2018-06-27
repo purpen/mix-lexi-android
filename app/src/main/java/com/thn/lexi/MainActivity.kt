@@ -1,13 +1,13 @@
 package com.thn.lexi
+
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity(){
+class MainActivity : BaseActivity() {
 
     override val layout: Int = R.layout.activity_main
-
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -18,6 +18,7 @@ class MainActivity : BaseActivity(){
     private var fragment2: BaseFragment? = null
     private var fragment3: BaseFragment? = null
 
+    private var lastClickedId: Int = -1
 
     override fun initView() {
         switchFragment(R.id.button0)
@@ -33,16 +34,19 @@ class MainActivity : BaseActivity(){
      * add()方式提交可以hide后可以show，replace方式提交无法通过show来显示
      */
     private fun switchFragment(id: Int) {
+
+        if (lastClickedId == id) return
+
+        lastClickedId = id
+
         hideFragments()
+
         when (id) {
             R.id.button0 -> {
                 if (fragment0 == null) {
                     fragment0 = MainFragment0.newInstance()
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment0).commit()
                 } else {
-                    //避免重复点击
-                    if (fragment0!!.isVisible) return
-
                     supportFragmentManager.beginTransaction().show(fragment0).commit()
                 }
             }
@@ -51,7 +55,6 @@ class MainActivity : BaseActivity(){
                     fragment1 = MainFragment1.newInstance()
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment1).commit()
                 } else {
-                    if (fragment1!!.isVisible) return
                     supportFragmentManager.beginTransaction().show(fragment1).commit()
                 }
 
@@ -61,7 +64,6 @@ class MainActivity : BaseActivity(){
                     fragment2 = MainFragment2.newInstance()
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment2).commit()
                 } else {
-                    if (fragment2!!.isVisible) return
                     supportFragmentManager.beginTransaction().show(fragment2).commit()
                 }
             }
@@ -70,7 +72,6 @@ class MainActivity : BaseActivity(){
                     fragment3 = MainFragment3.newInstance()
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment3).commit()
                 } else {
-                    if (fragment3!!.isVisible) return
                     supportFragmentManager.beginTransaction().show(fragment3).commit()
                 }
             }

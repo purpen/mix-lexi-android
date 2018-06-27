@@ -6,7 +6,11 @@ import com.basemodule.ui.BaseView
 import com.thn.lexi.goods.GoodsData
 
 class MineContract {
+
+
+
     interface View : BaseView<Presenter> {
+
         fun showLoadingView()
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
