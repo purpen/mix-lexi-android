@@ -12,6 +12,6 @@ class ForgetPasswordContract {
         fun showInfo(string: String)
     }
     interface Presenter : BasePresenter {
-        fun registerUser(phone: String, password: String,checkCode:String)
+        fun updateNewPassword(phone: String,checkCode:String,password: String)
     }
 }

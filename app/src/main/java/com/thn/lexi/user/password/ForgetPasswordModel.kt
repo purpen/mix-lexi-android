@@ -8,9 +8,12 @@ import java.io.IOException
 
 open class ForgetPasswordModel {
 
-    fun registerUser(phone: String, password: String,checkCode:String,callback: IDataSource.HttpRequestCallBack) {
+    /**
+     * 通过手机号换密码
+     */
+    fun updateNewPassword(phone: String,checkCode:String,password: String,callback: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getRegisterParams(phone,password,checkCode)
+        val params = ClientParamsAPI.getUpdateNewPasswordParams(phone,checkCode,password)
 
         HttpRequest.sendRequest(HttpRequest.POST,URL.REGISTER_URL,params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
@@ -27,26 +30,9 @@ open class ForgetPasswordModel {
         })
     }
 
+    //发送验证码
     fun sendCheckCode() {
 
-    }
-
-    fun getToken(phone: String, password: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getTokenParams(phone,password)
-
-        HttpRequest.sendRequest(HttpRequest.POST,URL.TOKEN_URL,params, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
     }
 
 }

@@ -38,7 +38,7 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
     override fun onClick(v: View?) {
         val id = v?.id
         when (id) {
-            R.id.button -> presenter.registerUser(editText0.text.toString(),editText1.text.toString(),editText2.text.toString())
+            R.id.button -> presenter.updateNewPassword(editText0.text.toString(),editText2.text.toString(),editText1.text.toString())
             R.id.textViewGetCode -> presenter.sendCheckCode()
 
         }

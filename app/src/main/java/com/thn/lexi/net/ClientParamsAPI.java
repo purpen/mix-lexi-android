@@ -479,4 +479,20 @@ public class ClientParamsAPI {
         params.put("per_page", Constants.PAGE_SIZE);
         return params;
     }
+
+    /**
+     * 通过手机号换密码
+     * @param phone
+     * @param checkCode
+     * @param password
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, String> getUpdateNewPasswordParams(@NotNull String phone, @NotNull String checkCode, @NotNull String password) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("phone", phone);
+        params.put("checkCode", checkCode);
+        params.put("password", password);
+        return params;
+    }
 }
