@@ -35,6 +35,17 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
         presenter.loadData("")
     }
 
+    override fun installListener() {
+        relativeLayout.setOnClickListener(this)
+        customItemLayout0.setOnClickListener(this)
+        customItemLayout1.setOnClickListener(this)
+        customItemLayout2.setOnClickListener(this)
+        customItemLayout3.setOnClickListener(this)
+        customItemLayout4.setOnClickListener(this)
+        customItemLayout5.setOnClickListener(this)
+        button.setOnClickListener(this)
+    }
+
     override fun onClick(v: View) {
         val id = v.id
         when (id) {
