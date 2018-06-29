@@ -23,6 +23,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
         customItemLayout3.setTVStyle(R.mipmap.icon_order_address, R.string.text_order_address, R.color.color_333)
         customItemLayout4.setTVStyle(R.mipmap.icon_serve_contract, R.string.text_serve_contract, R.color.color_333)
         customItemLayout5.setTVStyle(R.mipmap.icon_private_items, R.string.text_private_items, R.color.color_333)
+
     }
 
     override fun setPresenter(presenter: SettingContract.Presenter?) {
@@ -51,7 +52,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
 
     override fun setUserInfo(data: UserInfoBean.DataBean) {
         textView0.text = data.username
-        GlideUtil.loadCircleImageWidthDimen("http://pic.58pic.com/58pic/17/00/96/20g58PIC6nk_1024.jpg",imageView)
+        GlideUtil.loadCircleImageWidthDimen("https://kg.erp.taihuoniao.com/20180226/Fi-R-nar6b1TdBOKZAnhl-FvT_qc.jpg",imageView)
     }
 
     override fun showLoadingView() {

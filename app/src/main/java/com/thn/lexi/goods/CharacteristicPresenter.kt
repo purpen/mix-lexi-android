@@ -28,7 +28,7 @@ class CharacteristicPresenter(view: CharacteristicContract.View) : Characteristi
                     for (i in 1..10){
                         val bean = GoodsData.DataBean.ProductsBean()
                         bean.sale_price = 10.0
-                        bean.cover = "http://pic.58pic.com/58pic/17/00/96/20g58PIC6nk_1024.jpg"
+                        bean.cover = "https://kg.erp.taihuoniao.com/20180226/Fi-R-nar6b1TdBOKZAnhl-FvT_qc.jpg"
                         bean.name = "呼啸山庄"
                         list.add(bean)
                     }
@@ -61,7 +61,7 @@ class CharacteristicPresenter(view: CharacteristicContract.View) : Characteristi
                     for (i in 1..10){
                         val bean = GoodsData.DataBean.ProductsBean()
                         bean.sale_price = 10.0
-                        bean.cover = "http://pic.58pic.com/58pic/17/00/96/20g58PIC6nk_1024.jpg"
+                        bean.cover = "https://kg.erp.taihuoniao.com/20180226/Fi-R-nar6b1TdBOKZAnhl-FvT_qc.jpg"
                         bean.name = "呼啸山庄"
                         list.add(bean)
                     }
