@@ -22,4 +22,10 @@ object URL {
      * 商品列表
       */
     const val GOODS_LIST_URL = "${BASE_URL}products"
+
+    /**
+     * 用户信息
+      */
+    const val USER_INFO_URL = "${BASE_URL}users"
+
 }

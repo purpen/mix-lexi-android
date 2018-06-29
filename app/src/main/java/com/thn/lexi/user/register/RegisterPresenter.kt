@@ -12,15 +12,11 @@ import com.thn.lexi.user.password.ForgetPasswordBean
 import java.io.IOException
 
 
-class RegisterPresenter : RegisterContract.Presenter {
+class RegisterPresenter(view: RegisterContract.View) : RegisterContract.Presenter {
 
-    private var view: RegisterContract.View
+    private var view: RegisterContract.View = checkNotNull(view)
 
     private val dataSource: RegisterModel by lazy { RegisterModel() }
-
-    constructor(view: RegisterContract.View) {
-        this.view = checkNotNull(view)
-    }
 
     /**
      * 注册用户

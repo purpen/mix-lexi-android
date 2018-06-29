@@ -495,4 +495,16 @@ public class ClientParamsAPI {
         params.put("password", password);
         return params;
     }
+
+    /**
+     * 设置界面获取用户信息
+     * @param userId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getSettingParams(@NotNull String userId) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("userId", userId);
+        return params;
+    }
 }

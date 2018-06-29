@@ -1,0 +1,70 @@
+package com.thn.lexi.user.setting
+
+import android.content.Intent
+import android.view.View
+import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.WaitingDialog
+import com.basemodule.ui.BaseActivity
+import com.thn.lexi.R
+import kotlinx.android.synthetic.main.activity_setting.*
+
+class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListener {
+    private val dialog:WaitingDialog? by lazy { WaitingDialog(this) }
+    private lateinit var presenter: SettingPresenter
+    override val layout: Int = R.layout.activity_setting
+
+    override fun initView() {
+        presenter = SettingPresenter(this)
+        customHeadView.setHeadCenterTxtShow(true, R.string.title_setting)
+        customItemLayout0.setTVStyle(R.mipmap.icon_invite_freinds, R.string.text_invite_freinds, R.color.color_333)
+        customItemLayout1.setTVStyle(R.mipmap.icon_find_freind, R.string.text_find_freinds, R.color.color_333)
+        customItemLayout2.setTVStyle(R.mipmap.icon_my_orders, R.string.text_my_orders, R.color.color_333)
+        customItemLayout3.setTVStyle(R.mipmap.icon_order_address, R.string.text_order_address, R.color.color_333)
+        customItemLayout4.setTVStyle(R.mipmap.icon_serve_contract, R.string.text_serve_contract, R.color.color_333)
+        customItemLayout5.setTVStyle(R.mipmap.icon_private_items, R.string.text_private_items, R.color.color_333)
+    }
+
+    override fun setPresenter(presenter: SettingContract.Presenter?) {
+        setPresenter(presenter)
+    }
+
+    override fun requestNet() {
+        //用户需先登录
+        presenter.loadData("")
+    }
+
+    override fun onClick(v: View) {
+        val id = v.id
+        when (id) {
+            R.id.relativeLayout -> ToastUtil.showInfo("编辑个人资料")
+            R.id.customItemLayout0 -> ToastUtil.showInfo("邀请朋友")
+            R.id.customItemLayout1 -> ToastUtil.showInfo("找朋友")
+            R.id.customItemLayout2 -> ToastUtil.showInfo("我的订单")
+            R.id.customItemLayout3 -> ToastUtil.showInfo("收货地址")
+            R.id.customItemLayout4 -> ToastUtil.showInfo("服务条款")
+            R.id.customItemLayout5 -> ToastUtil.showInfo("隐私条款")
+            R.id.button -> ToastUtil.showInfo("退出登录")
+
+        }
+    }
+
+    override fun setUserInfo(data: UserInfoBean.DataBean) {
+        textView0.text = data.username
+        GlideUtil.loadCircleImageWidthDimen("http://pic.58pic.com/58pic/17/00/96/20g58PIC6nk_1024.jpg",imageView)
+    }
+
+    override fun showLoadingView() {
+        dialog?.show()
+    }
+
+    override fun dismissLoadingView() {
+        dialog?.dismiss()
+    }
+
+    override fun showError(s: String) {
+        ToastUtil.showError(s)
+    }
+
+
+}

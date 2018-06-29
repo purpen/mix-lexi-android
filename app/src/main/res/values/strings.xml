@@ -42,4 +42,17 @@
     <string name="title_forget_password">找回密码</string>
     <string name="text_complete">完成</string>
     <string name="tex_hint_new_password">请输入新密码</string>
+    <string name="text_preview_and_edit_info">查看并编辑个人资料</string>
+    <string name="text_link">连接</string>
+    <string name="text_please_input">请输入</string>
+    <string name="text_invite_freinds">邀请朋友</string>
+    <string name="text_find_freinds">找朋友</string>
+    <string name="text_setting_acount">账户</string>
+    <string name="text_my_orders">我的订单</string>
+    <string name="text_order_address">收货地址</string>
+    <string name="text_setting_more">更多</string>
+    <string name="text_serve_contract">服务协议</string>
+    <string name="text_private_items">隐私条款</string>
+    <string name="text_setting_logout">退出登录</string>
+    <string name="title_setting">设置</string>
 </resources>

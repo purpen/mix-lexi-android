@@ -1,4 +1,6 @@
 package com.thn.lexi
+import android.content.Intent
+import android.view.View
 import com.basemodule.tools.Constants
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
@@ -6,9 +8,11 @@ import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.goods.GoodsData
 import com.thn.lexi.mine.*
+import com.thn.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_main3.*
+import kotlinx.android.synthetic.main.view_mine_head.*
 
-class MainFragment3 : BaseFragment(), MineContract.View{
+class MainFragment3 : BaseFragment(), MineContract.View,View.OnClickListener{
     private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
     private lateinit var presenter: MinePresenter
     private var page: Int = 1
@@ -51,6 +55,16 @@ class MainFragment3 : BaseFragment(), MineContract.View{
     }
 
     override fun installListener() {
+        imageButton0.setOnClickListener(this)
+        imageButton1.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View) {
+        val id = v.id
+        when(id){
+//            R.id.imageButton0->
+            R.id.imageButton1 -> startActivity(Intent(activity, SettingActivity::class.java))
+        }
     }
 
     override fun loadData() {
