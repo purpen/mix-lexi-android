@@ -472,11 +472,12 @@ public class ClientParamsAPI {
     }
 
     @Nullable
-    public static HashMap<String, String> getGoodListParams(@NotNull String cid, int page) {
+    public static HashMap<String, String> getGoodListParams(@NotNull String cid, int page, String status) {
         HashMap<String, String> params = generateCommonParams();
         params.put("cid", cid);
         params.put("page", "" + page);
         params.put("per_page", Constants.PAGE_SIZE);
+        params.put("status", status);
         return params;
     }
 

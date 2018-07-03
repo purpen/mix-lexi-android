@@ -59,24 +59,20 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(data)
         adapter.setEnableLoadMore(true)
-        showEndView()
         ++page
     }
 
     override fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
         adapter.addData(products)
         ++page
-        showEndView()
     }
 
-    private fun showEndView() {
-        if (adapter.data.size < Integer.valueOf(Constants.PAGE_SIZE)) {
-            //第一页如果不够一页就不显示没有更多数据布局
-            adapter.loadMoreEnd(false)
+    override fun loadMoreComplete() {
+        adapter.loadMoreComplete()
+    }
 
-        } else {
-            adapter.loadMoreComplete()
-        }
+    override fun loadMoreEnd() {
+        adapter.loadMoreEnd()
     }
 
     override fun showLoadingView() {
@@ -89,6 +85,7 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
 
     override fun showError(string: String) {
         swipeRefreshLayout.isRefreshing = false
+        adapter.loadMoreFail()
         ToastUtil.showError(string)
     }
 

@@ -17,6 +17,11 @@ class CharacteristicContract {
         fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
 
         }
+
+        fun loadMoreEnd(){}
+        fun loadMoreComplete() {
+
+        }
     }
 
     interface Presenter : BasePresenter {
