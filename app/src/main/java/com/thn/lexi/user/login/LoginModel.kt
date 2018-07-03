@@ -7,11 +7,11 @@ import com.thn.lexi.net.URL
 import java.io.IOException
 
 open class LoginModel{
-    open fun loginUser(phone: String, password: String, callBack: IDataSource.HttpRequestCallBack) {
+    open fun loginUser(phone: String, password: String,authorzationCode: String,callBack: IDataSource.HttpRequestCallBack) {
 
         val params = ClientParamsAPI.getLoginParams(phone,password)
 
-        HttpRequest.sendRequest(HttpRequest.POST,URL.LOGIN_URL,params,object : IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.POST,URL.LOGIN_URL,authorzationCode,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }
@@ -42,6 +42,24 @@ open class LoginModel{
         val params = ClientParamsAPI.getTokenParams(phone,password)
 
         HttpRequest.sendRequest(HttpRequest.POST,URL.TOKEN_URL,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    fun getAppKeyAndSecret(storeId: String, authorzationCode: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.appKeyAndSecretParams(storeId)
+        HttpRequest.sendRequest(HttpRequest.POST,URL.APPKEY_APPSECRET,authorzationCode,params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

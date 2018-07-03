@@ -16,7 +16,7 @@ object URL {
     /**
      *登录
      */
-    const val LOGIN_URL = "${BASE_URL}auth/login"
+    const val LOGIN_URL = "${BASE_URL}auth/business_login"
 
     /**
      * 商品列表
@@ -27,5 +27,11 @@ object URL {
      * 用户信息
       */
     const val USER_INFO_URL = "${BASE_URL}users"
+
+
+    /**
+     * 换取token
+     */
+    const val APPKEY_APPSECRET ="${BASE_URL}auth/exchange_token"
 
 }
