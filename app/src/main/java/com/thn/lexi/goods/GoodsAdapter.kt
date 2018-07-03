@@ -1,9 +1,12 @@
 package com.thn.lexi.goods
+
+import android.graphics.Color
 import android.graphics.Rect
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -11,10 +14,15 @@ import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
+import com.orhanobut.dialogplus.DialogPlus
+import com.orhanobut.dialogplus.ViewHolder
+import com.thn.lexi.view.CenterShareView
+
 
 class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.ProductsBean, BaseViewHolder>(res) {
-    private var activity:FragmentActivity?=null
-    constructor(@LayoutRes res: Int, activity: FragmentActivity?):this(res){
+    private var activity: FragmentActivity? = null
+
+    constructor(@LayoutRes res: Int, activity: FragmentActivity?) : this(res) {
         this.activity = activity
     }
 
@@ -25,12 +33,22 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
         val imageView = helper.getView<ImageView>(R.id.imageView)
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, imageView.context.resources.getDimensionPixelSize(R.dimen.dp385))
         imageView.layoutParams = params
-        GlideUtil.loadImageWithTopRadius(item.cover,imageView,mContext.resources.getDimensionPixelSize(R.dimen.dp5))
+        GlideUtil.loadImageWithTopRadius(item.cover, imageView, mContext.resources.getDimensionPixelSize(R.dimen.dp5))
 
+        //购买
         helper.getView<View>(R.id.textView4).setOnClickListener {
             //TODO 请求商品SKU信息,设置给窗口
-            val popupWindow = GoodsSpecPopupWindow(activity,R.layout.dialog_purchase_goods,LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            val popupWindow = GoodsSpecPopupWindow(activity, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
             popupWindow.show()
+        }
+
+        //分享
+        helper.getView<View>(R.id.textView5).setOnClickListener {
+            val dialog = DialogPlus.newDialog(mContext)
+                    .setContentHolder(ViewHolder(CenterShareView(mContext)))
+                    .setGravity(Gravity.CENTER)
+                    .create()
+            dialog.show()
         }
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
@@ -38,11 +56,11 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
         val linearLayoutManager = LinearLayoutManager(imageView.context)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
-        headImageAdapter.setNewData(data.subList(0,3))
+        headImageAdapter.setNewData(data.subList(0, 3))
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = headImageAdapter
 
-        if (recyclerView.itemDecorationCount==0){
+        if (recyclerView.itemDecorationCount == 0) {
             recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
                     super.getItemOffsets(outRect, view, parent, state)

@@ -1,18 +1,10 @@
 package com.thn.lexi.mine
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.OnScrollListener
-import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.basemodule.tools.Constants
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
-import com.thn.lexi.MainFragment3
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.goods.CharacteristicContract
@@ -35,7 +27,7 @@ class FavoriteShopFragment : BaseFragment(), CharacteristicContract.View {
 
     override fun initView() {
         presenter = CharacteristicPresenter(this)
-        adapter = GoodsAdapter(R.layout.layout_goods_adapter)
+        adapter = GoodsAdapter(R.layout.adapter_goods_layout)
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(activity)

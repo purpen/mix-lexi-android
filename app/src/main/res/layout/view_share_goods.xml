@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp15"
+        android:text="@string/text_share_goods"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp14" />
+
+    <include layout="@layout/line_color_eee" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dp20"
+        android:layout_marginStart="@dimen/dp15"
+        android:layout_marginEnd="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp20" />
+
+    <include layout="@layout/line_color_eee" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_marginStart="@dimen/dp15"
+        android:layout_marginEnd="@dimen/dp15"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="@dimen/dp15"
+            android:layout_weight="1"
+            android:background="@drawable/border_radius4_ddd" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="67dp"
+            android:layout_height="@dimen/dp30"
+            android:background="@drawable/bg_color6ed7af_radius4"
+            android:text="@string/text_copy_link"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp12" />
+    </LinearLayout>
+</LinearLayout>

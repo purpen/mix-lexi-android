@@ -9,17 +9,25 @@
         <item>取消</item>
         <item>确定</item>
     </string-array>
-    <string-array name="strings_mine_titles" >
+    <string-array name="strings_mine_titles">
         <item>已喜欢</item>
         <item>心愿单</item>
         <item>商店</item>
         <item>动态</item>
     </string-array>
 
+    <string-array name="strings_dialog_share">
+        <item>朋友圈</item>
+        <item>微信</item>
+        <item>微博</item>
+        <item>QQ</item>
+        <item>QQ空间</item>
+    </string-array>
+
+
     <integer-array name="google_colors">
         <item>@color/color_6ed7af</item>
     </integer-array>
-
 
 
 </resources>

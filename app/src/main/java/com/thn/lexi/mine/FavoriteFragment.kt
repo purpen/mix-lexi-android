@@ -27,7 +27,7 @@ class FavoriteFragment : BaseFragment(), CharacteristicContract.View {
 
     override fun initView() {
         presenter = CharacteristicPresenter(this)
-        adapter = GoodsAdapter(R.layout.layout_goods_adapter)
+        adapter = GoodsAdapter(R.layout.adapter_goods_layout)
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(activity)

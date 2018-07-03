@@ -1,7 +1,5 @@
 package com.thn.lexi.mine
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.OnScrollListener
 import com.basemodule.tools.Constants
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
@@ -29,7 +27,7 @@ class ActivitiesFragment : BaseFragment(), CharacteristicContract.View {
 
     override fun initView() {
         presenter = CharacteristicPresenter(this)
-        adapter = GoodsAdapter(R.layout.layout_goods_adapter)
+        adapter = GoodsAdapter(R.layout.adapter_goods_layout)
 
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false

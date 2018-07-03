@@ -53,4 +53,6 @@
     <string name="title_inbox">收件箱</string>
     <string name="tvSpecification">尺寸</string>
     <string name="color_category">颜色</string>
+    <string name="text_share_goods">分享这件礼品</string>
+    <string name="text_copy_link">复制链接</string>
 </resources>

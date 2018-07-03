@@ -46,7 +46,7 @@ class MainFragment3 : BaseFragment(), MineContract.View,View.OnClickListener{
     override fun initView() {
         setUpViewPager()
         this.presenter = MinePresenter(this)
-        adapter0 = MineFavoritesAdapter(R.layout.layout_goods_adapter)
+        adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
     }
 
 

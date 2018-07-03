@@ -61,10 +61,10 @@ class GoodsSpecPopupWindow(activity: FragmentActivity?, @LayoutRes res: Int, wid
         colorRecyclerView.setHasFixedSize(true)
         colorRecyclerView.layoutManager = linearLayoutManager
 
-        colorAdapter = ColorAdapter(R.layout.layout_sku)
+        colorAdapter = ColorAdapter(R.layout.adapter_sku_layout)
         colorRecyclerView.adapter = colorAdapter
 
-        specificationAdapter = SpecificationAdapter(R.layout.layout_sku)
+        specificationAdapter = SpecificationAdapter(R.layout.adapter_sku_layout)
         specificRecyclerView.adapter = specificationAdapter
 
 //        colorAdapter.setOnItemClickListener(object : OnRecyclerViewItemClickListener() {
