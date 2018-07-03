@@ -10,7 +10,7 @@
     <string name="title_sidebar">乐喜</string>
     <string name="text_settings">设置</string>
     <string name="title_shopcart">购物车</string>
-    <string name="title_login">登陆</string>
+    <string name="title_login">登录</string>
     <string name="text_phone_login">手机注册</string>
     <string name="phone_num">请输入手机号</string>
     <string name="password">请输入密码</string>
@@ -51,4 +51,6 @@
     <string name="text_setting_logout">退出登录</string>
     <string name="title_setting">设置</string>
     <string name="title_inbox">收件箱</string>
+    <string name="tvSpecification">尺寸</string>
+    <string name="color_category">颜色</string>
 </resources>

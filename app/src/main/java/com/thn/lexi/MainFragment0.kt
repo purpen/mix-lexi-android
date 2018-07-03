@@ -38,7 +38,7 @@ class MainFragment0 : BaseFragment() {
 
     override fun installListener() {
         textView.setOnClickListener {
-            startActivity(Intent(activity, com.thn.lexi.user.login.LoginActivity::class.java))
+            startActivity(Intent(activity, LoginActivity::class.java))
         }
     }
 

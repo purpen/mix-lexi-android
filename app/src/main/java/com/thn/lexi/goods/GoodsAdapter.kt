@@ -1,6 +1,7 @@
 package com.thn.lexi.goods
 import android.graphics.Rect
 import android.support.annotation.LayoutRes
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -12,6 +13,10 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
 
 class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.ProductsBean, BaseViewHolder>(res) {
+    private var activity:FragmentActivity?=null
+    constructor(@LayoutRes res: Int, activity: FragmentActivity?):this(res){
+        this.activity = activity
+    }
 
     override fun convert(helper: BaseViewHolder, item: GoodsData.DataBean.ProductsBean) {
         helper.setText(R.id.textView0, item.name)
@@ -22,6 +27,12 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
         imageView.layoutParams = params
         GlideUtil.loadImageWithTopRadius(item.cover,imageView,mContext.resources.getDimensionPixelSize(R.dimen.dp5))
 
+        helper.getView<View>(R.id.textView4).setOnClickListener {
+            //TODO 请求商品SKU信息,设置给窗口
+            val popupWindow = GoodsSpecPopupWindow(activity,R.layout.dialog_purchase_goods,LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            popupWindow.show()
+        }
+
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
         recyclerView.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(imageView.context)
@@ -31,15 +42,16 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = headImageAdapter
 
-        if (recyclerView.itemDecorationCount>0) return
-
-        recyclerView.addItemDecoration(object :RecyclerView.ItemDecoration(){
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
-                super.getItemOffsets(outRect, view, parent, state)
-                if (parent.getChildAdapterPosition(view) >0 ){
-                    outRect.left = parent.context.resources.getDimensionPixelSize(R.dimen.dp5)
+        if (recyclerView.itemDecorationCount==0){
+            recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+                    super.getItemOffsets(outRect, view, parent, state)
+                    if (parent.getChildAdapterPosition(view) > 0) {
+                        outRect.left = parent.context.resources.getDimensionPixelSize(R.dimen.dp5)
+                    }
                 }
-            }
-        })
+            })
+        }
+
     }
 }

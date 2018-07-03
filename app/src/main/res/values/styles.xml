@@ -27,4 +27,14 @@
         <item name="android:textSize">11sp</item>
     </style>
 
+    <style name="BottomDialogAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/botton_dialog_push_in</item>
+        <item name="android:windowExitAnimation">@anim/botton_dialog_push_out</item>
+    </style>
+
+    <!-- popupWindow弹出弹入动画-->
+    <style name="popupwindow_style" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/bottom_to_up</item>
+        <item name="android:windowExitAnimation">@anim/up_to_bottom</item>
+    </style>
 </resources>
