@@ -10,6 +10,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 class HeadImageAdapter(@LayoutRes res: Int): BaseQuickAdapter<GoodsData.DataBean.ProductsBean, BaseViewHolder>(res) {
     override fun convert(helper: BaseViewHolder?, item: GoodsData.DataBean.ProductsBean?) {
         val imageView = helper?.getView<CircleImageView>(R.id.circleImageView)
-        GlideUtil.loadImage(item?.cover,imageView)
+        GlideUtil.loadImageWithFading(item?.cover,imageView)
     }
 }

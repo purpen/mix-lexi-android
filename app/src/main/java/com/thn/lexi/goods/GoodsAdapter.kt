@@ -1,6 +1,4 @@
 package com.thn.lexi.goods
-
-import android.graphics.Color
 import android.graphics.Rect
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentActivity
@@ -33,7 +31,7 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
         val imageView = helper.getView<ImageView>(R.id.imageView)
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, imageView.context.resources.getDimensionPixelSize(R.dimen.dp385))
         imageView.layoutParams = params
-        GlideUtil.loadImageWithTopRadius(item.cover, imageView, mContext.resources.getDimensionPixelSize(R.dimen.dp5))
+        GlideUtil.loadImageWithFading(item.cover, imageView)
 
         //购买
         helper.getView<View>(R.id.textView4).setOnClickListener {

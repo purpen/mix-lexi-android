@@ -23,7 +23,7 @@ public class GlideUtil {
     public static final int DEFAULT_PLACE_HOLDER = R.drawable.default_load;
     public static final int DEFAULT_ERROR_HOLDER = R.drawable.default_load;
     //The duration of the cross fade animation in milliseconds.
-    public static final int FADING_DURING = 250;
+    public static final int FADING_DURING = 300;
 
 
     public static <T> void loadImage(T t, ImageView imageView) {
@@ -67,9 +67,8 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageWithFading(T t, ImageView imageView) {
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
+        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
+        Glide.with(imageView.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
 
