@@ -1,13 +1,10 @@
 package com.thn.lexi
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import com.basemodule.tools.Constants
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
-import com.thn.lexi.goods.CharacteristicContract
-import com.thn.lexi.goods.CharacteristicPresenter
-import com.thn.lexi.goods.GoodsAdapter
-import com.thn.lexi.goods.GoodsData
+import com.thn.lexi.goods.*
 import kotlinx.android.synthetic.main.fragment_charactoristic.*
 
 class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
@@ -40,6 +37,13 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
 
 
     override fun installListener() {
+        adapter.setOnItemClickListener { adapter, view, position ->
+            val item =  adapter.getItem(position) as GoodsData.DataBean.ProductsBean
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item)
+            startActivity(intent)
+        }
+
         swipeRefreshLayout.setOnRefreshListener {
             adapter.setEnableLoadMore(false)
             loadData()

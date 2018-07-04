@@ -25,6 +25,7 @@
         </activity>
 
         <activity android:name=".user.login.LoginActivity" />
+        <activity android:name=".goods.GoodsDetailActivity" />
         <activity android:name=".user.register.RegisterActivity" />
         <activity android:name=".user.password.ForgetPasswordActivity"/>
         <activity android:name=".user.setting.SettingActivity"/>

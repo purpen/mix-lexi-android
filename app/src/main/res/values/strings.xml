@@ -55,4 +55,9 @@
     <string name="color_category">颜色</string>
     <string name="text_share_goods">分享这件礼品</string>
     <string name="text_copy_link">复制链接</string>
+    <string name="text_wish_order">心愿单</string>
+    <string name="text_select_spec_size">选择规格和尺码</string>
+    <string name="text_description">描述</string>
+    <string name="text_send_address">发货地</string>
+    <string name="text_send_time">交货时间</string>
 </resources>
