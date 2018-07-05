@@ -6,13 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-   <com.thn.lexi.view.autoScrollViewpager.CustomAutoScrollViewPager
-       android:id="@+id/customAutoScrollViewPager"
-       android:layout_width="match_parent"
-       android:layout_height="@dimen/dp05" />
+    <com.thn.lexi.view.autoScrollViewpager.CustomAutoScrollViewPager
+        android:id="@+id/customAutoScrollViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="375dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,8 +19,7 @@
         android:paddingBottom="@dimen/dp20"
         android:paddingEnd="@dimen/dp15"
         android:paddingStart="@dimen/dp15"
-        android:paddingTop="@dimen/dp20"
-        >
+        android:paddingTop="@dimen/dp20">
 
         <TextView
             android:id="@+id/textView0"
@@ -36,14 +34,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textView0"
-            android:layout_marginTop="@dimen/dp5"
-            android:drawableStart="@mipmap/icon_unit"
-            android:drawablePadding="@dimen/dp2"
             android:layout_marginEnd="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp5"
+            android:drawablePadding="@dimen/dp2"
+            android:drawableStart="@mipmap/icon_unit"
             android:text="@string/app_name"
             android:textColor="@color/color_333"
-            android:textStyle="bold"
-            android:textSize="@dimen/sp15" />
+            android:textSize="@dimen/sp15"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView2"
@@ -59,195 +57,102 @@
 
         <Button
             android:id="@+id/textView3"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="67dp"
             android:layout_height="30dp"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:paddingStart="@dimen/dp10"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/dp20"
-            android:drawablePadding="5dp"
-            android:background="@drawable/selector_favorite_goods"
-            android:drawableStart="@mipmap/icon_click_favorite_normal"
-            android:text="喜欢"
             android:layout_below="@+id/textView2"
+            android:layout_marginTop="@dimen/dp20"
+            android:background="@drawable/selector_favorite_goods"
+            android:drawablePadding="5dp"
+            android:drawableStart="@mipmap/icon_click_favorite_normal"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dp10"
+            android:text="喜欢"
             android:textColor="@color/color_999"
             android:textSize="@dimen/sp14" />
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_alignTop="@+id/textView3"
-            android:layout_toStartOf="@+id/textView5"
-            android:paddingStart="@dimen/dp10"
-            android:drawablePadding="@dimen/dp5"
             android:layout_width="75dp"
             android:layout_height="@dimen/dp30"
-            android:background="@drawable/border_radius4_ddd"
-            android:drawableStart="@mipmap/icon_add_wish_order"
-            android:text="@string/text_wish_order"
-            android:textSize="@dimen/sp14"
-            android:textColor="@color/color_999"
-            android:gravity="center_vertical"
+            android:layout_alignTop="@+id/textView3"
             android:layout_marginEnd="@dimen/dp10"
-            />
+            android:layout_toStartOf="@+id/textView5"
+            android:background="@drawable/border_radius4_ddd"
+            android:drawablePadding="@dimen/dp5"
+            android:drawableStart="@mipmap/icon_add_wish_order"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/dp10"
+            android:text="@string/text_wish_order"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp14" />
 
         <ImageButton
             android:id="@+id/textView5"
+            android:layout_width="31dp"
+            android:layout_height="@dimen/dp30"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/textView4"
-            android:layout_width="31dp"
-            android:src="@mipmap/icon_click_share"
-            android:layout_height="@dimen/dp30"
             android:background="@drawable/border_radius4_ddd"
-            />
+            android:src="@mipmap/icon_click_share" />
     </RelativeLayout>
 
     <include
         android:id="@+id/line"
         layout="@layout/line_color_eee"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        />
+        android:layout_height="@dimen/dp1" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginStart="@dimen/dp15"
-        android:layout_marginEnd="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp20"
-        android:paddingEnd="@dimen/dp10"
         android:layout_marginBottom="@dimen/dp20"
-        android:drawableEnd="@mipmap/icon_arrow_down"
+        android:layout_marginEnd="@dimen/dp15"
+        android:layout_marginStart="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp20"
         android:background="@drawable/border_radius4_ddd"
-        android:text="@string/text_select_spec_size"
-        android:textSize="@dimen/sp14"
-        android:textColor="@color/color_555"
+        android:drawableEnd="@mipmap/icon_arrow_down"
         android:gravity="center"
-        />
+        android:paddingEnd="@dimen/dp10"
+        android:text="@string/text_select_spec_size"
+        android:textColor="@color/color_555"
+        android:textSize="@dimen/sp14" />
+
     <include
         android:id="@+id/line"
         layout="@layout/line_color_eee"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        />
+        android:layout_height="@dimen/dp1" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dp20"
         android:paddingEnd="@dimen/dp15"
-        >
+        android:paddingStart="@dimen/dp20">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="wrap_content"
-            android:layout_height="52dp"
-            />
+            android:layout_height="52dp" />
+
         <ImageButton
             android:layout_width="31dp"
             android:layout_height="31dp"
-            android:background="@null"
-            android:src="@mipmap/icon_favorite_more_person"
-            android:scaleType="fitXY"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            />
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:src="@mipmap/icon_favorite_more_person" />
     </RelativeLayout>
 
     <include layout="@layout/line_height20_bgf8f8f8" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_333"
-        android:textSize="@dimen/sp14"
-        android:text="@string/text_description"
-        android:paddingTop="@dimen/dp20"
-        android:paddingBottom="@dimen/dp10"
-        android:paddingStart="@dimen/dp15"
-        android:textStyle="bold"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dp15"
-        android:paddingRight="@dimen/dp15"
-        android:lineSpacingMultiplier="1.2"
-        android:textSize="@dimen/sp14"
-        android:textColor="@color/color_333"
-        android:text="进入7月以来，中国降水范围广泛，四川盆地、陕西南部一带持续强降雨。今起，南方强降雨范围将扩大至江淮等地，与此同时暴雨蓝色预警、山洪灾害气象预警、地质灾害气象风险预警也在3日同时发布。"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:paddingBottom="@dimen/dp20"
-        />
-    <include
-        layout="@layout/line_color_eee"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        android:layout_marginStart="@dimen/dp15"
-        android:layout_marginEnd="@dimen/dp15"
-        />
+    <include layout="@layout/view_goods_description" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_333"
-        android:textSize="@dimen/sp14"
-        android:text="@string/text_send_address"
-        android:paddingTop="@dimen/dp20"
-        android:paddingBottom="@dimen/dp10"
-        android:paddingStart="@dimen/dp15"
-        android:textStyle="bold"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dp15"
-        android:paddingRight="@dimen/dp15"
-        android:lineSpacingMultiplier="1.2"
-        android:textSize="@dimen/sp14"
-        android:textColor="@color/color_333"
-        android:text="澳门"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:paddingBottom="@dimen/dp20"
-        />
-    <include
-        layout="@layout/line_color_eee"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        android:layout_marginStart="@dimen/dp15"
-        android:layout_marginEnd="@dimen/dp15"
-        />
+    <include layout="@layout/line_height20_bgf8f8f8" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_333"
-        android:textSize="@dimen/sp14"
-        android:text="@string/text_send_time"
-        android:paddingTop="@dimen/dp20"
-        android:paddingBottom="@dimen/dp10"
-        android:paddingStart="@dimen/dp15"
-        android:textStyle="bold"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dp15"
-        android:paddingRight="@dimen/dp15"
-        android:lineSpacingMultiplier="1.2"
-        android:textSize="@dimen/sp14"
-        android:textColor="@color/color_333"
-        android:text="预计3~5天到达遵义"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:paddingBottom="@dimen/dp20"
-        />
-    <include
-        layout="@layout/line_color_eee"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        android:layout_marginStart="@dimen/dp15"
-        android:layout_marginEnd="@dimen/dp15"
-        />
+    <include layout="@layout/view_goods_shop" />
+
 </LinearLayout>
 
 

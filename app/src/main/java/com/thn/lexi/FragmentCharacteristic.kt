@@ -5,6 +5,7 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.goods.*
+import com.thn.lexi.goods.detail.GoodsDetailActivity
 import kotlinx.android.synthetic.main.fragment_charactoristic.*
 
 class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
@@ -40,7 +41,7 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
         adapter.setOnItemClickListener { adapter, view, position ->
             val item =  adapter.getItem(position) as GoodsData.DataBean.ProductsBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item.rid)
             startActivity(intent)
         }
 

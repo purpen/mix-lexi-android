@@ -12,7 +12,7 @@ open class MineModel:IDataSource{
         const val STATUS: String = "1"
     }
 
-    override fun loadData(cid: String, page: Int, callBack: IDataSource.HttpRequestCallBack) {
+    fun loadData(cid: String, page: Int, callBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getGoodListParams(cid, page, STATUS)
 
         HttpRequest.sendRequest(HttpRequest.GET,URL.GOODS_LIST_URL,params,object : IDataSource.HttpRequestCallBack{

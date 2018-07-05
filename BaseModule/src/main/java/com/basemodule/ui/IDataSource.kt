@@ -14,6 +14,4 @@ interface IDataSource {
 
         fun onFailure(e: IOException)
     }
-
-    fun loadData(cid: String, page: Int, callBack: IDataSource.HttpRequestCallBack)
 }
