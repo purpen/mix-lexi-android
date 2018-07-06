@@ -1,13 +1,16 @@
 package com.thn.lexi.goods.detail
 
+import android.graphics.Color
+import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.R
 import com.thn.lexi.mine.FavoriteFragment
 import com.thn.lexi.mine.WishOrderFragment
+import com.thn.lexi.view.autoScrollViewpager.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_goods_detail.*
-import kotlinx.android.synthetic.main.view_goods_shop.*
+import kotlinx.android.synthetic.main.view_goods_detail_head.*
 
 class GoodsDetailActivity : BaseActivity(),GoodsDetailContract.View {
 
@@ -43,17 +46,42 @@ class GoodsDetailActivity : BaseActivity(),GoodsDetailContract.View {
         slidingTabLayout.setViewPager(customViewPager)
     }
 
+    override fun onStart() {
+        super.onStart()
+        scrollableView?.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        scrollableView?.stop()
+    }
 
     override fun requestNet() {
         presenter.loadData(goodsId)
+        presenter.loadGoodsInfo(goodsId)
     }
 
 
+    override fun setData(data: GoodsDetailBean.DataBean) {
+        var urlList = ArrayList<String>()
+        for (item in data.images){
+            urlList.add(item.view_url)
+        }
+        scrollableView.setAdapter(ViewPagerAdapter<String>(this,urlList,ScreenUtil.getScreenWidth(),resources.getDimensionPixelSize(R.dimen.dp375)).setInfiniteLoop(true))
+        scrollableView.setAutoScrollDurationFactor(8.0)
+        scrollableView.showIndicators()
+        scrollableView.start()
+    }
+
+    override fun setGoodsInfo(data: GoodsInfoBean.DataBean) {
+        textView0.text = data.name
+        textView1.text = data.commission_price.toString()
+        textView2.text = "+ ${data.like_count}人"
+    }
 
     override fun installListener() {
-        super.installListener()
-    }
 
+    }
 
     override fun showLoadingView() {
 

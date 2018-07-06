@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     >
+
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
-
-        <include
-            layout="@layout/view_goods_detail_head"
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp45"
-            android:text="哈哈哈哈"
-            />
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll"
+            >
+            <include
+                layout="@layout/view_goods_detail_head"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_collapseMode="none" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:background="@color/color_6ed7af"
+                app:layout_collapseMode="none"
+                android:visibility="gone"
+                />
+        </android.support.design.widget.CollapsingToolbarLayout>
+
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/slidingTabLayout"
             android:layout_width="match_parent"
@@ -36,11 +49,11 @@
             tl:tl_textSelectColor="@color/color_6ed7af"
             tl:tl_textUnselectColor="@color/color_999"
             tl:tl_textsize="@dimen/sp14" />
+
         <include
             layout="@layout/line_color_eee"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1"
-            />
+            android:layout_height="@dimen/dp1" />
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout

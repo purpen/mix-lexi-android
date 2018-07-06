@@ -77,9 +77,9 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
             holder = new ViewHolder();
             view = holder.imageView = new ImageView(container.getContext());
             holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            view.setTag(holder);
+            view.setTag(R.id.glide_image_tag,holder);
         } else {
-            holder = (ViewHolder) view.getTag();
+            holder = (ViewHolder) view.getTag(R.id.glide_image_tag);
         }
         final T content = list.get(getPosition(position));
 

@@ -10,6 +10,13 @@ class GoodsDetailContract {
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
         fun goPage()
+        fun setData(data: GoodsDetailBean.DataBean) {
+
+        }
+
+        fun setGoodsInfo(data: GoodsInfoBean.DataBean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

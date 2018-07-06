@@ -8,4 +8,5 @@
     <dimen name="dp385">385dp</dimen>
     <dimen name="dp278">278dp</dimen>
     <dimen name="dp238">238dp</dimen>
+    <dimen name="dp375">375dp</dimen>
 </resources>
