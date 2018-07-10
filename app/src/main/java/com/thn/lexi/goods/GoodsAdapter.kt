@@ -54,7 +54,9 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
         val linearLayoutManager = LinearLayoutManager(imageView.context)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
-        headImageAdapter.setNewData(data.subList(0, 3))
+        var urlList = ArrayList<String>()
+        urlList.add(item.cover)
+        headImageAdapter.setNewData(urlList)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = headImageAdapter
 

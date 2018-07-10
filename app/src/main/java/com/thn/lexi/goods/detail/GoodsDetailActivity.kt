@@ -1,18 +1,22 @@
 package com.thn.lexi.goods.detail
 
-import android.graphics.Color
+import android.graphics.Rect
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.View
 import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.R
-import com.thn.lexi.mine.FavoriteFragment
+import com.thn.lexi.goods.HeadImageAdapter
 import com.thn.lexi.mine.WishOrderFragment
 import com.thn.lexi.view.autoScrollViewpager.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_goods_detail.*
 import kotlinx.android.synthetic.main.view_goods_detail_head.*
+import kotlinx.android.synthetic.main.view_goods_shop.*
 
-class GoodsDetailActivity : BaseActivity(),GoodsDetailContract.View {
+class GoodsDetailActivity : BaseActivity(),GoodsDetailContract.View,View.OnClickListener{
 
     private lateinit var presenter:GoodsDetailPresenter
 
@@ -35,10 +39,10 @@ class GoodsDetailActivity : BaseActivity(),GoodsDetailContract.View {
 
     private fun setUpViewPager() {
         var fragments = ArrayList<BaseFragment>()
-        fragments.add(FavoriteFragment.newInstance())
+        fragments.add(SimilarGoodsFragment.newInstance())
         fragments.add(WishOrderFragment.newInstance())
 
-        val titles = resources.getStringArray(R.array.strings_mine_titles)
+        val titles = resources.getStringArray(R.array.strings_goods_detail_titles)
         val adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
@@ -71,6 +75,28 @@ class GoodsDetailActivity : BaseActivity(),GoodsDetailContract.View {
         scrollableView.setAutoScrollDurationFactor(8.0)
         scrollableView.showIndicators()
         scrollableView.start()
+
+        recyclerView.setHasFixedSize(true)
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
+        headImageAdapter.setNewData(urlList)
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.adapter = headImageAdapter
+
+        if (recyclerView.itemDecorationCount == 0) {
+            recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+                    super.getItemOffsets(outRect, view, parent, state)
+                    if (parent.getChildAdapterPosition(view) > 0) {
+                        outRect.left = -parent.context.resources.getDimensionPixelSize(R.dimen.dp5)
+                    }
+                }
+            })
+        }
+
+        //商店商品
+//        recyclerViewShopGoods.adapter
     }
 
     override fun setGoodsInfo(data: GoodsInfoBean.DataBean) {
@@ -80,7 +106,14 @@ class GoodsDetailActivity : BaseActivity(),GoodsDetailContract.View {
     }
 
     override fun installListener() {
+        imageButton1.setOnClickListener(this)
+    }
 
+    override fun onClick(v: View) {
+        val id = v.id
+        when(id){
+            R.id.imageButton1-> finish()
+        }
     }
 
     override fun showLoadingView() {

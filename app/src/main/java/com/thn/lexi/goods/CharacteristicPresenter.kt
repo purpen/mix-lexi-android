@@ -44,7 +44,6 @@ class CharacteristicPresenter(view: CharacteristicContract.View) : Characteristi
                 val goodsData = JsonUtil.fromJson(json, GoodsData::class.java)
                 if (goodsData.success) {
                     val products = goodsData.data.products
-                    LogUtil.e("====================="+products.size)
                     if (products.isEmpty() ){
                         view.loadMoreEnd()
                     }else{

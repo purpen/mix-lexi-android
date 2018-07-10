@@ -34,4 +34,10 @@ object URL {
      */
     const val APPKEY_APPSECRET ="${BASE_URL}auth/exchange_token"
 
+
+    /**
+     * 相似商品
+     */
+    const val SIMILAR_GOODS_URL ="${BASE_URL}products/sticked"
+
 }

@@ -129,16 +129,19 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:paddingEnd="@dimen/dp15"
             android:paddingStart="@dimen/dp20">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="wrap_content"
-                android:layout_height="52dp" />
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                />
 
             <ImageButton
+                android:id="@+id/imageButton"
                 android:layout_width="31dp"
                 android:layout_height="31dp"
                 android:layout_alignParentEnd="true"
@@ -158,13 +161,13 @@
 
     </LinearLayout>
     <ImageButton
-        android:id="@+id/button"
+        android:id="@+id/imageButton1"
         android:layout_width="@dimen/dp45"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:background="@drawable/bg_linear_gradient_back"
         android:src="@drawable/icon_return_white"
         android:scaleType="centerInside"
-        android:paddingRight="@dimen/dp15"
+        android:paddingEnd="@dimen/dp15"
         android:paddingStart="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
         android:layout_marginTop="@dimen/dp15"

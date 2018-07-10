@@ -1,72 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tl="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinator_layout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:layout_height="wrap_content">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll"
-            >
-            <include
-                layout="@layout/view_goods_detail_head"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="none" />
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp48"
-                android:background="@color/color_6ed7af"
-                app:layout_collapseMode="none"
-                android:visibility="gone"
-                />
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/slidingTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:layout_below="@+id/line"
-            android:background="@android:color/white"
-            tl:tl_indicator_color="@color/color_6ed7af"
-            tl:tl_indicator_height="2dp"
-            tl:tl_indicator_width_equal_title="true"
-            tl:tl_tab_padding="@dimen/dp15"
-            tl:tl_tab_space_equal="true"
-            tl:tl_textAllCaps="true"
-            tl:tl_textSelectColor="@color/color_6ed7af"
-            tl:tl_textUnselectColor="@color/color_999"
-            tl:tl_textsize="@dimen/sp14" />
-
-        <include
-            layout="@layout/line_color_eee"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1" />
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tl="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:scrollbars="none"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:fitsSystemWindows="true"
+        >
 
-        <com.basemodule.ui.CustomViewPager
-            android:id="@+id/customViewPager"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
 
-</android.support.design.widget.CoordinatorLayout>
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll">
+
+                <include
+                    layout="@layout/view_goods_detail_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_collapseMode="none" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:background="@color/color_6ed7af"
+                    android:visibility="gone"
+                    app:layout_collapseMode="none" />
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/slidingTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_below="@+id/line"
+                android:background="@android:color/white"
+                tl:tl_indicator_color="@color/color_6ed7af"
+                tl:tl_indicator_height="2dp"
+                tl:tl_indicator_width_equal_title="true"
+                tl:tl_tab_padding="@dimen/dp15"
+                tl:tl_tab_space_equal="true"
+                tl:tl_textAllCaps="true"
+                tl:tl_textSelectColor="@color/color_6ed7af"
+                tl:tl_textUnselectColor="@color/color_999"
+                tl:tl_textsize="@dimen/sp14" />
+
+            <include
+                layout="@layout/line_color_eee"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1" />
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="none"
+            android:layout_marginBottom="@dimen/dp50"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.basemodule.ui.CustomViewPager
+                android:id="@+id/customViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp50"
+            android:background="@android:color/white"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:gravity="center"
+                android:layout_marginEnd="@dimen/dp15"
+                android:layout_marginStart="@dimen/dp15"
+                android:background="@drawable/bg_color6ed7af_radius4"
+                android:text="@string/text_custom_made"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp16" />
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</RelativeLayout>

@@ -16,6 +16,11 @@
         <item>动态</item>
     </string-array>
 
+    <string-array name="strings_goods_detail_titles">
+        <item>相似礼品</item>
+        <item>最近查看</item>
+    </string-array>
+
     <string-array name="strings_dialog_share">
         <item>朋友圈</item>
         <item>微信</item>

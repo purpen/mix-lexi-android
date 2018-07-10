@@ -508,4 +508,11 @@ public class ClientParamsAPI {
         params.put("userId", userId);
         return params;
     }
+
+    public static HashMap<String,String> getSimilarParams(int page) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
+        return params;
+    }
 }

@@ -43,7 +43,7 @@ public class GlideUtil {
     public static <T> void loadImageWithTopRadius(T t, ImageView imageView, int radius) {
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.TOP));
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+        Glide.with(imageView.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -56,7 +56,7 @@ public class GlideUtil {
     public static <T> void loadImageWithRadius(T t, ImageView imageView, int radius) {
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+        Glide.with(imageView.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
 

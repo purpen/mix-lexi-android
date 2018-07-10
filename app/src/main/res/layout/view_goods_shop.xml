@@ -22,7 +22,7 @@
             android:src="@drawable/default_load"
             />
         <TextView
-            android:id="@+id/textView0"
+            android:id="@+id/textViewShopType"
             android:layout_marginStart="@dimen/dp10"
             android:layout_toEndOf="@+id/imageView"
             android:layout_alignTop="@+id/imageView"
@@ -34,9 +34,9 @@
             android:textColor="@color/color_999"
             />
         <TextView
-            android:id="@+id/textView1"
-            android:layout_below="@+id/textView0"
-            android:layout_alignStart="@+id/textView0"
+            android:id="@+id/textViewShopName"
+            android:layout_below="@+id/textViewShopType"
+            android:layout_alignStart="@+id/textViewShopType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp5"
@@ -45,6 +45,7 @@
             android:textColor="@color/color_333"
             />
         <Button
+            android:id="@+id/buttonFocus"
             android:layout_width="@dimen/dp62"
             android:layout_height="@dimen/dp30"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
@@ -60,6 +61,7 @@
             />
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewShopGoods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/sp15"
@@ -75,6 +77,7 @@
         android:layout_marginRight="@dimen/dp15"
         />
     <TextView
+        android:id="@+id/textViewConsult"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:text="@string/text_online_consult"
