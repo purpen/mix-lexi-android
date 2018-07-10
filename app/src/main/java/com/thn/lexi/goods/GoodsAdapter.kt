@@ -1,6 +1,8 @@
 package com.thn.lexi.goods
+
 import android.graphics.Rect
 import android.support.annotation.LayoutRes
+import android.support.annotation.Nullable
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,7 +19,16 @@ import com.orhanobut.dialogplus.ViewHolder
 import com.thn.lexi.view.CenterShareView
 
 
-class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.ProductsBean, BaseViewHolder>(res) {
+class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.ProductsBean, BaseViewHolder>(res), View.OnClickListener {
+    private var listener:OnCustomItemClickListener?=null
+    public interface OnCustomItemClickListener{
+        fun onItemClick(id: Int, adapterPosition: Int?)
+    }
+
+    fun  setCustomItemClickListener(@Nullable listener: OnCustomItemClickListener){
+        this.listener = listener
+    }
+
     private var activity: FragmentActivity? = null
 
     constructor(@LayoutRes res: Int, activity: FragmentActivity?) : this(res) {
@@ -33,21 +44,13 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
         imageView.layoutParams = params
         GlideUtil.loadImageWithFading(item.cover, imageView)
 
+        helper.addOnClickListener(R.id.textView3)
+
         //购买
-        helper.getView<View>(R.id.textView4).setOnClickListener {
-            //TODO 请求商品SKU信息,设置给窗口
-            val popupWindow = GoodsSpecPopupWindow(activity, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            popupWindow.show()
-        }
+        helper.getView<View>(R.id.textView4).setOnClickListener(this)
 
         //分享
-        helper.getView<View>(R.id.textView5).setOnClickListener {
-            val dialog = DialogPlus.newDialog(mContext)
-                    .setContentHolder(ViewHolder(CenterShareView(mContext)))
-                    .setGravity(Gravity.CENTER)
-                    .create()
-            dialog.show()
-        }
+        helper.getView<View>(R.id.textView5).setOnClickListener(this)
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
         recyclerView.setHasFixedSize(true)
@@ -71,5 +74,23 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
             })
         }
 
+    }
+
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.textView4 -> {
+                //TODO 请求商品SKU信息,设置给窗口
+                val popupWindow = GoodsSpecPopupWindow(activity, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                popupWindow.show()
+            }
+            R.id.textView5 -> {
+                val dialog = DialogPlus.newDialog(mContext)
+                        .setContentHolder(ViewHolder(CenterShareView(mContext)))
+                        .setGravity(Gravity.CENTER)
+                        .create()
+                dialog.show()
+            }
+        }
     }
 }

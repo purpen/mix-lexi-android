@@ -515,4 +515,19 @@ public class ClientParamsAPI {
         params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
         return params;
     }
+
+    /**
+     * 获取消息列表
+     * @param page
+     * @param userId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getMessageParams(int page, @NotNull String userId) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("user_id", userId);
+        params.put("page", String.valueOf(page));
+        params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
+        return params;
+    }
 }

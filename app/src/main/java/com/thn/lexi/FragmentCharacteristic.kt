@@ -1,9 +1,11 @@
 package com.thn.lexi
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.thn.lexi.goods.*
 import com.thn.lexi.goods.detail.GoodsDetailActivity
 import kotlinx.android.synthetic.main.fragment_charactoristic.*
@@ -38,6 +40,18 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
 
 
     override fun installListener() {
+        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+            ToastUtil.showInfo("$position")
+        }
+
+        adapter.setCustomItemClickListener(object :GoodsAdapter.OnCustomItemClickListener{
+            override fun onItemClick(id: Int, adapterPosition: Int?) {
+                ToastUtil.showInfo("$adapterPosition")
+//                presenter.favoriteGoods()
+            }
+        })
+
+
         adapter.setOnItemClickListener { adapter, view, position ->
             val item =  adapter.getItem(position) as GoodsData.DataBean.ProductsBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
