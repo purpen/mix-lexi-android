@@ -45,4 +45,9 @@ object URL {
      */
     const val FAVORITE_GOODS_URL = "${BASE_URL}userlike"
 
+    /**
+     *
+     */
+    const val SKU_LIST = "${BASE_URL}products/skus"
+
 }

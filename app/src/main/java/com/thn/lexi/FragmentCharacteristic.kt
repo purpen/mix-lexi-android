@@ -2,12 +2,17 @@ package com.thn.lexi
 
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Gravity
+import android.widget.LinearLayout
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.orhanobut.dialogplus.DialogPlus
+import com.orhanobut.dialogplus.ViewHolder
 import com.thn.lexi.goods.*
 import com.thn.lexi.goods.detail.GoodsDetailActivity
+import com.thn.lexi.view.CenterShareView
 import kotlinx.android.synthetic.main.fragment_charactoristic.*
 
 class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
@@ -42,11 +47,29 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
     override fun installListener() {
         adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-            if (item.isFavorite) {
-                presenter.unfavoriteGoods(item.rid, position)
-            } else {
-                presenter.favoriteGoods(item.rid, position)
+            when(view.id){
+
+                R.id.textView3 ->{
+                    if (item.isFavorite) {
+                        presenter.unfavoriteGoods(item.rid, position)
+                    } else {
+                        presenter.favoriteGoods(item.rid, position)
+                    }
+                }
+
+                R.id.textView4 -> {
+                    val popupWindow = GoodsSpecPopupWindow(activity,item,R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    popupWindow.show()
+                }
+                R.id.textView5 -> {
+                    val dialog = DialogPlus.newDialog(context)
+                            .setContentHolder(ViewHolder(CenterShareView(context)))
+                            .setGravity(Gravity.CENTER)
+                            .create()
+                    dialog.show()
+                }
             }
+
         }
 
 

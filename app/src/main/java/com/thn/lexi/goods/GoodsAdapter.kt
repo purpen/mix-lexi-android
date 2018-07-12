@@ -2,11 +2,9 @@ package com.thn.lexi.goods
 
 import android.graphics.Rect
 import android.support.annotation.LayoutRes
-import android.support.annotation.Nullable
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -14,12 +12,8 @@ import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
-import com.orhanobut.dialogplus.DialogPlus
-import com.orhanobut.dialogplus.ViewHolder
-import com.thn.lexi.view.CenterShareView
 
-
-class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.ProductsBean, BaseViewHolder>(res), View.OnClickListener {
+class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.ProductsBean, BaseViewHolder>(res){
 
     private var activity: FragmentActivity? = null
 
@@ -36,13 +30,14 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
         imageView.layoutParams = params
         GlideUtil.loadImageWithFading(item.cover, imageView)
 
+        //喜欢
         helper.addOnClickListener(R.id.textView3)
 
         //购买
-        helper.getView<View>(R.id.textView4).setOnClickListener(this)
+        helper.addOnClickListener(R.id.textView4)
 
         //分享
-        helper.getView<View>(R.id.textView5).setOnClickListener(this)
+        helper.addOnClickListener(R.id.textView5)
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
         recyclerView.setHasFixedSize(true)
@@ -66,23 +61,5 @@ class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.Pr
             })
         }
 
-    }
-
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.textView4 -> {
-                //TODO 请求商品SKU信息,设置给窗口
-                val popupWindow = GoodsSpecPopupWindow(activity, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                popupWindow.show()
-            }
-            R.id.textView5 -> {
-                val dialog = DialogPlus.newDialog(mContext)
-                        .setContentHolder(ViewHolder(CenterShareView(mContext)))
-                        .setGravity(Gravity.CENTER)
-                        .create()
-                dialog.show()
-            }
-        }
     }
 }
