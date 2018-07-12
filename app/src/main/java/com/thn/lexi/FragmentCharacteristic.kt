@@ -1,7 +1,7 @@
 package com.thn.lexi
+
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
@@ -24,14 +24,14 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
 
     override fun initView() {
         presenter = CharacteristicPresenter(this)
-        adapter = GoodsAdapter(R.layout.adapter_goods_layout,activity)
+        adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(activity)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(),LinearLayoutManager.VERTICAL,resources.getDimensionPixelSize(R.dimen.dp10),resources.getColor(R.color.color_d1d1d1)))
+        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.VERTICAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(R.color.color_d1d1d1)))
     }
 
     override fun setPresenter(presenter: CharacteristicContract.Presenter?) {
@@ -41,21 +41,19 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
 
     override fun installListener() {
         adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-            ToastUtil.showInfo("$position")
-        }
-
-        adapter.setCustomItemClickListener(object :GoodsAdapter.OnCustomItemClickListener{
-            override fun onItemClick(id: Int, adapterPosition: Int?) {
-                ToastUtil.showInfo("$adapterPosition")
-//                presenter.favoriteGoods()
+            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
+            if (item.isFavorite) {
+                presenter.unfavoriteGoods(item.rid, position)
+            } else {
+                presenter.favoriteGoods(item.rid, position)
             }
-        })
+        }
 
 
         adapter.setOnItemClickListener { adapter, view, position ->
-            val item =  adapter.getItem(position) as GoodsData.DataBean.ProductsBean
+            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item.rid)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
             startActivity(intent)
         }
 
@@ -65,8 +63,17 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData("",page)
-        },recyclerView)
+            presenter.loadMoreData("", page)
+        }, recyclerView)
+    }
+
+    /**
+     * 设置喜欢状态
+     */
+    override fun setFavorite(b: Boolean, position: Int) {
+        val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
+        item.isFavorite = b
+        adapter.notifyDataSetChanged()
     }
 
     override fun loadData() {

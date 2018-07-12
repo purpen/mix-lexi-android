@@ -38,6 +38,11 @@ object URL {
     /**
      * 相似商品
      */
-    const val SIMILAR_GOODS_URL ="${BASE_URL}products/sticked"
+    const val SIMILAR_GOODS_URL = "${BASE_URL}products/sticked"
+
+    /**
+     * 喜欢商品
+     */
+    const val FAVORITE_GOODS_URL = "${BASE_URL}userlike"
 
 }

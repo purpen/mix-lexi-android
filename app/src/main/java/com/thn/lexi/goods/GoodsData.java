@@ -61,6 +61,7 @@ public class GoodsData implements Parcelable {
             public double s_width;
             public double sale_price;
             public boolean sticked;
+            public boolean isFavorite;
 
             @Override
             public int describeContents() {

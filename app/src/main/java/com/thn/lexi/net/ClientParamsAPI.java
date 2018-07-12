@@ -530,4 +530,16 @@ public class ClientParamsAPI {
         params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
         return params;
     }
+
+    /**
+     * 喜欢某商品
+     * @param rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getFavoriteGoodsParams(@NotNull String rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid", rid);
+        return params;
+    }
 }

@@ -20,14 +20,6 @@ import com.thn.lexi.view.CenterShareView
 
 
 class GoodsAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.ProductsBean, BaseViewHolder>(res), View.OnClickListener {
-    private var listener:OnCustomItemClickListener?=null
-    public interface OnCustomItemClickListener{
-        fun onItemClick(id: Int, adapterPosition: Int?)
-    }
-
-    fun  setCustomItemClickListener(@Nullable listener: OnCustomItemClickListener){
-        this.listener = listener
-    }
 
     private var activity: FragmentActivity? = null
 
