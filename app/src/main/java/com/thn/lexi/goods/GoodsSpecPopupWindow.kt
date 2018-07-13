@@ -1,6 +1,4 @@
 package com.thn.lexi.goods
-
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentActivity
