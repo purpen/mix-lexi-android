@@ -1,10 +1,7 @@
 package com.thn.lexi.user.login
 
 import android.util.Base64
-import com.basemodule.tools.Constants
-import com.basemodule.tools.JsonUtil
-import com.basemodule.tools.LogUtil
-import com.basemodule.tools.SPUtil
+import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
@@ -113,5 +110,9 @@ class LoginPresenter : com.thn.lexi.user.login.LoginContract.Presenter {
         var str = "$phone:$password"
         str = "Basic  " + Base64.encodeToString(str.toByteArray(), Base64.DEFAULT)
         return str.trim()
+    }
+
+    fun getCheckCode(phone: String) {
+        ToastUtil.showInfo("发送验证码")
     }
 }

@@ -67,7 +67,7 @@
         />
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_above="@+id/button3"
+        android:layout_above="@+id/button1"
         android:layout_width="@dimen/dp250"
         android:layout_height="@dimen/dp45"
         android:layout_marginTop="@dimen/dp20"
@@ -89,7 +89,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"

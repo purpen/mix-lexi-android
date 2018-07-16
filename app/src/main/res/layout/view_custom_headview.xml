@@ -148,5 +148,6 @@
         android:layout_height="0.5dp"
         android:layout_alignParentBottom="true"
         android:background="@color/color_eee"
+        android:visibility="gone"
         />
 </RelativeLayout>
