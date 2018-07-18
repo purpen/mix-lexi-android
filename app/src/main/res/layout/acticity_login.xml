@@ -242,7 +242,7 @@
                 android:layout_height="@dimen/dp44"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp30"
-                android:background="@drawable/bg_color6ed7af_radius4"
+                android:background="@drawable/bg_color5fe4b1_radius4"
                 android:text="@string/title_login"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp16" />

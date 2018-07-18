@@ -126,7 +126,7 @@
             android:layout_below="@+id/relativeLayout1"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp50"
-            android:background="@drawable/bg_color6ed7af_radius4"
+            android:background="@drawable/bg_color5fe4b1_radius4"
             android:text="@string/text_register"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp16" />

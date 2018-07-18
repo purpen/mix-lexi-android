@@ -5,7 +5,7 @@
     android:layout_width="@dimen/dp70"
     android:layout_height="@dimen/dp30"
     android:gravity="center"
-    android:background="@drawable/corner_border6ed7af_radius4"
+    android:background="@drawable/corner_border5fe4b1_radius4"
     android:textColor="@color/color_6ed7af"
     android:layout_marginRight="@dimen/dp10"
     android:textSize="12sp"

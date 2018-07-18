@@ -82,7 +82,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp15"
-            android:background="@drawable/bg_color6ed7af_radius2"
+            android:background="@drawable/bg_color5fe4b1_radius2"
             android:text="@string/text_settings"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp12" />

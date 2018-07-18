@@ -10,7 +10,7 @@ import com.thn.lexi.R
 import kotlinx.android.synthetic.main.acticity_register.*
 
 /**
- * 注册
+ * 忘记密码
  */
 class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPasswordContract.View {
 
@@ -22,7 +22,6 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
 
     override fun initView() {
         presenter = ForgetPasswordPresenter(this)
-        customHeadView.setHeadCenterTxtShow(true, getString(R.string.title_forget_password))
     }
 
     override fun installListener() {
