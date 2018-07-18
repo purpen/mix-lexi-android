@@ -95,7 +95,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
                     showPassword = true
                     etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance();
                 }
-
             }
 
             R.id.textViewJump -> startActivity(Intent(applicationContext, RegisterActivity::class.java))

@@ -8,31 +8,40 @@ import java.io.IOException
 
 open class ForgetPasswordModel {
 
-    /**
-     * 通过手机号换密码
-     */
-    fun updateNewPassword(phone: String,checkCode:String,password: String,callback: IDataSource.HttpRequestCallBack) {
-
-        val params = ClientParamsAPI.getUpdateNewPasswordParams(phone,checkCode,password)
-
+    //发送验证码
+    fun sendCheckCode(phone: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getCheckCodeRequestParams(phone)
         HttpRequest.sendRequest(HttpRequest.POST,URL.REGISTER_URL,params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                callback.onStart()
+                httpRequestCallBack.onStart()
             }
 
             override fun onSuccess(json: String) {
-                callback.onSuccess(json)
+                httpRequestCallBack.onSuccess(json)
             }
 
             override fun onFailure(e: IOException) {
-                callback.onFailure(e)
+                httpRequestCallBack.onFailure(e)
             }
         })
     }
 
-    //发送验证码
-    fun sendCheckCode() {
 
+    fun verifyCheckCode(phone: String, checkCode: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.verifyCheckCodeParams(phone,checkCode)
+        HttpRequest.sendRequest(HttpRequest.POST,URL.REGISTER_URL,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
     }
 
 }

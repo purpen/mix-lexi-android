@@ -7,7 +7,7 @@ import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.MainActivity
 import com.thn.lexi.R
-import kotlinx.android.synthetic.main.acticity_register.*
+import kotlinx.android.synthetic.main.acticity_forget_password.*
 
 /**
  * 忘记密码
@@ -37,8 +37,12 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
     override fun onClick(v: View?) {
         val id = v?.id
         when (id) {
-            R.id.button -> presenter.updateNewPassword(editText0.text.toString(),editText2.text.toString(),editText1.text.toString())
-            R.id.textViewGetCode -> presenter.sendCheckCode()
+            R.id.button -> {
+                presenter.verifyCheckCode(etPhone.text.toString(),etCheckCode.text.toString())
+                //TODO 验证动态码正确，跳转设置新密码
+                startActivity(Intent(this,SetNewPasswordActivity::class.java))
+            }
+            R.id.textViewGetCode -> presenter.sendCheckCode(etPhone.text.toString())
 
         }
     }
@@ -56,8 +60,7 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
     }
 
     override fun goPage() {
-        startActivity(Intent(this,MainActivity::class.java))
-        finish()
+
     }
 
     override fun showInfo(string: String) {

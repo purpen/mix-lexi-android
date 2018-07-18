@@ -29,6 +29,7 @@
         <activity android:name=".user.password.ForgetPasswordActivity"/>
         <activity android:name=".user.setting.SettingActivity"/>
         <activity android:name=".MainActivity" />
+        <activity android:name=".user.password.SetNewPasswordActivity" />
     </application>
 
 </manifest>

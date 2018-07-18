@@ -1,6 +1,4 @@
 package com.thn.lexi.user.password
-
-import android.text.TextUtils
 import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -14,27 +12,10 @@ class ForgetPasswordPresenter(view: ForgetPasswordContract.View) : ForgetPasswor
     private val dataSource: ForgetPasswordModel by lazy { ForgetPasswordModel() }
 
     /**
-     * 通过手机号更换新密码
+     * 发送验证码
      */
-    override fun updateNewPassword(phone: String, checkCode: String, password: String) {
-
-        if (TextUtils.isEmpty(phone.trim())) {
-            view.showInfo(AppApplication.getContext().getString(R.string.text_phone_null))
-            return
-        }
-
-        if (TextUtils.isEmpty(checkCode.trim())) {
-            view.showInfo(AppApplication.getContext().getString(R.string.text_check_code))
-            return
-        }
-
-        if (TextUtils.isEmpty(password.trim())) {
-            view.showInfo(AppApplication.getContext().getString(R.string.tex_hint_new_password))
-            return
-        }
-
-
-        dataSource.updateNewPassword(phone, checkCode, password, object : IDataSource.HttpRequestCallBack {
+    fun sendCheckCode(phone: String) {
+        dataSource.sendCheckCode(phone,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -57,8 +38,32 @@ class ForgetPasswordPresenter(view: ForgetPasswordContract.View) : ForgetPasswor
     }
 
 
-    fun sendCheckCode() {
-        dataSource.sendCheckCode()
+    /**
+     * 验证动态码
+     */
+    fun verifyCheckCode(phone: String, checkCode: String) {
+        dataSource.verifyCheckCode(phone,checkCode,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+
+                //TODO 验证码Bean
+                LogUtil.e(json)
+                view.dismissLoadingView()
+                val forgetPasswordBean = JsonUtil.fromJson(json, ForgetPasswordBean::class.java)
+                if (forgetPasswordBean.success) {
+                    view.goPage()
+                } else {
+                    view.showInfo(forgetPasswordBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
     }
 
 }

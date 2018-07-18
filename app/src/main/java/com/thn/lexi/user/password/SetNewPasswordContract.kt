@@ -3,7 +3,7 @@ package com.thn.lexi.user.password
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 
-class ForgetPasswordContract {
+class SetNewPasswordContract {
     interface View : BaseView<Presenter>{
         fun showLoadingView()
         fun showError(s: String)
@@ -12,6 +12,6 @@ class ForgetPasswordContract {
         fun showInfo(string: String)
     }
     interface Presenter : BasePresenter {
-
+        fun updateNewPassword(password: String)
     }
 }

@@ -482,17 +482,13 @@ public class ClientParamsAPI {
     }
 
     /**
-     * 通过手机号换密码
-     * @param phone
-     * @param checkCode
+     * 找回密码
      * @param password
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getUpdateNewPasswordParams(@NotNull String phone, @NotNull String checkCode, @NotNull String password) {
+    public static HashMap<String, String> getUpdateNewPasswordParams(@NotNull String password) {
         HashMap<String, String> params = generateCommonParams();
-        params.put("phone", phone);
-        params.put("checkCode", checkCode);
         params.put("password", password);
         return params;
     }
@@ -540,6 +536,20 @@ public class ClientParamsAPI {
     public static HashMap<String,String> getFavoriteGoodsParams(@NotNull String rid) {
         HashMap<String, String> params = generateCommonParams();
         params.put("rid", rid);
+        return params;
+    }
+
+    /**
+     * 验证动态码
+     * @param phone
+     * @param checkCode
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> verifyCheckCodeParams(@NotNull String phone, @NotNull String checkCode) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("phone", phone);
+        params.put("checkCode", checkCode);
         return params;
     }
 }
