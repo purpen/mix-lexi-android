@@ -183,7 +183,7 @@
                 android:id="@+id/textViewService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="<<服务条款>>"
+                android:text="@string/text_service_items"
                 android:textColor="@color/color_2a2a2a"
                 android:textSize="@dimen/sp12" />
 
@@ -198,7 +198,7 @@
                 android:id="@+id/textViewPrivate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="<<隐私条款>>"
+                android:text="@string/text_private_item"
                 android:textColor="@color/color_2a2a2a"
                 android:textSize="@dimen/sp12" />
         </LinearLayout>

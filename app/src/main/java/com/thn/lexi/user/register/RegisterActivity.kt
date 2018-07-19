@@ -11,11 +11,11 @@ import com.thn.lexi.user.login.LoginActivity
 import kotlinx.android.synthetic.main.acticity_register.*
 
 /**
- * 注册presenter.registerUser(editText0.text.toString(),editText1.text.toString(),editText2.text.toString())
+ * 注册
  */
 class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.View {
 
-    private val dialog:WaitingDialog? by lazy { WaitingDialog(this) }
+    private val dialog: WaitingDialog? by lazy { WaitingDialog(this) }
 
     private lateinit var presenter: RegisterPresenter
 
@@ -23,10 +23,11 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
 
     override fun initView() {
         presenter = RegisterPresenter(this)
-        customHeadView.setHeadCenterTxtShow(true, getString(R.string.title_register))
+        customHeadView.setRightTxt(getString(R.string.text_skip), R.color.color_666)
     }
 
     override fun installListener() {
+        customHeadView.headRightTV.setOnClickListener(this)
         button.setOnClickListener(this)
         textViewGetCode.setOnClickListener(this)
         textViewService.setOnClickListener(this)
@@ -36,17 +37,27 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
 
 
     override fun setPresenter(presenter: RegisterContract.Presenter?) {
-       setPresenter(presenter)
+        setPresenter(presenter)
     }
 
     override fun onClick(v: View?) {
         val id = v?.id
         when (id) {
-            R.id.button -> presenter.verifyCheckCode(etPhone.text.toString(),etCheckCode.text.toString())
+            R.id.tv_head_right -> {
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+                finish()
+            }
+            R.id.button -> {
+                presenter.verifyCheckCode(etPhone.text.toString(), etCheckCode.text.toString())
+                //TODO 验证通过则跳转设置密码界面
+                val intent = Intent(this, SetPasswordActivity::class.java)
+                intent.putExtra(RegisterActivity::class.java.simpleName, etPhone.text.toString())
+                startActivity(intent)
+            }
             R.id.textViewGetCode -> presenter.sendCheckCode(etPhone.text.toString())
             R.id.textViewService -> ToastUtil.showInfo("服务条款")
             R.id.textViewPrivate -> ToastUtil.showInfo("隐私条款")
-            R.id.textViewJump -> startActivity(Intent(this,LoginActivity::class.java))
+            R.id.textViewJump -> startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 
@@ -63,7 +74,7 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
     }
 
     override fun goPage() {
-        startActivity(Intent(this,MainActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

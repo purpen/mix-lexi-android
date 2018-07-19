@@ -80,4 +80,6 @@
     <string name="text_usual_use">常用</string>
     <string name="text_register_set_password">下一步设置密码</string>
     <string name="text_click_login">点击登录</string>
+    <string name="text_service_items"><![CDATA[<<服务条款>>]]></string>
+    <string name="text_private_item"><![CDATA[<<隐私条款>>]]></string>
 </resources>

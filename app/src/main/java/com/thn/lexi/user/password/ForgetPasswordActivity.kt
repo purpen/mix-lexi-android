@@ -56,7 +56,7 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 Constants.REQUEST_AREA_CODE ->{
-                    var item = data?.getParcelableExtra(SelectCountryOrAreaActivity::class.java.simpleName) as CountryAreaCodeBean.DataBean.AreaCodesBean
+                    val item = data?.getParcelableExtra(SelectCountryOrAreaActivity::class.java.simpleName) as CountryAreaCodeBean.DataBean.AreaCodesBean
                     textViewCountryCode.text = item.areacode
                 }
 

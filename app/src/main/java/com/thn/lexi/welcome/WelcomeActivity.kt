@@ -27,7 +27,10 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.textViewSkip -> startActivity(Intent(this, MainActivity::class.java))
+            R.id.textViewSkip -> {
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+                finish()
+            }
             R.id.button0 -> startActivity(Intent(this, RegisterActivity::class.java))
             R.id.button1 -> startActivity(Intent(this, LoginActivity::class.java))
             R.id.linearLayout -> ToastUtil.showInfo("微信登录")

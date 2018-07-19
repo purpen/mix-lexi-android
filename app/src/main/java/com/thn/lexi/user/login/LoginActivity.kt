@@ -66,7 +66,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
     override fun onClick(v: View?) {
         val id = v?.id
         when (id) {
-            R.id.tv_head_right -> startActivity(Intent(applicationContext, MainActivity::class.java))
+            R.id.tv_head_right -> {
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+                finish()
+            }
 
             R.id.textViewPasswordLogin ->{
                 relativeLayoutCheckCodeBox.visibility = View.GONE
