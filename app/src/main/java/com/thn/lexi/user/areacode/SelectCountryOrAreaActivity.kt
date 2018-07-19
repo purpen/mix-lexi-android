@@ -1,20 +1,17 @@
 package com.thn.lexi.user.areacode
 
-import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
-import com.thn.lexi.Constants
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import kotlinx.android.synthetic.main.acticity_select_country_area.*
 import kotlinx.android.synthetic.main.view_custom_headview.view.*
 
-class SelectCountryOrAreaActivity : BaseActivity(),SelectCountryAreaContract.View {
+class SelectCountryOrAreaActivity : BaseActivity(), SelectCountryAreaContract.View {
     private val dialog: WaitingDialog? by lazy { WaitingDialog(this) }
     private var page: Int = 1
     private lateinit var adapter: AreaCodeAdapter
@@ -53,14 +50,14 @@ class SelectCountryOrAreaActivity : BaseActivity(),SelectCountryAreaContract.Vie
         adapter.setOnItemClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as CountryAreaCodeBean.DataBean.AreaCodesBean
             val intent = Intent()
-            intent.putExtra(SelectCountryOrAreaActivity::class.java.simpleName,item)
-            setResult(RESULT_OK,intent)
+            intent.putExtra(SelectCountryOrAreaActivity::class.java.simpleName, item)
+            setResult(RESULT_OK, intent)
             finish()
         }
     }
 
     override fun requestNet() {
-        page=1
+        page = 1
         presenter.loadData(page)
     }
 
