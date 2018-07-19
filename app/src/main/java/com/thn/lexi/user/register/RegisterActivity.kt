@@ -7,10 +7,11 @@ import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.MainActivity
 import com.thn.lexi.R
+import com.thn.lexi.user.login.LoginActivity
 import kotlinx.android.synthetic.main.acticity_register.*
 
 /**
- * 注册
+ * 注册presenter.registerUser(editText0.text.toString(),editText1.text.toString(),editText2.text.toString())
  */
 class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.View {
 
@@ -28,6 +29,9 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
     override fun installListener() {
         button.setOnClickListener(this)
         textViewGetCode.setOnClickListener(this)
+        textViewService.setOnClickListener(this)
+        textViewPrivate.setOnClickListener(this)
+        textViewJump.setOnClickListener(this)
     }
 
 
@@ -38,9 +42,11 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
     override fun onClick(v: View?) {
         val id = v?.id
         when (id) {
-            R.id.button -> presenter.registerUser(editText0.text.toString(),editText1.text.toString(),editText2.text.toString())
-            R.id.textViewGetCode -> presenter.sendCheckCode()
-
+            R.id.button -> presenter.verifyCheckCode(etPhone.text.toString(),etCheckCode.text.toString())
+            R.id.textViewGetCode -> presenter.sendCheckCode(etPhone.text.toString())
+            R.id.textViewService -> ToastUtil.showInfo("服务条款")
+            R.id.textViewPrivate -> ToastUtil.showInfo("隐私条款")
+            R.id.textViewJump -> startActivity(Intent(this,LoginActivity::class.java))
         }
     }
 

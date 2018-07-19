@@ -20,7 +20,7 @@
     <string name="text_login_sina">微博</string>
     <string name="text_login_qq">QQ</string>
     <string name="text_register">注册</string>
-    <string name="text_check_code">请输入验证码</string>
+    <string name="text_check_code">请输入动态码</string>
     <string name="title_register">注册</string>
     <string name="text_get_check_code">获取动态码</string>
     <string name="text_net_error">网络异常</string>
@@ -78,4 +78,6 @@
     <string name="text_password_require">8-16位字母和数字组合</string>
     <string name="title_select_country_area">选择国家和地区</string>
     <string name="text_usual_use">常用</string>
+    <string name="text_register_set_password">下一步设置密码</string>
+    <string name="text_click_login">点击登录</string>
 </resources>

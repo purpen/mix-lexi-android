@@ -1,10 +1,7 @@
 package com.thn.lexi.user.register
 
 import android.text.TextUtils
-import com.basemodule.tools.Constants
-import com.basemodule.tools.JsonUtil
-import com.basemodule.tools.LogUtil
-import com.basemodule.tools.SPUtil
+import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
@@ -79,8 +76,57 @@ class RegisterPresenter(view: RegisterContract.View) : RegisterContract.Presente
     }
 
 
-    fun sendCheckCode() {
-        dataSource.sendCheckCode()
+    /**
+     * 发送验证码
+     */
+    fun sendCheckCode(phone: String) {
+        dataSource.sendCheckCode(phone,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                LogUtil.e(json)
+                view.dismissLoadingView()
+                val forgetPasswordBean = JsonUtil.fromJson(json, ForgetPasswordBean::class.java)
+                if (forgetPasswordBean.success) {
+                    ToastUtil.showSuccess(forgetPasswordBean.status.message)
+                } else {
+                    view.showInfo(forgetPasswordBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 验证动态码
+     */
+    fun verifyCheckCode(phone: String, checkCode: String) {
+        dataSource.verifyCheckCode(phone,checkCode,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                //TODO 验证码Bean
+                LogUtil.e(json)
+                view.dismissLoadingView()
+                val forgetPasswordBean = JsonUtil.fromJson(json, ForgetPasswordBean::class.java)
+                if (forgetPasswordBean.success) {
+                    view.goPage()
+                } else {
+                    view.showInfo(forgetPasswordBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
     }
 
 }
