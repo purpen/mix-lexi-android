@@ -7,8 +7,11 @@ import android.view.View
 import com.basemodule.ui.BaseActivity
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
+import com.thn.lexi.Constants
 import com.thn.lexi.MainActivity
 import com.thn.lexi.R
+import com.thn.lexi.user.areacode.CountryAreaCodeBean
+import com.thn.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.thn.lexi.user.password.ForgetPasswordActivity
 import com.thn.lexi.user.register.RegisterActivity
 import kotlinx.android.synthetic.main.acticity_login.*
@@ -80,7 +83,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
             }
 
             R.id.textViewCountryCode ->{
-                ToastUtil.showInfo("显示国家代码")
+                startActivityForResult(Intent(applicationContext, SelectCountryOrAreaActivity::class.java), Constants.REQUEST_AREA_CODE)
             }
 
             R.id.textViewGetCode->{
@@ -110,6 +113,20 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
 //            R.id.linearLayoutSina -> presenter.sinaLogin()
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                Constants.REQUEST_AREA_CODE ->{
+                    var item = data?.getParcelableExtra(SelectCountryOrAreaActivity::class.java.simpleName) as CountryAreaCodeBean.DataBean.AreaCodesBean
+                    textViewCountryCode.text = item.areacode
+                }
+
+            }
+        }
+    }
+
 
     override fun showLoadingView() {
         dialog?.show()

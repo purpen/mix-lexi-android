@@ -552,4 +552,20 @@ public class ClientParamsAPI {
         params.put("checkCode", checkCode);
         return params;
     }
+
+
+    /**
+     * 获取手机号地区编码
+     * @param page
+     * @param status
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getAreaCodes(int page, @NotNull String status) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
+        params.put("status", status);
+        return params;
+    }
 }

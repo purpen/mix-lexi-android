@@ -46,8 +46,13 @@ object URL {
     const val FAVORITE_GOODS_URL = "${BASE_URL}userlike"
 
     /**
-     *
+     *商品SKU
      */
     const val SKU_LIST = "${BASE_URL}products/skus"
+
+    /**
+     * 手机号地区编码
+     */
+    const val AREA_CODE_URL = "${BASE_URL}auth/area_code"
 
 }

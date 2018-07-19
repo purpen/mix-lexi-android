@@ -59,7 +59,7 @@
         android:ellipsize="end"
         android:maxLines = "1"
         android:textColor="@color/color_333"
-        android:textSize="19sp"
+        android:textSize="18sp"
         android:visibility="gone" />
 
     <ImageView

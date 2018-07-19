@@ -9,9 +9,9 @@ import com.thn.lexi.user.register.TokenBean
 import java.io.IOException
 import java.util.HashMap
 
-class LoginPresenter : com.thn.lexi.user.login.LoginContract.Presenter {
+class LoginPresenter : LoginContract.Presenter {
 
-    private var view: com.thn.lexi.user.login.LoginContract.View
+    private var view: LoginContract.View
     private val dataSource: LoginModel by lazy { LoginModel() }
 
     constructor(view: LoginContract.View){

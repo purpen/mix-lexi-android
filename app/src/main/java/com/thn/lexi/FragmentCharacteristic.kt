@@ -81,6 +81,7 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
         }
 
         swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
             loadData()
         }
@@ -133,9 +134,9 @@ class FragmentCharacteristic : BaseFragment(), CharacteristicContract.View {
     }
 
     override fun showError(string: String) {
+        adapter.isLoading
         swipeRefreshLayout.isRefreshing = false
         adapter.loadMoreFail()
-        ToastUtil.showError(string)
     }
 
     override fun goPage() {

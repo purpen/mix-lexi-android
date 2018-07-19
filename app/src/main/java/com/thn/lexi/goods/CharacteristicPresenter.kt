@@ -48,7 +48,7 @@ class CharacteristicPresenter(view: CharacteristicContract.View) : Characteristi
                     }else{
                         view.loadMoreComplete()
                     }
-                    view.addData(goodsData.data.products)
+                    view.addData(products)
                 } else {
                     view.showError(goodsData.status.message)
                 }
