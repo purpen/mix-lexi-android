@@ -4,17 +4,22 @@ import android.content.Intent
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.thn.lexi.Constants
 import com.thn.lexi.MainActivity
+import com.thn.lexi.MessageClose
 import com.thn.lexi.R
 import com.thn.lexi.user.areacode.CountryAreaCodeBean
 import com.thn.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.thn.lexi.user.password.ForgetPasswordActivity
 import com.thn.lexi.user.register.RegisterActivity
 import kotlinx.android.synthetic.main.acticity_login.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * 登录
@@ -30,6 +35,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
     override val layout: Int = R.layout.acticity_login
 
     override fun initView() {
+        EventBus.getDefault().register(this)
         this.presenter = LoginPresenter(this)
         customHeadView.setRightTxt(getString(R.string.text_skip),R.color.color_666)
     }
@@ -68,6 +74,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
         when (id) {
             R.id.tv_head_right -> {
                 startActivity(Intent(applicationContext, MainActivity::class.java))
+                EventBus.getDefault().post(MessageClose())
                 finish()
             }
 
@@ -151,4 +158,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
         ToastUtil.showInfo(message)
     }
 
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageClose) {
+        LogUtil.e("LoginActivity be closed")
+        finish()
+    }
 }

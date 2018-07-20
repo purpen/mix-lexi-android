@@ -2,19 +2,15 @@ package com.thn.lexi;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Environment;
 //import com.qiniu.android.storage.UploadManager;
 //import com.squareup.leakcanary.LeakCanary;
-//import com.thn.basemodule.tools.BaseModuleContext;
 //import com.thn.erp.common.constant.THNZone;
 //import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
-
 import com.basemodule.tools.BaseModuleContext;
+import com.example.myapp.MyEventBusIndex;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.io.File;
 
 public class AppApplication extends Application {
     private static Application instance;
@@ -41,7 +37,8 @@ public class AppApplication extends Application {
 //        }
 
         BaseModuleContext.init(this);
-//        EventBus.builder().addIndex(new MyEventBusIndex()).throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
+        //使用时才自动生成MyEventBusIndex
+        EventBus.builder().addIndex(new MyEventBusIndex()).throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
 //        initQiNiu();
 //        ZXingLibrary.initDisplayOpinion(this);
     }

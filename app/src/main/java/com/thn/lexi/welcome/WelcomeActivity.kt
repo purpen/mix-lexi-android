@@ -9,12 +9,19 @@ import com.thn.lexi.R
 import com.thn.lexi.user.login.LoginActivity
 import com.thn.lexi.user.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
+import org.greenrobot.eventbus.EventBus
+import com.basemodule.tools.LogUtil
+import com.thn.lexi.MessageClose
+import org.greenrobot.eventbus.ThreadMode
+import org.greenrobot.eventbus.Subscribe
+
+
 
 class WelcomeActivity : BaseActivity(), View.OnClickListener {
     override val layout: Int = R.layout.activity_welcome
 
     override fun initView() {
-
+        EventBus.getDefault().register(this)
     }
 
     override fun installListener() {
@@ -35,5 +42,17 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener {
             R.id.button1 -> startActivity(Intent(this, LoginActivity::class.java))
             R.id.linearLayout -> ToastUtil.showInfo("微信登录")
         }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageClose) {
+        LogUtil.e("WelcomeActivity be closed")
+        finish()
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy()
     }
 }

@@ -23,12 +23,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".user.login.LoginActivity" />
+        <activity android:name=".user.login.LoginActivity" android:launchMode="singleInstance"/>
         <activity android:name=".goods.detail.GoodsDetailActivity" />
-        <activity android:name=".user.register.RegisterActivity" />
+        <activity android:name=".user.register.RegisterActivity" android:launchMode="singleInstance"/>
         <activity android:name=".user.password.ForgetPasswordActivity"/>
         <activity android:name=".user.setting.SettingActivity"/>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" android:launchMode="singleInstance"/>
         <activity android:name=".user.password.SetNewPasswordActivity" />
         <activity android:name=".user.areacode.SelectCountryOrAreaActivity" />
         <activity android:name=".user.register.SetPasswordActivity" />

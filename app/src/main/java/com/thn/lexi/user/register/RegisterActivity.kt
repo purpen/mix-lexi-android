@@ -2,13 +2,18 @@ package com.thn.lexi.user.register
 
 import android.content.Intent
 import android.view.View
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.MainActivity
+import com.thn.lexi.MessageClose
 import com.thn.lexi.R
 import com.thn.lexi.user.login.LoginActivity
 import kotlinx.android.synthetic.main.acticity_register.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * 注册
@@ -22,6 +27,7 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
     override val layout: Int = R.layout.acticity_register
 
     override fun initView() {
+        EventBus.getDefault().register(this)
         presenter = RegisterPresenter(this)
         customHeadView.setRightTxt(getString(R.string.text_skip), R.color.color_666)
     }
@@ -45,6 +51,7 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
         when (id) {
             R.id.tv_head_right -> {
                 startActivity(Intent(applicationContext, MainActivity::class.java))
+                EventBus.getDefault().post(MessageClose())
                 finish()
             }
             R.id.button -> {
@@ -80,6 +87,18 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
 
     override fun showInfo(string: String) {
         ToastUtil.showInfo(string)
+    }
+
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageClose) {
+        LogUtil.e("RegisterActivity be closed")
+        finish()
     }
 
 }

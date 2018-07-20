@@ -10,7 +10,7 @@ import com.thn.basemodule.BuildConfig;
  *         created at 2016/3/24 14:58
  */
 public class LogUtil {
-    private static final String TAG = "ERP";
+    private static final String TAG = "LX";
     private static final boolean DEV_MODE = BuildConfig.LOG_DEBUG;
     private static final int LOG_MAXLENGTH  = 2000;
 
