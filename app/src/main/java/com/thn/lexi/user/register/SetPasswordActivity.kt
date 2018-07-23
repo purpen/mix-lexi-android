@@ -1,5 +1,6 @@
 package com.thn.lexi.user.register
 
+import android.content.Intent
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
@@ -7,6 +8,7 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.R
+import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import kotlinx.android.synthetic.main.activity_set_password.*
 
 class SetPasswordActivity : BaseActivity(), SetPasswordContract.View, View.OnClickListener {
@@ -42,20 +44,24 @@ class SetPasswordActivity : BaseActivity(), SetPasswordContract.View, View.OnCli
         when (v.id) {
             R.id.imageViewShow -> {
                 if (showPassword) {
+                    imageViewShow.setImageResource(R.mipmap.icon_hidden_password)
                     showPassword = false
-                    etPassword.transformationMethod = PasswordTransformationMethod.getInstance();
+                    etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
                 } else {
+                    imageViewShow.setImageResource(R.mipmap.icon_show_password)
                     showPassword = true
-                    etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance();
+                    etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 }
             }
             R.id.imageViewShow1 -> {
                 if (showPassword1) {
+                    imageViewShow1.setImageResource(R.mipmap.icon_hidden_password)
                     showPassword1 = false
-                    etPassword1.transformationMethod = PasswordTransformationMethod.getInstance();
+                    etPassword1.transformationMethod = PasswordTransformationMethod.getInstance()
                 } else {
+                    imageViewShow1.setImageResource(R.mipmap.icon_show_password)
                     showPassword1 = true
-                    etPassword1.transformationMethod = HideReturnsTransformationMethod.getInstance();
+                    etPassword1.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 }
             }
         //注册用户
@@ -77,7 +83,8 @@ class SetPasswordActivity : BaseActivity(), SetPasswordContract.View, View.OnCli
     }
 
     override fun goPage() {
-
+        //TODO 完善资料
+        startActivity(Intent(this, CompleteInfoActivity::class.java))
     }
 
     override fun showInfo(string: String) {

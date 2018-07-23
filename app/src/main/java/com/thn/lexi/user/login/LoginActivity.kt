@@ -102,9 +102,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
 
             R.id.imageViewShow->{
                 if(showPassword){
+                    imageViewShow.setImageResource(R.mipmap.icon_hidden_password)
                     showPassword = false
                     etPassword.transformationMethod = PasswordTransformationMethod.getInstance();
                 }else{
+                    imageViewShow.setImageResource(R.mipmap.icon_show_password)
                     showPassword = true
                     etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance();
                 }

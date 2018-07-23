@@ -32,6 +32,7 @@
         <activity android:name=".user.password.SetNewPasswordActivity" />
         <activity android:name=".user.areacode.SelectCountryOrAreaActivity" />
         <activity android:name=".user.register.SetPasswordActivity" />
+        <activity android:name=".user.completeinfo.CompleteInfoActivity" />
     </application>
 
 </manifest>

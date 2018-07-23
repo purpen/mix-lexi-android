@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/dp20"
+    android:paddingStart="@dimen/dp20">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp50"
+        android:text="@string/title_welcome_to"
+        android:textColor="@color/color_333"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutOval"
+        android:layout_width="@dimen/dp90"
+        android:layout_height="@dimen/dp90"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp40"
+        android:background="@drawable/bg_oval_user_header"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_default_register_header" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp20"
+        android:text="@string/text_add_header_pic_hint"
+        android:textColor="@color/color_666"
+        android:textSize="@dimen/sp14" />
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="@dimen/dp30"
+        android:background="@drawable/border_radius4_ddd"
+        android:gravity="start|center_vertical"
+        android:hint="@string/hint_input_user_name"
+        android:inputType="phone"
+        android:maxLength="30"
+        android:maxLines="1"
+        android:paddingEnd="@dimen/dp5"
+        android:paddingStart="@dimen/dp15"
+        android:textColor="@color/color_333"
+        android:textColorHint="@color/color_b2b2b2"
+        android:textSize="@dimen/sp18" />
+
+    <TextView
+        android:id="@+id/textViewBirth"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp45"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@drawable/border_radius4_ddd"
+        android:drawableEnd="@mipmap/icon_arrow_down"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/dp5"
+        android:paddingStart="@dimen/dp15"
+        android:text="@string/hint_input_birth"
+        android:textColor="@color/color_b2b2b2"
+        android:textSize="@dimen/sp18" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp30"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_title_gender"
+            android:layout_centerVertical="true"
+            />
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true"
+            >
+
+            <RadioButton
+                android:id="@+id/radioButton0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:paddingStart="@dimen/dp10"
+                android:button="@drawable/radio_button_style"
+                android:text="@string/text_gender_woman" />
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp25"
+                android:paddingStart="@dimen/dp10"
+                android:button="@drawable/radio_button_style"
+                android:text="@string/text_gender_man" />
+
+        </RadioGroup>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/button"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp40"
+        android:background="@drawable/bg_color5fe4b1_radius4"
+        android:text="@string/title_login"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp16" />
+
+</LinearLayout>

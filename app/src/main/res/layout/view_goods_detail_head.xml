@@ -164,7 +164,7 @@
         android:id="@+id/imageButton1"
         android:layout_width="@dimen/dp45"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:background="@drawable/bg_linear_gradient_back"
+        android:background="@drawable/bg_oval_back"
         android:src="@mipmap/icon_return_white"
         android:scaleType="centerInside"
         android:paddingEnd="@dimen/dp15"

@@ -82,4 +82,11 @@
     <string name="text_click_login">点击登录</string>
     <string name="text_service_items"><![CDATA[<<服务条款>>]]></string>
     <string name="text_private_item"><![CDATA[<<隐私条款>>]]></string>
+    <string name="title_welcome_to">欢迎来到乐喜</string>
+    <string name="text_add_header_pic_hint">有个真实头像，会增加辨识度哦！</string>
+    <string name="hint_input_user_name">输入用户名</string>
+    <string name="hint_input_birth">输入生日信息</string>
+    <string name="text_gender_woman">女</string>
+    <string name="text_gender_man">男</string>
+    <string name="text_title_gender">性别</string>
 </resources>

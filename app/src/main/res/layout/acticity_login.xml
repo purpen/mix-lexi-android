@@ -147,7 +147,7 @@
                         android:layout_centerVertical="true"
                         android:paddingEnd="@dimen/dp5"
                         android:paddingStart="@dimen/dp5"
-                        android:src="@mipmap/icon_show_password" />
+                        android:src="@mipmap/icon_hidden_password" />
 
                     <include
                         layout="@layout/line_color_eee"
