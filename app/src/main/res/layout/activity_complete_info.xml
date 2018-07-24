@@ -65,7 +65,7 @@
         android:background="@drawable/border_radius4_ddd"
         android:drawableEnd="@mipmap/icon_arrow_down"
         android:gravity="center_vertical"
-        android:paddingEnd="@dimen/dp5"
+        android:paddingEnd="@dimen/dp15"
         android:paddingStart="@dimen/dp15"
         android:text="@string/hint_input_birth"
         android:textColor="@color/color_b2b2b2"
@@ -118,7 +118,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp40"
         android:background="@drawable/bg_color5fe4b1_radius4"
-        android:text="@string/title_login"
+        android:text="@string/text_confirm"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp16" />
 

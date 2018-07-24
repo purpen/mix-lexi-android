@@ -2,7 +2,6 @@ package com.thn.lexi.welcome
 
 import android.content.Intent
 import android.view.View
-import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.MainActivity
 import com.thn.lexi.R
@@ -12,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 import org.greenrobot.eventbus.EventBus
 import com.basemodule.tools.LogUtil
 import com.thn.lexi.MessageClose
+import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.Subscribe
 
@@ -40,7 +40,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.button0 -> startActivity(Intent(this, RegisterActivity::class.java))
             R.id.button1 -> startActivity(Intent(this, LoginActivity::class.java))
-            R.id.linearLayout -> ToastUtil.showInfo("微信登录")
+            R.id.linearLayout -> startActivity(Intent(this, CompleteInfoActivity::class.java))
         }
     }
 

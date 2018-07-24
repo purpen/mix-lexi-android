@@ -14,6 +14,7 @@ import com.thn.lexi.MessageClose
 import com.thn.lexi.R
 import com.thn.lexi.user.areacode.CountryAreaCodeBean
 import com.thn.lexi.user.areacode.SelectCountryOrAreaActivity
+import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import com.thn.lexi.user.password.ForgetPasswordActivity
 import com.thn.lexi.user.register.RegisterActivity
 import kotlinx.android.synthetic.main.acticity_login.*
@@ -117,6 +118,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
             R.id.textViewForgetPassword -> startActivity(Intent(applicationContext, ForgetPasswordActivity::class.java))
 
             R.id.btnLogin -> presenter.loginUser(etPhone.text.toString(),etPassword.text.toString())
+
 
             R.id.linearLayoutWeChat -> presenter.wechatLogin()
 

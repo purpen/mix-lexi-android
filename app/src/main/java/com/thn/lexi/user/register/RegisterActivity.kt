@@ -1,7 +1,10 @@
 package com.thn.lexi.user.register
 
 import android.content.Intent
+import android.graphics.Color
+import android.os.CountDownTimer
 import android.view.View
+import android.widget.TextView
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
@@ -14,6 +17,7 @@ import kotlinx.android.synthetic.main.acticity_register.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.lang.ref.WeakReference
 
 /**
  * 注册
@@ -23,13 +27,14 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
     private val dialog: WaitingDialog? by lazy { WaitingDialog(this) }
 
     private lateinit var presenter: RegisterPresenter
-
     override val layout: Int = R.layout.acticity_register
+    private lateinit var timeCount: TimeCount
 
     override fun initView() {
         EventBus.getDefault().register(this)
         presenter = RegisterPresenter(this)
         customHeadView.setRightTxt(getString(R.string.text_skip), R.color.color_666)
+        timeCount = TimeCount(textViewGetCode, 60000, 1000)
     }
 
     override fun installListener() {
@@ -61,7 +66,10 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
                 intent.putExtra(RegisterActivity::class.java.simpleName, etPhone.text.toString())
                 startActivity(intent)
             }
-            R.id.textViewGetCode -> presenter.sendCheckCode(etPhone.text.toString())
+            R.id.textViewGetCode -> {
+                timeCount.start()
+                presenter.sendCheckCode(etPhone.text.toString())
+            }
             R.id.textViewService -> ToastUtil.showInfo("服务条款")
             R.id.textViewPrivate -> ToastUtil.showInfo("隐私条款")
             R.id.textViewJump -> startActivity(Intent(this, LoginActivity::class.java))
@@ -101,4 +109,18 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
         finish()
     }
 
+
+    class TimeCount(view: TextView, millisInFuture: Long, countDownInterval: Long) : CountDownTimer(millisInFuture, countDownInterval) {
+        private val weakReference: WeakReference<TextView> = WeakReference(view)
+        private val textView: TextView? = weakReference.get()
+        override fun onTick(millisUntilFinished: Long) {
+            textView?.isClickable = false
+            textView?.text = (millisUntilFinished / 1000).toString() + "s"
+        }
+
+        override fun onFinish() {
+            textView?.text = "重新获取"
+            textView?.isClickable = true
+        }
+    }
 }

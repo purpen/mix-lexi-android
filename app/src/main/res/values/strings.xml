@@ -75,7 +75,7 @@
     <string name="text_set_password">设置密码</string>
     <string name="title_set_new_password">设置新密码</string>
     <string name="text_confirm">确认</string>
-    <string name="text_password_require">8-16位字母和数字组合</string>
+    <string name="text_password_require">8–16位字母和数字组合</string>
     <string name="title_select_country_area">选择国家和地区</string>
     <string name="text_usual_use">常用</string>
     <string name="text_register_set_password">下一步设置密码</string>
@@ -89,4 +89,6 @@
     <string name="text_gender_woman">女</string>
     <string name="text_gender_man">男</string>
     <string name="text_title_gender">性别</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_qd">确定</string>
 </resources>
