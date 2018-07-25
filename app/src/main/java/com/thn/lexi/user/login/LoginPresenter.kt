@@ -5,6 +5,7 @@ import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.user.password.VerifyCodeBean
 import com.thn.lexi.user.register.TokenBean
 import java.io.IOException
 import java.util.HashMap
@@ -112,7 +113,26 @@ class LoginPresenter : LoginContract.Presenter {
         return str.trim()
     }
 
-    fun getCheckCode(phone: String) {
-        ToastUtil.showInfo("发送验证码")
+    override fun sendCheckCode(areaCode: String, phone: String) {
+        dataSource.sendCheckCode(areaCode,phone,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                LogUtil.e(json)
+                view.dismissLoadingView()
+                val verifyCodeBean = JsonUtil.fromJson(json, VerifyCodeBean::class.java)
+                if (verifyCodeBean.success) {
+                    ToastUtil.showSuccess(verifyCodeBean.status.message)
+                } else {
+                    view.showInfo(verifyCodeBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
     }
 }

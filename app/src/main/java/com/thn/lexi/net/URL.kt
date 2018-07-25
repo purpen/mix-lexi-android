@@ -6,7 +6,7 @@ object URL {
     /**
      * 注册
      */
-    const val REGISTER_URL = "${BASE_URL}auth/register"
+    const val REGISTER_URL = "${BASE_URL}auth/app_register"
 
     /**
      * 请求Token
@@ -17,6 +17,16 @@ object URL {
      *登录
      */
     const val LOGIN_URL = "${BASE_URL}auth/business_login"
+
+    /**
+     *登录/忘记密码验证码URL
+     */
+    const val LOGIN_FORGET_VERIFY_CODE = "${BASE_URL}users/login_verify_code"
+
+    /*
+     *注册验证码URL
+     */
+    const val REGISTER_VERIFY_CODE = "${BASE_URL}users/register_verify_code"
 
     /**
      * 商品列表
@@ -54,5 +64,15 @@ object URL {
      * 手机号地区编码
      */
     const val AREA_CODE_URL = "${BASE_URL}auth/area_code"
+
+    /**
+     * 获取图片上传token
+     */
+    const val UPLOAD_TOKEN = "${BASE_URL}assets/up_token"
+
+    /**
+     * 首次登录完善资料
+     */
+    const val COMPLETE_USER_INFO = "${BASE_URL}auth/info"
 
 }

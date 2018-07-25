@@ -74,29 +74,29 @@ public class ClientParamsAPI {
     /**
      * 获取注册参数
      *
-     * @param account
+     * @param areaCode
+     * @param phone
      * @param userPsw
-     * @param checkCode
      * @return
      */
-    public static HashMap<String, String> getRegisterParams(String account, String userPsw, String checkCode) {
+    public static HashMap<String, String> getRegisterParams(String areaCode,String phone ,String userPsw) {
         HashMap<String, String> params = generateCommonParams();
-        params.put("email", account);
-        params.put("username", checkCode);
+        params.put("areacode", areaCode);
+        params.put("email", phone);
         params.put("password", userPsw);
-//        params.put("code",checkCode);
         return params;
     }
 
     /**
      * 获取验证码参数
-     *
-     * @param account
      * @return
+     * @param areaCode
+     * @param phone
      */
-    public static HashMap<String, String> getCheckCodeRequestParams(String account) {
+    public static HashMap<String, String> getCheckCodeRequestParams(String areaCode, String phone) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("account", account);
+        params.put("area_code", areaCode);
+        params.put("mobile", phone);
         return params;
     }
 
@@ -546,10 +546,11 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> verifyCheckCodeParams(@NotNull String phone, @NotNull String checkCode) {
+    public static HashMap<String,String> verifyCheckCodeParams(@NotNull String areaCode,@NotNull String phone, @NotNull String checkCode) {
         HashMap<String, String> params = generateCommonParams();
-        params.put("phone", phone);
-        params.put("checkCode", checkCode);
+        params.put("areacode", areaCode);
+        params.put("email", phone);
+        params.put("verify_code", checkCode);
         return params;
     }
 

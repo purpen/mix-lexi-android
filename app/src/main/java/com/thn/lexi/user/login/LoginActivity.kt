@@ -98,7 +98,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
             }
 
             R.id.textViewGetCode->{
-                presenter.getCheckCode(etPhone.text.toString())
+                presenter.sendCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString())
             }
 
             R.id.imageViewShow->{

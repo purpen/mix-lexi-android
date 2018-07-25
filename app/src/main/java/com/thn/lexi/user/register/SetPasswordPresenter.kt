@@ -9,7 +9,7 @@ import com.thn.lexi.user.password.ForgetPasswordBean
 import java.io.IOException
 
 
-class SetPasswordPresenter(view: SetPasswordActivity) : RegisterContract.Presenter {
+class SetPasswordPresenter(view: SetPasswordActivity) : SetPasswordContract.Presenter {
 
     private var view: SetPasswordContract.View = checkNotNull(view)
 
@@ -18,10 +18,9 @@ class SetPasswordPresenter(view: SetPasswordActivity) : RegisterContract.Present
     /**
      * 注册用户
      */
-    override fun registerUser(phone: String, password: String, checkCode: String) {
-
-        if (TextUtils.isEmpty(phone.trim())) {
-            view.showInfo(AppApplication.getContext().getString(R.string.text_phone_null))
+    override fun registerUser(areaCode: String, phone: String, password: String, confirmPassword: String) {
+        if (!TextUtils.equals(password, confirmPassword)) {
+            view.showInfo(AppApplication.getContext().getString(R.string.text_password_not_equal))
             return
         }
 
@@ -30,21 +29,19 @@ class SetPasswordPresenter(view: SetPasswordActivity) : RegisterContract.Present
             return
         }
 
-        dataSource.registerUser(phone, password, checkCode, object : IDataSource.HttpRequestCallBack {
+        dataSource.registerUser(areaCode, phone, password, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 view.dismissLoadingView()
-                val registerBean = JsonUtil.fromJson(json, ForgetPasswordBean::class.java)
-                if (registerBean.success) {
+                val setPasswordBean = JsonUtil.fromJson(json, SetPasswordBean::class.java)
+                if (setPasswordBean.success) {
                     getToken(phone, password)
                 } else {
-                    view.showInfo(registerBean.status.message)
+                    view.showInfo(setPasswordBean.status.message)
                 }
-
 
             }
 
@@ -62,7 +59,7 @@ class SetPasswordPresenter(view: SetPasswordActivity) : RegisterContract.Present
             override fun onSuccess(json: String) {
                 val tokenBean = JsonUtil.fromJson(json, TokenBean::class.java)
                 if (tokenBean.success) {
-                    SPUtil.write(Constants.AUTHORIZATION,tokenBean.data.token)
+                    SPUtil.write(Constants.AUTHORIZATION, tokenBean.data.token)
                     view.goPage()
                 } else {
                     view.showInfo(tokenBean.status.message)

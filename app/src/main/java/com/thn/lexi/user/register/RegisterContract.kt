@@ -7,11 +7,12 @@ class RegisterContract {
     interface View : BaseView<Presenter>{
         fun showLoadingView()
         fun showError(s: String)
-        fun goPage()
+        fun goPage(registerBean: RegisterBean)
         fun dismissLoadingView()
         fun showInfo(string: String)
     }
-    interface Presenter : BasePresenter {
-        fun registerUser(phone: String, password: String,checkCode:String)
+    interface Presenter : BasePresenter{
+        fun sendCheckCode(areaCode:String,phone: String)
+        fun verifyCheckCode(areaCode:String,phone: String, checkCode: String)
     }
 }

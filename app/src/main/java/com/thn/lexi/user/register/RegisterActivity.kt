@@ -1,7 +1,6 @@
 package com.thn.lexi.user.register
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.CountDownTimer
 import android.view.View
 import android.widget.TextView
@@ -60,15 +59,12 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
                 finish()
             }
             R.id.button -> {
-                presenter.verifyCheckCode(etPhone.text.toString(), etCheckCode.text.toString())
-                //TODO 验证通过则跳转设置密码界面
-                val intent = Intent(this, SetPasswordActivity::class.java)
-                intent.putExtra(RegisterActivity::class.java.simpleName, etPhone.text.toString())
-                startActivity(intent)
+                presenter.verifyCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString(), etCheckCode.text.toString())
+
             }
             R.id.textViewGetCode -> {
                 timeCount.start()
-                presenter.sendCheckCode(etPhone.text.toString())
+                presenter.sendCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString())
             }
             R.id.textViewService -> ToastUtil.showInfo("服务条款")
             R.id.textViewPrivate -> ToastUtil.showInfo("隐私条款")
@@ -88,9 +84,10 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
         ToastUtil.showError(s)
     }
 
-    override fun goPage() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+    override fun goPage(registerBean: RegisterBean) {
+        val intent = Intent(this, SetPasswordActivity::class.java)
+        intent.putExtra(RegisterActivity::class.java.simpleName, registerBean)
+        startActivity(intent)
     }
 
     override fun showInfo(string: String) {

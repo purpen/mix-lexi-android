@@ -18,5 +18,6 @@ class LoginContract {
         fun wechatLogin()
         fun qqLogin()
         fun sinaLogin()
+        fun sendCheckCode(areaCode: String, phone: String)
     }
 }

@@ -91,4 +91,5 @@
     <string name="text_title_gender">性别</string>
     <string name="text_cancel">取消</string>
     <string name="text_qd">确定</string>
+    <string name="text_password_not_equal">两次密码不一致</string>
 </resources>

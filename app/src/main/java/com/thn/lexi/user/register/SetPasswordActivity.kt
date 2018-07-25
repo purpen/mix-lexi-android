@@ -4,16 +4,21 @@ import android.content.Intent
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
+import com.thn.lexi.MessageClose
 import com.thn.lexi.R
 import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import kotlinx.android.synthetic.main.activity_set_password.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class SetPasswordActivity : BaseActivity(), SetPasswordContract.View, View.OnClickListener {
     private val dialog: WaitingDialog? by lazy { WaitingDialog(this) }
-    private lateinit var phone: String
+    private lateinit var registerBean: RegisterBean
 
     private lateinit var presenter: SetPasswordPresenter
 
@@ -23,10 +28,11 @@ class SetPasswordActivity : BaseActivity(), SetPasswordContract.View, View.OnCli
     override val layout: Int = R.layout.activity_set_password
 
     override fun getIntentData() {
-        phone = intent.extras.get(RegisterActivity::class.java.simpleName) as String
+        registerBean = intent.extras.get(RegisterActivity::class.java.simpleName) as RegisterBean
     }
 
     override fun initView() {
+        EventBus.getDefault().register(this)
         presenter = SetPasswordPresenter(this)
     }
 
@@ -65,7 +71,7 @@ class SetPasswordActivity : BaseActivity(), SetPasswordContract.View, View.OnCli
                 }
             }
         //注册用户
-            R.id.button -> presenter.registerUser(phone, etPassword.text.toString(), "")
+            R.id.button -> presenter.registerUser(registerBean.data.areacode,registerBean.data.email, etPassword.text.toString(),etPassword1.text.toString())
         }
     }
 
@@ -83,11 +89,21 @@ class SetPasswordActivity : BaseActivity(), SetPasswordContract.View, View.OnCli
     }
 
     override fun goPage() {
-        //TODO 完善资料
         startActivity(Intent(this, CompleteInfoActivity::class.java))
     }
 
     override fun showInfo(string: String) {
         ToastUtil.showInfo(string)
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageClose) {
+        LogUtil.e("SetPasswordActivity be closed")
+        finish()
     }
 }

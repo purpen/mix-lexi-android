@@ -14,20 +14,19 @@ class ForgetPasswordPresenter(view: ForgetPasswordContract.View) : ForgetPasswor
     /**
      * 发送验证码
      */
-    fun sendCheckCode(phone: String) {
-        dataSource.sendCheckCode(phone,object : IDataSource.HttpRequestCallBack {
+    fun sendCheckCode(areaCode: String,phone: String) {
+        dataSource.sendCheckCode(areaCode,phone,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 view.dismissLoadingView()
-                val forgetPasswordBean = JsonUtil.fromJson(json, ForgetPasswordBean::class.java)
-                if (forgetPasswordBean.success) {
-                    ToastUtil.showSuccess(forgetPasswordBean.status.message)
+                val verifyCodeBean = JsonUtil.fromJson(json, VerifyCodeBean::class.java)
+                if (verifyCodeBean.success) {
+                    ToastUtil.showSuccess(verifyCodeBean.status.message)
                 } else {
-                    view.showInfo(forgetPasswordBean.status.message)
+                    view.showInfo(verifyCodeBean.status.message)
                 }
             }
 
@@ -41,8 +40,8 @@ class ForgetPasswordPresenter(view: ForgetPasswordContract.View) : ForgetPasswor
     /**
      * 验证动态码
      */
-    fun verifyCheckCode(phone: String, checkCode: String) {
-        dataSource.verifyCheckCode(phone,checkCode,object : IDataSource.HttpRequestCallBack {
+    fun verifyCheckCode(areaCode:String,phone: String, checkCode: String) {
+        dataSource.verifyCheckCode(areaCode,phone,checkCode,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }

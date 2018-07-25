@@ -42,11 +42,11 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
         when (id) {
             R.id.textViewCountryCode -> startActivityForResult(Intent(applicationContext, SelectCountryOrAreaActivity::class.java), Constants.REQUEST_AREA_CODE)
             R.id.button -> {
-                presenter.verifyCheckCode(etPhone.text.toString(),etCheckCode.text.toString())
+                presenter.verifyCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString(),etCheckCode.text.toString())
                 //TODO 验证动态码正确，跳转设置新密码
                 startActivity(Intent(this,SetNewPasswordActivity::class.java))
             }
-            R.id.textViewGetCode -> presenter.sendCheckCode(etPhone.text.toString())
+            R.id.textViewGetCode -> presenter.sendCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString())
 
         }
     }

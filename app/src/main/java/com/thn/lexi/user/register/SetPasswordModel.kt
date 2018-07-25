@@ -7,9 +7,9 @@ import com.thn.lexi.net.URL
 import java.io.IOException
 
 class SetPasswordModel {
-    fun registerUser(phone: String, password: String,checkCode:String,callback: IDataSource.HttpRequestCallBack) {
+    fun registerUser(areaCode:String,phone: String, password:String,callback: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getRegisterParams(phone,password,checkCode)
+        val params = ClientParamsAPI.getRegisterParams(areaCode,phone,password)
 
         HttpRequest.sendRequest(HttpRequest.POST, URL.REGISTER_URL,params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {

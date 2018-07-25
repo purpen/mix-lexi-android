@@ -73,4 +73,25 @@ open class LoginModel{
             }
         })
     }
+
+
+    /**
+     * 发送验证码
+     */
+    fun sendCheckCode(areaCode: String, phone: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getCheckCodeRequestParams(areaCode,phone)
+        HttpRequest.sendRequest(HttpRequest.POST,URL.REGISTER_VERIFY_CODE,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
 }
