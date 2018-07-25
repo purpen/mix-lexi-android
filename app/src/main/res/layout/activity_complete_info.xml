@@ -22,13 +22,23 @@
         android:layout_height="@dimen/dp90"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp40"
-        android:background="@drawable/bg_oval_user_header"
-        android:gravity="center">
+        android:background="@drawable/bg_oval_user_header">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:src="@mipmap/icon_default_register_header" />
+
+        <ImageView
+            android:id="@+id/imageViewBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/icon_change_avatar"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <TextView
@@ -43,7 +53,7 @@
     <EditText
         android:id="@+id/etName"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:layout_marginTop="@dimen/dp30"
         android:background="@drawable/border_radius4_ddd"
         android:gravity="start|center_vertical"
@@ -55,12 +65,12 @@
         android:paddingStart="@dimen/dp15"
         android:textColor="@color/color_333"
         android:textColorHint="@color/color_b2b2b2"
-        android:textSize="@dimen/sp18" />
+        android:textSize="@dimen/sp16" />
 
     <TextView
         android:id="@+id/textViewBirth"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp45"
+        android:layout_height="@dimen/dp40"
         android:layout_marginTop="@dimen/dp20"
         android:background="@drawable/border_radius4_ddd"
         android:drawableEnd="@mipmap/icon_arrow_down"
@@ -69,34 +79,33 @@
         android:paddingStart="@dimen/dp15"
         android:text="@string/hint_input_birth"
         android:textColor="@color/color_b2b2b2"
-        android:textSize="@dimen/sp18" />
+        android:textSize="@dimen/sp16" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp30"
-        >
+        android:layout_marginTop="@dimen/dp30">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_title_gender"
             android:layout_centerVertical="true"
-            />
+            android:text="@string/text_title_gender" />
+
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentEnd="true"
-            >
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/radioButton0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:button="@drawable/radio_button_style"
                 android:checked="true"
                 android:paddingStart="@dimen/dp10"
-                android:button="@drawable/radio_button_style"
                 android:text="@string/text_gender_woman" />
 
             <RadioButton
@@ -104,12 +113,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp25"
-                android:paddingStart="@dimen/dp10"
                 android:button="@drawable/radio_button_style"
+                android:paddingStart="@dimen/dp10"
                 android:text="@string/text_gender_man" />
 
         </RadioGroup>
     </RelativeLayout>
+
     <Button
         android:id="@+id/button"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
