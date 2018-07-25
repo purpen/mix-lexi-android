@@ -8,9 +8,13 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
+import com.thn.lexi.Constants
 import com.thn.lexi.MainActivity
 import com.thn.lexi.MessageClose
 import com.thn.lexi.R
+import com.thn.lexi.user.areacode.CountryAreaCodeBean
+import com.thn.lexi.user.areacode.MessageAreaCode
+import com.thn.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.thn.lexi.user.login.LoginActivity
 import kotlinx.android.synthetic.main.acticity_register.*
 import org.greenrobot.eventbus.EventBus
@@ -38,6 +42,9 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
 
     override fun installListener() {
         customHeadView.headRightTV.setOnClickListener(this)
+
+        textViewCountryCode.setOnClickListener(this)
+
         button.setOnClickListener(this)
         textViewGetCode.setOnClickListener(this)
         textViewService.setOnClickListener(this)
@@ -62,6 +69,9 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
                 presenter.verifyCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString(), etCheckCode.text.toString())
 
             }
+
+            R.id.textViewCountryCode -> startActivity(Intent(this,SelectCountryOrAreaActivity::class.java))
+
             R.id.textViewGetCode -> {
                 timeCount.start()
                 presenter.sendCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString())
@@ -90,6 +100,7 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
         startActivity(intent)
     }
 
+
     override fun showInfo(string: String) {
         ToastUtil.showInfo(string)
     }
@@ -101,10 +112,17 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageAreaCode) {
+        textViewCountryCode.text = event.areaCode
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageClose) {
         LogUtil.e("RegisterActivity be closed")
         finish()
     }
+
+
 
 
     class TimeCount(view: TextView, millisInFuture: Long, countDownInterval: Long) : CountDownTimer(millisInFuture, countDownInterval) {

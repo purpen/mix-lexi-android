@@ -10,6 +10,7 @@ import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import kotlinx.android.synthetic.main.acticity_select_country_area.*
 import kotlinx.android.synthetic.main.view_custom_headview.view.*
+import org.greenrobot.eventbus.EventBus
 
 class SelectCountryOrAreaActivity : BaseActivity(), SelectCountryAreaContract.View {
     private val dialog: WaitingDialog? by lazy { WaitingDialog(this) }
@@ -49,9 +50,7 @@ class SelectCountryOrAreaActivity : BaseActivity(), SelectCountryAreaContract.Vi
 
         adapter.setOnItemClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as CountryAreaCodeBean.DataBean.AreaCodesBean
-            val intent = Intent()
-            intent.putExtra(SelectCountryOrAreaActivity::class.java.simpleName, item)
-            setResult(RESULT_OK, intent)
+            EventBus.getDefault().post(MessageAreaCode(item.areacode))
             finish()
         }
     }

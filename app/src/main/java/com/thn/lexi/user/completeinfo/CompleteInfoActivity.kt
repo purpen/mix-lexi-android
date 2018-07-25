@@ -73,13 +73,12 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
             R.id.button -> {
                 //提交补充信息关闭之前界面
                 presenter.uploadUserInfo("avatar_id", etName.text.toString(), textViewBirth.text.toString(),gender)
-                EventBus.getDefault().post(MessageClose())
-                finish()
             }
         }
     }
 
-    override fun goPage() {
+    override fun goPage() {//上传完关闭比界面，跳转主页
+        EventBus.getDefault().post(MessageClose())
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

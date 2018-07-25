@@ -51,7 +51,7 @@ class CompleteInfoPresenter(view: CompleteInfoContract.View) : CompleteInfoContr
                 view.dismissLoadingView()
                 val completeInfoBean = JsonUtil.fromJson(json, CompleteInfoBean::class.java)
                 if (completeInfoBean.success) {
-                    ToastUtil.showSuccess(completeInfoBean.status.message)
+                    view.goPage()
                 } else {
                     view.showInfo(completeInfoBean.status.message)
                 }

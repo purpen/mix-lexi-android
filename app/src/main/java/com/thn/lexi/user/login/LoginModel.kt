@@ -76,7 +76,7 @@ open class LoginModel{
 
 
     /**
-     * 发送验证码
+     * 登录发送验证码
      */
     fun sendCheckCode(areaCode: String, phone: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getCheckCodeRequestParams(areaCode,phone)

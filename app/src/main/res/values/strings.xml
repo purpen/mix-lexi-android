@@ -30,8 +30,8 @@
     <string name="text_purchase">购买</string>
     <string name="text_share">分享</string>
     <string name="bottom_bar_title0">首页</string>
-    <string name="bottom_bar_title1">购物车</string>
-    <string name="bottom_bar_title2">收件箱</string>
+    <string name="bottom_bar_title1">发现</string>
+    <string name="bottom_bar_title2">购物车</string>
     <string name="bottom_bar_title3">我的</string>
     <string name="text_mine_register_login">登录或注册</string>
     <string name="title_forget_password">找回密码</string>

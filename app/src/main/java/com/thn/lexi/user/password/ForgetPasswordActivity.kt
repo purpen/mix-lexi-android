@@ -5,11 +5,13 @@ import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
-import com.thn.lexi.Constants
 import com.thn.lexi.R
-import com.thn.lexi.user.areacode.CountryAreaCodeBean
+import com.thn.lexi.user.areacode.MessageAreaCode
 import com.thn.lexi.user.areacode.SelectCountryOrAreaActivity
 import kotlinx.android.synthetic.main.acticity_forget_password.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * 忘记密码
@@ -23,6 +25,7 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
     override val layout: Int = R.layout.acticity_forget_password
 
     override fun initView() {
+        EventBus.getDefault().register(this)
         presenter = ForgetPasswordPresenter(this)
     }
 
@@ -40,7 +43,7 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
     override fun onClick(v: View?) {
         val id = v?.id
         when (id) {
-            R.id.textViewCountryCode -> startActivityForResult(Intent(applicationContext, SelectCountryOrAreaActivity::class.java), Constants.REQUEST_AREA_CODE)
+            R.id.textViewCountryCode -> startActivity(Intent(applicationContext, SelectCountryOrAreaActivity::class.java))
             R.id.button -> {
                 presenter.verifyCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString(),etCheckCode.text.toString())
                 //TODO 验证动态码正确，跳转设置新密码
@@ -51,17 +54,14 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                Constants.REQUEST_AREA_CODE ->{
-                    val item = data?.getParcelableExtra(SelectCountryOrAreaActivity::class.java.simpleName) as CountryAreaCodeBean.DataBean.AreaCodesBean
-                    textViewCountryCode.text = item.areacode
-                }
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
 
-            }
-        }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageAreaCode) {
+        textViewCountryCode.text = event.areaCode
     }
 
     override fun showLoadingView() {

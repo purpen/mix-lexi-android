@@ -13,6 +13,7 @@ import com.thn.lexi.MainActivity
 import com.thn.lexi.MessageClose
 import com.thn.lexi.R
 import com.thn.lexi.user.areacode.CountryAreaCodeBean
+import com.thn.lexi.user.areacode.MessageAreaCode
 import com.thn.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import com.thn.lexi.user.password.ForgetPasswordActivity
@@ -94,7 +95,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
             }
 
             R.id.textViewCountryCode ->{
-                startActivityForResult(Intent(applicationContext, SelectCountryOrAreaActivity::class.java), Constants.REQUEST_AREA_CODE)
+                startActivity(Intent(applicationContext, SelectCountryOrAreaActivity::class.java))
             }
 
             R.id.textViewGetCode->{
@@ -128,19 +129,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                Constants.REQUEST_AREA_CODE ->{
-                    var item = data?.getParcelableExtra(SelectCountryOrAreaActivity::class.java.simpleName) as CountryAreaCodeBean.DataBean.AreaCodesBean
-                    textViewCountryCode.text = item.areacode
-                }
-
-            }
-        }
-    }
-
 
     override fun showLoadingView() {
         dialog?.show()
@@ -166,6 +154,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
     override fun onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: MessageAreaCode) {
+        textViewCountryCode.text = event.areaCode
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
