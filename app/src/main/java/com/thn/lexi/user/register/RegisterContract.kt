@@ -10,6 +10,7 @@ class RegisterContract {
         fun goPage(registerBean: RegisterBean)
         fun dismissLoadingView()
         fun showInfo(string: String)
+        fun startCountDown()
     }
     interface Presenter : BasePresenter{
         fun sendCheckCode(areaCode:String,phone: String)

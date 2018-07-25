@@ -31,14 +31,14 @@
         <Button
             android:id="@+id/button1"
             style="@style/BottomBarStyle"
-            android:drawableTop="@drawable/selector_item2"
+            android:drawableTop="@drawable/selector_item1"
             android:text="@string/bottom_bar_title2"
             android:textColor="@color/color_666" />
 
         <Button
             android:id="@+id/button2"
             style="@style/BottomBarStyle"
-            android:drawableTop="@drawable/selector_item1"
+            android:drawableTop="@drawable/selector_item2"
             android:text="@string/bottom_bar_title1"
             android:textColor="@color/color_666" />
 

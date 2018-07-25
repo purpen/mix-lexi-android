@@ -67,13 +67,11 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
             }
             R.id.button -> {
                 presenter.verifyCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString(), etCheckCode.text.toString())
-
             }
 
             R.id.textViewCountryCode -> startActivity(Intent(this,SelectCountryOrAreaActivity::class.java))
 
             R.id.textViewGetCode -> {
-                timeCount.start()
                 presenter.sendCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString())
             }
             R.id.textViewService -> ToastUtil.showInfo("服务条款")
@@ -90,6 +88,9 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
         dialog?.dismiss()
     }
 
+    override fun startCountDown() {
+        timeCount.start()
+    }
     override fun showError(s: String) {
         ToastUtil.showError(s)
     }

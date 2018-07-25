@@ -1,5 +1,6 @@
 package com.thn.lexi.user.register
 
+import android.text.TextUtils
 import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -19,6 +20,11 @@ class RegisterPresenter(view: RegisterContract.View) : RegisterContract.Presente
      * 发送验证码
      */
     override fun sendCheckCode(areaCode: String,phone: String) {
+        if (TextUtils.isEmpty(phone)){
+            view.showInfo(AppApplication.getContext().getString(R.string.text_phone_null))
+            return
+        }
+        view.startCountDown()
         dataSource.sendCheckCode(areaCode,phone,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -45,6 +51,16 @@ class RegisterPresenter(view: RegisterContract.View) : RegisterContract.Presente
      * 验证动态码是否正确
      */
     override fun verifyCheckCode(areaCode:String,phone: String, checkCode: String) {
+        if (TextUtils.isEmpty(phone)){
+            view.showInfo(AppApplication.getContext().getString(R.string.text_phone_null))
+            return
+        }
+
+        if (TextUtils.isEmpty(checkCode)){
+            view.showInfo(AppApplication.getContext().getString(R.string.text_check_code))
+            return
+        }
+
         dataSource.verifyCheckCode(areaCode,phone,checkCode,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
