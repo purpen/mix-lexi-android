@@ -26,7 +26,7 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@mipmap/icon_unit"
+        android:drawableStart="@mipmap/icon_price_unit"
         android:textSize="@dimen/sp11"
         android:layout_marginTop="@dimen/dp2"
         android:textColor="@color/color_333"

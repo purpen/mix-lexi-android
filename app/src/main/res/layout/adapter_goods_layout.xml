@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textView0"
             android:layout_marginTop="@dimen/dp5"
-            android:drawableStart="@mipmap/icon_unit"
+            android:drawableStart="@mipmap/icon_price_unit"
             android:drawablePadding="@dimen/dp2"
             android:layout_marginEnd="@dimen/dp10"
             android:text="@string/app_name"

@@ -85,4 +85,8 @@ object URL {
      */
     const val EXPLORE_BANNER_URL = "${BASE_URL}banners/explore"
 
+    /**
+     * 探索->编辑推荐
+     */
+    const val EDITOR_RECOMMEND_URL = "${BASE_URL}column/explore_recommend"
 }

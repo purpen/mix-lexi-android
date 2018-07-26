@@ -102,4 +102,24 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
         })
     }
 
+    /**
+     * 获取编辑推荐
+     */
+    fun getEditorRecommend() {
+        dataSource.getEditorRecommend( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setEditorRecommendData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 }

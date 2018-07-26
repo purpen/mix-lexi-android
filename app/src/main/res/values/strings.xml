@@ -93,4 +93,6 @@
     <string name="text_qd">确定</string>
     <string name="text_password_not_equal">两次密码不一致</string>
     <string name="hint_search_text">关键字 / 礼物 / 品牌馆 / 人</string>
+    <string name="text_editor_recommend">编辑推荐</string>
+    <string name="text_look_all">查看全部</string>
 </resources>

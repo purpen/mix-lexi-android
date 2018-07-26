@@ -18,14 +18,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15"
                 android:orientation="vertical"
                 >
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="112dp"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
                     android:layout_marginTop="@dimen/dp15"
                     android:layout_marginBottom="@dimen/dp20"
                     app:image_scale_type="fit_xy"
@@ -38,7 +38,50 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView0"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp30"
+                    />
+                <include layout="@layout/line_color_eee" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_editor_recommend"
+                        android:textSize="@dimen/sp16"
+                        android:textColor="@color/color_333"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:id="@+id/textViewAllRecommend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_look_all"
+                        android:textSize="@dimen/sp14"
+                        android:textColor="@color/color_999"
+                        />
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewRecommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginBottom="@dimen/dp20"
+                    />
             </LinearLayout>
         </ScrollView>
 

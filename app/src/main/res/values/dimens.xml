@@ -10,4 +10,5 @@
     <dimen name="dp238">238dp</dimen>
     <dimen name="dp375">375dp</dimen>
     <dimen name="sp18">18sp</dimen>
+    <dimen name="dp135">135dp</dimen>
 </resources>

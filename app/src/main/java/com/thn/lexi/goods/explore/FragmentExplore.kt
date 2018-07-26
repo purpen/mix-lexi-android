@@ -13,10 +13,8 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
-import com.thn.lexi.goods.detail.GoodsDetailActivity
 import com.thn.lexi.goods.selection.GoodsData
 import com.thn.lexi.goods.selection.GoodsSpecPopupWindow
-import com.thn.lexi.view.CenterShareView
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
 
@@ -28,6 +26,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     private var page: Int = 1
 //    private lateinit var adapter: ExploreAdapter
     private lateinit var adapterGoodsClass: GoodsClassAdapter
+    private lateinit var adapterEditorRecommend: EditorRecommendAdapter
     companion object {
         @JvmStatic fun newInstance(): FragmentExplore = FragmentExplore()
     }
@@ -36,10 +35,32 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         presenter = ExplorePresenter(this)
         initBanner()
         initGoodsClass()
+        initEditorRecommend()
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
     }
 
+
+    /**
+     * 初始化编辑推荐
+     */
+    private fun initEditorRecommend() {
+        presenter.getEditorRecommend()
+        adapterEditorRecommend = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewRecommend.setHasFixedSize(true)
+        recyclerViewRecommend.layoutManager = linearLayoutManager
+        recyclerViewRecommend.adapter = adapterEditorRecommend
+        recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+    }
+
+    /**
+     * 设置编辑推荐数据
+     */
+    override fun setEditorRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        adapterEditorRecommend.setNewData(products)
+    }
 
     /**
      * 初始化商品分类
