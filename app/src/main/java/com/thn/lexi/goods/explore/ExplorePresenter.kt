@@ -62,40 +62,6 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
         })
     }
 
-    fun favoriteGoods(rid: String, position: Int) {
-        dataSource.favoriteGoods(rid, object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
-                if (favoriteBean.success) {
-                   view.setFavorite(true,position)
-                } else {
-                    view.showError(favoriteBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
-
-    fun unfavoriteGoods(rid: String, position: Int) {
-        dataSource.unfavoriteGoods(rid, object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
-                if (favoriteBean.success) {
-                    view.setFavorite(false,position)
-                } else {
-                    view.showError(favoriteBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
-
     /**
      * 获取商品分类
      */
@@ -107,6 +73,26 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
                     view.setGoodsClassData(goodsClassBean.data.categories)
                 } else {
                     view.showError(goodsClassBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取Banner
+     */
+    fun getBanners() {
+        dataSource.getBanners( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val exploreBannerBean = JsonUtil.fromJson(json, ExploreBannerBean::class.java)
+                if (exploreBannerBean.success) {
+                    view.setBannerData(exploreBannerBean.data.banner_images)
+                } else {
+                    view.showError(exploreBannerBean.status.message)
                 }
             }
 

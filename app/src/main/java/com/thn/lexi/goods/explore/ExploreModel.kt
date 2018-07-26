@@ -91,6 +91,23 @@ open class ExploreModel{
         })
     }
 
+    fun getBanners(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET,URL.EXPLORE_BANNER_URL,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }
 
 

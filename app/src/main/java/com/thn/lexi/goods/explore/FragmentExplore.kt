@@ -62,15 +62,26 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         adapterGoodsClass.setNewData(categories)
     }
 
+    /**
+     * 初始化banner
+     */
     private fun initBanner() {
+        presenter.getBanners()
         banner.setImageLoader(GlideImageLoader())
-        val list = ArrayList<String>()
-        list.add("https://bpic.588ku.com/element_banner/20/18/07/5dc0bb12f2de7144d1a7eedb452d34b4.jpg!/unsharp/true/compress/true")
-        list.add("https://bpic.588ku.com/element_banner/20/18/07/a329ecc58de78ea1a70b9d8f0473a528.jpg!/unsharp/true/compress/true")
-        list.add("https://bpic.588ku.com/element_banner/20/18/07/ba3747a22e6a1a38fed0bb201c322703.jpg!/unsharp/true/compress/true")
         banner.setIndicatorGravity(BannerConfig.RIGHT)
-        banner.setImages(list)
         banner.start()
+    }
+
+    /**
+     * 设置Banner数据
+     */
+    override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
+        val list = ArrayList<String>()
+        for (item in banner_images){
+            list.add(item.image)
+        }
+        banner.setImages(list)
+
     }
 
     override fun setPresenter(presenter: ExploreContract.Presenter?) {

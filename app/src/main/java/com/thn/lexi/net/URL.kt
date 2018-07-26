@@ -80,4 +80,9 @@ object URL {
      */
     const val GOODS_CLASS_URL = "${BASE_URL}categories"
 
+    /**
+     * 探索Banner图
+     */
+    const val EXPLORE_BANNER_URL = "${BASE_URL}banners/explore"
+
 }
