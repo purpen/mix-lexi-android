@@ -4,7 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 
-class CharacteristicContract {
+class SelectionContract {
     interface View : BaseView<Presenter> {
         fun showLoadingView()
         fun dismissLoadingView()

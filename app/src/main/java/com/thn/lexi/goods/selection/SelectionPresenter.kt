@@ -6,12 +6,12 @@ import com.thn.lexi.R
 import com.thn.lexi.goods.bean.FavoriteBean
 import java.io.IOException
 
-class CharacteristicPresenter(view: CharacteristicContract.View) : CharacteristicContract.Presenter {
+class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Presenter {
 
 
-    private var view: CharacteristicContract.View = checkNotNull(view)
+    private var view: SelectionContract.View = checkNotNull(view)
 
-    private val dataSource: CharacteristicModel by lazy { CharacteristicModel() }
+    private val dataSource: SelectionModel by lazy { SelectionModel() }
 
     override fun loadData(cid: String, page: Int) {
         dataSource.loadData(cid, page,object : IDataSource.HttpRequestCallBack {

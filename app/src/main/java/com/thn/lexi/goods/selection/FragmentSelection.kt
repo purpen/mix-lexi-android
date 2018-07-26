@@ -1,5 +1,4 @@
 package com.thn.lexi.goods.selection
-
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
@@ -14,12 +13,12 @@ import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.goods.detail.GoodsDetailActivity
 import com.thn.lexi.view.CenterShareView
-import kotlinx.android.synthetic.main.fragment_charactoristic.*
+import kotlinx.android.synthetic.main.fragment_selection.*
 
-class FragmentSelection : BaseFragment(), CharacteristicContract.View {
+class FragmentSelection : BaseFragment(), SelectionContract.View {
     private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
-    override val layout: Int = R.layout.fragment_charactoristic
-    private lateinit var presenter: CharacteristicPresenter
+    override val layout: Int = R.layout.fragment_selection
+    private lateinit var presenter: SelectionPresenter
     private var page: Int = 1
     private lateinit var adapter: GoodsAdapter
 
@@ -29,7 +28,7 @@ class FragmentSelection : BaseFragment(), CharacteristicContract.View {
     }
 
     override fun initView() {
-        presenter = CharacteristicPresenter(this)
+        presenter = SelectionPresenter(this)
         adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
@@ -40,7 +39,7 @@ class FragmentSelection : BaseFragment(), CharacteristicContract.View {
         recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.VERTICAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(R.color.color_d1d1d1)))
     }
 
-    override fun setPresenter(presenter: CharacteristicContract.Presenter?) {
+    override fun setPresenter(presenter: SelectionContract.Presenter?) {
         setPresenter(presenter)
     }
 

@@ -3,9 +3,7 @@ package com.thn.lexi
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
-import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.support.v4.content.ContextCompat
-import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
@@ -16,7 +14,8 @@ import android.view.View
 class RecyclerViewDivider:RecyclerView.ItemDecoration {
     private var mPaint: Paint? = null
     private var mDivider: Drawable? = null
-    private var mDividerHeight = 2//分割线高度，默认为1px
+    private var mDividerHeight = 0//分割线高度，默认为1px
+    private var mDividerWith = 0
     private var mOrientation: Int//列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
     private val ATTRS = intArrayOf(android.R.attr.listDivider)
 
@@ -57,15 +56,19 @@ class RecyclerViewDivider:RecyclerView.ItemDecoration {
      * 自定义分割线
      * @param context
      * @param orientation   列表方向
-     * @param dividerHeight 分割线高度
+     * @param dividerSize 分割线高度
      * @param dividerColor  分割线颜色
      */
-    constructor(context: Context, orientation: Int, dividerHeight: Int, dividerColor: Int){
+    constructor(context: Context, orientation: Int, dividerSize: Int, dividerColor: Int){
         if (orientation != LinearLayoutManager.VERTICAL && orientation != LinearLayoutManager.HORIZONTAL) {
             throw IllegalArgumentException("请输入正确的参数！")
         }
         mOrientation = orientation
-        mDividerHeight = dividerHeight
+        if (mOrientation==LinearLayoutManager.VERTICAL){
+            mDividerHeight = dividerSize
+        }else{
+            mDividerWith = dividerSize
+        }
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mPaint?.color = dividerColor
         mPaint?.style = Paint.Style.FILL
@@ -75,7 +78,11 @@ class RecyclerViewDivider:RecyclerView.ItemDecoration {
     //获取分割线尺寸
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
-        outRect.set(0, 0, 0, mDividerHeight)
+        if (mOrientation==LinearLayoutManager.VERTICAL){
+            outRect.set(0, 0, 0, mDividerHeight)
+        }else{
+            outRect.set(0, 0,mDividerWith, 0)
+        }
     }
 
     //绘制分割线

@@ -75,4 +75,9 @@ object URL {
      */
     const val COMPLETE_USER_INFO = "${BASE_URL}auth/info"
 
+    /**
+     * 探索->商品分类
+     */
+    const val GOODS_CLASS_URL = "${BASE_URL}categories"
+
 }

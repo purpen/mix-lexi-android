@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp15"
+                android:layout_marginEnd="@dimen/dp15"
+                android:orientation="vertical"
+                >
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="112dp"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp20"
+                    app:image_scale_type="fit_xy"
+                    app:indicator_width="7dp"
+                    app:indicator_height="7dp"
+                    app:indicator_drawable_selected="@drawable/banner_indicator_selected"
+                    app:indicator_drawable_unselected="@drawable/banner_indicator_normal"
+                    app:indicator_margin="5dp"
+                    />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

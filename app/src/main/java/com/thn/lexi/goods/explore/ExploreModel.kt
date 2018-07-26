@@ -1,4 +1,4 @@
-package com.thn.lexi.goods.selection
+package com.thn.lexi.goods.explore
 
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI
@@ -6,7 +6,7 @@ import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
 import java.io.IOException
 
-open class CharacteristicModel:IDataSource{
+open class ExploreModel{
     companion object {
         //出售中
         const val STATUS: String = "1"
@@ -60,6 +60,23 @@ open class CharacteristicModel:IDataSource{
     fun unfavoriteGoods(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getFavoriteGoodsParams(rid)
         HttpRequest.sendRequest(HttpRequest.DELETE,URL.FAVORITE_GOODS_URL,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun getGoodsClass(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET,URL.GOODS_CLASS_URL,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

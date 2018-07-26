@@ -1,5 +1,7 @@
 package com.thn.lexi;
 
+import org.jetbrains.annotations.Nullable;
+
 public class Constants {
-    public static final int REQUEST_AREA_CODE = 0x0010;
+    public static final int SUCCESS = 200;
 }
