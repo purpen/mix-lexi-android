@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.orhanobut:dialogplus:1.11@aar'
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
     implementation 'com.qiniu:qiniu-android-sdk:7.3.+'
+    implementation 'com.youth.banner:banner:1.4.10'
 
 }
 

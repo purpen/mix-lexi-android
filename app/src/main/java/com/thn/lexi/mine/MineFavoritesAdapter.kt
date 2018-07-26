@@ -6,7 +6,7 @@ import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
-import com.thn.lexi.goods.GoodsData
+import com.thn.lexi.goods.selection.GoodsData
 
 class MineFavoritesAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.DataBean.ProductsBean, BaseViewHolder>(res) {
 

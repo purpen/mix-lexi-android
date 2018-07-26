@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/view_main_head_nav" />
+    <!--<include layout="@layout/view_main_head_nav" />-->
 
-    <View
+    <include layout="@layout/view_head_search_box" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/slidingTabLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp05"
-        android:background="@color/color_eee"
-        />
+        android:layout_height="@dimen/dp45"
+        tl:tl_indicator_color="@android:color/transparent"
+        tl:tl_indicator_height="2dp"
+        tl:tl_indicator_width_equal_title="true"
+        tl:tl_tab_padding="@dimen/dp15"
+        tl:tl_textBold="BOTH"
+        tl:tl_textSelectColor="@color/color_6ed7af"
+        tl:tl_textUnselectColor="@color/color_555"
+        tl:tl_textsize="@dimen/sp16" />
+
+    <include layout="@layout/line_color_eee" />
+
     <com.basemodule.ui.CustomViewPager
         android:id="@+id/customViewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-    <!--<android.support.v4.widget.SwipeRefreshLayout-->
-        <!--android:id="@+id/swipeLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--&gt;-->
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/recyclerView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"/>-->
-    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 </LinearLayout>

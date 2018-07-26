@@ -92,4 +92,5 @@
     <string name="text_cancel">取消</string>
     <string name="text_qd">确定</string>
     <string name="text_password_not_equal">两次密码不一致</string>
+    <string name="hint_search_text">关键字 / 礼物 / 品牌馆 / 人</string>
 </resources>

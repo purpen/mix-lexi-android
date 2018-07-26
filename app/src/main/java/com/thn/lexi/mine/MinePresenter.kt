@@ -4,7 +4,7 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.goods.GoodsData
+import com.thn.lexi.goods.selection.GoodsData
 import java.io.IOException
 
 class MinePresenter(view: MineContract.View) : MineContract.Presenter {

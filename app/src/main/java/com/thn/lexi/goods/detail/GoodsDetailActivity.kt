@@ -9,12 +9,11 @@ import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.R
-import com.thn.lexi.goods.HeadImageAdapter
+import com.thn.lexi.goods.selection.HeadImageAdapter
 import com.thn.lexi.mine.WishOrderFragment
 import com.thn.lexi.view.autoScrollViewpager.ViewPagerAdapter
 import kotlinx.android.synthetic.main.activity_goods_detail.*
 import kotlinx.android.synthetic.main.view_goods_detail_head.*
-import kotlinx.android.synthetic.main.view_goods_shop.*
 
 class GoodsDetailActivity : BaseActivity(),GoodsDetailContract.View,View.OnClickListener{
 

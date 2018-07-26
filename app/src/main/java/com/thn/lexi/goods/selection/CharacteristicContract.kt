@@ -1,4 +1,4 @@
-package com.thn.lexi.goods
+package com.thn.lexi.goods.selection
 
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter

@@ -1,4 +1,4 @@
-package com.thn.lexi.goods
+package com.thn.lexi.goods.selection
 import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -9,7 +9,7 @@ import java.io.IOException
 class CharacteristicPresenter(view: CharacteristicContract.View) : CharacteristicContract.Presenter {
 
 
-    private var view:CharacteristicContract.View = checkNotNull(view)
+    private var view: CharacteristicContract.View = checkNotNull(view)
 
     private val dataSource: CharacteristicModel by lazy { CharacteristicModel() }
 

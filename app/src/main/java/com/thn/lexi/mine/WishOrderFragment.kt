@@ -9,10 +9,10 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
-import com.thn.lexi.goods.CharacteristicContract
-import com.thn.lexi.goods.CharacteristicPresenter
-import com.thn.lexi.goods.GoodsAdapter
-import com.thn.lexi.goods.GoodsData
+import com.thn.lexi.goods.selection.CharacteristicContract
+import com.thn.lexi.goods.selection.CharacteristicPresenter
+import com.thn.lexi.goods.selection.GoodsAdapter
+import com.thn.lexi.goods.selection.GoodsData
 import kotlinx.android.synthetic.main.fragment_wish_order.*
 
 class WishOrderFragment : BaseFragment(), CharacteristicContract.View {

@@ -1,4 +1,4 @@
-package com.thn.lexi.goods
+package com.thn.lexi.goods.selection
 
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI
