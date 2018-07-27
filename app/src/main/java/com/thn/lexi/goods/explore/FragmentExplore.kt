@@ -1,20 +1,16 @@
 package com.thn.lexi.goods.explore
-
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import android.view.Gravity
-import android.widget.LinearLayout
+import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.orhanobut.dialogplus.DialogPlus
-import com.orhanobut.dialogplus.ViewHolder
 import com.thn.lexi.AppApplication
 import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
+import com.thn.lexi.goods.detail.GoodsDetailActivity
 import com.thn.lexi.goods.selection.GoodsData
-import com.thn.lexi.goods.selection.GoodsSpecPopupWindow
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
 
@@ -24,9 +20,12 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     override val layout: Int = R.layout.fragment_explore
     private lateinit var presenter: ExplorePresenter
     private var page: Int = 1
-//    private lateinit var adapter: ExploreAdapter
     private lateinit var adapterGoodsClass: GoodsClassAdapter
     private lateinit var adapterEditorRecommend: EditorRecommendAdapter
+    private lateinit var adapterBrandPavilion: BrandPavilionAdapter
+    private lateinit var adapterFeatureNewGoods: EditorRecommendAdapter
+    private lateinit var adapterGoodsCollection: CollectionGoodsAdapter
+
     companion object {
         @JvmStatic fun newInstance(): FragmentExplore = FragmentExplore()
     }
@@ -36,8 +35,63 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         initBanner()
         initGoodsClass()
         initEditorRecommend()
+        initBrandPavilion()
+        initFeatureNewGoods()
+        initGoodsCollection()
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    /**
+     * 初始化商品集合
+     */
+    private fun initGoodsCollection() {
+        presenter.getGoodsCollection()
+        adapterGoodsCollection = CollectionGoodsAdapter(R.layout.adapter_goods_collection)
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewBrand.setHasFixedSize(true)
+        recyclerViewBrand.layoutManager = linearLayoutManager
+        recyclerViewBrand.adapter = adapterGoodsCollection
+        recyclerViewBrand.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+    }
+
+    /**
+     * 初始化优质新品
+     */
+    private fun initFeatureNewGoods() {
+        presenter.getFeatureNewGoods()
+        adapterFeatureNewGoods = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewBrand.setHasFixedSize(true)
+        recyclerViewBrand.layoutManager = linearLayoutManager
+        recyclerViewBrand.adapter = adapterFeatureNewGoods
+        recyclerViewBrand.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+
+    }
+
+    /**
+     * 设置优质新品数据
+     * 与编辑推荐bean和adapter共用
+     */
+    override fun setFeatureNewGoodsData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        adapterFeatureNewGoods.setNewData(products)
+    }
+
+
+    /**
+     * 初始化品牌馆
+     */
+    private fun initBrandPavilion() {
+        presenter.getBrandPavilion()
+        adapterBrandPavilion = BrandPavilionAdapter(R.layout.adapter_brand_pavilion)
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewBrand.setHasFixedSize(true)
+        recyclerViewBrand.layoutManager = linearLayoutManager
+        recyclerViewBrand.adapter = adapterBrandPavilion
+        recyclerViewBrand.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
     }
 
 
@@ -110,18 +164,24 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     }
 
     override fun installListener() {
-//        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-//            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-//            when(view.id){
-//
-//                R.id.textView3 ->{
-//                    if (item.isFavorite) {
-//                        presenter.unfavoriteGoods(item.rid, position)
-//                    } else {
-//                        presenter.favoriteGoods(item.rid, position)
-//                    }
-//                }
-//
+        adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
+            when(view.id){
+                R.id.imageViewShop->ToastUtil.showInfo("去店铺")
+
+                R.id.imageViewGoods0,R.id.imageViewGoods1,R.id.imageViewGoods2->{
+                    //TODO 去商品详情
+                    startActivity(Intent(activity,GoodsDetailActivity::class.java))
+                }
+
+                R.id.buttonFocus ->{
+                    if (item.isFavorite) {
+                        presenter.unFocusBrandPavilion("店铺id")
+                    } else {
+                        presenter.focusBrandPavilion("店铺id")
+                    }
+                }
+
 //                R.id.textView4 -> {
 //                    val popupWindow = GoodsSpecPopupWindow(activity, item, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 //                    popupWindow.show()
@@ -133,9 +193,9 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 //                            .create()
 //                    dialog.show()
 //                }
-//            }
-//
-//        }
+            }
+
+        }
 
 //
 //        adapter.setOnItemClickListener { adapter, view, position ->
@@ -148,7 +208,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
 //            adapter.setEnableLoadMore(false)
-            loadData()
+//            loadData()
         }
 
 //        adapter.setOnLoadMoreListener({

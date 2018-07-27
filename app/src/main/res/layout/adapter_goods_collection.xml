@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    >
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/default_load"
+        />
+
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewTitle0"
+        android:text="精选"
+        android:background="@drawable/corner_bg_eee"
+        android:paddingTop="@dimen/dp5"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingStart="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginStart="@dimen/dp10"
+        android:paddingEnd="@dimen/dp10"
+        android:textSize="@dimen/sp12"
+        android:textColor="@android:color/white"
+        />
+
+
+    <TextView
+        android:id="@+id/textViewTitle0"
+        android:layout_above="@+id/textViewTitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp10"
+        android:layout_marginEnd="@dimen/dp10"
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp13"
+        android:text="@string/app_name"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:id="@+id/textViewTitle1"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp10"
+        android:layout_marginEnd="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp10"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp13"
+        android:text="@string/app_name"
+        android:ellipsize="end"
+        />
+</RelativeLayout>

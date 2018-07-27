@@ -31,6 +31,7 @@ class ExploreContract {
         fun setGoodsClassData(categories: List<GoodsClassBean.DataBean.CategoriesBean>)
         fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>)
         fun setEditorRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
+        fun setFeatureNewGoodsData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
     }
 
     interface Presenter : BasePresenter {

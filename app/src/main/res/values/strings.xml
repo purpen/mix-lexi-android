@@ -95,4 +95,9 @@
     <string name="hint_search_text">关键字 / 礼物 / 品牌馆 / 人</string>
     <string name="text_editor_recommend">编辑推荐</string>
     <string name="text_look_all">查看全部</string>
+    <string name="text_brand_pavilion">特色品牌馆</string>
+    <string name="text_feature_new_goods">优质新品</string>
+    <string name="text_explore_collection">集合</string>
+    <string name="text_explore_good100">百元好物</string>
+    <string name="text_good_design">特惠好设计</string>
 </resources>

@@ -11,6 +11,7 @@ import com.thn.basemodule.R;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
@@ -127,6 +128,18 @@ public class GlideUtil {
 
     public static <T> void loadCircleImageWidthDimen(@NotNull T t, @Nullable ImageView imageView) {
         RequestOptions requestOptions = bitmapTransform(new CircleCrop());
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
+        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+    }
+
+    /**
+     *  毛玻璃效果
+     * @param t
+     * @param imageView
+     * @param <T>
+     */
+    public static <T> void loadImageWithBlur(T t, @Nullable ImageView imageView) {
+        RequestOptions requestOptions = bitmapTransform(new BlurTransformation(25, 3));
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
     }

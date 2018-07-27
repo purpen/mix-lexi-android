@@ -122,4 +122,106 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
         })
     }
 
+
+    /**
+     * 获取品牌馆
+     */
+    fun getBrandPavilion() {
+        dataSource.getBrandPavilion( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setEditorRecommendData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取优质新品
+     * bean共用
+     */
+    fun getFeatureNewGoods() {
+        dataSource.getFeatureNewGoods( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setFeatureNewGoodsData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 店铺取消关注
+     */
+    fun unFocusBrandPavilion(rid:String) {
+        dataSource.unFocusBrandPavilion(rid,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setFeatureNewGoodsData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 关注品牌馆
+     */
+    fun focusBrandPavilion(rid:String) {
+        dataSource.focusBrandPavilion(rid,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setFeatureNewGoodsData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取商品集合
+     */
+    fun getGoodsCollection() {
+        dataSource.getGoodsCollection(object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setFeatureNewGoodsData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 }

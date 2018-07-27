@@ -89,4 +89,19 @@ object URL {
      * 探索->编辑推荐
      */
     const val EDITOR_RECOMMEND_URL = "${BASE_URL}column/explore_recommend"
+
+    /**
+     * 探索->优质新品
+     */
+    const val FEATURE_NEW_GOODS = "${BASE_URL}column/explore_new"
+
+    /**
+     * 探索->店铺取消关注
+     */
+    const val UNFOCUS_BRAND_PAVILION = "${BASE_URL}unfollow/store"
+
+    /**
+     * 探索->店铺关注
+     */
+    const val FOCUS_BRAND_PAVILION = "${BASE_URL}follow/store"
 }

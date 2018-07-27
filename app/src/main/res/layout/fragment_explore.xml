@@ -45,6 +45,7 @@
                     />
                 <include layout="@layout/line_color_eee" />
 
+                <!--编辑推荐-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,7 +83,207 @@
                     android:layout_marginTop="@dimen/dp20"
                     android:layout_marginBottom="@dimen/dp20"
                     />
+                <include layout="@layout/line_color_eee" />
+                <!--品牌馆-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_brand_pavilion"
+                        android:textSize="@dimen/sp16"
+                        android:textColor="@color/color_333"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:id="@+id/textViewAllBrand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_look_all"
+                        android:textSize="@dimen/sp14"
+                        android:textColor="@color/color_999"
+                        />
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewBrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginBottom="@dimen/dp20"
+                    />
+                <include layout="@layout/line_color_eee" />
+                <!--优质新品-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_feature_new_goods"
+                        android:textSize="@dimen/sp16"
+                        android:textColor="@color/color_333"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:id="@+id/textViewAllNewGoods"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_look_all"
+                        android:textSize="@dimen/sp14"
+                        android:textColor="@color/color_999"
+                        />
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewNewGoods"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginBottom="@dimen/dp20"
+                    />
+
+                <include layout="@layout/line_color_eee" />
+                <!--集合-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_explore_collection"
+                        android:textSize="@dimen/sp16"
+                        android:textColor="@color/color_333"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:id="@+id/textViewCollection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_look_all"
+                        android:textSize="@dimen/sp14"
+                        android:textColor="@color/color_999"
+                        />
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewCollection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginBottom="@dimen/dp20"
+                    />
+                <include layout="@layout/line_color_eee" />
+
+                <!--特惠好设计-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_good_design"
+                        android:textSize="@dimen/sp16"
+                        android:textColor="@color/color_333"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:id="@+id/textViewGoodDesign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_look_all"
+                        android:textSize="@dimen/sp14"
+                        android:textColor="@color/color_999"
+                        />
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewGoodDesign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginBottom="@dimen/dp20"
+                    />
+
+                <include layout="@layout/line_color_eee" />
+
+                <!--百元好物-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_explore_good100"
+                        android:textSize="@dimen/sp16"
+                        android:textColor="@color/color_333"
+                        android:textStyle="bold"
+                        />
+                    <TextView
+                        android:id="@+id/textViewGood100"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_look_all"
+                        android:textSize="@dimen/sp14"
+                        android:textColor="@color/color_999"
+                        />
+                </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewGood100"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginBottom="@dimen/dp20"
+                    />
             </LinearLayout>
+
         </ScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>

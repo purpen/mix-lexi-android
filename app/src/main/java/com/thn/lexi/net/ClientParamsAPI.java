@@ -569,4 +569,28 @@ public class ClientParamsAPI {
         params.put("status", status);
         return params;
     }
+
+    /**
+     * 关注店铺
+     * @param rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getFocusBrandPavilionParams(@NotNull String rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid", rid);
+        return params;
+    }
+
+    /**
+     * 店铺取消关注
+     * @param rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getUnfocusBrandPavilionParams(@NotNull String rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid", rid);
+        return params;
+    }
 }
