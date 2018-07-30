@@ -109,4 +109,9 @@ object URL {
      * 精选->Banner
      */
     const val SELECTION_BANNER_URL = "${BASE_URL}banners/handpick"
+
+    /**
+     * 精选->品牌馆
+     */
+    const val BRAND_PAVILION_URL = "${BASE_URL}column/feature_store"
 }

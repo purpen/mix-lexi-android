@@ -62,10 +62,10 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         adapterFeatureNewGoods = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerViewBrand.setHasFixedSize(true)
-        recyclerViewBrand.layoutManager = linearLayoutManager
-        recyclerViewBrand.adapter = adapterFeatureNewGoods
-        recyclerViewBrand.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewNewGoods.setHasFixedSize(true)
+        recyclerViewNewGoods.layoutManager = linearLayoutManager
+        recyclerViewNewGoods.adapter = adapterFeatureNewGoods
+        recyclerViewNewGoods.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
 
     }
 

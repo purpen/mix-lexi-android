@@ -80,10 +80,10 @@ public class EditorRecommendBean {
             public String is_custom_made;
             public String is_custom_service;
             public String is_distributed;
-            public String is_free_postage;
+            public boolean is_free_postage;
             public String is_like;
             public String is_made_holiday;
-            public String is_sold_out;
+            public boolean is_sold_out;
             public String is_proprietary;
             public String like_count;
             public String is_wish;

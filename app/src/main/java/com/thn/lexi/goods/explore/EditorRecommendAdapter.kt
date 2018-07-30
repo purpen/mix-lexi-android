@@ -9,8 +9,21 @@ import com.thn.lexi.R
 
 class EditorRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendBean.DataBean.ProductsBean, BaseViewHolder>(layoutResId) {
     override fun convert(helper: BaseViewHolder, item: EditorRecommendBean.DataBean.ProductsBean) {
-//        val textViewStatus = helper.getView<View>(R.id.textViewStatus)
-//        val textViewExpress = helper.getView<View>(R.id.textViewExpress)
+        val imageViewStatus = helper.getView<View>(R.id.imageViewStatus)
+        if (item.is_sold_out){
+            imageViewStatus.visibility = View.VISIBLE
+        }else{
+            imageViewStatus.visibility = View.GONE
+        }
+
+        val imageViewExpress = helper.getView<View>(R.id.imageViewExpress)
+
+        if (item.is_free_postage){
+            imageViewExpress.visibility = View.VISIBLE
+        }else{
+            imageViewExpress.visibility = View.GONE
+        }
+
         helper.setText(R.id.textViewTitle,item.name)
         helper.setText(R.id.textViewPrice,item.min_sale_price)
         val imageView = helper.getView<ImageView>(R.id.imageView)
