@@ -3,6 +3,7 @@ package com.thn.lexi.goods.selection
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.goods.explore.ExploreBannerBean
 
 class SelectionContract {
     interface View : BaseView<Presenter> {
@@ -26,6 +27,8 @@ class SelectionContract {
         fun setFavorite(b: Boolean, position: Int) {
 
         }
+
+        fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>){}
     }
 
     interface Presenter : BasePresenter {

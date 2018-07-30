@@ -1,7 +1,10 @@
 package com.thn.lexi.goods.selection
+
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
+import android.view.MotionEvent
+import android.view.View
 import android.widget.LinearLayout
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
@@ -12,15 +15,17 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.goods.detail.GoodsDetailActivity
+import com.thn.lexi.goods.explore.ExploreBannerBean
 import com.thn.lexi.view.CenterShareView
 import kotlinx.android.synthetic.main.fragment_selection.*
 
 class FragmentSelection : BaseFragment(), SelectionContract.View {
-    private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
+    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_selection
-    private lateinit var presenter: SelectionPresenter
+    private val presenter: SelectionPresenter by lazy { SelectionPresenter(this) }
     private var page: Int = 1
     private lateinit var adapter: GoodsAdapter
+    private lateinit var adapterViewPager: ViewPagerAdapter
 
     companion object {
         @JvmStatic
@@ -28,7 +33,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
     }
 
     override fun initView() {
-        presenter = SelectionPresenter(this)
+        initBanner()
         adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
@@ -39,17 +44,47 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
         recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.VERTICAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(R.color.color_d1d1d1)))
     }
 
+    /**
+     * 初始化banner
+     */
+    private fun initBanner() {
+        presenter.getBanners()
+        viewPager.offscreenPageLimit = 3
+        viewPager.setPageTransformer(false, GallaryTransformer())
+    }
+
+    /**
+     * 设置Banner数据
+     */
+    override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
+        val list = ArrayList<String>()
+        list.add("https://imgsa.baidu.com/news/q%3D100/sign=25fbbeb51c3853438acf8321a311b01f/f2deb48f8c5494eee0ce42c021f5e0fe98257e7e.jpg")
+        list.add("https://imgsa.baidu.com/news/q%3D100/sign=0672257b55ee3d6d24c683cb73176d41/faf2b2119313b07e9dcf66d400d7912396dd8cff.jpg")
+        list.add("https://imgsa.baidu.com/news/q%3D100/sign=8b9e26e200f3d7ca0af63b76c21dbe3c/d1a20cf431adcbef65b51fdaa0af2edda2cc9f6c.jpg")
+        for (item in banner_images) {
+            list.add(item.image)
+        }
+        adapterViewPager = ViewPagerAdapter(list)
+        viewPager.adapter = adapterViewPager
+    }
+
     override fun setPresenter(presenter: SelectionContract.Presenter?) {
         setPresenter(presenter)
     }
 
 
     override fun installListener() {
+//        relativeLayout.setOnTouchListener(object :View.OnTouchListener{
+//            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+//                return viewPager.dispatchTouchEvent(event)
+//            }
+//        })
+
         adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-            when(view.id){
+            when (view.id) {
 
-                R.id.textView3 ->{
+                R.id.textView3 -> {
                     if (item.isFavorite) {
                         presenter.unfavoriteGoods(item.rid, position)
                     } else {

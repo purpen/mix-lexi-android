@@ -1,34 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="135dp"
     android:layout_height="wrap_content"
     >
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="135dp"
-        android:layout_height="135dp" />
-
-    <TextView
-        android:id="@+id/textViewStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="售罄"
-        android:background="@drawable/corner_bg_eee"
-        android:paddingTop="@dimen/dp5"
-        android:paddingBottom="@dimen/dp5"
-        android:paddingStart="@dimen/dp10"
-        android:layout_marginTop="@dimen/dp5"
-        android:layout_marginStart="@dimen/dp10"
-        android:paddingEnd="@dimen/dp10"
-        android:textSize="@dimen/sp12"
-        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp135"
+        android:scaleType="fitXY"
         />
 
+    <ImageView
+        android:id="@+id/imageViewStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_sell_out"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginStart="@dimen/dp10"
+        />
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_below="@+id/imageView"
-        android:layout_toEndOf="@+id/textViewExpress"
+        android:layout_toEndOf="@+id/imageViewExpress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -39,17 +33,14 @@
         android:ellipsize="end"
         />
 
-    <TextView
-        android:id="@+id/textViewExpress"
-        android:layout_alignTop="@+id/textViewTitle"
+    <ImageView
+        android:id="@+id/imageViewExpress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_color5fe4b1_radius4"
-        android:padding="@dimen/dp1"
-        android:textSize="@dimen/sp10"
+        android:layout_alignTop="@+id/textViewTitle"
+        android:layout_marginTop="@dimen/dp3"
         android:layout_marginEnd="@dimen/dp5"
-        android:textColor="@android:color/white"
-        android:text="包邮"
+        android:src="@mipmap/icon_free_express"
         />
 
     <TextView

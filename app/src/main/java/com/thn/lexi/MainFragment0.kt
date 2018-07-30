@@ -24,7 +24,7 @@ class MainFragment0 : BaseFragment() {
 
     private fun setUpViewPager() {
         val fragments = ArrayList<BaseFragment>()
-
+        
         fragments.add(FragmentSelection.newInstance())
         fragments.add(FragmentExplore.newInstance())
 

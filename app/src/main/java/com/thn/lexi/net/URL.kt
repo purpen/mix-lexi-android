@@ -104,4 +104,9 @@ object URL {
      * 探索->店铺关注
      */
     const val FOCUS_BRAND_PAVILION = "${BASE_URL}follow/store"
+
+    /**
+     * 精选->Banner
+     */
+    const val SELECTION_BANNER_URL = "${BASE_URL}banners/handpick"
 }

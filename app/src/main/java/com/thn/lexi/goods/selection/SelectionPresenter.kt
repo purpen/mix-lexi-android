@@ -4,6 +4,7 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.goods.bean.FavoriteBean
+import com.thn.lexi.goods.explore.ExploreBannerBean
 import java.io.IOException
 
 class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Presenter {
@@ -85,6 +86,23 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
                     view.setFavorite(false,position)
                 } else {
                     view.showError(favoriteBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    fun getBanners() {
+        dataSource.getBanners( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val exploreBannerBean = JsonUtil.fromJson(json, ExploreBannerBean::class.java)
+                if (exploreBannerBean.success) {
+                    view.setBannerData(exploreBannerBean.data.banner_images)
+                } else {
+                    view.showError(exploreBannerBean.status.message)
                 }
             }
 

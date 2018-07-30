@@ -15,10 +15,9 @@ import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
 
 class FragmentExplore:BaseFragment(),ExploreContract.View {
-
-    private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
+    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
+    private val presenter: ExplorePresenter by lazy { ExplorePresenter(this) }
     override val layout: Int = R.layout.fragment_explore
-    private lateinit var presenter: ExplorePresenter
     private var page: Int = 1
     private lateinit var adapterGoodsClass: GoodsClassAdapter
     private lateinit var adapterEditorRecommend: EditorRecommendAdapter
@@ -31,7 +30,6 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     }
 
     override fun initView() {
-        presenter = ExplorePresenter(this)
         initBanner()
         initGoodsClass()
         initEditorRecommend()
@@ -144,7 +142,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         presenter.getBanners()
         banner.setImageLoader(GlideImageLoader())
         banner.setIndicatorGravity(BannerConfig.RIGHT)
-        banner.start()
+
     }
 
     /**
@@ -152,11 +150,14 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      */
     override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
         val list = ArrayList<String>()
+        list.add("https://imgsa.baidu.com/news/q%3D100/sign=25fbbeb51c3853438acf8321a311b01f/f2deb48f8c5494eee0ce42c021f5e0fe98257e7e.jpg")
+        list.add("https://imgsa.baidu.com/news/q%3D100/sign=0672257b55ee3d6d24c683cb73176d41/faf2b2119313b07e9dcf66d400d7912396dd8cff.jpg")
+        list.add("https://imgsa.baidu.com/news/q%3D100/sign=8b9e26e200f3d7ca0af63b76c21dbe3c/d1a20cf431adcbef65b51fdaa0af2edda2cc9f6c.jpg")
         for (item in banner_images){
             list.add(item.image)
         }
         banner.setImages(list)
-
+        banner.start()
     }
 
     override fun setPresenter(presenter: ExploreContract.Presenter?) {
@@ -164,6 +165,11 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     }
 
     override fun installListener() {
+
+        banner.setOnBannerListener {
+            position ->ToastUtil.showInfo("你点击了$position")
+        }
+
         adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
             when(view.id){

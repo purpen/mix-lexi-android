@@ -4,7 +4,6 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.Constants
 import com.thn.lexi.R
-import com.thn.lexi.goods.bean.FavoriteBean
 import com.thn.lexi.goods.selection.GoodsData
 import java.io.IOException
 
@@ -165,7 +164,7 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
     }
 
     /**
-     * 店铺取消关注
+     * 品牌馆取消关注
      */
     fun unFocusBrandPavilion(rid:String) {
         dataSource.unFocusBrandPavilion(rid,object : IDataSource.HttpRequestCallBack {

@@ -9,8 +9,8 @@ import com.thn.lexi.R
 
 class CollectionGoodsAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendBean.DataBean.ProductsBean, BaseViewHolder>(layoutResId) {
     override fun convert(helper: BaseViewHolder, item: EditorRecommendBean.DataBean.ProductsBean) {
-        val textViewStatus = helper.getView<View>(R.id.textViewStatus)
-        val textViewExpress = helper.getView<View>(R.id.textViewExpress)
+//        val textViewStatus = helper.getView<View>(R.id.textViewStatus)
+//        val textViewExpress = helper.getView<View>(R.id.textViewExpress)
         helper.setText(R.id.textViewTitle,item.name)
         helper.setText(R.id.textViewPrice,item.min_sale_price)
         val imageView = helper.getView<ImageView>(R.id.imageView)
