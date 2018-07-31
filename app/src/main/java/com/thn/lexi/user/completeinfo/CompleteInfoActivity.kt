@@ -1,6 +1,7 @@
 package com.thn.lexi.user.completeinfo
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.view.View
@@ -28,7 +29,7 @@ import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import pub.devrel.easypermissions.AppSettingsDialog
 
-class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnClickListener, EasyPermissions.PermissionCallbacks,EasyPermissions.RationaleCallbacks {
+class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnClickListener, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
     private var gender: String = "0" //默认性别女
     private var avatarId: String = "" //图像id
     private var birth: String = "" // 出生日期
@@ -76,7 +77,7 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
                     when (position) {
                         0 -> cameraTask()
 
-                        1-> albumTask()
+                        1 -> albumTask()
                     }
                     dialog.dismiss()
                 }
@@ -116,7 +117,7 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
         } else {
             // 申请权限。
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo),
-                    Constants.REQUEST_CODE_PICK_IMAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
+                    Constants.REQUEST_CODE_PICK_IMAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
         }
     }
 
@@ -158,20 +159,23 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
 
     private var mCurrentPhotoFile: File? = null
 
-    private fun openCamera(){
+    private fun openCamera() {
         mCurrentPhotoFile = ImageUtils.getDefaultFile()
         ImageUtils.getImageFromCamera(this, ImageUtils.getUriForFile(applicationContext, mCurrentPhotoFile))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode){
-            Constants.REQUEST_CODE_CAPTURE_CAMERA ->{
+        
+        if (resultCode != Activity.RESULT_OK) return
+
+        when (requestCode) {
+            Constants.REQUEST_CODE_CAPTURE_CAMERA -> {
                 if (null == mCurrentPhotoFile) return
                 toCropActivity(ImageUtils.getUriForFile(applicationContext, mCurrentPhotoFile))
             }
-            Constants.REQUEST_CODE_PICK_IMAGE ->{
-                var mSelected = PicturePickerUtils.obtainResult(data);
+            Constants.REQUEST_CODE_PICK_IMAGE -> {
+                var mSelected = PicturePickerUtils.obtainResult(data)
                 if (mSelected == null || mSelected.isEmpty()) {
                     return
                 }
@@ -201,14 +205,14 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
     fun onClipComplete(message: ImageCropActivity.MessageCropComplete) {
         val byteArray = ImageUtils.bitmap2ByteArray(message.bitmap)
         setUserAvatar(byteArray)
-        presenter.uploadAvatar(uploadTokenBean,byteArray)
+        presenter.uploadAvatar(uploadTokenBean, byteArray)
     }
 
     /**
      * 显示头像
      */
     private fun setUserAvatar(byteArray: ByteArray) {
-        GlideUtil.loadCircleImageWidthDimen(byteArray,imageView,resources.getDimensionPixelSize(R.dimen.dp90))
+        GlideUtil.loadCircleImageWidthDimen(byteArray, imageView, resources.getDimensionPixelSize(R.dimen.dp90))
         imageViewBottom.visibility = View.VISIBLE
     }
 
@@ -239,15 +243,8 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
     }
 
 
-
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
         super.onDestroy()
-    }
-
-    override fun onBackPressed() {
-        // 提示用户
-        LogUtil.e("图示用户还差最后一步就可以进入主页")
-        super.onBackPressed()
     }
 }

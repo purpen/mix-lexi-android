@@ -99,6 +99,7 @@ public class ImageSelectActivity extends FragmentActivity implements AlbumCollec
                 }
             }
         });
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
