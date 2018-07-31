@@ -58,7 +58,6 @@
         android:background="@drawable/border_radius4_ddd"
         android:gravity="start|center_vertical"
         android:hint="@string/hint_input_user_name"
-        android:inputType="phone"
         android:maxLength="30"
         android:maxLines="1"
         android:paddingEnd="@dimen/dp5"

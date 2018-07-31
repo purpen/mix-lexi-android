@@ -63,7 +63,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
 
     override fun setUserInfo(data: UserInfoBean.DataBean) {
         textView0.text = data.username
-        GlideUtil.loadCircleImageWidthDimen("https://kg.erp.taihuoniao.com/20180226/Fi-R-nar6b1TdBOKZAnhl-FvT_qc.jpg",imageView)
+        GlideUtil.loadCircleImageWidthDimen("https://kg.erp.taihuoniao.com/20180226/Fi-R-nar6b1TdBOKZAnhl-FvT_qc.jpg",imageView,resources.getDimensionPixelSize(R.dimen.dp60))
     }
 
     override fun showLoadingView() {

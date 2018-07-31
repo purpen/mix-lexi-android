@@ -17,14 +17,14 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class ClientParamsAPI {
-//    public static final String app_key = "fi2N0mZVRUjzCkwtKWbM";
-//    public static final String app_secret = "cc3c36db353b4543aba12db6bbcff6cb53a592b2";
+    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
+    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
 
     private static HashMap<String, String> generateCommonParams() {
         HashMap<String, String> params = new HashMap<>();
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         String nonceStr = generateRandomString();
-        String app_key = SPUtil.read(Constants.APP_KEY);
+//        String app_key = SPUtil.read(Constants.APP_KEY);
         params.put("app_key", app_key);
         params.put("timestamp", timeStamp);
         params.put("nonce_str", nonceStr);
@@ -67,7 +67,8 @@ public class ClientParamsAPI {
             sb.append(key + "=" + value + "&");
         }
         sb.deleteCharAt(sb.lastIndexOf("&"));
-        sb.append(SPUtil.read(Constants.APP_SECRET));
+//        sb.append(SPUtil.read(Constants.APP_SECRET));
+        sb.append(app_secret);
         return new String(Hex.encodeHex(DigestUtils.sha1(sb.toString())));
     }
 
@@ -77,13 +78,15 @@ public class ClientParamsAPI {
      * @param areaCode
      * @param phone
      * @param userPsw
+     * @param confirmPassword
      * @return
      */
-    public static HashMap<String, String> getRegisterParams(String areaCode,String phone ,String userPsw) {
+    public static HashMap<String, String> getRegisterParams(String areaCode, String phone, String userPsw, String confirmPassword) {
         HashMap<String, String> params = generateCommonParams();
         params.put("areacode", areaCode);
         params.put("email", phone);
         params.put("password", userPsw);
+        params.put("affirm_password", confirmPassword);
         return params;
     }
 
@@ -591,6 +594,24 @@ public class ClientParamsAPI {
     public static HashMap<String,String> getUnfocusBrandPavilionParams(@NotNull String rid) {
         HashMap<String, String> params = generateCommonParams();
         params.put("rid", rid);
+        return params;
+    }
+
+    /**
+     * 完善用户资料
+     * @param avatar_id
+     * @param name
+     * @param birth
+     * @param gender
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getUploadUserInfoParams(@NotNull String avatar_id, @NotNull String name, @NotNull String birth, @NotNull String gender) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("avatar_id", avatar_id);
+        params.put("username", name);
+        params.put("date", birth);
+        params.put("gender", gender);
         return params;
     }
 }

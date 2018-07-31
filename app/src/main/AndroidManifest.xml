@@ -33,6 +33,8 @@
         <activity android:name=".user.areacode.SelectCountryOrAreaActivity" />
         <activity android:name=".user.register.SetPasswordActivity" />
         <activity android:name=".user.completeinfo.CompleteInfoActivity" />
+        <activity android:name=".album.ImageCropActivity" />
+        <activity android:name=".album.ImageSelectActivity" />
     </application>
 
 </manifest>

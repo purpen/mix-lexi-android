@@ -126,9 +126,9 @@ public class GlideUtil {
         Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
     }
 
-    public static <T> void loadCircleImageWidthDimen(@NotNull T t, @Nullable ImageView imageView) {
+    public static <T> void loadCircleImageWidthDimen(@NotNull T t, @Nullable ImageView imageView,int size) {
         RequestOptions requestOptions = bitmapTransform(new CircleCrop());
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).override(size).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
     }
 

@@ -24,17 +24,17 @@ class RegisterPresenter(view: RegisterContract.View) : RegisterContract.Presente
             view.showInfo(AppApplication.getContext().getString(R.string.text_phone_null))
             return
         }
-        view.startCountDown()
+
         dataSource.sendCheckCode(areaCode,phone,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 view.dismissLoadingView()
                 val verifyCodeBean = JsonUtil.fromJson(json, VerifyCodeBean::class.java)
                 if (verifyCodeBean.success) {
+                    view.startCountDown()
                     ToastUtil.showSuccess(verifyCodeBean.status.message)
                 } else {
                     view.showInfo(verifyCodeBean.status.message)

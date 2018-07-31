@@ -9,15 +9,14 @@ import android.content.Context;
 
 import com.basemodule.tools.BaseModuleContext;
 import com.example.myapp.MyEventBusIndex;
+import com.qiniu.android.common.AutoZone;
+import com.qiniu.android.storage.Configuration;
+import com.qiniu.android.storage.UploadManager;
 
 import org.greenrobot.eventbus.EventBus;
 
 public class AppApplication extends Application {
     private static Application instance;
-
-
-//    private static UploadManager uploadManager;
-
 
     public static Application getContext() {
         return instance;
@@ -39,8 +38,6 @@ public class AppApplication extends Application {
         BaseModuleContext.init(this);
         //使用时才自动生成MyEventBusIndex
         EventBus.builder().addIndex(new MyEventBusIndex()).throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
-//        initQiNiu();
-//        ZXingLibrary.initDisplayOpinion(this);
     }
 
 
@@ -65,22 +62,16 @@ public class AppApplication extends Application {
 //        MultiDex.install(base);
     }
 
-//    private void initQiNiu() {
-//        Configuration config = new Configuration.Builder()
-//                .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
-//                .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
-//                .connectTimeout(10)           // 链接超时。默认10秒
-//                .useHttps(true)               // 是否使用https上传域名
-//                .responseTimeout(60)          // 服务器响应超时。默认60秒
-//                .recorder(recorder)           // recorder分片上传时，已上传片记录器。默认null
-//                .recorder(recorder, keyGen)   // keyGen 分片上传时，生成标识符，用于片记录器区分是那个文件的上传记录
-//                .zone(THNZone.zone0)        // 设置区域，指定不同区域的上传域名、备用域名、备用IP。
-//                .build();
+    private static class SingletonInstance {
+        static Configuration config = new Configuration.Builder()
+                .zone(AutoZone.autoZone)
+                .build();
 
-        // 重用 uploadManager。一般地，只需要创建一个 uploadManager 对象
-//        uploadManager = new UploadManager(config);
-//    }
-//    public static UploadManager getUploadManager() {
-//        return uploadManager;
-//    }
+        private static final UploadManager INSTANCE = new UploadManager(config);
+    }
+
+    public static UploadManager getUploadManager() {
+        return SingletonInstance.INSTANCE;
+    }
+
 }

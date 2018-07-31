@@ -1,15 +1,20 @@
 package com.basemodule.tools;
 
+import android.text.TextUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by lilin on 2017/7/25.
  */
 
 public class DateUtil {
+
+    private static final String PATTERN = "yyyy-MM-dd";
     private int interval =0;
     /**
      * 某日期的前几天或者后几天
@@ -21,7 +26,7 @@ public class DateUtil {
         c.setTime(date);
         int day = c.get(Calendar.DATE);
         c.set(Calendar.DATE,day-interval);
-        return new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+        return new SimpleDateFormat(PATTERN).format(c.getTime());
     }
 
     /**
@@ -70,5 +75,14 @@ public class DateUtil {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         c.setTime(new Date(timestamp));
         return simpleDateFormat.format(c.getTime());
+    }
+
+
+    /**
+     * 返回中国格式日期
+     */
+    public static String getDateString(Date date){
+        SimpleDateFormat format = new SimpleDateFormat(PATTERN, Locale.SIMPLIFIED_CHINESE);
+        return format.format(date);
     }
 }

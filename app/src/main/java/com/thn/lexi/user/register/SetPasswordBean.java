@@ -1,10 +1,9 @@
 package com.thn.lexi.user.register;
 
 public class SetPasswordBean {
-
     /**
-     * data : {"areacode":"+86","email":"13001179411"}
-     * status : {"code":200,"message":"Ok all right."}
+     * data : {"created_at":1532522531,"expiration":2592000,"token":"eyJhbGciOiJIUzI1NiIsImlhdCI6MTUzMjUyMjUzMSwiZXhwIjoxNTM1MTE0NTMxfQ.eyJpZCI6MTZ9._yfN5fiiN1hsn8kZttvHEHYwL_KbUEK1RljcLTHm6_I"}
+     * status : {"code":201,"message":"All created."}
      * success : true
      */
 
@@ -14,18 +13,20 @@ public class SetPasswordBean {
 
     public static class DataBean {
         /**
-         * areacode : +86
-         * email : 13001179411
+         * created_at : 1532522531
+         * expiration : 2592000
+         * token : eyJhbGciOiJIUzI1NiIsImlhdCI6MTUzMjUyMjUzMSwiZXhwIjoxNTM1MTE0NTMxfQ.eyJpZCI6MTZ9._yfN5fiiN1hsn8kZttvHEHYwL_KbUEK1RljcLTHm6_I
          */
 
-        public String areacode;
-        public String email;
+        public int created_at;
+        public int expiration;
+        public String token;
     }
 
     public static class StatusBean {
         /**
-         * code : 200
-         * message : Ok all right.
+         * code : 201
+         * message : All created.
          */
 
         public int code;

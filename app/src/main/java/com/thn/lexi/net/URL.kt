@@ -28,6 +28,11 @@ object URL {
      */
     const val REGISTER_VERIFY_CODE = "${BASE_URL}users/register_verify_code"
 
+    /*
+    *注册设置密码
+    */
+    const val REGISTER_SET_PASSWORD= "${BASE_URL}auth/set_password"
+
     /**
      * 商品列表
       */
@@ -68,12 +73,12 @@ object URL {
     /**
      * 获取图片上传token
      */
-    const val UPLOAD_TOKEN = "${BASE_URL}assets/up_token"
+    const val UPLOAD_TOKEN = "${BASE_URL}assets/user_upload_token"
 
     /**
      * 首次登录完善资料
      */
-    const val COMPLETE_USER_INFO = "${BASE_URL}auth/info"
+    const val COMPLETE_USER_INFO = "${BASE_URL}auth/complete_info"
 
     /**
      * 探索->商品分类
@@ -114,4 +119,5 @@ object URL {
      * 精选->品牌馆
      */
     const val BRAND_PAVILION_URL = "${BASE_URL}column/feature_store"
+
 }
