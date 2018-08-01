@@ -5,6 +5,7 @@ import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.net.ClientParamsAPI
 import java.io.IOException
 
 
@@ -38,7 +39,8 @@ class SetPasswordPresenter(view: SetPasswordActivity) : SetPasswordContract.Pres
                 view.dismissLoadingView()
                 val setPasswordBean = JsonUtil.fromJson(json, SetPasswordBean::class.java)
                 if (setPasswordBean.success) {
-                    SPUtil.write(Constants.AUTHORIZATION, setPasswordBean.data.token)
+                    val authorization = ClientParamsAPI.getAuthorization(setPasswordBean.data.token)
+                    SPUtil.write(Constants.AUTHORIZATION,authorization)
                     view.goPage()
                 } else {
                     view.showInfo(setPasswordBean.status.message)

@@ -1,9 +1,18 @@
 package com.thn.lexi.net;
+
+import android.text.TextUtils;
+import android.util.Base64;
+
 import com.basemodule.tools.Constants;
+import com.basemodule.tools.SPUtil;
+
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +22,33 @@ import java.util.TreeMap;
 public class ClientParamsAPI {
     public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
     public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
+
+    /**
+     * 获取登录后的authorization
+     * @param token
+     * @return
+     */
+    public static String getAuthorization(String token) {
+        String str;
+        if (TextUtils.isEmpty(token)) return "";
+        str = token + ":" + token;
+        str = "Basic  " + Base64.encodeToString(str.getBytes(), Base64.NO_WRAP);
+        return str.trim();
+    }
+
+    /**
+     * 获取登录前的token
+     * @param phone
+     * @param password
+     * @return
+     */
+    public static String getAuthorization(String phone,String password) {
+        String str;
+        if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) return "";
+        str = phone + ":" + password;
+        str = "Basic  " + Base64.encodeToString(str.getBytes(), Base64.NO_WRAP);
+        return str.trim();
+    }
 
     private static HashMap<String, String> generateCommonParams() {
         HashMap<String, String> params = new HashMap<>();
@@ -86,9 +122,10 @@ public class ClientParamsAPI {
 
     /**
      * 获取验证码参数
-     * @return
+     *
      * @param areaCode
      * @param phone
+     * @return
      */
     public static HashMap<String, String> getCheckCodeRequestParams(String areaCode, String phone) {
         HashMap<String, String> params = new HashMap<>();
@@ -329,12 +366,13 @@ public class ClientParamsAPI {
 
     /**
      * 找回密码
+     *
      * @param password
      * @param confirmPassword
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getUpdatePasswordParams(@NotNull String phone,@NotNull String password,@NotNull String confirmPassword) {
+    public static HashMap<String, String> getUpdatePasswordParams(@NotNull String phone, @NotNull String password, @NotNull String confirmPassword) {
         HashMap<String, String> params = generateCommonParams();
         params.put("email", phone);
         params.put("password", password);
@@ -344,17 +382,18 @@ public class ClientParamsAPI {
 
     /**
      * 设置界面获取用户信息
+     *
      * @param userId
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getSettingParams(@NotNull String userId) {
+    public static HashMap<String, String> getSettingParams(@NotNull String userId) {
         HashMap<String, String> params = generateCommonParams();
         params.put("userId", userId);
         return params;
     }
 
-    public static HashMap<String,String> getSimilarParams(int page) {
+    public static HashMap<String, String> getSimilarParams(int page) {
         HashMap<String, String> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
@@ -363,12 +402,13 @@ public class ClientParamsAPI {
 
     /**
      * 获取消息列表
+     *
      * @param page
      * @param userId
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getMessageParams(int page, @NotNull String userId) {
+    public static HashMap<String, String> getMessageParams(int page, @NotNull String userId) {
         HashMap<String, String> params = generateCommonParams();
         params.put("user_id", userId);
         params.put("page", String.valueOf(page));
@@ -378,11 +418,12 @@ public class ClientParamsAPI {
 
     /**
      * 喜欢某商品
+     *
      * @param rid
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getFavoriteGoodsParams(@NotNull String rid) {
+    public static HashMap<String, String> getFavoriteGoodsParams(@NotNull String rid) {
         HashMap<String, String> params = generateCommonParams();
         params.put("rid", rid);
         return params;
@@ -390,12 +431,13 @@ public class ClientParamsAPI {
 
     /**
      * 验证动态码
+     *
      * @param phone
      * @param checkCode
      * @return
      */
     @Nullable
-    public static HashMap<String,String> verifyCheckCodeParams(@NotNull String areaCode,@NotNull String phone, @NotNull String checkCode) {
+    public static HashMap<String, String> verifyCheckCodeParams(@NotNull String areaCode, @NotNull String phone, @NotNull String checkCode) {
         HashMap<String, String> params = generateCommonParams();
         params.put("areacode", areaCode);
         params.put("email", phone);
@@ -406,12 +448,13 @@ public class ClientParamsAPI {
 
     /**
      * 获取手机号地区编码
+     *
      * @param page
      * @param status
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getAreaCodes(int page, @NotNull String status) {
+    public static HashMap<String, String> getAreaCodes(int page, @NotNull String status) {
         HashMap<String, String> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
@@ -421,11 +464,12 @@ public class ClientParamsAPI {
 
     /**
      * 关注店铺
+     *
      * @param rid
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getFocusBrandPavilionParams(@NotNull String rid) {
+    public static HashMap<String, String> getFocusBrandPavilionParams(@NotNull String rid) {
         HashMap<String, String> params = generateCommonParams();
         params.put("rid", rid);
         return params;
@@ -433,11 +477,12 @@ public class ClientParamsAPI {
 
     /**
      * 店铺取消关注
+     *
      * @param rid
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getUnfocusBrandPavilionParams(@NotNull String rid) {
+    public static HashMap<String, String> getUnfocusBrandPavilionParams(@NotNull String rid) {
         HashMap<String, String> params = generateCommonParams();
         params.put("rid", rid);
         return params;
@@ -445,6 +490,7 @@ public class ClientParamsAPI {
 
     /**
      * 完善用户资料
+     *
      * @param avatar_id
      * @param name
      * @param birth
@@ -452,7 +498,7 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getUploadUserInfoParams(@NotNull String avatar_id, @NotNull String name, @NotNull String birth, @NotNull String gender) {
+    public static HashMap<String, String> getUploadUserInfoParams(@NotNull String avatar_id, @NotNull String name, @NotNull String birth, @NotNull String gender) {
         HashMap<String, String> params = generateCommonParams();
         params.put("avatar_id", avatar_id);
         params.put("username", name);
@@ -463,13 +509,14 @@ public class ClientParamsAPI {
 
     /**
      * 使用动态码登录
+     *
      * @param areaCode
      * @param phone
      * @param checkCode
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getCheckCodeLoginRequestParams(@NotNull String areaCode, @NotNull String phone, @NotNull String checkCode) {
+    public static HashMap<String, String> getCheckCodeLoginRequestParams(@NotNull String areaCode, @NotNull String phone, @NotNull String checkCode) {
         HashMap<String, String> params = generateCommonParams();
         params.put("areacode", areaCode);
         params.put("email", phone);
