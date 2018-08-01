@@ -45,12 +45,10 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
         when (id) {
             R.id.textViewCountryCode -> startActivity(Intent(applicationContext, SelectCountryOrAreaActivity::class.java))
             R.id.button -> {
-                presenter.verifyCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString(),etCheckCode.text.toString())
-                //TODO 验证动态码正确，跳转设置新密码
-                startActivity(Intent(this,SetNewPasswordActivity::class.java))
+                presenter.verifyCheckCode(textViewCountryCode.text.trim().toString(),etPhone.text.trim().toString(),etCheckCode.text.trim().toString())
+
             }
             R.id.textViewGetCode -> presenter.sendCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString())
-
         }
     }
 
@@ -76,8 +74,11 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
         ToastUtil.showError(s)
     }
 
-    override fun goPage() {
-
+    override fun goPage(phone: String) {
+        val intent = Intent(this, SetNewPasswordActivity::class.java)
+        intent.putExtra(ForgetPasswordActivity::class.java.simpleName,phone)
+        startActivity(intent)
+        finish()
     }
 
     override fun showInfo(string: String) {

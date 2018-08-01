@@ -80,7 +80,24 @@ open class LoginModel{
      */
     fun sendCheckCode(areaCode: String, phone: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getCheckCodeRequestParams(areaCode,phone)
-        HttpRequest.sendRequest(HttpRequest.POST,URL.REGISTER_VERIFY_CODE,params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.POST,URL.LOGIN_SEND_CHECKCODE,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun loginUserWithCheckCode(areaCode: String, phone: String, checkCode: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getCheckCodeLoginRequestParams(areaCode,phone,checkCode)
+        HttpRequest.sendRequest(HttpRequest.POST,URL.LOGIN_WITH_CHECKCODE,params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

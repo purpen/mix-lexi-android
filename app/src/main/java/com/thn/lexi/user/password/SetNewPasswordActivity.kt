@@ -1,13 +1,10 @@
 package com.thn.lexi.user.password
-
-import android.content.Intent
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
-import com.thn.lexi.MainActivity
 import com.thn.lexi.R
 import kotlinx.android.synthetic.main.acticity_set_new_password.*
 
@@ -20,10 +17,19 @@ class SetNewPasswordActivity : BaseActivity(), View.OnClickListener, SetNewPassw
     private val dialog: WaitingDialog? by lazy { WaitingDialog(this) }
 
     private var showPassword: Boolean = false
+    private var showPassword1: Boolean = false
 
     private lateinit var presenter: SetNewPasswordPresenter
 
     override val layout: Int = R.layout.acticity_set_new_password
+
+    private var phone:String = ""
+
+    override fun getIntentData() {
+       if (intent.hasExtra(ForgetPasswordActivity::class.java.simpleName)){
+            phone = intent.getStringExtra(ForgetPasswordActivity::class.java.simpleName)
+       }
+    }
 
     override fun initView() {
         presenter = SetNewPasswordPresenter(this)
@@ -32,6 +38,7 @@ class SetNewPasswordActivity : BaseActivity(), View.OnClickListener, SetNewPassw
     override fun installListener() {
         button.setOnClickListener(this)
         imageViewShow.setOnClickListener(this)
+        imageViewShow1.setOnClickListener(this)
     }
 
 
@@ -39,25 +46,34 @@ class SetNewPasswordActivity : BaseActivity(), View.OnClickListener, SetNewPassw
         setPresenter(presenter)
     }
 
-    override fun onClick(v: View?) {
-        val id = v?.id
+    override fun onClick(v: View) {
+        val id = v.id
         when (id) {
-
             //更新密码
-            R.id.button -> presenter.updateNewPassword(etPassword.text.toString())
+            R.id.button -> presenter.updateNewPassword(phone,etPassword.text.toString(),etPassword1.text.toString())
 
-            //显示密码
             R.id.imageViewShow -> {
                 if (showPassword) {
                     imageViewShow.setImageResource(R.mipmap.icon_hidden_password)
                     showPassword = false
-                    etPassword.transformationMethod = PasswordTransformationMethod.getInstance();
+                    etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
                 } else {
                     imageViewShow.setImageResource(R.mipmap.icon_show_password)
                     showPassword = true
-                    etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance();
+                    etPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 }
+            }
 
+            R.id.imageViewShow1 -> {
+                if (showPassword1) {
+                    imageViewShow1.setImageResource(R.mipmap.icon_hidden_password)
+                    showPassword1 = false
+                    etPassword1.transformationMethod = PasswordTransformationMethod.getInstance()
+                } else {
+                    imageViewShow1.setImageResource(R.mipmap.icon_show_password)
+                    showPassword1 = true
+                    etPassword1.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                }
             }
 
 
@@ -77,7 +93,6 @@ class SetNewPasswordActivity : BaseActivity(), View.OnClickListener, SetNewPassw
     }
 
     override fun goPage() {
-        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

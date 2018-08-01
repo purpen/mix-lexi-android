@@ -10,32 +10,30 @@ import com.thn.lexi.user.register.TokenBean
 import java.io.IOException
 import java.util.HashMap
 
-class LoginPresenter : LoginContract.Presenter {
+class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
 
-    private var view: LoginContract.View
+    private var view: LoginContract.View = checkNotNull(view)
     private val dataSource: LoginModel by lazy { LoginModel() }
 
-    constructor(view: LoginContract.View){
-        this.view = checkNotNull(view)
-    }
 
     //暂时用商户身份登录
     override fun loginUser(phone: String, password: String) {
         val authorzationCode = getTempAuthorzationCode(phone, password)
-        dataSource.loginUser(phone,password,authorzationCode,object:IDataSource.HttpRequestCallBack{
+        dataSource.loginUser(phone, password, authorzationCode, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 view.dismissLoadingView()
-                val fromJson = JsonUtil.fromJson(json, LoginBean::class.java)
-                if (fromJson.success){
+                val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
+                if (loginBean.success) {
 //                    getToken(phone,password)
-                    getAppKeyAndSecret(fromJson.data.store_rid,authorzationCode)
-                }else{
-                    view.showError(fromJson.status.message)
+//                    getAppKeyAndSecret(fromJson.data.store_rid, authorzationCode)
+                    SPUtil.write(Constants.AUTHORIZATION, loginBean.data.token)
+                    view.goPage()
+                } else {
+                    view.showError(loginBean.status.message)
                 }
             }
 
@@ -50,7 +48,7 @@ class LoginPresenter : LoginContract.Presenter {
     // 获取商户的key和token
     private fun getAppKeyAndSecret(storeId: String, authorzationCode: String) {
 
-        dataSource.getAppKeyAndSecret(storeId,authorzationCode,object:IDataSource.HttpRequestCallBack{
+        dataSource.getAppKeyAndSecret(storeId, authorzationCode, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 LogUtil.e(json)
                 view.dismissLoadingView()
@@ -82,7 +80,7 @@ class LoginPresenter : LoginContract.Presenter {
                 LogUtil.e(json)
                 val tokenBean = JsonUtil.fromJson(json, TokenBean::class.java)
                 if (tokenBean.success) {
-                    SPUtil.write(Constants.AUTHORIZATION,tokenBean.data.token)
+                    SPUtil.write(Constants.AUTHORIZATION, tokenBean.data.token)
                     view.goPage()
                 } else {
                     view.showInfo(tokenBean.status.message)
@@ -107,14 +105,14 @@ class LoginPresenter : LoginContract.Presenter {
         dataSource.sinaLogin()
     }
 
-    private fun getTempAuthorzationCode(phone: String,password: String): String {
+    private fun getTempAuthorzationCode(phone: String, password: String): String {
         var str = "$phone:$password"
         str = "Basic  " + Base64.encodeToString(str.toByteArray(), Base64.DEFAULT)
         return str.trim()
     }
 
     override fun sendCheckCode(areaCode: String, phone: String) {
-        dataSource.sendCheckCode(areaCode,phone,object : IDataSource.HttpRequestCallBack {
+        dataSource.sendCheckCode(areaCode, phone, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -131,6 +129,36 @@ class LoginPresenter : LoginContract.Presenter {
             }
 
             override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+
+    /**
+     * 通过手机号和动态码登录
+     */
+    fun loginUserWithCheckCode(areaCode: String, phone: String, checkCode: String) {
+        dataSource.loginUserWithCheckCode(areaCode, phone,checkCode,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                LogUtil.e(json)
+                view.dismissLoadingView()
+                val checkCodeLoginBean = JsonUtil.fromJson(json, CheckCodeLoginBean::class.java)
+                if (checkCodeLoginBean.success) {
+                    SPUtil.write(Constants.AUTHORIZATION, checkCodeLoginBean.data.token)
+                    view.goPage(checkCodeLoginBean.data.is_first_login)
+                } else {
+                    view.showInfo(checkCodeLoginBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

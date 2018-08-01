@@ -16,25 +16,24 @@ class SetNewPasswordPresenter(view: SetNewPasswordContract.View) : SetNewPasswor
     /**
      * 通过手机号更换新密码
      */
-    override fun updateNewPassword(password: String) {
-
-//        if (TextUtils.isEmpty(phone.trim())) {
-//            view.showInfo(AppApplication.getContext().getString(R.string.text_phone_null))
-//            return
-//        }
-//
-//        if (TextUtils.isEmpty(checkCode.trim())) {
-//            view.showInfo(AppApplication.getContext().getString(R.string.text_check_code))
-//            return
-//        }
+    override fun updateNewPassword(phone:String,password: String, confirmPassword: String) {
+        if (TextUtils.isEmpty(phone)){
+            view.showInfo(AppApplication.getContext().getString(R.string.text_phone_null))
+            return
+        }
 
         if (TextUtils.isEmpty(password.trim())) {
             view.showInfo(AppApplication.getContext().getString(R.string.tex_hint_new_password))
             return
         }
 
+        if (!TextUtils.equals(password,confirmPassword)){
+            view.showInfo(AppApplication.getContext().getString(R.string.text_password_not_equal))
+            return
+        }
 
-        dataSource.updateNewPassword(password, object : IDataSource.HttpRequestCallBack {
+
+        dataSource.updateNewPassword(phone,password.trim(),confirmPassword.trim(),object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -45,6 +44,7 @@ class SetNewPasswordPresenter(view: SetNewPasswordContract.View) : SetNewPasswor
                 val forgetPasswordBean = JsonUtil.fromJson(json, ForgetPasswordBean::class.java)
                 if (forgetPasswordBean.success) {
                     ToastUtil.showSuccess(forgetPasswordBean.status.message)
+                    view.goPage()
                 } else {
                     view.showInfo(forgetPasswordBean.status.message)
                 }
@@ -55,10 +55,4 @@ class SetNewPasswordPresenter(view: SetNewPasswordContract.View) : SetNewPasswor
             }
         })
     }
-
-
-    fun sendCheckCode() {
-        dataSource.sendCheckCode()
-    }
-
 }

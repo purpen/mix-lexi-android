@@ -12,6 +12,6 @@ class SetNewPasswordContract {
         fun showInfo(string: String)
     }
     interface Presenter : BasePresenter {
-        fun updateNewPassword(password: String)
+        fun updateNewPassword(phone:String,password: String, confirmPassword: String)
     }
 }

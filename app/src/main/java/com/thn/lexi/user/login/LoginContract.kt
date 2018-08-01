@@ -10,7 +10,7 @@ class LoginContract {
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
         fun showInfo(message: String)
-        fun goPage()
+        fun goPage(vararg args: Boolean)
     }
 
     interface Presenter : BasePresenter {

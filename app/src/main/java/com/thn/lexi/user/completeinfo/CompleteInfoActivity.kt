@@ -104,7 +104,6 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
             }
 
             R.id.button -> {
-                //提交补充信息关闭之前界面
                 presenter.uploadUserInfo(avatarId, etName.text.toString(), birth, gender)
             }
         }

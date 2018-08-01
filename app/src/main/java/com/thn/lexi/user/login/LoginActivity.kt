@@ -8,11 +8,9 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
-import com.thn.lexi.Constants
 import com.thn.lexi.MainActivity
 import com.thn.lexi.MessageClose
 import com.thn.lexi.R
-import com.thn.lexi.user.areacode.CountryAreaCodeBean
 import com.thn.lexi.user.areacode.MessageAreaCode
 import com.thn.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.thn.lexi.user.completeinfo.CompleteInfoActivity
@@ -118,8 +116,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
 
             R.id.textViewForgetPassword -> startActivity(Intent(applicationContext, ForgetPasswordActivity::class.java))
 
-            R.id.btnLogin -> presenter.loginUser(etPhone.text.toString(),etPassword.text.toString())
-
+            R.id.btnLogin -> {
+                if(relativeLayoutPassWordBox.isShown){
+                    presenter.loginUser(etPhone.text.toString(),etPassword.text.toString())
+                }else{
+                    presenter.loginUserWithCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString(),etCheckCode.text.toString())
+                }
+            }
 
             R.id.linearLayoutWeChat -> presenter.wechatLogin()
 
@@ -142,8 +145,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
         dialog?.dismiss()
     }
 
-    override fun goPage() {
-        startActivity(Intent(this, MainActivity::class.java))
+    override fun goPage(vararg args: Boolean) {
+        if (args.isEmpty() || !args[0]){
+            startActivity(Intent(this, MainActivity::class.java))
+            EventBus.getDefault().post(MessageClose())
+        }else{
+            startActivity(Intent(this, CompleteInfoActivity::class.java))
+        }
+
     }
 
     override fun showInfo(message: String) {

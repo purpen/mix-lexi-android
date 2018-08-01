@@ -7,7 +7,7 @@ class ForgetPasswordContract {
     interface View : BaseView<Presenter>{
         fun showLoadingView()
         fun showError(s: String)
-        fun goPage()
+        fun goPage(email: String)
         fun dismissLoadingView()
         fun showInfo(string: String)
     }

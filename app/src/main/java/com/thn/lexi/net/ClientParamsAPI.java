@@ -1,15 +1,9 @@
 package com.thn.lexi.net;
-
-
 import com.basemodule.tools.Constants;
-import com.basemodule.tools.SPUtil;
-
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -101,157 +95,6 @@ public class ClientParamsAPI {
         params.put("area_code", areaCode);
         params.put("mobile", phone);
         return params;
-    }
-
-    /**
-     * 获取重置密码验证码
-     *
-     * @param account
-     * @return
-     */
-    public static HashMap<String, String> getResetPasswordCodeRequestParams(String account) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("phone", account);
-        return params;
-    }
-
-    /**
-     * 重置为新密码
-     *
-     * @param account
-     * @param userPsw
-     * @param checkCode
-     * @return
-     */
-    public static HashMap<String, String> getResetPasswordRequestParams(String account, String userPsw, String checkCode) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("phone", account);
-        params.put("code", checkCode);
-        params.put("password", userPsw);
-        return params;
-    }
-
-    /**
-     * 获得top100产品列表
-     *
-     * @param start_time
-     * @param end_time
-     * @return
-     */
-    public static HashMap<String, String> getSalesTop100Params(String start_time, String end_time) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("start_time", start_time);
-        params.put("end_time", end_time);
-        return params;
-    }
-
-    public static HashMap<String, String> getSalesTrendsRequestParams(String start_time, String end_time) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("start_time", start_time);
-        params.put("end_time", end_time);
-        return params;
-    }
-
-
-    /**
-     * 获得登录参数
-     *
-     * @param account
-     * @param password
-     * @return
-     */
-    public static HashMap<String, String> getLoginRequestParams(String account, String password) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("email", account);
-//        params.put("from_to", "2");     //登录渠道
-        params.put("password", password);
-        return params;
-    }
-
-    /**
-     * 获取新增商品参数
-     *
-     * @param name
-     * @param cover_id
-     * @param price
-     * @return
-     */
-    public static HashMap<String, String> getProductSAddParams(String name, String cover_id, String price) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("name", name);
-        params.put("cover_id", cover_id);
-        params.put("price", price);
-        return params;
-    }
-
-    /**
-     * 获取分销客户列表
-     *
-     * @param page page 当前第几页
-     * @return
-     */
-    public static HashMap<String, String> getCustomerList(int page) {
-        HashMap<String, String> params = generateCommonParams();
-//        params.put("token",SPUtil.read(Constants.TOKEN));
-        params.put("page", String.valueOf(page));
-        params.put("per_page", Constants.PAGE_SIZE);
-        return params;
-    }
-
-    /**
-     * 新增用户
-     *
-     * @return
-     */
-    public static HashMap<String, String> addCustomer(int grade_id, String name, String province, String city, String area, String street_address, String mobile, String phone, String email) {
-        HashMap<String, String> params = generateCommonParams();
-//        params.put("token",SPUtil.read(Constants.TOKEN));
-        params.put("grade_id", String.valueOf(grade_id));
-        params.put("name", name);
-        params.put("province", province);
-        params.put("city", city);
-        params.put("area", area);
-        params.put("street_address", street_address);
-        params.put("mobile", mobile);
-        params.put("phone", phone);
-        params.put("email", email);
-        return params;
-    }
-
-    /**
-     * 获取商品列表或某分类所有商品
-     *
-     * @param page
-     * @return
-     */
-    public static HashMap<String, String> getGoodsList(String cid, int page) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("cid", String.valueOf(cid));
-        params.put("page", String.valueOf(page));
-        params.put("per_page", Constants.PAGE_SIZE);
-        return params;
-    }
-
-
-    /**
-     * 创建订单
-     *
-     * @return
-     */
-    public static HashMap createOrderParams(long store_id, String address_rid, double freight, ArrayList items) {
-        HashMap<String, String> params = generateCommonParams();
-        HashMap<String, Object> hashMap = new HashMap<>();
-        Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, String> entry = iterator.next();
-            hashMap.put(entry.getKey(), entry.getValue());
-        }
-        hashMap.put("store_id", store_id);
-        hashMap.put("address_rid", address_rid);
-        hashMap.put("freight", freight);
-        hashMap.put("items", items);
-        HashMap hashMap1 = new HashMap();
-        return hashMap;
     }
 
     /**
@@ -487,12 +330,15 @@ public class ClientParamsAPI {
     /**
      * 找回密码
      * @param password
+     * @param confirmPassword
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getUpdateNewPasswordParams(@NotNull String password) {
+    public static HashMap<String, String> getUpdatePasswordParams(@NotNull String phone,@NotNull String password,@NotNull String confirmPassword) {
         HashMap<String, String> params = generateCommonParams();
+        params.put("email", phone);
         params.put("password", password);
+        params.put("affirm_password", confirmPassword);
         return params;
     }
 
@@ -612,6 +458,22 @@ public class ClientParamsAPI {
         params.put("username", name);
         params.put("date", birth);
         params.put("gender", gender);
+        return params;
+    }
+
+    /**
+     * 使用动态码登录
+     * @param areaCode
+     * @param phone
+     * @param checkCode
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getCheckCodeLoginRequestParams(@NotNull String areaCode, @NotNull String phone, @NotNull String checkCode) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("areacode", areaCode);
+        params.put("email", phone);
+        params.put("verify_code", checkCode);
         return params;
     }
 }

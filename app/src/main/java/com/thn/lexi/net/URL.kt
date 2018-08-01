@@ -16,12 +16,33 @@ object URL {
     /**
      *登录
      */
-    const val LOGIN_URL = "${BASE_URL}auth/business_login"
+    const val LOGIN_URL = "${BASE_URL}auth/login"
 
     /**
-     *登录/忘记密码验证码URL
+     * 登录发送验证码
      */
-    const val LOGIN_FORGET_VERIFY_CODE = "${BASE_URL}users/login_verify_code"
+    const val LOGIN_SEND_CHECKCODE: String = "${BASE_URL}users/dynamic_login_verify_code"
+
+    /**
+     *  忘记密码发送验证码
+     */
+    const val FORGET_PASSWORD_SEND_CHECKCODE = "${BASE_URL}users/find_pwd_verify_code"
+
+    /**
+     *  忘记密码校验验证码
+     */
+    const val FORGET_PASSWORD_VERIFY_CHECKCODE = "${BASE_URL}auth/find_pwd"
+
+    /**
+     * 忘记密码后设置密码
+     */
+    const val FORGET_PASSWORD_SET_NEW = "${BASE_URL}auth/modify_pwd"
+
+    /**
+     * 使用动态码登录
+     */
+    val LOGIN_WITH_CHECKCODE = "${BASE_URL}auth/app_dynamic_login"
+
 
     /*
      *注册验证码URL
@@ -31,23 +52,23 @@ object URL {
     /*
     *注册设置密码
     */
-    const val REGISTER_SET_PASSWORD= "${BASE_URL}auth/set_password"
+    const val REGISTER_SET_PASSWORD = "${BASE_URL}auth/set_password"
 
     /**
      * 商品列表
-      */
+     */
     const val GOODS_LIST_URL = "${BASE_URL}products"
 
     /**
      * 用户信息
-      */
+     */
     const val USER_INFO_URL = "${BASE_URL}users"
 
 
     /**
      * 换取token
      */
-    const val APPKEY_APPSECRET ="${BASE_URL}auth/exchange_token"
+    const val APPKEY_APPSECRET = "${BASE_URL}auth/exchange_token"
 
 
     /**
@@ -119,5 +140,4 @@ object URL {
      * 精选->品牌馆
      */
     const val BRAND_PAVILION_URL = "${BASE_URL}column/feature_store"
-
 }

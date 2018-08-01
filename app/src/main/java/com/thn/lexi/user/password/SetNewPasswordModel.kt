@@ -9,13 +9,13 @@ import java.io.IOException
 open class SetNewPasswordModel {
 
     /**
-     * 通过手机号换密码
+     *  忘记密码后设置密码
      */
-    fun updateNewPassword(password: String,callback: IDataSource.HttpRequestCallBack) {
+    fun updateNewPassword(phone:String,password: String,confirmPassword: String,callback: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getUpdateNewPasswordParams(password)
+        val params = ClientParamsAPI.getUpdatePasswordParams(phone,password,confirmPassword)
 
-        HttpRequest.sendRequest(HttpRequest.POST,URL.REGISTER_URL,params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.POST,URL.FORGET_PASSWORD_SET_NEW,params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callback.onStart()
             }
@@ -28,11 +28,6 @@ open class SetNewPasswordModel {
                 callback.onFailure(e)
             }
         })
-    }
-
-    //发送验证码
-    fun sendCheckCode() {
-
     }
 
 }
