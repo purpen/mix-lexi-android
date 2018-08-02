@@ -1,38 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.thn.lexi.view.VCSwipeRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    >
-
+    android:background="@android:color/white">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipChildren="false"
-                >
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewPager"
-                    android:layout_marginTop="@dimen/dp15"
-                    android:layout_marginBottom="@dimen/dp20"
-                    android:layout_width="290dp"
-                    android:layout_height="190dp"
-                    android:layout_centerVertical="true"
-                    />
-            </RelativeLayout>
-
+                android:layout_marginStart="-20dp"
+                android:paddingTop="@dimen/dp15"
+                android:paddingBottom="@dimen/dp20"
+                />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -41,4 +30,4 @@
                 android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+</com.thn.lexi.view.VCSwipeRefreshView>

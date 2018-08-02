@@ -3,8 +3,6 @@ package com.thn.lexi.goods.selection
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
-import android.view.MotionEvent
-import android.view.View
 import android.widget.LinearLayout
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
@@ -25,8 +23,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
     private val presenter: SelectionPresenter by lazy { SelectionPresenter(this) }
     private var page: Int = 1
     private lateinit var adapter: GoodsAdapter
-    private lateinit var adapterViewPager: ViewPagerAdapter
-
+    private lateinit var adapterSelectionBanner: AdapterSelectionBanner
     companion object {
         @JvmStatic
         fun newInstance(): FragmentSelection = FragmentSelection()
@@ -49,8 +46,14 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
      */
     private fun initBanner() {
         presenter.getBanners()
-        viewPager.offscreenPageLimit = 3
-        viewPager.setPageTransformer(false, GallaryTransformer())
+        var manager = LinearLayoutManager(context)
+        manager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewBanner.layoutManager = manager
+        adapterSelectionBanner = AdapterSelectionBanner(R.layout.adapter_selection_banner)
+        recyclerViewBanner.adapter = adapterSelectionBanner
+        val mCardScaleHelper = CardScaleHelper()
+        mCardScaleHelper.currentItemPos = 0
+        mCardScaleHelper.attachToRecyclerView(recyclerViewBanner)
     }
 
     /**
@@ -64,8 +67,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
         for (item in banner_images) {
             list.add(item.image)
         }
-        adapterViewPager = ViewPagerAdapter(list)
-        viewPager.adapter = adapterViewPager
+        adapterSelectionBanner.setNewData(list)
     }
 
     override fun setPresenter(presenter: SelectionContract.Presenter?) {
@@ -74,11 +76,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
 
 
     override fun installListener() {
-//        relativeLayout.setOnTouchListener(object :View.OnTouchListener{
-//            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-//                return viewPager.dispatchTouchEvent(event)
-//            }
-//        })
+//        adapterSelectionBanner?.setOnItemClickListener { adapter, view, position ->
+//            ToastUtil.showInfo("position=$position")
+//        }
 
         adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
