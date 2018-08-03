@@ -2,6 +2,7 @@ package com.thn.lexi.goods.explore
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -9,6 +10,11 @@ import com.thn.lexi.R
 
 class EditorRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendBean.DataBean.ProductsBean, BaseViewHolder>(layoutResId) {
     override fun convert(helper: BaseViewHolder, item: EditorRecommendBean.DataBean.ProductsBean) {
+
+        val pixelSize = helper.itemView.resources.getDimensionPixelSize(R.dimen.dp135)
+        var layoutParams = RelativeLayout.LayoutParams(pixelSize,RelativeLayout.LayoutParams.WRAP_CONTENT)
+        helper.itemView.layoutParams = layoutParams
+
         val imageViewStatus = helper.getView<View>(R.id.imageViewStatus)
         if (item.is_sold_out){
             imageViewStatus.visibility = View.VISIBLE

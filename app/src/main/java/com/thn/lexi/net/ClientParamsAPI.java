@@ -523,4 +523,15 @@ public class ClientParamsAPI {
         params.put("verify_code", checkCode);
         return params;
     }
+
+    /**
+     * 获取人气推荐
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, String> getHotRecommendParams() {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("per_page", "5");
+        return params;
+    }
 }

@@ -12,4 +12,6 @@
     <dimen name="sp18">18sp</dimen>
     <dimen name="dp135">135dp</dimen>
     <dimen name="dp290">290dp</dimen>
+    <dimen name="dp128">128dp</dimen>
+    <dimen name="dp104">104dp</dimen>
 </resources>

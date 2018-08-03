@@ -34,9 +34,9 @@ class MainFragment0 : BaseFragment() {
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(true)
         slidingTabLayout.setViewPager(customViewPager)
-        slidingTabLayout.getTitleView(0).textSize = 19f
-        slidingTabLayout.showMsg(0,3)
-        slidingTabLayout.setMsgMargin(0,-45f,13f)
+//        slidingTabLayout.getTitleView(0).textSize = 19f
+//        slidingTabLayout.showMsg(0,3)
+//        slidingTabLayout.setMsgMargin(0,-45f,13f)
 
     }
 

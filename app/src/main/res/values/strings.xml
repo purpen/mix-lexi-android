@@ -104,4 +104,12 @@
     <string name="rationale_camera">需要获取相机权限</string>
     <string name="hint_text_upload_avatar">请先上传头像</string>
     <string name="tex_hint_new_password_again">请再次输入新密码</string>
+    <string name="text_open_store_guide">开馆指引</string>
+    <string name="text_tou_tiao">开馆\n头条</string>
+    <string name="text_guess_win_money">猜图赢现金</string>
+    <string name="text_free_slogan">免运，奖励，优惠生活</string>
+    <string name="text_today_recommend">今日推荐</string>
+    <string name="text_people_recommend">人气推荐</string>
+    <string name="text_coupon_center">领券中心</string>
+    <string name="text_exemption_mail">包邮专区</string>
 </resources>

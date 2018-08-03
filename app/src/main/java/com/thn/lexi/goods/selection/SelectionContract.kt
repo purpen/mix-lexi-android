@@ -3,6 +3,7 @@ package com.thn.lexi.goods.selection
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.goods.explore.EditorRecommendBean
 import com.thn.lexi.goods.explore.ExploreBannerBean
 
 class SelectionContract {
@@ -29,6 +30,8 @@ class SelectionContract {
         }
 
         fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>){}
+        fun setTodayRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>){}
+        fun setHotRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {}
     }
 
     interface Presenter : BasePresenter {

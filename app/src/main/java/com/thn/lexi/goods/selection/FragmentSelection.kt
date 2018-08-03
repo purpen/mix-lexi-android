@@ -1,6 +1,8 @@
 package com.thn.lexi.goods.selection
 
 import android.content.Intent
+import android.graphics.Color
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
 import android.widget.LinearLayout
@@ -16,14 +18,25 @@ import com.thn.lexi.goods.detail.GoodsDetailActivity
 import com.thn.lexi.goods.explore.ExploreBannerBean
 import com.thn.lexi.view.CenterShareView
 import kotlinx.android.synthetic.main.fragment_selection.*
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.SpannableString
+import android.view.View
+import com.basemodule.tools.ToastUtil
+import com.thn.lexi.goods.explore.EditorRecommendBean
 
-class FragmentSelection : BaseFragment(), SelectionContract.View {
+
+class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickListener {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_selection
     private val presenter: SelectionPresenter by lazy { SelectionPresenter(this) }
     private var page: Int = 1
     private lateinit var adapter: GoodsAdapter
+
+    private lateinit var adapterTodayRecommend: TodayRecommendAdapter
+
     private lateinit var adapterSelectionBanner: AdapterSelectionBanner
+
     companion object {
         @JvmStatic
         fun newInstance(): FragmentSelection = FragmentSelection()
@@ -31,14 +44,77 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
 
     override fun initView() {
         initBanner()
+        initNotice()
+        initRecommend()
+        initHotRecommend()
         adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    /**
+     * 人气推荐
+     */
+    private fun initHotRecommend() {
+        presenter.getHotRecommend()
+        val manager = GridLayoutManager(activity,6)
+        recyclerViewHotRecommend.layoutManager = manager
+
+    }
+
+    /**
+     * 设置人气推荐数据
+     */
+    override fun setHotRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        val list = ArrayList<PeopleRecommendAdapter.MultipleItem>()
+        for (i in products.indices){
+            if (i==0 ||i==1){//占3列宽
+                list.add(PeopleRecommendAdapter.MultipleItem(products[i],PeopleRecommendAdapter.MultipleItem.ITEM_TYPE_SPAN2,PeopleRecommendAdapter.MultipleItem.ITEM_SPAN3_SIZE))
+            }else{//占两列
+                list.add(PeopleRecommendAdapter.MultipleItem(products[i],PeopleRecommendAdapter.MultipleItem.ITEM_TYPE_SPAN3,PeopleRecommendAdapter.MultipleItem.ITEM_SPAN2_SIZE))
+            }
+        }
+
+        val multipleItemAdapter = PeopleRecommendAdapter(list)
+
+        multipleItemAdapter.setSpanSizeLookup { gridLayoutManager, position ->
+            list[position].spanSize
+        }
+        recyclerViewHotRecommend.adapter = multipleItemAdapter
+        recyclerViewHotRecommend.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10)))
+
+    }
+
+
+    /**
+     *  今日推荐
+     */
+    private fun initRecommend() {
+        presenter.getTodayRecommend()
+        adapterTodayRecommend = TodayRecommendAdapter(R.layout.adapter_today_recommend)
         val linearLayoutManager = LinearLayoutManager(activity)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.VERTICAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(R.color.color_d1d1d1)))
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewRecommend.setHasFixedSize(true)
+        recyclerViewRecommend.layoutManager = linearLayoutManager
+        recyclerViewRecommend.adapter = adapterTodayRecommend
+        recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+    }
+
+    override fun setTodayRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        adapterTodayRecommend.setNewData(products)
+    }
+
+    /**
+     * 初始化通知
+     */
+    private fun initNotice() {
+        val openInfo = SpannableString("设计师risky秒前开了自己的设计馆")
+        openInfo.setSpan(ForegroundColorSpan(resources.getColor(R.color.color_6ed7af)), 0, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        textViewOpenInfo.text = openInfo
+
+        val orderInfo = SpannableString("伟峰的设计馆1小时售出200单")
+        orderInfo.setSpan(ForegroundColorSpan(resources.getColor(R.color.color_f4b329)), 9, orderInfo.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        textViewOrderInfo.text = orderInfo
     }
 
     /**
@@ -46,14 +122,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
      */
     private fun initBanner() {
         presenter.getBanners()
-        var manager = LinearLayoutManager(context)
+        val manager = LinearLayoutManager(context)
         manager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewBanner.layoutManager = manager
         adapterSelectionBanner = AdapterSelectionBanner(R.layout.adapter_selection_banner)
         recyclerViewBanner.adapter = adapterSelectionBanner
-        val mCardScaleHelper = CardScaleHelper()
-        mCardScaleHelper.currentItemPos = 0
-        mCardScaleHelper.attachToRecyclerView(recyclerViewBanner)
     }
 
     /**
@@ -68,6 +141,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
             list.add(item.image)
         }
         adapterSelectionBanner.setNewData(list)
+        val mCardScaleHelper = CardScaleHelper()
+        mCardScaleHelper.currentItemPos = 0
+        mCardScaleHelper.attachToRecyclerView(recyclerViewBanner)
     }
 
     override fun setPresenter(presenter: SelectionContract.Presenter?) {
@@ -76,9 +152,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
 
 
     override fun installListener() {
-//        adapterSelectionBanner?.setOnItemClickListener { adapter, view, position ->
-//            ToastUtil.showInfo("position=$position")
-//        }
+
+        textViewGuessPic.setOnClickListener(this)
+        textViewCouponCenter.setOnClickListener(this)
+        textViewExemptionMail.setOnClickListener(this)
 
         adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
@@ -121,9 +198,14 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
             loadData()
         }
 
-        adapter.setOnLoadMoreListener({
-            presenter.loadMoreData("", page)
-        }, recyclerView)
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
+            R.id.textViewCouponCenter -> ToastUtil.showInfo("领券中心")
+            R.id.textViewExemptionMail -> ToastUtil.showInfo("包邮专区")
+        }
     }
 
     /**
@@ -169,7 +251,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View {
     }
 
     override fun showError(string: String) {
-        adapter.isLoading
         swipeRefreshLayout.isRefreshing = false
         adapter.loadMoreFail()
     }
