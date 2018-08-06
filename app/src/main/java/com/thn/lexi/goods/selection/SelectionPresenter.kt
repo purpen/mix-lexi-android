@@ -163,4 +163,64 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
         })
     }
 
+    /**
+     * 人气推荐banner
+     */
+    fun getHotRecommendBanner() {
+        dataSource.getHotRecommendBanner( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val selectionHotRecommendBannerBean = JsonUtil.fromJson(json, SelectionHotRecommendBannerBean::class.java)
+                if (selectionHotRecommendBannerBean.success) {
+                    view.setHotRecommendBannerData(selectionHotRecommendBannerBean.data.banner_images)
+                } else {
+                    view.showError(selectionHotRecommendBannerBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 发现生活美学
+     */
+    fun getDiscoverLife() {
+        dataSource.getDiscoverLife( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setDiscoverLifeData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 优选
+     */
+    fun getGoodSelection() {
+        dataSource.getGoodSelection( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setGoodSelectionData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 }

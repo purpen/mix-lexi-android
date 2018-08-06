@@ -93,6 +93,10 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     }
 
 
+    override fun setBrandPavilionData(stores: List<String>) {
+        adapterBrandPavilion.setNewData(stores)
+    }
+
     /**
      * 初始化编辑推荐
      */

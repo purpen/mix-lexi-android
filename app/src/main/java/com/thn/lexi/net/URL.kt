@@ -140,4 +140,9 @@ object URL {
      * 精选->品牌馆
      */
     const val BRAND_PAVILION_URL = "${BASE_URL}column/feature_store"
+
+    /**
+     * 精选人气推荐banner
+     */
+    const val SELECTION_HOT_PEOPLE_BANNER = "${BASE_URL}banners/handpick_content"
 }

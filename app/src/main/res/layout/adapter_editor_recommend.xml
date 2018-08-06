@@ -57,4 +57,17 @@
         android:drawablePadding="@dimen/dp2"
         android:drawableStart="@mipmap/icon_price_unit"
         />
+
+    <TextView
+        android:id="@+id/textViewLike"
+        android:layout_alignTop="@+id/textViewPrice"
+        android:layout_toEndOf="@+id/textViewPrice"
+        android:layout_marginStart="@dimen/dp5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="喜欢 +392"
+        android:textColor="@color/color_999"
+        android:textSize="@dimen/sp11"
+        android:visibility="gone"
+        />
 </RelativeLayout>

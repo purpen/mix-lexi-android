@@ -1,7 +1,6 @@
 package com.thn.lexi.goods.selection
 
 import android.content.Intent
-import android.graphics.Color
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Gravity
@@ -23,7 +22,9 @@ import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
 import android.view.View
 import com.basemodule.tools.ToastUtil
+import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.goods.explore.EditorRecommendBean
+import com.youth.banner.BannerConfig
 
 
 class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickListener {
@@ -37,6 +38,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     private lateinit var adapterSelectionBanner: AdapterSelectionBanner
 
+    private lateinit var adapterDiscoverLife: DiscoverLifeAdapter
+
+    private lateinit var adapterGoodSelection: GoodSelectionAdapter
+
+
     companion object {
         @JvmStatic
         fun newInstance(): FragmentSelection = FragmentSelection()
@@ -47,9 +53,76 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         initNotice()
         initRecommend()
         initHotRecommend()
+        initHotRecommendBanner()
+        initDiscoverLife()
+        initGoodSelection()
         adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    /**
+     * 乐喜优选
+     */
+    private fun initGoodSelection() {
+        presenter.getGoodSelection()
+        adapterGoodSelection = GoodSelectionAdapter(R.layout.adapter_editor_recommend)
+        val gridLayoutManager = GridLayoutManager(activity,2)
+        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerViewGoodSelection.setHasFixedSize(true)
+        recyclerViewGoodSelection.layoutManager = gridLayoutManager
+        recyclerViewGoodSelection.adapter = adapterGoodSelection
+        recyclerViewGoodSelection.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10),resources.getDimensionPixelSize(R.dimen.dp20)))
+    }
+
+    /**
+     * 设置优选数据
+     */
+    override fun setGoodSelectionData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        adapterGoodSelection.setNewData(products)
+    }
+
+
+    /**
+     * 发现生活美学
+     */
+    private fun initDiscoverLife() {
+        presenter.getDiscoverLife()
+        adapterDiscoverLife = DiscoverLifeAdapter(R.layout.adapter_discover_life)
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewDiscoverLife.setHasFixedSize(true)
+        recyclerViewDiscoverLife.layoutManager = linearLayoutManager
+        recyclerViewDiscoverLife.adapter = adapterDiscoverLife
+//        recyclerViewDiscoverLife.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+    }
+
+    /**
+     * 设置发现生活美学数据
+     */
+    override fun setDiscoverLifeData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        adapterDiscoverLife.setNewData(products)
+    }
+
+    /**
+     * 初始化人气推荐banner
+     */
+    private fun initHotRecommendBanner() {
+        presenter.getHotRecommendBanner()
+        hotBanner.setImageLoader(GlideImageLoader())
+        hotBanner.setBannerStyle(BannerConfig.NOT_INDICATOR)
+    }
+
+    override fun setHotRecommendBannerData(banner_images: List<String>) {
+        val list = ArrayList<String>()
+        list.add("https://imgsa.baidu.com/news/q%3D100/sign=25fbbeb51c3853438acf8321a311b01f/f2deb48f8c5494eee0ce42c021f5e0fe98257e7e.jpg")
+        list.add("https://imgsa.baidu.com/news/q%3D100/sign=0672257b55ee3d6d24c683cb73176d41/faf2b2119313b07e9dcf66d400d7912396dd8cff.jpg")
+        list.add("https://imgsa.baidu.com/news/q%3D100/sign=8b9e26e200f3d7ca0af63b76c21dbe3c/d1a20cf431adcbef65b51fdaa0af2edda2cc9f6c.jpg")
+//        for (item in banner_images){
+//            list.add(item.image)
+//        }
+        hotBanner.setImages(list)
+        hotBanner.start()
     }
 
     /**
@@ -81,7 +154,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             list[position].spanSize
         }
         recyclerViewHotRecommend.adapter = multipleItemAdapter
-        recyclerViewHotRecommend.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10)))
+        recyclerViewHotRecommend.addItemDecoration(HotPeopleGridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10)))
 
     }
 
@@ -257,5 +330,15 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     override fun goPage() {
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        hotBanner.startAutoPlay()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        hotBanner.stopAutoPlay()
     }
 }
