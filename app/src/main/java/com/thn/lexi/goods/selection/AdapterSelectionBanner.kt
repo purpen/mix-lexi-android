@@ -16,7 +16,7 @@ class AdapterSelectionBanner(@LayoutRes res: Int) : BaseQuickAdapter<String, Bas
         this.parent = parent
         return super.onCreateViewHolder(parent, viewType)
     }
-    private val mPagePadding = 10
+    private val mPagePadding = 20
     private val mShowLeftCardWidth = 15
 
     override fun convert(helper: BaseViewHolder, item: String) {
@@ -29,7 +29,7 @@ class AdapterSelectionBanner(@LayoutRes res: Int) : BaseQuickAdapter<String, Bas
         helper.itemView.setPadding(padding, 0, padding, 0)
         val leftMarin = if (helper.adapterPosition == 0) padding + DimenUtil.dp2px(mShowLeftCardWidth.toDouble()) else 0
         val rightMarin = if (helper.adapterPosition == itemCount - 1) padding + DimenUtil.dp2px(mShowLeftCardWidth.toDouble()) else 0
-        setViewMargin(helper.itemView, leftMarin, 0, rightMarin, 0)
+        setViewMargin(helper.itemView, 0, 0, 0, 0)
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
         GlideUtil.loadImageWithRadius(item,imageView,imageView.resources.getDimensionPixelSize(R.dimen.dp5))

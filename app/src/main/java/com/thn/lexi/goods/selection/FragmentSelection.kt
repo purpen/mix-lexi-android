@@ -3,6 +3,7 @@ package com.thn.lexi.goods.selection
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Gravity
 import android.widget.LinearLayout
 import com.basemodule.tools.WaitingDialog
@@ -42,6 +43,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     private lateinit var adapterGoodSelection: GoodSelectionAdapter
 
+    private lateinit var adapterZCManifest: ZCManifestAdapter
+
 
     companion object {
         @JvmStatic
@@ -56,9 +59,27 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         initHotRecommendBanner()
         initDiscoverLife()
         initGoodSelection()
+        initZCManifest()
         adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    /**
+     * 初始化种草清单
+     */
+    private fun initZCManifest() {
+        presenter.getZCManifest()
+        adapterZCManifest = ZCManifestAdapter(R.layout.adapter_zc_manifest)
+        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        recyclerViewZCManifest.setHasFixedSize(true)
+        recyclerViewZCManifest.layoutManager = staggeredGridLayoutManager
+        recyclerViewZCManifest.adapter = adapterZCManifest
+        recyclerViewZCManifest.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10),resources.getDimensionPixelSize(R.dimen.dp20)))
+    }
+
+    override fun setZCManifestData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        adapterZCManifest.setNewData(products)
     }
 
     /**

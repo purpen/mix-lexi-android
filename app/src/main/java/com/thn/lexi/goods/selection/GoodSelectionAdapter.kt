@@ -38,8 +38,9 @@ class GoodSelectionAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendB
 
         helper.setText(R.id.textViewTitle,item.name)
         helper.setText(R.id.textViewPrice,item.min_sale_price)
+
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        imageView.layoutParams = RelativeLayout.LayoutParams(pixelSize,pixelSize)
+        imageView.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,pixelSize)
         GlideUtil.loadImageWithRadius(item.cover,imageView,imageView.resources.getDimensionPixelSize(R.dimen.dp5))
     }
 }

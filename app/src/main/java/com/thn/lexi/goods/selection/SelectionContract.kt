@@ -43,6 +43,10 @@ class SelectionContract {
         fun setGoodSelectionData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
 
         }
+
+        fun setZCManifestData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
