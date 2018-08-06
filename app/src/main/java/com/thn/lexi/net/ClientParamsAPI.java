@@ -534,4 +534,15 @@ public class ClientParamsAPI {
         params.put("per_page", "5");
         return params;
     }
+
+    /**
+     * 优选
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, String> getGoodSelectionParams() {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("per_page", "4");
+        return params;
+    }
 }

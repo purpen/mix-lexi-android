@@ -145,4 +145,9 @@ object URL {
      * 精选人气推荐banner
      */
     const val SELECTION_HOT_PEOPLE_BANNER = "${BASE_URL}banners/handpick_content"
+
+    /**
+     * 小b分销商品列表
+     */
+    const val DISTRIBUTION_GOODS_LIST = "${BASE_URL}fx_distribute/proprietary"
 }

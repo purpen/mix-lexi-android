@@ -4,6 +4,7 @@ import android.support.v4.view.ViewPager
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.goods.explore.FragmentExplore
+import com.thn.lexi.goods.lifehouse.FragmentLifeHouse
 import com.thn.lexi.goods.selection.FragmentSelection
 import kotlinx.android.synthetic.main.fragment_main0.*
 
@@ -25,6 +26,7 @@ class MainFragment0 : BaseFragment() {
     private fun setUpViewPager() {
         val fragments = ArrayList<BaseFragment>()
         
+        fragments.add(FragmentLifeHouse.newInstance())
         fragments.add(FragmentSelection.newInstance())
         fragments.add(FragmentExplore.newInstance())
 

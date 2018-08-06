@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="strings_main_titles">
+        <item>生活馆</item>
         <item>精选</item>
         <item>探索</item>
     </string-array>
