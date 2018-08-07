@@ -2,6 +2,7 @@ package com.basemodule.tools;
 import android.content.Context;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -138,8 +139,12 @@ public class GlideUtil {
      * @param imageView
      * @param <T>
      */
-    public static <T> void loadImageWithBlur(T t, @Nullable ImageView imageView) {
-        RequestOptions requestOptions = bitmapTransform(new BlurTransformation(25, 3));
+    public static <T> void loadImageWithBlurAndRadius(T t, @Nullable ImageView imageView,int radius) {
+        MultiTransformation multi = new MultiTransformation(
+                new BlurTransformation(80, 3),
+                new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
+
+        RequestOptions requestOptions = bitmapTransform(multi);
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
     }

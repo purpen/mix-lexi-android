@@ -48,10 +48,10 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         adapterGoodsCollection = CollectionGoodsAdapter(R.layout.adapter_goods_collection)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerViewBrand.setHasFixedSize(true)
-        recyclerViewBrand.layoutManager = linearLayoutManager
-        recyclerViewBrand.adapter = adapterGoodsCollection
-        recyclerViewBrand.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewCollection.setHasFixedSize(true)
+        recyclerViewCollection.layoutManager = linearLayoutManager
+        recyclerViewCollection.adapter = adapterGoodsCollection
+        recyclerViewCollection.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
     }
 
     /**
@@ -92,8 +92,10 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         recyclerViewBrand.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
     }
 
-
-    override fun setBrandPavilionData(stores: List<String>) {
+    /**
+     * 设置品牌馆数据
+     */
+    override fun setBrandPavilionData(stores: List<BrandPavilionBean.DataBean.StoresBean>) {
         adapterBrandPavilion.setNewData(stores)
     }
 
@@ -154,9 +156,6 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      */
     override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
         val list = ArrayList<String>()
-        list.add("https://imgsa.baidu.com/news/q%3D100/sign=25fbbeb51c3853438acf8321a311b01f/f2deb48f8c5494eee0ce42c021f5e0fe98257e7e.jpg")
-        list.add("https://imgsa.baidu.com/news/q%3D100/sign=0672257b55ee3d6d24c683cb73176d41/faf2b2119313b07e9dcf66d400d7912396dd8cff.jpg")
-        list.add("https://imgsa.baidu.com/news/q%3D100/sign=8b9e26e200f3d7ca0af63b76c21dbe3c/d1a20cf431adcbef65b51fdaa0af2edda2cc9f6c.jpg")
         for (item in banner_images){
             list.add(item.image)
         }
@@ -179,10 +178,10 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
             when(view.id){
                 R.id.imageViewShop->ToastUtil.showInfo("去店铺")
 
-                R.id.imageViewGoods0,R.id.imageViewGoods1,R.id.imageViewGoods2->{
-                    //TODO 去商品详情
-                    startActivity(Intent(activity,GoodsDetailActivity::class.java))
-                }
+//                R.id.imageViewGoods0,R.id.imageViewGoods1,R.id.imageViewGoods2->{
+//                    //TODO 去商品详情
+//                    startActivity(Intent(activity,GoodsDetailActivity::class.java))
+//                }
 
                 R.id.buttonFocus ->{
                     if (item.isFavorite) {
