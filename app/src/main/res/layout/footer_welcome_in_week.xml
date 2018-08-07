@@ -2,15 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    >
     <!--本周最受欢迎-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp15"
-        android:layout_marginEnd="@dimen/dp15"
-        android:layout_marginStart="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp15">
+        android:layout_margin="@dimen/dp15">
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,14 +36,7 @@
         android:id="@+id/recyclerViewWelcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp30"
         android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15" />
 
-    <include
-        layout="@layout/line_color_eee"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        android:layout_marginEnd="@dimen/dp15"
-        android:layout_marginStart="@dimen/dp15" />
 </LinearLayout>

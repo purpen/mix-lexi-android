@@ -8,15 +8,14 @@ import android.view.View
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
-import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.goods.explore.EditorRecommendBean
 import com.thn.lexi.goods.selection.GoodSelectionAdapter
 import com.thn.lexi.goods.selection.GridSpaceDecoration
 import com.thn.lexi.goods.selection.HeadImageAdapter
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
+import kotlinx.android.synthetic.main.header_welcome_in_week.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
 
 class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View {
@@ -37,7 +36,6 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.VERTICAL, resources.getDimensionPixelSize(R.dimen.dp15), resources.getColor(android.R.color.transparent)))
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         initLifeHouseHeader()
@@ -50,9 +48,15 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View {
     private fun initLifeHouseHeader() {
         val headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week,null)
         val recyclerView = headerLifeHouse.recyclerViewHeader
+
         val str1= "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
         val str2= "http://tx.haiqq.com/uploads/allimg/170504/0641415410-1.jpg"
         val str3= "http://up.qqjia.com/z/18/tu20457_2.jpg"
+
+        GlideUtil.loadImageWithFading(str1,headerLifeHouse.imageView0)
+        GlideUtil.loadImageWithFading(str2,headerLifeHouse.imageView1)
+        GlideUtil.loadImageWithFading(str3,headerLifeHouse.imageView2)
+
         GlideUtil.loadImageWithRadius(str1,headerLifeHouse.imageViewCover,resources.getDimensionPixelSize(R.dimen.dp4))
         headerLifeHouse.imageViewCover
         recyclerView.setHasFixedSize(true)
