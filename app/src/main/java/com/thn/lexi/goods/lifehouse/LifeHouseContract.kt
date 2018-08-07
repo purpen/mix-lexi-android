@@ -3,6 +3,7 @@ package com.thn.lexi.goods.lifehouse
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.goods.explore.EditorRecommendBean
 import com.thn.lexi.goods.selection.GoodsData
 
 class LifeHouseContract {
@@ -21,6 +22,10 @@ class LifeHouseContract {
 
         fun loadMoreEnd(){}
         fun loadMoreComplete() {
+
+        }
+
+        fun setWelcomeInWeekData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
 
         }
 

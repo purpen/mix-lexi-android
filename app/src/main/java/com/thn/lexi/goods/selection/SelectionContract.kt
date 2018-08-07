@@ -32,7 +32,7 @@ class SelectionContract {
         fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>){}
         fun setTodayRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>){}
         fun setHotRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {}
-        fun setHotRecommendBannerData(banner_images: List<String>) {
+        fun setHotRecommendBannerData(banner_images: List<SelectionHotRecommendBannerBean.DataBean.BannerImagesBean>) {
 
         }
 

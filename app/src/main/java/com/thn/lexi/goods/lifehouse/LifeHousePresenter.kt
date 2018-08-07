@@ -3,6 +3,7 @@ import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.goods.explore.EditorRecommendBean
 import java.io.IOException
 
 class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Presenter {
@@ -49,6 +50,26 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                     view.addData(products)
                 } else {
                     view.showError(distributionGoodsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取本周最受欢迎
+     */
+    fun getWelcomeInWeek() {
+        dataSource.getWelcomeInWeek( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setWelcomeInWeekData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
                 }
             }
 

@@ -134,14 +134,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         hotBanner.setBannerStyle(BannerConfig.NOT_INDICATOR)
     }
 
-    override fun setHotRecommendBannerData(banner_images: List<String>) {
+    override fun setHotRecommendBannerData(banner_images: List<SelectionHotRecommendBannerBean.DataBean.BannerImagesBean>) {
         val list = ArrayList<String>()
-        list.add("https://imgsa.baidu.com/news/q%3D100/sign=25fbbeb51c3853438acf8321a311b01f/f2deb48f8c5494eee0ce42c021f5e0fe98257e7e.jpg")
-        list.add("https://imgsa.baidu.com/news/q%3D100/sign=0672257b55ee3d6d24c683cb73176d41/faf2b2119313b07e9dcf66d400d7912396dd8cff.jpg")
-        list.add("https://imgsa.baidu.com/news/q%3D100/sign=8b9e26e200f3d7ca0af63b76c21dbe3c/d1a20cf431adcbef65b51fdaa0af2edda2cc9f6c.jpg")
-//        for (item in banner_images){
-//            list.add(item.image)
-//        }
+        for (item in banner_images){
+            list.add(item.image)
+        }
         hotBanner.setImages(list)
         hotBanner.start()
     }
