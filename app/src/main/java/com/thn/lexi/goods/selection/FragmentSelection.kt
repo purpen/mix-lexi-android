@@ -72,13 +72,15 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         presenter.getZCManifest()
         adapterZCManifest = ZCManifestAdapter(R.layout.adapter_zc_manifest)
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        recyclerViewZCManifest.setHasFixedSize(true)
         recyclerViewZCManifest.layoutManager = staggeredGridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
         recyclerViewZCManifest.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10),resources.getDimensionPixelSize(R.dimen.dp20)))
     }
 
-    override fun setZCManifestData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    /**
+     * 设置种草清单数据
+     */
+    override fun setZCManifestData(products: List<ZCManifestBean.DataBean.LifeRecordsBean>) {
         adapterZCManifest.setNewData(products)
     }
 
@@ -121,8 +123,30 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 设置发现生活美学数据
      */
-    override fun setDiscoverLifeData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
-        adapterDiscoverLife.setNewData(products)
+    override fun setDiscoverLifeData(windows: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
+
+         var demos = ArrayList<DiscoverLifeBean.DataBean.ShopWindowsBean>()
+
+        for (i in 0..3){
+            val windowsBean = DiscoverLifeBean.DataBean.ShopWindowsBean()
+            demos.add(windowsBean)
+        }
+
+        for (item in demos){
+            item.title = "发现生活美学"
+            item.description = "生活美学好"
+            val list = ArrayList<DiscoverLifeBean.DataBean.ShopWindowsBean.ProductsBean>()
+            for (i in 0..3){
+                val productsBean = DiscoverLifeBean.DataBean.ShopWindowsBean.ProductsBean()
+                productsBean.cover = "http://c.hiphotos.baidu.com/image/h%3D300/sign=87d6daed02f41bd5c553eef461d881a0/f9198618367adab4b025268587d4b31c8601e47b.jpg"
+                list.add(productsBean)
+            }
+            item.products=list
+            item.avatar = "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
+        }
+
+        adapterDiscoverLife.setNewData(demos)
+//        adapterDiscoverLife.setNewData(windows)
     }
 
     /**
@@ -150,7 +174,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         presenter.getHotRecommend()
         val manager = GridLayoutManager(activity,6)
         recyclerViewHotRecommend.layoutManager = manager
-
     }
 
     /**
@@ -225,9 +248,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
         val list = ArrayList<String>()
-        list.add("https://imgsa.baidu.com/news/q%3D100/sign=25fbbeb51c3853438acf8321a311b01f/f2deb48f8c5494eee0ce42c021f5e0fe98257e7e.jpg")
-        list.add("https://imgsa.baidu.com/news/q%3D100/sign=0672257b55ee3d6d24c683cb73176d41/faf2b2119313b07e9dcf66d400d7912396dd8cff.jpg")
-        list.add("https://imgsa.baidu.com/news/q%3D100/sign=8b9e26e200f3d7ca0af63b76c21dbe3c/d1a20cf431adcbef65b51fdaa0af2edda2cc9f6c.jpg")
         for (item in banner_images) {
             list.add(item.image)
         }

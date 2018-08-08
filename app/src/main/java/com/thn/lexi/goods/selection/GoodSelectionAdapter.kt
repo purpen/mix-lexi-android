@@ -1,9 +1,11 @@
 package com.thn.lexi.goods.selection
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -13,9 +15,10 @@ import com.thn.lexi.goods.explore.EditorRecommendBean
 class GoodSelectionAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendBean.DataBean.ProductsBean, BaseViewHolder>(layoutResId) {
     override fun convert(helper: BaseViewHolder, item: EditorRecommendBean.DataBean.ProductsBean) {
 
-        val pixelSize = helper.itemView.resources.getDimensionPixelSize(R.dimen.dp160)
-        var layoutParams = RelativeLayout.LayoutParams(pixelSize,RelativeLayout.LayoutParams.WRAP_CONTENT)
-        helper.itemView.layoutParams = layoutParams
+        val relativeLayout = helper.getView<View>(R.id.relativeLayout)
+        val pixelSize = DimenUtil.getDimensionPixelSize(R.dimen.dp155)
+        var layoutParams = ViewGroup.LayoutParams(pixelSize,ViewGroup.LayoutParams.WRAP_CONTENT)
+        relativeLayout.layoutParams = layoutParams
 
         val imageViewStatus = helper.getView<View>(R.id.imageViewStatus)
         if (item.is_sold_out){
@@ -32,7 +35,7 @@ class GoodSelectionAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendB
             imageViewExpress.visibility = View.GONE
         }
 
-        val textViewLike = helper.getView<TextView>(R.id.textViewLike)
+        val textViewLike = helper.getView<View>(R.id.textViewLike)
         textViewLike.visibility = View.VISIBLE
 
 
@@ -40,7 +43,7 @@ class GoodSelectionAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendB
         helper.setText(R.id.textViewPrice,item.min_sale_price)
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        imageView.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,pixelSize)
-        GlideUtil.loadImageWithRadius(item.cover,imageView,imageView.resources.getDimensionPixelSize(R.dimen.dp5))
+        imageView.layoutParams = RelativeLayout.LayoutParams(pixelSize,pixelSize)
+        GlideUtil.loadImageWithRadius(item.cover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4))
     }
 }

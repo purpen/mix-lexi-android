@@ -273,7 +273,7 @@
                 android:id="@+id/recyclerViewHotRecommend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp30"
+                android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
                 />
@@ -386,8 +386,8 @@
                 android:id="@+id/recyclerViewGoodSelection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp30"
                 android:layout_marginEnd="@dimen/dp15"
+                android:layout_marginBottom="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp15"
                 />
 

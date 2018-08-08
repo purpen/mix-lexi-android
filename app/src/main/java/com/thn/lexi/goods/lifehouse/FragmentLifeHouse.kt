@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
@@ -53,11 +54,12 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View {
         val str2= "http://tx.haiqq.com/uploads/allimg/170504/0641415410-1.jpg"
         val str3= "http://up.qqjia.com/z/18/tu20457_2.jpg"
 
-        GlideUtil.loadImageWithFading(str1,headerLifeHouse.imageView0)
-        GlideUtil.loadImageWithFading(str2,headerLifeHouse.imageView1)
-        GlideUtil.loadImageWithFading(str3,headerLifeHouse.imageView2)
+        val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
+        GlideUtil.loadImageWithRadius(str1,headerLifeHouse.imageView0,size)
+        GlideUtil.loadImageWithRadius(str2,headerLifeHouse.imageView1,size)
+        GlideUtil.loadImageWithRadius(str3,headerLifeHouse.imageView2,size)
 
-        GlideUtil.loadImageWithRadius(str1,headerLifeHouse.imageViewCover,resources.getDimensionPixelSize(R.dimen.dp4))
+        GlideUtil.loadImageWithRadius(str1,headerLifeHouse.imageViewCover,size)
         headerLifeHouse.imageViewCover
         recyclerView.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,true)

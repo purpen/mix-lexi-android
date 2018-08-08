@@ -36,7 +36,7 @@ class SelectionContract {
 
         }
 
-        fun setDiscoverLifeData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        fun setDiscoverLifeData(products: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
 
         }
 
@@ -44,7 +44,7 @@ class SelectionContract {
 
         }
 
-        fun setZCManifestData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        fun setZCManifestData(products: List<ZCManifestBean.DataBean.LifeRecordsBean>) {
 
         }
     }

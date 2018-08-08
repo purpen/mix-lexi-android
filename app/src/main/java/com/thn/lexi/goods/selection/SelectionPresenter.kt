@@ -189,11 +189,11 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     fun getDiscoverLife() {
         dataSource.getDiscoverLife( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
-                if (editorRecommendBean.success) {
-                    view.setDiscoverLifeData(editorRecommendBean.data.products)
+                val discoverLifeBean = JsonUtil.fromJson(json, DiscoverLifeBean::class.java)
+                if (discoverLifeBean.success) {
+                    view.setDiscoverLifeData(discoverLifeBean.data.shop_windows)
                 } else {
-                    view.showError(editorRecommendBean.status.message)
+                    view.showError(discoverLifeBean.status.message)
                 }
             }
 
@@ -230,11 +230,11 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     fun getZCManifest() {
         dataSource.getZCManifest( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
-                if (editorRecommendBean.success) {
-                    view.setZCManifestData(editorRecommendBean.data.products)
+                val zcManifestBean = JsonUtil.fromJson(json, ZCManifestBean::class.java)
+                if (zcManifestBean.success) {
+                    view.setZCManifestData(zcManifestBean.data.life_records)
                 } else {
-                    view.showError(editorRecommendBean.status.message)
+                    view.showError(zcManifestBean.status.message)
                 }
             }
 

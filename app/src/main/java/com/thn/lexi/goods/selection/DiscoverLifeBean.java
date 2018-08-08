@@ -36,7 +36,7 @@ public class DiscoverLifeBean {
              * rid : 橱窗编号
              * title : 橱窗标题
              */
-
+            public String avatar;
             public String comment_count;
             public String description;
             public String is_follow;
@@ -98,7 +98,6 @@ public class DiscoverLifeBean {
                 public int cover_id;
                 public String custom_details;
                 public String delivery_country;
-                public Object delivery_country_id;
                 public String features;
                 public boolean have_distributed;
                 public String id_code;

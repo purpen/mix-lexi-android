@@ -147,6 +147,27 @@ object URL {
     const val SELECTION_HOT_PEOPLE_BANNER = "${BASE_URL}banners/handpick_content"
 
     /**
+     * 精选->人气推荐
+     */
+    const val PEOPLE_HOT_RECOMMEND = "${BASE_URL}column/handpick_recommend"
+
+    /**
+     * 精选->发现生活美学
+     */
+    const val DISCOVER_LIFE_URL = "${BASE_URL}shop_windows/recommend"
+
+    /**
+     * 精选->乐喜优选
+     */
+    const val GOOD_SELECTION_URL = "${BASE_URL}column/handpick_optimization"
+
+    /**
+     * 精选->种草清单
+     */
+    const val ZC_MANIFEST_URL = "${BASE_URL}life_records/recommend"
+
+
+    /**
      * 小b分销商品列表
      */
     const val DISTRIBUTION_GOODS_LIST = "${BASE_URL}fx_distribute/proprietary"
@@ -165,4 +186,7 @@ object URL {
      * 探索->百元好物
      */
     const val GOOD100_URL = "${BASE_URL}column/affordable_goods"
+
+
+
 }
