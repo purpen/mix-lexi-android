@@ -223,4 +223,44 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
         })
     }
 
+    /**
+     * 获取特惠好设计
+     */
+    fun getGoodDesign() {
+        dataSource.getGoodDesign( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setGoodDesignData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取百元好物
+     */
+    fun getGood100() {
+        dataSource.getGood100( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setGood100Data(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 }

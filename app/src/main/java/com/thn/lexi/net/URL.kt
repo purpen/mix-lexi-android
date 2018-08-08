@@ -155,4 +155,14 @@ object URL {
      * 探索->集合
      */
     const val WELL_GOODS_COLLECTION= "${BASE_URL}column/collections"
+
+    /**
+     * 探索->特惠好设计
+     */
+    const val GOOD_DESIGN_URL = "${BASE_URL}column/preferential_design"
+
+    /**
+     * 探索->百元好物
+     */
+    const val GOOD100_URL = "${BASE_URL}column/affordable_goods"
 }

@@ -24,6 +24,8 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     private lateinit var adapterBrandPavilion: BrandPavilionAdapter
     private lateinit var adapterFeatureNewGoods: EditorRecommendAdapter
     private lateinit var adapterGoodsCollection: CollectionGoodsAdapter
+    private lateinit var adapterGoodDesign: EditorRecommendAdapter
+    private lateinit var adapterGood100: EditorRecommendAdapter
 
     companion object {
         @JvmStatic fun newInstance(): FragmentExplore = FragmentExplore()
@@ -36,8 +38,45 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         initBrandPavilion()
         initFeatureNewGoods()
         initGoodsCollection()
+        initGoodDesign()
+        initGood100()
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
+    }
+
+    /**
+     * 初始化百元好物
+     */
+    private fun initGood100() {
+        presenter.getGood100()
+        adapterGood100 = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
+        val linearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        recyclerViewGood100.setHasFixedSize(true)
+        recyclerViewGood100.layoutManager = linearLayoutManager
+        recyclerViewGood100.adapter = adapterGood100
+        recyclerViewGood100.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+
+    }
+
+    override fun setGood100Data(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        adapterGood100.setNewData(products)
+    }
+
+    /**
+     * 初始化特惠好设计
+     */
+    private fun initGoodDesign() {
+        presenter.getGoodDesign()
+        adapterGoodDesign = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
+        val linearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        recyclerViewGoodDesign.setHasFixedSize(true)
+        recyclerViewGoodDesign.layoutManager = linearLayoutManager
+        recyclerViewGoodDesign.adapter = adapterGoodDesign
+        recyclerViewGoodDesign.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+    }
+
+    override fun setGoodDesignData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        adapterGoodDesign.setNewData(products)
     }
 
     /**

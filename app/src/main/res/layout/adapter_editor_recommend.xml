@@ -5,7 +5,7 @@
     >
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/dp135"
         android:layout_height="@dimen/dp135"
         android:scaleType="fitXY"
         />
@@ -66,6 +66,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="喜欢 +392"
+        android:textColor="@color/color_999"
+        android:textSize="@dimen/sp11"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/textViewOldPrice"
+        android:layout_alignTop="@+id/textViewPrice"
+        android:layout_toEndOf="@+id/textViewPrice"
+        android:layout_marginStart="@dimen/dp5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textColor="@color/color_999"
         android:textSize="@dimen/sp11"
         android:visibility="gone"

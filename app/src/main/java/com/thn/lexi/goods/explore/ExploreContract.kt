@@ -34,7 +34,10 @@ class ExploreContract {
         fun setFeatureNewGoodsData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
         fun setBrandPavilionData(stores: List<BrandPavilionBean.DataBean.StoresBean>)
 
-        fun setGoodsCollectionData(collections: List<GoodsCollectionBean.DataBean.CollectionsBean>) 
+        fun setGoodsCollectionData(collections: List<GoodsCollectionBean.DataBean.CollectionsBean>)
+
+        fun setGoodDesignData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
+        fun setGood100Data(products: List<EditorRecommendBean.DataBean.ProductsBean>)
     }
 
     interface Presenter : BasePresenter {
