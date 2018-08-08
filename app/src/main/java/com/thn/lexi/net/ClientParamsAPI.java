@@ -5,6 +5,7 @@ import android.util.Base64;
 
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.SPUtil;
+import com.thn.lexi.user.login.LoginUtil;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -543,6 +544,17 @@ public class ClientParamsAPI {
     public static HashMap<String, String> getGoodSelectionParams() {
         HashMap<String, String> params = generateCommonParams();
         params.put("per_page", "4");
+        return params;
+    }
+
+    /**
+     * 获取生活馆信息
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, String> getLifeStoreParams() {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid", LoginUtil.storeId());
         return params;
     }
 }

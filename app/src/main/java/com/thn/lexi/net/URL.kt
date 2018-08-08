@@ -187,6 +187,9 @@ object URL {
      */
     const val GOOD100_URL = "${BASE_URL}column/affordable_goods"
 
-
+    /**
+     * 获取小B生活馆信息
+     */
+   const val SMALL_LIFE_STORE = "${BASE_URL}store/life_store"
 
 }

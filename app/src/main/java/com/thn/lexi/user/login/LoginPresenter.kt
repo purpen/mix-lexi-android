@@ -30,6 +30,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
                 if (loginBean.success) {
                     SPUtil.write(Constants.AUTHORIZATION,authorization)
+                    SPUtil.write(com.thn.lexi.Constants.LOGIN_BEAN,json)
                     view.goPage()
                 } else {
                     view.showError(loginBean.status.message)
@@ -91,15 +92,15 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 view.dismissLoadingView()
-                val checkCodeLoginBean = JsonUtil.fromJson(json, CheckCodeLoginBean::class.java)
-                if (checkCodeLoginBean.success) {
-                    val authorization = ClientParamsAPI.getAuthorization(checkCodeLoginBean.data.token)
+                val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
+                if (loginBean.success) {
+                    val authorization = ClientParamsAPI.getAuthorization(loginBean.data.token)
                     SPUtil.write(Constants.AUTHORIZATION,authorization)
-                    view.goPage(checkCodeLoginBean.data.is_first_login)
+                    SPUtil.write(com.thn.lexi.Constants.LOGIN_BEAN,json)
+                    view.goPage(loginBean.data.is_first_login)
                 } else {
-                    view.showInfo(checkCodeLoginBean.status.message)
+                    view.showInfo(loginBean.status.message)
                 }
             }
 

@@ -3,6 +3,9 @@ import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.DimenUtil
@@ -16,16 +19,20 @@ import com.thn.lexi.goods.selection.GridSpaceDecoration
 import com.thn.lexi.goods.selection.HeadImageAdapter
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
-import kotlinx.android.synthetic.main.header_welcome_in_week.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
 
-class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View {
+class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListener {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
     private var page: Int = 1
     private lateinit var adapter: LifeHouseAdapter
     private lateinit var adapterWelcomeInWeek : GoodSelectionAdapter
+
+
+
+    private lateinit var headerLifeHouse: View
+
     companion object {
         @JvmStatic fun newInstance(): FragmentLifeHouse = FragmentLifeHouse()
     }
@@ -47,8 +54,15 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View {
      * 初始化生活馆Header
      */
     private fun initLifeHouseHeader() {
-        val headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week,null)
-        val recyclerView = headerLifeHouse.recyclerViewHeader
+
+        presenter.getLifeHouse()
+
+        presenter.getLookPeople()
+
+        headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week,null)
+
+
+        headerLifeHouse.imageViewEdit.setOnClickListener(this)
 
         val str1= "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
         val str2= "http://tx.haiqq.com/uploads/allimg/170504/0641415410-1.jpg"
@@ -60,26 +74,48 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View {
         GlideUtil.loadImageWithRadius(str3,headerLifeHouse.imageView2,size)
 
         GlideUtil.loadImageWithRadius(str1,headerLifeHouse.imageViewCover,size)
-        headerLifeHouse.imageViewCover
-        recyclerView.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,true)
-        val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
+
+        adapter.addHeaderView(headerLifeHouse)
+    }
+
+
+    /**
+     * 设置生活馆信息
+     */
+    override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
+        headerLifeHouse.textView0.text = data.name
+        headerLifeHouse.textViewDesc.text = data.description
+    }
+
+    /**
+     * 设置看过的用户信息
+     */
+    override fun setLookPeopleData(users: List<LookPeopleBean.DataBean.UsersBean>) {
+        val count = users.size
+        val string = SpannableString("$count 人浏览过生活馆")
+        string.setSpan(ForegroundColorSpan(resources.getColor(R.color.color_333)),0,count+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        headerLifeHouse.textViewLook.text = string
+
+
+        if (count<999){
+            headerLifeHouse.textViewHeaders.text = "$count"
+        }else{
+            headerLifeHouse.textViewHeaders.text = "+999"
+        }
+
         val urlList = ArrayList<String>()
-        //倒序
-        urlList.add(str1)
-        urlList.add(str2)
-        urlList.add(str3)
-        urlList.add(str1)
-        urlList.add(str2)
-        urlList.add(str3)
-        urlList.add(str1)
-        urlList.add(str2)
-        urlList.add(str3)
-        urlList.add(str1)
-        urlList.add(str2)
-        urlList.add(str3)
-        headImageAdapter.setNewData(urlList)
+        for (item in users){
+            urlList.add(item.avatar)
+        }
+
+        //反转头像
+        urlList.reverse()
+
+        val recyclerView = headerLifeHouse.recyclerViewHeader
+        val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,true)
         recyclerView.layoutManager = linearLayoutManager
+        recyclerView.setHasFixedSize(true)
+        val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
         recyclerView.adapter = headImageAdapter
         if (recyclerView.itemDecorationCount == 0) {
             recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
@@ -91,7 +127,8 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View {
                 }
             })
         }
-        adapter.addHeaderView(headerLifeHouse)
+
+        headImageAdapter.setNewData(urlList)
     }
 
     /**
@@ -127,6 +164,15 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View {
     }
 
 
+    override fun onClick(v: View) {
+        when(v.id){
+            R.id.imageViewEdit ->{
+                 val dialog = EditLifeHouseDialog(activity)
+                dialog.show()
+                dialog.setCanceledOnTouchOutside(false)
+            }
+        }
+    }
 
     override fun installListener() {
 

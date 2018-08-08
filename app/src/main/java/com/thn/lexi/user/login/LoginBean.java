@@ -6,9 +6,8 @@ package com.thn.lexi.user.login;
 
 public class LoginBean {
 
-
     /**
-     * data : {"created_at":1527504270,"expiration":2592000,"store_rid":"Q3694287","token":"eyJhbGciOiJIUzI1NiIsImlhdCI6MTUyNzUwNDI3MCwiZXhwIjoxNTMwMDk2MjcwfQ.eyJpZCI6N30.Q9ji-OHGw_cWBWN_7M0gztDjRjRHvH6b82Dk5FoLypo"}
+     * data : {"created_at":1533723438,"expiration":2592000,"is_first_login":false,"is_small_b":null,"is_supplier":true,"store_rid":"99130748","token":"eyJhbGciOiJIUzI1NiIsImlhdCI6MTUzMzcyMzQzOCwiZXhwIjoxNTM2MzE1NDM4fQ.eyJpZCI6MjgzfQ.3I5ItefibD8vSMHHBnWsrASTu1ybNW_yQB1QRPpJJAg"}
      * status : {"code":200,"message":"Ok all right."}
      * success : true
      */
@@ -19,14 +18,20 @@ public class LoginBean {
 
     public static class DataBean {
         /**
-         * created_at : 1527504270
+         * created_at : 1533723438
          * expiration : 2592000
-         * store_rid : Q3694287
-         * token : eyJhbGciOiJIUzI1NiIsImlhdCI6MTUyNzUwNDI3MCwiZXhwIjoxNTMwMDk2MjcwfQ.eyJpZCI6N30.Q9ji-OHGw_cWBWN_7M0gztDjRjRHvH6b82Dk5FoLypo
+         * is_first_login : false
+         * is_small_b : null
+         * is_supplier : true
+         * store_rid : 99130748
+         * token : eyJhbGciOiJIUzI1NiIsImlhdCI6MTUzMzcyMzQzOCwiZXhwIjoxNTM2MzE1NDM4fQ.eyJpZCI6MjgzfQ.3I5ItefibD8vSMHHBnWsrASTu1ybNW_yQB1QRPpJJAg
          */
 
         public int created_at;
         public int expiration;
+        public boolean is_first_login;
+        public Object is_small_b;
+        public boolean is_supplier;
         public String store_rid;
         public String token;
     }

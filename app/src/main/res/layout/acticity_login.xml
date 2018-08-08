@@ -96,7 +96,7 @@
                     android:maxLines="1"
                     android:paddingStart="@dimen/dp15"
                     android:paddingEnd="@dimen/dp5"
-                    android:text="13366469976"
+                    android:text="18518391827"
                     android:textColor="@color/color_333"
                     android:textColorHint="@color/color_b2b2b2"
                     android:textSize="@dimen/sp18" />
@@ -134,7 +134,7 @@
                         android:maxLength="30"
                         android:maxLines="1"
                         android:paddingStart="@dimen/dp15"
-                        android:text="1234qwer"
+                        android:text="in456321"
                         android:textColor="@color/color_333"
                         android:textColorHint="@color/color_b2b2b2"
                         android:textSize="@dimen/sp18" />

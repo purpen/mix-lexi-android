@@ -117,4 +117,8 @@
     <string name="text_zc_manifest">种草清单</string>
     <string name="text_welcome_in_week">本周最受欢迎</string>
     <string name="text_bg_selection_center">挑选乐喜优选优质商品上架\n品位生活，由此开启</string>
+    <string name="text_edit_life_house">编辑生活馆</string>
+    <string name="text_life_house_title">名称</string>
+    <string name="text_life_house_brife">简介</string>
+    <string name="text_save">保存</string>
 </resources>

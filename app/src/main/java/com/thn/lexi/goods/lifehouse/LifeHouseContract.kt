@@ -4,7 +4,6 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.thn.lexi.goods.explore.EditorRecommendBean
-import com.thn.lexi.goods.selection.GoodsData
 
 class LifeHouseContract {
     interface View : BaseView<Presenter> {
@@ -26,6 +25,14 @@ class LifeHouseContract {
         }
 
         fun setWelcomeInWeekData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+
+        }
+
+        fun setLookPeopleData(products: List<LookPeopleBean.DataBean.UsersBean>) {
+
+        }
+
+        fun setLifeHouseData(data: LifeHouseBean.DataBean) {
 
         }
 

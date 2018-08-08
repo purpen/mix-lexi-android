@@ -79,5 +79,45 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
         })
     }
 
+    /**
+     * 获取生活馆浏览人数
+     */
+    fun getLookPeople() {
+        dataSource.getLookPeople( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val lookPeopleBean = JsonUtil.fromJson(json, LookPeopleBean::class.java)
+                if (lookPeopleBean.success) {
+                    view.setLookPeopleData(lookPeopleBean.data.users)
+                } else {
+                    view.showError(lookPeopleBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取小b生活馆信息
+     */
+    fun getLifeHouse() {
+        dataSource.getLifeHouse( object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val lifeHouseBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
+                if (lifeHouseBean.success) {
+                    view.setLifeHouseData(lifeHouseBean.data)
+                } else {
+                    view.showError(lifeHouseBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 
 }

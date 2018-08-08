@@ -85,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp25"
-            android:text="112212人浏览过生活馆"
+            android:text="0人浏览过生活馆"
             android:textColor="@color/color_999"
             android:textSize="@dimen/sp12" />
 
