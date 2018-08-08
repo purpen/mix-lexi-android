@@ -3,6 +3,7 @@ package com.thn.lexi.goods.explore
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -11,7 +12,7 @@ import com.thn.lexi.R
 class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionBean.DataBean.StoresBean, BaseViewHolder>(layoutResId) {
     override fun convert(helper: BaseViewHolder, item: BrandPavilionBean.DataBean.StoresBean) {
         val imageViewBg = helper.getView<ImageView>(R.id.imageViewBg)
-        val size = imageViewBg.resources.getDimensionPixelSize(R.dimen.dp4)
+        val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
         GlideUtil.loadImageWithBlurAndRadius(item.bgcover,imageViewBg,size)
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)

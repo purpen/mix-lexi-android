@@ -32,9 +32,9 @@ class ExploreContract {
         fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>)
         fun setEditorRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
         fun setFeatureNewGoodsData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
-        fun setBrandPavilionData(stores: List<BrandPavilionBean.DataBean.StoresBean>) {
+        fun setBrandPavilionData(stores: List<BrandPavilionBean.DataBean.StoresBean>)
 
-        }
+        fun setGoodsCollectionData(collections: List<GoodsCollectionBean.DataBean.CollectionsBean>) 
     }
 
     interface Presenter : BasePresenter {

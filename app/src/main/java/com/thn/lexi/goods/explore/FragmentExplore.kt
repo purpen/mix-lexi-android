@@ -55,6 +55,13 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     }
 
     /**
+     * 设置集合数据
+     */
+    override fun setGoodsCollectionData(collections: List<GoodsCollectionBean.DataBean.CollectionsBean>) {
+        adapterGoodsCollection.setNewData(collections)
+    }
+
+    /**
      * 初始化优质新品
      */
     private fun initFeatureNewGoods() {

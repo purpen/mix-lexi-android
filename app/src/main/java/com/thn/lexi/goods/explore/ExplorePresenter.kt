@@ -209,11 +209,11 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
     fun getGoodsCollection() {
         dataSource.getGoodsCollection(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
-                if (editorRecommendBean.success) {
-                    view.setFeatureNewGoodsData(editorRecommendBean.data.products)
+                val goodsCollectionBean = JsonUtil.fromJson(json, GoodsCollectionBean::class.java)
+                if (goodsCollectionBean.success) {
+                    view.setGoodsCollectionData(goodsCollectionBean.data.collections)
                 } else {
-                    view.showError(editorRecommendBean.status.message)
+                    view.showError(goodsCollectionBean.status.message)
                 }
             }
 

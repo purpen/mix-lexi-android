@@ -16,6 +16,14 @@ public class DimenUtil {
         return (int) (dpVal * scale + 0.5f);
     }
 
+    /**
+     * dp转px
+     */
+    public static int getDimensionPixelSize(int dpVal) {
+        return BaseModuleContext.getContext().getResources().getDimensionPixelSize(dpVal);
+    }
+
+
 
     /**
      * sp转px
