@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
@@ -18,7 +19,10 @@ import android.view.animation.LayoutAnimationController
 import android.view.animation.TranslateAnimation
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.flyco.dialog.listener.OnBtnClickL
 import com.flyco.dialog.widget.ActionSheetDialog
+import com.flyco.dialog.widget.NormalDialog
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.album.ImageCropActivity
@@ -77,7 +81,9 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
         headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week,null)
 
 
-
+        if(SPUtil.readBool(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE)){
+            headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
+        }
 
         val str1= "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
         val str2= "http://tx.haiqq.com/uploads/allimg/170504/0641415410-1.jpg"
@@ -100,6 +106,20 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
+        when(data.phases){
+            1->{//实习馆主
+                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+                headerLifeHouse.textViewName.text = "当前为实习馆主"
+                headerLifeHouse.textViewContent.text = data.phases_description
+            }
+
+            2->{ //正式馆主
+                headerLifeHouse.textViewType.visibility = View.GONE
+                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_success_open_life_house,0,0,0)
+                headerLifeHouse.textViewName.text = "恭喜你拥有生活馆"
+                headerLifeHouse.textViewContent.text = data.phases_description
+            }
+        }
     }
 
     /**
@@ -208,7 +228,21 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
                     dialog.dismiss()
                 }
             }
+
+            R.id.imageViewTipsClose ->{
+                headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
+                SPUtil.write(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE,true)
+            }
         }
+
+
+    }
+
+    /**
+     * 删除分销商品
+     */
+    override fun deleteDistributeGoods(position: Int) {
+        adapter.remove(position)
     }
 
     override fun installListener() {
@@ -216,6 +250,22 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
 
         headerLifeHouse.imageViewCover.setOnClickListener(this)
 
+        headerLifeHouse.imageViewTipsClose.setOnClickListener(this)
+
+
+        adapter.setOnItemClickListener { adapter, view, position ->
+            ToastUtil.showInfo("position==$position")
+        }
+
+
+        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener{adapter, view, position ->
+            val productsBean = adapter.getItem(position) as DistributionGoodsBean.DataBean.ProductsBean
+            when(view.id){
+                R.id.imageViewDelete ->{
+                    showDeleteDialog(productsBean.rid,position)
+                }
+            }
+        }
 //        adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
 //            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
 //            when(view.id){
@@ -266,6 +316,30 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
 //        adapter.setOnLoadMoreListener({
 //            presenter.loadMoreData("", page)
 //        }, recyclerView)
+    }
+
+    private fun showDeleteDialog(rid: String, position: Int) {
+        val color333 = Util.getColor(R.color.color_333)
+        val white = Util.getColor(android.R.color.white)
+        val dialog =  NormalDialog(activity)
+        dialog.isTitleShow(false)
+                .bgColor(white)
+                .cornerRadius(4f)
+                .content("你确认要下架这件商品吗?")
+                .contentGravity(Gravity.CENTER)
+                .contentTextColor(color333)
+                .dividerColor(Util.getColor(R.color.color_eee))
+                .btnTextSize(15.5f, 15.5f)
+                .btnTextColor(color333,color333)
+                .btnPressColor(white)
+                .widthScale(0.85f)
+                .show()
+        dialog.setOnBtnClickL(OnBtnClickL {
+            dialog.dismiss()
+        }, OnBtnClickL {
+            presenter.deleteDistributeGoods(rid,position)
+            dialog.dismiss()
+        })
     }
 
     override fun loadData() {

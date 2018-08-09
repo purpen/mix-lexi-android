@@ -242,6 +242,25 @@ open class LifeHouseModel {
         })
     }
 
+    fun deleteDistributeGoods(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+
+        val params = ClientParamsAPI.getDeleteDistributeGoodsParams(rid)
+
+        HttpRequest.sendRequest(HttpRequest.DELETE,URL.DELETE_DISTRIBUTE_GOODS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }
 
 

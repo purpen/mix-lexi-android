@@ -519,6 +519,12 @@ public class ClientParamsAPI {
         return params;
     }
 
+    /**
+     * 编辑生活馆
+     * @param title
+     * @param description
+     * @return
+     */
     @Nullable
     public static HashMap<String, String> getEditLifeStoreParams(@NotNull String title, @NotNull String description) {
         HashMap<String, String> params = generateCommonParams();
@@ -527,4 +533,17 @@ public class ClientParamsAPI {
         params.put("description", description);
         return params;
     }
+
+    /**
+     * 删除分销商品
+     * @param rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, String> getDeleteDistributeGoodsParams(@NotNull String rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid",rid);
+        return params;
+    }
+
 }

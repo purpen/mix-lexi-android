@@ -4,6 +4,7 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.goods.explore.EditorRecommendBean
+import com.thn.lexi.net.NetStatusBean
 import java.io.IOException
 
 class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Presenter {
@@ -133,6 +134,27 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                     bean.name = title
                     bean.description = description
                     view.setLifeHouseData(bean)
+                } else {
+                    view.showError(netStatusBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+
+    /**
+     * 删除分销商品
+     */
+    fun deleteDistributeGoods(rid: String, position: Int) {
+        dataSource.deleteDistributeGoods(rid,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    view.deleteDistributeGoods(position)
                 } else {
                     view.showError(netStatusBean.status.message)
                 }

@@ -40,6 +40,10 @@ class LifeHouseContract {
 
         }
 
+        fun deleteDistributeGoods(position: Int) {
+
+        }
+
 
     }
 
