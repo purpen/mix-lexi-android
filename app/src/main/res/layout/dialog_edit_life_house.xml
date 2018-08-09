@@ -36,7 +36,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayoutTitle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp45"
+        android:layout_height="@dimen/dp48"
         android:layout_below="@+id/textView0"
         >
 
@@ -49,11 +49,14 @@
             android:paddingStart="@dimen/dp10"
             android:background="@drawable/border_radius4_ddd"
             android:textSize="@dimen/sp14"
+            android:maxLength="16"
+            android:maxLines="1"
             android:hint="@string/text_please_input"
             android:textColorHint="@color/color_b2b2b2"
             android:textColor="@color/color_333" />
 
         <TextView
+            android:id="@+id/textViewTitleLen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -71,7 +74,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayoutTitle"
         android:layout_marginTop="@dimen/dp20"
-        android:maxLength="16"
         android:text="@string/text_life_house_brife"
         android:textColor="@color/color_959fa7"
         android:textSize="@dimen/sp14"
@@ -84,6 +86,7 @@
         android:layout_below="@+id/textView1">
 
         <EditText
+            android:id="@+id/editTextDesc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dp10"
@@ -98,6 +101,7 @@
             android:textSize="@dimen/sp14" />
 
         <TextView
+            android:id="@+id/textViewDescLen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

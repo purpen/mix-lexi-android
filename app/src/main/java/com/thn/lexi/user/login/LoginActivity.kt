@@ -7,6 +7,7 @@ import android.view.View
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.thn.lexi.MainActivity
 import com.thn.lexi.MessageClose
@@ -81,15 +82,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
             R.id.textViewPasswordLogin ->{
                 relativeLayoutCheckCodeBox.visibility = View.GONE
                 relativeLayoutPassWordBox.visibility = View.VISIBLE
-                textViewPasswordLogin.setTextColor(resources.getColor(R.color.color_6ed7af))
-                textViewCheckCodeLogin.setTextColor(resources.getColor(R.color.color_333))
+                textViewPasswordLogin.setTextColor(Util.getColor(R.color.color_6ed7af))
+                textViewCheckCodeLogin.setTextColor(Util.getColor(R.color.color_333))
             }
 
             R.id.textViewCheckCodeLogin ->{
                 relativeLayoutPassWordBox.visibility = View.GONE
                 relativeLayoutCheckCodeBox.visibility = View.VISIBLE
-                textViewCheckCodeLogin.setTextColor(resources.getColor(R.color.color_6ed7af))
-                textViewPasswordLogin.setTextColor(resources.getColor(R.color.color_333))
+                textViewCheckCodeLogin.setTextColor(Util.getColor(R.color.color_6ed7af))
+                textViewPasswordLogin.setTextColor(Util.getColor(R.color.color_333))
             }
 
             R.id.textViewCountryCode ->{

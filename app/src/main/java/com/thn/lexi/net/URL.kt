@@ -192,4 +192,9 @@ object URL {
      */
    const val SMALL_LIFE_STORE = "${BASE_URL}store/life_store"
 
+    /**
+     * 编辑生活馆
+     */
+    const val EDIT_SMALL_LIFE_STORE = "${BASE_URL}store/edit_store"
+
 }

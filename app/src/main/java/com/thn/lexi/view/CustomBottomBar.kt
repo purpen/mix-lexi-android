@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import com.basemodule.tools.Util
 import com.thn.lexi.R
 import kotlinx.android.synthetic.main.view_custom_bottom_bar.view.*
 
@@ -52,7 +53,7 @@ class CustomBottomBar : LinearLayout, View.OnClickListener {
         val id = button?.id
         resetEnableState()
         button?.isSelected = true
-        button?.setTextColor(resources.getColor(R.color.color_6ed7af))
+        button?.setTextColor(Util.getColor(R.color.color_6ed7af))
         when (id) {
             R.id.button0 -> onTabClickListener?.invoke(id)
             R.id.button1 -> onTabClickListener?.invoke(id)
@@ -63,15 +64,15 @@ class CustomBottomBar : LinearLayout, View.OnClickListener {
 
     private fun resetEnableState() {
         button0.isSelected = false
-        button0.setTextColor(resources.getColor(R.color.color_666))
+        button0.setTextColor(Util.getColor(R.color.color_666))
 
         button1.isSelected = false
-        button1.setTextColor(resources.getColor(R.color.color_666))
+        button1.setTextColor(Util.getColor(R.color.color_666))
 
         button2.isSelected = false
-        button2.setTextColor(resources.getColor(R.color.color_666))
+        button2.setTextColor(Util.getColor(R.color.color_666))
 
         button3.isSelected = false
-        button3.setTextColor(resources.getColor(R.color.color_666))
+        button3.setTextColor(Util.getColor(R.color.color_666))
     }
 }

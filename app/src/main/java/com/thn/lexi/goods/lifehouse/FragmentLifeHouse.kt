@@ -8,9 +8,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.R
 import com.thn.lexi.goods.explore.EditorRecommendBean
@@ -44,7 +42,7 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-        swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
+        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         initLifeHouseHeader()
         initWelcomeInWeek()
@@ -83,7 +81,7 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
      * 设置生活馆信息
      */
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
-        headerLifeHouse.textView0.text = data.name
+        headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
     }
 
@@ -167,7 +165,9 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
     override fun onClick(v: View) {
         when(v.id){
             R.id.imageViewEdit ->{
-                 val dialog = EditLifeHouseDialog(activity)
+                val title = headerLifeHouse.textViewTitle.text
+                val description = headerLifeHouse.textViewDesc.text
+                 val dialog = EditLifeHouseDialog(activity,presenter,title,description)
                 dialog.show()
                 dialog.setCanceledOnTouchOutside(false)
             }
@@ -258,11 +258,15 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
     }
 
     override fun showLoadingView() {
-        if (!swipeRefreshLayout.isRefreshing) dialog?.show()
+        if (!swipeRefreshLayout.isRefreshing) dialog.show()
     }
 
     override fun dismissLoadingView() {
-        dialog?.dismiss()
+        dialog.dismiss()
+    }
+
+    override fun showInfo(s: String) {
+       ToastUtil.showInfo(s)
     }
 
     override fun showError(string: String) {

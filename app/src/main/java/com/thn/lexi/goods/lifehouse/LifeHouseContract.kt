@@ -28,11 +28,15 @@ class LifeHouseContract {
 
         }
 
-        fun setLookPeopleData(products: List<LookPeopleBean.DataBean.UsersBean>) {
+        fun setLookPeopleData(users: List<LookPeopleBean.DataBean.UsersBean>) {
 
         }
 
         fun setLifeHouseData(data: LifeHouseBean.DataBean) {
+
+        }
+
+        fun showInfo(s: String) {
 
         }
 

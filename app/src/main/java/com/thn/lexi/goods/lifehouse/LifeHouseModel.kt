@@ -223,6 +223,25 @@ open class LifeHouseModel {
         })
     }
 
+    fun editLifeHouse(title: String, description: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+
+        val params = ClientParamsAPI.getEditLifeStoreParams(title,description)
+
+        HttpRequest.sendRequest(HttpRequest.POST,URL.EDIT_SMALL_LIFE_STORE, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }
 
 

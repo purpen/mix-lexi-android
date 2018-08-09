@@ -56,7 +56,7 @@ class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.
         gridLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = adapter
-        adapter.setSpanSizeLookup { gridLayoutManager, position ->
+        adapter.setSpanSizeLookup { _, position ->
             list1[position].spanSize
         }
         val size = DimenUtil.getDimensionPixelSize(R.dimen.dp2)

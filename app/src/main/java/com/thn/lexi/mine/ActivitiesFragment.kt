@@ -2,6 +2,7 @@ package com.thn.lexi.mine
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.Constants
 import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
@@ -29,13 +30,13 @@ class ActivitiesFragment : BaseFragment(), SelectionContract.View {
         presenter = SelectionPresenter(this)
         adapter = GoodsAdapter(R.layout.adapter_goods_layout)
 
-        swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
+        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(activity)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(),LinearLayoutManager.VERTICAL,resources.getDimensionPixelSize(R.dimen.dp10),resources.getColor(R.color.color_d1d1d1)))
+        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(),LinearLayoutManager.VERTICAL,resources.getDimensionPixelSize(R.dimen.dp10),Util.getColor(R.color.color_d1d1d1)))
     }
 
     override fun setPresenter(presenter: SelectionContract.Presenter?) {

@@ -1,7 +1,11 @@
 package com.basemodule.tools;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 
+
+import com.thn.basemodule.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,6 +41,10 @@ public class Util {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static int getColor(@ColorRes int color){
+        return  ContextCompat.getColor(BaseModuleContext.getContext(),color);
     }
 
 }

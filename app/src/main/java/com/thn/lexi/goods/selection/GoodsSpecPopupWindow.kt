@@ -72,8 +72,8 @@ class GoodsSpecPopupWindow(activity: FragmentActivity?, item: GoodsData.DataBean
 
 
     private fun installListener() {
-        colorAdapter.setOnItemClickListener { adapter, view, position ->
-            var colorsBean: SKUListData.DataBean.ColorsBean? = null
+        colorAdapter.setOnItemClickListener { _, view, position ->
+            var colorsBean: SKUListData.DataBean.ColorsBean?
             for (i in colors.indices) {
                 colorsBean = colors[i]
                 if (position == i) {
@@ -89,8 +89,7 @@ class GoodsSpecPopupWindow(activity: FragmentActivity?, item: GoodsData.DataBean
             setSpecSelectableState()
         }
 
-
-        specificationAdapter.setOnItemClickListener { adapter, view, position ->
+        specificationAdapter.setOnItemClickListener { _, view, position ->
             var modesBean: SKUListData.DataBean.ModesBean
             for (i in modes.indices) {
                 modesBean = modes[i]

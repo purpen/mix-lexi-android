@@ -35,9 +35,9 @@ public class JsonUtil {
 //        return ((HttpResponseBean<T>) getGson().fromJson(json, token.getType())).getData();
 //    }
 
-    public static <T> HttpResponseBean<T> json2Bean(String json, TypeToken<HttpResponseBean<T>> token) throws JsonSyntaxException {
-        return (HttpResponseBean<T>) getGson().fromJson(json, token.getType());
-    }
+//    public static <T> HttpResponseBean<T> json2Bean(String json, TypeToken<HttpResponseBean<T>> token) throws JsonSyntaxException {
+//        return (HttpResponseBean<T>) getGson().fromJson(json, token.getType());
+//    }
 
     public static String toJson(Object object) {
         return getGson().toJson(object);

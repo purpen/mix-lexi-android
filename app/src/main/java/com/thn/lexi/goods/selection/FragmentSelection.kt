@@ -23,6 +23,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
 import android.view.View
 import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.goods.explore.EditorRecommendBean
 import com.youth.banner.BannerConfig
@@ -61,7 +62,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         initGoodSelection()
         initZCManifest()
         adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
-        swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
+        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
     }
 
@@ -117,7 +118,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewDiscoverLife.setHasFixedSize(true)
         recyclerViewDiscoverLife.layoutManager = linearLayoutManager
         recyclerViewDiscoverLife.adapter = adapterDiscoverLife
-        recyclerViewDiscoverLife.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewDiscoverLife.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
     /**
@@ -211,7 +212,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewRecommend.setHasFixedSize(true)
         recyclerViewRecommend.layoutManager = linearLayoutManager
         recyclerViewRecommend.adapter = adapterTodayRecommend
-        recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
     override fun setTodayRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
@@ -223,11 +224,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun initNotice() {
         val openInfo = SpannableString("设计师risky秒前开了自己的设计馆")
-        openInfo.setSpan(ForegroundColorSpan(resources.getColor(R.color.color_6ed7af)), 0, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        openInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)), 0, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         textViewOpenInfo.text = openInfo
 
         val orderInfo = SpannableString("伟峰的设计馆1小时售出200单")
-        orderInfo.setSpan(ForegroundColorSpan(resources.getColor(R.color.color_f4b329)), 9, orderInfo.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        orderInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f4b329)), 9, orderInfo.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         textViewOrderInfo.text = orderInfo
     }
 
@@ -354,11 +355,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     }
 
     override fun showLoadingView() {
-        if (!swipeRefreshLayout.isRefreshing) dialog?.show()
+        if (!swipeRefreshLayout.isRefreshing) dialog.show()
     }
 
     override fun dismissLoadingView() {
-        dialog?.dismiss()
+        dialog.dismiss()
     }
 
     override fun showError(string: String) {

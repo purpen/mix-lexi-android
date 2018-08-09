@@ -260,45 +260,6 @@ public class ClientParamsAPI {
         return params;
     }
 
-    /**
-     * 获取客户等级列表
-     *
-     * @param page
-     * @return
-     */
-    public static HashMap<String, String> getCustomerGradeParams(int page) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("page", String.valueOf(page));
-        params.put("per_page", Constants.PAGE_SIZE);
-        return params;
-    }
-
-    /**
-     * 新增客户分类
-     *
-     * @param text
-     * @return
-     */
-    public static HashMap<String, String> getAddGradeParams(String text) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("name", text);
-        return params;
-    }
-
-    /**
-     * 轮播图
-     *
-     * @param spot
-     * @param page
-     * @return
-     */
-    public static HashMap<String, String> slideParam(String spot, int page) {
-        HashMap<String, String> params = generateCommonParams();
-        params.put("spot", spot);
-        params.put("page", String.valueOf(page));
-        params.put("per_page", Constants.PAGE_SIZE);
-        return params;
-    }
 
     /**
      * 搜索历史
@@ -555,6 +516,15 @@ public class ClientParamsAPI {
     public static HashMap<String, String> getLifeStoreParams() {
         HashMap<String, String> params = generateCommonParams();
         params.put("rid", LoginUtil.storeId());
+        return params;
+    }
+
+    @Nullable
+    public static HashMap<String, String> getEditLifeStoreParams(@NotNull String title, @NotNull String description) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid", LoginUtil.storeId());
+        params.put("name", title);
+        params.put("description", description);
         return params;
     }
 }

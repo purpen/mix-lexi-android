@@ -3,6 +3,7 @@ package com.thn.lexi.user.areacode
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
@@ -23,13 +24,13 @@ class SelectCountryOrAreaActivity : BaseActivity(), SelectCountryAreaContract.Vi
         presenter = SelectCountryAreaPresenter(this)
         customHeadView.head_goback.visibility = View.GONE
         customHeadView.setHeadCenterTxtShow(true, R.string.title_select_country_area)
-        swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
+        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.VERTICAL, resources.getDimensionPixelSize(R.dimen.dp1), resources.getColor(R.color.color_d1d1d1)))
+        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.VERTICAL, resources.getDimensionPixelSize(R.dimen.dp1), Util.getColor(R.color.color_d1d1d1)))
     }
 
     override fun installListener() {

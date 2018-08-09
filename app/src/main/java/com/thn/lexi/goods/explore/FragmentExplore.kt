@@ -2,6 +2,7 @@ package com.thn.lexi.goods.explore
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -54,7 +55,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         recyclerViewGood100.setHasFixedSize(true)
         recyclerViewGood100.layoutManager = linearLayoutManager
         recyclerViewGood100.adapter = adapterGood100
-        recyclerViewGood100.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewGood100.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
 
     }
 
@@ -72,7 +73,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         recyclerViewGoodDesign.setHasFixedSize(true)
         recyclerViewGoodDesign.layoutManager = linearLayoutManager
         recyclerViewGoodDesign.adapter = adapterGoodDesign
-        recyclerViewGoodDesign.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewGoodDesign.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
     override fun setGoodDesignData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
@@ -90,7 +91,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         recyclerViewCollection.setHasFixedSize(true)
         recyclerViewCollection.layoutManager = linearLayoutManager
         recyclerViewCollection.adapter = adapterGoodsCollection
-        recyclerViewCollection.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewCollection.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
     /**
@@ -111,7 +112,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         recyclerViewNewGoods.setHasFixedSize(true)
         recyclerViewNewGoods.layoutManager = linearLayoutManager
         recyclerViewNewGoods.adapter = adapterFeatureNewGoods
-        recyclerViewNewGoods.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewNewGoods.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
 
     }
 
@@ -135,7 +136,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         recyclerViewBrand.setHasFixedSize(true)
         recyclerViewBrand.layoutManager = linearLayoutManager
         recyclerViewBrand.adapter = adapterBrandPavilion
-        recyclerViewBrand.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewBrand.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
     /**
@@ -156,7 +157,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         recyclerViewRecommend.setHasFixedSize(true)
         recyclerViewRecommend.layoutManager = linearLayoutManager
         recyclerViewRecommend.adapter = adapterEditorRecommend
-        recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), resources.getColor(android.R.color.transparent)))
+        recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
     /**
@@ -177,7 +178,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         recyclerView0.setHasFixedSize(true)
         recyclerView0.layoutManager = linearLayoutManager
         recyclerView0.adapter = adapterGoodsClass
-        recyclerView0.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp30), resources.getColor(android.R.color.transparent)))
+        recyclerView0.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp30), Util.getColor(android.R.color.transparent)))
     }
 
     /**
@@ -297,11 +298,11 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     }
 
     override fun showLoadingView() {
-        if (!swipeRefreshLayout.isRefreshing) dialog?.show()
+        if (!swipeRefreshLayout.isRefreshing) dialog.show()
     }
 
     override fun dismissLoadingView() {
-        dialog?.dismiss()
+        dialog.dismiss()
     }
 
     override fun showError(string: String) {
