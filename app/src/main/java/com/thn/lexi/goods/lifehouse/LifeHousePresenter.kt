@@ -1,5 +1,4 @@
 package com.thn.lexi.goods.lifehouse
-import android.text.TextUtils
 import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -125,15 +124,6 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
      * 编辑生活馆
      */
     fun editLifeHouse(title: String, description: String){
-        if (TextUtils.isEmpty(title)){
-            view.showInfo(AppApplication.getContext().getString(R.string.text_null_life_house_title))
-            return
-        }
-
-        if (TextUtils.isEmpty(description)){
-            view.showInfo(AppApplication.getContext().getString(R.string.text_null_life_house_description))
-            return
-        }
 
         dataSource.editLifeHouse(title,description,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {

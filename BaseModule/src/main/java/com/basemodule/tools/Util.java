@@ -1,7 +1,10 @@
 package com.basemodule.tools;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.support.annotation.AnimatorRes;
+import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorRes;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 
 
@@ -47,4 +50,12 @@ public class Util {
         return  ContextCompat.getColor(BaseModuleContext.getContext(),color);
     }
 
+
+    public static String getString(@StringRes int resourceId){
+        return BaseModuleContext.getContext().getString(resourceId);
+    }
+
+    public static String[] getStringArray(@ArrayRes int resourceId){
+        return BaseModuleContext.getContext().getResources().getStringArray(resourceId);
+    }
 }

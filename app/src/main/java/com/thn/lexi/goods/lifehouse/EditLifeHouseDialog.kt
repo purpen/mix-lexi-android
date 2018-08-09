@@ -1,4 +1,5 @@
 package com.thn.lexi.goods.lifehouse
+
 import android.graphics.Color
 import android.support.v4.app.FragmentActivity
 import android.text.Editable
@@ -8,27 +9,29 @@ import android.view.View
 import android.widget.TextView
 import com.flyco.dialog.widget.base.BaseDialog
 import com.basemodule.tools.DimenUtil
+import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.flyco.dialog.utils.CornerUtils
 import com.thn.lexi.R
 import kotlinx.android.synthetic.main.dialog_edit_life_house.view.*
 
 
-class EditLifeHouseDialog(context: FragmentActivity?,presenter: LifeHousePresenter,title: CharSequence, description: CharSequence) : BaseDialog<EditLifeHouseDialog>(context) {
-    private var titleLifeHouse:CharSequence = title
-    private var desc:CharSequence = description
+class EditLifeHouseDialog(context: FragmentActivity?, presenter: LifeHousePresenter, title: CharSequence, description: CharSequence) : BaseDialog<EditLifeHouseDialog>(context) {
+    private var titleLifeHouse: CharSequence = title
+    private var desc: CharSequence = description
     private val present: LifeHousePresenter = presenter
-    private lateinit var view:View
+    private lateinit var view: View
     override fun onCreateView(): View {
         widthScale(0.85f)
         view = View.inflate(context, R.layout.dialog_edit_life_house, null)
 
-        view.background = CornerUtils.cornerDrawable(Color.parseColor("#ffffff"),DimenUtil.getDimensionPixelSize(R.dimen.dp4).toFloat())
+        view.background = CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), DimenUtil.getDimensionPixelSize(R.dimen.dp4).toFloat())
 
         return view
     }
 
     override fun setUiBeforShow() {
-        view.editTextTitle.addTextChangedListener(object :TextWatcher{
+        view.editTextTitle.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 view.textViewTitleLen.text = "${s.length}/16"
             }
@@ -42,7 +45,7 @@ class EditLifeHouseDialog(context: FragmentActivity?,presenter: LifeHousePresent
             }
         })
 
-        view.editTextDesc.addTextChangedListener(object :TextWatcher{
+        view.editTextDesc.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 view.textViewDescLen.text = "${s.length}/40"
             }
@@ -57,13 +60,13 @@ class EditLifeHouseDialog(context: FragmentActivity?,presenter: LifeHousePresent
         })
 
         if (!TextUtils.isEmpty(titleLifeHouse)) {
-            view.editTextTitle.setText(titleLifeHouse,TextView.BufferType.EDITABLE)
+            view.editTextTitle.setText(titleLifeHouse, TextView.BufferType.EDITABLE)
             view.editTextTitle.setSelection(titleLifeHouse.length)
         }
 
 
-        if (!TextUtils.isEmpty(desc)){
-            view.editTextDesc.setText(desc,TextView.BufferType.EDITABLE)
+        if (!TextUtils.isEmpty(desc)) {
+            view.editTextDesc.setText(desc, TextView.BufferType.EDITABLE)
             view.editTextDesc.setSelection(desc.length)
         }
 
@@ -71,7 +74,16 @@ class EditLifeHouseDialog(context: FragmentActivity?,presenter: LifeHousePresent
         view.button.setOnClickListener {
             val title = view.editTextTitle.text.toString()
             val description = view.editTextDesc.text.toString()
-            present.editLifeHouse(title,description)
+            if (TextUtils.isEmpty(title)) {
+                ToastUtil.showInfo(Util.getString(R.string.text_null_life_house_title))
+                return@setOnClickListener
+            }
+
+            if (TextUtils.isEmpty(description)) {
+                ToastUtil.showInfo(Util.getString(R.string.text_null_life_house_description))
+                return@setOnClickListener
+            }
+            present.editLifeHouse(title, description)
             dismiss()
         }
 

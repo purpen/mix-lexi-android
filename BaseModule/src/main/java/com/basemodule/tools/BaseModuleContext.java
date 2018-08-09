@@ -21,13 +21,4 @@ public class BaseModuleContext {
     public static Context getContext(){
         return mContext;
     }
-
-
-    public static String getString(int resourceId){
-        return mContext.getResources().getString(resourceId);
-    }
-
-    public static String[] getStringArray(int resourceId){
-        return mContext.getResources().getStringArray(resourceId);
-    }
 }
