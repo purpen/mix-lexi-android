@@ -30,7 +30,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
                 if (loginBean.success) {
                     SPUtil.write(Constants.AUTHORIZATION,authorization)
-                    SPUtil.write(com.thn.lexi.Constants.LOGIN_BEAN,json)
+                    SPUtil.write(Constants.LOGIN_BEAN,json)
                     view.goPage()
                 } else {
                     view.showError(loginBean.status.message)
@@ -97,7 +97,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 if (loginBean.success) {
                     val authorization = ClientParamsAPI.getAuthorization(loginBean.data.token)
                     SPUtil.write(Constants.AUTHORIZATION,authorization)
-                    SPUtil.write(com.thn.lexi.Constants.LOGIN_BEAN,json)
+                    SPUtil.write(Constants.LOGIN_BEAN,json)
                     view.goPage(loginBean.data.is_first_login)
                 } else {
                     view.showInfo(loginBean.status.message)

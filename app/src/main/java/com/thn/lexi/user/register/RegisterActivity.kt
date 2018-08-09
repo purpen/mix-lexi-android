@@ -8,11 +8,9 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
-import com.thn.lexi.Constants
 import com.thn.lexi.MainActivity
 import com.thn.lexi.MessageClose
 import com.thn.lexi.R
-import com.thn.lexi.user.areacode.CountryAreaCodeBean
 import com.thn.lexi.user.areacode.MessageAreaCode
 import com.thn.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.thn.lexi.user.login.LoginActivity

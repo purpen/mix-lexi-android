@@ -1,5 +1,9 @@
 package com.thn.lexi.goods.lifehouse
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -8,9 +12,18 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.LayoutAnimationController
+import android.view.animation.TranslateAnimation
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
+import com.flyco.dialog.widget.ActionSheetDialog
+import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.album.ImageCropActivity
+import com.thn.lexi.album.ImageUtils
+import com.thn.lexi.album.PicturePickerUtils
 import com.thn.lexi.goods.explore.EditorRecommendBean
 import com.thn.lexi.goods.selection.GoodSelectionAdapter
 import com.thn.lexi.goods.selection.GridSpaceDecoration
@@ -18,8 +31,12 @@ import com.thn.lexi.goods.selection.HeadImageAdapter
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
+import java.io.File
 
-class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListener {
+class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListener,EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
@@ -60,7 +77,7 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
         headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week,null)
 
 
-        headerLifeHouse.imageViewEdit.setOnClickListener(this)
+
 
         val str1= "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
         val str2= "http://tx.haiqq.com/uploads/allimg/170504/0641415410-1.jpg"
@@ -91,7 +108,7 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
     override fun setLookPeopleData(users: List<LookPeopleBean.DataBean.UsersBean>) {
         val count = users.size
         val string = SpannableString("$count 人浏览过生活馆")
-        string.setSpan(ForegroundColorSpan(resources.getColor(R.color.color_333)),0,count+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)),0,count+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         headerLifeHouse.textViewLook.text = string
 
 
@@ -171,11 +188,33 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
                 dialog.show()
                 dialog.setCanceledOnTouchOutside(false)
             }
+
+            R.id.imageViewCover ->{
+                val stringItems = Util.getStringArray(R.array.strings_photo_titles)
+                val dialog = ActionSheetDialog(activity, stringItems, null)
+                dialog.itemTextColor(Util.getColor(R.color.color_333))
+                val animation = TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF,
+                        0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f)
+                animation.interpolator = DecelerateInterpolator()
+                dialog.layoutAnimation(LayoutAnimationController(animation, 0.12f))
+                dialog.isTitleShow(false).show()
+
+                dialog.setOnOperItemClickL { parent, view, position, id ->
+                    when (position) {
+                        0 -> cameraTask()
+
+                        1 -> albumTask()
+                    }
+                    dialog.dismiss()
+                }
+            }
         }
     }
 
     override fun installListener() {
+        headerLifeHouse.imageViewEdit.setOnClickListener(this)
 
+        headerLifeHouse.imageViewCover.setOnClickListener(this)
 
 //        adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
 //            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
@@ -274,6 +313,90 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
         adapter.loadMoreFail()
     }
     override fun goPage() {
+
+    }
+
+
+    @AfterPermissionGranted(Constants.REQUEST_CODE_PICK_IMAGE)
+    private fun albumTask() {
+        if (EasyPermissions.hasPermissions(AppApplication.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            ImageUtils.getImageFromAlbum(this, 1)
+        } else {
+            // 申请权限。
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo),
+                    Constants.REQUEST_CODE_PICK_IMAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+    }
+
+    @AfterPermissionGranted(Constants.REQUEST_CODE_CAPTURE_CAMERA)
+    private fun cameraTask() {
+        if (EasyPermissions.hasPermissions(AppApplication.getContext(), Manifest.permission.CAMERA)) {
+            openCamera()
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_camera),
+                    Constants.REQUEST_CODE_CAPTURE_CAMERA, Manifest.permission.CAMERA)
+        }
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        LogUtil.e("onPermissionsGranted:" + requestCode + ":" + perms.size)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        LogUtil.e("onPermissionsDenied:" + requestCode + ":" + perms.size)
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onRationaleDenied(requestCode: Int) {
+        LogUtil.e("onRationaleDenied:$requestCode")
+    }
+
+    override fun onRationaleAccepted(requestCode: Int) {
+        LogUtil.e("onRationaleAccepted:$requestCode")
+    }
+
+    private var mCurrentPhotoFile: File? = null
+
+    private fun openCamera() {
+        mCurrentPhotoFile = ImageUtils.getDefaultFile()
+        ImageUtils.getImageFromCamera(activity, ImageUtils.getUriForFile(context, mCurrentPhotoFile))
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        LogUtil.e("requestCode=$requestCode;resultCode=$resultCode")
+
+        if (resultCode != Activity.RESULT_OK) return
+
+        when (requestCode) {
+            Constants.REQUEST_CODE_CAPTURE_CAMERA -> {
+                if (null == mCurrentPhotoFile) return
+                toCropActivity(ImageUtils.getUriForFile(context, mCurrentPhotoFile))
+            }
+            Constants.REQUEST_CODE_PICK_IMAGE -> {
+                var mSelected = PicturePickerUtils.obtainResult(data)
+                if (mSelected == null || mSelected.isEmpty()) {
+                    return
+                }
+                toCropActivity(mSelected[0])
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun toCropActivity(uri: Uri?) {
+        val intent = Intent(context, ImageCropActivity::class.java)
+        intent.putExtra(FragmentLifeHouse::class.java.simpleName, uri)
+        startActivity(intent)
 
     }
 

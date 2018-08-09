@@ -23,7 +23,8 @@
                 android:id="@+id/relativeLayout"
                 android:layout_width="67dp"
                 android:layout_height="67dp"
-                android:layout_marginEnd="@dimen/dp10">
+                android:layout_marginEnd="@dimen/dp10"
+                >
 
                 <ImageView
                     android:id="@+id/imageViewCover"

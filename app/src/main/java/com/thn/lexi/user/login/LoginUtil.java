@@ -1,8 +1,8 @@
 package com.thn.lexi.user.login;
 
+import com.basemodule.tools.Constants;
 import com.basemodule.tools.JsonUtil;
 import com.basemodule.tools.SPUtil;
-import com.thn.lexi.Constants;
 
 public class LoginUtil {
     /**

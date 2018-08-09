@@ -17,7 +17,6 @@ import java.util.*
 import android.view.animation.*
 import com.basemodule.tools.*
 import com.flyco.dialog.widget.ActionSheetDialog
-import com.thn.lexi.Constants
 import com.thn.lexi.album.ImageCropActivity
 import com.thn.lexi.album.ImageUtils
 import com.thn.lexi.album.PicturePickerUtils
@@ -64,9 +63,9 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
     override fun onClick(v: View) {
         when (v.id) {
             R.id.relativeLayoutOval -> {
-                val stringItems = applicationContext.resources.getStringArray(R.array.strings_photo_titles)
+                val stringItems = Util.getStringArray(R.array.strings_photo_titles)
                 val dialog = ActionSheetDialog(this, stringItems, null)
-                dialog.itemTextColor(resources.getColor(R.color.color_333))
+                dialog.itemTextColor(Util.getColor(R.color.color_333))
                 val animation = TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF,
                         0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f)
                 animation.interpolator = DecelerateInterpolator()

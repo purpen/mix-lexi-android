@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.basemodule.tools.GlideUtil
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.R
+import com.thn.lexi.goods.lifehouse.FragmentLifeHouse
 import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import kotlinx.android.synthetic.main.activity_image_crop.*
 import org.greenrobot.eventbus.EventBus
@@ -24,6 +25,8 @@ class ImageCropActivity:BaseActivity(), View.OnClickListener {
     override fun getIntentData() {
         if (intent.hasExtra(CompleteInfoActivity::class.java.simpleName)){
             uri = intent.getParcelableExtra(CompleteInfoActivity::class.java.simpleName)
+        }else if (intent.hasExtra(FragmentLifeHouse::class.java.simpleName)){
+            uri = intent.getParcelableExtra(FragmentLifeHouse::class.java.simpleName)
         }
     }
 

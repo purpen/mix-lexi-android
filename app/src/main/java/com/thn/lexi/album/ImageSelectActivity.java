@@ -19,7 +19,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.thn.imagealbum.album.Album;
 import com.thn.imagealbum.album.BundleUtils;
 import com.thn.imagealbum.album.SelectedUriCollection;

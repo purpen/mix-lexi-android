@@ -1,8 +1,8 @@
 package com.thn.lexi.goods.explore
+import com.basemodule.tools.Constants
 import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
-import com.thn.lexi.Constants
 import com.thn.lexi.R
 import com.thn.lexi.goods.selection.GoodsData
 import java.io.IOException
@@ -68,7 +68,7 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
         dataSource.getGoodsClass( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val goodsClassBean = JsonUtil.fromJson(json, GoodsClassBean::class.java)
-                if (goodsClassBean.status.code==Constants.SUCCESS) {
+                if (goodsClassBean.status.code== Constants.SUCCESS) {
                     view.setGoodsClassData(goodsClassBean.data.categories)
                 } else {
                     view.showError(goodsClassBean.status.message)

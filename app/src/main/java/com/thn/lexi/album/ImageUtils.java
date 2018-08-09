@@ -20,14 +20,15 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 
+import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.thn.imagealbum.BuildConfig;
 import com.thn.imagealbum.album.ImageLoaderEngine;
-import com.thn.lexi.Constants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -367,6 +368,25 @@ public class ImageUtils {
         String state = Environment.getExternalStorageState();
         if (state.equals(Environment.MEDIA_MOUNTED)) {
             Picker.from(activity)
+                    .count(count)
+                    .enableCamera(false)
+                    .setEngine(new ImageLoaderEngine())
+                    .forResult(Constants.REQUEST_CODE_PICK_IMAGE);
+        } else {
+            ToastUtil.showError("未检测到SD卡");
+        }
+    }
+
+    /**
+     * 从相册获得图片
+     *
+     * @param fragment
+     * @param count
+     */
+    public static void getImageFromAlbum(Fragment fragment, int count) {
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            Picker.from(fragment)
                     .count(count)
                     .enableCamera(false)
                     .setEngine(new ImageLoaderEngine())

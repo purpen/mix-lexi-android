@@ -1,5 +1,6 @@
 package com.thn.lexi
 
+import android.content.Intent
 import android.support.v4.view.ViewPager
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
@@ -17,7 +18,7 @@ class MainFragment0 : BaseFragment() {
     }
 
     override val layout: Int = R.layout.fragment_main0
-
+    private  val fragmentLifeHouse:FragmentLifeHouse by lazy { FragmentLifeHouse.newInstance() }
 
     override fun initView() {
         setUpViewPager()
@@ -25,8 +26,8 @@ class MainFragment0 : BaseFragment() {
 
     private fun setUpViewPager() {
         val fragments = ArrayList<BaseFragment>()
-        
-        fragments.add(FragmentLifeHouse.newInstance())
+
+        fragments.add(fragmentLifeHouse)
         fragments.add(FragmentSelection.newInstance())
         fragments.add(FragmentExplore.newInstance())
 
@@ -70,5 +71,9 @@ class MainFragment0 : BaseFragment() {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        fragmentLifeHouse.onActivityResult(requestCode,resultCode,data)
+    }
 
 }
