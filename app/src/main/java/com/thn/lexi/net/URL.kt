@@ -213,4 +213,9 @@ object URL {
      */
     const val UPLOAD_LIFE_HOUSE_LOGO_ID = "${BASE_URL}store/update_life_store_logo"
 
+    /**
+     * 生活馆->本周最受欢迎
+     */
+    const val WELCOME_IN_WEEK = "${BASE_URL}fx_distribute/week_popular"
+
 }

@@ -561,7 +561,7 @@ public class ClientParamsAPI {
     public static HashMap<String,String> getUploadLifeHouseLogoIdParams(@NotNull String logoId) {
         HashMap<String, String> params = generateCommonParams();
         params.put("rid",LoginUtil.storeId());
-        params.put("logoId",logoId);
+        params.put("logo_id",logoId);
         return params;
     }
 }

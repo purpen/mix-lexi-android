@@ -120,7 +120,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置生活馆信息
      */
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
-
+        LogUtil.e(data.logo)
         GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
 
         headerLifeHouse.textViewTitle.text = data.name

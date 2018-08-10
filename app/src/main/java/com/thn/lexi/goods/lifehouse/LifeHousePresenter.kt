@@ -278,7 +278,9 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
         }
 
         dataSource.uploadLifeHouseLogoId(logoId,object : IDataSource.HttpRequestCallBack {
+
             override fun onSuccess(json: String) {
+                LogUtil.e(json)
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
                     LogUtil.e("品牌馆logoId上传成功")

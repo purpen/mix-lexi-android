@@ -119,7 +119,7 @@ open class ExploreModel {
 
     fun unFocusBrandPavilion(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getUnfocusBrandPavilionParams(rid)
-        HttpRequest.sendRequest(HttpRequest.GET, URL.UNFOCUS_BRAND_PAVILION, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.POST, URL.UNFOCUS_BRAND_PAVILION, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
