@@ -1,12 +1,17 @@
 package com.thn.lexi.goods.lifehouse
+import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.JsonUtil
+import com.basemodule.tools.LogUtil
+import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.goods.bean.FavoriteBean
 import com.thn.lexi.goods.explore.EditorRecommendBean
 import com.thn.lexi.net.NetStatusBean
+import com.thn.lexi.user.completeinfo.UploadTokenBean
+import org.json.JSONArray
 import java.io.IOException
 
 class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Presenter {
@@ -214,6 +219,75 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
             override fun onFailure(e: IOException) {
                 viewClicked.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取图片上传的Token
+     */
+    fun getUploadToken(byteArray: ByteArray) {
+        dataSource.getUploadToken(object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val uploadTokenBean = JsonUtil.fromJson(json, UploadTokenBean::class.java)
+                if (uploadTokenBean.success) {
+                    view.setUploadTokenData(uploadTokenBean,byteArray)
+                } else {
+                    view.showInfo(uploadTokenBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+
+    /**
+     * 上传生活馆logo
+     */
+    fun uploadLifeHouseLogo(uploadTokenBean: UploadTokenBean?, byteArray: ByteArray) {
+        if (uploadTokenBean==null) {
+            ToastUtil.showInfo(R.string.text_net_error)
+            return
+        }
+
+        dataSource.uploadLifeHouseLogo(byteArray,uploadTokenBean,object : IDataSource.UpLoadCallBack {
+            override fun onComplete(ids: JSONArray) {
+                LogUtil.e("uploadAvatar===上传完成，图片id=${ids[0]}")
+                view.setLifeHouseLogoData(ids)
+            }
+        })
+    }
+
+    /**
+     * 上传logoId
+     */
+    fun uploadLifeHouseLogoId(logoId: String) {
+        if (TextUtils.isEmpty(logoId)){
+            ToastUtil.showInfo(AppApplication.getContext().getString(R.string.hint_text_upload_avatar))
+            return
+        }
+
+        dataSource.uploadLifeHouseLogoId(logoId,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    LogUtil.e("品牌馆logoId上传成功")
+                } else {
+                    view.showError(netStatusBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

@@ -4,6 +4,8 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.thn.lexi.goods.explore.EditorRecommendBean
+import com.thn.lexi.user.completeinfo.UploadTokenBean
+import org.json.JSONArray
 
 class LifeHouseContract {
     interface View : BaseView<Presenter> {
@@ -49,6 +51,14 @@ class LifeHouseContract {
         }
 
         fun setEditLifeHouseData(bean: LifeHouseBean) {
+
+        }
+
+        fun setUploadTokenData(uploadTokenBean: UploadTokenBean?, byteArray: ByteArray) {
+
+        }
+
+        fun setLifeHouseLogoData(ids: JSONArray) {
 
         }
 

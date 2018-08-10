@@ -1,11 +1,16 @@
 package com.thn.lexi.goods.lifehouse
 
+import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
+import com.qiniu.android.storage.UploadOptions
+import com.thn.lexi.AppApplication
 import com.thn.lexi.net.ClientParamsAPI
 import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
+import com.thn.lexi.user.completeinfo.UploadTokenBean
 import com.thn.lexi.user.login.LoginUtil
 import java.io.IOException
+import java.util.HashMap
 
 open class LifeHouseModel {
     companion object {
@@ -254,6 +259,70 @@ open class LifeHouseModel {
 
             override fun onFailure(e: IOException) {
                 httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    /**
+     * 获取上传token
+     */
+    fun getUploadToken(callback: IDataSource.HttpRequestCallBack) {
+
+        val params = ClientParamsAPI.getDefaultParams()
+
+        HttpRequest.sendRequest(HttpRequest.GET,URL.UPLOAD_TOKEN,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callback.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callback.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callback.onFailure(e)
+            }
+        })
+    }
+
+    fun uploadLifeHouseLogo(byteArray: ByteArray, uploadTokenBean: UploadTokenBean, upLoadCallBack: IDataSource.UpLoadCallBack) {
+        val token =  uploadTokenBean.data.up_token
+
+        val map = HashMap<String, String>()
+        map["x:user_id"] = uploadTokenBean.data.user_id
+        map["x:directory_id"] = uploadTokenBean.data.directory_id
+
+        val uploadOptions = UploadOptions(map, "image/jpeg", false, null, null)
+
+        AppApplication.getUploadManager().put(byteArray, null, token,
+                { key, info, res ->
+                    //res包含hash、key等信息，具体字段取决于上传策略的设置
+                    if (info.isOK) {
+                        upLoadCallBack.onComplete(res.getJSONArray("ids"))
+                        LogUtil.i("CompleteInfoModel","qiniu Upload Success")
+                    } else {
+                        LogUtil.i("CompleteInfoModel","qiniu Upload Fail")
+                        //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                    }
+
+                    LogUtil.i("CompleteInfoModel", "$key,\r\n $info,\r\n $res")
+                }, uploadOptions)
+    }
+
+
+    fun uploadLifeHouseLogoId(logoId: String, callback: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getUploadLifeHouseLogoIdParams(logoId)
+        HttpRequest.sendRequest(HttpRequest.PUT,URL.UPLOAD_LIFE_HOUSE_LOGO_ID,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callback.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callback.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callback.onFailure(e)
             }
         })
     }

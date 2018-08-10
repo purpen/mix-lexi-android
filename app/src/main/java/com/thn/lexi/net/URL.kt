@@ -208,4 +208,9 @@ object URL {
      */
     const val STORE_HEADLINE_URL = "${BASE_URL}store/store_headline"
 
+    /**
+     * 上传生活馆logoId
+     */
+    const val UPLOAD_LIFE_HOUSE_LOGO_ID = "${BASE_URL}store/update_life_store_logo"
+
 }

@@ -33,9 +33,14 @@ import com.thn.lexi.goods.explore.EditorRecommendBean
 import com.thn.lexi.goods.selection.GoodSelectionAdapter
 import com.thn.lexi.goods.selection.GridSpaceDecoration
 import com.thn.lexi.goods.selection.HeadImageAdapter
+import com.thn.lexi.user.completeinfo.UploadTokenBean
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONArray
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -49,7 +54,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private lateinit var adapter: LifeHouseAdapter
     private lateinit var adapterWelcomeInWeek: GoodSelectionAdapter
 
-
     private lateinit var headerLifeHouse: View
 
     companion object {
@@ -58,6 +62,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun initView() {
+
+        EventBus.getDefault().register(this)
+
         adapter = LifeHouseAdapter(R.layout.adapter_curator_recommend)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -105,7 +112,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置编辑生活馆数据
      */
     override fun setEditLifeHouseData(bean: LifeHouseBean) {
-        LogUtil.e(bean.data.name+"==="+bean.data.description)
         headerLifeHouse.textViewTitle.text = bean.data.name
         headerLifeHouse.textViewDesc.text = bean.data.description
     }
@@ -117,7 +123,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
 
-        LogUtil.e(data.name+"==="+data.description)
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
         when (data.phases) {
@@ -394,6 +399,12 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
 
+
+    override fun setUploadTokenData(uploadTokenBean: UploadTokenBean?, byteArray: ByteArray) {
+        presenter.uploadLifeHouseLogo(uploadTokenBean, byteArray)
+    }
+
+
     override fun setNewData(data: List<DistributionGoodsBean.DataBean.ProductsBean>) {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(data)
@@ -517,6 +528,34 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         intent.putExtra(FragmentLifeHouse::class.java.simpleName, uri)
         startActivity(intent)
 
+    }
+
+
+    override fun setLifeHouseLogoData(ids: JSONArray) {
+        val logoId = "${ids[0]}"
+        presenter.uploadLifeHouseLogoId(logoId)
+    }
+
+    /**
+     * 显示头像
+     */
+    private fun setLifeHouseLogo(byteArray: ByteArray) {
+        GlideUtil.loadImageWithRadius(byteArray, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onClipComplete(message: ImageCropActivity.MessageCropComplete) {
+        val byteArray = ImageUtils.bitmap2ByteArray(message.bitmap)
+        presenter.getUploadToken(byteArray)
+        setLifeHouseLogo(byteArray)
+    }
+
+
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 
 }

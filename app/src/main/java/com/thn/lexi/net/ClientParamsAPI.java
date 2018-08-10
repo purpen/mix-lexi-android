@@ -552,4 +552,16 @@ public class ClientParamsAPI {
         return params;
     }
 
+    /**
+     * 上传店铺logoid
+     * @param logoId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getUploadLifeHouseLogoIdParams(@NotNull String logoId) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid",LoginUtil.storeId());
+        params.put("logoId",logoId);
+        return params;
+    }
 }
