@@ -44,6 +44,10 @@ class LifeHouseContract {
 
         }
 
+        fun setFavorite(b: Boolean, position: Int) {
+
+        }
+
 
     }
 

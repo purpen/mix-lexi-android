@@ -246,6 +246,15 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         adapter.remove(position)
     }
 
+    /**
+     * 设置是否喜欢
+     */
+    override fun setFavorite(b: Boolean, position: Int) {
+        val item = adapter.getItem(position) as DistributionGoodsBean.DataBean.ProductsBean
+        item.is_like = b
+        adapter.notifyDataSetChanged()
+    }
+
     override fun installListener() {
         headerLifeHouse.imageViewEdit.setOnClickListener(this)
 
@@ -259,14 +268,27 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
 
-        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, viewClicked, position ->
             val productsBean = adapter.getItem(position) as DistributionGoodsBean.DataBean.ProductsBean
-            when (view.id) {
+            when (viewClicked.id) {
                 R.id.imageViewDelete -> {
                     showDeleteDialog(productsBean.rid, position)
                 }
+
+                R.id.textView4 -> {
+                    if (productsBean.is_like) {
+                        presenter.unfavoriteGoods(productsBean.rid, position,viewClicked)
+                    } else {
+                        presenter.favoriteGoods(productsBean.rid, position,viewClicked)
+                    }
+                }
+                R.id.textView5 -> {
+                    val dialog =  DistributeShareDialog(activity)
+                    dialog.show()
+                }
             }
         }
+
 //        adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
 //            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
 //            when(view.id){
@@ -284,7 +306,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 //                        presenter.focusBrandPavilion("店铺id")
 //                    }
 //                }
-
+//
 //                R.id.textView4 -> {
 //                    val popupWindow = GoodsSpecPopupWindow(activity, item, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 //                    popupWindow.show()
@@ -297,7 +319,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 //                    dialog.show()
 //                }
 //            }
-
+//
 //        }
 
 //

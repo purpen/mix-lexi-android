@@ -1,6 +1,5 @@
 package com.thn.lexi.goods.lifehouse
 
-import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI
 import com.thn.lexi.net.HttpRequest
@@ -12,10 +11,13 @@ open class LifeHouseModel {
     companion object {
         //出售中
         const val STATUS: String = "1"
+
+        //是否获取用户喜欢，心愿单操作记录
+        const val USER_RECORD = "1"
     }
 
     fun loadData(cid: String, page: Int, callBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getGoodListParams(cid, page, STATUS)
+        val params = ClientParamsAPI.getGoodListParams(cid, page, STATUS, USER_RECORD)
 
         HttpRequest.sendRequest(HttpRequest.GET, URL.DISTRIBUTION_GOODS_LIST, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
@@ -32,56 +34,6 @@ open class LifeHouseModel {
         })
     }
 
-    fun getGoodsClass(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_CLASS_URL, params, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
-
-    fun getBanners(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.EXPLORE_BANNER_URL, params, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
-
-    fun getEditorRecommend(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.EDITOR_RECOMMEND_URL, params, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
 
     fun getBrandPavilion(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
@@ -190,7 +142,7 @@ open class LifeHouseModel {
         val params = ClientParamsAPI.getDefaultParams()
         val storeId = LoginUtil.storeId()
         val url = URL.BASE_URL + "store/$storeId/app_visitor"
-        HttpRequest.sendRequest(HttpRequest.GET,url, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.GET, url, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
@@ -208,7 +160,7 @@ open class LifeHouseModel {
     fun getLifeHouse(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getLifeStoreParams()
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.SMALL_LIFE_STORE, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.GET, URL.SMALL_LIFE_STORE, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
@@ -225,9 +177,9 @@ open class LifeHouseModel {
 
     fun editLifeHouse(title: String, description: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getEditLifeStoreParams(title,description)
+        val params = ClientParamsAPI.getEditLifeStoreParams(title, description)
 
-        HttpRequest.sendRequest(HttpRequest.POST,URL.EDIT_SMALL_LIFE_STORE, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.POST, URL.EDIT_SMALL_LIFE_STORE, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
@@ -246,7 +198,7 @@ open class LifeHouseModel {
 
         val params = ClientParamsAPI.getDeleteDistributeGoodsParams(rid)
 
-        HttpRequest.sendRequest(HttpRequest.DELETE,URL.DELETE_DISTRIBUTE_GOODS, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.DELETE, URL.DELETE_DISTRIBUTE_GOODS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
@@ -260,6 +212,52 @@ open class LifeHouseModel {
             }
         })
     }
+
+    /**
+     * 取消喜欢
+     * @param rid 商品id
+     * @param httpRequestCallBack
+     */
+    fun unfavoriteGoods(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFavoriteGoodsParams(rid)
+        HttpRequest.sendRequest(HttpRequest.DELETE,URL.FAVORITE_GOODS_URL,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    /**
+     * 喜欢商品
+     * @param rid 商品id
+     * @param httpRequestCallBack
+     */
+    fun favoriteGoods(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFavoriteGoodsParams(rid)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.FAVORITE_GOODS_URL,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 
 }
 

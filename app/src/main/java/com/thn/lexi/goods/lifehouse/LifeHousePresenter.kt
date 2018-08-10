@@ -1,8 +1,10 @@
 package com.thn.lexi.goods.lifehouse
+import android.view.View
 import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.goods.bean.FavoriteBean
 import com.thn.lexi.goods.explore.EditorRecommendBean
 import com.thn.lexi.net.NetStatusBean
 import java.io.IOException
@@ -161,6 +163,60 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
             }
 
             override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+
+    /**
+     * 取消喜欢
+     */
+    fun unfavoriteGoods(rid: String, position: Int, viewClicked: View) {
+        dataSource.unfavoriteGoods(rid, object : IDataSource.HttpRequestCallBack {
+
+            override fun onStart() {
+                viewClicked.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                viewClicked.isEnabled = true
+                val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
+                if (favoriteBean.success) {
+                    view.setFavorite(false,position)
+                } else {
+                    view.showError(favoriteBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                viewClicked.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 喜欢分享
+     */
+    fun favoriteGoods(rid: String, position: Int, viewClicked: View) {
+        dataSource.favoriteGoods(rid, object : IDataSource.HttpRequestCallBack {
+
+            override fun onStart() {
+                viewClicked.isEnabled = false
+            }
+            override fun onSuccess(json: String) {
+                viewClicked.isEnabled = true
+                val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
+                if (favoriteBean.success) {
+                    view.setFavorite(true,position)
+                } else {
+                    view.showError(favoriteBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                viewClicked.isEnabled = true
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

@@ -4,7 +4,6 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.basemodule.tools.Constants;
-import com.basemodule.tools.SPUtil;
 import com.thn.lexi.user.login.LoginUtil;
 
 import org.apache.commons.codec.binary.Hex;
@@ -12,8 +11,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -316,11 +313,20 @@ public class ClientParamsAPI {
         return params;
     }
 
+    /**
+     * 获取商品列表/分销商品列表
+     * @param cid
+     * @param page
+     * @param status
+     * @param user_record
+     * @return
+     */
     @Nullable
-    public static HashMap<String, String> getGoodListParams(@NotNull String cid, int page, String status) {
+    public static HashMap<String, String> getGoodListParams(@NotNull String cid, int page, String status, String user_record) {
         HashMap<String, String> params = generateCommonParams();
         params.put("cid", cid);
         params.put("page", "" + page);
+        params.put("user_record",user_record);
         params.put("per_page", Constants.PAGE_SIZE);
         params.put("status", status);
         return params;

@@ -4,19 +4,15 @@ import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.view.Gravity
 import android.widget.LinearLayout
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.orhanobut.dialogplus.DialogPlus
-import com.orhanobut.dialogplus.ViewHolder
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.goods.detail.GoodsDetailActivity
 import com.thn.lexi.goods.explore.ExploreBannerBean
-import com.thn.lexi.view.CenterShareView
 import kotlinx.android.synthetic.main.fragment_selection.*
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -292,28 +288,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
             when (view.id) {
-
-                R.id.textView3 -> {
-                    if (item.isFavorite) {
-                        presenter.unfavoriteGoods(item.rid, position)
-                    } else {
-                        presenter.favoriteGoods(item.rid, position)
-                    }
-                }
-
                 R.id.textView4 -> {
                     val popupWindow = GoodsSpecPopupWindow(activity, item, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                     popupWindow.show()
                 }
-                R.id.textView5 -> {
-                    val dialog = DialogPlus.newDialog(context)
-                            .setContentHolder(ViewHolder(CenterShareView(context)))
-                            .setGravity(Gravity.CENTER)
-                            .create()
-                    dialog.show()
-                }
             }
-
         }
 
 
@@ -340,14 +319,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         }
     }
 
-    /**
-     * 设置喜欢状态
-     */
-    override fun setFavorite(b: Boolean, position: Int) {
-        val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-        item.isFavorite = b
-        adapter.notifyDataSetChanged()
-    }
 
     override fun loadData() {
         page = 1

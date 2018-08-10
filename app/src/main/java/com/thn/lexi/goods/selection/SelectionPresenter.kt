@@ -62,39 +62,9 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
         })
     }
 
-    fun favoriteGoods(rid: String, position: Int) {
-        dataSource.favoriteGoods(rid, object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
-                if (favoriteBean.success) {
-                   view.setFavorite(true,position)
-                } else {
-                    view.showError(favoriteBean.status.message)
-                }
-            }
 
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
 
-    fun unfavoriteGoods(rid: String, position: Int) {
-        dataSource.unfavoriteGoods(rid, object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
-                if (favoriteBean.success) {
-                    view.setFavorite(false,position)
-                } else {
-                    view.showError(favoriteBean.status.message)
-                }
-            }
 
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
 
     fun getBanners() {
         dataSource.getBanners( object : IDataSource.HttpRequestCallBack {
