@@ -228,13 +228,20 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
      * 种草清单
      */
     fun getZCManifest() {
-        dataSource.getZCManifest( object : IDataSource.HttpRequestCallBack {
+
+    }
+
+    /**
+     * 获取头条
+     */
+    fun getHeadLine() {
+        dataSource.getHeadLine( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val zcManifestBean = JsonUtil.fromJson(json, ZCManifestBean::class.java)
-                if (zcManifestBean.success) {
-                    view.setZCManifestData(zcManifestBean.data.life_records)
+                val headLineBean = JsonUtil.fromJson(json, HeadLineBean::class.java)
+                if (headLineBean.success) {
+                    view.setHeadLineData(headLineBean.data)
                 } else {
-                    view.showError(zcManifestBean.status.message)
+                    view.showError(headLineBean.status.message)
                 }
             }
 

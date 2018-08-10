@@ -202,4 +202,10 @@ object URL {
      */
     const val DELETE_DISTRIBUTE_GOODS = "${BASE_URL}fx_distribute/remove"
 
+
+    /**
+     * 头条信息
+     */
+    const val STORE_HEADLINE_URL = "${BASE_URL}store/store_headline"
+
 }

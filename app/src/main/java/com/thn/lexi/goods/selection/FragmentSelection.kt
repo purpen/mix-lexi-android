@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_selection.*
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
+import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -220,16 +221,35 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     }
 
     /**
-     * 初始化通知
+     * 初始化头条
      */
     private fun initNotice() {
-        val openInfo = SpannableString("设计师risky秒前开了自己的设计馆")
-        openInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)), 0, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        textViewOpenInfo.text = openInfo
+        presenter.getHeadLine()
+    }
 
-        val orderInfo = SpannableString("伟峰的设计馆1小时售出200单")
-        orderInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f4b329)), 9, orderInfo.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        textViewOrderInfo.text = orderInfo
+    /**
+     * 设置头条数据
+     */
+    override fun setHeadLineData(data: HeadLineBean.DataBean) {
+        val name1 = data.username_one
+        val name2 = data.username_two
+        val orderCount= data.order_count
+
+        if (!TextUtils.isEmpty(name1)){
+            val openInfo = SpannableString("设计师${name1}10秒前开了自己的设计馆")
+            val start = 3
+            val end = start + name1.length
+            openInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)),start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            textViewOpenInfo.text = openInfo
+        }
+
+        if (!TextUtils.isEmpty(name2) && !TextUtils.isEmpty(orderCount)){
+            val orderInfo = SpannableString("${name2}设计馆1小时售出${orderCount}单")
+            val start = name2.length + 8
+            val end = start + orderCount.length
+            orderInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f4b329)),start , end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            textViewOrderInfo.text = orderInfo
+        }
     }
 
     /**

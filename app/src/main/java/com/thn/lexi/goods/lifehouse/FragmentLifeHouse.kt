@@ -1,4 +1,5 @@
 package com.thn.lexi.goods.lifehouse
+
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -40,20 +41,20 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 
-class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListener,EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
+class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickListener, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
     private var page: Int = 1
     private lateinit var adapter: LifeHouseAdapter
-    private lateinit var adapterWelcomeInWeek : GoodSelectionAdapter
-
+    private lateinit var adapterWelcomeInWeek: GoodSelectionAdapter
 
 
     private lateinit var headerLifeHouse: View
 
     companion object {
-        @JvmStatic fun newInstance(): FragmentLifeHouse = FragmentLifeHouse()
+        @JvmStatic
+        fun newInstance(): FragmentLifeHouse = FragmentLifeHouse()
     }
 
     override fun initView() {
@@ -78,23 +79,23 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
 
         presenter.getLookPeople()
 
-        headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week,null)
+        headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week, null)
 
 
-        if(SPUtil.readBool(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE)){
+        if (SPUtil.readBool(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE)) {
             headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
         }
 
-        val str1= "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
-        val str2= "http://tx.haiqq.com/uploads/allimg/170504/0641415410-1.jpg"
-        val str3= "http://up.qqjia.com/z/18/tu20457_2.jpg"
+        val str1 = "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
+        val str2 = "http://tx.haiqq.com/uploads/allimg/170504/0641415410-1.jpg"
+        val str3 = "http://up.qqjia.com/z/18/tu20457_2.jpg"
 
         val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
-        GlideUtil.loadImageWithRadius(str1,headerLifeHouse.imageView0,size)
-        GlideUtil.loadImageWithRadius(str2,headerLifeHouse.imageView1,size)
-        GlideUtil.loadImageWithRadius(str3,headerLifeHouse.imageView2,size)
+        GlideUtil.loadImageWithRadius(str1, headerLifeHouse.imageView0, size)
+        GlideUtil.loadImageWithRadius(str2, headerLifeHouse.imageView1, size)
+        GlideUtil.loadImageWithRadius(str3, headerLifeHouse.imageView2, size)
 
-        GlideUtil.loadImageWithRadius(str1,headerLifeHouse.imageViewCover,size)
+        GlideUtil.loadImageWithRadius(str1, headerLifeHouse.imageViewCover, size)
 
         adapter.addHeaderView(headerLifeHouse)
     }
@@ -106,16 +107,16 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
-        when(data.phases){
-            1->{//实习馆主
-                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+        when (data.phases) {
+            1 -> {//实习馆主
+                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
                 headerLifeHouse.textViewName.text = "当前为实习馆主"
                 headerLifeHouse.textViewContent.text = data.phases_description
             }
 
-            2->{ //正式馆主
+            2 -> { //正式馆主
                 headerLifeHouse.textViewType.visibility = View.GONE
-                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_success_open_life_house,0,0,0)
+                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_success_open_life_house, 0, 0, 0)
                 headerLifeHouse.textViewName.text = "恭喜你拥有生活馆"
                 headerLifeHouse.textViewContent.text = data.phases_description
             }
@@ -128,18 +129,18 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
     override fun setLookPeopleData(users: List<LookPeopleBean.DataBean.UsersBean>) {
         val count = users.size
         val string = SpannableString("$count 人浏览过生活馆")
-        string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)),0,count+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)), 0, count + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         headerLifeHouse.textViewLook.text = string
 
 
-        if (count<999){
+        if (count < 999) {
             headerLifeHouse.textViewHeaders.text = "$count"
-        }else{
+        } else {
             headerLifeHouse.textViewHeaders.text = "+999"
         }
 
         val urlList = ArrayList<String>()
-        for (item in users){
+        for (item in users) {
             urlList.add(item.avatar)
         }
 
@@ -147,7 +148,7 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
         urlList.reverse()
 
         val recyclerView = headerLifeHouse.recyclerViewHeader
-        val linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,true)
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.setHasFixedSize(true)
         val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
@@ -156,8 +157,8 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
             recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
                     super.getItemOffsets(outRect, view, parent, state)
-                    if (parent.getChildAdapterPosition(view) >= 0 && parent.getChildAdapterPosition(view)!=urlList.size-1) {
-                        outRect.left = - parent.context.resources.getDimensionPixelSize(R.dimen.dp5)
+                    if (parent.getChildAdapterPosition(view) >= 0 && parent.getChildAdapterPosition(view) != urlList.size - 1) {
+                        outRect.left = -parent.context.resources.getDimensionPixelSize(R.dimen.dp5)
                     }
                 }
             })
@@ -173,17 +174,17 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
 
         presenter.getWelcomeInWeek()
 
-        val footerWelcome = LayoutInflater.from(context).inflate(R.layout.footer_welcome_in_week,null)
+        val footerWelcome = LayoutInflater.from(context).inflate(R.layout.footer_welcome_in_week, null)
 
         val recyclerViewWelcome = footerWelcome.recyclerViewWelcome
 
         adapterWelcomeInWeek = GoodSelectionAdapter(R.layout.adapter_editor_recommend)
-        val gridLayoutManager = GridLayoutManager(activity,2)
+        val gridLayoutManager = GridLayoutManager(activity, 2)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerViewWelcome.setHasFixedSize(true)
         recyclerViewWelcome.layoutManager = gridLayoutManager
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
-        recyclerViewWelcome.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10),resources.getDimensionPixelSize(R.dimen.dp20)))
+        recyclerViewWelcome.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
         adapter.addFooterView(footerWelcome)
     }
 
@@ -200,16 +201,16 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
 
 
     override fun onClick(v: View) {
-        when(v.id){
-            R.id.imageViewEdit ->{
+        when (v.id) {
+            R.id.imageViewEdit -> {
                 val title = headerLifeHouse.textViewTitle.text
                 val description = headerLifeHouse.textViewDesc.text
-                 val dialog = EditLifeHouseDialog(activity,presenter,title,description)
+                val dialog = EditLifeHouseDialog(activity, presenter, title, description)
                 dialog.show()
                 dialog.setCanceledOnTouchOutside(false)
             }
 
-            R.id.imageViewCover ->{
+            R.id.imageViewCover -> {
                 val stringItems = Util.getStringArray(R.array.strings_photo_titles)
                 val dialog = ActionSheetDialog(activity, stringItems, null)
                 dialog.itemTextColor(Util.getColor(R.color.color_333))
@@ -229,9 +230,9 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
                 }
             }
 
-            R.id.imageViewTipsClose ->{
+            R.id.imageViewTipsClose -> {
                 headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
-                SPUtil.write(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE,true)
+                SPUtil.write(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE, true)
             }
         }
 
@@ -258,11 +259,11 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
         }
 
 
-        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener{adapter, view, position ->
+        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val productsBean = adapter.getItem(position) as DistributionGoodsBean.DataBean.ProductsBean
-            when(view.id){
-                R.id.imageViewDelete ->{
-                    showDeleteDialog(productsBean.rid,position)
+            when (view.id) {
+                R.id.imageViewDelete -> {
+                    showDeleteDialog(productsBean.rid, position)
                 }
             }
         }
@@ -321,23 +322,25 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
     private fun showDeleteDialog(rid: String, position: Int) {
         val color333 = Util.getColor(R.color.color_333)
         val white = Util.getColor(android.R.color.white)
-        val dialog =  NormalDialog(activity)
+        val dialog = NormalDialog(activity)
         dialog.isTitleShow(false)
                 .bgColor(white)
                 .cornerRadius(4f)
-                .content("你确认要下架这件商品吗?")
+                .content(Util.getString(R.string.text_unshelve_confirm))
                 .contentGravity(Gravity.CENTER)
                 .contentTextColor(color333)
-                .dividerColor(Util.getColor(R.color.color_eee))
-                .btnTextSize(15.5f, 15.5f)
-                .btnTextColor(color333,color333)
+                .contentTextSize(16f)
+                .dividerColor(Util.getColor(R.color.color_ccc))
+                .btnText(Util.getString(R.string.text_qd), Util.getString(R.string.text_cancel))
+                .btnTextSize(15f, 15f)
+                .btnTextColor(color333, Util.getColor(R.color.color_6ed7af))
                 .btnPressColor(white)
                 .widthScale(0.85f)
                 .show()
         dialog.setOnBtnClickL(OnBtnClickL {
             dialog.dismiss()
+            presenter.deleteDistributeGoods(rid, position)
         }, OnBtnClickL {
-            presenter.deleteDistributeGoods(rid,position)
             dialog.dismiss()
         })
     }
@@ -379,13 +382,14 @@ class FragmentLifeHouse:BaseFragment(),LifeHouseContract.View,View.OnClickListen
     }
 
     override fun showInfo(s: String) {
-       ToastUtil.showInfo(s)
+        ToastUtil.showInfo(s)
     }
 
     override fun showError(string: String) {
         swipeRefreshLayout.isRefreshing = false
         adapter.loadMoreFail()
     }
+
     override fun goPage() {
 
     }

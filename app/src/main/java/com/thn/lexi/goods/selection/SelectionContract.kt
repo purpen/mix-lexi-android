@@ -47,6 +47,10 @@ class SelectionContract {
         fun setZCManifestData(products: List<ZCManifestBean.DataBean.LifeRecordsBean>) {
 
         }
+
+        fun setHeadLineData(data: HeadLineBean.DataBean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

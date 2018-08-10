@@ -123,4 +123,5 @@
     <string name="text_save">保存</string>
     <string name="text_null_life_house_title">请输入名称</string>
     <string name="text_null_life_house_description">请输入简介</string>
+    <string name="text_unshelve_confirm">你确认要下架这件商品吗?</string>
 </resources>
