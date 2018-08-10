@@ -95,21 +95,34 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         GlideUtil.loadImageWithRadius(str2, headerLifeHouse.imageView1, size)
         GlideUtil.loadImageWithRadius(str3, headerLifeHouse.imageView2, size)
 
-        GlideUtil.loadImageWithRadius(str1, headerLifeHouse.imageViewCover, size)
+
 
         adapter.addHeaderView(headerLifeHouse)
     }
 
 
     /**
+     * 设置编辑生活馆数据
+     */
+    override fun setEditLifeHouseData(bean: LifeHouseBean) {
+        LogUtil.e(bean.data.name+"==="+bean.data.description)
+        headerLifeHouse.textViewTitle.text = bean.data.name
+        headerLifeHouse.textViewDesc.text = bean.data.description
+    }
+
+    /**
      * 设置生活馆信息
      */
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
+
+        GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+
+        LogUtil.e(data.name+"==="+data.description)
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
         when (data.phases) {
             1 -> {//实习馆主
-                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_practice_life_house, 0, 0, 0)
                 headerLifeHouse.textViewName.text = "当前为实习馆主"
                 headerLifeHouse.textViewContent.text = data.phases_description
             }
@@ -128,11 +141,16 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      */
     override fun setLookPeopleData(users: List<LookPeopleBean.DataBean.UsersBean>) {
         val count = users.size
+
+        if (count==0) return
+
+        headerLifeHouse.textViewLook.visibility = View.VISIBLE
         val string = SpannableString("$count 人浏览过生活馆")
         string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)), 0, count + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         headerLifeHouse.textViewLook.text = string
 
 
+        headerLifeHouse.relativeLayoutHeaders.visibility = View.VISIBLE
         if (count < 999) {
             headerLifeHouse.textViewHeaders.text = "$count"
         } else {
@@ -148,6 +166,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         urlList.reverse()
 
         val recyclerView = headerLifeHouse.recyclerViewHeader
+
+        //反转布局
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.setHasFixedSize(true)
@@ -207,7 +227,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 val description = headerLifeHouse.textViewDesc.text
                 val dialog = EditLifeHouseDialog(activity, presenter, title, description)
                 dialog.show()
-                dialog.setCanceledOnTouchOutside(false)
             }
 
             R.id.imageViewCover -> {

@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.support.annotation.LayoutRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import com.basemodule.tools.GlideUtil
@@ -13,17 +14,45 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
 import com.thn.lexi.goods.selection.HeadImageAdapter
 import android.widget.TextView
+import com.basemodule.tools.Util
 
 
 class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<DistributionGoodsBean.DataBean.ProductsBean, BaseViewHolder>(res){
     override fun convert(helper: BaseViewHolder, item: DistributionGoodsBean.DataBean.ProductsBean) {
-
         helper.setText(R.id.textView0, item.name)
-        helper.setText(R.id.textView1, "￥${item.real_sale_price}")
+
         val textView2 = helper.getView<TextView>(R.id.textView2)
-        textView2.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-        textView2.text = "￥${item.min_sale_price}"
-        helper.setText(R.id.textView3, "喜欢 +329")
+
+        if (item.real_sale_price ==0.0){ //折扣价为0,显示真实价格
+            helper.setText(R.id.textView1, "￥${item.real_price}")
+            textView2.visibility = View.GONE
+        }else{ //折扣价不为0显示折扣价格和带划线的真实价格
+            textView2.visibility = View.VISIBLE
+            helper.setText(R.id.textView1, "￥${item.real_sale_price}")
+            textView2.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+            textView2.text = "￥" + item.real_price
+        }
+
+        helper.setText(R.id.textView3, "喜欢 +${item.like_count}")
+
+        val textViewDesc = helper.getView<TextView>(R.id.textViewDesc)
+        if (TextUtils.isEmpty(item.stick_text)){
+            textViewDesc.visibility = View.GONE
+        }else{
+            textViewDesc.visibility = View.VISIBLE
+            textViewDesc.text = item.stick_text
+        }
+
+
+        val textView4 = helper.getView<TextView>(R.id.textView4)
+
+        if (item.is_like){
+            textView4.setTextColor(Util.getColor(R.color.color_6ed7af))
+            textView4.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_selected,0,0,0)
+        }else{
+            textView4.setTextColor(Util.getColor(R.color.color_959fa7))
+            textView4.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_normal,0,0,0)
+        }
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
 

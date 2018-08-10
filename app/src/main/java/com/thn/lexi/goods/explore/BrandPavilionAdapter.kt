@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
@@ -21,6 +22,12 @@ class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionBea
         helper.setText(R.id.textViewTitle,item.name)
         helper.setText(R.id.textViewCount,"${item.store_products_counts}件")
 
+        if (item.is_followed){
+            helper.setText(R.id.buttonFocus,Util.getString(R.string.text_focused))
+        }else{
+            helper.setText(R.id.buttonFocus,Util.getString(R.string.text_focus))
+        }
+
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerViewProducts)
         recyclerView.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL,false)
@@ -28,21 +35,7 @@ class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionBea
         recyclerView.adapter = adapter
         recyclerView.layoutManager = linearLayoutManager
         adapter.setNewData(item.products_cover)
-
-//        val imageViewGoods0 = helper.getView<ImageView>(R.id.imageViewGoods0)
-//        GlideUtil.loadImage(item.products_cover[0],imageViewGoods0)
-//
-//        val imageViewGoods1 = helper.getView<ImageView>(R.id.imageViewGoods0)
-//        GlideUtil.loadImage(R.mipmap.ic_launcher,imageViewGoods1)
-//
-//        val imageViewGoods2 = helper.getView<ImageView>(R.id.imageViewGoods0)
-//        GlideUtil.loadImage(R.mipmap.ic_launcher,imageViewGoods2)
-
         helper.addOnClickListener(R.id.imageViewShop)
-
-//        helper.addOnClickListener(R.id.imageViewGoods0)
-//        helper.addOnClickListener(R.id.imageViewGoods1)
-//        helper.addOnClickListener(R.id.imageViewGoods2)
 
         helper.addOnClickListener(R.id.buttonFocus)
     }

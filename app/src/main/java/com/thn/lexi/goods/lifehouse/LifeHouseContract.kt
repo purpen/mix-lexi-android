@@ -48,6 +48,10 @@ class LifeHouseContract {
 
         }
 
+        fun setEditLifeHouseData(bean: LifeHouseBean) {
+
+        }
+
 
     }
 

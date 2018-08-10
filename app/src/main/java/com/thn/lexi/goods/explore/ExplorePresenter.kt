@@ -5,6 +5,7 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.goods.selection.GoodsData
+import com.thn.lexi.net.NetStatusBean
 import java.io.IOException
 
 class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
@@ -166,14 +167,14 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
     /**
      * 品牌馆取消关注
      */
-    fun unFocusBrandPavilion(rid:String) {
+    fun unFocusBrandPavilion(rid: String, position: Int) {
         dataSource.unFocusBrandPavilion(rid,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
-                if (editorRecommendBean.success) {
-                    view.setFeatureNewGoodsData(editorRecommendBean.data.products)
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    view.setBrandPavilionFocusStateData(false,position)
                 } else {
-                    view.showError(editorRecommendBean.status.message)
+                    view.showError(netStatusBean.status.message)
                 }
             }
 
@@ -186,14 +187,14 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
     /**
      * 关注品牌馆
      */
-    fun focusBrandPavilion(rid:String) {
+    fun focusBrandPavilion(rid: String, position: Int) {
         dataSource.focusBrandPavilion(rid,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
-                if (editorRecommendBean.success) {
-                    view.setFeatureNewGoodsData(editorRecommendBean.data.products)
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    view.setBrandPavilionFocusStateData(true,position)
                 } else {
-                    view.showError(editorRecommendBean.status.message)
+                    view.showError(netStatusBean.status.message)
                 }
             }
 
@@ -262,5 +263,8 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
             }
         })
     }
+
+
+
 
 }

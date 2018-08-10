@@ -101,8 +101,8 @@ public class DistributionGoodsBean {
             public String min_sale_price;
             public String name;
             public String published_at;
-            public String real_price;
-            public String real_sale_price;
+            public double real_price;
+            public double real_sale_price;
             public String rid;
             public String second_category_id;
             public String status;

@@ -170,7 +170,7 @@ object URL {
     /**
      * 小b分销商品列表
      */
-    const val DISTRIBUTION_GOODS_LIST = "${BASE_URL}fx_distribute/proprietary"
+    const val DISTRIBUTION_GOODS_LIST = "${BASE_URL}fx_distribute/agency"
 
     /**
      * 探索->集合

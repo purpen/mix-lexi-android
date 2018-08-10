@@ -1,5 +1,4 @@
 package com.thn.lexi.goods.explore
-import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -10,7 +9,6 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
-import com.thn.lexi.goods.detail.GoodsDetailActivity
 import com.thn.lexi.goods.selection.GoodsData
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
@@ -214,6 +212,16 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         setPresenter(presenter)
     }
 
+    /**
+     * 设置是否馆主品牌馆
+     */
+    override fun setBrandPavilionFocusStateData(b: Boolean, position: Int) {
+        val item = adapterBrandPavilion.getItem(position) as BrandPavilionBean.DataBean.StoresBean
+        item.is_followed = b
+        adapterBrandPavilion.notifyDataSetChanged()
+    }
+
+
     override fun installListener() {
 
         banner.setOnBannerListener {
@@ -221,7 +229,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         }
 
         adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
+            val item = adapter.getItem(position) as BrandPavilionBean.DataBean.StoresBean
             when(view.id){
                 R.id.imageViewShop->ToastUtil.showInfo("去店铺")
 
@@ -231,24 +239,12 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 //                }
 
                 R.id.buttonFocus ->{
-                    if (item.isFavorite) {
-                        presenter.unFocusBrandPavilion("店铺id")
+                    if (item.is_followed) {
+                        presenter.unFocusBrandPavilion(item.rid,position)
                     } else {
-                        presenter.focusBrandPavilion("店铺id")
+                        presenter.focusBrandPavilion(item.rid,position)
                     }
                 }
-
-//                R.id.textView4 -> {
-//                    val popupWindow = GoodsSpecPopupWindow(activity, item, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-//                    popupWindow.show()
-//                }
-//                R.id.textView5 -> {
-//                    val dialog = DialogPlus.newDialog(context)
-//                            .setContentHolder(ViewHolder(CenterShareView(context)))
-//                            .setGravity(Gravity.CENTER)
-//                            .create()
-//                    dialog.show()
-//                }
             }
 
         }

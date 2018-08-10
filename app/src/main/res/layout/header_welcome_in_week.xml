@@ -13,11 +13,13 @@
         android:orientation="vertical"
         android:paddingEnd="@dimen/dp15"
         android:paddingStart="@dimen/dp15"
-        android:paddingTop="@dimen/dp30">
+        android:paddingTop="@dimen/dp30"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp25"
             >
             <RelativeLayout
                 android:id="@+id/relativeLayout"
@@ -30,7 +32,9 @@
                     android:id="@+id/imageViewCover"
                     android:layout_width="62dp"
                     android:layout_height="62dp"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/default_load"
+                    />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -86,16 +90,19 @@
             android:id="@+id/textViewLook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp25"
             android:text="0人浏览过生活馆"
             android:textColor="@color/color_999"
-            android:textSize="@dimen/sp12" />
+            android:textSize="@dimen/sp12"
+            android:visibility="gone"
+            />
 
         <RelativeLayout
+            android:id="@+id/relativeLayoutHeaders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp10"
             android:layout_marginBottom="@dimen/dp16"
+            android:visibility="gone"
             >
 
             <android.support.v7.widget.RecyclerView
@@ -146,12 +153,12 @@
             android:background="@drawable/bg_radius_round_2785fa"
             android:text="实习"
             android:layout_marginEnd="@dimen/dp5"
+            android:visibility="gone"
             />
 
         <TextView
             android:id="@+id/textViewName"
             android:drawablePadding="@dimen/dp5"
-            android:layout_toEndOf="@+id/textViewType"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp25"
             android:gravity="center"

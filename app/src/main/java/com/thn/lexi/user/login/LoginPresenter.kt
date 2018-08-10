@@ -1,6 +1,4 @@
 package com.thn.lexi.user.login
-
-import android.util.Base64
 import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -29,7 +27,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 view.dismissLoadingView()
                 val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
                 if (loginBean.success) {
-                    SPUtil.write(Constants.AUTHORIZATION,authorization)
+                    SPUtil.write(Constants.AUTHORIZATION,ClientParamsAPI.getAuthorization(loginBean.data.token))
                     SPUtil.write(Constants.LOGIN_BEAN,json)
                     view.goPage()
                 } else {

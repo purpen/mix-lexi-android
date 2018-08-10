@@ -4,7 +4,6 @@ import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.widget.LinearLayout
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -288,10 +287,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
             when (view.id) {
-                R.id.textView4 -> {
-                    val popupWindow = GoodsSpecPopupWindow(activity, item, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    popupWindow.show()
-                }
+//                R.id.textView4 -> {
+//                    val popupWindow = GoodsSpecPopupWindow(activity, item, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+//                    popupWindow.show()
+//                }
             }
         }
 

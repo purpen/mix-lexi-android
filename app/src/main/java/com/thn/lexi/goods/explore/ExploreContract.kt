@@ -38,6 +38,9 @@ class ExploreContract {
 
         fun setGoodDesignData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
         fun setGood100Data(products: List<EditorRecommendBean.DataBean.ProductsBean>)
+        fun setBrandPavilionFocusStateData(b: Boolean, position: Int) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

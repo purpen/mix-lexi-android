@@ -130,14 +130,11 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
         dataSource.editLifeHouse(title,description,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val netStatusBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
-                if (netStatusBean.success) {
-                    val bean = LifeHouseBean.DataBean()
-                    bean.name = title
-                    bean.description = description
-                    view.setLifeHouseData(bean)
+                val lifeHouseBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
+                if (lifeHouseBean.success) {
+                    view.setEditLifeHouseData(lifeHouseBean)
                 } else {
-                    view.showError(netStatusBean.status.message)
+                    view.showError(lifeHouseBean.status.message)
                 }
             }
 
