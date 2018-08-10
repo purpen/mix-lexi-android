@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
 import com.thn.lexi.goods.selection.HeadImageAdapter
 import android.widget.TextView
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.Util
 
 
@@ -56,7 +57,7 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<DistributionGoods
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
 
-        GlideUtil.loadCircleImageWidthDimen(item.cover,imageViewAvatar,imageViewAvatar.resources.getDimensionPixelSize(R.dimen.dp28))
+        GlideUtil.loadCircleImageWidthDimen(item.cover,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp28))
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
         GlideUtil.loadImageWithFading(item.cover, imageView)
@@ -74,10 +75,13 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<DistributionGoods
         recyclerView.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(imageView.context,LinearLayoutManager.HORIZONTAL,false)
         val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
-        val urlList = ArrayList<String>()
-        urlList.add(item.cover)
-        urlList.add(item.cover)
-        urlList.add(item.cover)
+        val urlList = ArrayList<String>(3)
+
+        for (userItem in item.product_like_users){
+            urlList.add(userItem.avatar)
+            if (urlList.size==3) break
+        }
+
         headImageAdapter.setNewData(urlList)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = headImageAdapter
@@ -87,7 +91,7 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<DistributionGoods
                 override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
                     super.getItemOffsets(outRect, view, parent, state)
                     if (parent.getChildAdapterPosition(view) >= 0) {
-                        outRect.left = parent.context.resources.getDimensionPixelSize(R.dimen.dp5)
+                        outRect.left = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
                     }
                 }
             })

@@ -5,7 +5,7 @@ import java.util.List;
 public class DistributionGoodsBean {
 
     /**
-     * data : {"count":54,"next":true,"prev":false,"products":[{"category_id":"分类id","commission_price":"分销佣金","commission_rate":"佣金比率","cover":"封面图片链接地址","cover_id":"封面图id","custom_details":"定制详情","delivery_country":"发货地名","delivery_country_id":"发货地编号","features":"商品推荐语","have_distributed":"店铺是否分销过该商品","id_code":"商品简码","is_custom_made":"是否接单定制","is_custom_service":"是否支持定制化服务","is_distributed":"是否分销","is_free_postage":"是否包邮","is_like":"用户是否添加喜欢","is_made_holiday":"制作周期是否包含节假日","is_sold_out":"是否已售罄","is_proprietary":"是否自营商品","like_count":"商品被喜欢数","is_wish":"用户是否加入心愿清单","made_cycle":"制作周期,天数","max_price":"最大售价","max_sale_price":"最大促销价","min_price":"最小售价","min_sale_price":"最小促销价","modes":["商品型号1","商品型号2"],"name":"商品名","published_at":"商品发布时间","real_price":"佣金对应的商品原价","real_sale_price":"佣金对应的商品折扣价","rid":"商品编号","second_category_id":"二级分类id","status":"商品状态: 0=仓库中, 1=出售中, 2=下架中","stick_text":"分销推荐语","sticked":"是否推荐","store_name":"店铺名","store_rid":"店铺编号","style_id":"商品风格编号","style_name":"商品风格名","top_category_id":"一级分类id","total_stock":"库存数"},{"category_id":200,"commission_price":30,"commission_rate":6,"cover":"http://xxx/_uploads/photos/171010/fe7380064e18135.jpg","cover_id":32,"custom_details":"定制详情","delivery_country":"北京","delivery_country_id":10,"features":"这是商品推荐语","have_distributed":true,"id_code":"6915545123548","is_custom_made":true,"is_custom_service":true,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_sold_out":false,"is_proprietary":false,"is_wish":false,"like_count":333,"made_cycle":5,"max_price":1888,"max_sale_price":1699,"min_price":1388,"min_sale_price":1299,"modes":["大 白色","小 黑色"],"name":"速腾套装","published_at":1546121488,"real_price":200,"real_sale_price":0,"rid":"117210372661","second_category_id":50,"status":1,"stick_text":"这里填写分销推荐语","sticked":null,"store_name":"太火鸟店铺","store_rid":"6516561564","style_id":2,"style_name":"简约","top_category_id":1,"total_stock":35}]}
+     * data : {"count":4,"next":false,"prev":false,"products":[{"category_id":79,"commission_price":10.68,"commission_rate":12,"cover":"https://kg.erp.taihuoniao.com/20180716/4335FvI9MTrWA3OnxBwECd8wTIM5qX4s.jpg","cover_id":2370,"custom_details":"","delivery_country":"中国","delivery_country_id":1,"features":"价格超值(5) 大小合适(4) 面料舒适(4) 尺码精准(3) 尺码合适(3) 做工精良(2) 简单得体(2) 使命必达(2) 简约大方","have_distributed":true,"id_code":"88888888","is_custom_made":true,"is_custom_service":true,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_proprietary":false,"is_sold_out":false,"is_wish":false,"like_count":3,"made_cycle":2,"material_id":4,"material_name":"毛线","max_price":98,"max_sale_price":89,"min_price":98,"min_sale_price":89,"modes":["170 白色"],"name":"宝利博纳 夏季新款修身短袖t恤","product_like_users":[{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg","avatar_id":2878,"city":"顺义区","city_id":2812,"country":"中国","country_id":1,"created_at":1531472129,"date":"1971-04-04","description":null,"email":"18518391827","gender":1,"is_distributor":false,"last_seen":1531472129,"mail":"demo@moebeast.com","master_uid":0,"mobile":"18518391827","phone":"010-84392342","province":"北京","province_id":1,"street_address":"大树下","uid":"12368917054","user_areacode":["18518391827"],"username":"小溪"},{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180808/4419FlddcHn8DBdgf0K0OQYaRNGalYZy.png","avatar_id":3510,"city":"徐汇区","city_id":2813,"country":"中国","country_id":1,"created_at":1531722495,"date":"1970-02-02","description":null,"email":"18511730665","gender":1,"is_distributor":false,"last_seen":1533896047,"mail":"605444775@qq.com","master_uid":0,"mobile":"+86-18511730665","phone":"","province":"上海","province_id":2,"street_address":"士大夫","uid":"18019253746","user_areacode":["+86","18511730665"],"username":"113513"},{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/3703FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","avatar_id":2877,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530786369,"date":"1972-03-04","description":null,"email":"17600351560","gender":1,"is_distributor":false,"last_seen":1530945164,"mail":null,"master_uid":0,"mobile":"17600351560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"17014638295","user_areacode":["17600351560"],"username":"大喜"}],"published_at":1531991317,"real_price":98,"real_sale_price":89,"rid":"8894537206","second_category_id":74,"status":1,"stick_text":"依附于依附于依附于依附于依附于","sticked":false,"store_name":"798艺术区","store_rid":"94952308","style_id":null,"style_name":"","top_category_id":376,"total_stock":22},{"category_id":240,"commission_price":1199.94,"commission_rate":6,"cover":"https://kg.erp.taihuoniao.com/20180719/0200FjG5nTGRosP1_WMXM6GSMgpUyFCN.jpg","cover_id":2663,"custom_details":"","delivery_country":"中国","delivery_country_id":1,"features":"性价比高","have_distributed":true,"id_code":"","is_custom_made":true,"is_custom_service":true,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_proprietary":false,"is_sold_out":false,"is_wish":false,"like_count":2,"made_cycle":2,"material_id":11,"material_name":"宝石","max_price":20888,"max_sale_price":19999,"min_price":19988,"min_sale_price":18888,"modes":["17款15.4/2.8/16/256/Bar 深空灰色","17款15.4/2.8/16/256/Bar 银色"],"name":"Apple 苹果 MacBook Pro 13英寸i5(15英寸i7)","product_like_users":[{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/3703FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","avatar_id":2877,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530786369,"date":"1972-03-04","description":null,"email":"17600351560","gender":1,"is_distributor":false,"last_seen":1530945164,"mail":null,"master_uid":0,"mobile":"17600351560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"17014638295","user_areacode":["17600351560"],"username":"大喜"},{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg","avatar_id":2878,"city":"顺义区","city_id":2812,"country":"中国","country_id":1,"created_at":1531472129,"date":"1971-04-04","description":null,"email":"18518391827","gender":1,"is_distributor":false,"last_seen":1531472129,"mail":"demo@moebeast.com","master_uid":0,"mobile":"18518391827","phone":"010-84392342","province":"北京","province_id":1,"street_address":"大树下","uid":"12368917054","user_areacode":["18518391827"],"username":"小溪"}],"published_at":1531974465,"real_price":20888,"real_sale_price":19999,"rid":"8419256083","second_category_id":240,"status":1,"stick_text":"苹果的13寸本子苹果的13寸本子苹果的13寸本子苹果的13寸本子","sticked":false,"store_name":"798艺术区","store_rid":"94952308","style_id":0,"style_name":"","top_category_id":220,"total_stock":53},{"category_id":97,"commission_price":21.75,"commission_rate":15,"cover":"https://kg.erp.taihuoniao.com/20180711/1808FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","cover_id":2235,"custom_details":"","delivery_country":"中国","delivery_country_id":1,"features":"这个就是一个杯具","have_distributed":true,"id_code":"","is_custom_made":false,"is_custom_service":false,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_proprietary":false,"is_sold_out":false,"is_wish":false,"like_count":-1,"made_cycle":0,"material_id":9,"material_name":"银","max_price":145,"max_sale_price":0,"min_price":145,"min_sale_price":0,"modes":["女士 白色"],"name":"女神银饰项链","product_like_users":[{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg","avatar_id":2878,"city":"顺义区","city_id":2812,"country":"中国","country_id":1,"created_at":1531472129,"date":"1971-04-04","description":null,"email":"18518391827","gender":1,"is_distributor":false,"last_seen":1531472129,"mail":"demo@moebeast.com","master_uid":0,"mobile":"18518391827","phone":"010-84392342","province":"北京","province_id":1,"street_address":"大树下","uid":"12368917054","user_areacode":["18518391827"],"username":"小溪"},{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/3703FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","avatar_id":2877,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530786369,"date":"1972-03-04","description":null,"email":"17600351560","gender":1,"is_distributor":false,"last_seen":1530945164,"mail":null,"master_uid":0,"mobile":"17600351560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"17014638295","user_areacode":["17600351560"],"username":"大喜"},{"about_me":null,"area":"","area_id":null,"areacode":null,"avatar":"https://kg.erp.taihuoniao.com/20180731/5353Fi-Z-d0kw_lCiiPMkHm3fRpzHkwM.jpg","avatar_id":3218,"city":"","city_id":null,"country":"","country_id":null,"created_at":1517825215,"date":"2017-07-31","description":null,"email":"demo@taihuoniao.com","gender":0,"is_distributor":null,"last_seen":1531997772,"mail":null,"master_uid":0,"mobile":null,"phone":null,"province":"","province_id":null,"street_address":null,"uid":"10873569124","user_areacode":null,"username":"哈哈哈哈哈哈啊哈哈哈"},{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/static/img/default-logo.png","avatar_id":null,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530782602,"date":"","description":null,"email":"13716171560","gender":0,"is_distributor":false,"last_seen":1530782602,"mail":null,"master_uid":0,"mobile":"13716171560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"15230948176","user_areacode":["13716171560"],"username":"13716171560"}],"published_at":1531304397,"real_price":145,"real_sale_price":0,"rid":"8408712593","second_category_id":86,"status":1,"stick_text":"送给女神最好的礼物，小确幸！","sticked":false,"store_name":"小灵兽设计店","store_rid":"Q3694287","style_id":null,"style_name":"","top_category_id":85,"total_stock":100},{"category_id":326,"commission_price":20.34,"commission_rate":14,"cover":"https://kg.erp.taihuoniao.com/20180711/3657Fjd77o1IbetInJz5uGZWf3W8MbPV.jpg","cover_id":2233,"custom_details":"","delivery_country":"中国","delivery_country_id":1,"features":"对于未来，我有信心","have_distributed":true,"id_code":"","is_custom_made":true,"is_custom_service":true,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_proprietary":false,"is_sold_out":false,"is_wish":false,"like_count":2,"made_cycle":0,"material_id":9,"material_name":"银","max_price":145.25,"max_sale_price":0,"min_price":145.25,"min_sale_price":0,"modes":["白色"],"name":"记载-纯银项链","product_like_users":[{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg","avatar_id":2878,"city":"顺义区","city_id":2812,"country":"中国","country_id":1,"created_at":1531472129,"date":"1971-04-04","description":null,"email":"18518391827","gender":1,"is_distributor":false,"last_seen":1531472129,"mail":"demo@moebeast.com","master_uid":0,"mobile":"18518391827","phone":"010-84392342","province":"北京","province_id":1,"street_address":"大树下","uid":"12368917054","user_areacode":["18518391827"],"username":"小溪"},{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/3703FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","avatar_id":2877,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530786369,"date":"1972-03-04","description":null,"email":"17600351560","gender":1,"is_distributor":false,"last_seen":1530945164,"mail":null,"master_uid":0,"mobile":"17600351560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"17014638295","user_areacode":["17600351560"],"username":"大喜"},{"about_me":null,"area":"","area_id":null,"areacode":null,"avatar":"https://kg.erp.taihuoniao.com/20180731/5353Fi-Z-d0kw_lCiiPMkHm3fRpzHkwM.jpg","avatar_id":3218,"city":"","city_id":null,"country":"","country_id":null,"created_at":1517825215,"date":"2017-07-31","description":null,"email":"demo@taihuoniao.com","gender":0,"is_distributor":null,"last_seen":1531997772,"mail":null,"master_uid":0,"mobile":null,"phone":null,"province":"","province_id":null,"street_address":null,"uid":"10873569124","user_areacode":null,"username":"哈哈哈哈哈哈啊哈哈哈"}],"published_at":1531304650,"real_price":145.25,"real_sale_price":0,"rid":"8784530169","second_category_id":326,"status":1,"stick_text":"手工制作，最爱的人才拥有。","sticked":false,"store_name":"小灵兽设计店","store_rid":"Q3694287","style_id":null,"style_name":"","top_category_id":323,"total_stock":100}]}
      * status : {"code":200,"message":"Ok all right."}
      * success : true
      */
@@ -16,105 +16,167 @@ public class DistributionGoodsBean {
 
     public static class DataBean {
         /**
-         * count : 54
-         * next : true
+         * count : 4
+         * next : false
          * prev : false
-         * products : [{"category_id":"分类id","commission_price":"分销佣金","commission_rate":"佣金比率","cover":"封面图片链接地址","cover_id":"封面图id","custom_details":"定制详情","delivery_country":"发货地名","delivery_country_id":"发货地编号","features":"商品推荐语","have_distributed":"店铺是否分销过该商品","id_code":"商品简码","is_custom_made":"是否接单定制","is_custom_service":"是否支持定制化服务","is_distributed":"是否分销","is_free_postage":"是否包邮","is_like":"用户是否添加喜欢","is_made_holiday":"制作周期是否包含节假日","is_sold_out":"是否已售罄","is_proprietary":"是否自营商品","like_count":"商品被喜欢数","is_wish":"用户是否加入心愿清单","made_cycle":"制作周期,天数","max_price":"最大售价","max_sale_price":"最大促销价","min_price":"最小售价","min_sale_price":"最小促销价","modes":["商品型号1","商品型号2"],"name":"商品名","published_at":"商品发布时间","real_price":"佣金对应的商品原价","real_sale_price":"佣金对应的商品折扣价","rid":"商品编号","second_category_id":"二级分类id","status":"商品状态: 0=仓库中, 1=出售中, 2=下架中","stick_text":"分销推荐语","sticked":"是否推荐","store_name":"店铺名","store_rid":"店铺编号","style_id":"商品风格编号","style_name":"商品风格名","top_category_id":"一级分类id","total_stock":"库存数"},{"category_id":200,"commission_price":30,"commission_rate":6,"cover":"http://xxx/_uploads/photos/171010/fe7380064e18135.jpg","cover_id":32,"custom_details":"定制详情","delivery_country":"北京","delivery_country_id":10,"features":"这是商品推荐语","have_distributed":true,"id_code":"6915545123548","is_custom_made":true,"is_custom_service":true,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_sold_out":false,"is_proprietary":false,"is_wish":false,"like_count":333,"made_cycle":5,"max_price":1888,"max_sale_price":1699,"min_price":1388,"min_sale_price":1299,"modes":["大 白色","小 黑色"],"name":"速腾套装","published_at":1546121488,"real_price":200,"real_sale_price":0,"rid":"117210372661","second_category_id":50,"status":1,"stick_text":"这里填写分销推荐语","sticked":null,"store_name":"太火鸟店铺","store_rid":"6516561564","style_id":2,"style_name":"简约","top_category_id":1,"total_stock":35}]
+         * products : [{"category_id":79,"commission_price":10.68,"commission_rate":12,"cover":"https://kg.erp.taihuoniao.com/20180716/4335FvI9MTrWA3OnxBwECd8wTIM5qX4s.jpg","cover_id":2370,"custom_details":"","delivery_country":"中国","delivery_country_id":1,"features":"价格超值(5) 大小合适(4) 面料舒适(4) 尺码精准(3) 尺码合适(3) 做工精良(2) 简单得体(2) 使命必达(2) 简约大方","have_distributed":true,"id_code":"88888888","is_custom_made":true,"is_custom_service":true,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_proprietary":false,"is_sold_out":false,"is_wish":false,"like_count":3,"made_cycle":2,"material_id":4,"material_name":"毛线","max_price":98,"max_sale_price":89,"min_price":98,"min_sale_price":89,"modes":["170 白色"],"name":"宝利博纳 夏季新款修身短袖t恤","product_like_users":[{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg","avatar_id":2878,"city":"顺义区","city_id":2812,"country":"中国","country_id":1,"created_at":1531472129,"date":"1971-04-04","description":null,"email":"18518391827","gender":1,"is_distributor":false,"last_seen":1531472129,"mail":"demo@moebeast.com","master_uid":0,"mobile":"18518391827","phone":"010-84392342","province":"北京","province_id":1,"street_address":"大树下","uid":"12368917054","user_areacode":["18518391827"],"username":"小溪"},{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180808/4419FlddcHn8DBdgf0K0OQYaRNGalYZy.png","avatar_id":3510,"city":"徐汇区","city_id":2813,"country":"中国","country_id":1,"created_at":1531722495,"date":"1970-02-02","description":null,"email":"18511730665","gender":1,"is_distributor":false,"last_seen":1533896047,"mail":"605444775@qq.com","master_uid":0,"mobile":"+86-18511730665","phone":"","province":"上海","province_id":2,"street_address":"士大夫","uid":"18019253746","user_areacode":["+86","18511730665"],"username":"113513"},{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/3703FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","avatar_id":2877,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530786369,"date":"1972-03-04","description":null,"email":"17600351560","gender":1,"is_distributor":false,"last_seen":1530945164,"mail":null,"master_uid":0,"mobile":"17600351560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"17014638295","user_areacode":["17600351560"],"username":"大喜"}],"published_at":1531991317,"real_price":98,"real_sale_price":89,"rid":"8894537206","second_category_id":74,"status":1,"stick_text":"依附于依附于依附于依附于依附于","sticked":false,"store_name":"798艺术区","store_rid":"94952308","style_id":null,"style_name":"","top_category_id":376,"total_stock":22},{"category_id":240,"commission_price":1199.94,"commission_rate":6,"cover":"https://kg.erp.taihuoniao.com/20180719/0200FjG5nTGRosP1_WMXM6GSMgpUyFCN.jpg","cover_id":2663,"custom_details":"","delivery_country":"中国","delivery_country_id":1,"features":"性价比高","have_distributed":true,"id_code":"","is_custom_made":true,"is_custom_service":true,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_proprietary":false,"is_sold_out":false,"is_wish":false,"like_count":2,"made_cycle":2,"material_id":11,"material_name":"宝石","max_price":20888,"max_sale_price":19999,"min_price":19988,"min_sale_price":18888,"modes":["17款15.4/2.8/16/256/Bar 深空灰色","17款15.4/2.8/16/256/Bar 银色"],"name":"Apple 苹果 MacBook Pro 13英寸i5(15英寸i7)","product_like_users":[{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/3703FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","avatar_id":2877,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530786369,"date":"1972-03-04","description":null,"email":"17600351560","gender":1,"is_distributor":false,"last_seen":1530945164,"mail":null,"master_uid":0,"mobile":"17600351560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"17014638295","user_areacode":["17600351560"],"username":"大喜"},{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg","avatar_id":2878,"city":"顺义区","city_id":2812,"country":"中国","country_id":1,"created_at":1531472129,"date":"1971-04-04","description":null,"email":"18518391827","gender":1,"is_distributor":false,"last_seen":1531472129,"mail":"demo@moebeast.com","master_uid":0,"mobile":"18518391827","phone":"010-84392342","province":"北京","province_id":1,"street_address":"大树下","uid":"12368917054","user_areacode":["18518391827"],"username":"小溪"}],"published_at":1531974465,"real_price":20888,"real_sale_price":19999,"rid":"8419256083","second_category_id":240,"status":1,"stick_text":"苹果的13寸本子苹果的13寸本子苹果的13寸本子苹果的13寸本子","sticked":false,"store_name":"798艺术区","store_rid":"94952308","style_id":0,"style_name":"","top_category_id":220,"total_stock":53},{"category_id":97,"commission_price":21.75,"commission_rate":15,"cover":"https://kg.erp.taihuoniao.com/20180711/1808FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","cover_id":2235,"custom_details":"","delivery_country":"中国","delivery_country_id":1,"features":"这个就是一个杯具","have_distributed":true,"id_code":"","is_custom_made":false,"is_custom_service":false,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_proprietary":false,"is_sold_out":false,"is_wish":false,"like_count":-1,"made_cycle":0,"material_id":9,"material_name":"银","max_price":145,"max_sale_price":0,"min_price":145,"min_sale_price":0,"modes":["女士 白色"],"name":"女神银饰项链","product_like_users":[{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg","avatar_id":2878,"city":"顺义区","city_id":2812,"country":"中国","country_id":1,"created_at":1531472129,"date":"1971-04-04","description":null,"email":"18518391827","gender":1,"is_distributor":false,"last_seen":1531472129,"mail":"demo@moebeast.com","master_uid":0,"mobile":"18518391827","phone":"010-84392342","province":"北京","province_id":1,"street_address":"大树下","uid":"12368917054","user_areacode":["18518391827"],"username":"小溪"},{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/3703FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","avatar_id":2877,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530786369,"date":"1972-03-04","description":null,"email":"17600351560","gender":1,"is_distributor":false,"last_seen":1530945164,"mail":null,"master_uid":0,"mobile":"17600351560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"17014638295","user_areacode":["17600351560"],"username":"大喜"},{"about_me":null,"area":"","area_id":null,"areacode":null,"avatar":"https://kg.erp.taihuoniao.com/20180731/5353Fi-Z-d0kw_lCiiPMkHm3fRpzHkwM.jpg","avatar_id":3218,"city":"","city_id":null,"country":"","country_id":null,"created_at":1517825215,"date":"2017-07-31","description":null,"email":"demo@taihuoniao.com","gender":0,"is_distributor":null,"last_seen":1531997772,"mail":null,"master_uid":0,"mobile":null,"phone":null,"province":"","province_id":null,"street_address":null,"uid":"10873569124","user_areacode":null,"username":"哈哈哈哈哈哈啊哈哈哈"},{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/static/img/default-logo.png","avatar_id":null,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530782602,"date":"","description":null,"email":"13716171560","gender":0,"is_distributor":false,"last_seen":1530782602,"mail":null,"master_uid":0,"mobile":"13716171560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"15230948176","user_areacode":["13716171560"],"username":"13716171560"}],"published_at":1531304397,"real_price":145,"real_sale_price":0,"rid":"8408712593","second_category_id":86,"status":1,"stick_text":"送给女神最好的礼物，小确幸！","sticked":false,"store_name":"小灵兽设计店","store_rid":"Q3694287","style_id":null,"style_name":"","top_category_id":85,"total_stock":100},{"category_id":326,"commission_price":20.34,"commission_rate":14,"cover":"https://kg.erp.taihuoniao.com/20180711/3657Fjd77o1IbetInJz5uGZWf3W8MbPV.jpg","cover_id":2233,"custom_details":"","delivery_country":"中国","delivery_country_id":1,"features":"对于未来，我有信心","have_distributed":true,"id_code":"","is_custom_made":true,"is_custom_service":true,"is_distributed":true,"is_free_postage":false,"is_like":true,"is_made_holiday":true,"is_proprietary":false,"is_sold_out":false,"is_wish":false,"like_count":2,"made_cycle":0,"material_id":9,"material_name":"银","max_price":145.25,"max_sale_price":0,"min_price":145.25,"min_sale_price":0,"modes":["白色"],"name":"记载-纯银项链","product_like_users":[{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg","avatar_id":2878,"city":"顺义区","city_id":2812,"country":"中国","country_id":1,"created_at":1531472129,"date":"1971-04-04","description":null,"email":"18518391827","gender":1,"is_distributor":false,"last_seen":1531472129,"mail":"demo@moebeast.com","master_uid":0,"mobile":"18518391827","phone":"010-84392342","province":"北京","province_id":1,"street_address":"大树下","uid":"12368917054","user_areacode":["18518391827"],"username":"小溪"},{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/3703FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","avatar_id":2877,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530786369,"date":"1972-03-04","description":null,"email":"17600351560","gender":1,"is_distributor":false,"last_seen":1530945164,"mail":null,"master_uid":0,"mobile":"17600351560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"17014638295","user_areacode":["17600351560"],"username":"大喜"},{"about_me":null,"area":"","area_id":null,"areacode":null,"avatar":"https://kg.erp.taihuoniao.com/20180731/5353Fi-Z-d0kw_lCiiPMkHm3fRpzHkwM.jpg","avatar_id":3218,"city":"","city_id":null,"country":"","country_id":null,"created_at":1517825215,"date":"2017-07-31","description":null,"email":"demo@taihuoniao.com","gender":0,"is_distributor":null,"last_seen":1531997772,"mail":null,"master_uid":0,"mobile":null,"phone":null,"province":"","province_id":null,"street_address":null,"uid":"10873569124","user_areacode":null,"username":"哈哈哈哈哈哈啊哈哈哈"}],"published_at":1531304650,"real_price":145.25,"real_sale_price":0,"rid":"8784530169","second_category_id":326,"status":1,"stick_text":"手工制作，最爱的人才拥有。","sticked":false,"store_name":"小灵兽设计店","store_rid":"Q3694287","style_id":null,"style_name":"","top_category_id":323,"total_stock":100}]
          */
 
         public int count;
-        public boolean next;
-        public boolean prev;
         public List<ProductsBean> products;
 
         public static class ProductsBean {
             /**
-             * category_id : 分类id
-             * commission_price : 分销佣金
-             * commission_rate : 佣金比率
-             * cover : 封面图片链接地址
-             * cover_id : 封面图id
-             * custom_details : 定制详情
-             * delivery_country : 发货地名
-             * delivery_country_id : 发货地编号
-             * features : 商品推荐语
-             * have_distributed : 店铺是否分销过该商品
-             * id_code : 商品简码
-             * is_custom_made : 是否接单定制
-             * is_custom_service : 是否支持定制化服务
-             * is_distributed : 是否分销
-             * is_free_postage : 是否包邮
-             * is_like : 用户是否添加喜欢
-             * is_made_holiday : 制作周期是否包含节假日
-             * is_sold_out : 是否已售罄
-             * is_proprietary : 是否自营商品
-             * like_count : 商品被喜欢数
-             * is_wish : 用户是否加入心愿清单
-             * made_cycle : 制作周期,天数
-             * max_price : 最大售价
-             * max_sale_price : 最大促销价
-             * min_price : 最小售价
-             * min_sale_price : 最小促销价
-             * modes : ["商品型号1","商品型号2"]
-             * name : 商品名
-             * published_at : 商品发布时间
-             * real_price : 佣金对应的商品原价
-             * real_sale_price : 佣金对应的商品折扣价
-             * rid : 商品编号
-             * second_category_id : 二级分类id
-             * status : 商品状态: 0=仓库中, 1=出售中, 2=下架中
-             * stick_text : 分销推荐语
-             * sticked : 是否推荐
-             * store_name : 店铺名
-             * store_rid : 店铺编号
-             * style_id : 商品风格编号
-             * style_name : 商品风格名
-             * top_category_id : 一级分类id
-             * total_stock : 库存数
+             * category_id : 79
+             * commission_price : 10.68
+             * commission_rate : 12
+             * cover : https://kg.erp.taihuoniao.com/20180716/4335FvI9MTrWA3OnxBwECd8wTIM5qX4s.jpg
+             * cover_id : 2370
+             * custom_details :
+             * delivery_country : 中国
+             * delivery_country_id : 1
+             * features : 价格超值(5) 大小合适(4) 面料舒适(4) 尺码精准(3) 尺码合适(3) 做工精良(2) 简单得体(2) 使命必达(2) 简约大方
+             * have_distributed : true
+             * id_code : 88888888
+             * is_custom_made : true
+             * is_custom_service : true
+             * is_distributed : true
+             * is_free_postage : false
+             * is_like : true
+             * is_made_holiday : true
+             * is_proprietary : false
+             * is_sold_out : false
+             * is_wish : false
+             * like_count : 3
+             * made_cycle : 2
+             * material_id : 4
+             * material_name : 毛线
+             * max_price : 98
+             * max_sale_price : 89
+             * min_price : 98
+             * min_sale_price : 89
+             * modes : ["170 白色"]
+             * name : 宝利博纳 夏季新款修身短袖t恤
+             * product_like_users : [{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg","avatar_id":2878,"city":"顺义区","city_id":2812,"country":"中国","country_id":1,"created_at":1531472129,"date":"1971-04-04","description":null,"email":"18518391827","gender":1,"is_distributor":false,"last_seen":1531472129,"mail":"demo@moebeast.com","master_uid":0,"mobile":"18518391827","phone":"010-84392342","province":"北京","province_id":1,"street_address":"大树下","uid":"12368917054","user_areacode":["18518391827"],"username":"小溪"},{"about_me":null,"area":"","area_id":0,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180808/4419FlddcHn8DBdgf0K0OQYaRNGalYZy.png","avatar_id":3510,"city":"徐汇区","city_id":2813,"country":"中国","country_id":1,"created_at":1531722495,"date":"1970-02-02","description":null,"email":"18511730665","gender":1,"is_distributor":false,"last_seen":1533896047,"mail":"605444775@qq.com","master_uid":0,"mobile":"+86-18511730665","phone":"","province":"上海","province_id":2,"street_address":"士大夫","uid":"18019253746","user_areacode":["+86","18511730665"],"username":"113513"},{"about_me":null,"area":"","area_id":null,"areacode":"+86","avatar":"https://kg.erp.taihuoniao.com/20180726/3703FgkTUxcFE3_2DAXlTdi4rQMRU7IY.jpg","avatar_id":2877,"city":"","city_id":null,"country":"","country_id":null,"created_at":1530786369,"date":"1972-03-04","description":null,"email":"17600351560","gender":1,"is_distributor":false,"last_seen":1530945164,"mail":null,"master_uid":0,"mobile":"17600351560","phone":null,"province":"","province_id":null,"street_address":null,"uid":"17014638295","user_areacode":["17600351560"],"username":"大喜"}]
+             * published_at : 1531991317
+             * real_price : 98
+             * real_sale_price : 89
+             * rid : 8894537206
+             * second_category_id : 74
+             * status : 1
+             * stick_text : 依附于依附于依附于依附于依附于
+             * sticked : false
+             * store_name : 798艺术区
+             * store_rid : 94952308
+             * style_id : null
+             * style_name :
+             * top_category_id : 376
+             * total_stock : 22
              */
 
-            public String category_id;
-            public String commission_price;
-            public String commission_rate;
+            public int category_id;
+            public double commission_price;
+            public int commission_rate;
             public String cover;
-            public String cover_id;
+            public int cover_id;
             public String custom_details;
             public String delivery_country;
-            public String delivery_country_id;
+            public int delivery_country_id;
             public String features;
-            public String have_distributed;
+            public boolean have_distributed;
             public String id_code;
-            public String is_custom_made;
-            public String is_custom_service;
-            public String is_distributed;
-            public String is_free_postage;
+            public boolean is_custom_made;
+            public boolean is_custom_service;
+            public boolean is_distributed;
+            public boolean is_free_postage;
             public boolean is_like;
-            public String is_made_holiday;
-            public String is_sold_out;
-            public String is_proprietary;
-            public String like_count;
-            public String is_wish;
-            public String made_cycle;
-            public String max_price;
-            public String max_sale_price;
-            public String min_price;
-            public String min_sale_price;
+            public boolean is_made_holiday;
+            public boolean is_proprietary;
+            public boolean is_sold_out;
+            public boolean is_wish;
+            public int like_count;
+            public int made_cycle;
+            public int material_id;
+            public String material_name;
+            public double max_price;
+            public double max_sale_price;
+            public double min_price;
+            public double min_sale_price;
             public String name;
-            public String published_at;
+            public int published_at;
             public double real_price;
             public double real_sale_price;
             public String rid;
-            public String second_category_id;
-            public String status;
+            public int second_category_id;
+            public int status;
             public String stick_text;
-            public String sticked;
+            public boolean sticked;
             public String store_name;
             public String store_rid;
-            public String style_id;
             public String style_name;
-            public String top_category_id;
-            public String total_stock;
+            public int top_category_id;
+            public int total_stock;
             public List<String> modes;
+            public List<ProductLikeUsersBean> product_like_users;
+
+            public static class ProductLikeUsersBean {
+                /**
+                 * about_me : null
+                 * area :
+                 * area_id : 0
+                 * areacode : +86
+                 * avatar : https://kg.erp.taihuoniao.com/20180726/4442FokXfuezOeWFihTxCEskFtvE5hrf.jpg
+                 * avatar_id : 2878
+                 * city : 顺义区
+                 * city_id : 2812
+                 * country : 中国
+                 * country_id : 1
+                 * created_at : 1531472129
+                 * date : 1971-04-04
+                 * description : null
+                 * email : 18518391827
+                 * gender : 1
+                 * is_distributor : false
+                 * last_seen : 1531472129
+                 * mail : demo@moebeast.com
+                 * master_uid : 0
+                 * mobile : 18518391827
+                 * phone : 010-84392342
+                 * province : 北京
+                 * province_id : 1
+                 * street_address : 大树下
+                 * uid : 12368917054
+                 * user_areacode : ["18518391827"]
+                 * username : 小溪
+                 */
+
+                public String area;
+                public int area_id;
+                public String areacode;
+                public String avatar;
+                public int avatar_id;
+                public String city;
+                public int city_id;
+                public String country;
+                public int country_id;
+                public int created_at;
+                public String date;
+                public Object description;
+                public String email;
+                public int gender;
+                public boolean is_distributor;
+                public int last_seen;
+                public String mail;
+                public int master_uid;
+                public String mobile;
+                public String phone;
+                public String province;
+                public int province_id;
+                public String street_address;
+                public String uid;
+                public String username;
+                public List<String> user_areacode;
+            }
         }
     }
 
