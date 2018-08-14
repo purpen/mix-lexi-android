@@ -225,26 +225,29 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 设置头条数据
      */
-    override fun setHeadLineData(data: HeadLineBean.DataBean) {
-        val name1 = data.username_one
-        val name2 = data.username_two
-        val orderCount= data.order_count
+    override fun setHeadLineData(data: MutableList<HeadLineBean.DataBean.HeadlinesBean>) {
+        val contentPavilion = data[0].line_text
+        val pavilionTime = data[0].time
 
-        if (!TextUtils.isEmpty(name1)){
-            val openInfo = SpannableString("设计师${name1}10秒前开了自己的设计馆")
-            val start = 3
-            val end = start + name1.length
-            openInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)),start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            textViewOpenInfo.text = openInfo
-        }
+        val contentOrders = data[1].line_text
+        val orderCount= data[1].time
 
-        if (!TextUtils.isEmpty(name2) && !TextUtils.isEmpty(orderCount)){
-            val orderInfo = SpannableString("${name2}设计馆1小时售出${orderCount}单")
-            val start = name2.length + 8
-            val end = start + orderCount.length
-            orderInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f4b329)),start , end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            textViewOrderInfo.text = orderInfo
-        }
+//        if (!TextUtils.isEmpty(name1)){
+//            val openInfo = SpannableString("设计师${contentPavilion}10秒前开了自己的设计馆")
+//            val start = 3
+//            val end = start + name1.length
+//            openInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)),start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//            textViewOpenInfo.text = openInfo
+//        }
+//
+//        if (!TextUtils.isEmpty(name2) && !TextUtils.isEmpty(orderCount)){
+//            val orderInfo = SpannableString("${name2}设计馆1小时售出${orderCount}单")
+//            val start = name2.length + 8
+//            val end = start + orderCount.length
+//            orderInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f4b329)),start , end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//            textViewOrderInfo.text = orderInfo
+//        }
+
     }
 
     /**

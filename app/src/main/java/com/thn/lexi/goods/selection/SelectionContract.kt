@@ -48,7 +48,7 @@ class SelectionContract {
 
         }
 
-        fun setHeadLineData(data: HeadLineBean.DataBean) {
+        fun setHeadLineData(data: MutableList<HeadLineBean.DataBean.HeadlinesBean>) {
 
         }
     }

@@ -3,7 +3,6 @@ import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.goods.bean.FavoriteBean
 import com.thn.lexi.goods.explore.EditorRecommendBean
 import com.thn.lexi.goods.explore.ExploreBannerBean
 import java.io.IOException
@@ -222,7 +221,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
             override fun onSuccess(json: String) {
                 val headLineBean = JsonUtil.fromJson(json, HeadLineBean::class.java)
                 if (headLineBean.success) {
-                    view.setHeadLineData(headLineBean.data)
+                    view.setHeadLineData(headLineBean.data.headlines)
                 } else {
                     view.showError(headLineBean.status.message)
                 }

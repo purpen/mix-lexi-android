@@ -399,12 +399,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
 
-
-    override fun setUploadTokenData(uploadTokenBean: UploadTokenBean?, byteArray: ByteArray) {
-        presenter.uploadLifeHouseLogo(uploadTokenBean, byteArray)
-    }
-
-
     override fun setNewData(data: List<DistributionGoodsBean.DataBean.ProductsBean>) {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(data)

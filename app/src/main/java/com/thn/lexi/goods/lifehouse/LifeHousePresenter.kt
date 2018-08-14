@@ -237,7 +237,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                 view.dismissLoadingView()
                 val uploadTokenBean = JsonUtil.fromJson(json, UploadTokenBean::class.java)
                 if (uploadTokenBean.success) {
-                    view.setUploadTokenData(uploadTokenBean,byteArray)
+                    uploadLifeHouseLogo(uploadTokenBean,byteArray)
                 } else {
                     view.showInfo(uploadTokenBean.status.message)
                 }

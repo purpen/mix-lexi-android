@@ -54,10 +54,6 @@ class LifeHouseContract {
 
         }
 
-        fun setUploadTokenData(uploadTokenBean: UploadTokenBean?, byteArray: ByteArray) {
-
-        }
-
         fun setLifeHouseLogoData(ids: JSONArray) {
 
         }
