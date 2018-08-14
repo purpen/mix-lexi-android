@@ -14,6 +14,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LayoutAnimationController
@@ -30,10 +31,8 @@ import com.thn.lexi.album.ImageCropActivity
 import com.thn.lexi.album.ImageUtils
 import com.thn.lexi.album.PicturePickerUtils
 import com.thn.lexi.goods.explore.EditorRecommendBean
-import com.thn.lexi.goods.selection.GoodSelectionAdapter
 import com.thn.lexi.goods.selection.GridSpaceDecoration
 import com.thn.lexi.goods.selection.HeadImageAdapter
-import com.thn.lexi.user.completeinfo.UploadTokenBean
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
@@ -66,6 +65,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         EventBus.getDefault().register(this)
 
         adapter = LifeHouseAdapter(R.layout.adapter_curator_recommend)
+        adapter.setEmptyView(R.layout.empty_view_distribute_goods,recyclerView.parent as ViewGroup)
+        adapter.setHeaderFooterEmpty(true,true)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.setHasFixedSize(true)
@@ -101,8 +102,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         GlideUtil.loadImageWithRadius(str1, headerLifeHouse.imageView0, size)
         GlideUtil.loadImageWithRadius(str2, headerLifeHouse.imageView1, size)
         GlideUtil.loadImageWithRadius(str3, headerLifeHouse.imageView2, size)
-
-
 
         adapter.addHeaderView(headerLifeHouse)
     }
