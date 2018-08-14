@@ -312,7 +312,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 }
 
                 R.id.linearLayoutLoadMore ->{ //加载更多
-                    presenter.loadMoreData("",1)
+                    presenter.loadMoreData("",page)
                 }
             }
         }
@@ -503,7 +503,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        LogUtil.e("requestCode=$requestCode;resultCode=$resultCode")
+//        LogUtil.e("requestCode=$requestCode;resultCode=$resultCode")
 
         if (resultCode != Activity.RESULT_OK) return
 

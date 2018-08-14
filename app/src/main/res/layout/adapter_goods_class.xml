@@ -15,7 +15,9 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/dp35"
-            android:layout_height="@dimen/dp35" />
+            android:layout_height="@dimen/dp35"
+            android:scaleType="fitXY"
+            />
     </LinearLayout>
 
 

@@ -54,8 +54,8 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                         view.loadMoreEnd()
                     }else{
                         view.loadMoreComplete()
+                        view.addData(products)
                     }
-                    view.addData(products)
                 } else {
                     view.showError(distributionGoodsBean.status.message)
                 }
