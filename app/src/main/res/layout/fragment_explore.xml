@@ -38,7 +38,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp30"
                 android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginStart="@dimen/dp15" />
+                android:layout_marginStart="@dimen/dp15"
+                android:overScrollMode="never"
+                />
 
             <include layout="@layout/line_color_eee" />
 
@@ -78,7 +80,9 @@
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp20" />
+                android:layout_marginTop="@dimen/dp20"
+                android:overScrollMode="never"
+                />
 
             <include layout="@layout/line_color_eee" />
             <!--品牌馆-->
@@ -117,7 +121,9 @@
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp20" />
+                android:layout_marginTop="@dimen/dp20"
+                android:overScrollMode="never"
+                />
 
             <include layout="@layout/line_color_eee" />
             <!--优质新品-->
@@ -156,7 +162,9 @@
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp20" />
+                android:layout_marginTop="@dimen/dp20"
+                android:overScrollMode="never"
+                />
 
             <include layout="@layout/line_color_eee" />
             <!--集合-->
@@ -195,7 +203,9 @@
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp20" />
+                android:layout_marginTop="@dimen/dp20"
+                android:overScrollMode="never"
+                />
 
             <include layout="@layout/line_color_eee" />
 
@@ -235,7 +245,9 @@
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp20" />
+                android:layout_marginTop="@dimen/dp20"
+                android:overScrollMode="never"
+                />
 
             <include layout="@layout/line_color_eee" />
 
@@ -275,7 +287,9 @@
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp20" />
+                android:layout_marginTop="@dimen/dp20"
+                android:overScrollMode="never"
+                />
         </LinearLayout>
 
     </ScrollView>

@@ -24,6 +24,7 @@
                 android:layout_height="@dimen/dp190"
                 android:paddingTop="@dimen/dp15"
                 android:paddingBottom="@dimen/dp20"
+                android:overScrollMode="never"
                 />
 
             <LinearLayout
@@ -166,6 +167,7 @@
                 android:layout_marginTop="@dimen/dp15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:overScrollMode="never"
                 />
 
             <include layout="@layout/line_color_eee"
@@ -279,6 +281,7 @@
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
+                android:overScrollMode="never"
                 />
 
             <include layout="@layout/line_color_eee"
@@ -346,6 +349,7 @@
                 android:layout_marginBottom="@dimen/dp10"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
+                android:overScrollMode="never"
                 />
 
             <include layout="@layout/line_color_eee"
@@ -392,6 +396,7 @@
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginBottom="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp15"
+                android:overScrollMode="never"
                 />
 
             <include layout="@layout/line_color_eee"
@@ -439,6 +444,7 @@
                 android:layout_marginBottom="@dimen/dp30"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
+                android:overScrollMode="never"
                 />
 
             <include layout="@layout/line_color_eee"
