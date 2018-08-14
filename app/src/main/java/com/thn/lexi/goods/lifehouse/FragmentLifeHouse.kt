@@ -204,11 +204,24 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         adapterWelcomeInWeek = WelcomeInWeekAdapter(R.layout.adapter_editor_recommend)
         val gridLayoutManager = GridLayoutManager(activity, 2)
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerViewWelcome.setHasFixedSize(true)
         recyclerViewWelcome.layoutManager = gridLayoutManager
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
-        recyclerViewWelcome.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
+//        recyclerViewWelcome.addItemDecoration(GridSpaceDecoration(DimenUtil.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
+        recyclerViewWelcome.addItemDecoration(object :RecyclerView.ItemDecoration(){
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+                super.getItemOffsets(outRect, view, parent, state)
+                val position = parent.getChildAdapterPosition(view)
+                outRect.bottom = DimenUtil.getDimensionPixelSize(R.dimen.dp20)
+                if (position % 2 ==0){
+                    outRect.right = DimenUtil.getDimensionPixelSize(R.dimen.dp10)
+                }else{
+                    outRect.right = 0
+                }
+                LogUtil.e(outRect.toString())
+            }
+        })
         adapter.setFooterView(footerWelcome)
 
     }

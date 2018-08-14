@@ -6,6 +6,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.LogUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
@@ -15,9 +16,17 @@ class WelcomeInWeekAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendB
     override fun convert(helper: BaseViewHolder, item: EditorRecommendBean.DataBean.ProductsBean) {
 
         val relativeLayout = helper.getView<View>(R.id.relativeLayout)
-        val pixelSize = DimenUtil.getDimensionPixelSize(R.dimen.dp155)
+        val pixelSize = DimenUtil.getDimensionPixelSize(R.dimen.dp160)
         var layoutParams = ViewGroup.LayoutParams(pixelSize,ViewGroup.LayoutParams.WRAP_CONTENT)
         relativeLayout.layoutParams = layoutParams
+
+        val imageView = helper.getView<ImageView>(R.id.imageView)
+        imageView.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,pixelSize)
+        val params = imageView.layoutParams
+//        LogUtil.e("pixelSize=="+pixelSize+";;imageView.width=="+params.width+";;;height="+params.height)
+
+        GlideUtil.loadImageWithRadius(item.cover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+
 
         val imageViewStatus = helper.getView<View>(R.id.imageViewStatus)
         if (item.is_sold_out){
@@ -52,8 +61,6 @@ class WelcomeInWeekAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendB
 //            textViewOldPrice.text = "￥" + item.real_price
         }
 
-        val imageView = helper.getView<ImageView>(R.id.imageView)
-        imageView.layoutParams = RelativeLayout.LayoutParams(pixelSize,pixelSize)
-        GlideUtil.loadImageWithRadius(item.cover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+
     }
 }
