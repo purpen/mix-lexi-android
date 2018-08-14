@@ -21,18 +21,12 @@ public class LoginBean {
          * created_at : 1533723438
          * expiration : 2592000
          * is_first_login : false
-         * is_small_b : null
-         * is_supplier : true
-         * store_rid : 99130748
          * token : eyJhbGciOiJIUzI1NiIsImlhdCI6MTUzMzcyMzQzOCwiZXhwIjoxNTM2MzE1NDM4fQ.eyJpZCI6MjgzfQ.3I5ItefibD8vSMHHBnWsrASTu1ybNW_yQB1QRPpJJAg
          */
 
         public int created_at;
         public int expiration;
         public boolean is_first_login;
-        public Object is_small_b;
-        public boolean is_supplier;
-        public String store_rid;
         public String token;
     }
 

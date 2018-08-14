@@ -52,7 +52,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     override val layout: Int = R.layout.fragment_life_house
     private var page: Int = 1
     private lateinit var adapter: LifeHouseAdapter
-    private lateinit var adapterWelcomeInWeek: GoodSelectionAdapter
+    private lateinit var adapterWelcomeInWeek: WelcomeInWeekAdapter
 
     private lateinit var headerLifeHouse: View
 
@@ -203,7 +203,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         val recyclerViewWelcome = footerWelcome.recyclerViewWelcome
 
-        adapterWelcomeInWeek = GoodSelectionAdapter(R.layout.adapter_editor_recommend)
+        adapterWelcomeInWeek = WelcomeInWeekAdapter(R.layout.adapter_editor_recommend)
         val gridLayoutManager = GridLayoutManager(activity, 2)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerViewWelcome.setHasFixedSize(true)
@@ -438,6 +438,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun showError(string: String) {
+        ToastUtil.showInfo(string)
         swipeRefreshLayout.isRefreshing = false
         adapter.loadMoreFail()
     }

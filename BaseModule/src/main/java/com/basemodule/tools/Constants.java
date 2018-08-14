@@ -21,14 +21,14 @@ public class Constants {
 
 
     /**
-     * 登录信息
-     */
-    @Nullable
-    public static final String LOGIN_BEAN = "LOGIN_BEAN";
-
-    /**
      * 生活馆等级提示
      */
     @Nullable
     public static final String TIPS_LIFE_HOUSE_GRADE_CLOSE = "TIPS_LIFE_HOUSE_GRADE_CLOSE" ;
+
+    /**
+     * 用户资料
+     */
+    @Nullable
+    public static final String USER_PROFILE = "USER_PROFILE";
 }

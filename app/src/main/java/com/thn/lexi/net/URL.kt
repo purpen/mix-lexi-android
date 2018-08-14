@@ -218,4 +218,10 @@ object URL {
      */
     const val WELCOME_IN_WEEK = "${BASE_URL}fx_distribute/week_popular"
 
+
+    /**
+     * 用户信息
+     */
+    const val USER_PROFILE_URL = "${BASE_URL}users/profile"
+
 }

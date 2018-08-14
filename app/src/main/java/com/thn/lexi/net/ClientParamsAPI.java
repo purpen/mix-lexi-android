@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.basemodule.tools.Constants;
-import com.thn.lexi.user.login.LoginUtil;
+import com.thn.lexi.user.login.UserProfileUtil;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -521,7 +521,7 @@ public class ClientParamsAPI {
     @Nullable
     public static HashMap<String, String> getLifeStoreParams() {
         HashMap<String, String> params = generateCommonParams();
-        params.put("rid", LoginUtil.storeId());
+        params.put("rid", UserProfileUtil.storeId());
         return params;
     }
 
@@ -534,7 +534,7 @@ public class ClientParamsAPI {
     @Nullable
     public static HashMap<String, String> getEditLifeStoreParams(@NotNull String title, @NotNull String description) {
         HashMap<String, String> params = generateCommonParams();
-        params.put("rid", LoginUtil.storeId());
+        params.put("rid", UserProfileUtil.storeId());
         params.put("name", title);
         params.put("description", description);
         return params;
@@ -560,7 +560,7 @@ public class ClientParamsAPI {
     @Nullable
     public static HashMap<String,String> getUploadLifeHouseLogoIdParams(@NotNull String logoId) {
         HashMap<String, String> params = generateCommonParams();
-        params.put("rid",LoginUtil.storeId());
+        params.put("rid", UserProfileUtil.storeId());
         params.put("logo_id",logoId);
         return params;
     }

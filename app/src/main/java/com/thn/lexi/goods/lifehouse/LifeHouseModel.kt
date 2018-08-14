@@ -8,7 +8,7 @@ import com.thn.lexi.net.ClientParamsAPI
 import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
 import com.thn.lexi.user.completeinfo.UploadTokenBean
-import com.thn.lexi.user.login.LoginUtil
+import com.thn.lexi.user.login.UserProfileUtil
 import java.io.IOException
 import java.util.HashMap
 
@@ -145,7 +145,7 @@ open class LifeHouseModel {
 
     fun getLookPeople(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        val storeId = LoginUtil.storeId()
+        val storeId = UserProfileUtil.storeId()
         val url = URL.BASE_URL + "store/$storeId/app_visitor"
         HttpRequest.sendRequest(HttpRequest.GET, url, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {

@@ -153,7 +153,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
         }else{
             startActivity(Intent(this, CompleteInfoActivity::class.java))
         }
-
     }
 
     override fun showInfo(message: String) {

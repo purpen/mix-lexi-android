@@ -106,14 +106,14 @@ public class CustomHeadView extends RelativeLayout {
                     //TODO
                     break;
 //                case R.id.head_view_shop:
-//                    if (LoginUtil.isLogin()){
+//                    if (UserProfileUtil.isLogin()){
 //                        activity.startActivity(new Intent(activity, UserShopCartActivity.class));
 //                    }else {
 //                        activity.startActivity(new Intent(activity, UserLoginActivity.class));
 //                    }
 //                    break;
                 case R.id.rl_head_shop:
-//                    if (LoginUtil.isLogin()){
+//                    if (UserProfileUtil.isLogin()){
 //                        activity.startActivity(new Intent(activity, UserShopCartActivity.class));
 //                    }else {
 //                        activity.startActivity(new Intent(activity, UserLoginActivity.class));

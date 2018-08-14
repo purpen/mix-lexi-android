@@ -28,8 +28,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
                 if (loginBean.success) {
                     SPUtil.write(Constants.AUTHORIZATION,ClientParamsAPI.getAuthorization(loginBean.data.token))
-                    SPUtil.write(Constants.LOGIN_BEAN,json)
-                    view.goPage()
+                    getUserProfile(loginBean.data.is_first_login)
                 } else {
                     view.showError(loginBean.status.message)
                 }
@@ -95,8 +94,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 if (loginBean.success) {
                     val authorization = ClientParamsAPI.getAuthorization(loginBean.data.token)
                     SPUtil.write(Constants.AUTHORIZATION,authorization)
-                    SPUtil.write(Constants.LOGIN_BEAN,json)
-                    view.goPage(loginBean.data.is_first_login)
+                    getUserProfile(loginBean.data.is_first_login)
                 } else {
                     view.showInfo(loginBean.status.message)
                 }
@@ -104,6 +102,27 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
 
             override fun onFailure(e: IOException) {
                 view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取用户信息
+     */
+    fun getUserProfile(isFirstLogin: Boolean) {
+        dataSource.getUserProfile(object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val userProfileBean = JsonUtil.fromJson(json, UserProfileBean::class.java)
+                if (userProfileBean.success) {
+                    SPUtil.write(Constants.USER_PROFILE,json)
+                    view.goPage(isFirstLogin)
+                } else {
+                    view.showInfo(userProfileBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
