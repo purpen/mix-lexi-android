@@ -15,6 +15,7 @@ import com.thn.lexi.R
 import com.thn.lexi.goods.selection.HeadImageAdapter
 import android.widget.TextView
 import com.basemodule.tools.DimenUtil
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
 
 
@@ -97,5 +98,16 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<DistributionGoods
             })
         }
 
+        val linearLayoutLoadMore = helper.getView<View>(R.id.linearLayoutLoadMore)
+
+        //点击加载更多
+        helper.addOnClickListener(R.id.linearLayoutLoadMore)
+
+//        LogUtil.e("layoutpositon==="+helper.layoutPosition+";;data.size==="+data.size)
+        if (helper.layoutPosition==data.size){
+            linearLayoutLoadMore.visibility = View.VISIBLE
+        }else{
+            linearLayoutLoadMore.visibility = View.GONE
+        }
     }
 }

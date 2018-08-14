@@ -327,7 +327,7 @@ public class ClientParamsAPI {
         params.put("cid", cid);
         params.put("page", "" + page);
         params.put("user_record",user_record);
-        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("per_page", Constants.PAGE_SIZE20);
         params.put("status", status);
         return params;
     }

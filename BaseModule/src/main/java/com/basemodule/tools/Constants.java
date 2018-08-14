@@ -11,6 +11,8 @@ public class Constants {
     public static final String AUTHORIZATION = "Authorization";
     public static final String PAGE_SIZE= "10";
 
+    public static final String PAGE_SIZE20= "20";
+
     //从获取相册图片
     public static final int REQUEST_CODE_PICK_IMAGE = 0x000011;
 

@@ -184,6 +184,12 @@
     </RelativeLayout>
 
     <include layout="@layout/line_color_eee"/>
+
+    <include
+        android:id="@+id/linearLayoutLoadMore"
+        android:visibility="gone"
+        layout="@layout/footer_life_house_loadmore" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp15"

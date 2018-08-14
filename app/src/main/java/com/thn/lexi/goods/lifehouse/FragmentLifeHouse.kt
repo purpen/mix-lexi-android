@@ -103,7 +103,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         GlideUtil.loadImageWithRadius(str2, headerLifeHouse.imageView1, size)
         GlideUtil.loadImageWithRadius(str3, headerLifeHouse.imageView2, size)
 
-        adapter.addHeaderView(headerLifeHouse)
+        adapter.setHeaderView(headerLifeHouse)
     }
 
 
@@ -209,7 +209,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         recyclerViewWelcome.layoutManager = gridLayoutManager
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
         recyclerViewWelcome.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
-        adapter.addFooterView(footerWelcome)
+        adapter.setFooterView(footerWelcome)
+
     }
 
     /**
@@ -309,6 +310,10 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                     val dialog =  DistributeShareDialog(activity)
                     dialog.show()
                 }
+
+                R.id.linearLayoutLoadMore ->{ //加载更多
+                    presenter.loadMoreData("",1)
+                }
             }
         }
 
@@ -407,6 +412,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun addData(products: List<DistributionGoodsBean.DataBean.ProductsBean>) {
         adapter.addData(products)
+        adapter.notifyDataSetChanged()
         ++page
     }
 
