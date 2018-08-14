@@ -42,7 +42,7 @@ class GoodsDetailActivity : BaseActivity(),GoodsDetailContract.View,View.OnClick
         fragments.add(WishOrderFragment.newInstance())
 
         val titles = resources.getStringArray(R.array.strings_goods_detail_titles)
-        val adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles)
+        val adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles.asList())
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(true)

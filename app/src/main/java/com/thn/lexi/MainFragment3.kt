@@ -35,7 +35,8 @@ class MainFragment3 : BaseFragment(), MineContract.View,View.OnClickListener{
         fragments.add(ActivitiesFragment.newInstance())
 
         val titles = resources.getStringArray(R.array.strings_mine_titles)
-        val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles)
+
+        val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles.asList())
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(true)

@@ -2,12 +2,16 @@ package com.thn.lexi
 
 import android.content.Intent
 import android.support.v4.view.ViewPager
+import com.basemodule.tools.Util
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.goods.explore.FragmentExplore
 import com.thn.lexi.goods.lifehouse.FragmentLifeHouse
 import com.thn.lexi.goods.selection.FragmentSelection
+import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_main0.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MainFragment0 : BaseFragment() {
 
@@ -16,6 +20,9 @@ class MainFragment0 : BaseFragment() {
             return MainFragment0()
         }
     }
+    private lateinit var listTitle:MutableList<String>
+    private lateinit var adapter:CustomFragmentPagerAdapter
+    private val fragments:ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
 
     override val layout: Int = R.layout.fragment_main0
     private  val fragmentLifeHouse:FragmentLifeHouse by lazy { FragmentLifeHouse.newInstance() }
@@ -25,14 +32,18 @@ class MainFragment0 : BaseFragment() {
     }
 
     private fun setUpViewPager() {
-        val fragments = ArrayList<BaseFragment>()
+        val titles = resources.getStringArray(R.array.strings_main_titles)
+        listTitle = titles.toMutableList()
 
-        fragments.add(fragmentLifeHouse)
+        if (UserProfileUtil.isSmallB()){ //添加生活馆
+            fragments.add(fragmentLifeHouse)
+            listTitle.add(0,Util.getString(R.string.text_life_pavilion))
+        }
+
         fragments.add(FragmentSelection.newInstance())
         fragments.add(FragmentExplore.newInstance())
 
-        val titles = resources.getStringArray(R.array.strings_main_titles)
-        val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles)
+        adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, listTitle)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(true)
@@ -40,7 +51,18 @@ class MainFragment0 : BaseFragment() {
 //        slidingTabLayout.getTitleView(0).textSize = 19f
 //        slidingTabLayout.showMsg(0,3)
 //        slidingTabLayout.setMsgMargin(0,-45f,13f)
+    }
 
+    /**
+     * 去掉生活馆界面
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun removeLifeHouseFragment(message:String) {
+        fragments.remove(fragmentLifeHouse)
+        listTitle.remove(Util.getString(R.string.text_life_pavilion))
+
+        adapter.notifyDataSetChanged()
+        slidingTabLayout.notifyDataSetChanged()
     }
 
     override fun installListener() {

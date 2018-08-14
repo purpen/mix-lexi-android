@@ -3,12 +3,13 @@ package com.basemodule.ui
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.PagerAdapter
 
 /**
  * @author lilin
  * created at 2016/8/8 13:03
  */
-class CustomFragmentPagerAdapter(fm: FragmentManager,private var classes: ArrayList<BaseFragment>,private var titles: Array<String>) : FragmentPagerAdapter(fm) {
+class CustomFragmentPagerAdapter(fm: FragmentManager, private var classes: ArrayList<BaseFragment>, private var titles: List<String>) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
            return classes[position]
@@ -21,4 +22,5 @@ class CustomFragmentPagerAdapter(fm: FragmentManager,private var classes: ArrayL
     override fun getPageTitle(position: Int): CharSequence? {
         return titles[position]
     }
+
 }
