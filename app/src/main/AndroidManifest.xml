@@ -24,7 +24,7 @@
         </activity>
 
         <activity android:name=".user.login.LoginActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".goods.detail.GoodsDetailActivity" />
+        <activity android:name=".index.detail.GoodsDetailActivity" />
         <activity android:name=".user.register.RegisterActivity" android:launchMode="singleInstance"/>
         <activity android:name=".user.password.ForgetPasswordActivity"/>
         <activity android:name=".user.setting.SettingActivity"/>
@@ -35,6 +35,7 @@
         <activity android:name=".user.completeinfo.CompleteInfoActivity" />
         <activity android:name=".album.ImageCropActivity" />
         <activity android:name=".album.ImageSelectActivity" />
+        <activity android:name=".selectionGoodsCenter.SelectionGoodsCenterActivity" />
     </application>
 
 </manifest>

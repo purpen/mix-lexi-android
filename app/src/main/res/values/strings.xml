@@ -127,4 +127,5 @@
     <string name="text_null_life_house_description">请输入简介</string>
     <string name="text_unshelve_confirm">你确认要下架这件商品吗?</string>
     <string name="text_no_goods_life_house">当前你的生活馆没有商品\n去挑选一些上架吧。</string>
+    <string name="title_selection_goods_center">选品中心</string>
 </resources>

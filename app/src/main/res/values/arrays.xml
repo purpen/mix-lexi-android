@@ -5,6 +5,11 @@
         <item>探索</item>
     </string-array>
 
+    <string-array name="strings_selection_goods_titles">
+        <item>推荐</item>
+        <item>全部商品</item>
+    </string-array>
+
     <string-array name="strings_photo_titles">
         <item>相机</item>
         <item>从手机相册中选照片</item>
@@ -14,6 +19,7 @@
         <item>取消</item>
         <item>确定</item>
     </string-array>
+
     <string-array name="strings_mine_titles">
         <item>已喜欢</item>
         <item>心愿单</item>

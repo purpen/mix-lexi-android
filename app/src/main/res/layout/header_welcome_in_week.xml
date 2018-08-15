@@ -143,18 +143,6 @@
         android:background="@drawable/corner_bg_f5f7f9"
         android:padding="@dimen/dp10"
         >
-        <TextView
-            android:id="@+id/textViewType"
-            android:layout_width="43dp"
-            android:layout_height="@dimen/dp25"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp11"
-            android:gravity="center"
-            android:background="@drawable/bg_radius_round_2785fa"
-            android:text="实习"
-            android:layout_marginEnd="@dimen/dp5"
-            android:visibility="gone"
-            />
 
         <TextView
             android:id="@+id/textViewName"
@@ -244,6 +232,7 @@
             />
 
         <TextView
+            android:id="@+id/textViewSelectGoodsCenter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="选品中心"

@@ -6,7 +6,7 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
-import com.thn.lexi.goods.selection.GoodsData
+import com.thn.lexi.index.selection.GoodsData
 import com.thn.lexi.mine.*
 import com.thn.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_main3.*

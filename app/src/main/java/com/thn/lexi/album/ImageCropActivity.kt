@@ -7,7 +7,7 @@ import android.widget.ImageView
 import com.basemodule.tools.GlideUtil
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.R
-import com.thn.lexi.goods.lifehouse.FragmentLifeHouse
+import com.thn.lexi.index.lifehouse.FragmentLifeHouse
 import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import kotlinx.android.synthetic.main.activity_image_crop.*
 import org.greenrobot.eventbus.EventBus

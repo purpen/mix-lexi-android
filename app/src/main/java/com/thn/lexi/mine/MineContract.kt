@@ -3,7 +3,7 @@ package com.thn.lexi.mine
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.thn.lexi.goods.selection.GoodsData
+import com.thn.lexi.index.selection.GoodsData
 
 class MineContract {
 

@@ -5,9 +5,9 @@ import android.support.v4.view.ViewPager
 import com.basemodule.tools.Util
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
-import com.thn.lexi.goods.explore.FragmentExplore
-import com.thn.lexi.goods.lifehouse.FragmentLifeHouse
-import com.thn.lexi.goods.selection.FragmentSelection
+import com.thn.lexi.index.explore.FragmentExplore
+import com.thn.lexi.index.lifehouse.FragmentLifeHouse
+import com.thn.lexi.index.selection.FragmentSelection
 import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_main0.*
 import org.greenrobot.eventbus.Subscribe
@@ -66,7 +66,6 @@ class MainFragment0 : BaseFragment() {
     }
 
     override fun installListener() {
-
         customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 val count = customViewPager.childCount
