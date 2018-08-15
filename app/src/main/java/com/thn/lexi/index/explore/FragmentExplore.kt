@@ -250,7 +250,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         }
 
 //
-//        adapter.setOnItemClickListener { adapter, view, position ->
+//        adapter.setOnItemClickListener { adapter, view_selection_goods_center_recommend, position ->
 //            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
 //            val intent = Intent(activity, GoodsDetailActivity::class.java)
 //            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)

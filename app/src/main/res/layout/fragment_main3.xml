@@ -21,7 +21,6 @@
             android:id="@+id/slidingTabLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp40"
-            android:layout_below="@+id/line"
             android:background="@android:color/white"
             tl:tl_indicator_color="@color/color_6ed7af"
             tl:tl_indicator_height="2dp"

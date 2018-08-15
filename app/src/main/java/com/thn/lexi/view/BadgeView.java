@@ -96,7 +96,7 @@ public class BadgeView extends AppCompatTextView {
     }
 
     /**
-     * @return Returns true if view is hidden on badge value 0 or null;
+     * @return Returns true if view_selection_goods_center_recommend is hidden on badge value 0 or null;
      */
     public boolean isHideOnNull() {
         return mHideOnNull;
@@ -201,9 +201,9 @@ public class BadgeView extends AppCompatTextView {
     }
 
     /*
-     * Attach the BadgeView to the target view
+     * Attach the BadgeView to the target view_selection_goods_center_recommend
      * 
-     * @param target the view to attach the BadgeView
+     * @param target the view_selection_goods_center_recommend to attach the BadgeView
      */
     public void setTargetView(View target) {
         if (getParent() != null) {

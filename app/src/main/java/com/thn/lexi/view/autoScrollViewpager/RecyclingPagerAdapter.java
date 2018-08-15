@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 /**
- * A {@link PagerAdapter} which behaves like an {@link android.widget.Adapter} with view types and
- * view recycling.
+ * A {@link PagerAdapter} which behaves like an {@link android.widget.Adapter} with view_selection_goods_center_recommend types and
+ * view_selection_goods_center_recommend recycling.
  */
 public abstract class RecyclingPagerAdapter extends PagerAdapter {
     static final int IGNORE_ITEM_VIEW_TYPE = AdapterView.ITEM_VIEW_TYPE_IGNORE;
@@ -81,7 +81,7 @@ public abstract class RecyclingPagerAdapter extends PagerAdapter {
     /**
      * Get the type of View that will be created by {@link #getView} for the specified item.
      *
-     * @param position The position of the item within the adapter's data set whose view type we
+     * @param position The position of the item within the adapter's data set whose view_selection_goods_center_recommend type we
      *        want.
      * @return An integer representing the type of View. Two views should share the same type if one
      *         can be converted to the other in {@link #getView}. Note: Integers must be in the
@@ -99,17 +99,17 @@ public abstract class RecyclingPagerAdapter extends PagerAdapter {
      * create a View manually or inflate it from an XML layout file. When the View is inflated, the
      * parent View (GridView, ListView...) will apply default layout parameters unless you use
      * {@link android.view.LayoutInflater#inflate(int, ViewGroup, boolean)}
-     * to specify a root view and to prevent attachment to the root.
+     * to specify a root view_selection_goods_center_recommend and to prevent attachment to the root.
      *
-     * @param position The position of the item within the adapter's data set of the item whose view
+     * @param position The position of the item within the adapter's data set of the item whose view_selection_goods_center_recommend
      *        we want.
-     * @param convertView The old view to reuse, if possible. Note: You should selector_choose_category_normal that this view
+     * @param convertView The old view_selection_goods_center_recommend to reuse, if possible. Note: You should selector_choose_category_normal that this view_selection_goods_center_recommend
      *        is non-null and of an appropriate type before using. If it is not possible to convert
-     *        this view to display the correct data, this method can create a new view.
-     *        Heterogeneous lists can specify their number of view types, so that this View is
+     *        this view_selection_goods_center_recommend to display the correct data, this method can create a new view_selection_goods_center_recommend.
+     *        Heterogeneous lists can specify their number of view_selection_goods_center_recommend types, so that this View is
      *        always of the img_button_right_normal type (see {@link #getViewTypeCount()} and
      *        {@link #getItemViewType(int)}).
-     * @param parent The parent that this view will eventually be attached to
+     * @param parent The parent that this view_selection_goods_center_recommend will eventually be attached to
      * @return A View corresponding to the data at the specified position.
      */
     public abstract View getView(int position, View convertView, ViewGroup container);

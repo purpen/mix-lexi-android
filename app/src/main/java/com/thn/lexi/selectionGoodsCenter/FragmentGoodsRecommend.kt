@@ -6,37 +6,29 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.R
 import com.thn.lexi.index.explore.ExploreBannerBean
 import android.view.View
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.index.selection.CardScaleHelper
 import com.thn.lexi.index.selection.HeadLineBean
+import com.thn.lexi.mine.FavoriteFragment
+import com.thn.lexi.mine.FavoriteShopFragment
+import com.thn.lexi.mine.WishOrderFragment
 import kotlinx.android.synthetic.main.fragment_goods_recommend.*
-
+import kotlinx.android.synthetic.main.view_selection_goods_center_recommend.*
 
 class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View.OnClickListener {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_goods_recommend
     private val presenter: GoodsRecommendPresenter by lazy { GoodsRecommendPresenter(this) }
 
-    private val fragment0: BaseFragment by lazy { FragmentGoodsRecommend.newInstance() }
-    private val fragment1: BaseFragment by lazy { FragmentGoodsRecommend.newInstance() }
+    private val fragment0: BaseFragment by lazy { FragmentHotGoods.newInstance() }
+    private val fragment1: BaseFragment by lazy { FragmentHotGoods.newInstance() }
+    private val fragment2: BaseFragment by lazy { FragmentHotGoods.newInstance() }
 
     private val fragments:ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
 
     private var page: Int = 1
-//    private lateinit var adapter: GoodsAdapter
 
-//    private lateinit var adapterTodayRecommend: TodayRecommendAdapter
-
-    private lateinit var adapterGoodsRecommedBanner: AdapterGoodsRecommendBanner
-
-//    private lateinit var adapterDiscoverLife: DiscoverLifeAdapter
-
-//    private lateinit var adapterGoodSelection: GoodSelectionAdapter
-
-//    private lateinit var adapterZCManifest: ZCManifestAdapter
-
+    private lateinit var adapterGoodsRecommendBanner: AdapterGoodsRecommendBanner
 
     companion object {
         @JvmStatic
@@ -46,23 +38,20 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
     override fun initView() {
         initBanner()
         initNotice()
-//        adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
-        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        swipeRefreshLayout.isRefreshing = false
-
-//        setUpViewPager()
+        setUpViewPager()
     }
 
     private fun setUpViewPager() {
-        val titles = resources.getStringArray(R.array.strings_selection_goods_titles)
+        val titles = resources.getStringArray(R.array.strings_selection_goods_subtitles)
 
         fragments.add(fragment0)
         fragments.add(fragment1)
+        fragments.add(fragment2)
 
         val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles.asList())
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
-        customViewPager.setPagingEnabled(true)
+        customViewPager.setPagingEnabled(false)
         slidingTabLayout.setViewPager(customViewPager)
     }
 
@@ -109,8 +98,8 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
         val manager = LinearLayoutManager(context)
         manager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewBanner.layoutManager = manager
-        adapterGoodsRecommedBanner = AdapterGoodsRecommendBanner(R.layout.adapter_selection_banner)
-        recyclerViewBanner.adapter = adapterGoodsRecommedBanner
+        adapterGoodsRecommendBanner = AdapterGoodsRecommendBanner(R.layout.adapter_selection_banner)
+        recyclerViewBanner.adapter = adapterGoodsRecommendBanner
     }
 
     /**
@@ -121,7 +110,7 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
         for (item in banner_images) {
             list.add(item.image)
         }
-        adapterGoodsRecommedBanner.setNewData(list)
+        adapterGoodsRecommendBanner.setNewData(list)
         val mCardScaleHelper = CardScaleHelper()
         mCardScaleHelper.currentItemPos = 0
         mCardScaleHelper.attachToRecyclerView(recyclerViewBanner)
@@ -138,9 +127,9 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
 //        textViewCouponCenter.setOnClickListener(this)
 //        textViewExemptionMail.setOnClickListener(this)
 
-//        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+//        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view_selection_goods_center_recommend, position ->
 //            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-//            when (view.id) {
+//            when (view_selection_goods_center_recommend.id) {
 //                R.id.textView4 -> {
 //                    val popupWindow = GoodsSpecPopupWindow(activity, item, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 //                    popupWindow.show()
@@ -149,7 +138,7 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
 //        }
 
 
-//        adapter.setOnItemClickListener { adapter, view, position ->
+//        adapter.setOnItemClickListener { adapter, view_selection_goods_center_recommend, position ->
 //            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
 //            val intent = Intent(activity, GoodsDetailActivity::class.java)
 //            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
@@ -161,11 +150,11 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
     }
 
     override fun onClick(v: View) {
-        when (v.id) {
-            R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
-            R.id.textViewCouponCenter -> ToastUtil.showInfo("领券中心")
-            R.id.textViewExemptionMail -> ToastUtil.showInfo("包邮专区")
-        }
+//        when (v.id) {
+//            R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
+//            R.id.textViewCouponCenter -> ToastUtil.showInfo("领券中心")
+//            R.id.textViewExemptionMail -> ToastUtil.showInfo("包邮专区")
+//        }
     }
 
 

@@ -298,7 +298,7 @@ public class ImageUtils {
 
     public static Bitmap convertViewToBitmap(View view) {
         view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-//        view.layout(view.getLeft(),view.getTop(), view.getLeft()+view.getMeasuredWidth(),view.getTop()+view.getMeasuredHeight());
+//        view_selection_goods_center_recommend.layout(view_selection_goods_center_recommend.getLeft(),view_selection_goods_center_recommend.getTop(), view_selection_goods_center_recommend.getLeft()+view_selection_goods_center_recommend.getMeasuredWidth(),view_selection_goods_center_recommend.getTop()+view_selection_goods_center_recommend.getMeasuredHeight());
         view.buildDrawingCache();
         Bitmap bitmap = view.getDrawingCache();
         return bitmap;

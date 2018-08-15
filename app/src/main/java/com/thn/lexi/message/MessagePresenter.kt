@@ -22,9 +22,9 @@ class MessagePresenter(view: MessageContract.View):MessageContract.Presenter {
                 view.dismissLoadingView()
                 val messageBean = JsonUtil.fromJson(json, MessageBean::class.java)
 //                if (goodsData.success) {
-//                    if (goodsData.data!=null) view.setData(goodsData.data)
+//                    if (goodsData.data!=null) view_selection_goods_center_recommend.setData(goodsData.data)
 //                } else {
-//                    view.showError(goodsData.status.message)
+//                    view_selection_goods_center_recommend.showError(goodsData.status.message)
 //                }
             }
 

@@ -27,7 +27,7 @@ class SimilarGoodsPresenter(view: SimilarGoodsContract.View) {
             }
 
             override fun onFailure(e: IOException) {
-//                view.dismissLoadingView()
+//                view_selection_goods_center_recommend.dismissLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

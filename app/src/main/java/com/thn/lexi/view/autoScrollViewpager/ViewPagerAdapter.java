@@ -97,7 +97,7 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
 
 //        if (activity instanceof UserGuideActivity) {
 //            if (position == size - 1) {
-//                view.setOnClickListener(new View.OnClickListener() {
+//                view_selection_goods_center_recommend.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View v) {
 //                        if (TextUtils.isEmpty(UserGuideActivity.fromPage)) {
@@ -118,7 +118,7 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
 //        }
 
 //        if (activity instanceof MainActivity) {
-//            view.setOnClickListener(new View.OnClickListener() {
+//            view_selection_goods_center_recommend.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onTopBarClick(View v) {
 //                    final BannerBean.RowsBean banner = (BannerBean.RowsBean) content;
@@ -128,7 +128,7 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
 //            });
 //        }
 //        if (activity instanceof DetailsActivity) {
-//            view.setOnClickListener(new View.OnClickListener() {
+//            view_selection_goods_center_recommend.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onTopBarClick(View v) {
 //

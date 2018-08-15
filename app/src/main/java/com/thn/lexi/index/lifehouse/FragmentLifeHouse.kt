@@ -336,9 +336,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             }
         }
 
-//        adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+//        adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view_selection_goods_center_recommend, position ->
 //            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-//            when(view.id){
+//            when(view_selection_goods_center_recommend.id){
 //                R.id.imageViewShop->ToastUtil.showInfo("去店铺")
 //
 //                R.id.imageViewGoods0,R.id.imageViewGoods1,R.id.imageViewGoods2->{
@@ -370,7 +370,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 //        }
 
 //
-//        adapter.setOnItemClickListener { adapter, view, position ->
+//        adapter.setOnItemClickListener { adapter, view_selection_goods_center_recommend, position ->
 //            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
 //            val intent = Intent(activity, GoodsDetailActivity::class.java)
 //            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
@@ -428,6 +428,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         adapter.setEnableLoadMore(true)
         ++page
     }
+
 
     override fun addData(products: List<DistributionGoodsBean.DataBean.ProductsBean>) {
         adapter.addData(products)

@@ -10,20 +10,21 @@
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <include layout="@layout/view_search_box_round_corner" />
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/slidingTabLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp45"
+        android:layout_height="@dimen/dp44"
         tl:tl_indicator_color="@android:color/transparent"
         tl:tl_indicator_height="2dp"
         tl:tl_indicator_width_equal_title="true"
         tl:tl_tab_padding="@dimen/dp15"
         tl:tl_textBold="BOTH"
         tl:tl_textSelectColor="@color/color_6ed7af"
-        tl:tl_textUnselectColor="@color/color_555"
-        tl:tl_textsize="@dimen/sp16" />
+        tl:tl_textUnselectColor="@color/color_2d343a"
+        tl:tl_textsize="@dimen/sp17" />
 
     <include layout="@layout/line_color_eee" />
 

@@ -1,100 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.thn.lexi.view.VCSwipeRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tl="http://schemas.android.com/tools"
-    android:id="@+id/swipeRefreshLayout"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
-    <ScrollView
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    >
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <include layout="@layout/view_selection_goods_center_recommend"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_scrollFlags="scroll"
+            />
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/slidingTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:background="@android:color/white"
+            tl:tl_indicator_color="@color/color_6ed7af"
+            tl:tl_indicator_height="2dp"
+            app:tl_indicator_width="14dp"
+            tl:tl_tab_padding="@dimen/dp15"
+            tl:tl_textAllCaps="true"
+            tl:tl_textSelectColor="@color/color_6ed7af"
+            tl:tl_textUnselectColor="@color/color_2d343a"
+            tl:tl_textsize="@dimen/sp15" />
+        <include
+            layout="@layout/line_color_eee"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            />
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        >
+        android:orientation="vertical"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <com.basemodule.ui.CustomViewPager
+            android:id="@+id/customViewPager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewBanner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp190"
-                android:paddingTop="@dimen/dp15"
-                android:paddingBottom="@dimen/dp20"
-                android:overScrollMode="never"
-                />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:background="@drawable/bg_search_box"
-                    >
-                    <TextView
-                        android:id="@+id/textViewIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableTop="@mipmap/icon_tou_tiao"
-                        android:drawablePadding="@dimen/dp4"
-                        android:text="@string/text_tou_tiao"
-                        android:textSize="@dimen/sp12"
-                        android:textColor="@color/color_333"
-                        />
-                    <ImageView
-                        android:id="@+id/imageViewSeparate"
-                        android:layout_toEndOf="@+id/textViewIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="38dp"
-                        android:layout_marginStart="@dimen/dp15"
-                        android:layout_marginEnd="@dimen/dp10"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:src="@mipmap/icon_seprate_tt"
-                        android:scaleType="fitXY"
-                        />
-
-                    <TextView
-                        android:id="@+id/textViewOpenInfo"
-                        android:layout_toEndOf="@+id/imageViewSeparate"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp12"
-                        android:text="设计师risky秒前开了自己的设计馆"
-                        android:textColor="@color/color_333"
-                        />
-                    <TextView
-                        android:id="@+id/textViewOrderInfo"
-                        android:layout_alignStart="@+id/textViewOpenInfo"
-                        android:layout_below="@+id/textViewOpenInfo"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp12"
-                        android:text="伟峰的设计馆1小时售出200单"
-                        android:textColor="@color/color_333"
-                        />
-                </RelativeLayout>
-
-            <com.flyco.tablayout.SlidingTabLayout
-                android:id="@+id/slidingTabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp45"
-                tl:tl_indicator_color="@android:color/transparent"
-                tl:tl_indicator_height="2dp"
-                tl:tl_indicator_width_equal_title="true"
-                tl:tl_tab_padding="@dimen/dp15"
-                tl:tl_textBold="BOTH"
-                tl:tl_textSelectColor="@color/color_6ed7af"
-                tl:tl_textUnselectColor="@color/color_555"
-                tl:tl_textsize="@dimen/sp16" />
-
-            <include layout="@layout/line_color_eee" />
-
-            <com.basemodule.ui.CustomViewPager
-                android:id="@+id/customViewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </ScrollView>
-</com.thn.lexi.view.VCSwipeRefreshView>
+</android.support.design.widget.CoordinatorLayout>

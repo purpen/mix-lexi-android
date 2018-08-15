@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.basemodule.tools.Constants;
+import com.basemodule.ui.IDataSource;
 import com.thn.lexi.user.login.UserProfileUtil;
 
 import org.apache.commons.codec.binary.Hex;
@@ -562,6 +563,20 @@ public class ClientParamsAPI {
         HashMap<String, String> params = generateCommonParams();
         params.put("rid", UserProfileUtil.storeId());
         params.put("logo_id",logoId);
+        return params;
+    }
+
+
+    /**
+     * 选品中心热门单品
+     * @param page
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getHotGoodsParams(int page) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", Constants.PAGE_SIZE);
         return params;
     }
 }

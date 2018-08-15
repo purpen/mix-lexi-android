@@ -224,4 +224,9 @@ object URL {
      */
     const val USER_PROFILE_URL = "${BASE_URL}users/profile"
 
+    /**
+     * 选品中心->热门单品
+     */
+   const val HOT_GOODS_URL: String = "${BASE_URL}fx_distribute/hot"
+
 }

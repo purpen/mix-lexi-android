@@ -4,28 +4,56 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.index.explore.ExploreBannerBean
-import com.thn.lexi.index.selection.GoodsData
 import com.thn.lexi.index.selection.HeadLineBean
 import java.io.IOException
 
-class GoodsRecommendPresenter(view: GoodsRecommendContract.View) : GoodsRecommendContract.Presenter {
-    private var view: GoodsRecommendContract.View = checkNotNull(view)
+class HotGoodsPresenter(view: HotGoodsContract.View) : HotGoodsContract.Presenter {
+    private var view: HotGoodsContract.View = checkNotNull(view)
 
-    private val dataSource: GoodsRecommendModel by lazy { GoodsRecommendModel() }
+    private val dataSource: HotGoodsModel by lazy { HotGoodsModel() }
 
-    override fun loadData(cid: String, page: Int) {
-        dataSource.loadData(cid, page,object : IDataSource.HttpRequestCallBack {
+    override fun loadData(page: Int) {
+        dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val goodsData = JsonUtil.fromJson(json, GoodsData::class.java)
-                if (goodsData.success) {
-//                    view_selection_goods_center_recommend.setNewData(goodsData.data.products)
+                val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
+                if (hotGoodsBean.success) {
+                    view.setNewData(hotGoodsBean.data.products)
                 } else {
-                    view.showError(goodsData.status.message)
+                    view.showError(hotGoodsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    fun loadMoreData(page: Int) {
+        dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
+                if (hotGoodsBean.success) {
+                    val products = hotGoodsBean.data.products
+                    if (products.isEmpty() ){
+                        view.loadMoreEnd()
+                    }else{
+                        view.loadMoreComplete()
+                        view.addData(products)
+                    }
+                } else {
+                    view.showError(hotGoodsBean.status.message)
                 }
             }
 
@@ -74,5 +102,7 @@ class GoodsRecommendPresenter(view: GoodsRecommendContract.View) : GoodsRecommen
             }
         })
     }
+
+
 
 }

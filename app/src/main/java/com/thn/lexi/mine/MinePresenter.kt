@@ -68,7 +68,7 @@ class MinePresenter(view: MineContract.View) : MineContract.Presenter {
                     }
 
                     view.addData(list)
-//                    view.addData(goodsData.data.products)
+//                    view_selection_goods_center_recommend.addData(goodsData.data.products)
                 } else {
                     view.showError(goodsData.status.message)
                 }
