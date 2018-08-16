@@ -131,4 +131,7 @@
     <string name="text_sell">卖</string>
     <string name="text_putaway">上架</string>
     <string name="text_look_more_goods">展开查看更多好物</string>
+    <string name="text_sort_synthesize">综合排序</string>
+    <string name="text_sort_profit">利润</string>
+    <string name="text_sort_filter">筛选</string>
 </resources>

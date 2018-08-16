@@ -3,23 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@android:color/white"
+    android:background="@color/color_f6f5f5"
     android:descendantFocusability="blocksDescendants"
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/dp20"
-        android:paddingEnd="@dimen/dp10"
-        android:paddingStart="@dimen/dp10"
-        android:paddingTop="@dimen/dp20">
+        >
 
         <ImageView
             android:id="@+id/imageViewGoods"
-            android:layout_width="@dimen/dp100"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp100"
-            android:layout_marginEnd="@dimen/dp10"
             android:scaleType="fitXY"
             />
 
@@ -33,28 +29,30 @@
             android:visibility="gone"
             />
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/imageViewFreeExpress"
-            android:layout_toEndOf="@+id/imageViewGoods"
-            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp5"
             android:src="@mipmap/icon_free_express"
             />
-
         <TextView
             android:id="@+id/textView0"
             android:layout_toEndOf="@+id/imageViewFreeExpress"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="@dimen/dp9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:maxLines="2"
             android:ellipsize="end"
             android:textColor="@color/color_333"
-            android:textSize="@dimen/sp13"
-            android:textStyle="bold"
+            android:textSize="@dimen/sp12"
             />
 
         <TextView
@@ -102,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp1"
-            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp10"
             android:layout_alignStart="@+id/textView1"
             android:gravity="center_vertical"
             android:text="赚 ￥10"
@@ -111,34 +109,16 @@
             />
 
     </RelativeLayout>
-    <include layout="@layout/line_color_eee"
-        android:layout_marginStart="@dimen/dp10"
-        android:layout_marginEnd="@dimen/dp10"
-        android:layout_height="@dimen/dp1"
-        android:layout_width="match_parent"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp40"
-        android:layout_marginEnd="@dimen/dp15"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
         >
-
-        <Button
-            android:id="@+id/textView4"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/bg_radius_round_ff6666"
-            android:layout_width="@dimen/dp50"
-            android:layout_height="@dimen/dp25"
-            android:layout_marginStart="@dimen/dp15"
-            android:layout_centerVertical="true"
-            android:text="@string/text_sell"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp12" />
 
         <Button
             android:id="@+id/textView5"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_toStartOf="@+id/textView4"
             android:background="@drawable/bg_radius_round_2d343a"
             android:layout_width="@dimen/dp50"
             android:layout_height="@dimen/dp25"
@@ -147,13 +127,21 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp12" />
 
+
+        <Button
+            android:id="@+id/textView4"
+            android:layout_toEndOf="@+id/textView5"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:background="@drawable/bg_radius_round_ff6666"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp25"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_centerVertical="true"
+            android:text="@string/text_sell"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp12" />
+
+
     </RelativeLayout>
-
-    <include layout="@layout/line_color_eee"/>
-
-    <include
-        android:id="@+id/linearLayoutLoadMore"
-        android:visibility="gone"
-        layout="@layout/footer_life_house_loadmore" />
 
 </LinearLayout>

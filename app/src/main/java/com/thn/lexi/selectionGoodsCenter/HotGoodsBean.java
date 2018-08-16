@@ -71,7 +71,7 @@ public class HotGoodsBean {
              */
 
             public String category_id;
-            public String commission_price;
+            public double commission_price;
             public String commission_rate;
             public String cover;
             public String cover_id;

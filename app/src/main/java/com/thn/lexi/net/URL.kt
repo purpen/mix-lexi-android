@@ -239,4 +239,8 @@ object URL {
      */
     const val FIRST_PUBLISH_URL = "${BASE_URL}fx_distribute/latest"
 
+    /**
+     * 选品中心 ->全部商品
+     */
+    const val ALL_GOODS_URL = "${BASE_URL}fx_distribute/choose_center"
 }

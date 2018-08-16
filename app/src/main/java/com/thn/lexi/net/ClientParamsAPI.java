@@ -579,4 +579,27 @@ public class ClientParamsAPI {
         params.put("per_page", Constants.PAGE_SIZE);
         return params;
     }
+
+    /**
+     * 选品中心全部商品
+     * @param page
+     * @param sortType
+     * @param profitType
+     * @param filterCondition
+     * @param minePrice
+     * @param maxPrice
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getAllGoodsParams(int page, @NotNull String sortType, @NotNull String profitType, @NotNull String filterCondition, @NotNull String minePrice, @NotNull String maxPrice) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        params.put("sort_type", sortType);
+        params.put("profit_type", profitType);
+        params.put("qk", filterCondition);
+        params.put("min_price", minePrice);
+        params.put("max_price", maxPrice);
+        return params;
+    }
 }

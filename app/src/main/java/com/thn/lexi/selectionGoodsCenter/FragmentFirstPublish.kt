@@ -2,11 +2,8 @@ package com.thn.lexi.selectionGoodsCenter
 
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
 import com.basemodule.ui.BaseFragment
-import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.RecyclerViewDivider
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class FragmentFirstPublish:BaseFragment(),FirstPublishContract.View {
