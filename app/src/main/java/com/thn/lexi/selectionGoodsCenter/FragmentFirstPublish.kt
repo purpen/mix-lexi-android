@@ -2,23 +2,26 @@ package com.thn.lexi.selectionGoodsCenter
 
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.basemodule.ui.BaseFragment
+import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.RecyclerViewDivider
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
-class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
+class FragmentFirstPublish:BaseFragment(),FirstPublishContract.View {
     override val layout: Int = R.layout.fragment_recyclerview
-    private lateinit var presenter: HotGoodsPresenter
+    private lateinit var presenter: FirstPublishPresenter
 
     private var page: Int = 1
     private lateinit var adapter: AdapterHotGoods
     companion object {
         @JvmStatic
-        fun newInstance(): FragmentHotGoods = FragmentHotGoods()
+        fun newInstance(): FragmentFirstPublish = FragmentFirstPublish()
     }
 
     override fun initView() {
-        presenter = HotGoodsPresenter(this)
+        presenter = FirstPublishPresenter(this)
         adapter = AdapterHotGoods(R.layout.adapter_hot_goods)
 
         val linearLayoutManager = LinearLayoutManager(activity)
@@ -27,7 +30,7 @@ class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
         recyclerView.adapter = adapter
     }
 
-    override fun setPresenter(presenter: HotGoodsContract.Presenter?) {
+    override fun setPresenter(presenter: FirstPublishContract.Presenter?) {
         setPresenter(presenter)
     }
 

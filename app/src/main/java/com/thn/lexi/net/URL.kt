@@ -175,7 +175,7 @@ object URL {
     /**
      * 探索->集合
      */
-    const val WELL_GOODS_COLLECTION= "${BASE_URL}column/collections"
+    const val WELL_GOODS_COLLECTION = "${BASE_URL}column/collections"
 
     /**
      * 探索->特惠好设计
@@ -190,7 +190,7 @@ object URL {
     /**
      * 获取小B生活馆信息
      */
-   const val SMALL_LIFE_STORE = "${BASE_URL}store/life_store"
+    const val SMALL_LIFE_STORE = "${BASE_URL}store/life_store"
 
     /**
      * 编辑生活馆
@@ -227,6 +227,16 @@ object URL {
     /**
      * 选品中心->热门单品
      */
-   const val HOT_GOODS_URL: String = "${BASE_URL}fx_distribute/hot"
+    const val HOT_GOODS_URL: String = "${BASE_URL}fx_distribute/hot"
+
+    /**
+     * 选品中心->官方推荐
+     */
+    const val OFFICIAL_RECOMMEND_URL = "${BASE_URL}fx_distribute/sticked"
+
+    /**
+     * 选品中心->新品首发
+     */
+    const val FIRST_PUBLISH_URL = "${BASE_URL}fx_distribute/latest"
 
 }

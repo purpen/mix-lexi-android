@@ -1,4 +1,5 @@
 package com.thn.lexi.selectionGoodsCenter
+
 import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -7,13 +8,13 @@ import com.thn.lexi.index.explore.ExploreBannerBean
 import com.thn.lexi.index.selection.HeadLineBean
 import java.io.IOException
 
-class HotGoodsPresenter(view: HotGoodsContract.View) : HotGoodsContract.Presenter {
-    private var view: HotGoodsContract.View = checkNotNull(view)
+class FirstPublishPresenter(view: FirstPublishContract.View) : FirstPublishContract.Presenter {
+    private var view: FirstPublishContract.View = checkNotNull(view)
 
-    private val dataSource: HotGoodsModel by lazy { HotGoodsModel() }
+    private val dataSource: FirstPublishModel by lazy { FirstPublishModel() }
 
     override fun loadData(page: Int) {
-        dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
+        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -36,7 +37,7 @@ class HotGoodsPresenter(view: HotGoodsContract.View) : HotGoodsContract.Presente
     }
 
     fun loadMoreData(page: Int) {
-        dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
+        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -46,9 +47,9 @@ class HotGoodsPresenter(view: HotGoodsContract.View) : HotGoodsContract.Presente
                 val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
                 if (hotGoodsBean.success) {
                     val products = hotGoodsBean.data.products
-                    if (products.isEmpty() ){
+                    if (products.isEmpty()) {
                         view.loadMoreEnd()
-                    }else{
+                    } else {
                         view.loadMoreComplete()
                         view.addData(products)
                     }
@@ -64,22 +65,5 @@ class HotGoodsPresenter(view: HotGoodsContract.View) : HotGoodsContract.Presente
         })
     }
 
-
-    fun getBanners() {
-        dataSource.getBanners( object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val exploreBannerBean = JsonUtil.fromJson(json, ExploreBannerBean::class.java)
-                if (exploreBannerBean.success) {
-                    view.setBannerData(exploreBannerBean.data.banner_images)
-                } else {
-                    view.showError(exploreBannerBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
 
 }

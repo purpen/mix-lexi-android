@@ -12,7 +12,7 @@ class SelectionGoodsCenterActivity : BaseActivity() {
     override val layout: Int = R.layout.activity_selection_goods_center
 
     private val fragment0: BaseFragment by lazy { FragmentGoodsRecommend.newInstance() }
-    private val fragment1: BaseFragment by lazy { FragmentGoodsRecommend.newInstance() }
+    private val fragment1: BaseFragment by lazy { FragmentOfficialRecommend.newInstance() }
 
     private val fragments:ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
 

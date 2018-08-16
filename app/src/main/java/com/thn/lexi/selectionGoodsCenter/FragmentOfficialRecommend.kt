@@ -6,19 +6,19 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.R
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
-class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
+class FragmentOfficialRecommend:BaseFragment(),OfficialRecommendContract.View {
     override val layout: Int = R.layout.fragment_recyclerview
-    private lateinit var presenter: HotGoodsPresenter
+    private lateinit var presenter: OfficialRecommendPresenter
 
     private var page: Int = 1
     private lateinit var adapter: AdapterHotGoods
     companion object {
         @JvmStatic
-        fun newInstance(): FragmentHotGoods = FragmentHotGoods()
+        fun newInstance(): FragmentOfficialRecommend = FragmentOfficialRecommend()
     }
 
     override fun initView() {
-        presenter = HotGoodsPresenter(this)
+        presenter = OfficialRecommendPresenter(this)
         adapter = AdapterHotGoods(R.layout.adapter_hot_goods)
 
         val linearLayoutManager = LinearLayoutManager(activity)
@@ -27,7 +27,7 @@ class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
         recyclerView.adapter = adapter
     }
 
-    override fun setPresenter(presenter: HotGoodsContract.Presenter?) {
+    override fun setPresenter(presenter: OfficialRecommendContract.Presenter?) {
         setPresenter(presenter)
     }
 

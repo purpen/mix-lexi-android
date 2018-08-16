@@ -9,9 +9,7 @@ import android.view.View
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.index.selection.CardScaleHelper
 import com.thn.lexi.index.selection.HeadLineBean
-import com.thn.lexi.mine.FavoriteFragment
-import com.thn.lexi.mine.FavoriteShopFragment
-import com.thn.lexi.mine.WishOrderFragment
+
 import kotlinx.android.synthetic.main.fragment_goods_recommend.*
 import kotlinx.android.synthetic.main.view_selection_goods_center_recommend.*
 
@@ -21,8 +19,8 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
     private val presenter: GoodsRecommendPresenter by lazy { GoodsRecommendPresenter(this) }
 
     private val fragment0: BaseFragment by lazy { FragmentHotGoods.newInstance() }
-    private val fragment1: BaseFragment by lazy { FragmentHotGoods.newInstance() }
-    private val fragment2: BaseFragment by lazy { FragmentHotGoods.newInstance() }
+    private val fragment1: BaseFragment by lazy { FragmentOfficialRecommend.newInstance() }
+    private val fragment2: BaseFragment by lazy { FragmentFirstPublish.newInstance() }
 
     private val fragments:ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
 
