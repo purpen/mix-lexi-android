@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp35"
+    android:layout_height="34dp"
     android:layout_marginEnd="@dimen/dp15"
     android:layout_marginStart="@dimen/dp15"
     android:layout_marginTop="@dimen/dp10"
@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/dp13"
         android:layout_toEndOf="@+id/imageView"
         android:layout_centerVertical="true"
-        android:text="@string/hint_search_text"
+        android:text="@string/hint_selection_center_search_text"
         android:textColor="@color/color_555"
         android:textSize="@dimen/sp12" />
 </RelativeLayout>

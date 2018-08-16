@@ -134,4 +134,5 @@
     <string name="text_sort_synthesize">综合排序</string>
     <string name="text_sort_profit">利润</string>
     <string name="text_sort_filter">筛选</string>
+    <string name="hint_selection_center_search_text">商品名称 / 关键字</string>
 </resources>
