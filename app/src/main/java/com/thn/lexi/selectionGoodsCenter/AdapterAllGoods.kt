@@ -13,7 +13,7 @@ import com.thn.lexi.R
 
 class AdapterAllGoods(@LayoutRes res: Int) : BaseQuickAdapter<HotGoodsBean.DataBean.ProductsBean, BaseViewHolder>(res) {
 
-    private var imageViewWidth:Int = ((ScreenUtil.getScreenWidth()- DimenUtil.getDimensionPixelSize(R.dimen.dp40))*0.5).toInt()
+    private var imageViewWidth:Int = ((ScreenUtil.getScreenWidth()- DimenUtil.getDimensionPixelSize(R.dimen.dp50))*0.5).toInt()
 
     override fun convert(helper: BaseViewHolder, item: HotGoodsBean.DataBean.ProductsBean) {
         helper.setText(R.id.textView0, item.name)

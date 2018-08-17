@@ -12,6 +12,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/linearLayoutSort"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -35,6 +36,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayoutProfit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -58,6 +60,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayoutFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -97,8 +100,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/dp15"
-            android:paddingEnd="@dimen/dp15"
+            android:paddingStart="@dimen/dp20"
+            android:paddingEnd="@dimen/dp20"
             android:background="@color/color_f6f5f5"
             />
 

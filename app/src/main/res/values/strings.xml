@@ -135,4 +135,11 @@
     <string name="text_sort_profit">利润</string>
     <string name="text_sort_filter">筛选</string>
     <string name="hint_selection_center_search_text">商品名称 / 关键字</string>
+    <string name="text_sort">排序</string>
+    <string name="text_synthesise_sort">综合排序</string>
+    <string name="text_price">价格</string>
+    <string name="text_price_low_up">由低至高</string>
+    <string name="text_price_up_low">由高至低</string>
+    <string name="text_profit">利润</string>
+    <string name="text_no_limit">不限</string>
 </resources>

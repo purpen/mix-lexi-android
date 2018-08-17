@@ -23,46 +23,13 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
     private var firstLoadData:Boolean = true
 
-    private var sortType: String = SORT_TYPE_DEFAULT
-
-
-    private var profitType: String = PROFIT_TYPE_DEFAULT
-
-    private var filterCondition: String = ""
-
-    private var minePrice: String = ""
-
-    private var maxPrice: String = ""
-
     private var page: Int = 1
+
     private val adapter: AdapterAllGoods by lazy { AdapterAllGoods(R.layout.adapter_all_goods) }
 
     companion object {
         @JvmStatic
         fun newInstance(): AllGoodsFragment = AllGoodsFragment()
-
-        //默认排序
-        const val SORT_TYPE_DEFAULT: String = "0"
-
-        //综合排序
-        const val SORT_TYPE_SYNTHESISE: String = "1"
-
-        //价格由低到高
-        const val SORT_TYPE_LOW_UP: String = "2"
-
-        //价格由高到低
-        const val SORT_TYPE_UP_LOW: String = "3"
-
-
-        //利润不限
-        const val PROFIT_TYPE_DEFAULT: String = "0"
-
-        //利润低到高
-        const val PROFIT_TYPE_LOW_UP: String = "1"
-
-        //利润高到低
-        const val PROFIT_TYPE_UP_LOW: String = "2"
-
     }
 
     override fun initView() {
@@ -99,23 +66,36 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
     override fun loadData() {
         firstLoadData = false
-        page = 1
-        presenter.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice)
+        presenter.loadData()
     }
 
     override fun setNewData(products: MutableList<HotGoodsBean.DataBean.ProductsBean>) {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(products)
-        ++page
         adapter.setEnableLoadMore(true)
     }
 
     override fun addData(products: List<HotGoodsBean.DataBean.ProductsBean>) {
         adapter.addData(products)
-        ++page
     }
 
     override fun installListener() {
+
+        linearLayoutSort.setOnClickListener {
+            val dialog = DialogBottomSynthesiseSort(activity,presenter)
+            dialog.show()
+        }
+
+        linearLayoutProfit.setOnClickListener {
+            val dialog = DialogBottomProfit(activity,presenter)
+            dialog.show()
+        }
+
+
+        linearLayoutFilter.setOnClickListener {
+
+        }
+
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
@@ -123,7 +103,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData(page, sortType, profitType, filterCondition, minePrice, maxPrice)
+            presenter.loadMoreData()
         }, recyclerView)
 
 
