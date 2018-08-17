@@ -29,6 +29,26 @@ open class AllGoodsModel{
         })
     }
 
+    /**
+     * 获取商品分类
+     */
+    fun getGoodsClassify(callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET,URL.GOODS_CATEGORIES_URL,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
 }
 
 

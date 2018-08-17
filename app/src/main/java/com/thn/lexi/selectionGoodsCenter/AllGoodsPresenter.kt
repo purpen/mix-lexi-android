@@ -1,5 +1,6 @@
 package com.thn.lexi.selectionGoodsCenter
 
+import com.basemodule.tools.Constants
 import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -51,7 +52,7 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
     /**
      * 默认参数加载数据
      */
-    override fun loadData(isRefresh:Boolean) {
+    override fun loadData(isRefresh: Boolean) {
         if (isRefresh) this.curPage = 1
 
         loadData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice)
@@ -75,6 +76,7 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
                 view.dismissLoadingView()
                 val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
                 if (hotGoodsBean.success) {
+                    view.setGoodsCount(hotGoodsBean.data.count)
                     view.setNewData(hotGoodsBean.data.products)
                     ++curPage
                 } else {
@@ -124,12 +126,28 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
         loadMoreData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice)
     }
 
-    fun getSortType():String {
+    fun getSortType(): String {
         return this.sortType
     }
 
     fun getProfitType(): String {
         return this.profitType
+    }
+
+    /**
+     * 获取商品分类
+     */
+    override fun getGoodsClassify(callBacks: IDataSource.HttpRequestCallBack) {
+        dataSource.getGoodsClassify(object : IDataSource.HttpRequestCallBack {
+
+            override fun onSuccess(json: String) {
+               callBacks.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
     }
 
 

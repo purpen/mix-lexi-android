@@ -243,4 +243,9 @@ object URL {
      * 选品中心 ->全部商品
      */
     const val ALL_GOODS_URL = "${BASE_URL}fx_distribute/choose_center"
+
+    /**
+     * 选品中心 -> 筛选->分类
+     */
+    const val GOODS_CATEGORIES_URL = "${BASE_URL}categories"
 }

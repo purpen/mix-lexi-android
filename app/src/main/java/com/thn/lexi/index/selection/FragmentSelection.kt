@@ -58,6 +58,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         initGoodSelection()
         initZCManifest()
         adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
+        swipeRefreshLayout.isEnabled = false
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
     }

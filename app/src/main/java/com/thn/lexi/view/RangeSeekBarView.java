@@ -173,9 +173,9 @@ public class RangeSeekBarView extends View {
         for (int i = 0; i < size; i++) {
             String tempDesc = data.get(i);
             float measureTextWidth = seekPbPaint.measureText(tempDesc);
-            if (i==leftPosition ||i==rightPosition){
+            if (i == leftPosition || i == rightPosition) {
                 seekTextPaint.setColor(seekTextSelectedColor);
-            }else {
+            } else {
                 seekTextPaint.setColor(seekTextColor);
             }
             canvas.drawText(tempDesc, DEF_PADDING + unitWidth * i - measureTextWidth / 2, seekTextY, seekTextPaint);
@@ -225,6 +225,7 @@ public class RangeSeekBarView extends View {
                     rightSeekBallX = rightSeekBallX - leftSeekBallX <= 0 ? leftSeekBallX : getCurrentSeekX((int) event.getX()) + DEF_PADDING + seekBallRadio;
                 }
                 if (null != dragFinishedListener) {
+                    if (rightPosition == data.size()) rightPosition = data.size() - 1;
                     dragFinishedListener.dragFinished(leftPosition, rightPosition);
                 }
                 break;
@@ -263,7 +264,7 @@ public class RangeSeekBarView extends View {
         Bitmap girlBitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.icon_range_drag_button)).getBitmap();
         int girlBitWidth = girlBitmap.getWidth();
         int girlBitHeight = girlBitmap.getHeight();
-        canvas.drawBitmap(girlBitmap, rightSeekBallX-girlBitWidth*0.5f,seekBallY-girlBitHeight*0.5f,seekBallEndPaint);
+        canvas.drawBitmap(girlBitmap, rightSeekBallX - girlBitWidth * 0.5f, seekBallY - girlBitHeight * 0.5f, seekBallEndPaint);
     }
 
     private void drawLeftCircle(Canvas canvas) {
@@ -271,7 +272,7 @@ public class RangeSeekBarView extends View {
         Bitmap girlBitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.icon_range_drag_button)).getBitmap();
         int girlBitWidth = girlBitmap.getWidth();
         int girlBitHeight = girlBitmap.getHeight();
-        canvas.drawBitmap(girlBitmap, leftSeekBallX-girlBitWidth*0.5f,seekBallY-girlBitHeight*0.5f,seekBallPaint);
+        canvas.drawBitmap(girlBitmap, leftSeekBallX - girlBitWidth * 0.5f, seekBallY - girlBitHeight * 0.5f, seekBallPaint);
     }
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/color_f5f7f9">
 
     <ImageView
@@ -29,9 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp40"
         android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
         android:paddingEnd="@dimen/dp20"
         android:paddingStart="@dimen/dp20"
-        android:gravity="center_vertical"
         android:text="@string/text_reset"
         android:textColor="@color/color_6ed7af"
         android:textSize="@dimen/sp16" />
@@ -40,46 +40,80 @@
         android:id="@+id/textViewRangePrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp15"
-        android:paddingBottom="@dimen/dp15"
-        android:textColor="@color/color_333"
-        android:textSize="@dimen/sp17"
-        android:gravity="center_vertical"
-        android:textStyle="bold"
-        android:paddingStart="@dimen/dp20"
-        android:paddingEnd="@dimen/dp20"
         android:layout_below="@+id/textViewTitle"
         android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/dp15"
+        android:paddingEnd="@dimen/dp20"
+        android:paddingStart="@dimen/dp20"
+        android:paddingTop="@dimen/dp15"
         android:text="@string/text_range_price"
-        />
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp17"
+        android:textStyle="bold" />
+
 
     <com.thn.lexi.view.RangeSeekBarView
         android:id="@+id/rangeSeekBarView"
-        android:layout_below="@+id/textViewRangePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/dp20"
+        android:layout_below="@+id/textViewRangePrice"
         android:paddingEnd="@dimen/dp20"
-        app:seek_view_padding="@dimen/dp20"
+        android:paddingStart="@dimen/dp20"
+        app:seek_bar_height="@dimen/dp4"
+        app:seek_bar_text_selected_color="@color/color_6ed7af"
         app:seek_bg_color="@color/color_eee"
         app:seek_pb_color="@color/color_6ed7af"
-        app:seek_text_size="@dimen/sp12"
-        app:seek_bar_height="@dimen/dp4"
         app:seek_text_color="@color/color_b2b2b2"
-        app:seek_bar_text_selected_color="@color/color_6ed7af"
+        app:seek_text_size="@dimen/sp12"
+        app:seek_view_padding="@dimen/dp20"
         />
 
-   <Button
-       android:id="@+id/button"
-       android:layout_width="match_parent"
-       android:layout_height="@dimen/dp40"
-       style="@style/Base.Widget.AppCompat.Button.Borderless"
-       android:background="@drawable/bg_color5fe4b1_radius4"
-       android:text="查看商品(234件)"
-       android:textSize="@dimen/sp16"
-       android:textColor="@android:color/white"
-       android:layout_below="@+id/rangeSeekBarView"
-       android:layout_margin="@dimen/dp20"
-       />
-    
+    <TextView
+        android:id="@+id/textViewClassify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_below="@+id/rangeSeekBarView"
+        android:text="@string/text_classify"
+        android:paddingStart="@dimen/dp20"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp17"
+        />
+
+    <TextView
+        android:id="@+id/textViewMulti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp60"
+        android:layout_alignBottom="@+id/textViewClassify"
+        android:background="@android:color/white"
+        android:text="@string/text_multi_select"
+        android:textColor="@color/color_999"
+        android:textSize="@dimen/sp11"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp20"
+        android:background="@android:color/white"
+        android:layout_below="@+id/textViewClassify"
+        android:paddingBottom="@dimen/dp30"
+        android:paddingTop="@dimen/dp30"
+        />
+
+    <Button
+        android:id="@+id/button"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:layout_below="@+id/recyclerView"
+        android:layout_margin="@dimen/dp20"
+        android:background="@drawable/bg_color5fe4b1_radius4"
+        android:text="查看商品(0件)"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp16" />
+
 </RelativeLayout>

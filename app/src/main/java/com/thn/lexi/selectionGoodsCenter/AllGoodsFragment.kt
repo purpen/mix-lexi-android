@@ -19,6 +19,8 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
     override val layout: Int = R.layout.fragment_all_goods
 
+    private val dialogBottomFilter:DialogBottomFilter by lazy { DialogBottomFilter(activity,presenter) }
+
     private val presenter: AllGoodsPresenter by lazy { AllGoodsPresenter(this) }
 
     private var firstLoadData:Boolean = true
@@ -77,6 +79,10 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         adapter.addData(products)
     }
 
+    override fun setGoodsCount(count: Int) {
+        if(dialogBottomFilter.isShowing) dialogBottomFilter.setGoodsCount(count)
+    }
+
     override fun installListener() {
 
         linearLayoutSort.setOnClickListener {
@@ -91,8 +97,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
 
         linearLayoutFilter.setOnClickListener {
-            val dialog = DialogBottomFilter(activity,presenter)
-            dialog.show()
+            dialogBottomFilter.show()
         }
 
         swipeRefreshLayout.setOnRefreshListener {

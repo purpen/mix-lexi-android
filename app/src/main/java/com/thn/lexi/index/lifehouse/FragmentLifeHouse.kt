@@ -61,9 +61,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun initView() {
+        swipeRefreshLayout.isEnabled =false
 
         EventBus.getDefault().register(this)
-
         adapter = LifeHouseAdapter(R.layout.adapter_curator_recommend)
         adapter.setEmptyView(R.layout.empty_view_distribute_goods,recyclerView.parent as ViewGroup)
         adapter.setHeaderFooterEmpty(true,true)

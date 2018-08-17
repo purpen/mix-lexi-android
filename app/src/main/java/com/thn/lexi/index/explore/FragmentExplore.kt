@@ -41,6 +41,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         initGood100()
         swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout.isEnabled = false
     }
 
     /**
