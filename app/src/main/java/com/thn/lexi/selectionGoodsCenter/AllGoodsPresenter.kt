@@ -11,8 +11,7 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
 
     private val dataSource: AllGoodsModel by lazy { AllGoodsModel() }
 
-    private var sortType: String = SORT_TYPE_DEFAULT
-
+    private var sortType: String = SORT_TYPE_SYNTHESISE
 
     private var profitType: String = PROFIT_TYPE_DEFAULT
 
@@ -49,7 +48,12 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
 
     }
 
-    override fun loadData() {
+    /**
+     * 默认参数加载数据
+     */
+    override fun loadData(isRefresh:Boolean) {
+        if (isRefresh) this.curPage = 1
+
         loadData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice)
     }
 
@@ -61,6 +65,7 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
         this.filterCondition = filterCondition
         this.minePrice = minePrice
         this.maxPrice = maxPrice
+
         dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -112,9 +117,19 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
         })
     }
 
-
+    /**
+     * 默认条件加载更多
+     */
     override fun loadMoreData() {
         loadMoreData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice)
+    }
+
+    fun getSortType():String {
+        return this.sortType
+    }
+
+    fun getProfitType(): String {
+        return this.profitType
     }
 
 

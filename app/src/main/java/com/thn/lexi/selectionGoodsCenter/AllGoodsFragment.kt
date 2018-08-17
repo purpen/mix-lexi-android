@@ -23,8 +23,6 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
     private var firstLoadData:Boolean = true
 
-    private var page: Int = 1
-
     private val adapter: AdapterAllGoods by lazy { AdapterAllGoods(R.layout.adapter_all_goods) }
 
     companion object {
@@ -66,7 +64,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
     override fun loadData() {
         firstLoadData = false
-        presenter.loadData()
+        presenter.loadData(false)
     }
 
     override fun setNewData(products: MutableList<HotGoodsBean.DataBean.ProductsBean>) {
@@ -99,7 +97,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            loadData()
+            presenter.loadData(true)
         }
 
         adapter.setOnLoadMoreListener({

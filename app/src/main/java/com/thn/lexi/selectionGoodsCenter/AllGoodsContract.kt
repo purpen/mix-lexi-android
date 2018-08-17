@@ -30,7 +30,7 @@ class AllGoodsContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData()
+        fun loadData(isRefresh:Boolean)
         fun loadMoreData()
         fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String)
     }
