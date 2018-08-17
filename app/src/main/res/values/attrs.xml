@@ -7,4 +7,18 @@
         <attr name="ClipSquareIV_BorderColor" format="color" />
         <attr name="ClipSquareIV_OutsideColor" format="color" />
     </declare-styleable>
+
+    <!--价格范围获取-->
+    <declare-styleable name="RangeSeekBarView">
+        <attr name="seek_bg_color" format="color" />
+        <attr name="seek_pb_color" format="color" />
+        <attr name="seek_ball_solid_color" format="color" />
+        <attr name="seek_ball_stroke_color" format="color" />
+        <attr name="seek_text_color" format="color" />
+        <attr name="seek_text_size" format="dimension" />
+        <attr name="seek_view_padding" format="dimension" />
+        <attr name="seek_bar_height" format="dimension" />
+        <attr name="seek_bar_text_selected_color" format="color" />
+        <attr name="seek_bar_text_unselected_color" format="color" />
+    </declare-styleable>
 </resources>

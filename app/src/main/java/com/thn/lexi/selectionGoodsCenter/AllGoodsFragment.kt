@@ -91,7 +91,8 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
 
         linearLayoutFilter.setOnClickListener {
-
+            val dialog = DialogBottomFilter(activity,presenter)
+            dialog.show()
         }
 
         swipeRefreshLayout.setOnRefreshListener {
