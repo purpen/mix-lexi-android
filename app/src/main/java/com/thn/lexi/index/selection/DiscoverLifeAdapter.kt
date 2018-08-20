@@ -59,6 +59,8 @@ class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.
         adapter.setSpanSizeLookup { _, position ->
             list1[position].spanSize
         }
+
+        if (recyclerView.itemDecorationCount>0) return
         val size = DimenUtil.getDimensionPixelSize(R.dimen.dp2)
         recyclerView.addItemDecoration(object:RecyclerView.ItemDecoration(){
             override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {

@@ -248,4 +248,9 @@ object URL {
      * 选品中心 -> 筛选->分类
      */
     const val GOODS_CATEGORIES_URL = "${BASE_URL}categories"
+
+    /**
+     *  发现生活美学 -> 橱窗推荐
+     */
+    const val RECOMMEND_SHOW_WINDOW = "${BASE_URL}shop_windows/recommend"
 }

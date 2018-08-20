@@ -602,4 +602,17 @@ public class ClientParamsAPI {
         params.put("max_price", maxPrice);
         return params;
     }
+
+    /**
+     * 获取橱窗数据
+     * @param page
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getShowWindowParams(int page) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
 }

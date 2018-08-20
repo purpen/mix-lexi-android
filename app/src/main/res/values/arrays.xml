@@ -46,6 +46,10 @@
         <item>QQ空间</item>
     </string-array>
 
+    <string-array name="strings_discover_life_titles">
+        <item>关注</item>
+        <item>推荐</item>
+    </string-array>
 
     <integer-array name="google_colors">
         <item>@color/color_6ed7af</item>

@@ -147,4 +147,6 @@
     <string name="text_range_price">价格区间</string>
     <string name="text_classify">分类</string>
     <string name="text_multi_select">可多选</string>
+    <string name="title_show_case">橱窗</string>
+    <string name="text_discover_life_description">发掘好物，品位生活,\n 寻找搭配灵感,塑造自己的独特风格</string>
 </resources>

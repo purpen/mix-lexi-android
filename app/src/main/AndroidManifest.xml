@@ -36,6 +36,7 @@
         <activity android:name=".album.ImageCropActivity" />
         <activity android:name=".album.ImageSelectActivity" />
         <activity android:name=".selectionGoodsCenter.SelectionGoodsCenterActivity" />
+        <activity android:name=".discoverLifeAesthetics.DiscoverLifeAestheticsActivity" />
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v4.content.ContextCompat
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.Drawable

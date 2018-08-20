@@ -7,9 +7,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.thn.lexi.AppApplication
-import com.thn.lexi.R
-import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.explore.ExploreBannerBean
 import kotlinx.android.synthetic.main.fragment_selection.*
@@ -20,8 +17,10 @@ import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
-import com.thn.lexi.GlideImageLoader
+import com.thn.lexi.*
+import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.youth.banner.BannerConfig
 
 
@@ -69,10 +68,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initZCManifest() {
         presenter.getZCManifest()
         adapterZCManifest = ZCManifestAdapter(R.layout.adapter_zc_manifest)
-        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewZCManifest.layoutManager = staggeredGridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
-        recyclerViewZCManifest.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10),resources.getDimensionPixelSize(R.dimen.dp20)))
+        recyclerViewZCManifest.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
     }
 
     /**
@@ -88,12 +87,12 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initGoodSelection() {
         presenter.getGoodSelection()
         adapterGoodSelection = GoodSelectionAdapter(R.layout.adapter_editor_recommend)
-        val gridLayoutManager = GridLayoutManager(activity,2)
+        val gridLayoutManager = GridLayoutManager(activity, 2)
         gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerViewGoodSelection.setHasFixedSize(true)
         recyclerViewGoodSelection.layoutManager = gridLayoutManager
         recyclerViewGoodSelection.adapter = adapterGoodSelection
-        recyclerViewGoodSelection.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10),resources.getDimensionPixelSize(R.dimen.dp20)))
+        recyclerViewGoodSelection.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
     }
 
     /**
@@ -123,23 +122,23 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     override fun setDiscoverLifeData(windows: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
 
-         var demos = ArrayList<DiscoverLifeBean.DataBean.ShopWindowsBean>()
+        var demos = ArrayList<DiscoverLifeBean.DataBean.ShopWindowsBean>()
 
-        for (i in 0..3){
+        for (i in 0..3) {
             val windowsBean = DiscoverLifeBean.DataBean.ShopWindowsBean()
             demos.add(windowsBean)
         }
 
-        for (item in demos){
+        for (item in demos) {
             item.title = "发现生活美学"
             item.description = "生活美学好"
             val list = ArrayList<DiscoverLifeBean.DataBean.ShopWindowsBean.ProductsBean>()
-            for (i in 0..3){
+            for (i in 0..3) {
                 val productsBean = DiscoverLifeBean.DataBean.ShopWindowsBean.ProductsBean()
                 productsBean.cover = "http://c.hiphotos.baidu.com/image/h%3D300/sign=87d6daed02f41bd5c553eef461d881a0/f9198618367adab4b025268587d4b31c8601e47b.jpg"
                 list.add(productsBean)
             }
-            item.products=list
+            item.products = list
             item.avatar = "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
         }
 
@@ -158,7 +157,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     override fun setHotRecommendBannerData(banner_images: List<SelectionHotRecommendBannerBean.DataBean.BannerImagesBean>) {
         val list = ArrayList<String>()
-        for (item in banner_images){
+        for (item in banner_images) {
             list.add(item.image)
         }
         hotBanner.setImages(list)
@@ -170,7 +169,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun initHotRecommend() {
         presenter.getHotRecommend()
-        val manager = GridLayoutManager(activity,6)
+        val manager = GridLayoutManager(activity, 6)
         recyclerViewHotRecommend.layoutManager = manager
     }
 
@@ -179,11 +178,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     override fun setHotRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
         val list = ArrayList<PeopleRecommendAdapter.MultipleItem>()
-        for (i in products.indices){
-            if (i==0 ||i==1){//占3列宽
-                list.add(PeopleRecommendAdapter.MultipleItem(products[i],PeopleRecommendAdapter.MultipleItem.ITEM_TYPE_SPAN2,PeopleRecommendAdapter.MultipleItem.ITEM_SPAN3_SIZE))
-            }else{//占两列
-                list.add(PeopleRecommendAdapter.MultipleItem(products[i],PeopleRecommendAdapter.MultipleItem.ITEM_TYPE_SPAN3,PeopleRecommendAdapter.MultipleItem.ITEM_SPAN2_SIZE))
+        for (i in products.indices) {
+            if (i == 0 || i == 1) {//占3列宽
+                list.add(PeopleRecommendAdapter.MultipleItem(products[i], PeopleRecommendAdapter.MultipleItem.ITEM_TYPE_SPAN2, PeopleRecommendAdapter.MultipleItem.ITEM_SPAN3_SIZE))
+            } else {//占两列
+                list.add(PeopleRecommendAdapter.MultipleItem(products[i], PeopleRecommendAdapter.MultipleItem.ITEM_TYPE_SPAN3, PeopleRecommendAdapter.MultipleItem.ITEM_SPAN2_SIZE))
             }
         }
 
@@ -231,7 +230,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         val pavilionTime = data[0].time
 
         val contentOrders = data[1].line_text
-        val orderCount= data[1].time
+        val orderCount = data[1].time
 
 //        if (!TextUtils.isEmpty(name1)){
 //            val openInfo = SpannableString("设计师${contentPavilion}10秒前开了自己的设计馆")
@@ -287,6 +286,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         textViewGuessPic.setOnClickListener(this)
         textViewCouponCenter.setOnClickListener(this)
         textViewExemptionMail.setOnClickListener(this)
+        textViewMoreDiscoverLife.setOnClickListener(this)
 
         adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
@@ -319,6 +319,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
             R.id.textViewCouponCenter -> ToastUtil.showInfo("领券中心")
             R.id.textViewExemptionMail -> ToastUtil.showInfo("包邮专区")
+            R.id.textViewMoreDiscoverLife -> startActivity(Intent(context, DiscoverLifeAestheticsActivity::class.java))
+
         }
     }
 
