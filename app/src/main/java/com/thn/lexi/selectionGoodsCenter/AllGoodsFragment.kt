@@ -5,9 +5,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.LinearInterpolator
-import android.view.animation.RotateAnimation
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -90,10 +87,10 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
     override fun installListener() {
 
         linearLayoutSort.setOnClickListener { _ ->
-            startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
+            Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
             val dialog = DialogBottomSynthesiseSort(activity, presenter)
             dialog.setOnDismissListener {
-                startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
+                Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
                 when (presenter.getSortType()) {
                     AllGoodsPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
                     AllGoodsPresenter.SORT_TYPE_LOW_UP -> textViewSort.text = Util.getString(R.string.text_price_low_up)
@@ -104,10 +101,10 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         }
 
         linearLayoutProfit.setOnClickListener { _ ->
-            startViewRotateAnimation(imageViewSortArrow1, 0f, 180f)
+            Util.startViewRotateAnimation(imageViewSortArrow1, 0f, 180f)
             val dialog = DialogBottomProfit(activity, presenter)
             dialog.setOnDismissListener {
-                startViewRotateAnimation(imageViewSortArrow1, -180f, 0f)
+                Util.startViewRotateAnimation(imageViewSortArrow1, -180f, 0f)
                 when (presenter.getSortType()) {
                     AllGoodsPresenter.PROFIT_TYPE_DEFAULT -> textViewProfit.text = Util.getString(R.string.text_no_limit)
                     AllGoodsPresenter.SORT_TYPE_LOW_UP -> textViewProfit.text = Util.getString(R.string.text_price_low_up)
@@ -119,10 +116,10 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
 
         linearLayoutFilter.setOnClickListener {
-            startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
+            Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
             dialogBottomFilter.show()
             dialogBottomFilter.setOnDismissListener {
-                startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
+                Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
             }
         }
 
@@ -136,7 +133,6 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
             presenter.loadMoreData()
         }, recyclerView)
 
-
         adapter.setOnItemChildClickListener { adapter, view, position ->
             val productsBean = adapter.getItem(position) as HotGoodsBean.DataBean.ProductsBean
             when (view.id) {
@@ -147,13 +143,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         }
     }
 
-    private fun startViewRotateAnimation(view: View, startAngle: Float, endAngle: Float) {
-        val rotateAnimation = RotateAnimation(startAngle, endAngle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        rotateAnimation.interpolator = LinearInterpolator()
-        rotateAnimation.fillAfter = true
-        rotateAnimation.duration = 200
-        view.startAnimation(rotateAnimation)
-    }
+
 
     override fun showLoadingView() {
         if (firstLoadData) dialog.show()

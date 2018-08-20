@@ -6,6 +6,10 @@ import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 
 
 import com.thn.basemodule.R;
@@ -57,5 +61,16 @@ public class Util {
 
     public static String[] getStringArray(@ArrayRes int resourceId){
         return BaseModuleContext.getContext().getResources().getStringArray(resourceId);
+    }
+
+    /**
+     * 箭头动画
+     */
+    public static void startViewRotateAnimation(View view,float startAngle,float endAngle) {
+        RotateAnimation rotateAnimation = new RotateAnimation(startAngle, endAngle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setInterpolator(new LinearInterpolator());
+        rotateAnimation.setFillAfter(true);
+        rotateAnimation.setDuration(200);
+        view.startAnimation(rotateAnimation);
     }
 }
