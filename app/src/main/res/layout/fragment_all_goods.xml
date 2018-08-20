@@ -19,6 +19,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/textViewSort"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dp5"
@@ -43,6 +44,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/textViewProfit"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dp5"

@@ -5,6 +5,9 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -19,11 +22,11 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
     override val layout: Int = R.layout.fragment_all_goods
 
-    private val dialogBottomFilter:DialogBottomFilter by lazy { DialogBottomFilter(activity,presenter) }
+    private val dialogBottomFilter: DialogBottomFilter by lazy { DialogBottomFilter(activity, presenter) }
 
     private val presenter: AllGoodsPresenter by lazy { AllGoodsPresenter(this) }
 
-    private var firstLoadData:Boolean = true
+    private var firstLoadData: Boolean = true
 
     private val adapter: AdapterAllGoods by lazy { AdapterAllGoods(R.layout.adapter_all_goods) }
 
@@ -80,24 +83,47 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
     }
 
     override fun setGoodsCount(count: Int) {
-        if(dialogBottomFilter.isShowing) dialogBottomFilter.setGoodsCount(count)
+        if (dialogBottomFilter.isShowing) dialogBottomFilter.setGoodsCount(count)
     }
+
 
     override fun installListener() {
 
-        linearLayoutSort.setOnClickListener {
-            val dialog = DialogBottomSynthesiseSort(activity,presenter)
+        linearLayoutSort.setOnClickListener { _ ->
+            startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
+            val dialog = DialogBottomSynthesiseSort(activity, presenter)
+            dialog.setOnDismissListener {
+                startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
+                when (presenter.getSortType()) {
+                    AllGoodsPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
+                    AllGoodsPresenter.SORT_TYPE_LOW_UP -> textViewSort.text = Util.getString(R.string.text_price_low_up)
+                    AllGoodsPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
+                }
+            }
             dialog.show()
         }
 
-        linearLayoutProfit.setOnClickListener {
-            val dialog = DialogBottomProfit(activity,presenter)
+        linearLayoutProfit.setOnClickListener { _ ->
+            startViewRotateAnimation(imageViewSortArrow1, 0f, 180f)
+            val dialog = DialogBottomProfit(activity, presenter)
+            dialog.setOnDismissListener {
+                startViewRotateAnimation(imageViewSortArrow1, -180f, 0f)
+                when (presenter.getSortType()) {
+                    AllGoodsPresenter.PROFIT_TYPE_DEFAULT -> textViewProfit.text = Util.getString(R.string.text_no_limit)
+                    AllGoodsPresenter.SORT_TYPE_LOW_UP -> textViewProfit.text = Util.getString(R.string.text_price_low_up)
+                    AllGoodsPresenter.SORT_TYPE_UP_LOW -> textViewProfit.text = Util.getString(R.string.text_price_up_low)
+                }
+            }
             dialog.show()
         }
 
 
         linearLayoutFilter.setOnClickListener {
+            startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
             dialogBottomFilter.show()
+            dialogBottomFilter.setOnDismissListener {
+                startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
+            }
         }
 
         swipeRefreshLayout.setOnRefreshListener {
@@ -119,6 +145,14 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 //                R.id.linearLayoutLoadMore -> presenter.loadMoreData(page)
             }
         }
+    }
+
+    private fun startViewRotateAnimation(view: View, startAngle: Float, endAngle: Float) {
+        val rotateAnimation = RotateAnimation(startAngle, endAngle, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        rotateAnimation.interpolator = LinearInterpolator()
+        rotateAnimation.fillAfter = true
+        rotateAnimation.duration = 200
+        view.startAnimation(rotateAnimation)
     }
 
     override fun showLoadingView() {
