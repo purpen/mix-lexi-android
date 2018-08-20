@@ -115,7 +115,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         }
 
 
-        linearLayoutFilter.setOnClickListener {
+        linearLayoutFilter.setOnClickListener { _ ->
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
             dialogBottomFilter.show()
             dialogBottomFilter.setOnDismissListener {
