@@ -294,7 +294,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     override fun setFavorite(b: Boolean, position: Int) {
         val item = adapter.getItem(position) as DistributionGoodsBean.DataBean.ProductsBean
         item.is_like = b
-        adapter.notifyDataSetChanged()
+        adapter.notifyItemChanged(position)
     }
 
     override fun installListener() {

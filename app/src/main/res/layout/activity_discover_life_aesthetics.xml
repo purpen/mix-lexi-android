@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -15,6 +15,7 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator_layout"
+        android:layout_below="@+id/customHeadView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -74,7 +75,8 @@
                 tl:tl_textAllCaps="true"
                 tl:tl_textSelectColor="@color/color_6ed7af"
                 tl:tl_textUnselectColor="@color/color_2d343a"
-                tl:tl_textsize="@dimen/sp15" />
+                app:tl_textBold="SELECT"
+                tl:tl_textsize="@dimen/sp17" />
 
             <include
                 layout="@layout/line_color_eee"
@@ -96,4 +98,29 @@
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutPublishWindow"
+        android:layout_width="123dp"
+        android:layout_height="@dimen/dp40"
+        android:background="@drawable/bg_radius_round_white"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp40"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_666"
+            android:text="@string/text_publish_show_window"
+            android:layout_marginEnd="@dimen/dp5"
+            android:textSize="@dimen/sp12"
+            />
+        <ImageView
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
+            android:src="@drawable/icon_pulish_add"
+            />
+    </LinearLayout>
+</RelativeLayout>

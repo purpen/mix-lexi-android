@@ -253,4 +253,16 @@ object URL {
      *  发现生活美学 -> 橱窗推荐
      */
     const val RECOMMEND_SHOW_WINDOW = "${BASE_URL}shop_windows/recommend"
+
+
+    /**
+     * 发现生活美学 -> 喜欢橱窗
+     */
+    const val FAVORITE_SHOW_WINDOW = "${BASE_URL}shop_windows/user_likes"
+
+
+    /**
+     * 发现生活美学 -> 关注的橱窗
+     */
+    const val FOCUS_SHOW_WINDOW = "${BASE_URL}shop_windows/follow"
 }

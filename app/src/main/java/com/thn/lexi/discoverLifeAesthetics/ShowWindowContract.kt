@@ -27,6 +27,10 @@ class ShowWindowContract {
         fun loadMoreComplete() {
 
         }
+
+        fun setFavorite(b: Boolean, position: Int) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

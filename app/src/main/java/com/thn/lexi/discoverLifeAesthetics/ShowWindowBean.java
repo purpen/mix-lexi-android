@@ -42,11 +42,12 @@ public class ShowWindowBean {
              * user_name : 用户名
              */
 
-            public String comment_count;
+            public int comment_count;
             public String description;
             public boolean is_follow;
             public boolean is_official;
-            public String like_count;
+            public int like_count;
+            public boolean is_like;
             public int product_count;
             public String rid;
             public String title;

@@ -15,14 +15,14 @@ import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 
 
-class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
+class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_swipe_refresh_recyclerview
     private val presenter: ShowWindowPresenter by lazy { ShowWindowPresenter(this) }
     private val adapter: AdapterRecommendShowWindow by lazy { AdapterRecommendShowWindow(R.layout.adapter_show_window) }
     companion object {
         @JvmStatic
-        fun newInstance(): FragmentRecommendShowWindow = FragmentRecommendShowWindow()
+        fun newInstance(): FragmentFocusShowWindow = FragmentFocusShowWindow()
     }
 
     override fun setPresenter(presenter: ShowWindowContract.Presenter?) {
@@ -43,12 +43,13 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            presenter.loadData(true)
+            presenter.loadFocusData(true)
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData()
+            presenter.loadMoreFocusData()
         }, recyclerView)
+
 
         adapter.setOnItemChildClickListener { adapter, view, position ->
             val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
@@ -107,7 +108,7 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
     }
 
     override fun loadData() {
-        presenter.loadData(false)
+        presenter.loadFocusData(false)
     }
 
     override fun showLoadingView() {

@@ -1,5 +1,6 @@
 package com.thn.lexi.discoverLifeAesthetics
 import android.support.v4.view.ViewPager
+import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
@@ -12,7 +13,7 @@ class DiscoverLifeAestheticsActivity : BaseActivity() {
 
     override val layout: Int = R.layout.activity_discover_life_aesthetics
 
-    private val fragment0: BaseFragment by lazy { FragmentRecommendShowWindow.newInstance() }
+    private val fragment0: BaseFragment by lazy { FragmentFocusShowWindow.newInstance() }
     private val fragment1: BaseFragment by lazy { FragmentRecommendShowWindow.newInstance() }
 
     private val fragments:ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
@@ -33,10 +34,14 @@ class DiscoverLifeAestheticsActivity : BaseActivity() {
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(true)
         slidingTabLayout.setViewPager(customViewPager)
-
     }
 
     override fun installListener() {
+
+        linearLayoutPublishWindow.setOnClickListener {
+            ToastUtil.showInfo("发布橱窗")
+        }
+
         customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 val count = customViewPager.childCount

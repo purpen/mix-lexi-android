@@ -615,4 +615,16 @@ public class ClientParamsAPI {
         params.put("per_page",Constants.PAGE_SIZE);
         return params;
     }
+
+    /**
+     * 喜欢橱窗
+     * @param rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getFavoriteShowWindowParams(@Nullable String rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid",rid);
+        return params;
+    }
 }

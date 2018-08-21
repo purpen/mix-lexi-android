@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp50"
@@ -126,7 +126,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dp20"
         android:paddingEnd="@dimen/dp20"
-        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp20"
         android:layout_marginTop="14dp"
         android:ellipsize="end"
         android:maxLines="3"
@@ -134,12 +134,19 @@
         android:textColor="@color/color_333"
         android:textSize="@dimen/sp13" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewTag"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dp10"
-        android:paddingBottom="@dimen/dp10"
+    <me.gujun.android.taggroup.TagGroup
+        android:id="@+id/tagGroup"
+        style="@style/TagGroup"
+        app:atg_borderColor="@android:color/transparent"
+        app:atg_textColor="@color/color_6ed7af"
+        app:atg_textSize="12sp"
+        app:atg_horizontalPadding="0dp"
+        app:atg_verticalPadding="0dp"
+        app:atg_horizontalSpacing="@dimen/dp10"
+        app:atg_borderStrokeWidth="0dp"
+        android:paddingBottom="@dimen/dp20"
+        android:paddingStart="@dimen/dp20"
+        android:paddingEnd="@dimen/dp20"
         />
 
     <include layout="@layout/line_color_eee" />
