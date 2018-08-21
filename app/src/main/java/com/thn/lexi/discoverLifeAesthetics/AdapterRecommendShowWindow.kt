@@ -64,8 +64,8 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShowWindow
         if (item.products.isEmpty()) return
 
         val list = ArrayList<String>()
-
-        if (item.products.size <= 3) {
+        val size = item.products.size
+        if ( size <= 3) {
             for (product in item.products) {
                 list.add(product.cover)
             }
@@ -87,7 +87,7 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShowWindow
         }
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
-        val showWindowProductAdapter = ShowWindowProductAdapter(list1)
+        val showWindowProductAdapter = ShowWindowProductAdapter(list1,size)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.HORIZONTAL
         recyclerView.layoutManager = gridLayoutManager

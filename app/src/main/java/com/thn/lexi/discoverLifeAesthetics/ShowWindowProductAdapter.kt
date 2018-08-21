@@ -1,15 +1,20 @@
 package com.thn.lexi.discoverLifeAesthetics
 
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.LogUtil
+import com.basemodule.tools.ScreenUtil
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.thn.lexi.R
 
-class ShowWindowProductAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<ShowWindowProductAdapter.MultipleItem, BaseViewHolder>(list) {
+class ShowWindowProductAdapter(list: List<MultipleItem>, private val size: Int) : BaseMultiItemQuickAdapter<ShowWindowProductAdapter.MultipleItem, BaseViewHolder>(list) {
 
     init {
         addItemType(MultipleItem.ITEM_TYPE_SPAN2, R.layout.adapter_discover_life_product)
@@ -33,7 +38,8 @@ class ShowWindowProductAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAda
 
     override fun convert(helper: BaseViewHolder, item: ShowWindowProductAdapter.MultipleItem) {
 
-        var layoutParams: ViewGroup.LayoutParams
+        val layoutParams: ViewGroup.LayoutParams
+        val relativeLayout = helper.getView<RelativeLayout>(R.id.relativeLayout)
         val imageView = helper.getView<ImageView>(R.id.imageView)
         val size250 = DimenUtil.getDimensionPixelSize(R.dimen.dp250)
         val size124 = DimenUtil.getDimensionPixelSize(R.dimen.dp124)
@@ -42,7 +48,16 @@ class ShowWindowProductAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAda
         } else {
             layoutParams = ViewGroup.LayoutParams(size124, size124)
         }
-        imageView.layoutParams = layoutParams
+        relativeLayout.layoutParams = layoutParams
         GlideUtil.loadImageWithFading(item.str, imageView)
+
+        val textView = helper.getView<TextView>(R.id.textView)
+
+        if (size > 3 && helper.adapterPosition == 2) {
+            textView.visibility = View.VISIBLE
+            textView.text = "+${size - 3}"
+        } else {
+            textView.visibility = View.GONE
+        }
     }
 }
