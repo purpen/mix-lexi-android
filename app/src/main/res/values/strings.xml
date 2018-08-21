@@ -151,4 +151,6 @@
     <string name="text_discover_life_description">发掘好物，品位生活,\n 寻找搭配灵感,塑造自己的独特风格</string>
     <string name="text_publish_show_window">拼贴我的橱窗</string>
     <string name="text_comment_count">条评论</string>
+    <string name="text_guess_like">猜你喜欢</string>
+    <string name="text_relate_show_window">相关橱窗</string>
 </resources>

@@ -37,6 +37,7 @@
         <activity android:name=".album.ImageSelectActivity" />
         <activity android:name=".selectionGoodsCenter.SelectionGoodsCenterActivity" />
         <activity android:name=".discoverLifeAesthetics.DiscoverLifeAestheticsActivity" />
+        <activity android:name=".discoverLifeAesthetics.ShowWindowDetailActivity" />
     </application>
 
 </manifest>

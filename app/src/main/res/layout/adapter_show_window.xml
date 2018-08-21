@@ -58,7 +58,7 @@
             android:layout_height="match_parent"
             android:paddingStart="@dimen/dp20"
             android:paddingEnd="@dimen/dp13"
-            android:drawableStart="@mipmap/icon_click_favorite_selected"
+            android:drawableStart="@mipmap/icon_click_favorite_normal"
             android:gravity="center_vertical"
             android:layout_centerVertical="true"
             android:textColor="@color/color_959fa7"

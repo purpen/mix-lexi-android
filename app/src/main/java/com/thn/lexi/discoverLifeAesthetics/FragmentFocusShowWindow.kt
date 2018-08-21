@@ -1,6 +1,7 @@
 package com.thn.lexi.discoverLifeAesthetics
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -63,6 +64,13 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
                     dialog.show()
                 }
             }
+        }
+
+        adapter.setOnItemClickListener { adapter, view, position ->
+            val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
+            val intent = Intent(context, ShowWindowDetailActivity::class.java)
+            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName,showWindowBean)
+            startActivity(intent)
         }
     }
 
