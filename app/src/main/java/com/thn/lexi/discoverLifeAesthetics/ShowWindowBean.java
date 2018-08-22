@@ -57,6 +57,7 @@ public class ShowWindowBean implements Parcelable {
             public String title;
             public String user_avatar;
             public String user_name;
+            public String uid;
             public List<String> keywords;
             public List<String> product_covers;
             public List<ProductsBean> products;

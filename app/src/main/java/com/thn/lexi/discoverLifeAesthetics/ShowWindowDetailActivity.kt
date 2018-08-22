@@ -1,5 +1,6 @@
 package com.thn.lexi.discoverLifeAesthetics
 
+import android.content.Intent
 import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -50,9 +51,21 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         initRelateShowWindow()
     }
 
+    override fun requestNet() {
+        presenter.loadData(shopWindowsBean.rid,false)
+    }
+
+    /**
+     * 设置橱窗详情数据
+     */
+    override fun setShowWindowData(data: ShowWindowDetailBean.DataBean?) {
+        //TODO  代替initShowWindow()设置数据
+    }
+
     /**
      * 初始化橱窗
      */
+    @Deprecated("see setShowWindowData")
     private fun initShowWindow() {
         GlideUtil.loadCircleImageWidthDimen(shopWindowsBean.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
         textViewName.text = shopWindowsBean.user_name
@@ -211,6 +224,16 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     override fun installListener() {
 
+        buttonFocus.setOnClickListener{ view ->
+            //TODO 记得修改为真实UID
+            if(shopWindowsBean.is_follow){
+                presenter.unfocusUser("uid",view)
+            }else{
+                presenter.focusUser("uid",view)
+            }
+        }
+
+
         textViewLike.setOnClickListener { view ->
             if (shopWindowsBean.is_like) {
                 presenter.unfavoriteShowWindow(shopWindowsBean.rid, view)
@@ -227,8 +250,34 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             val dialog = DistributeShareDialog(this)
             dialog.show()
         }
+
+
+        //猜你喜欢点击
+        adapterGuessLike.setOnItemClickListener { adapter, view, position ->
+            val productsBean = adapterGuessLike.getItem(position) as EditorRecommendBean.DataBean.ProductsBean
+            ToastUtil.showInfo("商品详情="+position)
+        }
+
+
+        //设置橱窗点击
+        adapterRelateShowWindow.setOnItemClickListener { adapter, view, position ->
+            val windowsBean = adapterRelateShowWindow.getItem(position) as DiscoverLifeBean.DataBean.ShopWindowsBean
+            val intent = Intent(applicationContext, ShowWindowDetailActivity::class.java)
+//            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName,windowsBean.rid)
+            startActivity(intent)
+        }
     }
 
+    /**
+     * 设置用户关注状态
+     */
+    override fun setUserFocusState(b: Boolean) {
+        if (b){
+            buttonFocus.text = Util.getString(R.string.text_focused)
+        }else{
+            buttonFocus.text = Util.getString(R.string.text_focus)
+        }
+    }
 
     /**
      * 设置喜欢

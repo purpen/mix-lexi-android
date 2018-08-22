@@ -84,6 +84,8 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
         }
 
         for (item in demos) {
+            item.uid= "111"
+            item.rid = "111"
             item.title = "标题发现生活美学"
             item.description = "生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对"
             val list = ArrayList<ShowWindowBean.DataBean.ShopWindowsBean.ProductsBean>()

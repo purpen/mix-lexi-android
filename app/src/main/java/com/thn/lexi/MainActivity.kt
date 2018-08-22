@@ -32,6 +32,11 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        LogUtil.e("=================MainActivity==onNewIntent====================")
+    }
+
+
     /**
      * add()方式提交可以hide后可以show，replace方式提交无法通过show来显示
      */

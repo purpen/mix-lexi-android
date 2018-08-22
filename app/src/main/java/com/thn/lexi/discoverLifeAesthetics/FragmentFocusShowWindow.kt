@@ -93,6 +93,8 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
         }
 
         for (item in demos) {
+            item.uid = "1111"
+            item.rid = "111"
             item.title = "标题发现生活美学"
             item.description = "生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对"
             val list = ArrayList<ShowWindowBean.DataBean.ShopWindowsBean.ProductsBean>()
@@ -103,6 +105,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
             }
             item.products = list
             item.user_avatar = "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
+            item.user_name = "姗姗来迟"
         }
 
         adapter.setNewData(demos)

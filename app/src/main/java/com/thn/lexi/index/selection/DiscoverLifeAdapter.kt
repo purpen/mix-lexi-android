@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.ToastUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.AppApplication
@@ -56,6 +57,12 @@ class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.
         gridLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = adapter
+
+        adapter.setOnItemClickListener { adapter, view, position ->
+            val multipleItem = adapter.getItem(position) as DiscoverLifeProductAdapter.MultipleItem
+            ToastUtil.showInfo("商品详情"+position+multipleItem.str)
+        }
+
         adapter.setSpanSizeLookup { _, position ->
             list1[position].spanSize
         }

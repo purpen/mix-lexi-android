@@ -15,27 +15,23 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
 
     private val dataSource: ShowWindowDetailModel by lazy { ShowWindowDetailModel() }
 
-    private var page: Int = 1
 
     /**
-     * 加载数据
+     * 加载详情数据
      */
-    override fun loadData(isRefresh: Boolean) {
-        if (isRefresh) this.page = 1
-
-        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
+    override fun loadData(rid: String,isRefresh: Boolean) {
+        dataSource.loadData(rid,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val showWindowBean = JsonUtil.fromJson(json, ShowWindowBean::class.java)
-                if (showWindowBean.success) {
-                    view.setNewData(showWindowBean.data.shop_windows)
-                    ++page
+                val showWindowDetailBean = JsonUtil.fromJson(json, ShowWindowDetailBean::class.java)
+                if (showWindowDetailBean.success) {
+                    view.setShowWindowData(showWindowDetailBean.data)
                 } else {
-                    view.showError(showWindowBean.status.message)
+                    view.showError(showWindowDetailBean.status.message)
                 }
             }
 
@@ -145,5 +141,58 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
         })
     }
 
+    /**
+     * 关注用户
+     */
+    override fun focusUser(uid: String, view1: View) {
+        dataSource.focusUser(uid, object : IDataSource.HttpRequestCallBack {
+
+            override fun onStart() {
+                view1.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                view1.isEnabled = true
+                val userFocusState = JsonUtil.fromJson(json, UserFocusState::class.java)
+                if (userFocusState.success) {
+                    view.setUserFocusState(true)
+                } else {
+                    view.showError(userFocusState.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view1.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 取消关注用户
+     */
+    override fun unfocusUser(uid: String, view1: View) {
+        dataSource.unfocusUser(uid, object : IDataSource.HttpRequestCallBack {
+
+            override fun onStart() {
+                view1.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                view1.isEnabled = true
+                val userFocusState = JsonUtil.fromJson(json, UserFocusState::class.java)
+                if (userFocusState.success) {
+                    view.setUserFocusState(false)
+                } else {
+                    view.showError(userFocusState.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view1.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
 
 }

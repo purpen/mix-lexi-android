@@ -265,4 +265,21 @@ object URL {
      * 发现生活美学 -> 关注的橱窗
      */
     const val FOCUS_SHOW_WINDOW = "${BASE_URL}shop_windows/follow"
+
+
+    /**
+     * 关注用户
+     */
+    const val FOCUS_USER_URL = "${BASE_URL}follow/user"
+
+    /**
+     * 取消关注用户
+     */
+    const val UNFOCUS_USER_URL ="${BASE_URL}unfollow/user"
+
+
+    /**
+     * 橱窗详情
+     */
+    const val SHOW_WINDOW_DETAIL = "${BASE_URL}shop_windows/detail"
 }

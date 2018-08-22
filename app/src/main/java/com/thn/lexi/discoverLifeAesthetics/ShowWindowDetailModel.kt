@@ -8,11 +8,11 @@ import java.io.IOException
 
 open class ShowWindowDetailModel{
 
-    fun loadData(page: Int,callBack: IDataSource.HttpRequestCallBack) {
+    fun loadData(rid: String,callBack: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getShowWindowParams(page)
+        val params = ClientParamsAPI.getShowWindowDetailParams(rid)
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.RECOMMEND_SHOW_WINDOW,params,object : IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.GET,URL.SHOW_WINDOW_DETAIL,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }
@@ -61,24 +61,6 @@ open class ShowWindowDetailModel{
         })
     }
 
-    fun loadFocusData(page: Int, callBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getShowWindowParams(page)
-
-        HttpRequest.sendRequest(HttpRequest.GET,URL.FOCUS_SHOW_WINDOW,params,object : IDataSource.HttpRequestCallBack{
-            override fun onStart() {
-                callBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                callBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                callBack.onFailure(e)
-            }
-        })
-    }
-
 
     fun getGuessLike(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
@@ -100,6 +82,40 @@ open class ShowWindowDetailModel{
     fun getRelateShowWindow(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
         HttpRequest.sendRequest(HttpRequest.GET, URL.DISCOVER_LIFE_URL, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun focusUser(uid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFocusUserParams(uid)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.FOCUS_USER_URL, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun unfocusUser(uid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFocusUserParams(uid)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.UNFOCUS_USER_URL, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

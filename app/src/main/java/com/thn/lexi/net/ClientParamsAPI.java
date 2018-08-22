@@ -627,4 +627,28 @@ public class ClientParamsAPI {
         params.put("rid",rid);
         return params;
     }
+
+    /**
+     * 关注用户
+     * @param uid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getFocusUserParams(@NotNull String uid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("uid",uid);
+        return params;
+    }
+
+    /**
+     * 获取橱窗详情
+     * @param rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getShowWindowDetailParams(@NotNull String rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid",rid);
+        return params;
+    }
 }

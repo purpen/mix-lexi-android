@@ -14,15 +14,6 @@ class ShowWindowDetailContract {
 
         fun goPage()
 
-        fun setNewData(shopWindows: MutableList<ShowWindowBean.DataBean.ShopWindowsBean>) {
-
-        }
-
-        fun addData(shopWindows: MutableList<ShowWindowBean.DataBean.ShopWindowsBean>) {
-
-        }
-
-
         fun setFavorite(b: Boolean) {
 
         }
@@ -34,10 +25,20 @@ class ShowWindowDetailContract {
         fun setRelateShowWindowData(shop_windows: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
 
         }
+
+        fun setUserFocusState(b: Boolean) {
+
+        }
+
+        fun setShowWindowData(data: ShowWindowDetailBean.DataBean?) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(isRefresh:Boolean)
+        fun focusUser(uid:String,view1: android.view.View)
+        fun unfocusUser(uid:String,view1: android.view.View)
+        fun loadData(rid:String,isRefresh:Boolean)
         fun getGuessLike()
     }
 }
