@@ -33,6 +33,10 @@ class ShowWindowDetailContract {
         fun setShowWindowData(data: ShowWindowDetailBean.DataBean?) {
 
         }
+
+        fun setCommentState() {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -40,5 +44,6 @@ class ShowWindowDetailContract {
         fun unfocusUser(uid:String,view1: android.view.View)
         fun loadData(rid:String,isRefresh:Boolean)
         fun getGuessLike()
+        fun sendComment(rid: String, pid: String, content: String)
     }
 }

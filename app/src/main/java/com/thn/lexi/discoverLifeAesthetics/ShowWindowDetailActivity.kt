@@ -4,7 +4,10 @@ import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.InputType
+import android.text.TextUtils
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
@@ -44,6 +47,8 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     override fun initView() {
         customHeadView.setHeadCenterTxtShow(true, R.string.title_show_case)
+        editText.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
+        editText.setSingleLine(false)
         initShowWindow()
         initGuessLike()
         initRelateShowWindow()
@@ -226,7 +231,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     }
 
 
-    override fun installListener() {
+    override fun installListener(){
 
         buttonFocus.setOnClickListener{ view ->
             //TODO 记得修改为真实UID
@@ -246,8 +251,11 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             }
         }
 
+        //跳转评论列表
         relativeLayoutComment.setOnClickListener { view ->
-            ToastUtil.showInfo("去评论界面")
+            val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
+            intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName,shopWindowsBean.rid)
+            startActivity(intent)
         }
 
         textViewShare.setOnClickListener { view ->
@@ -270,6 +278,29 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 //            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName,windowsBean.rid)
             startActivity(intent)
         }
+
+        // 发送评论
+        editText.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == EditorInfo.IME_ACTION_SEND){
+                val content = editText.text.toString().trim()
+                if (TextUtils.isEmpty(content)){
+                    ToastUtil.showInfo(Util.getString(R.string.hint_input_comment))
+                }else{
+                    presenter.sendComment(shopWindowsBean.rid,"0",content)
+                }
+                return@setOnKeyListener true
+            }
+
+            return@setOnKeyListener false
+        }
+
+    }
+
+    /**
+     * 重新设置评论数
+     */
+    override fun setCommentState() {
+        textViewComment.text = ""+(shopWindowsBean.comment_count+1)
     }
 
     /**

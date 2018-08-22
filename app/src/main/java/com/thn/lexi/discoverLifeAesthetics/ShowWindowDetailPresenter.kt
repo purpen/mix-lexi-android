@@ -195,4 +195,24 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
         })
     }
 
+    /**
+     * 发送橱窗评论
+     */
+    override fun sendComment(rid: String, pid: String, content: String) {
+        dataSource.sendComment(rid,pid,content,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val showWindowCommentBean = JsonUtil.fromJson(json, ShowWindowCommentBean::class.java)
+                if (showWindowCommentBean.success) {
+                    view.setCommentState()
+                } else {
+                    view.showError(showWindowCommentBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 }

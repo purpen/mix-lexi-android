@@ -85,6 +85,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
 
     override fun setNewData(shopWindows: MutableList<ShowWindowBean.DataBean.ShopWindowsBean>) {
         swipeRefreshLayout.isRefreshing = false
+
         var demos = ArrayList<ShowWindowBean.DataBean.ShopWindowsBean>()
 
         for (i in 0..3) {

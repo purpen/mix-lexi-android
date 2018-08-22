@@ -651,4 +651,20 @@ public class ClientParamsAPI {
         params.put("rid",rid);
         return params;
     }
+
+    /**
+     * 提交橱窗评论
+     * @param rid
+     * @param pid
+     * @param content
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getSendCommentParams(@NotNull String rid, @NotNull String pid, @NotNull String content) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid",rid);
+        params.put("pid",pid);
+        params.put("content",content);
+        return params;
+    }
 }

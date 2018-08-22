@@ -282,4 +282,9 @@ object URL {
      * 橱窗详情
      */
     const val SHOW_WINDOW_DETAIL = "${BASE_URL}shop_windows/detail"
+
+    /**
+     * 发送橱窗评论
+     */
+    const val SHOP_WINDOWS_COMMENTS = "${BASE_URL}shop_windows/comments"
 }

@@ -6,9 +6,9 @@ import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
 import java.io.IOException
 
-open class ShowWindowDetailModel{
+open class ShowWindowCommentModel{
 
-    fun loadData(rid: String,callBack: IDataSource.HttpRequestCallBack) {
+    fun loadData(page:Int,rid: String,callBack: IDataSource.HttpRequestCallBack) {
 
         val params = ClientParamsAPI.getShowWindowDetailParams(rid)
 

@@ -154,4 +154,7 @@
     <string name="text_guess_like">猜你喜欢</string>
     <string name="text_relate_show_window">相关橱窗</string>
     <string name="text_add_comment">添加评论</string>
+    <string name="hint_input_comment">请输入评论</string>
+    <string name="text_reply">回复</string>
+    <string name="text_praise">赞</string>
 </resources>
