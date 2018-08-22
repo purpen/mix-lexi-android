@@ -1,5 +1,4 @@
 package com.thn.lexi.discoverLifeAesthetics
-
 import android.content.Intent
 import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
@@ -17,7 +16,6 @@ import com.thn.lexi.index.lifehouse.DistributeShareDialog
 import com.thn.lexi.index.selection.DiscoverLifeAdapter
 import com.thn.lexi.index.selection.DiscoverLifeBean
 import kotlinx.android.synthetic.main.activity_show_window_detail.*
-
 
 class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
@@ -75,14 +73,20 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
         }
 
-
-        if (shopWindowsBean.is_like) {
-            textViewLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_selected, 0, 0, 0)
+        shopWindowsBean.like_count =1000
+        if (shopWindowsBean.like_count>0) {
+            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
+            textViewLike.text = "${shopWindowsBean.like_count}"
         } else {
-            textViewLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_normal, 0, 0, 0)
+            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
+            textViewLike.text = ""
         }
 
-        textViewLikeCommentCount.text = "${shopWindowsBean.like_count}" + Util.getString(R.string.text_favorite) + " · ${shopWindowsBean.comment_count}" + Util.getString(R.string.text_comment_count)
+        if (shopWindowsBean.comment_count>0){
+            textViewComment.text = "${shopWindowsBean.comment_count}"
+        }else{
+            textViewComment.text = ""
+        }
 
         textViewTitle1.text = shopWindowsBean.title
 
@@ -234,7 +238,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         }
 
 
-        textViewLike.setOnClickListener { view ->
+        relativeLayoutLike.setOnClickListener { view ->
             if (shopWindowsBean.is_like) {
                 presenter.unfavoriteShowWindow(shopWindowsBean.rid, view)
             } else {
@@ -242,7 +246,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             }
         }
 
-        textViewComment.setOnClickListener { view ->
+        relativeLayoutComment.setOnClickListener { view ->
             ToastUtil.showInfo("去评论界面")
         }
 
@@ -284,9 +288,11 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      */
     override fun setFavorite(b: Boolean) {
         if (b) {
-            textViewLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_selected, 0, 0, 0)
+            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
+            textViewLike.text = ""+(shopWindowsBean.like_count+1)
         } else {
-            textViewLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_normal, 0, 0, 0)
+            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
+            textViewLike.text = ""+(shopWindowsBean.like_count-1)
         }
     }
 
