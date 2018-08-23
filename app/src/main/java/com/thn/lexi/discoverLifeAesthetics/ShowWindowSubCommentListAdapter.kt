@@ -9,9 +9,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
 
-class ShowWindowSubCommentListAdapter(res: Int) : BaseQuickAdapter<ShowWindowCommentListBean.DataBean.CommentsBean.SubCommentsBean, BaseViewHolder>(res) {
+class ShowWindowSubCommentListAdapter(res: Int) : BaseQuickAdapter<CommentBean, BaseViewHolder>(res) {
 
-    override fun convert(helper: BaseViewHolder, item: ShowWindowCommentListBean.DataBean.CommentsBean.SubCommentsBean) {
+    override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp20))
         val textViewPraise = helper.getView<TextView>(R.id.textViewPraise)

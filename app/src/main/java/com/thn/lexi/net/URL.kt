@@ -294,4 +294,10 @@ object URL {
      */
     const val SHOP_WINDOWS_COMMENTS_PRAISE = "${BASE_URL}shop_windows/comments/praises"
 
+
+    /**
+     *  加载子评论
+     */
+    const val SHOP_WINDOWS_SUB_COMMENTS = "${BASE_URL}shop_windows/child_comments"
+
 }

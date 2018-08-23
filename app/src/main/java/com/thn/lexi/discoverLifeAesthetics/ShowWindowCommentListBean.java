@@ -23,55 +23,7 @@ public class ShowWindowCommentListBean {
          */
 
         public int count;
-        public List<CommentsBean> comments;
-
-        public static class CommentsBean {
-            /**
-             * comment_id : 1
-             * content : 你说的真好
-             * created_at : 1533086565
-             * is_praise : true
-             * pid : 0
-             * praise_count : 1
-             * sub_comment_count : 4
-             * sub_comments : [{"comment_id":14,"content":"订单！！！","created_at":1533557451,"is_praise":false,"pid":1,"praise_count":0,"user_avatar":"http://kg.erp.taihuoniao.com/static/img/default-logo.png","user_name":"商品棒棒棒1(作者)"},{"comment_id":13,"content":"订单！！！","created_at":1533095638,"is_praise":false,"pid":1,"praise_count":0,"user_avatar":"http://kg.erp.taihuoniao.com/static/img/default-logo.png","user_name":"商品棒棒棒1(作者)"}]
-             * user_avatar : http://kg.erp.taihuoniao.com/static/img/default-logo.png
-             * user_name : 商品棒棒棒1(作者)
-             */
-
-            public String comment_id;
-            public String content;
-            public long created_at;
-            public boolean is_praise;
-            public int pid;
-            public int praise_count;
-            public int sub_comment_count;
-            public String user_avatar;
-            public String user_name;
-            public List<SubCommentsBean> sub_comments;
-
-            public static class SubCommentsBean {
-                /**
-                 * comment_id : 14
-                 * content : 订单！！！
-                 * created_at : 1533557451
-                 * is_praise : false
-                 * pid : 1
-                 * praise_count : 0
-                 * user_avatar : http://kg.erp.taihuoniao.com/static/img/default-logo.png
-                 * user_name : 商品棒棒棒1(作者)
-                 */
-
-                public String comment_id;
-                public String content;
-                public long created_at;
-                public boolean is_praise;
-                public int pid;
-                public int praise_count;
-                public String user_avatar;
-                public String user_name;
-            }
-        }
+        public List<CommentBean> comments;
     }
 
     public static class StatusBean {

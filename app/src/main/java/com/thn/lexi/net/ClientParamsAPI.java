@@ -679,4 +679,18 @@ public class ClientParamsAPI {
         params.put("comment_id",comment_id);
         return params;
     }
+
+    /**
+     * 加载更多子评论
+     * @param comment_id
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getMoreSubCommentsParams(int page,@NotNull String comment_id) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("comment_id",comment_id);
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("page", String.valueOf(page));
+        return params;
+    }
 }

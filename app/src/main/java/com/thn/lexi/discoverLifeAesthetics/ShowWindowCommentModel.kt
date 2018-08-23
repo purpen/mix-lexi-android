@@ -181,6 +181,23 @@ open class ShowWindowCommentModel{
         })
     }
 
+    fun loadMoreSubComments(page: Int,comment_id: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getMoreSubCommentsParams(page,comment_id)
+        HttpRequest.sendRequest(HttpRequest.GET, URL.SHOP_WINDOWS_SUB_COMMENTS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 
 }
 

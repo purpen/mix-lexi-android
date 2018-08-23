@@ -60,7 +60,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
         adapter.setOnItemChildClickListener { adapter, view, position ->
 
-            val commentsBean = adapter.getItem(position) as ShowWindowCommentListBean.DataBean.CommentsBean
+            val commentsBean = adapter.getItem(position) as CommentBean
 
             when (view.id) {
                 R.id.textViewReply -> {
@@ -88,7 +88,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         if (isSubAdapter) {
             adapter.setPraiseCommentState(doPraise, position)
         } else {
-            val commentsBean = adapter.getItem(position) as ShowWindowCommentListBean.DataBean.CommentsBean
+            val commentsBean = adapter.getItem(position) as CommentBean
             if (doPraise) {
                 commentsBean.praise_count += 1
             } else {
@@ -101,14 +101,18 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
     }
 
+    override fun addSubCommentsData(position: Int,comments: MutableList<CommentBean>) {
+        adapter.addSubCommentsData(position,comments)
+    }
 
-    override fun setNewData(comments: MutableList<ShowWindowCommentListBean.DataBean.CommentsBean>) {
+
+    override fun setNewData(comments: MutableList<CommentBean>) {
         swipeRefreshLayout.isRefreshing = false
 
-        var demos = ArrayList<ShowWindowCommentListBean.DataBean.CommentsBean>()
+        var demos = ArrayList<CommentBean>()
 
         for (i in 0..3) {
-            val commentBean = ShowWindowCommentListBean.DataBean.CommentsBean()
+            val commentBean = CommentBean()
             demos.add(commentBean)
         }
 
@@ -118,9 +122,9 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
             item.created_at = System.currentTimeMillis() / 1000
             item.content = "哈教科书代姐啊代姐哈空间大代姐大声疾活动空 间点,环撒打算的"
             item.praise_count = 102
-            val list = ArrayList<ShowWindowCommentListBean.DataBean.CommentsBean.SubCommentsBean>()
+            val list = ArrayList<CommentBean>()
             for (i in 0..4) {
-                val subItem = ShowWindowCommentListBean.DataBean.CommentsBean.SubCommentsBean()
+                val subItem = CommentBean()
                 subItem.user_avatar = "http://c.hiphotos.baidu.com/image/h%3D300/sign=87d6daed02f41bd5c553eef461d881a0/f9198618367adab4b025268587d4b31c8601e47b.jpg"
                 subItem.user_name = "${i}懵乖乖"
                 subItem.created_at = System.currentTimeMillis() / 1000
@@ -135,7 +139,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 //        adapter.setNewData(comments)
     }
 
-    override fun addData(comments: MutableList<ShowWindowCommentListBean.DataBean.CommentsBean>) {
+    override fun addData(comments: MutableList<CommentBean>) {
         adapter.addData(comments)
     }
 

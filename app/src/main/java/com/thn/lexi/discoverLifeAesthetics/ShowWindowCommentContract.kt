@@ -12,11 +12,11 @@ class ShowWindowCommentContract {
 
         fun goPage()
 
-        fun setNewData(comments: MutableList<ShowWindowCommentListBean.DataBean.CommentsBean>) {
+        fun setNewData(comments: MutableList<CommentBean>) {
 
         }
 
-        fun addData(comments: MutableList<ShowWindowCommentListBean.DataBean.CommentsBean>) {
+        fun addData(comments: MutableList<CommentBean>) {
 
         }
 
@@ -35,6 +35,8 @@ class ShowWindowCommentContract {
         fun setPraiseCommentState(doPraise: Boolean, position: Int, isSubAdapter: Boolean) {
 
         }
+
+        fun addSubCommentsData(position: Int,comments: MutableList<CommentBean>){}
     }
 
     interface Presenter : BasePresenter {
@@ -42,5 +44,6 @@ class ShowWindowCommentContract {
         fun loadMoreData(rid: String)
         fun praiseComment(comment_id: String, position: Int, view1: android.view.View, isSubAdapter: Boolean)
         fun cancelPraiseComment(comment_id: String, position: Int, view1: android.view.View, isSubAdapter: Boolean)
+        fun loadMoreSubComments(comment_id: String,position: Int,view1: android.view.View)
     }
 }
