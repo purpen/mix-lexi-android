@@ -81,22 +81,12 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     }
 
     /**
-     * 更新点赞/子评论点赞状态
+     * 更新评论点赞状态
      */
     override fun setPraiseCommentState(doPraise: Boolean, position: Int, isSubAdapter: Boolean) {
 
         if (isSubAdapter) {
-            val subAdapter = adapter.getSubAdapter()
-            val subCommentsBean = subAdapter.getItem(position) as ShowWindowCommentListBean.DataBean.CommentsBean.SubCommentsBean
-            if (doPraise) {
-                subCommentsBean.praise_count += 1
-            } else {
-                if (subCommentsBean.praise_count > 0) {
-                    subCommentsBean.praise_count -= 1
-                }
-            }
-            subAdapter.notifyItemChanged(position)
-
+            adapter.setPraiseCommentState(doPraise, position)
         } else {
             val commentsBean = adapter.getItem(position) as ShowWindowCommentListBean.DataBean.CommentsBean
             if (doPraise) {
@@ -108,7 +98,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
             }
             adapter.notifyItemChanged(position)
         }
-
 
     }
 

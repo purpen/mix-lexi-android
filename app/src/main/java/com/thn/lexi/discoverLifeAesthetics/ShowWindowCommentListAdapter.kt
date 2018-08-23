@@ -62,11 +62,20 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
         }
     }
 
+
     /**
-     * 获取子评论adapter
+     * 设置子评论点赞状态
      */
-    fun getSubAdapter():ShowWindowSubCommentListAdapter{
-        return adapter
+    fun setPraiseCommentState(doPraise: Boolean, position: Int){
+        val subCommentsBean = adapter.getItem(position) as ShowWindowCommentListBean.DataBean.CommentsBean.SubCommentsBean
+        if (doPraise) {
+            subCommentsBean.praise_count += 1
+        } else {
+            if (subCommentsBean.praise_count > 0) {
+                subCommentsBean.praise_count -= 1
+            }
+        }
+        adapter.notifyItemChanged(position)
     }
 
     internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
