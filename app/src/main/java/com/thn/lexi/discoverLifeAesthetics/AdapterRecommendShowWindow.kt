@@ -64,7 +64,9 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShowWindow
         if (item.products.isEmpty()) return
 
         val list = ArrayList<String>()
+
         val size = item.products.size
+
         if ( size <= 3) {
             for (product in item.products) {
                 list.add(product.cover)
@@ -76,47 +78,22 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShowWindow
             }
         }
 
-        val list1 = ArrayList<ShowWindowProductAdapter.MultipleItem>()
+        val imageView0 = helper.getView<ImageView>(R.id.imageView0)
+        val imageView1 = helper.getView<ImageView>(R.id.imageView1)
+        val imageView2 = helper.getView<ImageView>(R.id.imageView2)
 
-        for (i in list.indices) {
-            if (i == 0) {//第一张图占2列宽
-                list1.add(ShowWindowProductAdapter.MultipleItem(list[i], ShowWindowProductAdapter.MultipleItem.ITEM_TYPE_SPAN2, ShowWindowProductAdapter.MultipleItem.ITEM_SPAN2_SIZE))
-            } else {//占1列
-                list1.add(ShowWindowProductAdapter.MultipleItem(list[i], ShowWindowProductAdapter.MultipleItem.ITEM_TYPE_SPAN1, ShowWindowProductAdapter.MultipleItem.ITEM_SPAN1_SIZE))
-            }
+        GlideUtil.loadImageWithFading(list[0],imageView0)
+        GlideUtil.loadImageWithFading(list[1],imageView1)
+        GlideUtil.loadImageWithFading(list[2],imageView2)
+
+        val textView = helper.getView<TextView>(R.id.textView)
+
+        if (size>3){
+            textView.visibility = View.VISIBLE
+            textView.text = "+"+(size-3)
+        }else{
+            textView.visibility = View.GONE
         }
-
-        val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
-        val showWindowProductAdapter = ShowWindowProductAdapter(list1,size)
-        val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
-        gridLayoutManager.orientation = GridLayoutManager.HORIZONTAL
-        recyclerView.layoutManager = gridLayoutManager
-        recyclerView.adapter = showWindowProductAdapter
-        showWindowProductAdapter.setSpanSizeLookup { _, position ->
-            list1[position].spanSize
-        }
-
-        if (recyclerView.itemDecorationCount == 0) {
-            val size = DimenUtil.getDimensionPixelSize(R.dimen.dp2)
-            recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
-                    super.getItemOffsets(outRect, view, parent, state)
-                    val position = parent.getChildAdapterPosition(view)
-                    if (position == 0) {
-                        outRect.right = size
-                    } else {
-                        outRect.right = 0
-                    }
-
-                    if (position == 1) {
-                        outRect.bottom = size
-                    } else {
-                        outRect.bottom = 0
-                    }
-                }
-            })
-        }
-
 
         //设置标签
         val mTagGroup = helper.getView<TagGroup>(R.id.tagGroup)
