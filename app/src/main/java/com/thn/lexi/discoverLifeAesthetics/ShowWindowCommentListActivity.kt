@@ -122,6 +122,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
             item.created_at = System.currentTimeMillis() / 1000
             item.content = "哈教科书代姐啊代姐哈空间大代姐大声疾活动空 间点,环撒打算的"
             item.praise_count = 102
+            item.sub_comment_count = 10
             val list = ArrayList<CommentBean>()
             for (i in 0..4) {
                 val subItem = CommentBean()

@@ -33,6 +33,7 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
         } else {
             textViewPraise.setTextColor(Util.getColor(R.color.color_999))
             textViewPraise.text = Util.getString(R.string.text_praise)
+//            val icon = ContextCompat.getDrawable(AppApplication.getContext(), R.mipmap.icon_praise_normal)
             textViewPraise.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_praise_normal, 0, 0, 0)
         }
 
@@ -66,6 +67,9 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
             }
         }
         footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment,null)
+
+        footerView?.findViewById<TextView>(R.id.textView)?.text = "查看${item.sub_comment_count}条回复"
+
         if (adapter!!.footerLayoutCount==0) adapter!!.addFooterView(footerView)
 
         footerView?.setOnClickListener { view ->

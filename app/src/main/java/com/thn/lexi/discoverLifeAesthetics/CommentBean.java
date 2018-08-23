@@ -21,6 +21,7 @@ public class CommentBean {
     public boolean is_praise;
     public String pid;
     public int praise_count;
+    public int sub_comment_count;
     public String user_avatar;
     public String user_name;
     public List<CommentBean> sub_comments;
