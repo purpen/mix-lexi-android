@@ -36,6 +36,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     }
 
     override fun initView() {
+        swipeRefreshLayout.isEnabled = false
         customHeadView.setHeadCenterTxtShow(true, "4条评论")
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
