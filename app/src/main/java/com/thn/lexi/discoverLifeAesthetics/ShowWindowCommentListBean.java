@@ -39,7 +39,7 @@ public class ShowWindowCommentListBean {
              * user_name : 商品棒棒棒1(作者)
              */
 
-            public int comment_id;
+            public String comment_id;
             public String content;
             public long created_at;
             public boolean is_praise;
@@ -62,7 +62,7 @@ public class ShowWindowCommentListBean {
                  * user_name : 商品棒棒棒1(作者)
                  */
 
-                public int comment_id;
+                public String comment_id;
                 public String content;
                 public long created_at;
                 public boolean is_praise;

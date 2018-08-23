@@ -31,10 +31,16 @@ class ShowWindowCommentContract {
         fun setFavorite(b: Boolean, position: Int) {
 
         }
+
+        fun setPraiseCommentState(doPraise: Boolean, position: Int, isSubAdapter: Boolean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
         fun loadData(rid:String,isRefresh: Boolean)
         fun loadMoreData(rid: String)
+        fun praiseComment(comment_id: String, position: Int, view1: android.view.View, isSubAdapter: Boolean)
+        fun cancelPraiseComment(comment_id: String, position: Int, view1: android.view.View, isSubAdapter: Boolean)
     }
 }

@@ -287,4 +287,11 @@ object URL {
      * 发送橱窗评论
      */
     const val SHOP_WINDOWS_COMMENTS = "${BASE_URL}shop_windows/comments"
+
+
+    /**
+     * 对评论点赞
+     */
+    const val SHOP_WINDOWS_COMMENTS_PRAISE = "${BASE_URL}shop_windows/comments/praises"
+
 }

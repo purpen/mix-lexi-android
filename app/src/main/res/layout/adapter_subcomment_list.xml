@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="6dp"
+    >
+    <ImageView
+        android:id="@+id/imageViewAvatar"
+        android:layout_width="@dimen/dp20"
+        android:layout_height="@dimen/dp20"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginStart="@dimen/dp5"
+        android:layout_toEndOf="@+id/imageViewAvatar"
+        android:gravity="center_vertical"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/app_name"
+        android:textColor="@color/color_555"
+        android:textSize="@dimen/sp12" />
+
+
+    <TextView
+        android:id="@+id/textViewComment"
+        android:layout_below="@+id/imageViewAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="11dp"
+        android:lineSpacingMultiplier="1.2"
+        android:text="哈教科书代姐啊代姐哈空间大代姐大声疾活动空 间点,环撒打算的"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp12" />
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp12"
+        android:layout_below="@+id/textViewComment"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/app_name"
+        android:textColor="@color/color_999"
+        android:textSize="@dimen/sp11" />
+
+    <TextView
+        android:id="@+id/textViewPraise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textViewTime"
+        android:drawablePadding="@dimen/dp5"
+        android:drawableStart="@mipmap/icon_praise_normal"
+        android:gravity="center"
+        android:paddingEnd="0dp"
+        android:paddingStart="@dimen/dp10"
+        android:text="@string/text_praise"
+        android:textColor="@color/color_999"
+        android:textSize="@dimen/sp12" />
+
+</RelativeLayout>

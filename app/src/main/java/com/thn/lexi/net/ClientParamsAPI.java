@@ -667,4 +667,16 @@ public class ClientParamsAPI {
         params.put("content",content);
         return params;
     }
+
+    /**
+     * 点赞评论
+     * @param comment_id
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getPraiseCommentParams(@NotNull String comment_id) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("comment_id",comment_id);
+        return params;
+    }
 }
