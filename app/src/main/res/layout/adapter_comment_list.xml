@@ -59,7 +59,7 @@
             android:id="@+id/imageViewOval"
             android:layout_width="3dp"
             android:layout_height="3dp"
-            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginTop="14dp"
             android:layout_toStartOf="@+id/textViewPraise"
             android:src="@drawable/bg_oval_666" />
 
