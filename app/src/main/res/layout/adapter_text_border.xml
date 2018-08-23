@@ -11,4 +11,5 @@
     android:textColor="@color/color_333"
     android:layout_marginEnd="@dimen/dp10"
     android:textSize="12sp"
+    android:includeFontPadding="false"
     />

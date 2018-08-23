@@ -1,6 +1,8 @@
 package com.thn.lexi.discoverLifeAesthetics
 
 import android.content.Context
+import android.graphics.Rect
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -21,6 +23,8 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
     private var adapter: ShowWindowSubCommentListAdapter?=null
     private var footerView: View?=null
 
+    private val bounds:Rect by lazy { Rect(0,0,DimenUtil.getDimensionPixelSize(R.dimen.dp13),DimenUtil.getDimensionPixelSize(R.dimen.dp13)) }
+
     override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
@@ -29,12 +33,15 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
         if (item.praise_count > 0) {
             textViewPraise.setTextColor(Util.getColor(R.color.color_ff6666))
             textViewPraise.text = "${item.praise_count}"
-            textViewPraise.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_praise_active, 0, 0, 0)
+            val icon = ContextCompat.getDrawable(AppApplication.getContext(), R.mipmap.icon_praise_active)
+            icon?.bounds = bounds
+            textViewPraise.setCompoundDrawables(icon,null,null,null)
         } else {
             textViewPraise.setTextColor(Util.getColor(R.color.color_999))
             textViewPraise.text = Util.getString(R.string.text_praise)
-//            val icon = ContextCompat.getDrawable(AppApplication.getContext(), R.mipmap.icon_praise_normal)
-            textViewPraise.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_praise_normal, 0, 0, 0)
+            val icon = ContextCompat.getDrawable(AppApplication.getContext(), R.mipmap.icon_praise_normal)
+            icon?.bounds = bounds
+            textViewPraise.setCompoundDrawables(icon,null,null,null)
         }
 
         helper.addOnClickListener(R.id.textViewPraise)
