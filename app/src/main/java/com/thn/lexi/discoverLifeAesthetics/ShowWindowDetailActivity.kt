@@ -1,8 +1,5 @@
 package com.thn.lexi.discoverLifeAesthetics
-
 import android.content.Intent
-import android.graphics.Paint
-import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.InputType
@@ -38,7 +35,6 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     private val adapterRelateShowWindow: DiscoverLifeAdapter by lazy { DiscoverLifeAdapter(R.layout.adapter_discover_life) }
 
     override val layout: Int = R.layout.activity_show_window_detail
-    private var layoutChangeListener: View.OnLayoutChangeListener? = null
 
     override fun getIntentData() {
         if (intent.hasExtra(ShowWindowDetailActivity::class.java.simpleName)) {
@@ -57,11 +53,6 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         initShowWindow()
         initGuessLike()
         initRelateShowWindow()
-
-
-        val layoutParams1 = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp50))
-        layoutParams1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-        relativeLayoutBar.layoutParams = layoutParams1
     }
 
     override fun requestNet() {

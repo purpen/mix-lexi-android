@@ -2,6 +2,10 @@ package com.thn.lexi.discoverLifeAesthetics
 
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.RelativeLayout
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -79,6 +83,23 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
                 }
             }
         }
+
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+            override fun afterTextChanged(s: Editable) { //动态设置底部栏高度
+                val lineCount = editText.lineCount
+                var height = DimenUtil.getDimensionPixelSize(R.dimen.dp50) + editText.lineHeight * (lineCount - 1)
+                val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height)
+                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+                relativeLayoutBar.layoutParams = layoutParams
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+        })
     }
 
     /**

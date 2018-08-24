@@ -28,7 +28,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayoutBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp50"
         android:background="@android:color/white"
         android:layout_alignParentBottom="true"
         >
@@ -37,7 +37,7 @@
             android:id="@+id/editText"
             android:layout_width="284dp"
             android:layout_height="wrap_content"
-            android:minHeight="14dp"
+            android:minHeight="@dimen/dp34"
             android:layout_centerVertical="true"
             android:textColorHint="@color/color_999"
             android:hint="@string/text_add_comment"
@@ -59,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp50"
             android:paddingStart="@dimen/dp10"
+            android:layout_alignParentBottom="true"
             android:paddingEnd="0dp"
             android:layout_toEndOf="@+id/editText"
             >
