@@ -2,12 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
+
     <com.thn.lexi.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,14 +16,13 @@
         android:layout_below="@+id/customHeadView"
         android:background="@android:color/white"
         android:overScrollMode="never"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp50"
@@ -42,9 +42,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp5"
                     android:layout_toEndOf="@+id/imageViewAvatar"
-                    android:includeFontPadding="false"
                     android:drawablePadding="@dimen/dp5"
                     android:ellipsize="end"
+                    android:includeFontPadding="false"
                     android:maxLines="1"
                     android:text="@string/app_name"
                     android:textColor="@color/color_333"
@@ -68,17 +68,16 @@
                 android:id="@+id/linearLayoutBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
             </LinearLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="never"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textViewTitle1"
@@ -86,10 +85,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp15"
                 android:ellipsize="end"
+                android:includeFontPadding="false"
                 android:maxLines="1"
                 android:paddingEnd="@dimen/dp20"
                 android:paddingStart="@dimen/dp20"
-                android:includeFontPadding="false"
                 android:text="@string/app_name"
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/sp15"
@@ -103,9 +102,9 @@
                 android:layout_marginBottom="@dimen/dp20"
                 android:layout_marginTop="14dp"
                 android:ellipsize="end"
+                android:includeFontPadding="false"
                 android:maxLines="3"
                 android:paddingEnd="@dimen/dp20"
-                android:includeFontPadding="false"
                 android:paddingStart="@dimen/dp20"
                 android:text="@string/app_name"
                 android:textColor="@color/color_333"
@@ -130,8 +129,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp15"
-                android:background="@color/color_f5f7f9"
-                />
+                android:background="@color/color_f5f7f9" />
 
             <!--猜你你喜欢-->
             <RelativeLayout
@@ -144,9 +142,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
                     android:text="@string/text_guess_like"
                     android:textColor="@color/color_333"
-                    android:includeFontPadding="false"
                     android:textSize="@dimen/sp14"
                     android:textStyle="bold" />
 
@@ -158,8 +156,8 @@
                     android:layout_centerVertical="true"
                     android:drawableEnd="@mipmap/icon_arrow_more"
                     android:drawablePadding="@dimen/dp5"
-                    android:text="@string/text_look_all"
                     android:includeFontPadding="false"
+                    android:text="@string/text_look_all"
                     android:textColor="@color/color_999"
                     android:textSize="@dimen/sp14"
                     android:visibility="gone" />
@@ -176,11 +174,11 @@
                 android:overScrollMode="never" />
 
             <include layout="@layout/line_color_eee" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp15"
-                android:background="@color/color_f5f7f9"
-                />
+                android:background="@color/color_f5f7f9" />
             <!--发现相关橱窗-->
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -193,8 +191,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_relate_show_window"
                     android:includeFontPadding="false"
+                    android:text="@string/text_relate_show_window"
                     android:textColor="@color/color_333"
                     android:textSize="@dimen/sp14"
                     android:textStyle="bold" />
@@ -226,68 +224,72 @@
             <include
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
-                />
+                android:layout_height="@dimen/dp1" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp30"
-                android:background="@color/color_f5f7f9"
-                />
+                android:background="@color/color_f5f7f9" />
+
             <include
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
-                />
+                android:layout_height="@dimen/dp1" />
         </LinearLayout>
     </ScrollView>
 
     <RelativeLayout
         android:id="@+id/relativeLayoutBar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50"
-        android:background="@android:color/white"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        >
+        android:background="@android:color/white">
 
         <EditText
             android:id="@+id/editText"
             android:layout_width="145dp"
-            android:layout_height="34dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textColorHint="@color/color_999"
-            android:hint="@string/text_add_comment"
-            android:background="@drawable/bg_radius_round_f6f5f5"
+            android:layout_marginBottom="@dimen/dp8"
             android:layout_marginStart="@dimen/dp20"
-            android:textColor="@color/color_333"
-            android:textSize="@dimen/sp13"
-            android:paddingStart="@dimen/dp15"
-            android:paddingEnd="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp8"
+            android:background="@drawable/bg_radius_round_f6f5f5"
+            android:hint="@string/text_add_comment"
             android:imeOptions="actionSend"
-            />
+            android:includeFontPadding="false"
+            android:lineSpacingMultiplier="1.2"
+            android:minHeight="@dimen/dp34"
+            android:paddingBottom="@dimen/dp5"
+            android:paddingEnd="@dimen/dp15"
+            android:paddingStart="@dimen/dp15"
+            android:paddingTop="@dimen/dp5"
+            android:textColor="@color/color_333"
+            android:textColorHint="@color/color_999"
+            android:textSize="@dimen/sp13" />
 
         <RelativeLayout
             android:id="@+id/relativeLayoutLike"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingStart="@dimen/dp10"
-            android:paddingEnd="@dimen/dp5"
+            android:layout_height="@dimen/dp50"
+            android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/editText"
-            >
+            android:paddingEnd="@dimen/dp5"
+            android:paddingStart="@dimen/dp10">
+
             <ImageView
                 android:id="@+id/imageViewLike"
                 android:layout_width="22dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_click_favorite_normal"
-                />
+                android:src="@mipmap/icon_click_favorite_normal" />
 
             <TextView
                 android:id="@+id/textViewLike"
-                android:layout_toEndOf="@+id/imageViewLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/imageViewLike"
                 android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageViewLike"
                 android:includeFontPadding="false"
                 android:text="111"
                 android:textColor="@color/color_333"
@@ -297,28 +299,29 @@
 
         <RelativeLayout
             android:id="@+id/relativeLayoutComment"
-            android:layout_toEndOf="@+id/relativeLayoutLike"
-            android:paddingStart="@dimen/dp10"
-            android:paddingEnd="@dimen/dp10"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="@dimen/dp50"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/relativeLayoutLike"
+            android:paddingEnd="@dimen/dp10"
+            android:paddingStart="@dimen/dp10">
+
             <ImageView
                 android:id="@+id/imageViewComment"
                 android:layout_width="22dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/icon_click_comment"
-                />
+                android:src="@mipmap/icon_click_comment" />
+
             <TextView
                 android:id="@+id/textViewComment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageViewComment"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/imageViewComment"
-                android:layout_alignTop="@+id/imageViewComment"
-                android:includeFontPadding="false"
                 android:gravity="center_vertical"
+                android:includeFontPadding="false"
                 android:text="111"
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/sp11" />
@@ -328,12 +331,12 @@
         <TextView
             android:id="@+id/textViewShare"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/dp50"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:includeFontPadding="false"
             android:drawableStart="@mipmap/icon_click_share"
             android:gravity="center_vertical"
+            android:includeFontPadding="false"
             android:paddingEnd="@dimen/dp20"
             android:paddingStart="@dimen/dp15"
             android:textColor="@color/color_959fa7"
