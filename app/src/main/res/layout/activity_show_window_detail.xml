@@ -64,11 +64,21 @@
                     android:textSize="@dimen/sp14" />
             </RelativeLayout>
 
+            <LinearLayout
+                android:id="@+id/linearLayoutBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+            </LinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                android:visibility="gone"
+                />
 
             <TextView
                 android:id="@+id/textViewTitle1"

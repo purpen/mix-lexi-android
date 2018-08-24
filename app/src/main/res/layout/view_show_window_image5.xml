@@ -5,37 +5,43 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView0"
+        android:id="@+id/imageView50"
         android:layout_width="230dp"
-        android:layout_height="230dp" />
+        android:layout_height="230dp"
+        android:scaleType="fitXY"
+        />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imageView51"
         android:layout_width="143dp"
         android:layout_height="114dp"
         android:layout_marginBottom="@dimen/dp2"
         android:layout_marginStart="@dimen/dp2"
-        android:layout_toEndOf="@+id/imageView0" />
+        android:scaleType="fitXY"
+        android:layout_toEndOf="@+id/imageView50" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView52"
         android:layout_width="143dp"
         android:layout_height="114dp"
-        android:layout_alignStart="@+id/imageView1"
-        android:layout_below="@+id/imageView1" />
+        android:scaleType="fitXY"
+        android:layout_alignStart="@+id/imageView51"
+        android:layout_below="@+id/imageView51" />
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageView53"
         android:layout_width="215dp"
         android:layout_height="161dp"
         android:layout_marginTop="@dimen/dp2"
-        android:layout_marginRight="@dimen/dp2"
-        android:layout_below="@+id/imageView0" />
+        android:layout_marginEnd="@dimen/dp2"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/imageView50" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView54"
         android:layout_width="158dp"
-        android:layout_height="160dp"
-        android:layout_toEndOf="@+id/imageView3"
-        android:layout_alignTop="@+id/imageView3"
-        android:layout_below="@+id/imageView0" />
+        android:layout_height="161dp"
+        android:scaleType="fitXY"
+        android:layout_toEndOf="@+id/imageView53"
+        android:layout_alignTop="@+id/imageView53"
+        android:layout_below="@+id/imageView50" />
 </RelativeLayout>

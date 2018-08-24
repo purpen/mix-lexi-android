@@ -1,11 +1,9 @@
 package com.thn.lexi.discoverLifeAesthetics
 import android.content.Intent
-import android.graphics.Rect
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.InputType
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import com.basemodule.tools.*
@@ -19,6 +17,9 @@ import com.thn.lexi.index.lifehouse.DistributeShareDialog
 import com.thn.lexi.index.selection.DiscoverLifeAdapter
 import com.thn.lexi.index.selection.DiscoverLifeBean
 import kotlinx.android.synthetic.main.activity_show_window_detail.*
+import kotlinx.android.synthetic.main.view_show_window_image3.view.*
+import kotlinx.android.synthetic.main.view_show_window_image5.view.*
+import kotlinx.android.synthetic.main.view_show_window_image7.view.*
 
 class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
@@ -104,62 +105,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             buttonFocus.text = Util.getString(R.string.text_focus)
         }
 
-        // 设置3张产品图
-        if (shopWindowsBean.products.isEmpty()) return
-
-        val list = ArrayList<String>()
-        val size = shopWindowsBean.products.size
-        if (size <= 3) {
-            for (product in shopWindowsBean.products) {
-                list.add(product.cover)
-            }
-        } else {
-            val subList = shopWindowsBean.products.subList(0, 3)
-            for (product in subList) {
-                list.add(product.cover)
-            }
-        }
-
-        val list1 = ArrayList<ShowWindowProductAdapter.MultipleItem>()
-
-        for (i in list.indices) {
-            if (i == 0) {//第一张图占2列宽
-                list1.add(ShowWindowProductAdapter.MultipleItem(list[i], ShowWindowProductAdapter.MultipleItem.ITEM_TYPE_SPAN2, ShowWindowProductAdapter.MultipleItem.ITEM_SPAN2_SIZE))
-            } else {//占1列
-                list1.add(ShowWindowProductAdapter.MultipleItem(list[i], ShowWindowProductAdapter.MultipleItem.ITEM_TYPE_SPAN1, ShowWindowProductAdapter.MultipleItem.ITEM_SPAN1_SIZE))
-            }
-        }
-
-        val showWindowProductAdapter = ShowWindowProductAdapter(list1, size)
-        val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
-        gridLayoutManager.orientation = GridLayoutManager.HORIZONTAL
-        recyclerView.layoutManager = gridLayoutManager
-        recyclerView.adapter = showWindowProductAdapter
-        showWindowProductAdapter.setSpanSizeLookup { _, position ->
-            list1[position].spanSize
-        }
-
-        if (recyclerView.itemDecorationCount == 0) {
-            val size = DimenUtil.getDimensionPixelSize(R.dimen.dp2)
-            recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
-                    super.getItemOffsets(outRect, view, parent, state)
-                    val position = parent.getChildAdapterPosition(view)
-                    if (position == 0) {
-                        outRect.right = size
-                    } else {
-                        outRect.right = 0
-                    }
-
-                    if (position == 1) {
-                        outRect.bottom = size
-                    } else {
-                        outRect.bottom = 0
-                    }
-                }
-            })
-        }
-
+        setGoodsImages()
 
         //设置标签
         tagGroup.setTags(listOf("#生活", "#美学", "#夏天girl", "#东东"))
@@ -168,10 +114,62 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
 
     /**
+     * 设置橱窗产品图片
+     */
+    private fun setGoodsImages() {
+        // 设置3张产品图
+        if (shopWindowsBean.products.isEmpty()) return
+
+        val list = ArrayList<String>()
+        val size = shopWindowsBean.products.size
+
+        //图片只能3,5,7张
+        if (size<3) return
+
+        val view:View
+
+        for (product in shopWindowsBean.products) {
+            list.add(product.cover)
+        }
+
+        when(size){
+            3 ->{
+                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image3, null)
+                linearLayoutBox.addView(view)
+                GlideUtil.loadImageWithFading(list[0],view.imageView30)
+                GlideUtil.loadImageWithFading(list[1],view.imageView31)
+                GlideUtil.loadImageWithFading(list[2],view.imageView32)
+            }
+
+            5->{
+                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image5, null)
+                linearLayoutBox.addView(view)
+                GlideUtil.loadImageWithFading(list[0],view.imageView50)
+                GlideUtil.loadImageWithFading(list[1],view.imageView51)
+                GlideUtil.loadImageWithFading(list[2],view.imageView52)
+                GlideUtil.loadImageWithFading(list[3],view.imageView53)
+                GlideUtil.loadImageWithFading(list[4],view.imageView54)
+            }
+
+            7->{
+                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image7, null)
+                linearLayoutBox.addView(view)
+                GlideUtil.loadImageWithFading(list[0],view.imageView70)
+                GlideUtil.loadImageWithFading(list[1],view.imageView71)
+                GlideUtil.loadImageWithFading(list[2],view.imageView72)
+                GlideUtil.loadImageWithFading(list[3],view.imageView73)
+                GlideUtil.loadImageWithFading(list[4],view.imageView74)
+                GlideUtil.loadImageWithFading(list[5],view.imageView75)
+                GlideUtil.loadImageWithFading(list[6],view.imageView76)
+            }
+        }
+    }
+
+    /**
      * 相关橱窗
      */
     private fun initRelateShowWindow() {
-        presenter.getRelateShowWindow()
+        presenter.getRelateShowWindow(shopWindowsBean.rid)
         val linearLayoutManager = LinearLayoutManager(applicationContext)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewShowWindow.setHasFixedSize(true)
@@ -214,7 +212,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 初始化猜你喜欢
      */
     private fun initGuessLike() {
-        presenter.getGuessLike()
+        presenter.getGuessLike(shopWindowsBean.rid)
         val linearLayoutManager = LinearLayoutManager(applicationContext)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewGuess.setHasFixedSize(true)

@@ -4,14 +4,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <ImageView
-        android:id="@+id/imageView0"
+        android:id="@+id/imageView30"
         android:layout_width="@dimen/dp250"
         android:layout_height="@dimen/dp249"
         android:scaleType="fitXY"
         />
     <ImageView
-        android:id="@+id/imageView1"
-        android:layout_toEndOf="@+id/imageView0"
+        android:id="@+id/imageView31"
+        android:layout_toEndOf="@+id/imageView30"
         android:layout_width="@dimen/dp124"
         android:layout_height="@dimen/dp124"
         android:layout_marginStart="@dimen/dp2"
@@ -19,12 +19,12 @@
         android:scaleType="fitXY"
         />
     <RelativeLayout
-        android:layout_below="@+id/imageView1"
-        android:layout_alignStart="@+id/imageView1"
+        android:layout_below="@+id/imageView31"
+        android:layout_alignStart="@+id/imageView31"
         android:layout_width="@dimen/dp124"
         android:layout_height="@dimen/dp124">
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView32"
             android:layout_width="@dimen/dp124"
             android:layout_height="@dimen/dp124"
             android:scaleType="fitXY"

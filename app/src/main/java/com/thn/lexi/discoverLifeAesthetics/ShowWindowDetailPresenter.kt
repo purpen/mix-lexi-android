@@ -103,8 +103,8 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
     /**
      * 加载猜你喜欢
      */
-    override fun getGuessLike() {
-        dataSource.getGuessLike( object : IDataSource.HttpRequestCallBack {
+    override fun getGuessLike(rid: String) {
+        dataSource.getGuessLike(rid, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
                 if (editorRecommendBean.success) {
@@ -124,8 +124,8 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
     /**
      *  获取相关橱窗
      */
-    fun getRelateShowWindow() {
-        dataSource.getRelateShowWindow( object : IDataSource.HttpRequestCallBack {
+    fun getRelateShowWindow(rid: String) {
+        dataSource.getRelateShowWindow(rid, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val discoverLifeBean = JsonUtil.fromJson(json, DiscoverLifeBean::class.java)
                 if (discoverLifeBean.success) {

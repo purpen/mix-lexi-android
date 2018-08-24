@@ -5,52 +5,62 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageView0"
+        android:id="@+id/imageView70"
         android:layout_width="78dp"
-        android:layout_height="78dp" />
+        android:layout_height="78dp"
+        android:scaleType="fitXY"
+        />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imageView71"
         android:layout_width="78dp"
         android:layout_height="78dp"
         android:layout_marginStart="@dimen/dp2"
         android:layout_marginEnd="@dimen/dp2"
-        android:layout_toEndOf="@+id/imageView0" />
+        android:scaleType="fitXY"
+        android:layout_toEndOf="@+id/imageView70" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView72"
         android:layout_width="215dp"
         android:layout_height="215dp"
-        android:layout_toEndOf="@+id/imageView1"  />
+        android:layout_toEndOf="@+id/imageView71"
+        android:scaleType="fitXY"
+        />
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageView73"
         android:layout_width="158dp"
-        android:layout_height="136dp"
+        android:layout_height="135dp"
         android:layout_marginTop="@dimen/dp2"
-        android:layout_below="@+id/imageView0" />
+        android:scaleType="fitXY"
+        android:layout_below="@+id/imageView70" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView74"
         android:layout_width="124dp"
         android:layout_height="125dp"
         android:layout_marginTop="@dimen/dp2"
-        android:layout_below="@+id/imageView3" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="124dp"
-        android:layout_height="125dp"
-        android:layout_alignTop="@+id/imageView4"
-        android:layout_toEndOf="@+id/imageView4"
-        android:layout_marginStart="@dimen/dp2"
-        android:layout_marginEnd="@dimen/dp2"
+        android:layout_below="@+id/imageView73"
+        android:scaleType="fitXY"
         />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imageView75"
+        android:layout_width="124dp"
+        android:layout_height="125dp"
+        android:layout_alignTop="@+id/imageView74"
+        android:layout_toEndOf="@+id/imageView74"
+        android:layout_marginStart="@dimen/dp2"
+        android:layout_marginEnd="@dimen/dp2"
+        android:scaleType="fitXY"
+        />
+
+    <ImageView
+        android:id="@+id/imageView76"
         android:layout_width="123dp"
         android:layout_height="125dp"
-        android:layout_alignTop="@+id/imageView4"
-        android:layout_toEndOf="@+id/imageView5"
+        android:layout_alignTop="@+id/imageView74"
+        android:layout_toEndOf="@+id/imageView75"
+        android:scaleType="fitXY"
         />
 </RelativeLayout>

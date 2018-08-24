@@ -78,9 +78,9 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShowWindow
             }
         }
 
-        val imageView0 = helper.getView<ImageView>(R.id.imageView0)
-        val imageView1 = helper.getView<ImageView>(R.id.imageView1)
-        val imageView2 = helper.getView<ImageView>(R.id.imageView2)
+        val imageView0 = helper.getView<ImageView>(R.id.imageView30)
+        val imageView1 = helper.getView<ImageView>(R.id.imageView31)
+        val imageView2 = helper.getView<ImageView>(R.id.imageView32)
 
         GlideUtil.loadImageWithFading(list[0],imageView0)
         GlideUtil.loadImageWithFading(list[1],imageView1)

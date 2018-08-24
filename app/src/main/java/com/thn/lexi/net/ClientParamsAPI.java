@@ -693,4 +693,28 @@ public class ClientParamsAPI {
         params.put("page", String.valueOf(page));
         return params;
     }
+
+    /**
+     * 获取相关橱窗
+     * @param rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getRelateShowWindowParams(@NotNull String rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid",rid);
+        return  params;
+    }
+
+    /**
+     * 猜你喜欢
+     * @param rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getGuessLikeParams(@NotNull String rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid",rid);
+        return  params;
+    }
 }

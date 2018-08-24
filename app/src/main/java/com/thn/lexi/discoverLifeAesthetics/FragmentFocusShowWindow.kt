@@ -99,7 +99,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
             item.title = "标题发现生活美学"
             item.description = "生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对"
             val list = ArrayList<ShowWindowBean.DataBean.ShopWindowsBean.ProductsBean>()
-            for (i in 0..4) {
+            for (i in 0..6) {
                 val productsBean = ShowWindowBean.DataBean.ShopWindowsBean.ProductsBean()
                 productsBean.cover = "http://c.hiphotos.baidu.com/image/h%3D300/sign=87d6daed02f41bd5c553eef461d881a0/f9198618367adab4b025268587d4b31c8601e47b.jpg"
                 list.add(productsBean)

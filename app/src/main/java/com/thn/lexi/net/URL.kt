@@ -300,4 +300,15 @@ object URL {
      */
     const val SHOP_WINDOWS_SUB_COMMENTS = "${BASE_URL}shop_windows/child_comments"
 
+
+    /**
+     * 相关橱窗
+     */
+    const val SHOP_WINDOWS_SIMILAR = "${BASE_URL}shop_windows/similar"
+
+    /**
+     * 猜你喜欢
+     */
+    const val SHOP_WINDOWS_GUESS_LIKE = "${BASE_URL}shop_windows/guess_like"
+
 }
