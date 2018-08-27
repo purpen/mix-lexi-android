@@ -24,9 +24,6 @@ import com.thn.lexi.view.emotionkeyboardview.model.ImageModel
 import com.thn.lexi.view.emotionkeyboardview.utils.EmotionUtils
 import com.thn.lexi.view.emotionkeyboardview.utils.GlobalOnItemClickManagerUtils
 import com.thn.lexi.view.emotionkeyboardview.utils.SharedPreferencedUtils
-import kotlinx.android.synthetic.main.fragment_main_emotion.view.*
-import kotlinx.android.synthetic.main.include_emotion_bar.*
-
 import java.util.ArrayList
 
 /**
@@ -77,9 +74,6 @@ class EmotionMainFragment : BaseFragment() {
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_main_emotion, container, false)
-//        isHidenBarEditTextAndBtn = savedInstanceState?.getBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN)
-        //获取判断绑定对象的参数
-//        isBindToBarEditText = savedInstanceState?.getBoolean(EmotionMainFragment.BIND_TO_EDITTEXT)
         initView(rootView)
 
         mEmotionKeyboard = EmotionKeyboard.with(activity)
@@ -153,12 +147,6 @@ class EmotionMainFragment : BaseFragment() {
                     buttonSend.isEnabled = false
                     buttonSend.setTextColor(Util.getColor(R.color.color_999))
                 }
-
-//                val lineCount = editTextComment.lineCount
-
-//                var height = DimenUtil.getDimensionPixelSize(R.dimen.dp50) + editTextComment.lineHeight * (lineCount - 1)
-
-//                val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
 
             }
 
