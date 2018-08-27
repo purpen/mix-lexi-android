@@ -2,6 +2,7 @@ package com.thn.lexi.discoverLifeAesthetics
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.basemodule.tools.LogUtil
 
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -30,7 +31,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     private val adapter: ShowWindowCommentListAdapter by lazy { ShowWindowCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
     private lateinit var rid: String
-
+    private lateinit var emotionMainFragment:EmotionMainFragment;
 
 
 
@@ -70,7 +71,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         //隐藏控件
         bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
 
-        val emotionMainFragment = EmotionMainFragment.newInstance(bundle)
+        emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment.bindToContentView(swipeRefreshLayout)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayoutEmotion, emotionMainFragment)
@@ -253,12 +254,12 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     }
 
 
-    /**
-     * 是否拦截返回键操作，如果此时表情布局未隐藏，先隐藏表情布局
-     * @return true则隐藏表情布局，拦截返回键操作
-     * false 则不拦截返回键操作
-     */
-    fun isInterceptBackPress(): Boolean {
-        return mEmotionKeyboard.interceptBackPress()
+    override fun onBackPressed() {
+        /**
+         * 判断是否拦截返回键操作
+         */
+        if (!emotionMainFragment.isInterceptBackPress()) {
+            finish()
+        }
     }
 }
