@@ -1,6 +1,7 @@
 package com.thn.lexi.discoverLifeAesthetics
-
 import android.content.Context
+import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,12 @@ import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.R
+import com.thn.lexi.view.emotionkeyboardview.EmotionKeyboard
+import com.thn.lexi.view.emotionkeyboardview.NoHorizontalScrollerViewPager
+import com.thn.lexi.view.emotionkeyboardview.adapter.HorizontalRecyclerviewAdapter
+
+import com.thn.lexi.view.emotionkeyboardview.fragment.EmotionMainFragment
+
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -28,6 +35,24 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     private val adapter: ShowWindowCommentListAdapter by lazy { ShowWindowCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
     private lateinit var rid: String
+
+    private var showEmojiKeyBoard:Boolean = false
+
+    private var horizontalRecyclerviewAdapter: HorizontalRecyclerviewAdapter? = null
+
+    private var CurrentPosition = 0
+
+    internal var fragments: MutableList<Fragment> = java.util.ArrayList()
+
+    //当前被选中底部tab
+    private val CURRENT_POSITION_FLAG = "CURRENT_POSITION_FLAG"
+
+    //表情面板
+    private lateinit var mEmotionKeyboard: EmotionKeyboard
+
+
+    //不可横向滚动的ViewPager
+    private var viewPager: NoHorizontalScrollerViewPager? = null
 
     override fun setPresenter(presenter: ShowWindowCommentContract.Presenter?) {
         setPresenter(presenter)
@@ -47,10 +72,48 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(applicationContext))
+        initEmotionFragment()
+    }
+
+    /**
+     * 初始化EmotionMainFragment
+     */
+    private fun initEmotionFragment() {
+        //构建传递参数
+        val bundle = Bundle()
+        //绑定主内容编辑框
+        bundle.putBoolean(EmotionMainFragment.BIND_TO_EDITTEXT, true)
+        //隐藏控件
+        bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
+        //替换fragment
+        //创建修改实例
+        val emotionMainFragment = EmotionMainFragment.newInstance(bundle)
+        emotionMainFragment.bindToContentView(relativeLayout)
+        val transaction = supportFragmentManager.beginTransaction()
+        // Replace whatever is in thefragment_container view with this fragment,
+        // and add the transaction to the backstack
+        transaction.replace(R.id.frameLayoutEmotion, emotionMainFragment)
+        transaction.addToBackStack(null)
+        //提交修改
+        transaction.commit()
     }
 
 
+
+
     override fun installListener() {
+
+        imageViewChangeInput.setOnClickListener{
+            if (showEmojiKeyBoard){ //打开emoji键盘
+                ToastUtil.showInfo("打开emoji")
+                showEmojiKeyBoard = false
+                imageViewChangeInput.setImageResource(R.mipmap.icon_open_emoji)
+            }else{
+                imageViewChangeInput.setImageResource(R.mipmap.icon_text_input)
+                ToastUtil.showInfo("打开文字输入")
+                showEmojiKeyBoard = true
+            }
+        }
 
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
@@ -191,7 +254,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         private val color: Int = Util.getColor(R.color.color_eee)
         override fun getDivider(itemPosition: Int): Y_Divider? {
             val count = adapter.itemCount
-            var divider: Y_Divider? = null
+            val divider: Y_Divider?
             divider = when (itemPosition) {
                 count - 1 -> {
                     Y_DividerBuilder()
@@ -208,5 +271,15 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
             return divider
         }
+    }
+
+
+    /**
+     * 是否拦截返回键操作，如果此时表情布局未隐藏，先隐藏表情布局
+     * @return true则隐藏表情布局，拦截返回键操作
+     * false 则不拦截返回键操作
+     */
+    fun isInterceptBackPress(): Boolean {
+        return mEmotionKeyboard.interceptBackPress()
     }
 }

@@ -16,8 +16,8 @@ class MainActivity : BaseActivity() {
     }
 
     private val fragment0: BaseFragment by lazy { MainFragment0.newInstance() }
-    private val fragment1: BaseFragment by lazy { MainFragment1.newInstance() }
-    private val fragment2: BaseFragment by lazy { MainFragment2.newInstance() }
+    private val fragment1: BaseFragment by lazy { MainFragment2.newInstance() }
+    private val fragment2: BaseFragment by lazy { MainFragment1.newInstance() }
     private val fragment3: BaseFragment by lazy { MainFragment3.newInstance() }
 
     private var lastClickedId: Int = -1
