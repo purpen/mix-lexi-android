@@ -1,87 +1,81 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="@dimen/dp50"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/bg_horizontal_line_color" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/editTextComment"
+        android:layout_width="284dp"
         android:layout_height="wrap_content"
-        android:background="#eee"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="6dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="6dp">
+        android:layout_marginBottom="@dimen/dp8"
+        android:layout_marginStart="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/bg_radius_round_f6f5f5"
+        android:hint="@string/text_add_comment"
+        android:imeOptions="actionSend"
+        android:minHeight="@dimen/dp34"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingEnd="42dp"
+        android:paddingStart="@dimen/dp15"
+        android:paddingTop="@dimen/dp10"
+        android:textColor="@color/color_333"
+        android:textColorHint="@color/color_999"
+        android:textSize="@dimen/sp13" />
 
+    <ImageView
+        android:id="@+id/imageViewChangeEmotion"
+        android:layout_width="@dimen/dp20"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginBottom="@dimen/dp15"
+        android:layout_marginStart="-30dp"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_gravity="bottom"
+        android:src="@mipmap/icon_open_emoji" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutLike"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp50"
+        android:layout_gravity="bottom"
+        android:paddingEnd="0dp"
+        android:paddingStart="@dimen/dp15"
+        android:paddingBottom="@dimen/dp15"
+        >
 
         <ImageView
-            android:id="@+id/bar_emotion_btn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:clickable="true"
-            android:src="@mipmap/icon_open_emoji"
-            android:visibility="gone" />
+            android:id="@+id/imageViewLike"
+            android:layout_width="22dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_click_favorite_normal" />
 
-        <ImageView
-            android:id="@+id/bar_image_add_btn"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:clickable="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_plus"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/rl_editbar_bg"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/textViewLike"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/shape_bg_reply_edittext"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_alignTop="@+id/imageViewLike"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageViewLike"
+            android:includeFontPadding="false"
+            android:text="111"
+            android:textColor="@color/color_333"
+            android:textSize="@dimen/sp11" />
+    </RelativeLayout>
 
-            <EditText
-                android:id="@+id/bar_edit_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#0000"
-                android:maxLines="3"
-                android:minHeight="36dp"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/emotionButton"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:clickable="true"
-                android:src="@drawable/ic_emotion" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/bar_btn_send"
-            android:layout_width="56dp"
-            android:layout_height="32dp"
-            android:background="@drawable/shape_bg_button_reply"
-            android:text="发送"
-            android:textColor="@android:color/white"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/bg_horizontal_line_color"/>
-
-
-
-
+    <Button
+        android:id="@+id/buttonSend"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_gravity="center_vertical"
+        android:layout_width="56dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="@dimen/dp15"
+        android:background="@null"
+        android:enabled="false"
+        android:text="发布"
+        android:textColor="@color/color_999"
+        android:visibility="gone"
+         />
 </LinearLayout>
+

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     >
 
     <com.thn.lexi.view.CustomHeadView
@@ -13,9 +14,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/customHeadView"
-        android:layout_above="@+id/relativeLayoutBar"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:descendantFocusability="blocksDescendants"
         >
         <android.support.v7.widget.RecyclerView
@@ -26,82 +26,82 @@
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayoutBar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50"
-        android:background="@android:color/white"
-        android:layout_alignParentBottom="true"
-        >
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/relativeLayoutBar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp50"-->
+        <!--android:background="@android:color/white"-->
+        <!--android:visibility="gone"-->
+        <!--&gt;-->
 
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="284dp"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/dp34"
-            android:layout_centerVertical="true"
-            android:textColorHint="@color/color_999"
-            android:hint="@string/text_add_comment"
-            android:background="@drawable/bg_radius_round_f6f5f5"
-            android:layout_marginStart="@dimen/dp20"
-            android:textColor="@color/color_333"
-            android:textSize="@dimen/sp13"
-            android:paddingStart="@dimen/dp15"
-            android:paddingEnd="42dp"
-            android:paddingTop="@dimen/dp10"
-            android:paddingBottom="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp8"
-            android:layout_marginBottom="@dimen/dp8"
-            android:imeOptions="actionSend"
-            />
-        <ImageView
-            android:id="@+id/imageViewChangeInput"
-            android:layout_width="@dimen/dp20"
-            android:layout_height="@dimen/dp20"
-            android:src="@mipmap/icon_open_emoji"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/dp15"
-            android:layout_marginBottom="@dimen/dp15"
-            android:layout_toEndOf="@+id/editText"
-            android:layout_marginStart="-30dp"
-            />
-        <RelativeLayout
-            android:id="@+id/relativeLayoutLike"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp50"
-            android:paddingStart="@dimen/dp10"
-            android:layout_alignParentBottom="true"
-            android:paddingEnd="0dp"
-            android:layout_toEndOf="@+id/editText"
-            >
-            <ImageView
-                android:id="@+id/imageViewLike"
-                android:layout_width="22dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/icon_click_favorite_normal"
-                />
+        <!--<EditText-->
+            <!--android:id="@+id/editText"-->
+            <!--android:layout_width="284dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:minHeight="@dimen/dp34"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:textColorHint="@color/color_999"-->
+            <!--android:hint="@string/text_add_comment"-->
+            <!--android:background="@drawable/bg_radius_round_f6f5f5"-->
+            <!--android:layout_marginStart="@dimen/dp20"-->
+            <!--android:textColor="@color/color_333"-->
+            <!--android:textSize="@dimen/sp13"-->
+            <!--android:paddingStart="@dimen/dp15"-->
+            <!--android:paddingEnd="42dp"-->
+            <!--android:paddingTop="@dimen/dp10"-->
+            <!--android:paddingBottom="@dimen/dp10"-->
+            <!--android:layout_marginTop="@dimen/dp8"-->
+            <!--android:layout_marginBottom="@dimen/dp8"-->
+            <!--android:imeOptions="actionSend"-->
+            <!--/>-->
+        <!--<ImageView-->
+            <!--android:id="@+id/imageViewChangeInput"-->
+            <!--android:layout_width="@dimen/dp20"-->
+            <!--android:layout_height="@dimen/dp20"-->
+            <!--android:src="@mipmap/icon_open_emoji"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginTop="@dimen/dp15"-->
+            <!--android:layout_marginBottom="@dimen/dp15"-->
+            <!--android:layout_toEndOf="@+id/editText"-->
+            <!--android:layout_marginStart="-30dp"-->
+            <!--/>-->
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/relativeLayoutLike"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="@dimen/dp50"-->
+            <!--android:paddingStart="@dimen/dp10"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:paddingEnd="0dp"-->
+            <!--android:layout_toEndOf="@+id/editText"-->
+            <!--android:visibility="gone"-->
+            <!--&gt;-->
+            <!--<ImageView-->
+                <!--android:id="@+id/imageViewLike"-->
+                <!--android:layout_width="22dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:src="@mipmap/icon_click_favorite_normal"-->
+                <!--/>-->
 
-            <TextView
-                android:id="@+id/textViewLike"
-                android:layout_toEndOf="@+id/imageViewLike"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/imageViewLike"
-                android:layout_centerVertical="true"
-                android:text="111"
-                android:includeFontPadding="false"
-                android:textColor="@color/color_333"
-                android:textSize="@dimen/sp11" />
-        </RelativeLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/textViewLike"-->
+                <!--android:layout_toEndOf="@+id/imageViewLike"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignTop="@+id/imageViewLike"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:text="111"-->
+                <!--android:includeFontPadding="false"-->
+                <!--android:textColor="@color/color_333"-->
+                <!--android:textSize="@dimen/sp11" />-->
+        <!--</RelativeLayout>-->
 
-    </RelativeLayout>
-
-
+    <!--</RelativeLayout>-->
     <FrameLayout
         android:id="@+id/frameLayoutEmotion"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        >
 
-
-</RelativeLayout>
+    </FrameLayout>
+</LinearLayout>
