@@ -3,6 +3,8 @@ package com.thn.lexi.mine
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.index.bean.ProductBean
+import com.thn.lexi.index.selection.DiscoverLifeBean
 import com.thn.lexi.index.selection.GoodsData
 
 class FavoriteContract {
@@ -14,6 +16,14 @@ class FavoriteContract {
         fun showError(@NonNull string: String)
         fun goPage()
         fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
+
+        }
+
+        fun setGoodsLikeData(products: List<ProductBean>) {
+
+        }
+
+        fun setShowWindowData(shop_windows: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
 
         }
 

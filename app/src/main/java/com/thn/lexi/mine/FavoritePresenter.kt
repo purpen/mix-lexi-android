@@ -4,6 +4,8 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.index.selection.DiscoverLifeBean
 import com.thn.lexi.index.selection.GoodsData
 import java.io.IOException
 
@@ -58,26 +60,36 @@ class FavoritePresenter(view: FavoriteContract.View) : FavoriteContract.Presente
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val goodsData = JsonUtil.fromJson(json, GoodsData::class.java)
-                goodsData.success =true
-                if (goodsData.success) {
-                    val list = ArrayList<GoodsData.DataBean.ProductsBean>()
-                    for (i in 1..10){
-                        val bean = GoodsData.DataBean.ProductsBean()
-                        bean.sale_price = 10.0
-                        bean.cover = "http://pic.58pic.com/58pic/17/00/96/20g58PIC6nk_1024.jpg"
-                        bean.name = "呼啸山庄"
-                        list.add(bean)
-                    }
-
-                    view.setNewData(list)
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setGoodsLikeData(editorRecommendBean.data.products)
                 } else {
-                    view.showError(goodsData.status.message)
+                    view.showError(editorRecommendBean.status.message)
                 }
             }
 
             override fun onFailure(e: IOException) {
                 view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取喜欢的橱窗
+     */
+    fun getShowWindowLike() {
+        dataSource.getShowWindowLike(object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val discoverLifeBean = JsonUtil.fromJson(json, DiscoverLifeBean::class.java)
+                if (discoverLifeBean.success) {
+                    view.setShowWindowData(discoverLifeBean.data.shop_windows)
+                } else {
+                    view.showError(discoverLifeBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

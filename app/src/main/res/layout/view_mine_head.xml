@@ -149,6 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp4"
             android:includeFontPadding="false"
+            android:textStyle="bold"
             android:text="0"
             android:textColor="@color/color_333"
             android:textSize="@dimen/sp12" />
@@ -178,6 +179,7 @@
             android:layout_marginStart="@dimen/dp4"
             android:includeFontPadding="false"
             android:text="0"
+            android:textStyle="bold"
             android:textColor="@color/color_333"
             android:textSize="@dimen/sp12" />
     </LinearLayout>

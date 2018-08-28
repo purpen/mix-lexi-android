@@ -1,29 +1,22 @@
-package com.thn.lexi.index.selection
-
+package com.thn.lexi.mine
 import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.widget.ImageView
 import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ToastUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.index.selection.DiscoverLifeBean
+import com.thn.lexi.index.selection.DiscoverLifeProductAdapter
 
-class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.DataBean.ShopWindowsBean, BaseViewHolder>(layoutResId) {
+class AdapterLikeShowWindow(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.DataBean.ShopWindowsBean, BaseViewHolder>(layoutResId) {
     override fun convert(helper: BaseViewHolder, item: DiscoverLifeBean.DataBean.ShopWindowsBean) {
 
-        val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.avatar,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp25))
-
-        helper.setText(R.id.textViewName,item.title)
-        helper.setText(R.id.textViewTitle1,item.title)
-        helper.setText(R.id.textViewTitle2,item.description)
-
+        helper.setText(R.id.textView,item.description)
 
         if (item.products.isEmpty()) return
 
