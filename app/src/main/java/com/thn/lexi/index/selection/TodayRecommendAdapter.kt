@@ -5,10 +5,10 @@ import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
-import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.index.bean.ProductBean
 
-class TodayRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendBean.DataBean.ProductsBean, BaseViewHolder>(layoutResId) {
-    override fun convert(helper: BaseViewHolder, item: EditorRecommendBean.DataBean.ProductsBean) {
+class TodayRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(layoutResId) {
+    override fun convert(helper: BaseViewHolder, item: ProductBean) {
 
         helper.setText(R.id.textViewTitle,item.name)
         helper.setText(R.id.textViewTitle1,item.store_name)

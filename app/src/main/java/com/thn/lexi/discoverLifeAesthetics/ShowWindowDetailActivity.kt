@@ -12,8 +12,8 @@ import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
+import com.thn.lexi.index.bean.ProductBean
 import com.thn.lexi.index.explore.EditorRecommendAdapter
-import com.thn.lexi.index.explore.EditorRecommendBean
 import com.thn.lexi.index.lifehouse.DistributeShareDialog
 import com.thn.lexi.index.selection.DiscoverLifeAdapter
 import com.thn.lexi.index.selection.DiscoverLifeBean
@@ -224,7 +224,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     /**
      * 设置猜你喜欢界面
      */
-    override fun setGuessLikeData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    override fun setGuessLikeData(products: List<ProductBean>) {
         adapterGuessLike.setNewData(products)
     }
 
@@ -282,7 +282,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         //猜你喜欢点击
         adapterGuessLike.setOnItemClickListener { adapter, view, position ->
-            val productsBean = adapterGuessLike.getItem(position) as EditorRecommendBean.DataBean.ProductsBean
+            val productsBean = adapterGuessLike.getItem(position) as ProductBean
             ToastUtil.showInfo("商品详情=" + position)
         }
 

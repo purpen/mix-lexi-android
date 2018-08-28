@@ -30,7 +30,7 @@ import com.thn.lexi.R
 import com.thn.lexi.album.ImageCropActivity
 import com.thn.lexi.album.ImageUtils
 import com.thn.lexi.album.PicturePickerUtils
-import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.index.bean.ProductBean
 import com.thn.lexi.index.selection.HeadImageAdapter
 import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
@@ -229,7 +229,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     /**
      * 设置本周最受欢迎数据
      */
-    override fun setWelcomeInWeekData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    override fun setWelcomeInWeekData(products: List<ProductBean>) {
         adapterWelcomeInWeek.setNewData(products)
     }
 

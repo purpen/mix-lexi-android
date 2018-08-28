@@ -19,6 +19,7 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.thn.lexi.*
 import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
+import com.thn.lexi.index.bean.ProductBean
 import com.thn.lexi.index.explore.EditorRecommendBean
 import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.youth.banner.BannerConfig
@@ -98,7 +99,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 设置优选数据
      */
-    override fun setGoodSelectionData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    override fun setGoodSelectionData(products: List<ProductBean>) {
         adapterGoodSelection.setNewData(products)
     }
 
@@ -176,7 +177,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 设置人气推荐数据
      */
-    override fun setHotRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    override fun setHotRecommendData(products: List<ProductBean>) {
         val list = ArrayList<PeopleRecommendAdapter.MultipleItem>()
         for (i in products.indices) {
             if (i == 0 || i == 1) {//占3列宽
@@ -211,7 +212,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
-    override fun setTodayRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    override fun setTodayRecommendData(products: List<ProductBean>) {
         adapterTodayRecommend.setNewData(products)
     }
 

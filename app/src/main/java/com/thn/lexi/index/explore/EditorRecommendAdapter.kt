@@ -10,9 +10,10 @@ import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
+import com.thn.lexi.index.bean.ProductBean
 
-class EditorRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendBean.DataBean.ProductsBean, BaseViewHolder>(layoutResId) {
-    override fun convert(helper: BaseViewHolder, item: EditorRecommendBean.DataBean.ProductsBean) {
+class EditorRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(layoutResId) {
+    override fun convert(helper: BaseViewHolder, item: ProductBean) {
 
         val pixelSize = DimenUtil.getDimensionPixelSize(R.dimen.dp135)
         helper.itemView.layoutParams = RelativeLayout.LayoutParams(pixelSize,RelativeLayout.LayoutParams.WRAP_CONTENT)

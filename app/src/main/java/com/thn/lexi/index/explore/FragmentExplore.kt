@@ -11,6 +11,7 @@ import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.brandPavilion.BrandPavilionListActivity
+import com.thn.lexi.index.bean.ProductBean
 import com.thn.lexi.index.selection.GoodsData
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
@@ -60,7 +61,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
     }
 
-    override fun setGood100Data(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    override fun setGood100Data(products: List<ProductBean>) {
         adapterGood100.setNewData(products)
     }
 
@@ -77,7 +78,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         recyclerViewGoodDesign.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
-    override fun setGoodDesignData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    override fun setGoodDesignData(products: List<ProductBean>) {
         adapterGoodDesign.setNewData(products)
     }
 
@@ -121,7 +122,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 设置优质新品数据
      * 与编辑推荐bean和adapter共用
      */
-    override fun setFeatureNewGoodsData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    override fun setFeatureNewGoodsData(products: List<ProductBean>) {
         adapterFeatureNewGoods.setNewData(products)
     }
 
@@ -164,7 +165,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     /**
      * 设置编辑推荐数据
      */
-    override fun setEditorRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+    override fun setEditorRecommendData(products: List<ProductBean>) {
         adapterEditorRecommend.setNewData(products)
     }
 

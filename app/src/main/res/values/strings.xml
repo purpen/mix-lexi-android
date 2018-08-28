@@ -163,4 +163,6 @@
     <string name="text_design_pavilion">设计馆</string>
     <string name="text_fans">粉丝</string>
     <string name="text_mine_order">我的订单</string>
+    <string name="text_goods_like">喜欢的商品</string>
+    <string name="text_show_window_like">喜欢的橱窗</string>
 </resources>

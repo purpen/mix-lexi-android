@@ -3,7 +3,7 @@ package com.thn.lexi.index.selection
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.index.bean.ProductBean
 import com.thn.lexi.index.explore.ExploreBannerBean
 
 class SelectionContract {
@@ -30,8 +30,8 @@ class SelectionContract {
         }
 
         fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>){}
-        fun setTodayRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>){}
-        fun setHotRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {}
+        fun setTodayRecommendData(products: List<ProductBean>){}
+        fun setHotRecommendData(products: List<ProductBean>) {}
         fun setHotRecommendBannerData(banner_images: List<SelectionHotRecommendBannerBean.DataBean.BannerImagesBean>) {
 
         }
@@ -40,7 +40,7 @@ class SelectionContract {
 
         }
 
-        fun setGoodSelectionData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        fun setGoodSelectionData(products: List<ProductBean>) {
 
         }
 

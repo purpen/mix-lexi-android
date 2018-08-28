@@ -6,14 +6,13 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.LogUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
-import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.index.bean.ProductBean
 
-class WelcomeInWeekAdapter(layoutResId: Int) : BaseQuickAdapter<EditorRecommendBean.DataBean.ProductsBean, BaseViewHolder>(layoutResId) {
-    override fun convert(helper: BaseViewHolder, item: EditorRecommendBean.DataBean.ProductsBean) {
+class WelcomeInWeekAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(layoutResId) {
+    override fun convert(helper: BaseViewHolder, item: ProductBean) {
 
         val relativeLayout = helper.getView<View>(R.id.relativeLayout)
         val pixelSize = DimenUtil.getDimensionPixelSize(R.dimen.dp160)

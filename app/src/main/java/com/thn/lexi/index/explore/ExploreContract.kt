@@ -3,6 +3,7 @@ package com.thn.lexi.index.explore
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.index.bean.ProductBean
 import com.thn.lexi.index.selection.GoodsData
 
 class ExploreContract {
@@ -30,14 +31,14 @@ class ExploreContract {
 
         fun setGoodsClassData(categories: List<GoodsClassBean.DataBean.CategoriesBean>)
         fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>)
-        fun setEditorRecommendData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
-        fun setFeatureNewGoodsData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
+        fun setEditorRecommendData(products: List<ProductBean>)
+        fun setFeatureNewGoodsData(products: List<ProductBean>)
         fun setBrandPavilionData(stores: List<BrandPavilionBean.DataBean.StoresBean>)
 
         fun setGoodsCollectionData(collections: List<GoodsCollectionBean.DataBean.CollectionsBean>)
 
-        fun setGoodDesignData(products: List<EditorRecommendBean.DataBean.ProductsBean>)
-        fun setGood100Data(products: List<EditorRecommendBean.DataBean.ProductsBean>)
+        fun setGoodDesignData(products: List<ProductBean>)
+        fun setGood100Data(products: List<ProductBean>)
         fun setBrandPavilionFocusStateData(b: Boolean, position: Int) {
 
         }

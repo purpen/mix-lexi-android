@@ -3,7 +3,7 @@ package com.thn.lexi.discoverLifeAesthetics
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.index.bean.ProductBean
 import com.thn.lexi.index.selection.DiscoverLifeBean
 
 class ShowWindowDetailContract {
@@ -18,7 +18,7 @@ class ShowWindowDetailContract {
 
         }
 
-        fun setGuessLikeData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        fun setGuessLikeData(products: List<ProductBean>) {
 
         }
 

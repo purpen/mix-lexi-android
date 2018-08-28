@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.thn.lexi.R
+import com.thn.lexi.index.bean.ProductBean
 import com.thn.lexi.index.explore.EditorRecommendBean
 
 class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<PeopleRecommendAdapter.MultipleItem, BaseViewHolder>(list) {
@@ -18,7 +19,7 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
         addItemType(MultipleItem.ITEM_TYPE_SPAN3, R.layout.adapter_editor_recommend)
     }
 
-    class MultipleItem(var product: EditorRecommendBean.DataBean.ProductsBean, private var itemType: Int, var spanSize: Int) : MultiItemEntity {
+    class MultipleItem(var product: ProductBean, private var itemType: Int, var spanSize: Int) : MultiItemEntity {
 
         override fun getItemType(): Int {
             return itemType

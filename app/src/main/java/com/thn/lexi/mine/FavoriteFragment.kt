@@ -8,18 +8,19 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
-import com.thn.lexi.index.selection.SelectionContract
-import com.thn.lexi.index.selection.SelectionPresenter
+import com.thn.lexi.index.explore.EditorRecommendBean
 import com.thn.lexi.index.selection.GoodsAdapter
 import com.thn.lexi.index.selection.GoodsData
 import kotlinx.android.synthetic.main.fragment_mine_favorite.*
 
-class FavoriteFragment : BaseFragment(), SelectionContract.View {
-    private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
+class FavoriteFragment : BaseFragment(), FavoriteContract.View {
+    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
+    private val adapterLikeGoods: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
+
     override val layout: Int = R.layout.fragment_mine_favorite
-    private lateinit var presenter: SelectionPresenter
+    private lateinit var presenter: FavoritePresenter
     private var page: Int = 1
-    private lateinit var adapter: GoodsAdapter
+    private lateinit var adapter: AdapterLikeGoods
 
     companion object {
         @JvmStatic
@@ -27,75 +28,63 @@ class FavoriteFragment : BaseFragment(), SelectionContract.View {
     }
 
     override fun initView() {
-        presenter = SelectionPresenter(this)
-        adapter = GoodsAdapter(R.layout.adapter_goods_layout)
-        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        swipeRefreshLayout.isRefreshing = false
-        val linearLayoutManager = LinearLayoutManager(activity)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(),LinearLayoutManager.VERTICAL,resources.getDimensionPixelSize(R.dimen.dp10),Util.getColor(R.color.color_d1d1d1)))
+        presenter = FavoritePresenter(this)
+
+        initGuessLike()
     }
 
-    override fun setPresenter(presenter: SelectionContract.Presenter?) {
+    override fun setPresenter(presenter: FavoriteContract.Presenter?) {
         setPresenter(presenter)
     }
+
+    /**
+     * 初始化猜你喜欢
+     */
+    private fun initGuessLike() {
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewGoodsLike.setHasFixedSize(true)
+        recyclerViewGoodsLike.layoutManager = linearLayoutManager
+        recyclerViewGoodsLike.adapter = adapterLikeGoods
+        recyclerViewGoodsLike.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
+    }
+
+    /**
+     * 设置猜你喜欢界面
+     */
+//    override fun setGoodsLikeData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+//        adapterLikeGoods.setNewData(products)
+//    }
+
 
 
     override fun installListener() {
 
-        swipeRefreshLayout.setOnRefreshListener {
-            adapter.setEnableLoadMore(false)
-            loadData()
-        }
-
-        adapter.setOnLoadMoreListener({
-            presenter.loadMoreData("",page)
-        },recyclerView)
     }
 
 
 
     override fun loadData() {
-        page = 1
-        presenter.loadData("", page)
+        presenter.getUserGoodsLike()
+//        page = 1
+//        presenter.loadData("", page)
     }
 
     override fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-        swipeRefreshLayout.isRefreshing = false
-        adapter.setNewData(data)
-        adapter.setEnableLoadMore(true)
-        showEndView()
-        ++page
+//        adapter.setNewData(data)
+//        ++page
     }
 
-    override fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
-        adapter.addData(products)
-        ++page
-        showEndView()
-    }
-
-    private fun showEndView() {
-        if (adapter.data.size < Integer.valueOf(Constants.PAGE_SIZE)) {
-            //第一页如果不够一页就不显示没有更多数据布局
-            adapter.loadMoreEnd(false)
-
-        } else {
-            adapter.loadMoreComplete()
-        }
-    }
 
     override fun showLoadingView() {
-        if (!swipeRefreshLayout.isRefreshing) dialog?.show()
+       dialog.show()
     }
 
     override fun dismissLoadingView() {
-        dialog?.dismiss()
+        dialog.dismiss()
     }
 
     override fun showError(string: String) {
-        swipeRefreshLayout.isRefreshing = false
         ToastUtil.showError(string)
     }
 

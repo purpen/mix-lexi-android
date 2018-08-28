@@ -3,8 +3,7 @@ package com.thn.lexi.index.lifehouse
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.thn.lexi.index.explore.EditorRecommendBean
-import com.thn.lexi.user.completeinfo.UploadTokenBean
+import com.thn.lexi.index.bean.ProductBean
 import org.json.JSONArray
 
 class LifeHouseContract {
@@ -26,7 +25,7 @@ class LifeHouseContract {
 
         }
 
-        fun setWelcomeInWeekData(products: List<EditorRecommendBean.DataBean.ProductsBean>) {
+        fun setWelcomeInWeekData(products: List<ProductBean>) {
 
         }
 
