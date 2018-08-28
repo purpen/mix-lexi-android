@@ -2,13 +2,11 @@ package com.thn.lexi
 
 import android.content.Intent
 import android.support.v4.view.ViewPager
+import android.text.TextUtils
 import android.view.View
-import com.basemodule.tools.Constants
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
-import com.thn.lexi.index.selection.GoodsData
 import com.thn.lexi.mine.*
 import com.thn.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_main3.*
@@ -17,7 +15,6 @@ import kotlinx.android.synthetic.main.view_mine_head.*
 class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private lateinit var presenter: MinePresenter
-    private var page: Int = 1
     private lateinit var adapter0: MineFavoritesAdapter
     private lateinit var fragments: ArrayList<BaseFragment>
 
@@ -33,16 +30,16 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     private fun setUpViewPager() {
         fragments = ArrayList()
         fragments.add(FavoriteFragment.newInstance())
-        fragments.add(WishOrderFragment.newInstance())
+        fragments.add(EnshrineFragment.newInstance())
         fragments.add(FavoriteShopFragment.newInstance())
         fragments.add(ActivitiesFragment.newInstance())
 
         val titles = resources.getStringArray(R.array.strings_mine_titles)
 
         val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles.asList())
+        customViewPager.setPagingEnabled(false)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
-        customViewPager.setPagingEnabled(true)
     }
 
 
@@ -57,10 +54,45 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         setPresenter(presenter)
     }
 
+
+    /**
+     * 重置文字颜色
+     */
+    private fun resetTextColor(){
+        val color = Util.getColor(R.color.color_999)
+        textViewLikeNum.setTextColor(color)
+        textViewLike.setTextColor(color)
+        textViewEnshrineNum.setTextColor(color)
+        textViewEnshrine.setTextColor(color)
+        textViewDesignNum.setTextColor(color)
+        textViewDesign.setTextColor(color)
+    }
+
     override fun installListener() {
         customViewPager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener{
             override fun onPageSelected(position: Int) {
+                when(position){
+                    0 -> {
+                        val color = Util.getColor(R.color.color_6ed7af)
+                        resetTextColor()
+                        textViewLikeNum.setTextColor(color)
+                        textViewLike.setTextColor(color)
+                    }
 
+                    1 -> {
+                        val color = Util.getColor(R.color.color_6ed7af)
+                        resetTextColor()
+                        textViewEnshrineNum.setTextColor(color)
+                        textViewEnshrine.setTextColor(color)
+                    }
+
+                    2 -> {
+                        val color = Util.getColor(R.color.color_6ed7af)
+                        resetTextColor()
+                        textViewDesignNum.setTextColor(color)
+                        textViewDesign.setTextColor(color)
+                    }
+                }
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -72,44 +104,52 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
             }
         })
 
-        imageButtonShare.setOnClickListener(this)
-        imageButtonSetting.setOnClickListener(this)
+        imageViewShare.setOnClickListener(this)
+        imageViewSetting.setOnClickListener(this)
+
+        linearLayoutLike.setOnClickListener{
+            customViewPager.setCurrentItem(0,true)
+        }
+
+        linearLayoutEnshrine.setOnClickListener {
+            customViewPager.setCurrentItem(1,true)
+        }
+
+        linearLayoutDesign.setOnClickListener {
+            customViewPager.setCurrentItem(2,true)
+        }
     }
 
     override fun onClick(v: View) {
         val id = v.id
         when (id) {
-            R.id.imageButtonShare -> ToastUtil.showInfo("分享")
-            R.id.imageButtonSetting -> startActivity(Intent(activity, SettingActivity::class.java))
+            R.id.imageViewShare -> ToastUtil.showInfo("分享")
+            R.id.imageViewSetting -> startActivity(Intent(activity, SettingActivity::class.java))
         }
     }
 
     override fun loadData() {
-        page = 1
-        presenter.loadData("", page)
+        presenter.loadData()
     }
 
-    override fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-        adapter0.setNewData(data)
-        adapter0.setEnableLoadMore(true)
-        showEndView()
-        ++page
-    }
-
-    override fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
-        adapter0.addData(products)
-        ++page
-        showEndView()
-    }
-
-    private fun showEndView() {
-        if (adapter0.data.size < Integer.valueOf(Constants.PAGE_SIZE)) {
-            //第一页如果不够一页就不显示没有更多数据布局
-            adapter0.loadMoreEnd(false)
-
-        } else {
-            adapter0.loadMoreComplete()
+    /**
+     * 设置用户数据
+     */
+    override fun setUserData(data: UserCenterBean.DataBean) {
+        GlideUtil.loadCircleImageWidthDimen(data.avatar,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp70))
+        textViewLikeNum.text = data.user_like_counts
+        textViewEnshrineNum.text = data.wish_list_counts
+        textViewDesignNum.text = data.followed_stores_counts
+        textViewFocusNum.text = data.followed_users_counts
+        textViewFansNum.text = data.fans_counts
+        textViewName.text = data.username
+        if (TextUtils.isEmpty(data.about_me)){
+            textViewSignature.visibility = View.GONE
+        }else{
+            textViewSignature.visibility = View.VISIBLE
+            textViewSignature.text = data.about_me
         }
+
     }
 
 

@@ -15,18 +15,12 @@ class MineContract {
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
         fun goPage()
-        fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-
-        }
-
-        fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
+        fun setUserData(data: UserCenterBean.DataBean) {
 
         }
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(cid: String, page: Int)
-
-        fun loadMoreData(cid: String, page: Int)
+        fun loadData()
     }
 }

@@ -311,4 +311,9 @@ object URL {
      */
     const val SHOP_WINDOWS_GUESS_LIKE = "${BASE_URL}shop_windows/guess_like"
 
+    /**
+     * 用户个人中心
+     */
+    const val USER_CENTER = "${BASE_URL}users/user_center"
+
 }

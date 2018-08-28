@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.adapter_goods_like.view.*
 import kotlinx.android.synthetic.main.adapter_item_show_window.view.*
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
-class FavoriteFragment : BaseFragment(), FavoriteContract.View {
+class EnshrineFragment : BaseFragment(), FavoriteContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
 
     private val adapterLikeGoods: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
@@ -32,7 +32,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
     companion object {
         @JvmStatic
-        fun newInstance(): FavoriteFragment = FavoriteFragment()
+        fun newInstance(): EnshrineFragment = EnshrineFragment()
     }
 
     override fun initView() {

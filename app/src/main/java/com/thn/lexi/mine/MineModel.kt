@@ -7,15 +7,11 @@ import com.thn.lexi.net.URL
 import java.io.IOException
 
 open class MineModel:IDataSource{
-    companion object {
-        //出售中
-        const val STATUS: String = "1"
-    }
 
-    fun loadData(cid: String, page: Int, callBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getGoodListParams(cid, page, STATUS, "1")
+    fun loadData(callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.GOODS_LIST_URL,params,object : IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.GET,URL.USER_CENTER,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }
