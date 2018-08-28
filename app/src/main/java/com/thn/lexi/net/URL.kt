@@ -316,4 +316,14 @@ object URL {
      */
     const val USER_CENTER = "${BASE_URL}users/user_center"
 
+    /**
+     *  用户个人最近浏览商品
+     */
+    const val RECENT_LOOK_GOODS = "${BASE_URL}user_browses"
+
+    /**
+     * 用户个人心愿单
+     */
+    const val WISH_ORDER = "${BASE_URL}wishlist"
+
 }
