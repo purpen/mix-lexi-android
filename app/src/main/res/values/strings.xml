@@ -33,7 +33,7 @@
     <string name="bottom_bar_title1">发现</string>
     <string name="bottom_bar_title2">购物车</string>
     <string name="bottom_bar_title3">我的</string>
-    <string name="text_mine_register_login">登录或注册</string>
+    <string name="text_mine_activity">动态</string>
     <string name="title_forget_password">找回密码</string>
     <string name="text_complete">完成</string>
     <string name="tex_hint_new_password">请输入新密码</string>
@@ -158,4 +158,9 @@
     <string name="text_reply">回复</string>
     <string name="text_praise">赞</string>
     <string name="title_brand_pavilion">品牌馆</string>
+    <string name="text_already_like">已喜欢</string>
+    <string name="text_enshrine">收藏</string>
+    <string name="text_design_pavilion">设计馆</string>
+    <string name="text_fans">粉丝</string>
+    <string name="text_mine_order">我的订单</string>
 </resources>

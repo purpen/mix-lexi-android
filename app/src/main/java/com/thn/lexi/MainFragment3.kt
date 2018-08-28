@@ -1,5 +1,7 @@
 package com.thn.lexi
+
 import android.content.Intent
+import android.support.v4.view.ViewPager
 import android.view.View
 import com.basemodule.tools.Constants
 import com.basemodule.tools.ToastUtil
@@ -12,12 +14,13 @@ import com.thn.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
 
-class MainFragment3 : BaseFragment(), MineContract.View,View.OnClickListener{
-    private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
+class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
+    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private lateinit var presenter: MinePresenter
     private var page: Int = 1
     private lateinit var adapter0: MineFavoritesAdapter
     private lateinit var fragments: ArrayList<BaseFragment>
+
     companion object {
         fun newInstance(): MainFragment3 {
             return MainFragment3()
@@ -40,7 +43,6 @@ class MainFragment3 : BaseFragment(), MineContract.View,View.OnClickListener{
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(true)
-        slidingTabLayout.setViewPager(customViewPager)
     }
 
 
@@ -56,15 +58,29 @@ class MainFragment3 : BaseFragment(), MineContract.View,View.OnClickListener{
     }
 
     override fun installListener() {
-        imageButton0.setOnClickListener(this)
-        imageButton1.setOnClickListener(this)
+        customViewPager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener{
+            override fun onPageSelected(position: Int) {
+
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+        })
+
+        imageButtonShare.setOnClickListener(this)
+        imageButtonSetting.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         val id = v.id
-        when(id){
-//            R.id.imageButton0->
-            R.id.imageButton1 -> startActivity(Intent(activity, SettingActivity::class.java))
+        when (id) {
+            R.id.imageButtonShare -> ToastUtil.showInfo("分享")
+            R.id.imageButtonSetting -> startActivity(Intent(activity, SettingActivity::class.java))
         }
     }
 
@@ -98,11 +114,11 @@ class MainFragment3 : BaseFragment(), MineContract.View,View.OnClickListener{
 
 
     override fun showLoadingView() {
-        dialog?.show()
+        dialog.show()
     }
 
     override fun dismissLoadingView() {
-        dialog?.dismiss()
+        dialog.dismiss()
     }
 
     override fun showError(string: String) {

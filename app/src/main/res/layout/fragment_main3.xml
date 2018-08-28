@@ -1,54 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     >
-    <android.support.design.widget.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:layout_height="@dimen/dp50"
+        >
 
-        <include
-            layout="@layout/view_mine_head"
+        <ImageButton
+            android:id="@+id/imageButtonShare"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/imageButtonSetting"
+            android:background="@null"
+            android:paddingEnd="@dimen/dp15"
+            android:paddingStart="@dimen/dp15"
+            android:src="@mipmap/icon_click_share" />
+
+        <ImageButton
+            android:id="@+id/imageButtonSetting"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_setting" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll" />
-
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/slidingTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
             android:background="@android:color/white"
-            tl:tl_indicator_color="@color/color_6ed7af"
-            tl:tl_indicator_height="2dp"
-            tl:tl_indicator_width_equal_title="true"
-            tl:tl_tab_padding="@dimen/dp15"
-            tl:tl_tab_space_equal="true"
-            tl:tl_textAllCaps="true"
-            tl:tl_textSelectColor="@color/color_6ed7af"
-            tl:tl_textUnselectColor="@color/color_999"
-            tl:tl_textsize="@dimen/sp14" />
-        <include
-            layout="@layout/line_color_eee"
+            android:fitsSystemWindows="true">
+
+            <include
+                layout="@layout/view_mine_head"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                />
+
+            <include
+                layout="@layout/line_color_eee"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:layout_alignParentBottom="true"
+                />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1"
-            />
-    </android.support.design.widget.AppBarLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:scrollbars="none"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <com.basemodule.ui.CustomViewPager
+                android:id="@+id/customViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
-        <com.basemodule.ui.CustomViewPager
-            android:id="@+id/customViewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
