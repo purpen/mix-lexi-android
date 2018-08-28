@@ -1,4 +1,5 @@
 package com.thn.lexi.index.explore
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -9,6 +10,7 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
+import com.thn.lexi.brandPavilion.BrandPavilionListActivity
 import com.thn.lexi.index.selection.GoodsData
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
@@ -224,6 +226,10 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
 
     override fun installListener() {
+
+        textViewAllBrand.setOnClickListener {
+            startActivity(Intent(activity,BrandPavilionListActivity::class.java))
+        }
 
         banner.setOnBannerListener {
             position ->ToastUtil.showInfo("你点击了$position")

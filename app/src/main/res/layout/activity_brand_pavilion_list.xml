@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.thn.lexi.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50" />
+
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/slidingTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp45"
+        android:background="@android:color/white"
+        app:tl_indicator_height="0dp"
+        app:tl_indicator_width="14dp"
+        app:tl_textBold="SELECT"
+        tl:tl_indicator_color="@color/color_6ed7af"
+        tl:tl_tab_padding="@dimen/dp15"
+        tl:tl_textAllCaps="true"
+        tl:tl_textSelectColor="@color/color_6ed7af"
+        tl:tl_textUnselectColor="@color/color_2d343a"
+        tl:tl_textsize="@dimen/sp17" />
+
+    <include
+        layout="@layout/line_color_eee"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+
+    <com.basemodule.ui.CustomViewPager
+        android:id="@+id/customViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

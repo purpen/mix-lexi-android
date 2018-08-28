@@ -51,6 +51,11 @@
         <item>推荐</item>
     </string-array>
 
+    <string-array name="strings_brand_pavilion_titles">
+        <item>特色</item>
+        <item>精选</item>
+    </string-array>
+
     <integer-array name="google_colors">
         <item>@color/color_6ed7af</item>
     </integer-array>
