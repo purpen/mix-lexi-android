@@ -32,7 +32,6 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         fragments.add(FavoriteFragment.newInstance())
         fragments.add(EnshrineFragment.newInstance())
         fragments.add(FavoriteShopFragment.newInstance())
-        fragments.add(ActivitiesFragment.newInstance())
 
         val titles = resources.getStringArray(R.array.strings_mine_titles)
 

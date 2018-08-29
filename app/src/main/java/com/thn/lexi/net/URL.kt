@@ -326,4 +326,9 @@ object URL {
      */
     const val WISH_ORDER = "${BASE_URL}wishlist"
 
+    /**
+     * 用户关注的设计馆
+     */
+    val FOLLOWED_STORES = "${BASE_URL}users/followed_stores"
+
 }

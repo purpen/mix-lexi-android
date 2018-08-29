@@ -1,25 +1,23 @@
 package com.thn.lexi.mine
+import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
-import com.basemodule.tools.Constants
+import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.RecyclerViewDivider
-import com.thn.lexi.index.selection.SelectionContract
-import com.thn.lexi.index.selection.SelectionPresenter
-import com.thn.lexi.index.selection.GoodsAdapter
-import com.thn.lexi.index.selection.GoodsData
+import com.yanyusong.y_divideritemdecoration.Y_Divider
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
+import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
 
-class FavoriteShopFragment : BaseFragment(), SelectionContract.View {
-    private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
-    override val layout: Int = R.layout.fragment_favorite_shop
-    private lateinit var presenter: SelectionPresenter
-    private var page: Int = 1
-    private lateinit var adapter: GoodsAdapter
+class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
+    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
+    override val layout: Int = R.layout.fragment_recyclerview
+    private lateinit var presenter: FavoriteDesignPresenter
+    private val adapter: AdapterDesignPavilion by lazy { AdapterDesignPavilion(R.layout.adapter_design_pavilion) }
 
     companion object {
         @JvmStatic
@@ -27,80 +25,108 @@ class FavoriteShopFragment : BaseFragment(), SelectionContract.View {
     }
 
     override fun initView() {
-        presenter = SelectionPresenter(this)
-        adapter = GoodsAdapter(R.layout.adapter_goods_layout)
-        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        swipeRefreshLayout.isRefreshing = false
+        presenter = FavoriteDesignPresenter(this)
+//        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
+//        swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(),LinearLayoutManager.VERTICAL,resources.getDimensionPixelSize(R.dimen.dp10),Util.getColor(R.color.color_d1d1d1)))
+        val view = View(activity)
+        adapter.addHeaderView(view)
+        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
     }
 
-    override fun setPresenter(presenter: SelectionContract.Presenter?) {
+    override fun setPresenter(presenter: FavoriteDesignContract.Presenter?) {
         setPresenter(presenter)
     }
 
 
     override fun installListener() {
 
-        swipeRefreshLayout.setOnRefreshListener {
-            adapter.setEnableLoadMore(false)
-            loadData()
-        }
+//        swipeRefreshLayout.setOnRefreshListener {
+//            adapter.setEnableLoadMore(false)
+//            loadData()
+//        }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData("",page)
+            presenter.loadMoreData()
         },recyclerView)
     }
 
 
 
     override fun loadData() {
-        page = 1
-        presenter.loadData("", page)
+        presenter.loadData()
     }
 
-    override fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-        swipeRefreshLayout.isRefreshing = false
+
+
+    override fun setNewData(data: MutableList<DesignPavilionBean>) {
         adapter.setNewData(data)
         adapter.setEnableLoadMore(true)
-        showEndView()
-        ++page
     }
 
-    override fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
+
+    override fun addData(products: MutableList<DesignPavilionBean>) {
         adapter.addData(products)
-        ++page
-        showEndView()
     }
 
-    private fun showEndView() {
-        if (adapter.data.size < Integer.valueOf(Constants.PAGE_SIZE)) {
-            //第一页如果不够一页就不显示没有更多数据布局
-            adapter.loadMoreEnd(false)
-
-        } else {
-            adapter.loadMoreComplete()
-        }
+    override fun loadMoreComplete() {
+        adapter.loadMoreComplete()
     }
+
+    override fun loadMoreEnd() {
+        adapter.loadMoreEnd()
+    }
+
 
     override fun showLoadingView() {
-        if (!swipeRefreshLayout.isRefreshing) dialog?.show()
+        dialog.show()
     }
 
     override fun dismissLoadingView() {
-        dialog?.dismiss()
+        dialog.dismiss()
     }
 
     override fun showError(string: String) {
-        swipeRefreshLayout.isRefreshing = false
+//        swipeRefreshLayout.isRefreshing = false
         ToastUtil.showError(string)
     }
 
     override fun goPage() {
 
+    }
+
+    internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
+        private val color:Int = Util.getColor(R.color.color_f5f7f9)
+        override fun getDivider(itemPosition: Int): Y_Divider? {
+            val count = adapter.itemCount
+            var divider: Y_Divider? = null
+            when (itemPosition) {
+                count - 2 -> {
+
+                    divider = Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+
+                count - 1 -> {
+                    divider = Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+
+                else -> {
+                    divider = Y_DividerBuilder()
+                            .setBottomSideLine(true, color, 11f, 0f, 0f)
+                            .create()
+                }
+            }
+
+            return divider
+        }
     }
 
 }

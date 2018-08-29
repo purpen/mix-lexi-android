@@ -717,4 +717,17 @@ public class ClientParamsAPI {
         params.put("rid",rid);
         return  params;
     }
+
+    /**
+     * 获取关注的品牌馆
+     * @param page
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getFocusedDesignPavilionParams(int page) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("page", String.valueOf(page));
+        return params;
+    }
 }

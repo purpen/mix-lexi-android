@@ -28,9 +28,8 @@
 
     <string-array name="strings_mine_titles">
         <item>已喜欢</item>
-        <item>心愿单</item>
-        <item>商店</item>
-        <item>动态</item>
+        <item>收藏</item>
+        <item>设计馆</item>
     </string-array>
 
     <string-array name="strings_goods_detail_titles">
