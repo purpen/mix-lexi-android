@@ -40,6 +40,7 @@
         <activity android:name=".discoverLifeAesthetics.ShowWindowDetailActivity" />
         <activity android:name=".discoverLifeAesthetics.ShowWindowCommentListActivity" />
         <activity android:name=".brandPavilion.BrandPavilionListActivity" />
+        <activity android:name=".mine.DynamicActivity" />
     </application>
 
 </manifest>

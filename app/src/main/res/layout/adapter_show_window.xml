@@ -60,7 +60,7 @@
         >
         <TextView
             android:id="@+id/textViewLike"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp53"
             android:layout_height="match_parent"
             android:paddingStart="@dimen/dp20"
             android:paddingEnd="@dimen/dp13"

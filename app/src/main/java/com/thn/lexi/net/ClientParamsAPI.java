@@ -730,4 +730,18 @@ public class ClientParamsAPI {
         params.put("page", String.valueOf(page));
         return params;
     }
+
+
+    /**
+     * 获取用户生活馆动态列表
+     * @param page
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getUserDynamicParams(int page) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("page", String.valueOf(page));
+        return params;
+    }
 }

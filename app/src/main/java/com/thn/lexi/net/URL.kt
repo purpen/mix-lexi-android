@@ -329,6 +329,11 @@ object URL {
     /**
      * 用户关注的设计馆
      */
-    val FOLLOWED_STORES = "${BASE_URL}users/followed_stores"
+    const val FOLLOWED_STORES = "${BASE_URL}users/followed_stores"
+
+    /**
+     * 用户生活馆动态
+     */
+    const val USER_DYNAMIC_URL = "${BASE_URL}users/user_dynamic"
 
 }

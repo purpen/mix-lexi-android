@@ -117,6 +117,10 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         linearLayoutDesign.setOnClickListener {
             customViewPager.setCurrentItem(2,true)
         }
+
+        buttonActivity.setOnClickListener {
+            startActivity(Intent(activity,DynamicActivity::class.java))
+        }
     }
 
     override fun onClick(v: View) {

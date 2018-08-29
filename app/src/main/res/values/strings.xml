@@ -166,4 +166,7 @@
     <string name="text_goods_like">喜欢的商品</string>
     <string name="text_show_window_like">喜欢的橱窗</string>
     <string name="text_recent_look_goods">最近查看</string>
+    <string name="text_publish_window">拼贴橱窗</string>
+    <string name="title_dynamic_activity">动态</string>
+    <string name="text_no_dynamic">您还没有任何动态信息</string>
 </resources>
