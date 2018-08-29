@@ -1,16 +1,12 @@
 package com.thn.lexi.mine
-import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
+import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
-import com.yanyusong.y_divideritemdecoration.Y_Divider
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
-import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
 
 class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
@@ -35,7 +31,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         recyclerView.adapter = adapter
         val view = View(activity)
         adapter.addHeaderView(view)
-        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(),R.color.color_f5f7f9,recyclerView))
 //        adapter.emptyView =
     }
 
@@ -99,35 +95,4 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
     override fun goPage() {
 
     }
-
-    internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
-        private val color:Int = Util.getColor(R.color.color_f5f7f9)
-        override fun getDivider(itemPosition: Int): Y_Divider? {
-            val count = adapter.itemCount
-            var divider: Y_Divider? = null
-            when (itemPosition) {
-                count - 2 -> {
-
-                    divider = Y_DividerBuilder()
-                            .setBottomSideLine(false, color, 0f, 0f, 0f)
-                            .create()
-                }
-
-                count - 1 -> {
-                    divider = Y_DividerBuilder()
-                            .setBottomSideLine(false, color, 0f, 0f, 0f)
-                            .create()
-                }
-
-                else -> {
-                    divider = Y_DividerBuilder()
-                            .setBottomSideLine(true, color, 11f, 0f, 0f)
-                            .create()
-                }
-            }
-
-            return divider
-        }
-    }
-
 }
