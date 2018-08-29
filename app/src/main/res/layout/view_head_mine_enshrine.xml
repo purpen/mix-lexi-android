@@ -5,6 +5,7 @@
     android:orientation="vertical">
     <!--最近查看-->
     <RelativeLayout
+        android:id="@+id/relativeLayoutRecentLook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp15"
@@ -46,6 +47,7 @@
 
     <!--心愿单-->
     <RelativeLayout
+        android:id="@+id/relativeLayoutWishOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp15"

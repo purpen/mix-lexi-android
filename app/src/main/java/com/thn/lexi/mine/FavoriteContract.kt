@@ -15,9 +15,6 @@ class FavoriteContract {
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
         fun goPage()
-        fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-
-        }
 
         fun setGoodsLikeData(products: List<ProductBean>) {
 
@@ -30,6 +27,7 @@ class FavoriteContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(cid: String, page: Int)
+        fun getUserGoodsLike()
+        fun getShowWindowLike()
     }
 }

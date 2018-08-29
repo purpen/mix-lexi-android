@@ -86,6 +86,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
         adapterLikeShowWindow.setNewData(demos)
 //        adapterLikeShowWindow.setNewData(shop_windows)
+//        if (shop_windows.isEmpty()) headerView.linearLayoutLikeWindow.visibility = View.GONE
     }
 
     override fun setPresenter(presenter: FavoriteContract.Presenter?) {
@@ -109,6 +110,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
      */
     override fun setGoodsLikeData(products: List<ProductBean>) {
         adapterLikeGoods.setNewData(products)
+       if (products.isEmpty()) headerView.linearLayoutGoodsLike.visibility = View.GONE
     }
 
 
@@ -123,13 +125,6 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
         presenter.getUserGoodsLike()
 
         presenter.getShowWindowLike()
-//        page = 1
-//        presenter.loadData("", page)
-    }
-
-    override fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-//        adapter.setNewData(data)
-//        ++page
     }
 
 

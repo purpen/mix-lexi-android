@@ -67,6 +67,7 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
      */
     override fun setRecentLookData(products: List<ProductBean>) {
         adapterRecent.setNewData(products)
+        if (products.isEmpty()) headerView.relativeLayoutRecentLook.visibility = View.GONE
     }
 
 
@@ -87,8 +88,12 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     }
 
 
+    /**
+     * 设置心愿单
+     */
     override fun setWishOrderData(products: List<ProductBean>) {
         adapterWishOrder.setNewData(products)
+        if (products.isEmpty()) headerView.relativeLayoutWishOrder.visibility = View.GONE
     }
 
     override fun installListener() {
