@@ -36,6 +36,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         val view = View(activity)
         adapter.addHeaderView(view)
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+//        adapter.emptyView =
     }
 
     override fun setPresenter(presenter: FavoriteDesignContract.Presenter?) {
