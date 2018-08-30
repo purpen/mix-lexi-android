@@ -1,4 +1,4 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.designPavilion
 
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI
@@ -6,13 +6,13 @@ import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
 import java.io.IOException
 
-open class DynamicModel:IDataSource{
+open class FavoriteDesignModel:IDataSource{
 
+    //TODO 改为FOLLOWED_STORES
     fun loadData(page:Int,callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFocusedDesignPavilionParams(page)
 
-        val params = ClientParamsAPI.getUserDynamicParams(page)
-
-        HttpRequest.sendRequest(HttpRequest.GET,URL.USER_DYNAMIC_URL,params,object : IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.GET,URL.BRAND_PAVILION_URL,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }

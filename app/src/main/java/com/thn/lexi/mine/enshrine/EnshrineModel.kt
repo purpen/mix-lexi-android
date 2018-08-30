@@ -1,4 +1,4 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.enshrine
 
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI

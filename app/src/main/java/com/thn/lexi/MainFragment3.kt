@@ -8,6 +8,10 @@ import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.mine.*
+import com.thn.lexi.mine.designPavilion.FavoriteShopFragment
+import com.thn.lexi.mine.dynamic.DynamicActivity
+import com.thn.lexi.mine.enshrine.EnshrineFragment
+import com.thn.lexi.mine.like.FavoriteFragment
 import com.thn.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
@@ -119,7 +123,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         }
 
         buttonActivity.setOnClickListener {
-            startActivity(Intent(activity,DynamicActivity::class.java))
+            startActivity(Intent(activity, DynamicActivity::class.java))
         }
     }
 

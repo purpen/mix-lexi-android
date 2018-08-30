@@ -1,10 +1,11 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.enshrine
 
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.index.bean.ProductBean
 
-class FavoriteDesignContract {
+class EnshrineContract {
 
     interface View : BaseView<Presenter> {
 
@@ -13,27 +14,17 @@ class FavoriteDesignContract {
         fun showError(@NonNull string: String)
         fun goPage()
 
-        fun setNewData(data: MutableList<DesignPavilionBean>) {
+        fun setRecentLookData(products: List<ProductBean>) {
 
         }
 
-        fun loadMoreEnd() {
-            
-        }
-
-        fun loadMoreComplete() {
-            
-        }
-
-        fun addData(stores: MutableList<DesignPavilionBean>) {
+        fun setWishOrderData(products: List<ProductBean>) {
 
         }
-
-
     }
 
     interface Presenter : BasePresenter {
-        fun loadData()
-        fun loadMoreData()
+        fun getUserRecentLook()
+        fun getWishOrder()
     }
 }

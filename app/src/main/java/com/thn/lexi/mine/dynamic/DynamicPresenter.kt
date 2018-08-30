@@ -1,18 +1,23 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.dynamic
 import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.mine.designPavilion.DesignPavilionListBean
 import java.io.IOException
 
-class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesignContract.Presenter {
+class DynamicPresenter(view: DynamicContract.View) : DynamicContract.Presenter {
 
-    private var view:FavoriteDesignContract.View = checkNotNull(view)
+    private var view: DynamicContract.View = checkNotNull(view)
 
-    private val dataSource: FavoriteDesignModel by lazy { FavoriteDesignModel() }
+    private val dataSource: DynamicModel by lazy { DynamicModel() }
+
     private var page:Int =1
 
-    override fun loadData() {
+    override fun loadData(isRefresh: Boolean) {
+
+        if (isRefresh) page =1
+
         dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -20,12 +25,12 @@ class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesig
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val designPavilionListBean = JsonUtil.fromJson(json, DesignPavilionListBean::class.java)
-                if (designPavilionListBean.success) {
-                    view.setNewData(designPavilionListBean.data.stores)
+                val dynamicBean = JsonUtil.fromJson(json, DynamicBean::class.java)
+                if (dynamicBean.success) {
+                    view.setNewData(dynamicBean.data)
                     ++page
                 } else {
-                    view.showError(designPavilionListBean.status.message)
+                    view.showError(dynamicBean.status.message)
                 }
             }
 

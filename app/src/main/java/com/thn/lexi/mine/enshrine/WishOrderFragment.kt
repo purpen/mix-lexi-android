@@ -1,6 +1,5 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.enshrine
 
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.basemodule.tools.Constants

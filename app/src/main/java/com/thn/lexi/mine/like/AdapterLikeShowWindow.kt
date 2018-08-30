@@ -1,4 +1,4 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.like
 import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager

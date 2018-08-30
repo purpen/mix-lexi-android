@@ -1,4 +1,4 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.dynamic
 
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.like
 import android.widget.ImageView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil

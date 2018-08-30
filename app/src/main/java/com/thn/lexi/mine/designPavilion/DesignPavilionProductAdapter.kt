@@ -1,4 +1,4 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.designPavilion
 
 import android.support.annotation.LayoutRes
 import android.view.ViewGroup

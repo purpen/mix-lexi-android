@@ -1,4 +1,4 @@
-package com.thn.lexi.mine;
+package com.thn.lexi.mine.designPavilion;
 
 import java.util.List;
 

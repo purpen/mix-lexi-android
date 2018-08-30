@@ -1,4 +1,4 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.designPavilion
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,6 +12,8 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
+import com.thn.lexi.mine.designPavilion.DesignPavilionBean
+import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
 
 class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionBean, BaseViewHolder>(layoutResId) {
 

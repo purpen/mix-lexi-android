@@ -1,4 +1,4 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.designPavilion
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.basemodule.tools.ToastUtil

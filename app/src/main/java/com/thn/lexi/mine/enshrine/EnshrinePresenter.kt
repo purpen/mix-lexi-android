@@ -1,4 +1,4 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.enshrine
 import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -7,7 +7,7 @@ import java.io.IOException
 
 class EnshrinePresenter(view: EnshrineContract.View) : EnshrineContract.Presenter {
 
-    private var view:EnshrineContract.View = checkNotNull(view)
+    private var view: EnshrineContract.View = checkNotNull(view)
 
     private val dataSource: EnshrineModel by lazy { EnshrineModel() }
 

@@ -1,8 +1,9 @@
-package com.thn.lexi.mine
+package com.thn.lexi.mine.dynamic
 
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.mine.designPavilion.DesignPavilionBean
 
 class DynamicContract {
 

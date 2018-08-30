@@ -1,4 +1,4 @@
-package com.thn.lexi.mine;
+package com.thn.lexi.mine.dynamic;
 
 import java.util.List;
 
