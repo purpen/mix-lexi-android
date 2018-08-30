@@ -1,4 +1,4 @@
-package com.thn.lexi.index.bean;
+package com.thn.lexi.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;

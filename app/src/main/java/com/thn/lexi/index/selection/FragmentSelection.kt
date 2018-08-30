@@ -10,18 +10,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.explore.ExploreBannerBean
 import kotlinx.android.synthetic.main.fragment_selection.*
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
-import android.text.SpannableString
-import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.thn.lexi.*
 import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
-import com.thn.lexi.index.bean.ProductBean
-import com.thn.lexi.index.explore.EditorRecommendBean
-import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
+import com.thn.lexi.beans.ProductBean
 import com.youth.banner.BannerConfig
 
 

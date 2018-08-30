@@ -30,7 +30,7 @@ import com.thn.lexi.R
 import com.thn.lexi.album.ImageCropActivity
 import com.thn.lexi.album.ImageUtils
 import com.thn.lexi.album.PicturePickerUtils
-import com.thn.lexi.index.bean.ProductBean
+import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.selection.HeadImageAdapter
 import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*

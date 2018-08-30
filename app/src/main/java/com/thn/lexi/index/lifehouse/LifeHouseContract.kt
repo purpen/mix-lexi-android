@@ -3,7 +3,7 @@ package com.thn.lexi.index.lifehouse
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.thn.lexi.index.bean.ProductBean
+import com.thn.lexi.beans.ProductBean
 import org.json.JSONArray
 
 class LifeHouseContract {

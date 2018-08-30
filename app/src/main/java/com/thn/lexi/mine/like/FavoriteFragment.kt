@@ -9,7 +9,7 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
-import com.thn.lexi.index.bean.ProductBean
+import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.selection.DiscoverLifeBean
 import com.thn.lexi.mine.*
 import kotlinx.android.synthetic.main.adapter_goods_like.view.*

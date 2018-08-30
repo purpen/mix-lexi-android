@@ -11,7 +11,7 @@ import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.brandPavilion.BrandPavilionListActivity
-import com.thn.lexi.index.bean.ProductBean
+import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.selection.GoodsData
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*

@@ -9,8 +9,7 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.thn.lexi.R
-import com.thn.lexi.index.bean.ProductBean
-import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.beans.ProductBean
 
 class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<PeopleRecommendAdapter.MultipleItem, BaseViewHolder>(list) {
 

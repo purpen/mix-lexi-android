@@ -1,6 +1,6 @@
 package com.thn.lexi.index.explore;
 
-import com.thn.lexi.index.bean.ProductBean;
+import com.thn.lexi.beans.ProductBean;
 
 import java.util.List;
 

@@ -12,7 +12,7 @@ import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
-import com.thn.lexi.index.bean.ProductBean
+import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.explore.EditorRecommendAdapter
 import com.thn.lexi.index.lifehouse.DistributeShareDialog
 import com.thn.lexi.index.selection.DiscoverLifeAdapter
