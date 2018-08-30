@@ -73,6 +73,17 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
 
     }
 
+    override fun loadMoreEnd() {
+        adapter.loadMoreEnd()
+    }
+
+    override fun loadMoreComplete() {
+        adapter.loadMoreComplete()
+    }
+
+    override fun loadMoreFail() {
+        adapter.loadMoreFail()
+    }
 
     override fun showLoadingView() {
         dialog.show()

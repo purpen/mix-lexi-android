@@ -61,6 +61,7 @@ class DynamicPresenter(view: DynamicContract.View) : DynamicContract.Presenter {
                         ++page
                     }
                 } else {
+                    view.loadMoreFail()
                     view.showError(designPavilionListBean.status.message)
                 }
             }

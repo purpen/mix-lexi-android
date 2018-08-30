@@ -1,8 +1,10 @@
 package com.thn.lexi.index.explore;
 
+import com.thn.lexi.index.bean.ProductBean;
+
 import java.util.List;
 
-public class BrandPavilionBean {
+public class BrandPavilionListBean {
 
 
     /**
@@ -110,6 +112,7 @@ public class BrandPavilionBean {
             public int province_id;
             public String rid;
             public int status;
+            public List<ProductBean> products;
             public String store_products_counts;
             public String tag_line;
             public int type;

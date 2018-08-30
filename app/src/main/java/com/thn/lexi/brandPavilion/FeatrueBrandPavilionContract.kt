@@ -3,7 +3,7 @@ package com.thn.lexi.brandPavilion
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.thn.lexi.discoverLifeAesthetics.ShowWindowBean
+import com.thn.lexi.index.explore.BrandPavilionListBean
 
 class FeatrueBrandPavilionContract {
     interface View : BaseView<Presenter> {
@@ -13,11 +13,11 @@ class FeatrueBrandPavilionContract {
 
         fun goPage()
 
-        fun setNewData(shopWindows: MutableList<ShowWindowBean.DataBean.ShopWindowsBean>) {
+        fun setNewData(stores: MutableList<BrandPavilionListBean.DataBean.StoresBean>) {
 
         }
 
-        fun addData(shopWindows: MutableList<ShowWindowBean.DataBean.ShopWindowsBean>) {
+        fun addData(stores: MutableList<BrandPavilionListBean.DataBean.StoresBean>) {
 
         }
 
@@ -30,6 +30,10 @@ class FeatrueBrandPavilionContract {
         }
 
         fun setFavorite(b: Boolean, position: Int) {
+
+        }
+
+        fun loadMoreFail() {
 
         }
     }

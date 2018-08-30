@@ -12,7 +12,7 @@ open class FeatureBrandPavilionModel{
 
         val params = ClientParamsAPI.getShowWindowParams(page)
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.RECOMMEND_SHOW_WINDOW,params,object : IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.GET,URL.BRAND_PAVILION_URL,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }
@@ -26,43 +26,6 @@ open class FeatureBrandPavilionModel{
             }
         })
     }
-
-    fun favoriteShowWindow(rid: String?, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getFavoriteShowWindowParams(rid)
-        HttpRequest.sendRequest(HttpRequest.POST, URL.FAVORITE_SHOW_WINDOW,params,object : IDataSource.HttpRequestCallBack{
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
-
-
-    fun loadFocusData(page: Int, callBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getShowWindowParams(page)
-
-        HttpRequest.sendRequest(HttpRequest.GET,URL.FOCUS_SHOW_WINDOW,params,object : IDataSource.HttpRequestCallBack{
-            override fun onStart() {
-                callBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                callBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                callBack.onFailure(e)
-            }
-        })
-    }
-
 }
 
 

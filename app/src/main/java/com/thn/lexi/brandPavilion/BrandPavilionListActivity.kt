@@ -12,7 +12,7 @@ class BrandPavilionListActivity : BaseActivity() {
     override val layout: Int = R.layout.activity_brand_pavilion_list
 
     private val fragment0: BaseFragment by lazy { FragmentFeatureBrandPavilion.newInstance() }
-    private val fragment1: BaseFragment by lazy { FragmentFeatureBrandPavilion.newInstance() }
+    private val fragment1: BaseFragment by lazy { FragmentSelectionBrandPavilion.newInstance() }
 
     private val fragments:ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
 

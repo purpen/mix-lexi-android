@@ -33,7 +33,7 @@ class ExploreContract {
         fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>)
         fun setEditorRecommendData(products: List<ProductBean>)
         fun setFeatureNewGoodsData(products: List<ProductBean>)
-        fun setBrandPavilionData(stores: List<BrandPavilionBean.DataBean.StoresBean>)
+        fun setBrandPavilionData(stores: List<BrandPavilionListBean.DataBean.StoresBean>)
 
         fun setGoodsCollectionData(collections: List<GoodsCollectionBean.DataBean.CollectionsBean>)
 

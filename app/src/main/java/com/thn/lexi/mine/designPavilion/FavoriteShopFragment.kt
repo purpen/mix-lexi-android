@@ -88,6 +88,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
     }
 
     override fun showError(string: String) {
+        adapter.loadMoreFail()
 //        swipeRefreshLayout.isRefreshing = false
         ToastUtil.showError(string)
     }

@@ -30,6 +30,10 @@ class DynamicContract {
 
         }
 
+        fun loadMoreFail() {
+
+        }
+
 
     }
 

@@ -10,8 +10,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
 
-class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionBean.DataBean.StoresBean, BaseViewHolder>(layoutResId) {
-    override fun convert(helper: BaseViewHolder, item: BrandPavilionBean.DataBean.StoresBean) {
+class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionListBean.DataBean.StoresBean, BaseViewHolder>(layoutResId) {
+    override fun convert(helper: BaseViewHolder, item: BrandPavilionListBean.DataBean.StoresBean) {
         val imageViewBg = helper.getView<ImageView>(R.id.imageViewBg)
         val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
         GlideUtil.loadImageWithBlurAndRadius(item.bgcover,imageViewBg,size)

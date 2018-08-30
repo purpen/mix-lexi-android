@@ -144,7 +144,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     /**
      * 设置品牌馆数据
      */
-    override fun setBrandPavilionData(stores: List<BrandPavilionBean.DataBean.StoresBean>) {
+    override fun setBrandPavilionData(stores: List<BrandPavilionListBean.DataBean.StoresBean>) {
         adapterBrandPavilion.setNewData(stores)
     }
 
@@ -220,7 +220,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 设置是否馆主品牌馆
      */
     override fun setBrandPavilionFocusStateData(b: Boolean, position: Int) {
-        val item = adapterBrandPavilion.getItem(position) as BrandPavilionBean.DataBean.StoresBean
+        val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
         item.is_followed = b
         adapterBrandPavilion.notifyDataSetChanged()
     }
@@ -237,7 +237,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         }
 
         adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-            val item = adapter.getItem(position) as BrandPavilionBean.DataBean.StoresBean
+            val item = adapter.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
             when(view.id){
                 R.id.imageViewShop->ToastUtil.showInfo("去店铺")
 

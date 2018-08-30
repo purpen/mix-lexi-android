@@ -129,7 +129,7 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
     fun getBrandPavilion() {
         dataSource.getBrandPavilion( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val brandPavilionBean = JsonUtil.fromJson(json, BrandPavilionBean::class.java)
+                val brandPavilionBean = JsonUtil.fromJson(json, BrandPavilionListBean::class.java)
                 if (brandPavilionBean.success) {
                     view.setBrandPavilionData(brandPavilionBean.data.stores)
                 } else {
