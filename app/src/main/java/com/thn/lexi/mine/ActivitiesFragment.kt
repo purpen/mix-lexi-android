@@ -52,7 +52,7 @@ class ActivitiesFragment : BaseFragment(), SelectionContract.View {
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData("",page)
+//            presenter.loadMoreData("",page)
         },recyclerView)
     }
 
@@ -60,22 +60,22 @@ class ActivitiesFragment : BaseFragment(), SelectionContract.View {
 
     override fun loadData() {
         page = 1
-        presenter.loadData("", page)
+//        presenter.loadData("", page)
     }
 
-    override fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-        swipeRefreshLayout.isRefreshing = false
-        adapter.setNewData(data)
-        adapter.setEnableLoadMore(true)
-        showEndView()
-        ++page
-    }
-
-    override fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
-        adapter.addData(products)
-        ++page
-        showEndView()
-    }
+//    override fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
+//        swipeRefreshLayout.isRefreshing = false
+//        adapter.setNewData(data)
+//        adapter.setEnableLoadMore(true)
+//        showEndView()
+//        ++page
+//    }
+//
+//    override fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
+//        adapter.addData(products)
+//        ++page
+//        showEndView()
+//    }
 
     private fun showEndView() {
         if (adapter.data.size < Integer.valueOf(Constants.PAGE_SIZE)) {

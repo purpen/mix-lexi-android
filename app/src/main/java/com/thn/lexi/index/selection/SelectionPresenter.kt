@@ -14,58 +14,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
 
     private val dataSource: SelectionModel by lazy { SelectionModel() }
 
-    override fun loadData(cid: String, page: Int) {
-        dataSource.loadData(cid, page,object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                view.showLoadingView()
-            }
-
-            override fun onSuccess(json: String) {
-                view.dismissLoadingView()
-                val goodsData = JsonUtil.fromJson(json, GoodsData::class.java)
-                if (goodsData.success) {
-                    view.setNewData(goodsData.data.products)
-                } else {
-                    view.showError(goodsData.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.dismissLoadingView()
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
-
-    override fun loadMoreData(cid: String, page: Int) {
-        dataSource.loadData(cid, page, object : IDataSource.HttpRequestCallBack {
-
-            override fun onSuccess(json: String) {
-                val goodsData = JsonUtil.fromJson(json, GoodsData::class.java)
-                if (goodsData.success) {
-                    val products = goodsData.data.products
-                    if (products.isEmpty() ){
-                        view.loadMoreEnd()
-                    }else{
-                        view.loadMoreComplete()
-                    }
-                    view.addData(products)
-                } else {
-                    view.showError(goodsData.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
-
-
-
-
-
-    fun getBanners() {
+    override fun getBanners() {
         dataSource.getBanners( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val exploreBannerBean = JsonUtil.fromJson(json, ExploreBannerBean::class.java)
@@ -85,7 +34,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     /**
      * 获得今日推荐
      */
-    fun getTodayRecommend() {
+    override fun getTodayRecommend() {
         dataSource.getTodayRecommend( object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -110,7 +59,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     /**
      * 获取人气推荐
      */
-    fun getHotRecommend() {
+    override fun getHotRecommend() {
         dataSource.getHotRecommend( object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -135,7 +84,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     /**
      * 人气推荐banner
      */
-    fun getHotRecommendBanner() {
+    override fun getHotRecommendBanner() {
         dataSource.getHotRecommendBanner( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val selectionHotRecommendBannerBean = JsonUtil.fromJson(json, SelectionHotRecommendBannerBean::class.java)
@@ -155,7 +104,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     /**
      * 发现生活美学
      */
-    fun getDiscoverLife() {
+    override fun getDiscoverLife() {
         dataSource.getDiscoverLife( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val discoverLifeBean = JsonUtil.fromJson(json, DiscoverLifeBean::class.java)
@@ -175,7 +124,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     /**
      * 优选
      */
-    fun getGoodSelection() {
+    override fun getGoodSelection() {
         dataSource.getGoodSelection( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
@@ -196,7 +145,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     /**
      * 种草清单
      */
-    fun getZCManifest() {
+    override fun getZCManifest() {
         dataSource.getZCManifest( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val zcManifestBean = JsonUtil.fromJson(json, ZCManifestBean::class.java)
@@ -216,7 +165,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     /**
      * 获取头条
      */
-    fun getHeadLine() {
+    override fun getHeadLine() {
         dataSource.getHeadLine( object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val headLineBean = JsonUtil.fromJson(json, HeadLineBean::class.java)

@@ -12,19 +12,6 @@ class SelectionContract {
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
         fun goPage()
-        fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-
-        }
-
-        fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
-
-        }
-
-        fun loadMoreEnd(){}
-        fun loadMoreComplete() {
-
-        }
-
         fun setFavorite(b: Boolean, position: Int) {
 
         }
@@ -54,8 +41,20 @@ class SelectionContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(cid: String, page: Int)
+        fun getBanners()
 
-        fun loadMoreData(cid: String, page: Int)
+        fun getTodayRecommend()
+
+        fun getHotRecommend()
+
+        fun getHotRecommendBanner()
+
+        fun getDiscoverLife()
+
+        fun getGoodSelection()
+
+        fun getZCManifest()
+
+        fun getHeadLine()
     }
 }

@@ -23,8 +23,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_selection
     private val presenter: SelectionPresenter by lazy { SelectionPresenter(this) }
-    private var page: Int = 1
-    private lateinit var adapter: GoodsAdapter
 
     private lateinit var adapterTodayRecommend: TodayRecommendAdapter
 
@@ -35,6 +33,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private lateinit var adapterGoodSelection: GoodSelectionAdapter
 
     private lateinit var adapterZCManifest: ZCManifestAdapter
+
 
 
     companion object {
@@ -51,10 +50,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         initDiscoverLife()
         initGoodSelection()
         initZCManifest()
-        adapter = GoodsAdapter(R.layout.adapter_goods_layout, activity)
         swipeRefreshLayout.isEnabled = false
-        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        swipeRefreshLayout.isRefreshing = false
+//        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
+//        swipeRefreshLayout.isRefreshing = false
     }
 
     /**
@@ -181,13 +179,20 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             }
         }
 
-        val multipleItemAdapter = PeopleRecommendAdapter(list)
+        val adapterPeopleRecommend = PeopleRecommendAdapter(list)
 
-        multipleItemAdapter.setSpanSizeLookup { gridLayoutManager, position ->
+        adapterPeopleRecommend.setSpanSizeLookup { _, position ->
             list[position].spanSize
         }
-        recyclerViewHotRecommend.adapter = multipleItemAdapter
+        recyclerViewHotRecommend.adapter = adapterPeopleRecommend
         recyclerViewHotRecommend.addItemDecoration(HotPeopleGridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10)))
+
+        adapterPeopleRecommend.setOnItemClickListener { adapter, _, position ->
+            val item = adapter.getItem(position) as PeopleRecommendAdapter.MultipleItem
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.product.rid)
+            startActivity(intent)
+        }
 
     }
 
@@ -283,30 +288,17 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         textViewExemptionMail.setOnClickListener(this)
         textViewMoreDiscoverLife.setOnClickListener(this)
 
-        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-            when (view.id) {
-//                R.id.textView4 -> {
-//                    val popupWindow = GoodsSpecPopupWindow(activity, item, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-//                    popupWindow.show()
-//                }
-            }
+        adapterDiscoverLife.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
+            val item = adapter.getItem(position) as ProductBean
+            ToastUtil.showInfo(item.name)
         }
 
-
-        adapter.setOnItemClickListener { adapter, view, position ->
-            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
+        adapterGoodSelection.setOnItemClickListener { adapter, _, position ->
+            val item = adapter.getItem(position) as ProductBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
             startActivity(intent)
         }
-
-        swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = true
-            adapter.setEnableLoadMore(false)
-            loadData()
-        }
-
     }
 
     override fun onClick(v: View) {
@@ -321,32 +313,14 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
 
     override fun loadData() {
-        page = 1
-        presenter.loadData("", page)
+
     }
 
-    override fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-        swipeRefreshLayout.isRefreshing = false
-        adapter.setNewData(data)
-        adapter.setEnableLoadMore(true)
-        ++page
-    }
 
-    override fun addData(products: List<GoodsData.DataBean.ProductsBean>) {
-        adapter.addData(products)
-        ++page
-    }
 
-    override fun loadMoreComplete() {
-        adapter.loadMoreComplete()
-    }
-
-    override fun loadMoreEnd() {
-        adapter.loadMoreEnd()
-    }
 
     override fun showLoadingView() {
-        if (!swipeRefreshLayout.isRefreshing) dialog.show()
+        dialog.show()
     }
 
     override fun dismissLoadingView() {
@@ -354,8 +328,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     }
 
     override fun showError(string: String) {
-        swipeRefreshLayout.isRefreshing = false
-        adapter.loadMoreFail()
+        ToastUtil.showError(string)
     }
 
     override fun goPage() {

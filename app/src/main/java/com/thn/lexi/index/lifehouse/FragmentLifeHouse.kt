@@ -31,6 +31,7 @@ import com.thn.lexi.album.ImageCropActivity
 import com.thn.lexi.album.ImageUtils
 import com.thn.lexi.album.PicturePickerUtils
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.selection.HeadImageAdapter
 import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
@@ -61,12 +62,12 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun initView() {
-        swipeRefreshLayout.isEnabled =false
+        swipeRefreshLayout.isEnabled = false
 
         EventBus.getDefault().register(this)
         adapter = LifeHouseAdapter(R.layout.adapter_curator_recommend)
-        adapter.setEmptyView(R.layout.empty_view_distribute_goods,recyclerView.parent as ViewGroup)
-        adapter.setHeaderFooterEmpty(true,true)
+        adapter.setEmptyView(R.layout.empty_view_distribute_goods, recyclerView.parent as ViewGroup)
+        adapter.setHeaderFooterEmpty(true, true)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.setHasFixedSize(true)
@@ -146,7 +147,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     override fun setLookPeopleData(users: List<LookPeopleBean.DataBean.UsersBean>) {
         val count = users.size
 
-        if (count==0) return
+        if (count == 0) return
 
         headerLifeHouse.textViewLook.visibility = View.VISIBLE
         val string = SpannableString("$count 人浏览过生活馆")
@@ -208,15 +209,15 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         recyclerViewWelcome.setHasFixedSize(true)
         recyclerViewWelcome.layoutManager = gridLayoutManager
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
-//        recyclerViewWelcome.addItemDecoration(GridSpaceDecoration(DimenUtil.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
-        recyclerViewWelcome.addItemDecoration(object :RecyclerView.ItemDecoration(){
+
+        recyclerViewWelcome.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
                 super.getItemOffsets(outRect, view, parent, state)
                 val position = parent.getChildAdapterPosition(view)
                 outRect.bottom = DimenUtil.getDimensionPixelSize(R.dimen.dp20)
-                if (position % 2 ==0){
+                if (position % 2 == 0) {
                     outRect.right = DimenUtil.getDimensionPixelSize(R.dimen.dp10)
-                }else{
+                } else {
                     outRect.right = 0
                 }
                 LogUtil.e(outRect.toString())
@@ -273,8 +274,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             }
 
 
-            R.id.textViewSelectGoodsCenter->{ //选品中心
-                startActivity(Intent(activity,SelectionGoodsCenterActivity::class.java))
+            R.id.textViewSelectGoodsCenter -> { //选品中心
+                startActivity(Intent(activity, SelectionGoodsCenterActivity::class.java))
             }
         }
 
@@ -320,68 +321,36 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
                 R.id.textView4 -> {
                     if (productsBean.is_like) {
-                        presenter.unfavoriteGoods(productsBean.rid, position,viewClicked)
+                        presenter.unfavoriteGoods(productsBean.rid, position, viewClicked)
                     } else {
-                        presenter.favoriteGoods(productsBean.rid, position,viewClicked)
+                        presenter.favoriteGoods(productsBean.rid, position, viewClicked)
                     }
                 }
                 R.id.textView5 -> {
-                    val dialog =  DistributeShareDialog(activity)
+                    val dialog = DistributeShareDialog(activity)
                     dialog.show()
                 }
 
-                R.id.linearLayoutLoadMore ->{ //加载更多
-                    presenter.loadMoreData("",page)
+                R.id.linearLayoutLoadMore -> { //加载更多
+                    presenter.loadMoreData("", page)
                 }
             }
         }
 
-//        adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view_selection_goods_center_recommend, position ->
-//            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-//            when(view_selection_goods_center_recommend.id){
-//                R.id.imageViewShop->ToastUtil.showInfo("去店铺")
-//
-//                R.id.imageViewGoods0,R.id.imageViewGoods1,R.id.imageViewGoods2->{
-//                    //TODO 去商品详情
-//                    startActivity(Intent(activity,GoodsDetailActivity::class.java))
-//                }
-//
-//                R.id.buttonFocus ->{
-//                    if (item.isFavorite) {
-//                        presenter.unFocusBrandPavilion("店铺id")
-//                    } else {
-//                        presenter.focusBrandPavilion("店铺id")
-//                    }
-//                }
-//
-//                R.id.textView4 -> {
-//                    val popupWindow = GoodsSpecPopupWindow(activity, item, R.layout.dialog_purchase_goods, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-//                    popupWindow.show()
-//                }
-//                R.id.textView5 -> {
-//                    val dialog = DialogPlus.newDialog(context)
-//                            .setContentHolder(ViewHolder(CenterShareView(context)))
-//                            .setGravity(Gravity.CENTER)
-//                            .create()
-//                    dialog.show()
-//                }
-//            }
-//
-//        }
 
-//
-//        adapter.setOnItemClickListener { adapter, view_selection_goods_center_recommend, position ->
-//            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-//            val intent = Intent(activity, GoodsDetailActivity::class.java)
-//            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
-//            startActivity(intent)
-//        }
+        adapterWelcomeInWeek.setOnItemClickListener { adapter, _, position ->
+            val item = adapter.getItem(position) as ProductBean
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
+            startActivity(intent)
+        }
 
-        swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = true
+
+//        swipeRefreshLayout.setOnRefreshListener {
+//            swipeRefreshLayout.isRefreshing = true
 //            adapter.setEnableLoadMore(false)
 //            loadData()
-        }
+//        }
 
 //        adapter.setOnLoadMoreListener({
 //            presenter.loadMoreData("", page)
@@ -570,7 +539,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         presenter.getUploadToken(byteArray)
         setLifeHouseLogo(byteArray)
     }
-
 
 
     override fun onDestroy() {

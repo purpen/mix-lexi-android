@@ -6,12 +6,14 @@ import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.AppApplication
 import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.brandPavilion.BrandPavilionListActivity
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.selection.GoodsData
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
@@ -257,24 +259,41 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
         }
 
-//
-//        adapter.setOnItemClickListener { adapter, view_selection_goods_center_recommend, position ->
-//            val item = adapter.getItem(position) as GoodsData.DataBean.ProductsBean
-//            val intent = Intent(activity, GoodsDetailActivity::class.java)
-//            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
-//            startActivity(intent)
-//        }
+        adapterEditorRecommend.setOnItemClickListener { adapter, _, position ->
+            jump2GoodsDetail(adapter, position)
+        }
 
-        swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = true
+
+        adapterFeatureNewGoods.setOnItemClickListener { adapter, _, position ->
+            jump2GoodsDetail(adapter,position)
+        }
+
+        adapterGood100.setOnItemClickListener { adapter, _, position ->
+            jump2GoodsDetail(adapter,position)
+        }
+
+        adapterGoodDesign.setOnItemClickListener { adapter, _, position ->
+            jump2GoodsDetail(adapter,position)
+        }
+
+//        swipeRefreshLayout.setOnRefreshListener {
+//            swipeRefreshLayout.isRefreshing = true
 //            adapter.setEnableLoadMore(false)
 //            loadData()
-        }
+//        }
 
 //        adapter.setOnLoadMoreListener({
 //            presenter.loadMoreData("", page)
 //        }, recyclerView)
     }
+
+    private fun jump2GoodsDetail(adapter: BaseQuickAdapter<Any, BaseViewHolder>, position: Int) {
+        val item = adapter.getItem(position) as ProductBean
+        val intent = Intent(activity, GoodsDetailActivity::class.java)
+        intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
+        startActivity(intent)
+    }
+
 
     override fun loadData() {
         page = 1

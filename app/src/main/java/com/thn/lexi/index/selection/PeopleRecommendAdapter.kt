@@ -34,6 +34,7 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
 
 
     override fun convert(helper: BaseViewHolder, item: PeopleRecommendAdapter.MultipleItem) {
+
         var itemProduct = item.product
 
         var layoutParams: RelativeLayout.LayoutParams
