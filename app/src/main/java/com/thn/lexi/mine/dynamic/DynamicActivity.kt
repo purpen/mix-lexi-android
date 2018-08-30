@@ -6,6 +6,7 @@ import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.R
+import com.thn.lexi.mine.designPavilion.DesignPavilionBean
 import kotlinx.android.synthetic.main.activity_mine_dynamic.*
 import kotlinx.android.synthetic.main.view_head_mine_dynamic.view.*
 
@@ -50,10 +51,15 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
 
 
     override fun setNewData(data: DynamicBean.DataBean) {
+        swipeRefreshLayout.isRefreshing = false
         GlideUtil.loadImage(data.bg_cover,headerView.imageViewHeader)
         GlideUtil.loadCircleImageWidthDimen(data.user_avatar,headerView.imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp60))
         headerView.textViewName.text = data.username
     }
+
+//    override fun addData(data: DynamicBean.DataBean) {
+//        adapter.addData(stores)
+//    }
 
     override fun installListener() {
         headerView.linearLayoutPublishWindow.setOnClickListener{

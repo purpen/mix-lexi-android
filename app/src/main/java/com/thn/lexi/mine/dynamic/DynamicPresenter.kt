@@ -50,19 +50,19 @@ class DynamicPresenter(view: DynamicContract.View) : DynamicContract.Presenter {
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val designPavilionListBean = JsonUtil.fromJson(json, DesignPavilionListBean::class.java)
-                if (designPavilionListBean.success) {
-                    val stores = designPavilionListBean.data.stores
-                    if (stores.isEmpty()) {
-                        view.loadMoreEnd()
-                    } else {
-                        view.loadMoreComplete()
-                        view.addData(stores)
-                        ++page
-                    }
+                val dynamicBean = JsonUtil.fromJson(json, DynamicBean::class.java)
+                if (dynamicBean.success) {
+//                    val stores = dynamicBean.data
+//                    if (stores.isEmpty()) {
+//                        view.loadMoreEnd()
+//                    } else {
+//                        view.loadMoreComplete()
+//                        view.addData(stores)
+//                        ++page
+//                    }
                 } else {
                     view.loadMoreFail()
-                    view.showError(designPavilionListBean.status.message)
+                    view.showError(dynamicBean.status.message)
                 }
             }
 
