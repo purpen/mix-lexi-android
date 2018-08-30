@@ -2,6 +2,6 @@
 <View xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp20"
-    android:background="@color/color_f8f8f8"
+    android:layout_height="@dimen/dp16"
+    android:background="@color/color_f5f7f9"
     tools:showIn="@layout/view_goods_detail_head" />

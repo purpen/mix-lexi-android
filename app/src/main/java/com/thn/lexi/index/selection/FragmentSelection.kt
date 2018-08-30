@@ -144,7 +144,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun initHotRecommendBanner() {
         presenter.getHotRecommendBanner()
-        hotBanner.setImageLoader(GlideImageLoader())
+        hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4))
         hotBanner.setBannerStyle(BannerConfig.NOT_INDICATOR)
     }
 

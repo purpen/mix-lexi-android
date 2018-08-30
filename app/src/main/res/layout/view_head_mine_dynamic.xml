@@ -16,7 +16,7 @@
         android:id="@+id/linearLayoutPublishWindow"
         android:layout_width="98dp"
         android:layout_height="@dimen/dp33"
-        android:background="@drawable/bg_radius_oval"
+        android:background="@drawable/bg_round_color5fe4b1"
         android:layout_marginTop="@dimen/dp10"
         android:layout_marginEnd="@dimen/dp15"
         android:layout_marginBottom="@dimen/dp11"

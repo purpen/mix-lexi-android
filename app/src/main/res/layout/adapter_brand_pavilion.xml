@@ -74,7 +74,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp20"
-        android:background="@drawable/bg_radius_oval"
+        android:background="@drawable/bg_round_color5fe4b1"
         android:drawableStart="@mipmap/icon_focus_pavilion"
         android:paddingEnd="@dimen/dp15"
         android:paddingStart="@dimen/dp15"

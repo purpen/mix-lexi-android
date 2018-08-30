@@ -8,7 +8,7 @@ import java.io.IOException
 class GoodsDetailModel:IDataSource {
 
     fun loadData(goodsId: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        HttpRequest.sendRequest(HttpRequest.GET,URL.BASE_URL+"products/$goodsId/detail",object :IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.GET,URL.BASE_URL+"products/$goodsId/all_detail",object :IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

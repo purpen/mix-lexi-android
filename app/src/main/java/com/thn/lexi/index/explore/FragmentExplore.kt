@@ -197,7 +197,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      */
     private fun initBanner() {
         presenter.getBanners()
-        banner.setImageLoader(GlideImageLoader())
+        banner.setImageLoader(GlideImageLoader(R.dimen.dp4))
         banner.setIndicatorGravity(BannerConfig.RIGHT)
 
     }

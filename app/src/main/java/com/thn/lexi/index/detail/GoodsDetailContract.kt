@@ -3,6 +3,7 @@ package com.thn.lexi.index.detail
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.beans.ProductBean
 
 class GoodsDetailContract {
     interface View : BaseView<Presenter> {
@@ -10,11 +11,11 @@ class GoodsDetailContract {
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
         fun goPage()
-        fun setData(data: GoodsDetailBean.DataBean) {
+        fun setData(data: GoodsAllDetailBean.DataBean) {
 
         }
 
-        fun setGoodsInfo(data: GoodsInfoBean.DataBean) {
+        fun setGoodsInfo(data: ProductBean) {
 
         }
     }

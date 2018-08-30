@@ -25,4 +25,5 @@
     <dimen name="sp20">20sp</dimen>
     <dimen name="dp11">11dp</dimen>
     <dimen name="dp22">22dp</dimen>
+    <dimen name="dp0">0dp</dimen>
 </resources>

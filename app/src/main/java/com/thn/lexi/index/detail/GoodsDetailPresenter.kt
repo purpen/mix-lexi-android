@@ -19,7 +19,7 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View):GoodsDetailContract.P
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val goodsData = JsonUtil.fromJson(json, GoodsDetailBean::class.java)
+                val goodsData = JsonUtil.fromJson(json, GoodsAllDetailBean::class.java)
                 if (goodsData.success) {
                     if (goodsData.data!=null) view.setData(goodsData.data)
                 } else {
