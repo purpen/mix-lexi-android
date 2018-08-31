@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:zhy="http://schemas.android.com/tools">
 
 
     <LinearLayout
@@ -70,25 +71,58 @@
                 android:visibility="gone"
                 />
 
-            <Button
+            <LinearLayout
+                android:id="@+id/linearLayoutTags"
+                android:layout_below="@+id/textViewNowPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp15"
+                android:orientation="horizontal"
+                >
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/tagFlowLayout"
+                    zhy:max_select="0"
+                    android:padding="@dimen/dp0"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewShowAllTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp2"
+                    android:includeFontPadding="false"
+                    android:drawableEnd="@mipmap/icon_arrow_show_tag"
+                    android:textColor="@color/color_6ed7af"
+                    android:textSize="@dimen/sp11"
+                    android:drawablePadding="@dimen/dp4"
+                    android:paddingStart="@dimen/dp4"
+                    android:paddingEnd="@dimen/dp4"
+                    android:visibility="gone"
+                    android:text="+3"
+                    />
+            </LinearLayout>
+
+
+            <com.thn.lexi.view.ButtonDrawableCenter
                 android:id="@+id/buttonLike"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="69dp"
                 android:layout_height="29dp"
-                android:layout_below="@+id/textViewNowPrice"
+                android:layout_below="@+id/linearLayoutTags"
                 android:layout_marginTop="@dimen/dp20"
-                android:background="@drawable/bg_round_color5fe4b1"
+                android:background="@drawable/border_round_ededed"
                 android:drawablePadding="5dp"
-                android:drawableStart="@mipmap/icon_like_white"
+                android:drawableStart="@mipmap/icon_click_favorite_normal"
                 android:includeFontPadding="false"
-                android:gravity="center_vertical"
-                android:paddingStart="@dimen/dp10"
-                android:paddingEnd="0dp"
+                android:textAlignment="center"
                 android:text="喜欢"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_949ea6"
                 android:textSize="@dimen/sp12" />
 
-            <Button
+            <com.thn.lexi.view.ButtonDrawableCenter
                 android:id="@+id/buttonAddWish"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="74dp"
@@ -99,8 +133,6 @@
                 android:drawablePadding="@dimen/dp5"
                 android:drawableStart="@mipmap/icon_add_wish_order"
                 android:includeFontPadding="false"
-                android:paddingStart="@dimen/dp10"
-                android:paddingEnd="@dimen/dp10"
                 android:text="@string/text_wish_order"
                 android:textColor="@color/color_949ea6"
                 android:textSize="@dimen/sp13" />

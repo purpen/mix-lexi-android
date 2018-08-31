@@ -169,4 +169,5 @@
     <string name="text_publish_window">拼贴橱窗</string>
     <string name="title_dynamic_activity">动态</string>
     <string name="text_no_dynamic">您还没有任何动态信息</string>
+    <string name="text_like">喜欢</string>
 </resources>
