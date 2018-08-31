@@ -82,7 +82,7 @@ public class GoodsAllDetailBean {
         public String delivery_country;
         public int delivery_country_id;
         public String features;
-        public String fid;
+        public String fid; //运费模板
         public boolean have_distributed;
         public String id_code;
         public boolean is_custom_made;

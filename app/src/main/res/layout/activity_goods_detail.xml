@@ -23,6 +23,7 @@
                 app:layout_scrollFlags="scroll" />
 
 
+
             <com.flyco.tablayout.SlidingTabLayout
                 android:id="@+id/slidingTabLayout"
                 android:layout_width="match_parent"

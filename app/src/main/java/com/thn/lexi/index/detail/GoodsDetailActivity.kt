@@ -3,6 +3,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.basemodule.tools.*
 import com.thn.lexi.AppApplication
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
+import kotlinx.android.synthetic.main.view_goods_description.*
 
 
 class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener {
@@ -132,9 +134,24 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             })
         }
 
-//        val content:String? = data.content
-//        textViewGoodsDesc.text = Html.fromHtml(content)
 
+        textViewLightSpot.text = "亮点："+data.features
+
+        if (data.is_custom_service){ //可定制
+            textViewCharacter.visibility = View.VISIBLE
+            textViewCharacter.text = "特点："+Util.getString(R.string.text_can_custom_service)
+        }else{
+            textViewCharacter.visibility = View.GONE
+        }
+
+
+        textViewMaterial.text = "材质：${data.material_name}"
+
+        textViewCount.text = "数量：${data.total_stock}件"
+
+        textViewSendAddress.text = data.delivery_country
+
+        textViewReturnPolicy.text = data.return_policy_title
         //商店商品
 //        recyclerViewShopGoods.adapter
     }

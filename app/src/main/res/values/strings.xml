@@ -170,4 +170,5 @@
     <string name="title_dynamic_activity">动态</string>
     <string name="text_no_dynamic">您还没有任何动态信息</string>
     <string name="text_like">喜欢</string>
+    <string name="text_can_custom_service">可提供定制化服务</string>
 </resources>
