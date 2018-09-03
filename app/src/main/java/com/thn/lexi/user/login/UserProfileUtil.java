@@ -28,4 +28,14 @@ public class UserProfileUtil {
         UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);
         return  userProfileBean.data.is_small_b;
     }
+
+    /**
+     * 判断用户是否登录
+     * @return
+     */
+    public static boolean isLogin(){
+        String read = SPUtil.read(Constants.USER_PROFILE);
+        if (TextUtils.isEmpty(read)) return false;
+        return true;
+    }
 }

@@ -1,4 +1,5 @@
 package com.thn.lexi.index.detail
+
 import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
@@ -20,7 +21,9 @@ import com.basemodule.tools.*
 import com.thn.lexi.AppApplication
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.beans.BrandPavilionBean
+import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
+import com.thn.lexi.user.login.UserProfileUtil
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.header_goods_detail.view.*
@@ -43,9 +46,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var adapter: AdapterGoodsDetail
 
-    private lateinit var listDescription:ArrayList<AdapterGoodsDetail.MultipleItem>
+    private lateinit var listDescription: ArrayList<AdapterGoodsDetail.MultipleItem>
 
-    private lateinit var headerView:View
+    private lateinit var headerView: View
 
     override fun getIntentData() {
         goodsId = intent.extras.getString(GoodsDetailActivity::class.java.simpleName)
@@ -64,7 +67,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         val footerView = View(this)
         footerView.setBackgroundColor(Util.getColor(android.R.color.white))
-        footerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,DimenUtil.getDimensionPixelSize(R.dimen.dp20))
+        footerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp20))
         adapter.addFooterView(footerView)
         headerView = LayoutInflater.from(this).inflate(R.layout.header_goods_detail, null)
 
@@ -76,8 +79,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR)
         headerView.banner.isAutoPlay(false)
         this.presenter = GoodsDetailPresenter(this)
-        headerView.textViewCoupon.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_get_coupon,R.dimen.dp29,R.dimen.dp15),null,null,null)
-        headerView.textViewSub.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_full_reduction,R.dimen.dp15,R.dimen.dp15),null,null,null)
+        headerView.textViewCoupon.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_get_coupon, R.dimen.dp29, R.dimen.dp15), null, null, null)
+        headerView.textViewSub.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_full_reduction, R.dimen.dp15, R.dimen.dp15), null, null, null)
     }
 
     override fun setPresenter(presenter: GoodsDetailContract.Presenter?) {
@@ -125,18 +128,27 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         designPavilionProductAdapter.setNewData(imgUrls)
     }
 
-    override fun setExpressData(expressInfoBean: ExpressInfoBean?) {
-
-        var expressItem: ExpressInfoBean.DataBean.ItemsBean? = null
-        run loop@{
-            expressInfoBean?.data?.items?.forEach {
-                if (it.is_default) { //退出遍历
-                    expressItem = it
-                    return@loop
-                }
+    /**
+     * 设置优惠券数据
+     */
+    override fun setCouponData(coupons: List<CouponBean>) {
+        if (coupons.isEmpty()) {
+            headerView.relativeLayoutCoupon.visibility = View.GONE
+        } else {
+            headerView.relativeLayoutCoupon.visibility = View.VISIBLE
+            val couponStr = StringBuilder()
+            for (coupon in coupons) {
+                couponStr.append("满${coupon.min_amount}减${coupon.amount}、")
             }
+            headerView.textViewSub.text = couponStr.dropLast(1)
         }
+    }
 
+    /**
+     * 设置运费模板，快递时间 默认选第一条
+     */
+    override fun setExpressData(expressInfoBean: ExpressInfoBean?) {
+        var expressItem: ExpressInfoBean.DataBean.ItemsBean? = expressInfoBean?.data?.items?.get(0)
         headerView.textViewExpressTime.text = "预计${expressItem?.min_days}~${expressItem?.max_days}到达"
     }
 
@@ -144,6 +156,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      * 设置商品信息
      */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
+
+        //获取优惠券
+        presenter.getCouponsByStoreId(data.store_rid)
 
         //获取商品所在品牌馆信息
         presenter.loadBrandPavilionInfo(data.store_rid)
@@ -154,11 +169,11 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         //获取相似商品
         presenter.getSimilarGoods(goodsId)
 
-        for (item in data.deal_content){
-            if (TextUtils.equals("text",item.type)){
-                listDescription.add(AdapterGoodsDetail.MultipleItem(item,AdapterGoodsDetail.MultipleItem.TEXT_ITEM_TYPE))
-            }else if(TextUtils.equals("image",item.type)){
-                listDescription.add(AdapterGoodsDetail.MultipleItem(item,AdapterGoodsDetail.MultipleItem.IMAGE_ITEM_TYPE))
+        for (item in data.deal_content) {
+            if (TextUtils.equals("text", item.type)) {
+                listDescription.add(AdapterGoodsDetail.MultipleItem(item, AdapterGoodsDetail.MultipleItem.TEXT_ITEM_TYPE))
+            } else if (TextUtils.equals("image", item.type)) {
+                listDescription.add(AdapterGoodsDetail.MultipleItem(item, AdapterGoodsDetail.MultipleItem.IMAGE_ITEM_TYPE))
             }
         }
 
@@ -166,7 +181,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         headerView.textViewName.text = data.name
 
-        headerView.textViewNowPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp10,R.dimen.dp12),null ,null,null)
+        headerView.textViewNowPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
         if (data.real_sale_price == 0.0) {
             headerView.textViewOriginalPrice.visibility = View.GONE
             headerView.textViewNowPrice.text = data.real_price.toString()
@@ -351,7 +366,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 ToastUtil.showInfo("添加心愿单")
             }
             R.id.buttonGetDiscount -> {
-                ToastUtil.showInfo("领取")
+                if (UserProfileUtil.isLogin()){ //获取登录时的优惠券
+
+                }else{ //获取未登录优惠券
+
+                }
+
             }
             R.id.textViewSelectSpec -> {
                 ToastUtil.showInfo("选择规格")

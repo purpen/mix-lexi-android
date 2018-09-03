@@ -4,7 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.thn.lexi.beans.BrandPavilionBean
-import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.beans.CouponBean
 
 class GoodsDetailContract {
     interface View : BaseView<Presenter> {
@@ -27,10 +27,16 @@ class GoodsDetailContract {
         fun setSimilarGoodsData(data: BrandPavilionBean.DataBean?) {
 
         }
+
+        fun setCouponData(coupons: List<CouponBean>) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
         fun loadData(goodsId:String)
+
+        fun getCouponsByStoreId(store_rid: String)
 
         fun loadBrandPavilionInfo(store_rid:String)
 

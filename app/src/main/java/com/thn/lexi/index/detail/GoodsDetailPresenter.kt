@@ -117,4 +117,25 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
 //            }
 //        })
     }
+
+
+    /**
+     * 获取商品所在店铺优惠券列表
+     */
+    override fun getCouponsByStoreId(store_rid: String) {
+        dataSource.getCouponsByStoreId(store_rid,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val shopCouponListBean = JsonUtil.fromJson(json, ShopCouponListBean::class.java)
+                if (shopCouponListBean.success) {
+                    if (shopCouponListBean.data != null) view.setCouponData(shopCouponListBean.data.coupons)
+                } else {
+                    view.showError(shopCouponListBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
 }

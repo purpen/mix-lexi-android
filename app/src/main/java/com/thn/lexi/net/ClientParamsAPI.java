@@ -792,4 +792,16 @@ public class ClientParamsAPI {
         params.put("product_rid", goodsId);
         return params;
     }
+
+    /**
+     * 获取商家优惠券列表
+     * @param store_rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getCouponsByStoreIdParams(@NotNull String store_rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("store_rid", store_rid);
+        return params;
+    }
 }

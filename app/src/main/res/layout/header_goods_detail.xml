@@ -141,12 +141,15 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayoutCoupon"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp65"
         android:layout_marginBottom="@dimen/dp15"
         android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
-        android:background="@drawable/bg_colord4af86_radius4">
+        android:background="@drawable/bg_colord4af86_radius4"
+        android:visibility="gone"
+        >
 
         <TextView
             android:id="@+id/textViewCoupon"
@@ -168,6 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/textViewCoupon"
+            android:layout_marginEnd="@dimen/dp10"
             android:layout_marginBottom="@dimen/dp12"
             android:drawablePadding="6dp"
             android:drawableStart="@mipmap/icon_full_reduction"

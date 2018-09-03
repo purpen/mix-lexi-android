@@ -348,4 +348,14 @@ object URL {
      */
     const val OFFICIAL_STORE_INFO = "${BASE_URL}official_store/info"
 
+    /**
+     *  获取登录用户优惠券列表
+     */
+    const val SHOP_STORE_LOGIN_COUPONS = "${BASE_URL}market/user_master_coupons"
+
+    /**
+     *  获取未登录用户优惠券列表
+     */
+    const val SHOP_STORE_UNLOGIN_COUPONS = "${BASE_URL}market/not_login_coupons"
+
 }
