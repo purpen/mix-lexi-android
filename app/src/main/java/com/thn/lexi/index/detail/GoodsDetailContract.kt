@@ -16,11 +16,11 @@ class GoodsDetailContract {
 
         }
 
-        fun setGoodsInfo(data: ProductBean) {
+        fun setBrandPavilionData(data: BrandPavilionBean.DataBean?) {
 
         }
 
-        fun setBrandPavilionData(data: BrandPavilionBean.DataBean?) {
+        fun setExpressData(expressInfoBean: ExpressInfoBean?) {
 
         }
     }
@@ -29,5 +29,7 @@ class GoodsDetailContract {
         fun loadData(goodsId:String)
 
         fun loadBrandPavilionInfo(store_rid:String)
+
+        fun getExpressTime(rid: String, store_rid: String, goodsId: String)
     }
 }

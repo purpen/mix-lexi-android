@@ -766,4 +766,18 @@ public class ClientParamsAPI {
         params.put("rid", store_rid);
         return params;
     }
+
+    /**
+     * 获取到货时间
+     * @param goodsId
+     * @param store_rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getExpressTimeParams(@NotNull String goodsId, @NotNull String store_rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid", store_rid);
+        params.put("product_rid", goodsId);
+        return params;
+    }
 }

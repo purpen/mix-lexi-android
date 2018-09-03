@@ -1,6 +1,9 @@
 package com.thn.lexi.index.detail
+
 import android.graphics.Paint
 import android.graphics.Rect
+import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v7.widget.AppCompatDrawableManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
@@ -21,6 +24,7 @@ import com.basemodule.tools.*
 import com.thn.lexi.AppApplication
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.beans.BrandPavilionBean
+import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.view_goods_description.*
@@ -32,6 +36,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
 
     private lateinit var presenter: GoodsDetailPresenter
+
 
     private var goodsId: String = ""
 
@@ -46,9 +51,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     override fun initView() {
         banner.setImageLoader(GlideImageLoader(R.dimen.dp0))
         banner.setBannerStyle(BannerConfig.NUM_INDICATOR)
-
         setUpViewPager()
         this.presenter = GoodsDetailPresenter(this)
+        textViewCoupon.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_get_coupon,R.dimen.dp29,R.dimen.dp15),null,null,null)
+        textViewCoupon.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_full_reduction,R.dimen.dp15,R.dimen.dp15),null,null,null)
     }
 
     override fun setPresenter(presenter: GoodsDetailContract.Presenter?) {
@@ -79,20 +85,45 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     override fun requestNet() {
         presenter.loadData(goodsId)
-
-        presenter.loadGoodsInfo(goodsId)
     }
 
 
     //设置品牌馆信息
     override fun setBrandPavilionData(data: BrandPavilionBean.DataBean?) {
+        val imgUrls = ArrayList<String>()
+
+        data?.products?.forEach { product ->
+            imgUrls.add(product.cover)
+        }
+
+        GlideUtil.loadImage(data?.logo, imageViewLogo)
+
+        textViewShopName.text = data?.name
 
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewShopGoods.setHasFixedSize(true)
         recyclerViewShopGoods.layoutManager = linearLayoutManager
-//        recyclerViewShopGoods.adapter = adapterLikeGoods
+
+        val designPavilionProductAdapter = DesignPavilionProductAdapter(R.layout.adapter_pure_imageview)
+        recyclerViewShopGoods.adapter = designPavilionProductAdapter
         recyclerViewShopGoods.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
+        designPavilionProductAdapter.setNewData(imgUrls)
+    }
+
+    override fun setExpressData(expressInfoBean: ExpressInfoBean?) {
+
+        var expressItem: ExpressInfoBean.DataBean.ItemsBean? = null
+        run loop@{
+            expressInfoBean?.data?.items?.forEach {
+                if (it.is_default) { //退出遍历
+                    expressItem = it
+                    return@loop
+                }
+            }
+        }
+
+        textViewExpressTime.text = "预计${expressItem?.min_days}~${expressItem?.max_days}到达"
     }
 
     /**
@@ -100,16 +131,28 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
 
+        //获取商品所在品牌馆信息
         presenter.loadBrandPavilionInfo(data.store_rid)
 
+        // 获取交货时间
+        presenter.getExpressTime(data.fid, data.store_rid, goodsId)
 
-        GlideUtil.loadImage(data.store_logo,imageViewLogo)
+        textViewName.text = data.name
 
-        textViewShopName.text = data.store_name
+        textViewNowPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp10,R.dimen.dp12),null ,null,null)
+        if (data.real_sale_price == 0.0) {
+            textViewOriginalPrice.visibility = View.GONE
+            textViewNowPrice.text = data.real_price.toString()
+        } else {
+            textViewNowPrice.text = data.real_sale_price.toString()
+            textViewOriginalPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+            textViewOriginalPrice.text = data.real_price.toString()
+        }
 
-        if (data.is_free_postage){
+
+        if (data.is_free_postage) {
             imageViewFreeExpress.visibility = View.VISIBLE
-        }else{
+        } else {
             imageViewFreeExpress.visibility = View.GONE
         }
 
@@ -144,7 +187,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             buttonLike.text = Util.getString(R.string.text_like)
         }
 
-        //设置头像
+        //设置关注人头像
         recyclerView.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -158,22 +201,21 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
                     super.getItemOffsets(outRect, view, parent, state)
                     if (parent.getChildAdapterPosition(view) > 0) {
-                        outRect.left = -parent.context.resources.getDimensionPixelSize(R.dimen.dp5)
+                        outRect.left = -DimenUtil.getDimensionPixelSize(R.dimen.dp5)
                     }
                 }
             })
         }
 
 
-        textViewLightSpot.text = "亮点："+data.features
+        textViewLightSpot.text = "亮点：" + data.features
 
-        if (data.is_custom_service){ //可定制
+        if (data.is_custom_service) { //可定制
             textViewCharacter.visibility = View.VISIBLE
-            textViewCharacter.text = "特点："+Util.getString(R.string.text_can_custom_service)
-        }else{
+            textViewCharacter.text = "特点：" + Util.getString(R.string.text_can_custom_service)
+        } else {
             textViewCharacter.visibility = View.GONE
         }
-
 
         textViewMaterial.text = "材质：${data.material_name}"
 
@@ -184,8 +226,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         textViewReturnPolicy.text = data.return_policy_title
 
         textViewProductReturnPolicy.text = data.product_return_policy
-        //商店商品
-//        recyclerViewShopGoods.adapter
     }
 
     /**
@@ -203,7 +243,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             } else {
                 if (size > showTagCount) { //默认最多显示5个tag，少于5全部显示
                     textViewShowAllTag.visibility = View.VISIBLE
-                    subLabels = labels.subList(0,showTagCount)
+                    subLabels = labels.subList(0, showTagCount)
                     textViewShowAllTag.text = "+${size - showTagCount}"
                 } else {
                     subLabels = labels
@@ -243,18 +283,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         }
     }
 
-    override fun setGoodsInfo(data: ProductBean) {
-        textViewName.text = data.name
-        if (data.real_sale_price == 0.0) {
-            textViewOriginalPrice.visibility = View.GONE
-            textViewNowPrice.text = data.real_price.toString()
-        } else {
-            textViewNowPrice.text = data.real_sale_price.toString()
-            textViewOriginalPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOriginalPrice.text = data.real_price.toString()
-        }
-
-    }
 
     override fun installListener() {
         imageViewBack.setOnClickListener {

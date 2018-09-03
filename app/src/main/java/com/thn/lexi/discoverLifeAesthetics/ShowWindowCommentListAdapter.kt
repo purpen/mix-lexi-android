@@ -20,28 +20,23 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 
 class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresenter) : BaseQuickAdapter<CommentBean, BaseViewHolder>(res) {
     private val present: ShowWindowCommentPresenter = presenter
-    private var adapter: ShowWindowSubCommentListAdapter?=null
-    private var footerView: View?=null
-
-    private val bounds:Rect by lazy { Rect(0,0,DimenUtil.getDimensionPixelSize(R.dimen.dp13),DimenUtil.getDimensionPixelSize(R.dimen.dp13)) }
+    private var adapter: ShowWindowSubCommentListAdapter? = null
+    private var footerView: View? = null
+    private val size30 by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp30) }
 
     override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
+        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, size30)
         val textViewPraise = helper.getView<TextView>(R.id.textViewPraise)
         helper.setText(R.id.textViewTime, DateUtil.getDateByTimestamp(item.created_at))
         if (item.praise_count > 0) {
             textViewPraise.setTextColor(Util.getColor(R.color.color_ff6666))
             textViewPraise.text = "${item.praise_count}"
-            val icon = ContextCompat.getDrawable(AppApplication.getContext(), R.mipmap.icon_praise_active)
-            icon?.bounds = bounds
-            textViewPraise.setCompoundDrawables(icon,null,null,null)
+            textViewPraise.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_praise_active,R.dimen.dp13,R.dimen.dp13), null, null, null)
         } else {
             textViewPraise.setTextColor(Util.getColor(R.color.color_999))
             textViewPraise.text = Util.getString(R.string.text_praise)
-            val icon = ContextCompat.getDrawable(AppApplication.getContext(), R.mipmap.icon_praise_normal)
-            icon?.bounds = bounds
-            textViewPraise.setCompoundDrawables(icon,null,null,null)
+            textViewPraise.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_praise_normal,R.dimen.dp13,R.dimen.dp13), null, null, null)
         }
 
         helper.addOnClickListener(R.id.textViewPraise)
@@ -73,18 +68,18 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
                 }
             }
         }
-        footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment,null)
+        footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment, null)
 
         footerView?.findViewById<TextView>(R.id.textView)?.text = "查看${item.sub_comment_count}条回复"
 
-        if (adapter!!.footerLayoutCount==0) adapter!!.addFooterView(footerView)
+        if (adapter!!.footerLayoutCount == 0) adapter!!.addFooterView(footerView)
 
         footerView?.setOnClickListener { view ->
             //当前item.comment_id就是父评论的id
 
             item.comment_id = "111"
 
-            present.loadMoreSubComments(item.comment_id,helper.adapterPosition,view)
+            present.loadMoreSubComments(item.comment_id, helper.adapterPosition, view)
         }
     }
 
@@ -107,12 +102,12 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
     /**
      * 添加子评论
      */
-    fun addSubCommentsData(position: Int,comments: List<CommentBean>) {
+    fun addSubCommentsData(position: Int, comments: List<CommentBean>) {
 
         if (comments.isEmpty()) adapter?.removeFooterView(footerView)
 
         val subComments = data[position].sub_comments
-        if (subComments.size<=2){ //第一次加载子评论,清空原来数据，重头开始第一页
+        if (subComments.size <= 2) { //第一次加载子评论,清空原来数据，重头开始第一页
             subComments.clear()
         }
 

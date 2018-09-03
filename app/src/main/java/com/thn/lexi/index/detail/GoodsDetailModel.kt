@@ -57,4 +57,25 @@ class GoodsDetailModel:IDataSource {
         })
     }
 
+
+    fun getExpressTime(rid: String, store_rid: String, goodsId: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getExpressTimeParams(goodsId,store_rid)
+
+        val url = URL.BASE_URL + "logistics/core_freight_template/$rid"
+
+        HttpRequest.sendRequest(HttpRequest.GET,url,params,object :IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }

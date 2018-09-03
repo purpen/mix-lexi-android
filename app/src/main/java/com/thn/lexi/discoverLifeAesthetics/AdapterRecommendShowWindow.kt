@@ -1,8 +1,4 @@
 package com.thn.lexi.discoverLifeAesthetics
-
-import android.graphics.Rect
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,7 +8,6 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import me.gujun.android.taggroup.TagGroup
 
@@ -25,18 +20,30 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShowWindow
         val textViewName = helper.getView<TextView>(R.id.textViewName)
         textViewName.text = item.user_name
         if (item.is_official) {
-            textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_show_window_official, 0)
+            textViewName.setCompoundDrawables(null,null,Util.getDrawableWidthDimen(R.mipmap.icon_show_window_official,R.dimen.dp25,R.dimen.dp13),null)
         } else {
-            textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            textViewName.setCompoundDrawables(null,null,null,null)
         }
 
         val textViewLike = helper.getView<TextView>(R.id.textViewLike)
 
         if (item.is_like){
-            textViewLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_selected,0,0,0)
+            textViewLike.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_click_favorite_selected,R.dimen.dp20,R.dimen.dp20),null,null,null)
         }else{
-            textViewLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_normal,0,0,0)
+            textViewLike.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_click_favorite_normal,R.dimen.dp20,R.dimen.dp20),null,null,null)
         }
+
+        val textViewComment = helper.getView<TextView>(R.id.textViewComment)
+        textViewComment.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_click_comment,R.dimen.dp20,R.dimen.dp20),null,null,null)
+
+        val textViewShare = helper.getView<TextView>(R.id.textViewShare)
+        textViewShare.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_click_share,R.dimen.dp20,R.dimen.dp20),null,null,null)
+
+        helper.addOnClickListener(R.id.textViewLike)
+
+        helper.addOnClickListener(R.id.textViewComment)
+
+        helper.addOnClickListener(R.id.textViewShare)
 
         helper.setText(R.id.textViewLikeCommentCount, "${item.like_count}"+Util.getString(R.string.text_favorite) + " · ${item.comment_count}" + Util.getString(R.string.text_comment_count))
 
@@ -52,13 +59,6 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShowWindow
             textViewFocus.text = Util.getString(R.string.text_focus)
             textViewFocus.setTextColor(Util.getColor(R.color.color_6ed7af))
         }
-
-        helper.addOnClickListener(R.id.textViewLike)
-
-        helper.addOnClickListener(R.id.textViewComment)
-
-        helper.addOnClickListener(R.id.textViewShare)
-
 
         // 设置3张产品图
         if (item.products.isEmpty()) return
