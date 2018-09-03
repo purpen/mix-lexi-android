@@ -1,7 +1,7 @@
 package com.thn.lexi.net
 
 object URL {
-    const val BASE_URL = "https://wx.taihuoniao.com/api/v1.0/"
+    const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
 
     /**
      * 注册

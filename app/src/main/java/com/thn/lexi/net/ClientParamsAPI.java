@@ -780,4 +780,16 @@ public class ClientParamsAPI {
         params.put("product_rid", goodsId);
         return params;
     }
+
+    /**
+     * 获取相似商品
+     * @param goodsId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getSimilarGoodsParams(@NotNull String goodsId) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("product_rid", goodsId);
+        return params;
+    }
 }

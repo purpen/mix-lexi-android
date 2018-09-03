@@ -24,21 +24,6 @@ class GoodsDetailModel:IDataSource {
         })
     }
 
-    fun loadGoodsInfo(goodsId: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        HttpRequest.sendRequest(HttpRequest.GET,URL.BASE_URL+"products/$goodsId",object :IDataSource.HttpRequestCallBack{
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
 
     fun loadBrandPavilionInfo(store_rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.loadBrandPavilionInfoParams(store_rid)
@@ -64,6 +49,23 @@ class GoodsDetailModel:IDataSource {
         val url = URL.BASE_URL + "logistics/core_freight_template/$rid"
 
         HttpRequest.sendRequest(HttpRequest.GET,url,params,object :IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun getSimilarGoods(goodsId: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getSimilarGoodsParams(goodsId)
+        HttpRequest.sendRequest(HttpRequest.GET,URL.OFFICIAL_STORE_INFO,params,object :IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

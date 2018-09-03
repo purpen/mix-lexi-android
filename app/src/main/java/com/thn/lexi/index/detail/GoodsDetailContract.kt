@@ -23,6 +23,10 @@ class GoodsDetailContract {
         fun setExpressData(expressInfoBean: ExpressInfoBean?) {
 
         }
+
+        fun setSimilarGoodsData(data: BrandPavilionBean.DataBean?) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -31,5 +35,7 @@ class GoodsDetailContract {
         fun loadBrandPavilionInfo(store_rid:String)
 
         fun getExpressTime(rid: String, store_rid: String, goodsId: String)
+
+        fun getSimilarGoods(goodsId: String)
     }
 }

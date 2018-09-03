@@ -5,7 +5,6 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.beans.BrandPavilionBean
-import com.thn.lexi.index.explore.BrandPavilionListBean
 import java.io.IOException
 
 class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract.Presenter {
@@ -95,5 +94,27 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
+    }
+
+    /**
+     * 获取相似商品
+     */
+    override fun getSimilarGoods(goodsId: String) {
+
+//        dataSource.getSimilarGoods(goodsId, object : IDataSource.HttpRequestCallBack {
+//            override fun onSuccess(json: String) {
+//                val brandPavilionBean = JsonUtil.fromJson(json, BrandPavilionBean::class.java)
+//                if (brandPavilionBean.success) {
+//                    if (brandPavilionBean.data != null) view.setSimilarGoodsData(brandPavilionBean.data)
+//                } else {
+//                    view.showError(brandPavilionBean.status.message)
+//                }
+//            }
+//
+//            override fun onFailure(e: IOException) {
+//                view.dismissLoadingView()
+//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+//            }
+//        })
     }
 }

@@ -4,4 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp16"
     android:background="@color/color_f5f7f9"
-    tools:showIn="@layout/view_goods_detail_head" />
+    tools:showIn="@layout/header_goods_detail" />
