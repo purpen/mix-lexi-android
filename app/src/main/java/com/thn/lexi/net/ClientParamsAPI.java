@@ -744,4 +744,26 @@ public class ClientParamsAPI {
         params.put("page", String.valueOf(page));
         return params;
     }
+
+
+//    @Nullable
+//    public static HashMap<String,String> getProductsByStoreId(int page,@NotNull String store_rid) {
+//        HashMap<String, String> params = generateCommonParams();
+//        params.put("per_page", Constants.PAGE_SIZE);
+//        params.put("page", String.valueOf(page));
+//        params.put("sid", store_rid);
+//        return params;
+//    }
+
+    /**
+     * 加载品牌馆信息
+     * @param store_rid
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> loadBrandPavilionInfoParams(@NotNull String store_rid) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid", store_rid);
+        return params;
+    }
 }

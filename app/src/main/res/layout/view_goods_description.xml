@@ -181,13 +181,27 @@
         android:drawableStart="@drawable/bg_oval_000"
         android:drawablePadding="6dp"
         android:includeFontPadding="false"
-        android:paddingBottom="@dimen/dp20"
+        android:paddingBottom="@dimen/dp10"
         android:paddingLeft="@dimen/dp15"
         android:paddingRight="@dimen/dp15"
         android:text="退货"
         android:textColor="@color/color_333"
         android:textSize="@dimen/sp14" />
 
+    <TextView
+        android:id="@+id/textViewProductReturnPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="2"
+        android:includeFontPadding="false"
+        android:layout_marginBottom="@dimen/dp30"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15"
+        android:text="退货"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp14" />
     <Button
         android:layout_width="@dimen/dp100"
         android:layout_height="@dimen/dp40"

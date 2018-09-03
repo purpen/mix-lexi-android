@@ -275,7 +275,7 @@ object URL {
     /**
      * 取消关注用户
      */
-    const val UNFOCUS_USER_URL ="${BASE_URL}unfollow/user"
+    const val UNFOCUS_USER_URL = "${BASE_URL}unfollow/user"
 
 
     /**
@@ -335,5 +335,17 @@ object URL {
      * 用户生活馆动态
      */
     const val USER_DYNAMIC_URL = "${BASE_URL}users/user_dynamic"
+
+
+    /**
+     * 获取品牌馆中商品列表
+     */
+    const val GET_PRODUCTS_BY_STORE = "${BASE_URL}core_platforms/products/by_store"
+
+
+    /**
+     * 获取官方品牌馆信息
+     */
+    const val OFFICIAL_STORE_INFO = "${BASE_URL}official_store/info"
 
 }

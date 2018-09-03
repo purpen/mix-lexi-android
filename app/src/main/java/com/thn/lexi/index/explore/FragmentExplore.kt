@@ -321,7 +321,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     }
 
     override fun showLoadingView() {
-        if (!swipeRefreshLayout.isRefreshing) dialog.show()
+        dialog.show()
     }
 
     override fun dismissLoadingView() {
@@ -330,7 +330,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
     override fun showError(string: String) {
 //        adapter.isLoading
-        swipeRefreshLayout.isRefreshing = false
+//        swipeRefreshLayout.isRefreshing = false
 //        adapter.loadMoreFail()
     }
     override fun goPage() {

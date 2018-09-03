@@ -65,7 +65,7 @@
     <string name="text_focus">关注</string>
     <string name="text_focused">已关注</string>
     <string name="text_online_consult">在线咨询</string>
-    <string name="text_custom_made">我要定制</string>
+    <string name="text_custom_made">我要订制</string>
     <string name="text_skip">跳过</string>
     <string name="text_welcome">欢迎来到乐喜</string>
     <string name="text_app_description">全球原创设计品位购物平台</string>
@@ -170,5 +170,5 @@
     <string name="title_dynamic_activity">动态</string>
     <string name="text_no_dynamic">您还没有任何动态信息</string>
     <string name="text_like">喜欢</string>
-    <string name="text_can_custom_service">可提供定制化服务</string>
+    <string name="text_can_custom_service">可提供订制化服务</string>
 </resources>

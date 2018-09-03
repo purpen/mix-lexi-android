@@ -12,20 +12,23 @@
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dp15"
         android:paddingEnd="@dimen/dp15"
+        android:paddingBottom="@dimen/dp15"
         >
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/dp50"
-            android:layout_height="@dimen/dp50"
+            android:id="@+id/imageViewLogo"
+            android:layout_width="@dimen/dp45"
+            android:layout_height="@dimen/dp45"
             android:src="@drawable/default_load"
+            android:scaleType="fitXY"
             />
         <TextView
             android:id="@+id/textViewShopType"
             android:layout_marginStart="@dimen/dp10"
-            android:layout_toEndOf="@+id/imageView"
-            android:layout_alignTop="@+id/imageView"
-            android:layout_marginTop="@dimen/dp5"
+            android:layout_toEndOf="@+id/imageViewLogo"
+            android:layout_alignTop="@+id/imageViewLogo"
+            android:layout_marginTop="@dimen/dp4"
+            android:includeFontPadding="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="原创品牌设计馆"
@@ -37,52 +40,57 @@
             android:layout_below="@+id/textViewShopType"
             android:layout_alignStart="@+id/textViewShopType"
             android:layout_width="wrap_content"
+            android:includeFontPadding="false"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp5"
             android:text="Brook 手工制作"
             android:textSize="@dimen/sp15"
             android:textColor="@color/color_333"
             />
-        <Button
+        <com.thn.lexi.view.ButtonDrawableCenter
             android:id="@+id/buttonFocus"
-            android:layout_width="@dimen/dp62"
-            android:layout_height="@dimen/dp30"
+            android:layout_width="63dp"
+            android:layout_height="29dp"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:paddingStart="@dimen/dp10"
-            android:paddingEnd="@dimen/dp10"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/corner_border5fe4b1_radius4"
-            android:drawableStart="@mipmap/icon_sign_shop"
+            android:includeFontPadding="false"
+            android:drawablePadding="6dp"
+            android:background="@drawable/corner_bg_6ed7af"
+            android:drawableStart="@mipmap/icon_focus_pavilion"
             android:text="@string/text_focus"
             android:textSize="@dimen/sp12"
-            android:textColor="@color/color_6ed7af"
+            android:textColor="@android:color/white"
             />
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewShopGoods"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/sp15"
-        android:layout_marginBottom="@dimen/dp20"
-        android:paddingStart="@dimen/dp15"
-        android:paddingEnd="@dimen/dp15"
-        />
     <include
         layout="@layout/line_color_eee"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"
         android:layout_marginStart="@dimen/dp15"
-        android:layout_marginRight="@dimen/dp15"
         />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewShopGoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginStart="@dimen/dp15"
+        />
+
     <TextView
         android:id="@+id/textViewConsult"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
+        android:layout_height="40dp"
         android:text="@string/text_online_consult"
         android:gravity="center"
         android:textColor="@color/color_6ed7af"
         android:textSize="@dimen/sp14"
+        />
+    <include
+        layout="@layout/line_color_eee"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
         />
     <include layout="@layout/line_height20_bgf8f8f8"/>
 </LinearLayout>

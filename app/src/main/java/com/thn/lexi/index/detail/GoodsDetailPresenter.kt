@@ -3,6 +3,8 @@ import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.beans.BrandPavilionBean
+import com.thn.lexi.index.explore.BrandPavilionListBean
 import java.io.IOException
 
 class GoodsDetailPresenter(view: GoodsDetailContract.View):GoodsDetailContract.Presenter {
@@ -42,6 +44,27 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View):GoodsDetailContract.P
                     if (goodsInfoBean.data!=null) view.setGoodsInfo(goodsInfoBean.data)
                 } else {
                     view.showError(goodsInfoBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 请求商品所属品牌馆数据
+     */
+    override fun loadBrandPavilionInfo(store_rid: String) {
+        dataSource.loadBrandPavilionInfo(store_rid,object :IDataSource.HttpRequestCallBack{
+            override fun onSuccess(json: String) {
+                val brandPavilionBean = JsonUtil.fromJson(json, BrandPavilionBean::class.java)
+                if (brandPavilionBean.success) {
+                    if (brandPavilionBean.data!=null) view.setBrandPavilionData(brandPavilionBean.data)
+                } else {
+                    view.showError(brandPavilionBean.status.message)
                 }
             }
 

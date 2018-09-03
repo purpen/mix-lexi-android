@@ -3,7 +3,6 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.Html
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +19,12 @@ import kotlinx.android.synthetic.main.view_goods_detail_head.*
 import android.widget.TextView
 import com.basemodule.tools.*
 import com.thn.lexi.AppApplication
+import com.thn.lexi.RecyclerViewDivider
+import com.thn.lexi.beans.BrandPavilionBean
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.view_goods_description.*
+import kotlinx.android.synthetic.main.view_goods_shop.*
 
 
 class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener {
@@ -77,11 +79,39 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     override fun requestNet() {
         presenter.loadData(goodsId)
+
         presenter.loadGoodsInfo(goodsId)
     }
 
 
+    //设置品牌馆信息
+    override fun setBrandPavilionData(data: BrandPavilionBean.DataBean?) {
+
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewShopGoods.setHasFixedSize(true)
+        recyclerViewShopGoods.layoutManager = linearLayoutManager
+//        recyclerViewShopGoods.adapter = adapterLikeGoods
+        recyclerViewShopGoods.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
+    }
+
+    /**
+     * 设置商品信息
+     */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
+
+        presenter.loadBrandPavilionInfo(data.store_rid)
+
+
+        GlideUtil.loadImage(data.store_logo,imageViewLogo)
+
+        textViewShopName.text = data.store_name
+
+        if (data.is_free_postage){
+            imageViewFreeExpress.visibility = View.VISIBLE
+        }else{
+            imageViewFreeExpress.visibility = View.GONE
+        }
 
         //设置banner
         val urlList = ArrayList<String>()
@@ -152,6 +182,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         textViewSendAddress.text = data.delivery_country
 
         textViewReturnPolicy.text = data.return_policy_title
+
+        textViewProductReturnPolicy.text = data.product_return_policy
         //商店商品
 //        recyclerViewShopGoods.adapter
     }
@@ -243,6 +275,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         buttonGetDiscount.setOnClickListener(this)
 
         textViewSelectSpec.setOnClickListener(this)
+
+        textViewConsult.setOnClickListener {
+            ToastUtil.showInfo("咨询")
+        }
     }
 
     override fun onClick(v: View) {
