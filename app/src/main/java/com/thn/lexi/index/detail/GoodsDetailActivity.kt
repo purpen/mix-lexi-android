@@ -14,7 +14,6 @@ import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
-import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.selection.HeadImageAdapter
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.activity_goods_detail.*
@@ -54,7 +53,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         setUpViewPager()
         this.presenter = GoodsDetailPresenter(this)
         textViewCoupon.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_get_coupon,R.dimen.dp29,R.dimen.dp15),null,null,null)
-        textViewCoupon.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_full_reduction,R.dimen.dp15,R.dimen.dp15),null,null,null)
+        textViewSub.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_full_reduction,R.dimen.dp15,R.dimen.dp15),null,null,null)
     }
 
     override fun setPresenter(presenter: GoodsDetailContract.Presenter?) {
