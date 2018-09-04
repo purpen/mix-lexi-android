@@ -107,4 +107,22 @@ class GoodsDetailModel:IDataSource {
         })
     }
 
+    fun clickGetCoupon(storeId: String, code: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getClickCouponsParams(storeId,code)
+
+        HttpRequest.sendRequest(HttpRequest.POST,URL.CLICK_GET_COUPON,params,object :IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }

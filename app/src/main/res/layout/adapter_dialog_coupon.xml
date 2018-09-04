@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewContent"
         android:layout_alignStart="@+id/textViewContent"
-        android:layout_marginTop="@dimen/dp3"
+        android:layout_marginTop="@dimen/dp4"
         android:includeFontPadding="false"
         android:text="有效期"
         android:textColor="@color/color_666"
@@ -55,15 +55,15 @@
         />
     <TextView
         android:id="@+id/textViewStatus"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp65"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
         android:text="@string/text_share_get"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp14"
+        android:gravity="center_horizontal"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:lineSpacingMultiplier="1.2"
-        android:layout_marginEnd="19dp"
         />
 </RelativeLayout>

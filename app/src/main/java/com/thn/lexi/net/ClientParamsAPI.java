@@ -804,4 +804,18 @@ public class ClientParamsAPI {
         params.put("store_rid", store_rid);
         return params;
     }
+
+    /**
+     * 点击领取优惠券
+     * @param storeId
+     * @param code
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getClickCouponsParams(@NotNull String storeId, @NotNull String code) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("store_rid", storeId);
+        params.put("rid", code);
+        return params;
+    }
 }

@@ -358,4 +358,9 @@ object URL {
      */
     const val SHOP_STORE_UNLOGIN_COUPONS = "${BASE_URL}market/not_login_coupons"
 
+    /**
+     * 点击领取优惠券
+     */
+    const val CLICK_GET_COUPON = "${BASE_URL}market/coupons/grant"
+
 }

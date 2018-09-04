@@ -51,6 +51,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var couponList:ArrayList<CouponBean>
 
+    private var storeRid:String = ""
+
     override fun getIntentData() {
         goodsId = intent.extras.getString(GoodsDetailActivity::class.java.simpleName)
     }
@@ -164,6 +166,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      * 设置商品信息
      */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
+
+        storeRid = data.store_rid
 
         //获取优惠券
         presenter.getCouponsByStoreId(data.store_rid)
@@ -374,7 +378,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 ToastUtil.showInfo("添加心愿单")
             }
             R.id.buttonGetDiscount -> {
-                val couponBottomDialog = CouponBottomDialog(this, couponList, presenter)
+                val couponBottomDialog = CouponBottomDialog(this, couponList, presenter,storeRid)
                 couponBottomDialog.show()
             }
 

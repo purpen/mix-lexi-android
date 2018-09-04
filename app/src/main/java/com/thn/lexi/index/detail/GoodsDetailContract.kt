@@ -31,6 +31,10 @@ class GoodsDetailContract {
         fun setCouponData(coupons: List<CouponBean>) {
 
         }
+
+        fun updateCouponState(position: Int) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

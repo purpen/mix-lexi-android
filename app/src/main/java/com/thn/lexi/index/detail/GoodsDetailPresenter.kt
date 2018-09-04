@@ -1,6 +1,7 @@
 package com.thn.lexi.index.detail
 
 import com.basemodule.tools.JsonUtil
+import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
@@ -134,6 +135,28 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
             }
 
             override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 点击领取优惠券
+     */
+    fun clickGetCoupon(storeId: String, code: String, callBack: IDataSource.HttpRequestCallBack) {
+        dataSource.clickGetCoupon(storeId,code,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val getCouponBean = JsonUtil.fromJson(json, GetCouponBean::class.java)
+                if (getCouponBean.success) {
+                    callBack.onSuccess(json)
+                    ToastUtil.showInfo(R.string.text_get_coupon_success)
+                } else {
+                    view.showError(getCouponBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
