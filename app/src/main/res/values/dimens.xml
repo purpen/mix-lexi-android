@@ -29,4 +29,5 @@
     <dimen name="dp27">27dp</dimen>
     <dimen name="dp29">29dp</dimen>
     <dimen name="sp30">30sp</dimen>
+    <dimen name="dp125">125dp</dimen>
 </resources>

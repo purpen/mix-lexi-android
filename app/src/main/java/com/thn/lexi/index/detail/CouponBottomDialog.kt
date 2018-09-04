@@ -5,11 +5,11 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.JsonUtil
-import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
+import com.thn.lexi.CustomLinearLayoutManager
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
 import com.thn.lexi.beans.CouponBean
@@ -22,7 +22,7 @@ class CouponBottomDialog(context: Context, coupons: List<CouponBean>, presenter:
     private val couponsList: List<CouponBean> by lazy { coupons }
     private val present: GoodsDetailPresenter by lazy { presenter }
     private val storeId: String by lazy { storeRid }
-
+    private val list: ArrayList<CouponBean> by lazy { ArrayList<CouponBean>() }
     private val adapterDialogCoupon: AdapterDialogCoupon by lazy { AdapterDialogCoupon(R.layout.adapter_dialog_coupon) }
     private lateinit var view: View
     private lateinit var headerView: View
@@ -41,7 +41,11 @@ class CouponBottomDialog(context: Context, coupons: List<CouponBean>, presenter:
 
         val couponStr = StringBuilder()
         for (coupon in couponsList) {
-            if (coupon.type == 3) couponStr.append("满${coupon.min_amount}减${coupon.amount}、")
+            if (coupon.type == 3) {
+                couponStr.append("满${coupon.min_amount}减${coupon.amount}、")
+            } else {
+                list.add(coupon)
+            }
         }
         if (TextUtils.isEmpty(couponStr)) {
             headerView.imageView.visibility = View.GONE
@@ -55,25 +59,41 @@ class CouponBottomDialog(context: Context, coupons: List<CouponBean>, presenter:
 
     override fun setUiBeforShow() {
         setFullReduce()
-        val footerView = View(context)
-        footerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp26))
-        adapterDialogCoupon.addFooterView(footerView)
-        val linearLayoutManager = LinearLayoutManager(context)
+
+        val linearLayoutManager = CustomLinearLayoutManager(context)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+
+        if (list.isEmpty()) {
+            view.relativeLayoutBar.visibility = View.GONE
+            view.recyclerViewCoupon.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp125))
+            adapterDialogCoupon.emptyView = View(context)
+            adapterDialogCoupon.setHeaderFooterEmpty(true, true)
+            headerView.textViewCouponTitle.visibility = View.GONE
+            linearLayoutManager.setScrollEnabled(false)
+        } else {
+            val footerView = View(context)
+            footerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp26))
+            adapterDialogCoupon.addFooterView(footerView)
+
+        }
+
+
         view.recyclerViewCoupon.setHasFixedSize(true)
         view.recyclerViewCoupon.layoutManager = linearLayoutManager
         view.recyclerViewCoupon.adapter = adapterDialogCoupon
         view.recyclerViewCoupon.addItemDecoration(DividerItemDecoration(context, android.R.color.transparent, view.recyclerViewCoupon, 15f))
-        adapterDialogCoupon.setNewData(couponsList)
+
+
+
+        adapterDialogCoupon.setNewData(list)
+
         view.relativeLayoutBar.setOnClickListener { dismiss() }
 
         adapterDialogCoupon.setOnItemClickListener { adapter, _, position ->
-            LogUtil.e("position==${position}")
             val couponBean = adapter.getItem(position) as CouponBean
-            present.clickGetCoupon(storeId, couponBean.code,object :IDataSource.HttpRequestCallBack{
+            present.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
                 override fun onSuccess(json: String) {
                     couponBean.status = 1
-                    LogUtil.e("couponBean.state==${couponBean.status}")
                     adapter.notifyDataSetChanged()
                 }
 
