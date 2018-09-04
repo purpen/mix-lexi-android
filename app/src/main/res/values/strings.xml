@@ -170,4 +170,6 @@
     <string name="text_share_get">分享\n领取</string>
     <string name="text_already_get_coupon">已领取</string>
     <string name="text_get_coupon_success">已领取</string>
+    <string name="text_add_shopcart">加入购物车</string>
+    <string name="text_order_make">接单订制</string>
 </resources>

@@ -13,29 +13,6 @@
         android:overScrollMode="never"
         />
 
-
-    <LinearLayout
-        android:id="@+id/relativeLayoutBar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50"
-        android:layout_gravity="bottom"
-        android:background="@android:color/white"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            android:layout_marginEnd="@dimen/dp15"
-            android:layout_marginStart="@dimen/dp15"
-            android:background="@drawable/bg_color5fe4b1_radius4"
-            android:gravity="center"
-            android:text="@string/text_custom_made"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp16" />
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp50"
@@ -58,5 +35,101 @@
             android:layout_alignParentEnd="true"
             android:paddingStart="@dimen/dp15"
             android:paddingEnd="@dimen/dp15" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:background="@android:color/white"
+        android:layout_alignParentBottom="true"
+        >
+        <include layout="@layout/line_color_eee" />
+        <RelativeLayout
+            android:id="@+id/relativeLayoutShopCart"
+            android:layout_width="79dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            >
+            <TextView
+                android:layout_width="79dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp24"
+                android:paddingEnd="@dimen/dp22"
+                android:drawableTop="@mipmap/icon_add_shopcart"
+                android:gravity="center"
+                android:text="@string/title_shopcart"
+                android:textColor="@color/color_949ea6"
+                android:textSize="@dimen/sp11" />
+            <TextView
+                android:id="@+id/textViewCount"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="23dp"
+                android:minWidth="@dimen/dp12"
+                android:minHeight="@dimen/dp12"
+                android:gravity="center"
+                android:textSize="@dimen/sp8"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:background="@drawable/bg_oval_ff6666"
+                />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonAddShopCart"
+            android:layout_toEndOf="@+id/relativeLayoutShopCart"
+            android:layout_width="133dp"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/bg_colore2d343a_left_radius4"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_centerVertical="true"
+            android:text="@string/text_add_shopcart"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16"
+            />
+
+        <Button
+            android:id="@+id/buttonGoOrderConfirm"
+            android:layout_toEndOf="@id/buttonAddShopCart"
+            android:layout_width="133dp"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/bg_colore5fe4b1_right_radius4"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_centerVertical="true"
+            android:text="@string/text_purchase"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16"
+            />
+
+        <Button
+            android:id="@+id/buttonOrderMake"
+            android:layout_toEndOf="@id/buttonAddShopCart"
+            android:layout_width="133dp"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/bg_colore5fe4b1_right_radius4"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_centerVertical="true"
+            android:text="@string/text_order_make"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16"
+            android:visibility="gone"
+            />
+        <Button
+            android:id="@+id/buttonSaleDistribution"
+            android:layout_toEndOf="@id/buttonGoOrderConfirm"
+            android:layout_width="133dp"
+            android:layout_height="@dimen/dp40"
+            android:background="@drawable/bg_coloreff6666_right_radius4"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_centerVertical="true"
+            android:text="卖 赚￥12.00"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 </RelativeLayout>

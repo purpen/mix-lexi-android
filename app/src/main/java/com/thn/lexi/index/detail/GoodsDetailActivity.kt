@@ -1,5 +1,4 @@
 package com.thn.lexi.index.detail
-
 import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
@@ -339,9 +338,17 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
     override fun installListener() {
-        imageViewBack.setOnClickListener {
-            finish()
+
+        buttonGoOrderConfirm.setOnClickListener(this)
+
+        buttonAddShopCart.setOnClickListener(this)
+
+        relativeLayoutShopCart.setOnClickListener {
+            //TODO 去购物车
+            ToastUtil.showInfo("去购物车")
         }
+
+        imageViewBack.setOnClickListener { finish() }
 
         imageViewShare.setOnClickListener(this)
 
@@ -366,6 +373,17 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     override fun onClick(v: View) {
         val id = v.id
         when (id) {
+
+            R.id.buttonGoOrderConfirm ->{
+                //TODO 跳转确认订单
+                ToastUtil.showInfo("确认订单")
+            }
+
+            R.id.buttonAddShopCart ->{
+                //TODO 添加到购物车
+                ToastUtil.showInfo("添加到购物车")
+            }
+
             R.id.imageViewShare -> {
                 ToastUtil.showInfo("分享产品")
             }
