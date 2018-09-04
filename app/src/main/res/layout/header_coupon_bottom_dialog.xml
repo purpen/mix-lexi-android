@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/dp15"
+    android:paddingEnd="@dimen/dp15"
+    android:paddingTop="@dimen/dp20"
+    >
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_full_reduction"
+        android:layout_marginEnd="@dimen/dp5"
+        android:visibility="gone"
+        />
+    <TextView
+        android:id="@+id/textViewSub"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp12"
+        android:textColor="@color/color_555"
+        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈"
+        android:lineSpacingMultiplier="1.2"
+        android:layout_marginBottom="@dimen/dp20"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/textViewCouponTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewSub"
+        android:textSize="@dimen/sp14"
+        android:textColor="@color/color_333"
+        android:textStyle="bold"
+        android:text="设计馆优惠券红包"
+        />
+</RelativeLayout>

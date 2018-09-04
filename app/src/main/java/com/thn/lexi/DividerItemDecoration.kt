@@ -1,4 +1,5 @@
 package com.thn.lexi
+
 import android.content.Context
 import android.support.annotation.ColorRes
 import android.support.v7.widget.RecyclerView
@@ -7,8 +8,14 @@ import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 
-class DividerItemDecoration(context:Context,@ColorRes color:Int,recyclerView: RecyclerView): Y_DividerItemDecoration(context) {
-    private val color:Int = Util.getColor(color)
+class DividerItemDecoration(context: Context, @ColorRes color: Int, recyclerView: RecyclerView) : Y_DividerItemDecoration(context) {
+    private var height: Float = 11f
+
+    constructor(context: Context, @ColorRes color: Int, recyclerView: RecyclerView, dividerHeight: Float) : this(context, color, recyclerView) {
+        height = dividerHeight
+    }
+
+    private val color: Int = Util.getColor(color)
     private val adapter = recyclerView.adapter
     override fun getDivider(itemPosition: Int): Y_Divider? {
         val count = adapter.itemCount
@@ -29,7 +36,7 @@ class DividerItemDecoration(context:Context,@ColorRes color:Int,recyclerView: Re
 
             else -> {
                 divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, 11f, 0f, 0f)
+                        .setBottomSideLine(true, color, height, 0f, 0f)
                         .create()
             }
         }

@@ -23,7 +23,6 @@ import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.beans.BrandPavilionBean
 import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
-import com.thn.lexi.user.login.UserProfileUtil
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.header_goods_detail.view.*
@@ -50,6 +49,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var headerView: View
 
+    private lateinit var couponList:ArrayList<CouponBean>
+
     override fun getIntentData() {
         goodsId = intent.extras.getString(GoodsDetailActivity::class.java.simpleName)
     }
@@ -57,6 +58,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     override fun initView() {
 
         listDescription = ArrayList()
+
+        couponList = ArrayList()
 
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -138,10 +141,15 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.relativeLayoutCoupon.visibility = View.VISIBLE
             val couponStr = StringBuilder()
             for (coupon in coupons) {
-                couponStr.append("满${coupon.min_amount}减${coupon.amount}、")
+                if (coupon.type==3)couponStr.append("满${coupon.min_amount}减${coupon.amount}、")
             }
-            headerView.textViewSub.text = couponStr.dropLast(1)
+            if (TextUtils.isEmpty(couponStr)) {
+                headerView.textViewSub.visibility = View.GONE
+            } else {
+                headerView.textViewSub.text = couponStr.dropLast(1)
+            }
         }
+        couponList.addAll(coupons)
     }
 
     /**
@@ -366,13 +374,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 ToastUtil.showInfo("添加心愿单")
             }
             R.id.buttonGetDiscount -> {
-                if (UserProfileUtil.isLogin()){ //获取登录时的优惠券
-
-                }else{ //获取未登录优惠券
-
-                }
-
+                val couponBottomDialog = CouponBottomDialog(this, couponList, presenter)
+                couponBottomDialog.show()
             }
+
             R.id.textViewSelectSpec -> {
                 ToastUtil.showInfo("选择规格")
             }

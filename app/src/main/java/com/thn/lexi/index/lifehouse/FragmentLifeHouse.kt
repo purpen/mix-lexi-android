@@ -1,5 +1,4 @@
 package com.thn.lexi.index.lifehouse
-
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -255,7 +254,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 val animation = TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF,
                         0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f)
                 animation.interpolator = DecelerateInterpolator()
-                dialog.layoutAnimation(LayoutAnimationController(animation, 0.12f))
+                dialog.layoutAnimation(LayoutAnimationController(animation, 0f))
                 dialog.isTitleShow(false).show()
 
                 dialog.setOnOperItemClickL { parent, view, position, id ->

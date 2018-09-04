@@ -14,7 +14,9 @@ import java.util.Locale;
 
 public class DateUtil {
 
-    private static final String PATTERN = "yyyy-MM-dd";
+    public static final String PATTERN = "yyyy-MM-dd";
+    public static final String PATTERN_DOT = "yyyy.MM.dd";
+
     private int interval =0;
     /**
      * 某日期的前几天或者后几天
@@ -69,14 +71,20 @@ public class DateUtil {
     /**
      * 根据时间戳获得日期
      */
-    public static String getDateByTimestamp(long timestamp){
+    public static String getDateByTimestamp(long timestamp,String pattern){
         timestamp = timestamp*1000;
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         c.setTime(new Date(timestamp));
         return simpleDateFormat.format(c.getTime());
     }
 
+    /**
+     * 根据时间戳获得日期
+     */
+    public static String getDateByTimestamp(long timestamp){
+        return getDateByTimestamp(timestamp, PATTERN);
+    }
 
     /**
      * 返回中国格式日期

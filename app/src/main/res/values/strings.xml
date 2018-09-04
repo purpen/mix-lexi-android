@@ -173,4 +173,5 @@
     <string name="text_can_custom_service">可提供订制化服务</string>
     <string name="text_goods_detail">作品详情</string>
     <string name="text_similar_goods">相似商品</string>
+    <string name="text_share_get">分享\n领取</string>
 </resources>

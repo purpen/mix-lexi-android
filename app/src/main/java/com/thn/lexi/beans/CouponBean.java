@@ -26,10 +26,10 @@ public class CouponBean {
     public int days;
     public int min_amount;
     public int reach_amount;
-    public String status;
+    public int status;
     public int type;
     public String type_text;
-    public int end_date;
-    public int start_date;
+    public long end_date;
+    public long start_date;
     public List<?> products;
 }

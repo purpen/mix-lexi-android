@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_f7f9fb"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewCoupon"
+        android:layout_width="match_parent"
+        android:layout_height="342dp"
+        android:overScrollMode="never"
+        />
+
+    <include
+        android:id="@+id/line"
+        layout="@layout/line_color_eee"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_below="@+id/recyclerViewCoupon" />
+
+    <LinearLayout
+        android:id="@+id/relativeLayoutBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_below="@+id/line"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginEnd="@dimen/dp15"
+            android:layout_marginStart="@dimen/dp15"
+            android:background="@drawable/bg_color5fe4b1_radius4"
+            android:gravity="center"
+            android:text="@string/text_complete"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16" />
+    </LinearLayout>
+</RelativeLayout>
