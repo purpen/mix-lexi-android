@@ -195,7 +195,6 @@ public class GoodsAllDetailBean {
             public double commission_price;
             public int commission_rate;
             public String cover;
-            public Object cover_id;
             public String delivery_country;
             public int delivery_country_id;
             public String mode;
@@ -205,7 +204,7 @@ public class GoodsAllDetailBean {
             public String rid;
             public String s_color;
             public String s_model;
-            public int s_weight;
+            public double s_weight;
             public double sale_price;
             public int stock_count;
             public int stock_quantity;

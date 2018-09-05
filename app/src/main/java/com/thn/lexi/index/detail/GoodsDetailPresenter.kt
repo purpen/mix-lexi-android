@@ -1,6 +1,7 @@
 package com.thn.lexi.index.detail
 
 import com.basemodule.tools.JsonUtil
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -15,6 +16,7 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
     private val dataSource: GoodsDetailModel by lazy { GoodsDetailModel() }
 
     override fun loadData(goodsId: String) {
+        LogUtil.e("goodID====${goodsId}")
         dataSource.loadData(goodsId, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -158,6 +160,21 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
             override fun onFailure(e: IOException) {
                 callBack.onFailure(e)
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取商品所有SKU
+     */
+    override fun getGoodsSKUs(id: String, callBack: IDataSource.HttpRequestCallBack) {
+        dataSource.getGoodsSKUs(id,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
             }
         })
     }

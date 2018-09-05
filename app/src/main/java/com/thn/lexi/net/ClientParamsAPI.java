@@ -818,4 +818,16 @@ public class ClientParamsAPI {
         params.put("rid", code);
         return params;
     }
+
+    /**
+     * 获取商品所有SKU
+     * @param id
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,String> getGoodsSKUsParams(@NotNull String id) {
+        HashMap<String, String> params = generateCommonParams();
+        params.put("rid", id);
+        return params;
+    }
 }

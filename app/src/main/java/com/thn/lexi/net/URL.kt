@@ -363,4 +363,9 @@ object URL {
      */
     const val CLICK_GET_COUPON = "${BASE_URL}market/coupons/grant"
 
+    /**
+     * 获取商品所有SKU
+     */
+    const val GET_GOODS_SKUS = "${BASE_URL}products/many_skus"
+
 }

@@ -3,6 +3,7 @@ package com.thn.lexi.index.detail
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.basemodule.ui.IDataSource
 import com.thn.lexi.beans.BrandPavilionBean
 import com.thn.lexi.beans.CouponBean
 
@@ -47,5 +48,7 @@ class GoodsDetailContract {
         fun getExpressTime(rid: String, store_rid: String, goodsId: String)
 
         fun getSimilarGoods(goodsId: String)
+
+        fun getGoodsSKUs(id: String, param: IDataSource.HttpRequestCallBack)
     }
 }

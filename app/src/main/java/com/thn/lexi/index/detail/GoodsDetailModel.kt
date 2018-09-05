@@ -125,4 +125,23 @@ class GoodsDetailModel:IDataSource {
         })
     }
 
+
+    fun getGoodsSKUs(id: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+
+        val params = ClientParamsAPI.getGoodsSKUsParams(id)
+        HttpRequest.sendRequest(HttpRequest.GET,URL.GET_GOODS_SKUS,params,object :IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }

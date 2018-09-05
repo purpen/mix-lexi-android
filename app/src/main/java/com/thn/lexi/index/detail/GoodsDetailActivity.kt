@@ -401,7 +401,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.textViewSelectSpec -> {
-                ToastUtil.showInfo("选择规格")
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this,presenter,goodsId)
+                selectSpecificationBottomDialog.show()
             }
         }
     }
