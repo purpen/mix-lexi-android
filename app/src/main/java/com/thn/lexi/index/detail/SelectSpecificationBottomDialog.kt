@@ -1,7 +1,6 @@
 package com.thn.lexi.index.detail
 
 import android.content.Context
-import android.content.Intent
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
@@ -20,8 +19,9 @@ import java.io.IOException
 import java.util.HashMap
 
 
-class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean?) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
+class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean?, ClickedId: Int) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
     private val present: GoodsDetailPresenter by lazy { presenter }
+    private val whichClicked: Int by lazy { ClickedId }
     private val goods: GoodsAllDetailBean.DataBean? = goodsData
     private val items: ArrayList<GoodsAllSKUBean.DataBean.ItemsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ItemsBean>() }
     private val colors: ArrayList<GoodsAllSKUBean.DataBean.ColorsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ColorsBean>() }
@@ -250,9 +250,19 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 return@setOnClickListener
             }
             dismiss()
-            val intent = Intent()
-            intent.putExtra(GoodsAllSKUBean::class.java.simpleName, selectedSKU)
-            context.startActivity(intent)
+
+            when(whichClicked){
+                R.id.textViewSelectSpec ->{
+                    ToastUtil.showInfo("跳转确认订单...")
+                }
+
+                R.id.buttonAddShopCart ->{
+                    ToastUtil.showInfo("加入购物车")
+                }
+            }
+//            val intent = Intent()
+//            intent.putExtra(GoodsAllSKUBean::class.java.simpleName, selectedSKU)
+//            context.startActivity(intent)
         }
     }
 

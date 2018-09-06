@@ -462,7 +462,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
             R.id.buttonAddShopCart -> {
                 if (goodsData==null) return
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter,goodsData)
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter,goodsData,R.id.buttonAddShopCart)
                 selectSpecificationBottomDialog.show()
             }
 
@@ -495,7 +495,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.textViewSelectSpec -> {
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter,goodsData)
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData, R.id.textViewSelectSpec)
                 selectSpecificationBottomDialog.show()
             }
         }
