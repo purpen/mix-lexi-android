@@ -104,21 +104,21 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
      */
     override fun getSimilarGoods(goodsId: String) {
 
-//        dataSource.getSimilarGoods(goodsId, object : IDataSource.HttpRequestCallBack {
-//            override fun onSuccess(json: String) {
-//                val brandPavilionBean = JsonUtil.fromJson(json, BrandPavilionBean::class.java)
-//                if (brandPavilionBean.success) {
-//                    if (brandPavilionBean.data != null) view.setSimilarGoodsData(brandPavilionBean.data)
-//                } else {
-//                    view.showError(brandPavilionBean.status.message)
-//                }
-//            }
-//
-//            override fun onFailure(e: IOException) {
-//                view.dismissLoadingView()
-//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-//            }
-//        })
+        dataSource.getSimilarGoods(goodsId, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val similarGoodsListBean = JsonUtil.fromJson(json, SimilarGoodsListBean::class.java)
+                if (similarGoodsListBean.success) {
+                    if (similarGoodsListBean.data != null) view.setSimilarGoodsData(similarGoodsListBean.data.products)
+                } else {
+                    view.showError(similarGoodsListBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
     }
 
 

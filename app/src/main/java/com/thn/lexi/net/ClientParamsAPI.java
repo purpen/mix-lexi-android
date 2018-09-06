@@ -791,7 +791,7 @@ public class ClientParamsAPI {
     @Nullable
     public static HashMap<String, Object> getSimilarGoodsParams(@NotNull String goodsId) {
         HashMap<String, Object> params = generateCommonParams();
-        params.put("product_rid", goodsId);
+        params.put("rid", goodsId);
         return params;
     }
 

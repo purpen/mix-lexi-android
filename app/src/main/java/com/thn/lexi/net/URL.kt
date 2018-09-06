@@ -373,4 +373,9 @@ object URL {
      */
     const val ADD_WISH_ORDER = "${BASE_URL}wishlist"
 
+    /**
+     * 获取相似商品
+     */
+    const val GET_SIMILAR_GOODS = "${BASE_URL}products/similar"
+
 }

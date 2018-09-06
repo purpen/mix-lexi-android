@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +22,7 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.beans.BrandPavilionBean
 import com.thn.lexi.beans.CouponBean
+import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
@@ -97,6 +97,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     override fun requestNet() {
         presenter.loadData(goodsId)
+
+        //获取相似商品
+        presenter.getSimilarGoods(goodsId)
     }
 
 
@@ -162,16 +165,28 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.recyclerViewShopGoods.adapter = designPavilionProductAdapter
         headerView.recyclerViewShopGoods.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
         designPavilionProductAdapter.setNewData(imgUrls)
+    }
 
 
-        //TODO 等相似商品接口 暂时设置品牌馆产品数据
+    /**
+     * 设置相似商品列表
+     */
+    override fun setSimilarGoodsData(data: MutableList<ProductBean>) {
+        if (data.isEmpty()) {
+            headerView.linearLayoutSimilar.visibility = View.GONE
+            return
+        }
 
-        val linearLayoutManager1 = LinearLayoutManager(this)
-        linearLayoutManager1.orientation = LinearLayoutManager.HORIZONTAL
+        val imgUrls = ArrayList<String>()
+        for (item in data) {
+            imgUrls.add(item.cover)
+        }
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         headerView.recyclerViewSimilar.setHasFixedSize(true)
-        headerView.recyclerViewSimilar.layoutManager = linearLayoutManager1
-
-//        val designPavilionProductAdapter = DesignPavilionProductAdapter(R.layout.adapter_pure_imageview)
+        headerView.recyclerViewSimilar.layoutManager = linearLayoutManager
+        //和品牌馆共用一个adapter
+        val designPavilionProductAdapter = DesignPavilionProductAdapter(R.layout.adapter_pure_imageview)
         headerView.recyclerViewSimilar.adapter = designPavilionProductAdapter
         headerView.recyclerViewSimilar.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
         designPavilionProductAdapter.setNewData(imgUrls)
@@ -230,8 +245,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         // 获取交货时间
         presenter.getExpressTime(data.fid, data.store_rid, goodsId)
 
-        //获取相似商品
-        presenter.getSimilarGoods(goodsId)
 
         for (item in data.deal_content) {
             if (TextUtils.equals("text", item.type)) {

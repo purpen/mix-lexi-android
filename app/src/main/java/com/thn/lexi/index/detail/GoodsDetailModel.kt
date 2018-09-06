@@ -68,7 +68,7 @@ class GoodsDetailModel : IDataSource {
 
     fun getSimilarGoods(goodsId: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getSimilarGoodsParams(goodsId)
-        HttpRequest.sendRequest(HttpRequest.GET, URL.OFFICIAL_STORE_INFO, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.GET, URL.GET_SIMILAR_GOODS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
