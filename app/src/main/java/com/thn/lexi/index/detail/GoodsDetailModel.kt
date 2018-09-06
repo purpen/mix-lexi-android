@@ -1,6 +1,7 @@
 package com.thn.lexi.index.detail
 
 import com.basemodule.ui.IDataSource
+import com.thn.lexi.mine.AdapterMineFavorite
 import com.thn.lexi.net.ClientParamsAPI
 import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
@@ -156,6 +157,35 @@ class GoodsDetailModel : IDataSource {
         }
 
         HttpRequest.sendRequest(method, URL.ADD_WISH_ORDER, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    /**
+     * 喜欢商品
+     * @param rid 商品id
+     * @param httpRequestCallBack
+     */
+    fun favoriteGoods(rid: String, favorite: Boolean, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFavoriteGoodsParams(rid)
+        val method: String
+        if (favorite) {
+            method = HttpRequest.POST
+        } else {
+            method = HttpRequest.DELETE
+        }
+        HttpRequest.sendRequest(method, URL.FAVORITE_GOODS_URL, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

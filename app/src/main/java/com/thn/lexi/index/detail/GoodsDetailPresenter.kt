@@ -1,11 +1,12 @@
 package com.thn.lexi.index.detail
-
+import android.view.View
 import com.basemodule.tools.JsonUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.beans.BrandPavilionBean
+import com.thn.lexi.index.bean.FavoriteBean
 import com.thn.lexi.net.NetStatusBean
 import java.io.IOException
 
@@ -193,6 +194,33 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
             }
 
             override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+
+    /**
+     * 喜欢/取消商品
+     */
+    override fun favoriteGoods(rid: String, v: View, favorite: Boolean) {
+        dataSource.favoriteGoods(rid,favorite, object : IDataSource.HttpRequestCallBack {
+
+            override fun onStart() {
+                v.isEnabled = false
+            }
+            override fun onSuccess(json: String) {
+                v.isEnabled = true
+                val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
+                if (favoriteBean.success) {
+                    view.updateFavoriteState(favorite)
+                } else {
+                    view.showError(favoriteBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                v.isEnabled = true
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

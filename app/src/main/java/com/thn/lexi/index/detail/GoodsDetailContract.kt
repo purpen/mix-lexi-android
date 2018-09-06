@@ -1,6 +1,7 @@
 package com.thn.lexi.index.detail
 
 import android.support.annotation.NonNull
+import android.view.View
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.basemodule.ui.IDataSource
@@ -40,6 +41,10 @@ class GoodsDetailContract {
         fun setAddWishOrderStatus(b: Boolean) {
 
         }
+
+        fun updateFavoriteState(favorite: Boolean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -56,5 +61,7 @@ class GoodsDetailContract {
         fun getGoodsSKUs(id: String, param: IDataSource.HttpRequestCallBack)
 
         fun addWishOrder(goodsId: String, isAddWish: Boolean)
+
+        fun favoriteGoods(rid: String, v: android.view.View, favorite: Boolean)
     }
 }

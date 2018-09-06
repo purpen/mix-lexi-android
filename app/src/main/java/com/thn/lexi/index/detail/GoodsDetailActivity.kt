@@ -99,14 +99,40 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         presenter.loadData(goodsId)
     }
 
+
+    /**
+     * 更新喜欢状态
+     */
+    override fun updateFavoriteState(favorite: Boolean) {
+        if (goodsData == null) return
+        goodsData?.is_like = favorite
+        if (favorite) {
+            goodsData!!.like_count++
+            headerView.buttonLike.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
+            headerView.buttonLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_like_white, 0, 0, 0)
+            headerView.buttonLike.setTextColor(Util.getColor(android.R.color.white))
+            headerView.buttonLike.text = "+${goodsData!!.like_count}"
+        } else {
+            goodsData!!.like_count--
+            headerView.buttonLike.setBackgroundResource(R.drawable.border_round_ededed)
+            headerView.buttonLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_normal, 0, 0, 0)
+            headerView.buttonLike.setTextColor(Util.getColor(R.color.color_949ea6))
+            if (goodsData!!.like_count > 0) {
+                headerView.buttonLike.text = "+${goodsData!!.like_count}"
+            } else {
+                headerView.buttonLike.text = Util.getString(R.string.text_like)
+            }
+        }
+    }
+
     /**
      * 设置添加心愿单状态
      */
     override fun setAddWishOrderStatus(b: Boolean) {
         goodsData?.is_wish = b
         if (b) {
-            buttonAddWish.setCompoundDrawables(null,null,null,null)
-            buttonAddWish.setPadding(DimenUtil.getDimensionPixelSize(R.dimen.dp4),0,0,0)
+            buttonAddWish.setCompoundDrawables(null, null, null, null)
+            buttonAddWish.setPadding(DimenUtil.getDimensionPixelSize(R.dimen.dp4), 0, 0, 0)
             buttonAddWish.text = Util.getString(R.string.text_already_add)
         } else {
             buttonAddWish.compoundDrawablePadding = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
@@ -191,7 +217,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
 
-
         goodsData = data
 
         storeRid = data.store_rid
@@ -266,7 +291,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         setTags(labels, false)
 
 
-        if (data.like_count > 0) {
+        //设置初始喜欢状态
+        if (data.is_like) {
             headerView.buttonLike.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
             headerView.buttonLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_like_white, 0, 0, 0)
             headerView.buttonLike.setTextColor(Util.getColor(android.R.color.white))
@@ -275,7 +301,11 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.buttonLike.setBackgroundResource(R.drawable.border_round_ededed)
             headerView.buttonLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_click_favorite_normal, 0, 0, 0)
             headerView.buttonLike.setTextColor(Util.getColor(R.color.color_949ea6))
-            headerView.buttonLike.text = Util.getString(R.string.text_like)
+            if (data.like_count > 0) {
+                headerView.buttonLike.text = "+${data.like_count}"
+            } else {
+                headerView.buttonLike.text = Util.getString(R.string.text_like)
+            }
         }
 
         //设置关注人头像
@@ -427,7 +457,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonLike -> {
-                ToastUtil.showInfo("喜欢")
+                if (goodsData == null) return
+                if (goodsData!!.is_like) {
+                    presenter.favoriteGoods(goodsData!!.rid, v, false)
+                } else {
+                    presenter.favoriteGoods(goodsData!!.rid, v, true)
+                }
             }
 
             R.id.buttonAddWish -> {
