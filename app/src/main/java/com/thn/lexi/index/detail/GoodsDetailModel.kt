@@ -200,4 +200,29 @@ class GoodsDetailModel : IDataSource {
         })
     }
 
+    fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+
+        val params = ClientParamsAPI.getFocusBrandPavilionParams(store_rid)
+
+        val url: String
+        if (isFavorite) {
+            url = URL.FOCUS_BRAND_PAVILION
+        } else {
+            url = URL.UNFOCUS_BRAND_PAVILION
+        }
+        HttpRequest.sendRequest(HttpRequest.POST, url, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }

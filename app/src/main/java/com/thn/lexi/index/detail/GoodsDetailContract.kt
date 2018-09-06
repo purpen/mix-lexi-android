@@ -45,6 +45,10 @@ class GoodsDetailContract {
         fun updateFavoriteState(favorite: Boolean) {
 
         }
+
+        fun setBrandPavilionFocusState(favorite: Boolean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -63,5 +67,7 @@ class GoodsDetailContract {
         fun addWishOrder(goodsId: String, isAddWish: Boolean)
 
         fun favoriteGoods(rid: String, v: android.view.View, favorite: Boolean)
+
+        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean)
     }
 }

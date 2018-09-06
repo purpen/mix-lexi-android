@@ -54,7 +54,11 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private var storeRid: String = ""
 
+    //商品详情数据
     private var goodsData: GoodsAllDetailBean.DataBean? = null
+
+    //品牌馆数据
+    private var brandPavilionData: BrandPavilionBean.DataBean? = null
 
     override fun getIntentData() {
         goodsId = intent.extras.getString(GoodsDetailActivity::class.java.simpleName)
@@ -144,17 +148,36 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         }
     }
 
+
     //设置品牌馆信息
     override fun setBrandPavilionData(data: BrandPavilionBean.DataBean?) {
+
+        if (data == null) return
+
+        brandPavilionData = data
         val imgUrls = ArrayList<String>()
 
-        data?.products?.forEach { product ->
+        data.products?.forEach { product ->
             imgUrls.add(product.cover)
         }
 
-        GlideUtil.loadImage(data?.logo, headerView.imageViewLogo)
+        GlideUtil.loadImage(data.logo, headerView.imageViewLogo)
 
-        headerView.textViewShopName.text = data?.name
+        headerView.textViewShopName.text = data.name
+
+        if (data.is_followed) {
+            headerView.buttonFocus.text = Util.getString(R.string.text_focused)
+            headerView.buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+            headerView.buttonFocus.setBackgroundResource(R.drawable.bg_coloreff3f2_radius4)
+            headerView.buttonFocus.setPadding(0,0,0,0)
+            headerView.buttonFocus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+        } else {
+            headerView.buttonFocus.text = Util.getString(R.string.text_focus)
+            headerView.buttonFocus.setTextColor(Util.getColor(android.R.color.white))
+            headerView.buttonFocus.setBackgroundResource(R.drawable.corner_bg_6ed7af)
+            headerView.buttonFocus.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_focus_pavilion, R.dimen.dp13, R.dimen.dp12), null, null, null)
+        }
+
 
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -167,6 +190,23 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         designPavilionProductAdapter.setNewData(imgUrls)
     }
 
+    //设置品牌馆关注状态
+    override fun setBrandPavilionFocusState(favorite: Boolean) {
+        if (favorite) {
+            headerView.buttonFocus.text = Util.getString(R.string.text_focused)
+            headerView.buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+            headerView.buttonFocus.setBackgroundResource(R.drawable.bg_coloreff3f2_radius4)
+            headerView.buttonFocus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            headerView.buttonFocus.setPadding(0,0,0,0)
+        } else {
+            headerView.buttonFocus.text = Util.getString(R.string.text_focus)
+            headerView.buttonFocus.setTextColor(Util.getColor(android.R.color.white))
+            headerView.buttonFocus.setBackgroundResource(R.drawable.corner_bg_6ed7af)
+            headerView.buttonFocus.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_focus_pavilion, R.dimen.dp13, R.dimen.dp12), null, null, null)
+        }
+
+        brandPavilionData?.is_followed = favorite
+    }
 
     /**
      * 设置相似商品列表
@@ -226,6 +266,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         val expressItem: ExpressInfoBean.DataBean.ItemsBean? = items[0]
         headerView.textViewExpressTime.text = "预计${expressItem?.min_days}~${expressItem?.max_days}到达"
     }
+
+
 
     /**
      * 设置商品信息
@@ -446,6 +488,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         headerView.textViewSelectSpec.setOnClickListener(this)
 
+        headerView.buttonFocus.setOnClickListener(this)
+
         headerView.textViewConsult.setOnClickListener {
             ToastUtil.showInfo("咨询")
         }
@@ -461,8 +505,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonAddShopCart -> {
-                if (goodsData==null) return
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter,goodsData,R.id.buttonAddShopCart)
+                if (goodsData == null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData, R.id.buttonAddShopCart)
                 selectSpecificationBottomDialog.show()
             }
 
@@ -470,8 +514,15 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 ToastUtil.showInfo("分享产品")
             }
 
+            R.id.buttonFocus -> { //关注大B/品牌馆/店铺
+                if (brandPavilionData == null) return
+                presenter.focusBrandPavilion(goodsData!!.store_rid,!brandPavilionData!!.is_followed)
+            }
+
             R.id.buttonLike -> {
                 if (goodsData == null) return
+
+
                 if (goodsData!!.is_like) {
                     presenter.favoriteGoods(goodsData!!.rid, v, false)
                 } else {
@@ -489,12 +540,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 }
 
             }
-            R.id.buttonGetDiscount -> {
+            R.id.buttonGetDiscount -> { //获取优惠券
                 val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, storeRid)
                 couponBottomDialog.show()
             }
 
-            R.id.textViewSelectSpec -> {
+            R.id.textViewSelectSpec -> { //请选择规格
                 val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData, R.id.textViewSelectSpec)
                 selectSpecificationBottomDialog.show()
             }
