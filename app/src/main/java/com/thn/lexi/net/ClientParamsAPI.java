@@ -857,4 +857,17 @@ public class ClientParamsAPI {
         params.put("user_record","1");
         return params;
     }
+
+    /**
+     * 获取喜欢商品的用户 最多7条
+     * @param goodsId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getFavoriteUsers(@NotNull String goodsId,String pageSize) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("rid",goodsId);
+        params.put("per_page",pageSize);
+        return params;
+    }
 }

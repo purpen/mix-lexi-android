@@ -23,6 +23,7 @@ import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.beans.BrandPavilionBean
 import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.beans.UserBean
 import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
@@ -104,6 +105,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         //获取相似商品
         presenter.getSimilarGoods(goodsId)
+
+        //获取喜欢商品用户
+        presenter.getFavoriteUsers(goodsId)
     }
 
 
@@ -363,27 +367,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
         }
 
-        //设置关注人头像
-        headerView.recyclerViewHeader.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
-        headImageAdapter.setNewData(urlList)
-        headerView.recyclerViewHeader.layoutManager = linearLayoutManager
-        headerView.recyclerViewHeader.adapter = headImageAdapter
-
-        if (headerView.recyclerViewHeader.itemDecorationCount == 0) {
-            headerView.recyclerViewHeader.addItemDecoration(object : RecyclerView.ItemDecoration() {
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
-                    super.getItemOffsets(outRect, view, parent, state)
-                    if (parent.getChildAdapterPosition(view) > 0) {
-                        outRect.left = -DimenUtil.getDimensionPixelSize(R.dimen.dp5)
-                    }
-                }
-            })
-        }
-
-
         headerView.textViewLightSpot.text = "亮点：" + data.features
 
         if (data.is_custom_service) { //可定制
@@ -402,6 +385,46 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.textViewReturnPolicy.text = data.return_policy_title
 
         headerView.textViewProductReturnPolicy.text = data.product_return_policy
+    }
+
+    /**
+     * 设置喜欢商品的用户数据
+     */
+    override fun setFavoriteUsersData(product_like_users: List<UserBean>) {
+
+        if (product_like_users.isEmpty()) {
+            relativeLayoutFavoriteGoodsUser.visibility = View.GONE
+            return
+        }
+
+        val urlList = ArrayList<String>()
+
+        for (item in product_like_users) urlList.add(item.avatar)
+
+        //反转头像
+        urlList.reverse()
+
+        //设置关注人头像
+        headerView.recyclerViewHeader.setHasFixedSize(true)
+        val linearLayoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true)
+        val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
+
+        headImageAdapter.setNewData(urlList)
+        headerView.recyclerViewHeader.layoutManager = linearLayoutManager
+        headerView.recyclerViewHeader.adapter = headImageAdapter
+
+
+        if (headerView.recyclerViewHeader.itemDecorationCount == 0) {
+            headerView.recyclerViewHeader.addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+                    super.getItemOffsets(outRect, view, parent, state)
+                    if (parent.getChildAdapterPosition(view) >= 0 && parent.getChildAdapterPosition(view) != urlList.size - 1) {
+                        outRect.left = -DimenUtil.getDimensionPixelSize(R.dimen.dp5)
+                    }
+                }
+            })
+        }
+
     }
 
     /**

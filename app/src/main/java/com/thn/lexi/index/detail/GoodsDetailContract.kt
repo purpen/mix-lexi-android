@@ -7,6 +7,7 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.beans.BrandPavilionBean
 import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.beans.UserBean
 
 class GoodsDetailContract {
     interface View : BaseView<Presenter> {
@@ -49,6 +50,10 @@ class GoodsDetailContract {
         fun setBrandPavilionFocusState(favorite: Boolean) {
 
         }
+
+        fun setFavoriteUsersData(product_like_users: List<UserBean>) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -69,5 +74,7 @@ class GoodsDetailContract {
         fun favoriteGoods(rid: String, v: android.view.View, favorite: Boolean)
 
         fun focusBrandPavilion(store_rid: String, isFavorite: Boolean)
+
+        fun getFavoriteUsers(goodsId: String)
     }
 }

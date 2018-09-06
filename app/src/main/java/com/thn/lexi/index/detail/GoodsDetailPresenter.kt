@@ -245,4 +245,22 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
             }
         })
     }
+
+    //获取喜欢商品的用户
+    override fun getFavoriteUsers(goodsId: String) {
+        dataSource.getFavoriteUsers(goodsId,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val favoriteGoodsUsersBean = JsonUtil.fromJson(json, FavoriteGoodsUsersBean::class.java)
+                if (favoriteGoodsUsersBean.success) {
+                    view.setFavoriteUsersData(favoriteGoodsUsersBean.data.product_like_users)
+                } else {
+                    view.showError(favoriteGoodsUsersBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
 }

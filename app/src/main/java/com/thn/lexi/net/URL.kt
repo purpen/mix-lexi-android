@@ -378,4 +378,9 @@ object URL {
      */
     const val GET_SIMILAR_GOODS = "${BASE_URL}products/similar"
 
+    /**
+     * 获取喜欢商品的用户
+     */
+    const val GOODS_FAVORITE_USERS = "${BASE_URL}product/userlike"
+
 }

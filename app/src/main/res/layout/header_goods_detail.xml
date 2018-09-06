@@ -232,6 +232,7 @@
         android:layout_height="@dimen/dp1" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayoutFavoriteGoodsUser"
         android:layout_width="match_parent"
         android:layout_height="51dp"
         android:paddingEnd="@dimen/dp15"

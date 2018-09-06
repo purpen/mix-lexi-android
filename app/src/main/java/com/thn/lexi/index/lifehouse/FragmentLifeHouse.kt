@@ -182,7 +182,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
                     super.getItemOffsets(outRect, view, parent, state)
                     if (parent.getChildAdapterPosition(view) >= 0 && parent.getChildAdapterPosition(view) != urlList.size - 1) {
-                        outRect.left = -parent.context.resources.getDimensionPixelSize(R.dimen.dp5)
+                        outRect.left = -DimenUtil.getDimensionPixelSize(R.dimen.dp5)
                     }
                 }
             })

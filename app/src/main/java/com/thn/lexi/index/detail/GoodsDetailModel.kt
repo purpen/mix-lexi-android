@@ -1,7 +1,6 @@
 package com.thn.lexi.index.detail
 
 import com.basemodule.ui.IDataSource
-import com.thn.lexi.mine.AdapterMineFavorite
 import com.thn.lexi.net.ClientParamsAPI
 import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
@@ -211,6 +210,24 @@ class GoodsDetailModel : IDataSource {
             url = URL.UNFOCUS_BRAND_PAVILION
         }
         HttpRequest.sendRequest(HttpRequest.POST, url, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    //根据UI加载7位
+    fun getFavoriteUsers(goodsId: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFavoriteUsers(goodsId,"7")
+        HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_FAVORITE_USERS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
