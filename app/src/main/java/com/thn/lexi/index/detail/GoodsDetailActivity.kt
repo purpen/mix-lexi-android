@@ -461,8 +461,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonAddShopCart -> {
-                //TODO 添加到购物车
-                ToastUtil.showInfo("添加到购物车")
+                if (goodsData==null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter,goodsData)
+                selectSpecificationBottomDialog.show()
             }
 
             R.id.imageViewShare -> {
@@ -482,9 +483,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 if (goodsData == null) return
 
                 if (goodsData!!.is_wish) { //取消
-                    presenter.addWishOrder(goodsId, false)
+                    presenter.addWishOrder(goodsData!!.rid, false)
                 } else {
-                    presenter.addWishOrder(goodsId, true)
+                    presenter.addWishOrder(goodsData!!.rid, true)
                 }
 
             }
@@ -494,7 +495,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.textViewSelectSpec -> {
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsId, goodsData)
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter,goodsData)
                 selectSpecificationBottomDialog.show()
             }
         }

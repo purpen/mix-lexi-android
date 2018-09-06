@@ -1,4 +1,5 @@
 package com.thn.lexi.index.detail
+
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
@@ -19,9 +20,8 @@ import java.io.IOException
 import java.util.HashMap
 
 
-class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsId: String, goodsData: GoodsAllDetailBean.DataBean?) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
+class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean?) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
     private val present: GoodsDetailPresenter by lazy { presenter }
-    private val id: String by lazy { goodsId }
     private val goods: GoodsAllDetailBean.DataBean? = goodsData
     private val items: ArrayList<GoodsAllSKUBean.DataBean.ItemsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ItemsBean>() }
     private val colors: ArrayList<GoodsAllSKUBean.DataBean.ColorsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ColorsBean>() }
@@ -70,7 +70,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
     }
 
     private fun loadData() {
-        present.getGoodsSKUs(id, object : IDataSource.HttpRequestCallBack {
+        present.getGoodsSKUs(goods!!.rid, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val goodsAllSKUBean = JsonUtil.fromJson(json, GoodsAllSKUBean::class.java)
                 if (goodsAllSKUBean.success) {
@@ -122,9 +122,9 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
         loadData()
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
-        if (goods?.real_sale_price==0.0){
+        if (goods?.real_sale_price == 0.0) {
             view.textViewPrice.text = "${goods.real_price}"
-        }else{
+        } else {
             view.textViewPrice.text = "${goods?.real_sale_price}"
         }
 
