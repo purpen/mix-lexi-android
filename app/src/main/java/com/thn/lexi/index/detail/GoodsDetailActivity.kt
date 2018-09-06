@@ -52,6 +52,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private var storeRid:String = ""
 
+    private var goodsData: GoodsAllDetailBean.DataBean? = null
+
     override fun getIntentData() {
         goodsId = intent.extras.getString(GoodsDetailActivity::class.java.simpleName)
     }
@@ -157,7 +159,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      * 设置运费模板，快递时间 默认选第一条
      */
     override fun setExpressData(expressInfoBean: ExpressInfoBean?) {
-        var expressItem: ExpressInfoBean.DataBean.ItemsBean? = expressInfoBean?.data?.items?.get(0)
+        val items = expressInfoBean?.data?.items
+        if (items==null || items.isEmpty()){
+            headerView.textViewExpressTime.visibility = View.GONE
+            headerView.textViewExpress.visibility = View.GONE
+            return
+        }
+        val expressItem: ExpressInfoBean.DataBean.ItemsBean? = items[0]
         headerView.textViewExpressTime.text = "预计${expressItem?.min_days}~${expressItem?.max_days}到达"
     }
 
@@ -165,6 +173,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      * 设置商品信息
      */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
+
+
+        goodsData = data
 
         storeRid = data.store_rid
 
@@ -401,7 +412,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.textViewSelectSpec -> {
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this,presenter,goodsId)
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this,presenter,goodsId,goodsData)
                 selectSpecificationBottomDialog.show()
             }
         }

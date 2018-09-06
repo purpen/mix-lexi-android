@@ -16,7 +16,6 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
     private val dataSource: GoodsDetailModel by lazy { GoodsDetailModel() }
 
     override fun loadData(goodsId: String) {
-        LogUtil.e("goodID====${goodsId}")
         dataSource.loadData(goodsId, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()

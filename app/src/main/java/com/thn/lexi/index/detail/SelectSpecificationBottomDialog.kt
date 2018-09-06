@@ -1,5 +1,6 @@
 package com.thn.lexi.index.detail
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
@@ -18,9 +19,10 @@ import java.io.IOException
 import java.util.HashMap
 
 
-class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsId: String) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
+class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsId: String, goodsData: GoodsAllDetailBean.DataBean?) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
     private val present: GoodsDetailPresenter by lazy { presenter }
     private val id: String by lazy { goodsId }
+    private val goods: GoodsAllDetailBean.DataBean? = goodsData
     private val items: ArrayList<GoodsAllSKUBean.DataBean.ItemsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ItemsBean>() }
     private val colors: ArrayList<GoodsAllSKUBean.DataBean.ColorsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ColorsBean>() }
     private val modes: ArrayList<GoodsAllSKUBean.DataBean.ModesBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ModesBean>() }
@@ -34,56 +36,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
-        present.getGoodsSKUs(id, object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val goodsAllSKUBean = JsonUtil.fromJson(json, GoodsAllSKUBean::class.java)
-                if (goodsAllSKUBean.success) {
-                    setData(goodsAllSKUBean)
-                    SPUtil.write(GoodsAllSKUBean::class.java.simpleName, json)
-                } else {
-                    ToastUtil.showError(goodsAllSKUBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                ToastUtil.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
         return view
-    }
-
-
-    /**
-     * 设置数据
-     */
-    private fun setData(goodsAllSKUBean: GoodsAllSKUBean) {
-        items.clear()
-        colors.clear()
-        modes.clear()
-        items.addAll(goodsAllSKUBean.data.items)
-        colors.addAll(goodsAllSKUBean.data.colors)
-        modes.addAll(goodsAllSKUBean.data.modes)
-        initColorListState()
-        initSpecListState()
-
-        if (colors.isEmpty()) {
-            view.flowLayoutColor.visibility = View.GONE
-            view.textViewColor.visibility = View.GONE
-        } else {
-            view.flowLayoutColor.visibility = View.VISIBLE
-            view.textViewColor.visibility = View.VISIBLE
-            adapterColor.notifyDataChanged()
-        }
-
-        if (modes.isEmpty()) {
-            view.flowLayoutSize.visibility = View.GONE
-            view.textViewSize.visibility = View.GONE
-        } else {
-            view.flowLayoutSize.visibility = View.VISIBLE
-            view.textViewSize.visibility = View.VISIBLE
-            adapterSize.notifyDataChanged()
-        }
-
     }
 
     /**
@@ -116,8 +69,66 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
         }
     }
 
+    private fun loadData() {
+        present.getGoodsSKUs(id, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val goodsAllSKUBean = JsonUtil.fromJson(json, GoodsAllSKUBean::class.java)
+                if (goodsAllSKUBean.success) {
+                    setData(goodsAllSKUBean)
+                    SPUtil.write(GoodsAllSKUBean::class.java.simpleName, json)
+                } else {
+                    ToastUtil.showError(goodsAllSKUBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                ToastUtil.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 设置数据
+     */
+    private fun setData(goodsAllSKUBean: GoodsAllSKUBean) {
+        items.clear()
+        colors.clear()
+        modes.clear()
+        items.addAll(goodsAllSKUBean.data.items)
+        colors.addAll(goodsAllSKUBean.data.colors)
+        modes.addAll(goodsAllSKUBean.data.modes)
+
+        initColorListState()
+        initSpecListState()
+
+        adapterColor.notifyDataChanged()
+        adapterSize.notifyDataChanged()
+
+        if (colors.isEmpty()) {
+            view.linearLayoutColor.visibility = View.GONE
+        } else {
+            view.linearLayoutColor.visibility = View.VISIBLE
+        }
+
+        if (modes.isEmpty()) {
+            view.linearLayoutSize.visibility = View.GONE
+        } else {
+            view.linearLayoutSize.visibility = View.VISIBLE
+        }
+
+    }
+
     override fun setUiBeforShow() {
+        loadData()
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
+
+        if (goods?.real_sale_price==0.0){
+            view.textViewPrice.text = "${goods.real_price}"
+        }else{
+            view.textViewPrice.text = "${goods?.real_sale_price}"
+        }
+
+        view.textViewName.text = goods?.name
 
         val marginRight = DimenUtil.getDimensionPixelSize(R.dimen.dp15)
         val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DimenUtil.getDimensionPixelSize(R.dimen.dp24))
@@ -227,11 +238,22 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             }
             true
         }
-//        if (list.isEmpty()) {
-//            view.relativeLayoutBar.visibility = View.GONE
-//            view.recyclerViewCoupon.layoutParams = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp125))
 
-//        }
+        view.buttonConfirm.setOnClickListener {
+            if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
+                ToastUtil.showInfo("请选择颜色分类")
+                return@setOnClickListener
+            }
+
+            if (modes.size > 0 && TextUtils.isEmpty(selectedSize)) {
+                ToastUtil.showInfo("请选择规格")
+                return@setOnClickListener
+            }
+            dismiss()
+            val intent = Intent()
+            intent.putExtra(GoodsAllSKUBean::class.java.simpleName, selectedSKU)
+            context.startActivity(intent)
+        }
     }
 
     /**
