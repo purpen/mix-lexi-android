@@ -36,6 +36,10 @@ class GoodsDetailContract {
         fun updateCouponState(position: Int) {
 
         }
+
+        fun setAddWishOrderStatus(b: Boolean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -50,5 +54,7 @@ class GoodsDetailContract {
         fun getSimilarGoods(goodsId: String)
 
         fun getGoodsSKUs(id: String, param: IDataSource.HttpRequestCallBack)
+
+        fun addWishOrder(goodsId: String, isAddWish: Boolean)
     }
 }

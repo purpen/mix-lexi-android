@@ -1,12 +1,12 @@
 package com.thn.lexi.index.detail
 
 import com.basemodule.tools.JsonUtil
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.beans.BrandPavilionBean
+import com.thn.lexi.net.NetStatusBean
 import java.io.IOException
 
 class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract.Presenter {
@@ -125,7 +125,7 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
      * 获取商品所在店铺优惠券列表
      */
     override fun getCouponsByStoreId(store_rid: String) {
-        dataSource.getCouponsByStoreId(store_rid,object : IDataSource.HttpRequestCallBack {
+        dataSource.getCouponsByStoreId(store_rid, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val shopCouponListBean = JsonUtil.fromJson(json, ShopCouponListBean::class.java)
                 if (shopCouponListBean.success) {
@@ -145,7 +145,7 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
      * 点击领取优惠券
      */
     fun clickGetCoupon(storeId: String, code: String, callBack: IDataSource.HttpRequestCallBack) {
-        dataSource.clickGetCoupon(storeId,code,object : IDataSource.HttpRequestCallBack {
+        dataSource.clickGetCoupon(storeId, code, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val getCouponBean = JsonUtil.fromJson(json, GetCouponBean::class.java)
                 if (getCouponBean.success) {
@@ -167,13 +167,33 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
      * 获取商品所有SKU
      */
     override fun getGoodsSKUs(id: String, callBack: IDataSource.HttpRequestCallBack) {
-        dataSource.getGoodsSKUs(id,object : IDataSource.HttpRequestCallBack {
+        dataSource.getGoodsSKUs(id, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 callBack.onSuccess(json)
             }
 
             override fun onFailure(e: IOException) {
                 callBack.onFailure(e)
+            }
+        })
+    }
+
+    /**
+     * 添加心愿单
+     */
+    override fun addWishOrder(goodsId: String, isAddWish: Boolean) {
+        dataSource.addWishOrder(goodsId, isAddWish, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    view.setAddWishOrderStatus(isAddWish)
+                } else {
+                    view.showError(netStatusBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
     }

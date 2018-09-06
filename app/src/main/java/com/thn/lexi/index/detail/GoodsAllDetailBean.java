@@ -92,6 +92,8 @@ public class GoodsAllDetailBean {
         public boolean is_made_holiday;
         public boolean is_proprietary;
         public boolean is_sold_out;
+        public boolean is_wish;
+        public boolean is_like;
         public String keywords;
         public int like_count;
         public int made_cycle;

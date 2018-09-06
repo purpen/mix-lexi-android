@@ -368,4 +368,9 @@ object URL {
      */
     const val GET_GOODS_SKUS = "${BASE_URL}products/many_skus"
 
+    /**
+     *  添加心愿单
+     */
+    const val ADD_WISH_ORDER = "${BASE_URL}wishlist"
+
 }

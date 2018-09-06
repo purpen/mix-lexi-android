@@ -174,4 +174,5 @@
     <string name="text_order_make">接单订制</string>
     <string name="text_title_color">颜色</string>
     <string name="text_title_size">尺寸</string>
+    <string name="text_already_add">已添加</string>
 </resources>

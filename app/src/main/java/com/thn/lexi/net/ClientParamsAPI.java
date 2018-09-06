@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.basemodule.tools.Constants;
+import com.basemodule.tools.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.user.login.UserProfileUtil;
 
@@ -12,6 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -49,8 +51,8 @@ public class ClientParamsAPI {
         return str.trim();
     }
 
-    private static HashMap<String, String> generateCommonParams() {
-        HashMap<String, String> params = new HashMap<>();
+    private static HashMap<String, Object> generateCommonParams() {
+        HashMap<String,Object> params = new HashMap<>();
         String timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
         String nonceStr = generateRandomString();
 //        String app_key = SPUtil.read(Constants.APP_KEY);
@@ -110,8 +112,8 @@ public class ClientParamsAPI {
      * @param confirmPassword
      * @return
      */
-    public static HashMap<String, String> getRegisterParams(String areaCode, String phone, String userPsw, String confirmPassword) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getRegisterParams(String areaCode, String phone, String userPsw, String confirmPassword) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("areacode", areaCode);
         params.put("email", phone);
         params.put("password", userPsw);
@@ -126,8 +128,8 @@ public class ClientParamsAPI {
      * @param phone
      * @return
      */
-    public static HashMap<String, String> getCheckCodeRequestParams(String areaCode, String phone) {
-        HashMap<String, String> params = new HashMap<>();
+    public static HashMap<String, Object> getCheckCodeRequestParams(String areaCode, String phone) {
+        HashMap<String, Object> params = new HashMap<>();
         params.put("area_code", areaCode);
         params.put("mobile", phone);
         return params;
@@ -138,7 +140,7 @@ public class ClientParamsAPI {
      *
      * @return
      */
-    public static HashMap<String, String> getFreightParams() {
+    public static HashMap<String, Object> getFreightParams() {
         return generateCommonParams();
     }
 
@@ -147,7 +149,7 @@ public class ClientParamsAPI {
      *
      * @return
      */
-    public static HashMap<String, String> getAddressListParams() {
+    public static HashMap<String, Object> getAddressListParams() {
         return generateCommonParams();
     }
 
@@ -156,7 +158,7 @@ public class ClientParamsAPI {
      *
      * @return
      */
-    public static HashMap<String, String> getDefaultAddressParams() {
+    public static HashMap<String, Object> getDefaultAddressParams() {
         return generateCommonParams();
     }
 
@@ -165,14 +167,14 @@ public class ClientParamsAPI {
      *
      * @return
      */
-    public static HashMap<String, String> deleteAddressParams() {
+    public static HashMap<String, Object> deleteAddressParams() {
         return generateCommonParams();
     }
 
     /**
      * 获取省
      */
-    public static HashMap<String, String> getProvinceParams() {
+    public static HashMap<String, Object> getProvinceParams() {
         return generateCommonParams();
     }
 
@@ -181,7 +183,7 @@ public class ClientParamsAPI {
      *
      * @return
      */
-    public static HashMap<String, String> getDefaultParams() {
+    public static HashMap<String, Object> getDefaultParams() {
         return generateCommonParams();
     }
 
@@ -197,8 +199,8 @@ public class ClientParamsAPI {
      * @param checked
      * @return
      */
-    public static HashMap<String, String> getCommitAddressParams(String consigneeName, String phone, String provinceId, String cityId, String countyId, String townId, String addressDetail, String zipCode, boolean checked) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getCommitAddressParams(String consigneeName, String phone, String provinceId, String cityId, String countyId, String townId, String addressDetail, String zipCode, boolean checked) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("first_name", consigneeName);
         params.put("mobile", phone);
         params.put("province_id", provinceId);
@@ -218,8 +220,8 @@ public class ClientParamsAPI {
      * @param page
      * @return
      */
-    public static HashMap<String, String> getOrderList(String status, int page) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getOrderList(String status, int page) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("status", status);
         params.put("page", String.valueOf(page));
         params.put("per_page", Constants.PAGE_SIZE);
@@ -229,7 +231,7 @@ public class ClientParamsAPI {
     /**
      * 获取订单详情
      */
-    public static HashMap<String, String> getOrderDetailParams() {
+    public static HashMap<String, Object> getOrderDetailParams() {
         return generateCommonParams();
     }
 
@@ -240,8 +242,8 @@ public class ClientParamsAPI {
      * @param rid
      * @return
      */
-    public static HashMap<String, String> getSKUListParams(String rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getSKUListParams(String rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", rid);
         return params;
     }
@@ -251,8 +253,8 @@ public class ClientParamsAPI {
      *
      * @return
      */
-    public static HashMap<String, String> getShopCartParams(String rid, int quantity) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getShopCartParams(String rid, int quantity) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", rid);
         params.put("quantity", String.valueOf(quantity));
         return params;
@@ -265,8 +267,8 @@ public class ClientParamsAPI {
      * @param page
      * @return
      */
-    public static HashMap<String, String> searchHistoryParams(int page) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> searchHistoryParams(int page) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page", Constants.PAGE_SIZE);
         return params;
@@ -277,8 +279,8 @@ public class ClientParamsAPI {
      *
      * @return
      */
-    public static HashMap<String, String> searchResultParam(int page, String qk) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> searchResultParam(int page, String qk) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page", Constants.PAGE_SIZE);
         params.put("qk", qk);
@@ -291,24 +293,24 @@ public class ClientParamsAPI {
      * @param storeId
      * @return
      */
-    public static HashMap<String, String> appKeyAndSecretParams(String storeId) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> appKeyAndSecretParams(String storeId) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("store_rid", storeId);
         return params;
     }
 
 
     @Nullable
-    public static HashMap<String, String> getTokenParams(@NotNull String phone, @NotNull String password) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getTokenParams(@NotNull String phone, @NotNull String password) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("email", phone);
         params.put("password", password);
         return params;
     }
 
     @Nullable
-    public static HashMap<String, String> getLoginParams(@NotNull String phone, @NotNull String password) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getLoginParams(@NotNull String phone, @NotNull String password) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("email", phone);
         params.put("password", password);
         return params;
@@ -323,8 +325,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getGoodListParams(@NotNull String cid, int page, String status, String user_record) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getGoodListParams(@NotNull String cid, int page, String status, String user_record) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("cid", cid);
         params.put("page", "" + page);
         params.put("user_record",user_record);
@@ -341,8 +343,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getUpdatePasswordParams(@NotNull String phone, @NotNull String password, @NotNull String confirmPassword) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getUpdatePasswordParams(@NotNull String phone, @NotNull String password, @NotNull String confirmPassword) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("email", phone);
         params.put("password", password);
         params.put("affirm_password", confirmPassword);
@@ -356,14 +358,14 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getSettingParams(@NotNull String userId) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getSettingParams(@NotNull String userId) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("userId", userId);
         return params;
     }
 
-    public static HashMap<String, String> getSimilarParams(int page) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getSimilarParams(int page) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
         return params;
@@ -377,8 +379,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getMessageParams(int page, @NotNull String userId) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getMessageParams(int page, @NotNull String userId) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("user_id", userId);
         params.put("page", String.valueOf(page));
         params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
@@ -392,8 +394,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getFavoriteGoodsParams(@NotNull String rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getFavoriteGoodsParams(@NotNull String rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", rid);
         return params;
     }
@@ -406,8 +408,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> verifyCheckCodeParams(@NotNull String areaCode, @NotNull String phone, @NotNull String checkCode) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> verifyCheckCodeParams(@NotNull String areaCode, @NotNull String phone, @NotNull String checkCode) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("areacode", areaCode);
         params.put("email", phone);
         params.put("verify_code", checkCode);
@@ -423,8 +425,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getAreaCodes(int page, @NotNull String status) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getAreaCodes(int page, @NotNull String status) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page", String.valueOf(Constants.PAGE_SIZE));
         params.put("status", status);
@@ -438,8 +440,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getFocusBrandPavilionParams(@NotNull String rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getFocusBrandPavilionParams(@NotNull String rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", rid);
         return params;
     }
@@ -451,8 +453,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getUnfocusBrandPavilionParams(@NotNull String rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getUnfocusBrandPavilionParams(@NotNull String rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", rid);
         return params;
     }
@@ -467,8 +469,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getUploadUserInfoParams(@NotNull String avatar_id, @NotNull String name, @NotNull String birth, @NotNull String gender) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getUploadUserInfoParams(@NotNull String avatar_id, @NotNull String name, @NotNull String birth, @NotNull String gender) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("avatar_id", avatar_id);
         params.put("username", name);
         params.put("date", birth);
@@ -485,8 +487,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getCheckCodeLoginRequestParams(@NotNull String areaCode, @NotNull String phone, @NotNull String checkCode) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getCheckCodeLoginRequestParams(@NotNull String areaCode, @NotNull String phone, @NotNull String checkCode) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("areacode", areaCode);
         params.put("email", phone);
         params.put("verify_code", checkCode);
@@ -498,8 +500,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getHotRecommendParams() {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getHotRecommendParams() {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("per_page", "5");
         return params;
     }
@@ -509,8 +511,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getGoodSelectionParams() {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getGoodSelectionParams() {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("per_page", "4");
         return params;
     }
@@ -520,8 +522,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getLifeStoreParams() {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getLifeStoreParams() {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", UserProfileUtil.storeId());
         return params;
     }
@@ -533,8 +535,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getEditLifeStoreParams(@NotNull String title, @NotNull String description) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getEditLifeStoreParams(@NotNull String title, @NotNull String description) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", UserProfileUtil.storeId());
         params.put("name", title);
         params.put("description", description);
@@ -547,8 +549,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, String> getDeleteDistributeGoodsParams(@NotNull String rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getDeleteDistributeGoodsParams(@NotNull String rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid",rid);
         return params;
     }
@@ -559,8 +561,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getUploadLifeHouseLogoIdParams(@NotNull String logoId) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String,Object> getUploadLifeHouseLogoIdParams(@NotNull String logoId) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", UserProfileUtil.storeId());
         params.put("logo_id",logoId);
         return params;
@@ -573,8 +575,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getHotGoodsParams(int page) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String,Object> getHotGoodsParams(int page) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page", Constants.PAGE_SIZE);
         return params;
@@ -591,8 +593,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getAllGoodsParams(int page, @NotNull String sortType, @NotNull String profitType, @NotNull String filterCondition, @NotNull String minePrice, @NotNull String maxPrice) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getAllGoodsParams(int page, @NotNull String sortType, @NotNull String profitType, @NotNull String filterCondition, @NotNull String minePrice, @NotNull String maxPrice) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page",Constants.PAGE_SIZE);
         params.put("sort_type", sortType);
@@ -609,8 +611,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getShowWindowParams(int page) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getShowWindowParams(int page) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page",Constants.PAGE_SIZE);
         return params;
@@ -622,8 +624,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getFavoriteShowWindowParams(@Nullable String rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getFavoriteShowWindowParams(@Nullable String rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid",rid);
         return params;
     }
@@ -634,8 +636,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getFocusUserParams(@NotNull String uid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getFocusUserParams(@NotNull String uid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("uid",uid);
         return params;
     }
@@ -646,8 +648,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getShowWindowDetailParams(@NotNull String rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getShowWindowDetailParams(@NotNull String rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid",rid);
         return params;
     }
@@ -660,8 +662,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getSendCommentParams(@NotNull String rid, @NotNull String pid, @NotNull String content) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getSendCommentParams(@NotNull String rid, @NotNull String pid, @NotNull String content) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid",rid);
         params.put("pid",pid);
         params.put("content",content);
@@ -674,8 +676,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getPraiseCommentParams(@NotNull String comment_id) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getPraiseCommentParams(@NotNull String comment_id) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("comment_id",comment_id);
         return params;
     }
@@ -686,8 +688,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getMoreSubCommentsParams(int page,@NotNull String comment_id) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getMoreSubCommentsParams(int page,@NotNull String comment_id) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("comment_id",comment_id);
         params.put("per_page", Constants.PAGE_SIZE);
         params.put("page", String.valueOf(page));
@@ -700,8 +702,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getRelateShowWindowParams(@NotNull String rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getRelateShowWindowParams(@NotNull String rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid",rid);
         return  params;
     }
@@ -712,8 +714,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getGuessLikeParams(@NotNull String rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getGuessLikeParams(@NotNull String rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid",rid);
         return  params;
     }
@@ -724,8 +726,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getFocusedDesignPavilionParams(int page) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getFocusedDesignPavilionParams(int page) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("per_page", Constants.PAGE_SIZE);
         params.put("page", String.valueOf(page));
         return params;
@@ -738,8 +740,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getUserDynamicParams(int page) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getUserDynamicParams(int page) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("per_page", Constants.PAGE_SIZE);
         params.put("page", String.valueOf(page));
         return params;
@@ -747,8 +749,8 @@ public class ClientParamsAPI {
 
 
 //    @Nullable
-//    public static HashMap<String,String> getProductsByStoreId(int page,@NotNull String store_rid) {
-//        HashMap<String, String> params = generateCommonParams();
+//    public static HashMap<String, Object> getProductsByStoreId(int page,@NotNull String store_rid) {
+//        HashMap<String, Object> params = generateCommonParams();
 //        params.put("per_page", Constants.PAGE_SIZE);
 //        params.put("page", String.valueOf(page));
 //        params.put("sid", store_rid);
@@ -761,8 +763,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> loadBrandPavilionInfoParams(@NotNull String store_rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> loadBrandPavilionInfoParams(@NotNull String store_rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", store_rid);
         return params;
     }
@@ -774,8 +776,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getExpressTimeParams(@NotNull String goodsId, @NotNull String store_rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getExpressTimeParams(@NotNull String goodsId, @NotNull String store_rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", store_rid);
         params.put("product_rid", goodsId);
         return params;
@@ -787,8 +789,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getSimilarGoodsParams(@NotNull String goodsId) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getSimilarGoodsParams(@NotNull String goodsId) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("product_rid", goodsId);
         return params;
     }
@@ -799,8 +801,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getCouponsByStoreIdParams(@NotNull String store_rid) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getCouponsByStoreIdParams(@NotNull String store_rid) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("store_rid", store_rid);
         return params;
     }
@@ -812,8 +814,8 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getClickCouponsParams(@NotNull String storeId, @NotNull String code) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getClickCouponsParams(@NotNull String storeId, @NotNull String code) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("store_rid", storeId);
         params.put("rid", code);
         return params;
@@ -825,9 +827,34 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String,String> getGoodsSKUsParams(@NotNull String id) {
-        HashMap<String, String> params = generateCommonParams();
+    public static HashMap<String, Object> getGoodsSKUsParams(@NotNull String id) {
+        HashMap<String, Object> params = generateCommonParams();
         params.put("rid", id);
+        return params;
+    }
+
+    /**
+     * 添加心愿单
+     * @param goodsId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getGoodsIdParams(@NotNull String goodsId) {
+        HashMap<String, Object> params = generateCommonParams();
+        ArrayList<String> list = new ArrayList<>();
+        list.add(goodsId);
+        params.put("rids", list);
+        return params;
+    }
+
+    /**
+     * 商品详情
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getGoodsDetailData() {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("user_record","1");
         return params;
     }
 }

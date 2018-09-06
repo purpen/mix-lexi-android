@@ -1,10 +1,12 @@
 package com.thn.lexi.index.detail
+
 import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,9 +50,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var headerView: View
 
-    private lateinit var couponList:ArrayList<CouponBean>
+    private lateinit var couponList: ArrayList<CouponBean>
 
-    private var storeRid:String = ""
+    private var storeRid: String = ""
 
     private var goodsData: GoodsAllDetailBean.DataBean? = null
 
@@ -97,6 +99,21 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         presenter.loadData(goodsId)
     }
 
+    /**
+     * 设置添加心愿单状态
+     */
+    override fun setAddWishOrderStatus(b: Boolean) {
+        goodsData?.is_wish = b
+        if (b) {
+            buttonAddWish.setCompoundDrawables(null,null,null,null)
+            buttonAddWish.setPadding(DimenUtil.getDimensionPixelSize(R.dimen.dp4),0,0,0)
+            buttonAddWish.text = Util.getString(R.string.text_already_add)
+        } else {
+            buttonAddWish.compoundDrawablePadding = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
+            buttonAddWish.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_add_wish_order, R.dimen.dp10, R.dimen.dp10), null, null, null)
+            buttonAddWish.text = Util.getString(R.string.text_wish_order)
+        }
+    }
 
     //设置品牌馆信息
     override fun setBrandPavilionData(data: BrandPavilionBean.DataBean?) {
@@ -144,7 +161,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.relativeLayoutCoupon.visibility = View.VISIBLE
             val couponStr = StringBuilder()
             for (coupon in coupons) {
-                if (coupon.type==3)couponStr.append("满${coupon.min_amount}减${coupon.amount}、")
+                if (coupon.type == 3) couponStr.append("满${coupon.min_amount}减${coupon.amount}、")
             }
             if (TextUtils.isEmpty(couponStr)) {
                 headerView.textViewSub.visibility = View.GONE
@@ -160,7 +177,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      */
     override fun setExpressData(expressInfoBean: ExpressInfoBean?) {
         val items = expressInfoBean?.data?.items
-        if (items==null || items.isEmpty()){
+        if (items == null || items.isEmpty()) {
             headerView.textViewExpressTime.visibility = View.GONE
             headerView.textViewExpress.visibility = View.GONE
             return
@@ -197,6 +214,16 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             } else if (TextUtils.equals("image", item.type)) {
                 listDescription.add(AdapterGoodsDetail.MultipleItem(item, AdapterGoodsDetail.MultipleItem.IMAGE_ITEM_TYPE))
             }
+        }
+
+        //设置心愿单状态
+        if (data.is_wish) {
+            buttonAddWish.setCompoundDrawables(null, null, null, null)
+            buttonAddWish.text = Util.getString(R.string.text_already_add)
+        } else {
+            buttonAddWish.compoundDrawablePadding = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
+            buttonAddWish.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_add_wish_order, R.dimen.dp10, R.dimen.dp10), null, null, null)
+            buttonAddWish.text = Util.getString(R.string.text_wish_order)
         }
 
         adapter.setNewData(listDescription)
@@ -385,12 +412,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         val id = v.id
         when (id) {
 
-            R.id.buttonGoOrderConfirm ->{
+            R.id.buttonGoOrderConfirm -> {
                 //TODO 跳转确认订单
                 ToastUtil.showInfo("确认订单")
             }
 
-            R.id.buttonAddShopCart ->{
+            R.id.buttonAddShopCart -> {
                 //TODO 添加到购物车
                 ToastUtil.showInfo("添加到购物车")
             }
@@ -404,15 +431,22 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonAddWish -> {
-                ToastUtil.showInfo("添加心愿单")
+                if (goodsData == null) return
+
+                if (goodsData!!.is_wish) { //取消
+                    presenter.addWishOrder(goodsId, false)
+                } else {
+                    presenter.addWishOrder(goodsId, true)
+                }
+
             }
             R.id.buttonGetDiscount -> {
-                val couponBottomDialog = CouponBottomDialog(this, couponList, presenter,storeRid)
+                val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, storeRid)
                 couponBottomDialog.show()
             }
 
             R.id.textViewSelectSpec -> {
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this,presenter,goodsId,goodsData)
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsId, goodsData)
                 selectSpecificationBottomDialog.show()
             }
         }

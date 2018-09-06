@@ -19,7 +19,7 @@ public class JsonUtil {
         return element.getAsJsonArray();
     }
 
-    public static String list2Json(List list) throws JsonSyntaxException{
+    public static String list2Json(List list){
         return new Gson().toJson(list);
     }
 

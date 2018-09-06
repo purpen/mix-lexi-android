@@ -76,7 +76,7 @@ public class HttpRequest {
     }
 
     public static Call getRequest(String requestUrl, String urlSuffix, IDataSource.HttpRequestCallBack callback) {
-        HashMap<String, String> defaultParams = ClientParamsAPI.getDefaultParams();
+        HashMap<String, Object> defaultParams = ClientParamsAPI.getDefaultParams();
         return getRequest(requestUrl, urlSuffix, defaultParams, callback);
     }
 
