@@ -290,7 +290,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     private fun jump2GoodsDetail(adapter: BaseQuickAdapter<Any, BaseViewHolder>, position: Int) {
         val item = adapter.getItem(position) as ProductBean
         val intent = Intent(activity, GoodsDetailActivity::class.java)
-        intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
+        intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
         startActivity(intent)
     }
 

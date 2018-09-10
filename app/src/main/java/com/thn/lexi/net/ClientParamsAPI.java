@@ -778,7 +778,7 @@ public class ClientParamsAPI {
     @Nullable
     public static HashMap<String, Object> getExpressTimeParams(@NotNull String goodsId, @NotNull String store_rid) {
         HashMap<String, Object> params = generateCommonParams();
-        params.put("rid", store_rid);
+        params.put("store_rid", store_rid);
         params.put("product_rid", goodsId);
         return params;
     }

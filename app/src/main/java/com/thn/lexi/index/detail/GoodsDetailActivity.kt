@@ -54,7 +54,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var couponList: ArrayList<CouponBean>
 
-    private var storeRid: String = ""
 
     //商品详情数据
     private var goodsData: GoodsAllDetailBean.DataBean? = null
@@ -67,6 +66,18 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     }
 
     override fun initView() {
+
+        if(product.is_distributed){ //分销商品
+            buttonGoOrderConfirm.visibility = View.VISIBLE
+            buttonSaleDistribution.visibility= View.VISIBLE
+        }else{  //非分销商品
+            buttonAddShopCart.visibility = View.VISIBLE
+            if (product.is_custom_made){ //支持接单订制
+                buttonOrderMake.visibility = View.VISIBLE
+            }else{  //不支持接单订制
+                buttonGoOrderConfirm.visibility = View.VISIBLE
+            }
+        }
 
         listDescription = ArrayList()
 
@@ -109,6 +120,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         //获取喜欢商品用户
         presenter.getFavoriteUsers(product.rid)
+
+        //获取优惠券
+        presenter.getCouponsByStoreId(product.store_rid)
+
+        //获取商品所在品牌馆信息
+        presenter.loadBrandPavilionInfo(product.store_rid)
+
     }
 
 
@@ -281,16 +299,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         goodsData = data
 
-        storeRid = data.store_rid
-
-        //获取优惠券
-        presenter.getCouponsByStoreId(data.store_rid)
-
-        //获取商品所在品牌馆信息
-        presenter.loadBrandPavilionInfo(data.store_rid)
-
         // 获取交货时间
-        presenter.getExpressTime(data.fid, data.store_rid, product.rid)
+        presenter.getExpressTime(data.fid, product.store_rid, product.rid)
 
 
         for (item in data.deal_content) {
@@ -573,7 +583,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
             }
             R.id.buttonGetDiscount -> { //获取优惠券
-                val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, storeRid)
+                val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, product.store_rid)
                 couponBottomDialog.show()
             }
 

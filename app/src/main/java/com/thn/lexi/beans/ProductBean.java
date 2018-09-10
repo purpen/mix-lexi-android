@@ -60,16 +60,16 @@ public class ProductBean implements Parcelable {
     public String features;
     public String have_distributed;
     public String id_code;
-    public String is_custom_made;
-    public String is_custom_service;
-    public String is_distributed;
+    public boolean is_custom_made;
+    public boolean is_custom_service;
+    public boolean is_distributed;
     public boolean is_free_postage;
-    public String is_like;
-    public String is_made_holiday;
+    public boolean is_like;
+    public boolean is_made_holiday;
     public boolean is_sold_out;
-    public String is_proprietary;
+    public boolean is_proprietary;
     public String like_count;
-    public String is_wish;
+    public boolean is_wish;
     public String made_cycle;
     public String max_price;
     public String max_sale_price;
@@ -89,6 +89,9 @@ public class ProductBean implements Parcelable {
     public String total_stock;
     public List<String> modes;
 
+    public ProductBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -107,16 +110,16 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.features);
         dest.writeString(this.have_distributed);
         dest.writeString(this.id_code);
-        dest.writeString(this.is_custom_made);
-        dest.writeString(this.is_custom_service);
-        dest.writeString(this.is_distributed);
+        dest.writeByte(this.is_custom_made ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.is_custom_service ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.is_distributed ? (byte) 1 : (byte) 0);
         dest.writeByte(this.is_free_postage ? (byte) 1 : (byte) 0);
-        dest.writeString(this.is_like);
-        dest.writeString(this.is_made_holiday);
+        dest.writeByte(this.is_like ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.is_made_holiday ? (byte) 1 : (byte) 0);
         dest.writeByte(this.is_sold_out ? (byte) 1 : (byte) 0);
-        dest.writeString(this.is_proprietary);
+        dest.writeByte(this.is_proprietary ? (byte) 1 : (byte) 0);
         dest.writeString(this.like_count);
-        dest.writeString(this.is_wish);
+        dest.writeByte(this.is_wish ? (byte) 1 : (byte) 0);
         dest.writeString(this.made_cycle);
         dest.writeString(this.max_price);
         dest.writeString(this.max_sale_price);
@@ -137,9 +140,6 @@ public class ProductBean implements Parcelable {
         dest.writeStringList(this.modes);
     }
 
-    public ProductBean() {
-    }
-
     protected ProductBean(Parcel in) {
         this.category_id = in.readString();
         this.commission_price = in.readString();
@@ -152,16 +152,16 @@ public class ProductBean implements Parcelable {
         this.features = in.readString();
         this.have_distributed = in.readString();
         this.id_code = in.readString();
-        this.is_custom_made = in.readString();
-        this.is_custom_service = in.readString();
-        this.is_distributed = in.readString();
+        this.is_custom_made = in.readByte() != 0;
+        this.is_custom_service = in.readByte() != 0;
+        this.is_distributed = in.readByte() != 0;
         this.is_free_postage = in.readByte() != 0;
-        this.is_like = in.readString();
-        this.is_made_holiday = in.readString();
+        this.is_like = in.readByte() != 0;
+        this.is_made_holiday = in.readByte() != 0;
         this.is_sold_out = in.readByte() != 0;
-        this.is_proprietary = in.readString();
+        this.is_proprietary = in.readByte() != 0;
         this.like_count = in.readString();
-        this.is_wish = in.readString();
+        this.is_wish = in.readByte() != 0;
         this.made_cycle = in.readString();
         this.max_price = in.readString();
         this.max_sale_price = in.readString();
@@ -182,7 +182,7 @@ public class ProductBean implements Parcelable {
         this.modes = in.createStringArrayList();
     }
 
-    public static final Parcelable.Creator<ProductBean> CREATOR = new Parcelable.Creator<ProductBean>() {
+    public static final Creator<ProductBean> CREATOR = new Creator<ProductBean>() {
         @Override
         public ProductBean createFromParcel(Parcel source) {
             return new ProductBean(source);

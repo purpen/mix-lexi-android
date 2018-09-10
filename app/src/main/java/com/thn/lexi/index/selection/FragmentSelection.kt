@@ -190,7 +190,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         adapterPeopleRecommend.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as PeopleRecommendAdapter.MultipleItem
             val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.product.rid)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.product)
             startActivity(intent)
         }
 
@@ -296,7 +296,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         adapterGoodSelection.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as ProductBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
             startActivity(intent)
         }
     }
