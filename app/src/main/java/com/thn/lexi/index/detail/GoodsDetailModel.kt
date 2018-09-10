@@ -242,4 +242,39 @@ class GoodsDetailModel : IDataSource {
         })
     }
 
+
+    fun addShopCart(rid: String, quantity: Int, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.addShopCartParams(rid,quantity)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.ADD_SHOP_CART, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun getShopCartProductsNum(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET, URL.SHOP_CART_ITEM_COUNT, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }

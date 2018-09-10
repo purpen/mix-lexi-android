@@ -884,4 +884,18 @@ public class ClientParamsAPI {
         params.put("page",String.valueOf(page));
         return params;
     }
+
+    /**
+     * 加入购物车
+     * @param rid
+     * @param quantity
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> addShopCartParams(@NotNull String rid, int quantity) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("rid",rid);
+        params.put("quantity",String.valueOf(quantity));
+        return params;
+    }
 }

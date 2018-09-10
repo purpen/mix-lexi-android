@@ -3,6 +3,7 @@ package com.thn.lexi.index.detail
 import android.content.Intent
 import android.graphics.Paint
 import android.graphics.Rect
+import android.support.annotation.IntegerRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -32,6 +33,7 @@ import kotlinx.android.synthetic.main.header_goods_detail.view.*
 import kotlinx.android.synthetic.main.view_goods_description.view.*
 import kotlinx.android.synthetic.main.view_goods_shop.view.*
 import kotlinx.android.synthetic.main.view_similar_goods.view.*
+import java.lang.Integer.parseInt
 
 
 class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener {
@@ -127,8 +129,32 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         //获取商品所在品牌馆信息
         presenter.loadBrandPavilionInfo(product.store_rid)
 
+        //获取购物车商品数量
+        presenter.getShopCartProductsNum()
+
     }
 
+    /**
+     * 设置购物车商品数量
+     */
+    override fun setShopCartNum(item_count: Int) {
+        if (item_count>0){
+            textViewProductCount.visibility = View.VISIBLE
+        }else{
+            textViewProductCount.visibility = View.GONE
+        }
+
+        textViewProductCount.text = "$item_count"
+    }
+
+    /**
+     *  添加购物车成功
+     */
+    override fun setAddShopCartSuccess() {
+        var i = Integer.parseInt(textViewProductCount.text.toString())
+        i++
+        setShopCartNum(i)
+    }
 
     /**
      * 更新喜欢状态
@@ -301,7 +327,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         // 获取交货时间
         presenter.getExpressTime(data.fid, product.store_rid, product.rid)
-
 
         for (item in data.deal_content) {
             if (TextUtils.equals("text", item.type)) {

@@ -54,6 +54,14 @@ class GoodsDetailContract {
         fun setFavoriteUsersData(product_like_users: List<UserBean>) {
 
         }
+
+        fun setAddShopCartSuccess() {
+
+        }
+
+        fun setShopCartNum(item_count: Int) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -76,5 +84,9 @@ class GoodsDetailContract {
         fun focusBrandPavilion(store_rid: String, isFavorite: Boolean)
 
         fun getFavoriteUsers(goodsId: String)
+
+        fun getShopCartProductsNum()
+
+        fun addShopCart(rid: String, quantity: Int)
     }
 }

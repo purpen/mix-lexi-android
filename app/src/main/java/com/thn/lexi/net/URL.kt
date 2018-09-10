@@ -383,4 +383,14 @@ object URL {
      */
     const val GOODS_FAVORITE_USERS = "${BASE_URL}product/userlike"
 
+    /**
+     * 加入购物车
+     */
+    const val ADD_SHOP_CART = "${BASE_URL}cart"
+
+    /**
+     * 获取购物车商品数
+     */
+    const val SHOP_CART_ITEM_COUNT = "${BASE_URL}cart/item_count"
+
 }

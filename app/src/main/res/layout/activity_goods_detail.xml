@@ -65,7 +65,7 @@
                 android:textSize="@dimen/sp11" />
 
             <TextView
-                android:id="@+id/textViewCount"
+                android:id="@+id/textViewProductCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -75,6 +75,7 @@
                 android:minHeight="@dimen/dp12"
                 android:minWidth="@dimen/dp12"
                 android:text="0"
+                android:visibility="gone"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp8" />
         </RelativeLayout>

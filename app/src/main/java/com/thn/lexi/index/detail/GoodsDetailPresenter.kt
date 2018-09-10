@@ -1,6 +1,7 @@
 package com.thn.lexi.index.detail
 import android.view.View
 import com.basemodule.tools.JsonUtil
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -38,24 +39,6 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
             }
         })
     }
-
-//    fun loadGoodsInfo(goodsId: String) {
-//        dataSource.loadGoodsInfo(goodsId, object : IDataSource.HttpRequestCallBack {
-//            override fun onSuccess(json: String) {
-//                val goodsInfoBean = JsonUtil.fromJson(json, GoodsInfoBean::class.java)
-//                if (goodsInfoBean.success) {
-//                    if (goodsInfoBean.data != null) view.setGoodsInfo(goodsInfoBean.data)
-//                } else {
-//                    view.showError(goodsInfoBean.status.message)
-//                }
-//            }
-//
-//            override fun onFailure(e: IOException) {
-//                view.dismissLoadingView()
-//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-//            }
-//        })
-//    }
 
     /**
      * 请求商品所属品牌馆数据
@@ -255,6 +238,48 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
                     view.setFavoriteUsersData(favoriteGoodsUsersBean.data.product_like_users)
                 } else {
                     view.showError(favoriteGoodsUsersBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 添加购物车
+     */
+    override fun addShopCart(rid: String, quantity: Int) {
+        dataSource.addShopCart(rid,quantity,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val addShopCartBean = JsonUtil.fromJson(json, AddShopCartBean::class.java)
+                if (addShopCartBean.success) {
+                    view.setAddShopCartSuccess()
+                } else {
+                    view.showError(addShopCartBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     *  获取购物车商品数量
+     */
+    override fun getShopCartProductsNum() {
+
+        dataSource.getShopCartProductsNum(object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val shopCartProductNumBean = JsonUtil.fromJson(json, ShopCartProductNumBean::class.java)
+                if (shopCartProductNumBean.success) {
+                    LogUtil.e(json)
+                    view.setShopCartNum(shopCartProductNumBean.data.item_count)
+                } else {
+                    view.showError(shopCartProductNumBean.status.message)
                 }
             }
 
