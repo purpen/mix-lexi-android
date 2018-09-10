@@ -870,4 +870,18 @@ public class ClientParamsAPI {
         params.put("per_page",pageSize);
         return params;
     }
+
+    /**
+     * 获取喜欢商品的用户
+     * @param goodsId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getFavoriteUsers(@NotNull String goodsId,int page) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("rid",goodsId);
+        params.put("per_page",Constants.PAGE_SIZE);
+        params.put("page",String.valueOf(page));
+        return params;
+    }
 }

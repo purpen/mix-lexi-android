@@ -1,5 +1,6 @@
 package com.thn.lexi.index.detail
 
+import android.content.Intent
 import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
@@ -511,6 +512,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         headerView.textViewSelectSpec.setOnClickListener(this)
 
+        headerView.imageButton.setOnClickListener(this)
+
         headerView.buttonFocus.setOnClickListener(this)
 
         headerView.textViewConsult.setOnClickListener {
@@ -535,6 +538,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
             R.id.imageViewShare -> {
                 ToastUtil.showInfo("分享产品")
+            }
+
+            R.id.imageButton ->{ //喜欢用户列表
+                val intent = Intent(applicationContext,FavoriteUserListActivity::class.java)
+                intent.putExtra(FavoriteUserListActivity::class.java.simpleName,goodsId)
+                startActivity(intent)
             }
 
             R.id.buttonFocus -> { //关注大B/品牌馆/店铺

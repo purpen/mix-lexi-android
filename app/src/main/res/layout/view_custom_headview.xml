@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp48"
+    android:layout_height="@dimen/dp50"
     android:id="@+id/relativeLayout_titleBar"
     >
     <ImageButton
         android:id="@+id/head_goback"
-        android:layout_width="@dimen/dp45"
+        android:layout_width="@dimen/dp44"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
+        android:paddingStart="@dimen/dp15"
+        android:paddingEnd="@dimen/dp15"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:scaleType="fitXY"
         android:background="@null"
         android:src="@mipmap/icon_nav_back" />
 

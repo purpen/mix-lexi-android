@@ -12,7 +12,6 @@ import com.thn.lexi.R
 import com.thn.lexi.discoverLifeAesthetics.ShowWindowBean
 import com.thn.lexi.discoverLifeAesthetics.ShowWindowDetailActivity
 import com.thn.lexi.index.explore.BrandPavilionListBean
-import com.thn.lexi.index.lifehouse.DistributeShareDialog
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_Divider

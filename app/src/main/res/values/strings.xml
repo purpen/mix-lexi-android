@@ -175,4 +175,6 @@
     <string name="text_title_color">颜色</string>
     <string name="text_title_size">尺寸</string>
     <string name="text_already_add">已添加</string>
+    <string name="title_favorite_goods_person">喜欢该商品的人</string>
+    <string name="text_focused_each_other">互相关注</string>
 </resources>

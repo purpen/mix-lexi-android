@@ -1,6 +1,5 @@
 package com.thn.lexi.brandPavilion
 
-import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -9,8 +8,6 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
-import com.thn.lexi.discoverLifeAesthetics.ShowWindowBean
-import com.thn.lexi.discoverLifeAesthetics.ShowWindowDetailActivity
 import com.thn.lexi.index.explore.BrandPavilionListBean
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 

@@ -41,6 +41,7 @@
         <activity android:name=".discoverLifeAesthetics.ShowWindowCommentListActivity" />
         <activity android:name=".brandPavilion.BrandPavilionListActivity" />
         <activity android:name=".mine.dynamic.DynamicActivity" />
+        <activity android:name=".index.detail.FavoriteUserListActivity" />
     </application>
 
 </manifest>
