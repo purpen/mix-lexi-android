@@ -1,6 +1,7 @@
 package com.thn.lexi.view
 
 import android.content.Context
+import android.support.annotation.IdRes
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,10 @@ class CustomBottomBar : LinearLayout, View.OnClickListener {
 
         button3.setOnClickListener(this)
 
+    }
+
+    public fun getButton(@IdRes id:Int):Button{
+        return findViewById(id)
     }
 
     override fun onClick(v: View?) {

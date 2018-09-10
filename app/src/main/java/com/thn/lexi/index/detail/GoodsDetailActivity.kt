@@ -12,16 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.basemodule.ui.BaseActivity
-import com.thn.lexi.GlideImageLoader
-import com.thn.lexi.R
 import com.thn.lexi.index.selection.HeadImageAdapter
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.activity_goods_detail.*
 import kotlinx.android.synthetic.main.header_goods_detail.*
 import android.widget.TextView
 import com.basemodule.tools.*
-import com.thn.lexi.AppApplication
-import com.thn.lexi.RecyclerViewDivider
+import com.thn.lexi.*
 import com.thn.lexi.beans.BrandPavilionBean
 import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.beans.ProductBean
@@ -33,8 +30,6 @@ import kotlinx.android.synthetic.main.header_goods_detail.view.*
 import kotlinx.android.synthetic.main.view_goods_description.view.*
 import kotlinx.android.synthetic.main.view_goods_shop.view.*
 import kotlinx.android.synthetic.main.view_similar_goods.view.*
-import java.lang.Integer.parseInt
-
 
 class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener {
     private val showTagCount: Int = 5
@@ -526,8 +521,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         buttonAddShopCart.setOnClickListener(this)
 
         relativeLayoutShopCart.setOnClickListener {
-            //TODO 去购物车
-            ToastUtil.showInfo("去购物车")
+            val intent = Intent(applicationContext,MainActivity::class.java)
+            intent.putExtra(MainActivity::class.java.simpleName,MainFragment1::class.java.simpleName)
+            startActivity(intent)
         }
 
         imageViewBack.setOnClickListener { finish() }

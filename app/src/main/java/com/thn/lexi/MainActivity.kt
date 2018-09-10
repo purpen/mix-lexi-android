@@ -1,6 +1,7 @@
 package com.thn.lexi
 
 import android.content.Intent
+import android.text.TextUtils
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
@@ -12,7 +13,7 @@ class MainActivity : BaseActivity() {
     override val layout: Int = R.layout.activity_main
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        if (!isFinishing) super.onBackPressed()
     }
 
     private val fragment0: BaseFragment by lazy { MainFragment0.newInstance() }
@@ -33,7 +34,16 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onNewIntent(intent: Intent?) {
-        LogUtil.e("=================MainActivity==onNewIntent====================")
+        if (intent==null) return
+        var str = ""
+        if (intent.hasExtra(TAG)){
+           str = intent.getStringExtra(TAG)
+        }
+
+        if (TextUtils.equals(MainFragment1::class.java.simpleName,str)){
+            switchFragment(R.id.button2)
+            customBottomBar.getButton(R.id.button2).performClick()
+        }
     }
 
 
@@ -49,33 +59,33 @@ class MainActivity : BaseActivity() {
         hideFragments()
 
         when (id) {
-            R.id.button0 -> {
+            R.id.button0 -> { //首页
                 if (!fragment0.isAdded) {
-                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment0).show(fragment0).commit()
+                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment0).show(fragment0).commitAllowingStateLoss()
                 } else {
-                    supportFragmentManager.beginTransaction().show(fragment0).commit()
+                    supportFragmentManager.beginTransaction().show(fragment0).commitAllowingStateLoss()
                 }
             }
-            R.id.button1 -> {
+            R.id.button1 -> { //发现
                 if (!fragment1.isAdded) {
-                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment1).show(fragment1).commit()
+                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment1).show(fragment1).commitAllowingStateLoss()
                 } else {
-                    supportFragmentManager.beginTransaction().show(fragment1).commit()
+                    supportFragmentManager.beginTransaction().show(fragment1).commitAllowingStateLoss()
                 }
 
             }
-            R.id.button2 -> {
+            R.id.button2 -> { //购物车
                 if (!fragment2.isAdded) {
-                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment2).show(fragment2).commit()
+                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment2).show(fragment2).commitAllowingStateLoss()
                 } else {
-                    supportFragmentManager.beginTransaction().show(fragment2).commit()
+                    supportFragmentManager.beginTransaction().show(fragment2).commitAllowingStateLoss()
                 }
             }
             R.id.button3 -> {
                 if (!fragment3.isAdded) {
-                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment3).show(fragment3).commit()
+                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment3).show(fragment3).commitAllowingStateLoss()
                 } else {
-                    supportFragmentManager.beginTransaction().show(fragment3).commit()
+                    supportFragmentManager.beginTransaction().show(fragment3).commitAllowingStateLoss()
                 }
             }
         }
@@ -85,10 +95,10 @@ class MainActivity : BaseActivity() {
      * fragment当前事务只能提交一次，否则报错，解决方法是每次提交后重新获取事务
      */
     private fun hideFragments() {
-        supportFragmentManager.beginTransaction().hide(fragment0).commit()
-        supportFragmentManager.beginTransaction().hide(fragment1).commit()
-        supportFragmentManager.beginTransaction().hide(fragment2).commit()
-        supportFragmentManager.beginTransaction().hide(fragment3).commit()
+        supportFragmentManager.beginTransaction().hide(fragment0).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().hide(fragment1).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().hide(fragment2).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().hide(fragment3).commitAllowingStateLoss()
     }
 
 
