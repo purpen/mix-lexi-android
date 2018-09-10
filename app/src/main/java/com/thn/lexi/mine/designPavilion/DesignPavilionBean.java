@@ -81,6 +81,7 @@ public class DesignPavilionBean {
     public String products_count;
     public String province;
     public String province_id;
+    public List<String> products_cover;
     public List<ProductBean> products;
     public String rid;
     public int status;

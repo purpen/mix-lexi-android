@@ -12,8 +12,6 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
-import com.thn.lexi.mine.designPavilion.DesignPavilionBean
-import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
 
 class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionBean, BaseViewHolder>(layoutResId) {
 
@@ -21,43 +19,38 @@ class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionB
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)
 
-        GlideUtil.loadImageWithRadius(item.logo,imageViewShop,DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+        GlideUtil.loadImageWithRadius(item.logo, imageViewShop, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
 
-        helper.setText(R.id.textViewTitle,item.name)
-        helper.setText(R.id.textViewCount,"${item.store_products_counts}件商品")
+        helper.setText(R.id.textViewTitle, item.name)
+        helper.setText(R.id.textViewCount, "${item.store_products_counts}件商品")
 
         val buttonFocus = helper.getView<Button>(R.id.buttonFocus)
 
-        if (item.followed_status==1){
+        if (item.followed_status == 1) {
             buttonFocus.text = Util.getString(R.string.text_focused)
             buttonFocus.textSize = 13f
             buttonFocus.setTextColor(Util.getColor(R.color.color_6ed7af))
-            buttonFocus.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_focus_pavilion,0,0,0)
+            buttonFocus.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_focus_pavilion, 0, 0, 0)
             buttonFocus.setBackgroundResource(R.drawable.bg_color5fe4b1_radius4)
-        }else{
+        } else {
             buttonFocus.textSize = 14f
             buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
             buttonFocus.text = Util.getString(R.string.text_focus)
-            buttonFocus.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+            buttonFocus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             buttonFocus.setBackgroundResource(R.drawable.bg_coloreff3f2_radius4)
         }
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerViewProducts)
         recyclerView.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL,false)
+        val linearLayoutManager = LinearLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL, false)
         val adapter = DesignPavilionProductAdapter(R.layout.adapter_pure_imageview)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = linearLayoutManager
 
-        if (recyclerView.itemDecorationCount==0) recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
+        if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
 
-        val list = ArrayList<String>()
 
-        for (product in item.products){
-            list.add(product.cover)
-        }
-
-        adapter.setNewData(list)
+        if (item.products_cover != null) adapter.setNewData(item.products_cover)
 
         helper.addOnClickListener(R.id.imageViewShop)
 

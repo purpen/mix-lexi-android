@@ -69,8 +69,7 @@ class FavoriteUserListActivity : BaseActivity(), FavoriteUserListContract.View {
         }
 
         adapter.setOnItemClickListener { adapter, view, position ->
-            //
-            ToastUtil.showInfo("跳转用户")
+//            ToastUtil.showInfo("跳转用户")
 //            val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
 //            val intent = Intent(context, ShowWindowDetailActivity::class.java)
 //            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName, showWindowBean)
