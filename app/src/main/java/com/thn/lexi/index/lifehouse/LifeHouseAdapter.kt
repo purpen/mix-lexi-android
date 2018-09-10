@@ -15,12 +15,12 @@ import com.thn.lexi.R
 import com.thn.lexi.index.selection.HeadImageAdapter
 import android.widget.TextView
 import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
+import com.thn.lexi.beans.ProductBean
 
 
-class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<DistributionGoodsBean.DataBean.ProductsBean, BaseViewHolder>(res){
-    override fun convert(helper: BaseViewHolder, item: DistributionGoodsBean.DataBean.ProductsBean) {
+class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res){
+    override fun convert(helper: BaseViewHolder, item: ProductBean) {
         helper.setText(R.id.textView0, item.name)
 
         val textView2 = helper.getView<TextView>(R.id.textView2)

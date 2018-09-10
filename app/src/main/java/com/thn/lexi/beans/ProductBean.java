@@ -76,6 +76,7 @@ public class ProductBean implements Parcelable {
     public String min_price;
     public String min_sale_price;
     public String name;
+    public String stick_text;
     public String published_at;
     public double real_price;
     public double real_sale_price;
@@ -88,6 +89,7 @@ public class ProductBean implements Parcelable {
     public String top_category_id;
     public String total_stock;
     public List<String> modes;
+    public List<UserBean> product_like_users;
 
     public ProductBean() {
     }

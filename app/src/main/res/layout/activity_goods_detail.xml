@@ -2,136 +2,154 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"
-    >
+    android:descendantFocusability="blocksDescendants">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/relativeLayoutBar"
-        android:overScrollMode="never"
-        />
+        android:overScrollMode="never" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50"
-        >
+        android:layout_height="@dimen/dp50">
 
         <ImageView
             android:id="@+id/imageViewBack"
             android:layout_width="@dimen/dp50"
             android:layout_height="@dimen/dp50"
-            android:src="@mipmap/icon_return_white"
             android:layout_centerVertical="true"
-            android:padding="@dimen/dp15" />
+            android:padding="@dimen/dp15"
+            android:src="@mipmap/icon_return_white" />
 
         <ImageView
             android:id="@+id/imageViewShare"
             android:layout_width="@dimen/dp50"
             android:layout_height="@dimen/dp50"
-            android:src="@mipmap/icon_share_white"
-            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingEnd="@dimen/dp15"
             android:paddingStart="@dimen/dp15"
-            android:paddingEnd="@dimen/dp15" />
+            android:src="@mipmap/icon_share_white" />
     </RelativeLayout>
-
-    <RelativeLayout
+    <include layout="@layout/line_color_eee"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_above="@+id/relativeLayoutBar"
+        />
+    <LinearLayout
         android:id="@+id/relativeLayoutBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp50"
-        android:background="@android:color/white"
         android:layout_alignParentBottom="true"
-        >
-        <include layout="@layout/line_color_eee" />
+        android:background="@android:color/white">
+
         <RelativeLayout
             android:id="@+id/relativeLayoutShopCart"
             android:layout_width="79dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingTop="6dp"
+            android:layout_gravity="center_vertical"
             android:paddingBottom="6dp"
-            >
+            android:paddingTop="6dp">
+
             <TextView
                 android:layout_width="79dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/dp24"
-                android:paddingEnd="@dimen/dp22"
                 android:drawableTop="@mipmap/icon_add_shopcart"
                 android:gravity="center"
+                android:paddingEnd="@dimen/dp22"
+                android:paddingStart="@dimen/dp24"
                 android:text="@string/title_shopcart"
                 android:textColor="@color/color_949ea6"
                 android:textSize="@dimen/sp11" />
+
             <TextView
                 android:id="@+id/textViewCount"
-                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="23dp"
-                android:minWidth="@dimen/dp12"
-                android:minHeight="@dimen/dp12"
+                android:background="@drawable/bg_oval_ff6666"
                 android:gravity="center"
-                android:textSize="@dimen/sp8"
+                android:minHeight="@dimen/dp12"
+                android:minWidth="@dimen/dp12"
                 android:text="0"
                 android:textColor="@android:color/white"
-                android:background="@drawable/bg_oval_ff6666"
-                />
+                android:textSize="@dimen/sp8" />
         </RelativeLayout>
 
+        <!--添加购物车-->
         <Button
             android:id="@+id/buttonAddShopCart"
-            android:layout_toEndOf="@+id/relativeLayoutShopCart"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="133dp"
             android:layout_height="@dimen/dp40"
+            android:layout_gravity="center_vertical|end"
             android:background="@drawable/bg_colore2d343a_left_radius4"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_centerVertical="true"
             android:text="@string/text_add_shopcart"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp16"
             android:visibility="gone"
             />
 
+        <!--非分销购买按钮-->
         <Button
             android:id="@+id/buttonGoOrderConfirm"
-            android:layout_toEndOf="@id/buttonAddShopCart"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="133dp"
             android:layout_height="@dimen/dp40"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/dp15"
             android:background="@drawable/bg_colore5fe4b1_right_radius4"
+            android:text="@string/text_purchase"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16"
+            android:visibility="gone" />
+
+
+        <!--接单订制按钮-->
+        <Button
+            android:id="@+id/buttonOrderMake"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_centerVertical="true"
+            android:layout_width="133dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/dp15"
+            android:background="@drawable/bg_colore5fe4b1_right_radius4"
+            android:text="@string/text_order_make"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16"
+            android:visibility="gone"
+            />
+
+        <!--分销购买按钮-->
+        <Button
+            android:id="@+id/buttonPurchase"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="133dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_gravity="center_vertical|end"
+            android:background="@drawable/bg_colore5fe4b1_left_radius4"
             android:text="@string/text_purchase"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp16"
             android:visibility="gone"
             />
 
-        <Button
-            android:id="@+id/buttonOrderMake"
-            android:layout_toEndOf="@id/buttonAddShopCart"
-            android:layout_width="133dp"
-            android:layout_height="@dimen/dp40"
-            android:background="@drawable/bg_colore5fe4b1_right_radius4"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_centerVertical="true"
-            android:text="@string/text_order_make"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp16"
-            android:visibility="gone"
-            />
+        <!--卖按钮-->
         <Button
             android:id="@+id/buttonSaleDistribution"
-            android:layout_toEndOf="@id/buttonGoOrderConfirm"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="@dimen/dp15"
             android:layout_width="133dp"
             android:layout_height="@dimen/dp40"
             android:background="@drawable/bg_coloreff6666_right_radius4"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_centerVertical="true"
             android:text="卖 赚￥12.00"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp16"
             android:visibility="gone"
             />
-    </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

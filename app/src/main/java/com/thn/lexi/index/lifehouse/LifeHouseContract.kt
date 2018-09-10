@@ -12,11 +12,11 @@ class LifeHouseContract {
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
         fun goPage()
-        fun setNewData(data: List<DistributionGoodsBean.DataBean.ProductsBean>) {
+        fun setNewData(data: List<ProductBean>) {
 
         }
 
-        fun addData(products: List<DistributionGoodsBean.DataBean.ProductsBean>) {
+        fun addData(products: List<ProductBean>) {
 
         }
 

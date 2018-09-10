@@ -292,7 +292,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置是否喜欢
      */
     override fun setFavorite(b: Boolean, position: Int) {
-        val item = adapter.getItem(position) as DistributionGoodsBean.DataBean.ProductsBean
+        val item = adapter.getItem(position) as ProductBean
         item.is_like = b
         adapter.notifyItemChanged(position)
     }
@@ -306,13 +306,16 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         headerLifeHouse.textViewSelectGoodsCenter.setOnClickListener(this)
 
-        adapter.setOnItemClickListener { adapter, view, position ->
-            ToastUtil.showInfo("position==$position")
+        adapter.setOnItemClickListener { adapter, _, position ->
+            val item = adapter.getItem(position) as ProductBean
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
+            startActivity(intent)
         }
 
 
         adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, viewClicked, position ->
-            val productsBean = adapter.getItem(position) as DistributionGoodsBean.DataBean.ProductsBean
+            val productsBean = adapter.getItem(position) as ProductBean
             when (viewClicked.id) {
                 R.id.imageViewDelete -> {
                     showDeleteDialog(productsBean.rid, position)
@@ -390,7 +393,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
 
-    override fun setNewData(data: List<DistributionGoodsBean.DataBean.ProductsBean>) {
+    override fun setNewData(data: List<ProductBean>) {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(data)
         adapter.setEnableLoadMore(true)
@@ -398,7 +401,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
 
-    override fun addData(products: List<DistributionGoodsBean.DataBean.ProductsBean>) {
+    override fun addData(products: List<ProductBean>) {
         adapter.addData(products)
         adapter.notifyDataSetChanged()
         ++page

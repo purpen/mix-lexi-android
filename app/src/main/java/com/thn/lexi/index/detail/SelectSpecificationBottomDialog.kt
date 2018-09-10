@@ -1,6 +1,7 @@
 package com.thn.lexi.index.detail
 
 import android.content.Context
+import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
@@ -34,8 +35,19 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
     private lateinit var adapterColor: TagAdapter<GoodsAllSKUBean.DataBean.ColorsBean>
     private lateinit var adapterSize: TagAdapter<GoodsAllSKUBean.DataBean.ModesBean>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        loadData()
+    }
+
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
+        if (goods!!.is_distributed) {
+            view.buttonAddShopCart.visibility = View.VISIBLE
+            view.buttonGoOrderConfirm.visibility = View.VISIBLE
+        } else {
+            view.buttonConfirm.visibility = View.VISIBLE
+        }
         return view
     }
 
@@ -119,7 +131,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
     }
 
     override fun setUiBeforShow() {
-        loadData()
+
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
         if (goods?.real_sale_price == 0.0) {
@@ -239,6 +251,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             true
         }
 
+        //确认按钮
         view.buttonConfirm.setOnClickListener {
             if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
                 ToastUtil.showInfo("请选择颜色分类")
@@ -251,18 +264,28 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             }
             dismiss()
 
-            when(whichClicked){
-                R.id.textViewSelectSpec ->{
+            when (whichClicked) {
+                R.id.textViewSelectSpec -> {
                     ToastUtil.showInfo("跳转确认订单...")
                 }
 
-                R.id.buttonAddShopCart ->{
+                R.id.buttonAddShopCart -> {
                     ToastUtil.showInfo("加入购物车")
                 }
             }
 //            val intent = Intent()
 //            intent.putExtra(GoodsAllSKUBean::class.java.simpleName, selectedSKU)
 //            context.startActivity(intent)
+        }
+
+        //添加购物车按钮
+        view.buttonAddShopCart.setOnClickListener {
+            ToastUtil.showInfo("加入购物车")
+        }
+
+        //购买->跳转确认订单
+        view.buttonGoOrderConfirm.setOnClickListener {
+            ToastUtil.showInfo("跳转确认订单...")
         }
     }
 

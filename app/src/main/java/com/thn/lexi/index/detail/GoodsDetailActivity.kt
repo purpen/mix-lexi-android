@@ -68,7 +68,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     override fun initView() {
 
         if(product.is_distributed){ //分销商品
-            buttonGoOrderConfirm.visibility = View.VISIBLE
+            buttonPurchase.visibility = View.VISIBLE
             buttonSaleDistribution.visibility= View.VISIBLE
         }else{  //非分销商品
             buttonAddShopCart.visibility = View.VISIBLE
@@ -529,6 +529,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.textViewConsult.setOnClickListener {
             ToastUtil.showInfo("咨询")
         }
+
+        //分销商品->点击购买
+        buttonPurchase.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -587,7 +590,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 couponBottomDialog.show()
             }
 
-            R.id.textViewSelectSpec -> { //请选择规格
+            R.id.buttonPurchase,R.id.textViewSelectSpec -> { //请选择规格
                 val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData, R.id.textViewSelectSpec)
                 selectSpecificationBottomDialog.show()
             }
