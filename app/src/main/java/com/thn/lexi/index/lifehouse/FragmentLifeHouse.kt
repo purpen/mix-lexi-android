@@ -340,7 +340,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         adapterWelcomeInWeek.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as ProductBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.rid)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
             startActivity(intent)
         }
 

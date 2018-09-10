@@ -40,7 +40,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var presenter: GoodsDetailPresenter
 
-    private var goodsId: String = ""
+    private lateinit var product: ProductBean
 
     override val layout: Int = R.layout.activity_goods_detail
 
@@ -63,7 +63,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     private var brandPavilionData: BrandPavilionBean.DataBean? = null
 
     override fun getIntentData() {
-        goodsId = intent.extras.getString(GoodsDetailActivity::class.java.simpleName)
+        product = intent.extras.getParcelable(GoodsDetailActivity::class.java.simpleName)
     }
 
     override fun initView() {
@@ -102,13 +102,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     }
 
     override fun requestNet() {
-        presenter.loadData(goodsId)
+        presenter.loadData(product.rid)
 
         //获取相似商品
-        presenter.getSimilarGoods(goodsId)
+        presenter.getSimilarGoods(product.rid)
 
         //获取喜欢商品用户
-        presenter.getFavoriteUsers(goodsId)
+        presenter.getFavoriteUsers(product.rid)
     }
 
 
@@ -290,7 +290,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         presenter.loadBrandPavilionInfo(data.store_rid)
 
         // 获取交货时间
-        presenter.getExpressTime(data.fid, data.store_rid, goodsId)
+        presenter.getExpressTime(data.fid, data.store_rid, product.rid)
 
 
         for (item in data.deal_content) {
@@ -542,7 +542,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
             R.id.imageButton ->{ //喜欢用户列表
                 val intent = Intent(applicationContext,FavoriteUserListActivity::class.java)
-                intent.putExtra(FavoriteUserListActivity::class.java.simpleName,goodsId)
+                intent.putExtra(FavoriteUserListActivity::class.java.simpleName,product.rid)
                 startActivity(intent)
             }
 
