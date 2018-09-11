@@ -1,13 +1,16 @@
 package com.thn.lexi
+
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.RadioButton
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.shopCart.*
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
 import kotlinx.android.synthetic.main.fragment_main1.*
+import kotlinx.android.synthetic.main.photopick_gridlist_item.view.*
 import kotlinx.android.synthetic.main.view_custom_headview.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -60,7 +63,8 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapterWish
 
-        adapterWish.addHeaderView(View.inflate(activity,R.layout.header_shop_cart_wish_order,null))
+        adapterWish.addHeaderView(View.inflate(activity, R.layout.header_shop_cart_wish_order, null))
+
     }
 
     /**
@@ -76,10 +80,33 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerViewGoods.layoutManager = linearLayoutManager
         recyclerViewGoods.setHasFixedSize(true)
         recyclerViewGoods.adapter = adapterOrder
+
+        //编辑状态购物车
+        val linearLayoutManagerEdit = LinearLayoutManager(activity)
+        linearLayoutManagerEdit.orientation = LinearLayoutManager.VERTICAL
+        recyclerViewEditShopCart.setHasFixedSize(true)
+        recyclerViewEditShopCart.layoutManager = linearLayoutManagerEdit
+        recyclerViewEditShopCart.adapter = adapterOrder
     }
 
 
     override fun installListener() {
+        customHeadView.headRightTV.setOnClickListener {
+            if (swipeRefreshLayout.isShown) {
+                swipeRefreshLayout.visibility = View.GONE
+                recyclerViewEditShopCart.visibility = View.VISIBLE
+                customHeadView.setRightTxt(Util.getString(R.string.text_complete), color6e)
+            } else {
+                swipeRefreshLayout.visibility = View.VISIBLE
+                recyclerViewEditShopCart.visibility = View.GONE
+                customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
+            }
+            for (item in adapterOrder.data){
+                item.isEdit = !item.isEdit
+            }
+
+            adapterOrder.notifyDataSetChanged()
+        }
 
         adapterWish.setOnLoadMoreListener({
             presenter.loadMoreData()

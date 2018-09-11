@@ -2,9 +2,9 @@ package com.thn.lexi.shopCart
 
 import android.graphics.Paint
 import android.support.annotation.LayoutRes
+import android.support.annotation.VisibleForTesting
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
@@ -46,6 +46,16 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
         addSubView.setOnValueChangedListener { value ->
             item.quantity = value
             EventBus.getDefault().post(MessageUpdate())
+        }
+
+        val checkBox = helper.getView<CheckBox>(R.id.checkBox)
+
+        if (item.isEdit){
+            checkBox.visibility = View.VISIBLE
+            addSubView.visibility = View.GONE
+        }else{
+            checkBox.visibility = View.GONE
+            addSubView.visibility = View.VISIBLE
         }
     }
 }

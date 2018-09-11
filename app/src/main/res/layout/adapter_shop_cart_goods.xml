@@ -2,12 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="105dp"
+    android:background="@android:color/white"
     android:paddingStart="@dimen/dp15"
     android:paddingEnd="@dimen/dp0"
-    android:background="@android:color/white"
     >
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:button="@drawable/radio_button_style"
+        android:paddingEnd="@dimen/dp15"
+        android:paddingStart="@dimen/dp0"
+        android:visibility="gone"
+        android:background="@null"
+        />
     <ImageView
         android:id="@+id/imageView"
+        android:layout_toEndOf="@+id/checkBox"
         android:layout_width="@dimen/dp70"
         android:layout_height="@dimen/dp70"
         android:layout_centerVertical="true"
