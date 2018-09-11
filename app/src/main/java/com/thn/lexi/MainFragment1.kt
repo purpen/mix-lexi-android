@@ -51,7 +51,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         customHeadView.head_goback.visibility = View.GONE
         customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
         customHeadView.setHeadCenterTxtShow(true, R.string.title_shopcart)
-
+        adapterWish.setHeaderAndEmpty(true)
         iniShopCart()
 
         val linearLayoutManager = LinearLayoutManager(activity)

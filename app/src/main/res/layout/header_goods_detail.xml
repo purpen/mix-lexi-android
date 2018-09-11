@@ -257,11 +257,11 @@
             android:src="@mipmap/icon_favorite_more_person" />
     </RelativeLayout>
 
-    <include layout="@layout/line_height20_bgf8f8f8" />
+    <include layout="@layout/line_height20_bgf5f7f9" />
 
     <include layout="@layout/view_goods_description" />
 
-    <include layout="@layout/line_height20_bgf8f8f8" />
+    <include layout="@layout/line_height20_bgf5f7f9" />
 
     <include layout="@layout/view_goods_shop" />
 

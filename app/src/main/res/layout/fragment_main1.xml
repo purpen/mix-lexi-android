@@ -18,7 +18,7 @@
         android:paddingBottom="@dimen/dp12"
         android:includeFontPadding="false"
         android:textSize="@dimen/sp14"
-        android:text="0"
+        android:text="0件礼品"
         />
     <include layout="@layout/line_color_eee" />
     <android.support.v4.widget.SwipeRefreshLayout
