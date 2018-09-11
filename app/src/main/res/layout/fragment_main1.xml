@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:background="@color/color_f5f7f9"
+    >
     <com.thn.lexi.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
@@ -13,6 +13,8 @@
         android:id="@+id/textViewNum"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp45"
+        android:layout_below="@+id/customHeadView"
+        android:background="@android:color/white"
         android:gravity="bottom"
         android:includeFontPadding="false"
         android:paddingBottom="@dimen/dp12"
@@ -22,10 +24,17 @@
         android:textColor="@color/color_333"
         android:textSize="@dimen/sp14" />
 
-    <include layout="@layout/line_color_eee" />
+    <include layout="@layout/line_color_eee"
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_below="@+id/textViewNum"
+        />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
+        android:layout_below="@+id/line"
+        android:layout_above="@+id/relativeLayoutBottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -38,10 +47,91 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewEditShopCart"
+        android:layout_below="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
+        android:layout_above="@+id/relativeLayoutBottom"
         android:visibility="gone" />
 
+    <RelativeLayout
+        android:id="@+id/relativeLayoutBottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        >
+        <include layout="@layout/line_color_eee" />
+        <!--非编辑状态-->
+        <TextView
+            android:id="@+id/textViewTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp15"
+            android:paddingEnd="@dimen/dp0"
+            android:textColor="@color/color_555"
+            android:includeFontPadding="false"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/sp14"
+            android:text="合计:"
+            />
+        <TextView
+            android:id="@+id/textViewTotalPrice"
+            android:layout_toEndOf="@+id/textViewTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:includeFontPadding="false"
+            android:drawableStart="@mipmap/icon_price_unit"
+            android:layout_marginStart="@dimen/dp10"
+            android:textColor="@color/color_333"
+            android:drawablePadding="@dimen/dp3"
+            android:textSize="@dimen/sp15"
+            android:text="0"
+            />
+        <Button
+            android:id="@+id/buttonSettleAccount"
+            android:layout_alignParentEnd="true"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="173dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginEnd="@dimen/dp15"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_color5fe4b1_radius4"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16"
+            android:text="@string/text_settle_account"
+            />
 
-</LinearLayout>
+        <!--编辑状态-->
+        <Button
+            android:id="@+id/buttonDelete"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/dp160"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginStart="@dimen/dp15"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_colord265fe4b1_radius4"
+            android:textColor="@color/color_6ed7af"
+            android:textSize="@dimen/sp16"
+            android:text="@string/text_settle_account"
+            android:visibility="gone"
+            />
+
+        <Button
+            android:id="@+id/buttonAddWish"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/dp160"
+            android:layout_height="@dimen/dp40"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp15"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_color5fe4b1_radius4"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16"
+            android:text="@string/text_add_wish_order"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -3,14 +3,12 @@ package com.thn.lexi
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RadioButton
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.shopCart.*
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
 import kotlinx.android.synthetic.main.fragment_main1.*
-import kotlinx.android.synthetic.main.photopick_gridlist_item.view.*
 import kotlinx.android.synthetic.main.view_custom_headview.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -92,16 +90,26 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
     override fun installListener() {
         customHeadView.headRightTV.setOnClickListener {
-            if (swipeRefreshLayout.isShown) {
+            if (swipeRefreshLayout.isShown) { //显示编辑状态
                 swipeRefreshLayout.visibility = View.GONE
                 recyclerViewEditShopCart.visibility = View.VISIBLE
                 customHeadView.setRightTxt(Util.getString(R.string.text_complete), color6e)
+                textViewTotal.visibility = View.GONE
+                textViewTotalPrice.visibility = View.GONE
+                buttonSettleAccount.visibility = View.GONE
+                buttonDelete.visibility = View.VISIBLE
+                buttonAddWish.visibility = View.VISIBLE
             } else {
                 swipeRefreshLayout.visibility = View.VISIBLE
                 recyclerViewEditShopCart.visibility = View.GONE
                 customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
+                buttonDelete.visibility = View.GONE
+                buttonAddWish.visibility = View.GONE
+                textViewTotal.visibility = View.VISIBLE
+                textViewTotalPrice.visibility = View.VISIBLE
+                buttonSettleAccount.visibility = View.VISIBLE
             }
-            for (item in adapterOrder.data){
+            for (item in adapterOrder.data) {
                 item.isEdit = !item.isEdit
             }
 

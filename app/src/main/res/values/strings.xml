@@ -179,4 +179,6 @@
     <string name="text_focused_each_other">互相关注</string>
     <string name="text_edit">编辑</string>
     <string name="text_sold_out">该商品已售罄</string>
+    <string name="text_settle_account">结算</string>
+    <string name="text_add_wish_order">放入心愿单</string>
 </resources>
