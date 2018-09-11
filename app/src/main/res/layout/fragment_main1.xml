@@ -114,7 +114,7 @@
             android:background="@drawable/bg_colord265fe4b1_radius4"
             android:textColor="@color/color_6ed7af"
             android:textSize="@dimen/sp16"
-            android:text="@string/text_settle_account"
+            android:text="@string/text_remove"
             android:visibility="gone"
             />
 
