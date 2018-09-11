@@ -60,6 +60,10 @@ public class ProductBean implements Parcelable {
     public String features;
     public String have_distributed;
     public String id_code;
+    public String s_color;
+    public String s_model;
+    public String product_name;
+    public int stock_quantity;
     public boolean is_custom_made;
     public boolean is_custom_service;
     public boolean is_distributed;

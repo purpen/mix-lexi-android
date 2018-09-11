@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:textColor="@color/color_333"
+        android:paddingStart="@dimen/dp15"
+        android:gravity="center_vertical"
+        android:paddingEnd="0dp"
+        android:includeFontPadding="false"
+        android:textSize="@dimen/sp14"
+        android:text="@string/text_wish_order"
+        />
+    <include layout="@layout/line_color_eee" />
+</LinearLayout>

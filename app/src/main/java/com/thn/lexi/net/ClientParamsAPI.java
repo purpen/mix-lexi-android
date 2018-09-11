@@ -898,4 +898,17 @@ public class ClientParamsAPI {
         params.put("quantity",String.valueOf(quantity));
         return params;
     }
+
+    /**
+     * 购物车心愿单
+     * @param page
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getWishOrderParams(int page) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("page",String.valueOf(page));
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
 }

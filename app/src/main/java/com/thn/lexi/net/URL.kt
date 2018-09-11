@@ -393,4 +393,9 @@ object URL {
      */
     const val SHOP_CART_ITEM_COUNT = "${BASE_URL}cart/item_count"
 
+    /**
+     * 获取购物车所有商品
+     */
+    const val SHOP_CART_GOODS = "${BASE_URL}cart"
+
 }
