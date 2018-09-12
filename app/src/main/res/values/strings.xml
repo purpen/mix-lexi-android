@@ -183,4 +183,9 @@
     <string name="text_add_wish_order">放入心愿单</string>
     <string name="text_remove">移除</string>
     <string name="text_plesse_select_goods">请选择商品</string>
+    <string name="title_select_express_address">选择收货地址</string>
+    <string name="text_delivery_send">寄送</string>
+    <string name="text_order_detail">明细</string>
+    <string name="text_continue_commit_order">继续以确认订单</string>
+    <string name="text_add_new_address">新的收货地址</string>
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/shape_radiu4_bgcolor_5fe4b1" android:state_enabled="true"/>
+
+    <item android:drawable="@drawable/shape_radiu4_bgcolor_805fe4b1" android:state_enabled="false"/>
+</selector>

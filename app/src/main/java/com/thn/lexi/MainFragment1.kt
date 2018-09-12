@@ -1,5 +1,6 @@
 package com.thn.lexi
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.AddShopCartBean
+import com.thn.lexi.order.SelectExpressAddressActivity
+import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.thn.lexi.shopCart.*
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
 import kotlinx.android.synthetic.main.fragment_main1.*
@@ -122,7 +125,9 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
         buttonSettleAccount.setOnClickListener {
             //结算
-            ToastUtil.showInfo("结算")
+            val intent =Intent(activity,SelectExpressAddressActivity::class.java)
+//            intent.putExtra()
+            startActivity(intent)
         }
 
 

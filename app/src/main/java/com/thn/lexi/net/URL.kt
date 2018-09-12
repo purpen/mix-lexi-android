@@ -403,4 +403,10 @@ object URL {
      */
     const val REMOVE_FROM_SHOP_CART = "${BASE_URL}cart/remove"
 
+
+    /**
+     * 获取用户收货地址
+     */
+    const val GET_USER_EXPRESS_ADDRESS = "${BASE_URL}address"
+
 }
