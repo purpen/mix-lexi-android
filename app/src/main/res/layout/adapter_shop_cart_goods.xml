@@ -28,11 +28,12 @@
         />
     <TextView
         android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/imageView"
         android:layout_alignTop="@+id/imageView"
         android:layout_marginStart="@dimen/dp10"
+        android:layout_marginEnd="@dimen/dp10"
         android:layout_toStartOf="@+id/textViewPrice"
         android:includeFontPadding="false"
         android:text="@string/app_name"
@@ -47,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="@dimen/dp5"
+
         android:drawableStart="@mipmap/icon_price_unit"
         android:includeFontPadding="false"
         android:textSize="@dimen/sp14"
@@ -76,9 +77,13 @@
 
     <TextView
         android:id="@+id/textViewSpec"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/color_b2b2b2"
+        android:layout_toStartOf="@+id/textViewPrice"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginEnd="@dimen/dp10"
         android:includeFontPadding="false"
         android:textSize="@dimen/sp12"
         android:text="规格"

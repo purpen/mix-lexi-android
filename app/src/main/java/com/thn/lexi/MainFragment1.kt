@@ -229,6 +229,26 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         items = data.items
 
         adapterOrder.setNewData(data.items)
+
+        setShopCartTotalPrice()
+    }
+
+    /**
+     * 设置购物车总价
+     */
+    private fun setShopCartTotalPrice(){
+        var totalPrice = 0.0
+        val items = adapterOrder.data
+        for (item in items) {
+            val product = item.product
+            if (product.sale_price == 0.0) {
+                totalPrice += product.price*item.quantity
+            }else{
+                totalPrice += product.sale_price*item.quantity
+            }
+        }
+
+        textViewTotalPrice.text = "$totalPrice"
     }
 
     override fun loadMoreComplete() {
@@ -267,6 +287,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
             count += item.quantity
         }
         textViewNum.text = "${count}件礼品"
+        setShopCartTotalPrice()
     }
 
 
