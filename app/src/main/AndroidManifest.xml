@@ -43,6 +43,7 @@
         <activity android:name=".mine.dynamic.DynamicActivity" />
         <activity android:name=".index.detail.FavoriteUserListActivity" />
         <activity android:name=".order.SelectExpressAddressActivity" />
+        <activity android:name=".order.ConfirmOrderActivity" />
     </application>
 
 </manifest>

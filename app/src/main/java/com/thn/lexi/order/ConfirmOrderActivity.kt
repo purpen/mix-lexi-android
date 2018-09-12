@@ -12,10 +12,10 @@ import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
-import kotlinx.android.synthetic.main.acticity_select_express_address.*
+import kotlinx.android.synthetic.main.acticity_submit_order.*
 
 
-class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContract.View {
+class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
 
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
 
@@ -23,26 +23,25 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     private val adapter: AdapterUserAddressList by lazy { AdapterUserAddressList(R.layout.adapter_user_express_address) }
 
-    override val layout: Int = R.layout.acticity_select_express_address
+    override val layout: Int = R.layout.acticity_submit_order
 
     private lateinit var footerView: View
 
-    private var goodsId: String? = null
 
     override fun getIntentData() {
-        if (intent.hasExtra(SelectExpressAddressActivity::class.java.simpleName)) {
-            goodsId = intent.getStringExtra(SelectExpressAddressActivity::class.java.simpleName)
+        if (intent.hasExtra(ConfirmOrderActivity::class.java.simpleName)) {
+//            goodsId = intent.getStringExtra(ConfirmOrderActivity::class.java.simpleName)
         }
     }
 
     override fun initView() {
-        customHeadView.setHeadCenterTxtShow(true, R.string.title_select_express_address)
+        customHeadView.setHeadCenterTxtShow(true, R.string.title_submit_order)
         swipeRefreshLayout.isEnabled = false
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapter
+//  TODO      recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(), R.color.color_f5f7f9, recyclerView, 1f))
         val view = View(this)
         view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp10))
@@ -69,17 +68,12 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
             item.is_default = true
 
             adapter.notifyDataSetChanged()
-
-            setConfirmOrderButtonState()
         }
 
-        buttonConfirmOrder.setOnClickListener {
-            if (!buttonConfirmOrder.isEnabled){
-                ToastUtil.showInfo("请先选择收货地址")
-                return@setOnClickListener
-            }
-            val intent = Intent(this,ConfirmOrderActivity::class.java)
-            startActivity(intent)
+        buttonSubmitOrder.setOnClickListener {
+
+//            val intent = Intent(this,ConfirmOrderActivity::class.java)
+//            startActivity(intent)
         }
     }
 
@@ -87,24 +81,8 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
     override fun setNewData(addresses: MutableList<UserAddressListBean.DataBean>) {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(addresses)
-        setConfirmOrderButtonState()
     }
 
-    /**
-     * 设置去确认订单界面按钮状态
-     */
-    private fun setConfirmOrderButtonState() {
-        val data = adapter.data
-
-        var hasChecked = false
-        for (item in data) {
-            if (item.is_default) {
-                hasChecked = true
-                break
-            }
-        }
-        buttonConfirmOrder.isEnabled = hasChecked
-    }
 
 
     override fun requestNet() {
