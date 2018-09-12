@@ -14,6 +14,7 @@
         android:button="@drawable/check_box_style"
         android:paddingEnd="@dimen/dp15"
         android:paddingStart="@dimen/dp0"
+        android:checked="false"
         android:visibility="gone"
         android:background="@null"
         />

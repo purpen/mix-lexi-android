@@ -4,6 +4,7 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.index.detail.AddShopCartBean
+import com.thn.lexi.net.NetStatusBean
 import java.io.IOException
 
 class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presenter {
@@ -16,7 +17,10 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
     /**
      * 加载心愿单
      */
-    override fun loadData() {
+    override fun loadData(isRefresh: Boolean) {
+
+        if (isRefresh) page = 1
+
         dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
 
             override fun onStart() {
@@ -130,6 +134,53 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
             }
 
             override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+
+    /**
+     * 心愿单
+     */
+    override fun addWishOrder(list: ArrayList<String>) {
+        dataSource.addWishOrder(list, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    view.setAddWishOrderStatus()
+                } else {
+                    view.showError(netStatusBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 从购物车移除
+     */
+    override fun removeProductFromShopCart(list: ArrayList<String>) {
+        dataSource.removeProductFromShopCart(list,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val removeShopCartBean = JsonUtil.fromJson(json, RemoveShopCartBean::class.java)
+                if (removeShopCartBean.success) {
+                    if (removeShopCartBean.data!=null) view.removeShopCartSuccess()
+                } else {
+                    view.showError(removeShopCartBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

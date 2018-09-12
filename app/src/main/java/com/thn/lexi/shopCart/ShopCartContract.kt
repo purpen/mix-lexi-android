@@ -42,13 +42,23 @@ class ShopCartContract {
         fun setAddShopCartSuccess(cartBean: AddShopCartBean.DataBean.CartBean) {
 
         }
+
+        fun setAddWishOrderStatus() {
+
+        }
+
+        fun removeShopCartSuccess() {
+
+        }
     }
 
     interface Presenter : BasePresenter {
-        fun loadData()
+        fun loadData(isRefresh: Boolean)
         fun loadMoreData()
         fun getShopCartGoods()
         fun getGoodsSKUs(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack)
         fun addShopCart(rid: String, quantity: Int)
+        fun addWishOrder(list: ArrayList<String>)
+        fun removeProductFromShopCart(list: ArrayList<String>)
     }
 }

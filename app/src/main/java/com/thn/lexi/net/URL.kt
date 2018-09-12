@@ -398,4 +398,9 @@ object URL {
      */
     const val SHOP_CART_GOODS = "${BASE_URL}cart"
 
+    /**
+     *  购物车移除商品SKU
+     */
+    const val REMOVE_FROM_SHOP_CART = "${BASE_URL}cart/remove"
+
 }

@@ -63,6 +63,7 @@ public class ProductBean implements Parcelable {
     public String s_color;
     public String s_model;
     public String product_name;
+    public String product_rid;
     public int stock_quantity;
     public boolean is_custom_made;
     public boolean is_custom_service;
@@ -77,6 +78,8 @@ public class ProductBean implements Parcelable {
     public String made_cycle;
     public String max_price;
     public String max_sale_price;
+    public double sale_price;
+    public double price;
     public String min_price;
     public String min_sale_price;
     public String name;

@@ -2,11 +2,9 @@ package com.thn.lexi.shopCart
 
 import android.graphics.Paint
 import android.support.annotation.LayoutRes
-import android.support.annotation.VisibleForTesting
 import android.view.View
 import android.widget.*
 import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -25,14 +23,14 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
         val textViewPrice = helper.getView<TextView>(R.id.textViewPrice)
         val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)
         textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp8,R.dimen.dp10),null,null,null)
-        if (product.real_sale_price == 0.0) {
-            textViewPrice.text = "${product.real_price}"
+        if (product.sale_price == 0.0) {
+            textViewPrice.text = "${product.price}"
             textViewOldPrice.visibility = View.GONE
         } else {
             textViewOldPrice.visibility = View.VISIBLE
-            textViewPrice.text = "${product.real_sale_price}"
+            textViewPrice.text = "${product.sale_price}"
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥${product.real_price}"
+            textViewOldPrice.text = "￥${product.price}"
         }
 
         helper.setText(R.id.textViewSpec,product.s_color+" / "+product.s_model)
@@ -49,6 +47,12 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
         }
 
         val checkBox = helper.getView<CheckBox>(R.id.checkBox)
+
+        checkBox.isChecked = item.isChecked
+
+        checkBox.setOnCheckedChangeListener { _, isChecked ->
+            item.isChecked = isChecked
+        }
 
         if (item.isEdit){
             checkBox.visibility = View.VISIBLE

@@ -9,10 +9,8 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.thn.lexi.MessageUpdate
 import com.thn.lexi.R
 import com.thn.lexi.beans.ProductBean
-import org.greenrobot.eventbus.EventBus
 
 class AdapterShopCartWishGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
 

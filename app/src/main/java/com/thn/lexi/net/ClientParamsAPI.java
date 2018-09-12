@@ -834,15 +834,13 @@ public class ClientParamsAPI {
     }
 
     /**
-     * 添加心愿单
-     * @param goodsId
+     * 心愿单参数
+     * @param list
      * @return
      */
     @Nullable
-    public static HashMap<String, Object> getGoodsIdParams(@NotNull String goodsId) {
+    public static HashMap<String, Object> getGoodsIdParams(@NotNull ArrayList<String> list) {
         HashMap<String, Object> params = generateCommonParams();
-        ArrayList<String> list = new ArrayList<>();
-        list.add(goodsId);
         params.put("rids", list);
         return params;
     }

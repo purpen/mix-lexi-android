@@ -146,7 +146,10 @@ class GoodsDetailModel : IDataSource {
     }
 
     fun addWishOrder(goodsId: String, isAddWish: Boolean, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getGoodsIdParams(goodsId)
+        val list = ArrayList<String>()
+        list.add(goodsId)
+
+        val params = ClientParamsAPI.getGoodsIdParams(list)
 
         val method: String
         if (isAddWish) {

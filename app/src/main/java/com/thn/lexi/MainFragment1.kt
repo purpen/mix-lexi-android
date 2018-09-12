@@ -63,7 +63,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerView.adapter = adapterWish
 
         adapterWish.addHeaderView(View.inflate(activity, R.layout.header_shop_cart_wish_order, null))
-        textViewTotalPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp11,R.dimen.dp14),null,null,null)
+        textViewTotalPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp11, R.dimen.dp14), null, null, null)
     }
 
     /**
@@ -89,17 +89,83 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     }
 
     /**
-     * 心愿单->添加购物车成功
+     * 心愿单添加购物车成功
      */
     override fun setAddShopCartSuccess(cartBean: AddShopCartBean.DataBean.CartBean) {
         presenter.getShopCartGoods()
     }
 
+    /**
+     *  放入心愿单
+     */
+    override fun setAddWishOrderStatus() {
+        presenter.loadData(true)
+    }
+
+    /**
+     * 商品SKU移除购物车成功
+     */
+    override fun removeShopCartSuccess() {
+        val data = adapterOrder.data
+
+        val iterator = data.iterator()
+
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item.isChecked) iterator.remove()
+        }
+
+        adapterOrder.notifyDataSetChanged()
+    }
+
     override fun installListener() {
 
+        buttonSettleAccount.setOnClickListener {
+            //结算
+            ToastUtil.showInfo("结算")
+        }
+
+
+        buttonDelete.setOnClickListener {
+            //从购物车移除
+            val data = adapterOrder.data
+            val list = ArrayList<String>()
+            for (item in data) {
+                if (item.isChecked) {
+                    list.add(item.product.rid)
+                }
+            }
+
+            if (list.isEmpty()) {
+                ToastUtil.showInfo(Util.getString(R.string.text_plesse_select_goods))
+                return@setOnClickListener
+            }
+
+            presenter.removeProductFromShopCart(list)
+        }
+
+        buttonAddWish.setOnClickListener {
+            //加入心愿单
+            val data = adapterOrder.data
+            val list = ArrayList<String>()
+            for (item in data) {
+                if (item.isChecked) {
+                    list.add(item.product.product_rid)
+                }
+            }
+
+            if (list.isEmpty()) {
+                ToastUtil.showInfo(Util.getString(R.string.text_plesse_select_goods))
+                return@setOnClickListener
+            }
+            presenter.addWishOrder(list)
+        }
+
+
+        // 心愿单添加购物车
         adapterWish.setOnItemChildClickListener { adapter, view, position ->
             val productBean = adapter.getItem(position) as ProductBean
-            val addShopCartBottomDialog = AddShopCartBottomDialog(activity!!, presenter,productBean)
+            val addShopCartBottomDialog = AddShopCartBottomDialog(activity!!, presenter, productBean)
             addShopCartBottomDialog.show()
         }
 
@@ -148,7 +214,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
     override fun loadData() {
 //        加载心愿单
-        presenter.loadData()
+        presenter.loadData(false)
 
 //        获取购物车商品
         presenter.getShopCartGoods()

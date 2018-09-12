@@ -182,4 +182,5 @@
     <string name="text_settle_account">结算</string>
     <string name="text_add_wish_order">放入心愿单</string>
     <string name="text_remove">移除</string>
+    <string name="text_plesse_select_goods">请选择商品</string>
 </resources>

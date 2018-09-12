@@ -77,4 +77,41 @@ class ShopCartModel : IDataSource {
         })
     }
 
+    fun addWishOrder(list: ArrayList<String>, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getGoodsIdParams(list)
+
+        HttpRequest.sendRequest(HttpRequest.POST, URL.ADD_WISH_ORDER, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    fun removeProductFromShopCart(list: ArrayList<String>, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getGoodsIdParams(list)
+
+        HttpRequest.sendRequest(HttpRequest.POST, URL.REMOVE_FROM_SHOP_CART, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }

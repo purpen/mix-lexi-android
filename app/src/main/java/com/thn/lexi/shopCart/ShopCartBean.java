@@ -42,6 +42,7 @@ public class ShopCartBean {
             public int store_id;
             public int user_id;
             public boolean isEdit;
+            public boolean isChecked;
         }
     }
 
