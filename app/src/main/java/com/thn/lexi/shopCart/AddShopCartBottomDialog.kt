@@ -1,4 +1,4 @@
-package com.thn.lexi.index.detail
+package com.thn.lexi.shopCart
 
 import android.content.Context
 import android.os.Bundle
@@ -13,6 +13,8 @@ import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.detail.GoodsAllSKUBean
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.dialog_select_specification_bottom.view.*
@@ -20,10 +22,9 @@ import java.io.IOException
 import java.util.HashMap
 
 
-class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean?, ClickedId: Int) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
-    private val present: GoodsDetailPresenter by lazy { presenter }
-    private val whichClicked: Int by lazy { ClickedId }
-    private val goods: GoodsAllDetailBean.DataBean? = goodsData
+class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, product: ProductBean) : BottomBaseDialog<AddShopCartBottomDialog>(context) {
+    private val present: ShopCartPresenter by lazy { presenter }
+    private val goods: ProductBean = product
     private val items: ArrayList<GoodsAllSKUBean.DataBean.ItemsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ItemsBean>() }
     private val colors: ArrayList<GoodsAllSKUBean.DataBean.ColorsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ColorsBean>() }
     private val modes: ArrayList<GoodsAllSKUBean.DataBean.ModesBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ModesBean>() }
@@ -271,15 +272,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             }
             dismiss()
 
-            when (whichClicked) {
-                R.id.textViewSelectSpec -> {
-                    ToastUtil.showInfo("跳转确认订单...")
-                }
-
-                R.id.buttonAddShopCart -> {
-                    present.addShopCart(selectedSKU!!.rid,1)
-                }
-            }
+            present.addShopCart(selectedSKU!!.rid,1)
 //            val intent = Intent()
 //            intent.putExtra(GoodsAllSKUBean::class.java.simpleName, selectedSKU)
 //            context.startActivity(intent)
@@ -297,6 +290,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 return@setOnClickListener
             }
             dismiss()
+
             present.addShopCart(selectedSKU!!.rid,1)
         }
 

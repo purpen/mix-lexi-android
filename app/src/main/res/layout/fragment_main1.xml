@@ -86,6 +86,7 @@
             android:layout_marginStart="@dimen/dp10"
             android:textColor="@color/color_333"
             android:drawablePadding="@dimen/dp3"
+            android:textStyle="bold"
             android:textSize="@dimen/sp15"
             android:text="0"
             />

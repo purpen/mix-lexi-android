@@ -3,6 +3,7 @@ import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.index.detail.AddShopCartBean
 import java.io.IOException
 
 class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presenter {
@@ -97,26 +98,42 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
     }
 
 
+    /**
+     * 获取商品所有SKU
+     */
+    override fun getGoodsSKUs(rid: String, callBack: IDataSource.HttpRequestCallBack) {
+        dataSource.getGoodsSKUs(rid, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
+
 
     /**
      * 添加购物车
      */
-//    override fun addShopCart(rid: String, quantity: Int) {
-//        dataSource.addShopCart(rid,quantity,object : IDataSource.HttpRequestCallBack {
-//            override fun onSuccess(json: String) {
-//                val addShopCartBean = JsonUtil.fromJson(json, AddShopCartBean::class.java)
-//                if (addShopCartBean.success) {
-//                    view.setAddShopCartSuccess()
-//                } else {
-//                    view.showError(addShopCartBean.status.message)
-//                }
-//            }
-//
-//            override fun onFailure(e: IOException) {
-//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-//            }
-//        })
-//    }
+    override fun addShopCart(rid: String, quantity: Int) {
+        dataSource.addShopCart(rid,quantity,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val addShopCartBean = JsonUtil.fromJson(json, AddShopCartBean::class.java)
+                if (addShopCartBean.success) {
+                    if (addShopCartBean.data.cart!=null) view.setAddShopCartSuccess(addShopCartBean.data.cart)
+                } else {
+                    view.showError(addShopCartBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
 
     /**
      *  获取购物车商品数量

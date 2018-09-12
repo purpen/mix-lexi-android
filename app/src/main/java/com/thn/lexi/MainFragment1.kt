@@ -6,6 +6,7 @@ import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.detail.AddShopCartBean
 import com.thn.lexi.shopCart.*
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
 import kotlinx.android.synthetic.main.fragment_main1.*
@@ -62,7 +63,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerView.adapter = adapterWish
 
         adapterWish.addHeaderView(View.inflate(activity, R.layout.header_shop_cart_wish_order, null))
-
+        textViewTotalPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp11,R.dimen.dp14),null,null,null)
     }
 
     /**
@@ -87,8 +88,21 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerViewEditShopCart.adapter = adapterOrder
     }
 
+    /**
+     * 心愿单->添加购物车成功
+     */
+    override fun setAddShopCartSuccess(cartBean: AddShopCartBean.DataBean.CartBean) {
+        presenter.getShopCartGoods()
+    }
 
     override fun installListener() {
+
+        adapterWish.setOnItemChildClickListener { adapter, view, position ->
+            val productBean = adapter.getItem(position) as ProductBean
+            val addShopCartBottomDialog = AddShopCartBottomDialog(activity!!, presenter,productBean)
+            addShopCartBottomDialog.show()
+        }
+
         customHeadView.headRightTV.setOnClickListener {
             if (swipeRefreshLayout.isShown) { //显示编辑状态
                 swipeRefreshLayout.visibility = View.GONE
@@ -181,9 +195,9 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onCountChange(message: MessageUpdate) {
-        if (items == null) return
-        var count: Int = 0
-        for (item in items!!) {
+        val data = adapterOrder.data
+        var count = 0
+        for (item in data) {
             count += item.quantity
         }
         textViewNum.text = "${count}件礼品"

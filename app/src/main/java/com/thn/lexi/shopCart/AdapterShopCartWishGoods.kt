@@ -6,14 +6,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.MessageUpdate
 import com.thn.lexi.R
 import com.thn.lexi.beans.ProductBean
-import com.thn.lexi.view.AddSubView
 import org.greenrobot.eventbus.EventBus
 
 class AdapterShopCartWishGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
@@ -37,14 +35,17 @@ class AdapterShopCartWishGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBe
         }
 
         val textViewSoldOut = helper.getView<TextView>(R.id.textViewSoldOut)
-        val linearLayout = helper.getView<View>(R.id.linearLayout)
+        val linearLayoutAddShopCart = helper.getView<View>(R.id.linearLayoutAddShopCart)
         if (item.is_sold_out){
-            linearLayout.visibility = View.GONE
+            linearLayoutAddShopCart.visibility = View.GONE
             textViewSoldOut.visibility = View.VISIBLE
             textViewSoldOut.text = Util.getString(R.string.text_sold_out)
         }else{
             textViewSoldOut.visibility = View.GONE
-            linearLayout.visibility = View.VISIBLE
+            linearLayoutAddShopCart.visibility = View.VISIBLE
         }
+
+        //加入购物车
+        helper.addOnClickListener(R.id.linearLayoutAddShopCart)
     }
 }
