@@ -27,11 +27,12 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     private lateinit var footerView: View
 
-    private var goodsId: String? = null
+    //订单信息
+    private lateinit var createOrderBean: CreateOrderBean
 
     override fun getIntentData() {
         if (intent.hasExtra(SelectExpressAddressActivity::class.java.simpleName)) {
-            goodsId = intent.getStringExtra(SelectExpressAddressActivity::class.java.simpleName)
+            createOrderBean = intent.getParcelableExtra(SelectExpressAddressActivity::class.java.simpleName)
         }
     }
 
@@ -74,11 +75,25 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
         }
 
         buttonConfirmOrder.setOnClickListener {
-            if (!buttonConfirmOrder.isEnabled){
+
+            var selectedItem: UserAddressListBean.DataBean? =null
+
+            for (item in adapter.data){
+                if (item.is_default){
+                    selectedItem = item
+                    break
+                }
+            }
+
+            if (selectedItem==null) {
                 ToastUtil.showInfo("请先选择收货地址")
                 return@setOnClickListener
             }
+
+            createOrderBean.address_rid = selectedItem.rid
+
             val intent = Intent(this,ConfirmOrderActivity::class.java)
+            intent.putExtra(ConfirmOrderActivity::class.java.simpleName,createOrderBean)
             startActivity(intent)
         }
     }

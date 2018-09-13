@@ -4,10 +4,7 @@ import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
@@ -27,10 +24,13 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
 
     private lateinit var footerView: View
 
+    //订单信息
+    private lateinit var createOrderBean: CreateOrderBean
 
     override fun getIntentData() {
         if (intent.hasExtra(ConfirmOrderActivity::class.java.simpleName)) {
-//            goodsId = intent.getStringExtra(ConfirmOrderActivity::class.java.simpleName)
+            createOrderBean = intent.getParcelableExtra(ConfirmOrderActivity::class.java.simpleName)
+            LogUtil.e("")
         }
     }
 
@@ -42,13 +42,16 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(), R.color.color_f5f7f9, recyclerView, 1f))
-        val view = View(this)
-        view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp10))
-        view.setBackgroundColor(Util.getColor(android.R.color.transparent))
-        adapter.addHeaderView(view)
 
-        footerView = View.inflate(this, R.layout.footer_add_new_address, null)
+        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(), R.color.color_f5f7f9, recyclerView, 10f))
+
+        adapter.setHeaderFooterEmpty(true,true)
+
+        val headerView = View.inflate(this, R.layout.header_submit_order, null)
+
+        adapter.addHeaderView(headerView)
+
+        footerView = View.inflate(this, R.layout.footer_comfirm_order, null)
         adapter.addFooterView(footerView)
     }
 

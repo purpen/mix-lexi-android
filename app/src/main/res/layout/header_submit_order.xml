@@ -2,53 +2,221 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_f5f7f9"
+        />
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="112dp"
-        android:padding="15dp"
-        >
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="寄送地址"
-            android:textColor="@color/color_999"
-            android:textSize="12sp"
             android:includeFontPadding="false"
-            />
+            android:text="@string/text_send_address_user"
+            android:textColor="@color/color_999"
+            android:textSize="12sp" />
+
         <TextView
             android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewTitle"
+            android:layout_marginTop="6dp"
+            android:includeFontPadding="false"
             android:text="@string/text_loading"
             android:textColor="@color/color_333"
-            android:layout_marginTop="6dp"
-            android:textSize="14sp"
-            android:includeFontPadding="false"
-            />
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/textViewPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/textViewName"
             android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textViewName"
+            android:includeFontPadding="false"
             android:text="@string/text_loading"
             android:textColor="@color/color_333"
-            android:textSize="14sp"
-            android:includeFontPadding="false"
-            />
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/textViewAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewName"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
             android:text="@string/text_loading"
             android:textColor="@color/color_333"
-            android:textSize="14sp"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewZip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewAddress"
+            android:layout_marginTop="8dp"
             android:includeFontPadding="false"
-            />
+            android:text="@string/text_loading"
+            android:textColor="@color/color_333"
+            android:textSize="14sp" />
     </RelativeLayout>
+
+    <include layout="@layout/line_color_eee" />
+
+    <include layout="@layout/line_height10_bgf5f7f9" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingBottom="20dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/textViewSubtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/text_subtotal"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewSubtotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:drawablePadding="5dp"
+            android:drawableStart="@mipmap/icon_price_unit"
+            android:includeFontPadding="false"
+            android:text="0"
+            android:textColor="@color/color_333"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewDelivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewSubtotal"
+            android:layout_marginTop="13dp"
+            android:includeFontPadding="false"
+            android:text="@string/text_delivery"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewDeliveryPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textViewDelivery"
+            android:includeFontPadding="false"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_c2a67d"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFirstOrderDiscount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewDelivery"
+            android:layout_marginTop="13dp"
+            android:includeFontPadding="false"
+            android:text="@string/text_first_order_discount"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFirstOrderDiscountPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textViewFirstOrderDiscount"
+            android:includeFontPadding="false"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFullReduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewFirstOrderDiscount"
+            android:layout_marginTop="13dp"
+            android:includeFontPadding="false"
+            android:text="@string/text_full_reduce"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFullReducePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textViewFullReduce"
+            android:includeFontPadding="false"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <!--优惠券-->
+        <TextView
+            android:id="@+id/textViewCoupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewFullReduce"
+            android:layout_marginTop="13dp"
+            android:includeFontPadding="false"
+            android:text="@string/text_first_order_discount"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewCouponPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textViewCoupon"
+            android:includeFontPadding="false"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <!--订单总计-->
+        <TextView
+            android:id="@+id/textViewTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewCoupon"
+            android:layout_marginTop="13dp"
+            android:includeFontPadding="false"
+            android:text="@string/text_order_total"
+            android:textStyle="bold"
+            android:textColor="@color/color_333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:includeFontPadding="false"
+            android:layout_alignBottom="@+id/textViewTotal"
+            android:text="￥ 0"
+            android:textColor="@color/color_ff6666"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <include layout="@layout/line_color_eee" />
 </LinearLayout>

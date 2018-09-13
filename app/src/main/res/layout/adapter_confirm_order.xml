@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <!--设计馆名和发货地-->
+    <TextView
+        android:id="@+id/textViewPavilionName"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingEnd="0dp"
+        android:paddingStart="15dp"
+        android:text="@string/text_loading"
+        android:textColor="@color/color_333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textViewFromAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingEnd="15dp"
+        android:paddingStart="0dp"
+        android:text="@string/text_loading"
+        android:textColor="@color/color_949ea6"
+        android:textSize="12sp" />
+
+    <include
+        android:id="@+id/line0"
+        layout="@layout/line_color_eee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/textViewPavilionName" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewGoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line0" />
+
+    <!--选择配送方式-->
+    <RelativeLayout
+        android:id="@+id/relativeLayoutOrderItemExpress"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/recyclerViewGoods">
+
+        <TextView
+            android:id="@+id/textViewSendWay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingBottom="16dp"
+            android:paddingEnd="0dp"
+            android:paddingStart="15dp"
+            android:paddingTop="20dp"
+            android:text="@string/text_send_way"
+            android:textColor="@color/color_333"
+            android:textSize="@dimen/sp14" />
+
+        <TextView
+            android:id="@+id/textViewSelectExpress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/textViewSendWay"
+            android:drawableEnd="@mipmap/icon_arrow_right_5fe4b1"
+            android:drawablePadding="@dimen/dp5"
+            android:includeFontPadding="false"
+            android:paddingBottom="16dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="20dp"
+            android:text="@string/text_select_express"
+            android:textColor="@color/color_6ed7af"
+            android:textSize="@dimen/sp14" />
+
+        <TextView
+            android:id="@+id/textViewExpressName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewSendWay"
+            android:drawablePadding="@dimen/dp10"
+            android:drawableStart="@mipmap/icon_express"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:paddingEnd="0dp"
+            android:paddingStart="15dp"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_333"
+            android:textSize="@dimen/sp12" />
+
+        <TextView
+            android:id="@+id/textViewExpressTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/textViewExpressName"
+            android:layout_alignParentEnd="true"
+            android:drawablePadding="@dimen/dp10"
+            android:includeFontPadding="false"
+            android:paddingEnd="15dp"
+            android:paddingStart="0dp"
+            android:text="物流时长"
+            android:textColor="@color/color_333"
+            android:textSize="@dimen/sp12" />
+    </RelativeLayout>
+
+    <!--商家备注-->
+    <EditText
+        android:id="@+id/editTextShopNote"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/relativeLayoutOrderItemExpress"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border_radius4_ddd"
+        android:drawablePadding="10dp"
+        android:drawableStart="@mipmap/icon_shop_note"
+        android:hint="@string/hint_shop_note"
+        android:includeFontPadding="false"
+        android:inputType="text"
+        android:paddingEnd="5dp"
+        android:paddingStart="10dp"
+        android:textColor="@color/color_333"
+        android:textColorHint="@color/color_b2b2b2"
+        android:textSize="13sp" />
+
+    <!--商品备注-->
+    <EditText
+        android:id="@+id/editTextGoodsNote"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/editTextShopNote"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/border_radius4_ddd"
+        android:drawablePadding="10dp"
+        android:drawableStart="@mipmap/icon_goods_note"
+        android:hint="@string/hint_goods_note"
+        android:includeFontPadding="false"
+        android:inputType="text"
+        android:paddingEnd="5dp"
+        android:paddingStart="10dp"
+        android:textColor="@color/color_333"
+        android:textColorHint="@color/color_b2b2b2"
+        android:textSize="13sp" />
+
+    <!--运费-->
+    <TextView
+        android:id="@+id/textViewFreightTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/editTextGoodsNote"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingEnd="0dp"
+        android:paddingStart="15dp"
+        android:text="@string/text_freight"
+        android:textColor="@color/color_333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textViewFreight"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/textViewFreightTitle"
+        android:drawableStart="@mipmap/icon_price_unit"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingEnd="15dp"
+        android:paddingStart="0dp"
+        android:text="0"
+        android:textColor="@color/color_333"
+        android:textSize="14sp" />
+
+    <!--促销-->
+    <RelativeLayout
+        android:id="@+id/relativeLayoutPromotion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewFreightTitle">
+        <TextView
+            android:id="@+id/textViewPromotionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+
+            android:drawablePadding="3dp"
+            android:drawableStart="@mipmap/icon_full_reduction"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:paddingEnd="0dp"
+            android:paddingStart="15dp"
+            android:text="@string/text_freight"
+            android:textColor="@color/color_555"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewPromotion"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/textViewPromotionTitle"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:paddingEnd="15dp"
+            android:paddingStart="0dp"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_555"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <!--设计馆优惠券-->
+    <TextView
+        android:id="@+id/textViewPavilionCouponTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/relativeLayoutPromotion"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingEnd="0dp"
+        android:paddingStart="15dp"
+        android:text="@string/text_pavilion_coupon"
+        android:textColor="@color/color_333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textViewPavilionCoupon"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textViewPavilionCouponTitle"
+        android:gravity="center_vertical"
+        android:drawableEnd="@mipmap/icon_arrow_right_999"
+        android:drawablePadding="@dimen/dp5"
+        android:includeFontPadding="false"
+        android:paddingEnd="15dp"
+        android:paddingStart="0dp"
+        android:text="已抵￥25元"
+        android:textColor="@color/color_ff6666"
+        android:textSize="12sp" />
+</RelativeLayout>

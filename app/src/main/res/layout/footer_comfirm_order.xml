@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    >
+    <View
+        android:id="@+id/line_footer"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_f5f7f9"
+        />
+    <TextView
+        android:id="@+id/textViewOfficalCouponTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/line_footer"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingEnd="0dp"
+        android:paddingStart="15dp"
+        android:text="@string/text_lexi_coupon"
+        android:textColor="@color/color_333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textViewOfficalCoupon"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/textViewOfficalCouponTitle"
+        android:drawableEnd="@mipmap/icon_arrow_right_999"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingEnd="15dp"
+        android:paddingStart="0dp"
+        android:text="已抵￥0元"
+        android:textColor="@color/color_ff6666"
+        android:textSize="12sp" />
+    <include
+        android:id="@+id/line_footer2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/textViewOfficalCouponTitle"
+        layout="@layout/line_color_eee" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/line_footer2"
+        android:background="@color/color_f5f7f9"
+        />
+</RelativeLayout>

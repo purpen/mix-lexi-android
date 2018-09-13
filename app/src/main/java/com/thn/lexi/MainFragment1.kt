@@ -2,14 +2,14 @@ package com.thn.lexi
 
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.AddShopCartBean
-import com.thn.lexi.order.SelectExpressAddressActivity
-import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
+import com.thn.lexi.order.*
 import com.thn.lexi.shopCart.*
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
 import kotlinx.android.synthetic.main.fragment_main1.*
@@ -121,14 +121,78 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         adapterOrder.notifyDataSetChanged()
     }
 
+
+    /**
+     * 获取店铺Id
+     */
+    private fun getStoreIds(): HashSet<String> {
+        val data = adapterOrder.data
+        val hashSet = HashSet<String>()
+        for (item in data) {
+            hashSet.add(item.product.store_rid)
+        }
+        return hashSet
+    }
+
+
     override fun installListener() {
 
         buttonSettleAccount.setOnClickListener {
+            val data = adapterOrder.data
+            if (data.isEmpty()) {
+                ToastUtil.showInfo("您的购物车还没有商品")
+                return@setOnClickListener
+            }
+
+            val createOrderBean = CreateOrderBean()
+
+            val storeIds = getStoreIds()
+
+            //店铺列表
+            val storeList = ArrayList<StoreItemBean>()
+
+            //当前店铺
+            var storeItemBean: StoreItemBean
+
+            //商品列表
+            var goodsList: ArrayList<ProductBean>
+
+            //商品
+            var goods: ProductBean
+
+            for (storeId in storeIds) {
+
+                //创建店铺
+                storeItemBean = StoreItemBean()
+
+                storeItemBean.store_rid = storeId
+
+                //创建商品列表
+                goodsList = ArrayList()
+
+                //添加店铺
+                storeList.add(storeItemBean)
+
+                for (item in data) {
+                    if (TextUtils.equals(storeId, item.product.store_rid)) {
+                        goods = item.product
+                        goodsList.add(goods)
+                    }
+
+                }
+                //添加商品列表
+                storeItemBean.items = goodsList
+            }
+
+            // 添加有所店铺
+            createOrderBean.store_items = storeList
+
             //结算
             val intent =Intent(activity,SelectExpressAddressActivity::class.java)
-//            intent.putExtra()
+            intent.putExtra(SelectExpressAddressActivity::class.java.simpleName,createOrderBean)
             startActivity(intent)
         }
+
 
 
         buttonDelete.setOnClickListener {
@@ -241,15 +305,15 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     /**
      * 设置购物车总价
      */
-    private fun setShopCartTotalPrice(){
+    private fun setShopCartTotalPrice() {
         var totalPrice = 0.0
         val items = adapterOrder.data
         for (item in items) {
             val product = item.product
             if (product.sale_price == 0.0) {
-                totalPrice += product.price*item.quantity
-            }else{
-                totalPrice += product.sale_price*item.quantity
+                totalPrice += product.price * item.quantity
+            } else {
+                totalPrice += product.sale_price * item.quantity
             }
         }
 
