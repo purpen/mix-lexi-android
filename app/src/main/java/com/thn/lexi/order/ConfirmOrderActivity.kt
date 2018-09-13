@@ -41,7 +41,7 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = linearLayoutManager
-//  TODO      recyclerView.adapter = adapter
+        recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(), R.color.color_f5f7f9, recyclerView, 1f))
         val view = View(this)
         view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp10))

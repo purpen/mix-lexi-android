@@ -106,13 +106,14 @@
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayoutConfirmOrder"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@android:color/white"
         android:layout_alignParentBottom="true"
         >
+        <include layout="@layout/line_color_eee"/>
         <Button
             android:id="@+id/buttonSubmitOrder"
             android:layout_width="match_parent"
@@ -122,9 +123,9 @@
             android:background="@drawable/selector_5fe4b1_alpha50"
             android:textSize="16sp"
             android:text="@string/title_submit_order"
-            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp15"
             android:layout_marginEnd="@dimen/dp15"
             />
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

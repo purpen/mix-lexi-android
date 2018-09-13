@@ -190,4 +190,5 @@
     <string name="text_add_new_address">新的收货地址</string>
     <string name="hint_please_select_consignee_address">请先选择收货地址</string>
     <string name="title_submit_order">提交订单</string>
+    <string name="text_loading">加载中...</string>
 </resources>

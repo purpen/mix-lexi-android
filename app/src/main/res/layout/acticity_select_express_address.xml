@@ -106,13 +106,14 @@
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayoutConfirmOrder"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@android:color/white"
         android:layout_alignParentBottom="true"
         >
+        <include layout="@layout/line_color_eee"/>
         <Button
             android:id="@+id/buttonConfirmOrder"
             android:layout_width="match_parent"
@@ -123,9 +124,9 @@
             android:textSize="16sp"
             android:enabled="false"
             android:text="@string/text_continue_commit_order"
-            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp15"
             android:layout_marginEnd="@dimen/dp15"
             />
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
