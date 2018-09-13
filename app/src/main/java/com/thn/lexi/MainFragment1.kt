@@ -187,6 +187,8 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
             // 添加有所店铺
             createOrderBean.store_items = storeList
 
+            createOrderBean.orderTotalPrice =  textViewTotalPrice.text.toString().toDouble()
+
             //结算
             val intent =Intent(activity,SelectExpressAddressActivity::class.java)
             intent.putExtra(SelectExpressAddressActivity::class.java.simpleName,createOrderBean)

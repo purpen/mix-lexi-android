@@ -10,6 +10,7 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
 import kotlinx.android.synthetic.main.acticity_submit_order.*
+import kotlinx.android.synthetic.main.header_submit_order.view.*
 
 
 class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
@@ -22,6 +23,8 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
 
     override val layout: Int = R.layout.acticity_submit_order
 
+    private lateinit var headerView: View
+
     private lateinit var footerView: View
 
     //订单信息
@@ -30,7 +33,6 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
     override fun getIntentData() {
         if (intent.hasExtra(ConfirmOrderActivity::class.java.simpleName)) {
             createOrderBean = intent.getParcelableExtra(ConfirmOrderActivity::class.java.simpleName)
-            LogUtil.e("")
         }
     }
 
@@ -47,12 +49,27 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
 
         adapter.setHeaderFooterEmpty(true,true)
 
-        val headerView = View.inflate(this, R.layout.header_submit_order, null)
+        headerView = View.inflate(this, R.layout.header_submit_order, null)
 
         adapter.addHeaderView(headerView)
 
         footerView = View.inflate(this, R.layout.footer_comfirm_order, null)
         adapter.addFooterView(footerView)
+
+        setOrderData()
+    }
+
+
+    /**
+     * 设置订单列表数据
+     */
+    private fun setOrderData() {
+        headerView.textViewName.text = createOrderBean.consigneeInfo.full_name
+        headerView.textViewPhone.text = createOrderBean.consigneeInfo.mobile
+        headerView.textViewAddress.text = createOrderBean.consigneeInfo.full_address
+        headerView.textViewZip.text = createOrderBean.consigneeInfo.zipcode
+
+        headerView.textViewSubtotalPrice.text = "${createOrderBean.orderTotalPrice}"
     }
 
     override fun setPresenter(presenter: SelectExpressAddressContract.Presenter?) {
@@ -73,8 +90,8 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
             adapter.notifyDataSetChanged()
         }
 
-        buttonSubmitOrder.setOnClickListener {
-
+        buttonSubmitOrder.setOnClickListener { //提交订单
+            ToastUtil.showInfo("提交订单")
 //            val intent = Intent(this,ConfirmOrderActivity::class.java)
 //            startActivity(intent)
         }
@@ -89,7 +106,7 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
 
 
     override fun requestNet() {
-        presenter.loadData()
+//        presenter.loadData()
     }
 
     override fun loadMoreComplete() {

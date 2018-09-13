@@ -6,6 +6,11 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class CreateOrderBean implements Parcelable {
+
+    public UserAddressListBean.DataBean consigneeInfo;
+
+    public double orderTotalPrice;
+
     //收货地址ID
     public String address_rid;
 
@@ -36,6 +41,9 @@ public class CreateOrderBean implements Parcelable {
     //店铺列表
     public ArrayList<StoreItemBean> store_items;
 
+    public CreateOrderBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -43,6 +51,8 @@ public class CreateOrderBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.consigneeInfo, flags);
+        dest.writeDouble(this.orderTotalPrice);
         dest.writeString(this.address_rid);
         dest.writeString(this.outside_target_id);
         dest.writeString(this.invoice_type);
@@ -52,13 +62,12 @@ public class CreateOrderBean implements Parcelable {
         dest.writeString(this.bonus_code);
         dest.writeString(this.sync_pay);
         dest.writeString(this.last_store_rid);
-        dest.writeList(this.store_items);
-    }
-
-    public CreateOrderBean() {
+        dest.writeTypedList(this.store_items);
     }
 
     protected CreateOrderBean(Parcel in) {
+        this.consigneeInfo = in.readParcelable(UserAddressListBean.DataBean.class.getClassLoader());
+        this.orderTotalPrice = in.readDouble();
         this.address_rid = in.readString();
         this.outside_target_id = in.readString();
         this.invoice_type = in.readString();
@@ -68,11 +77,10 @@ public class CreateOrderBean implements Parcelable {
         this.bonus_code = in.readString();
         this.sync_pay = in.readString();
         this.last_store_rid = in.readString();
-        this.store_items = new ArrayList<StoreItemBean>();
-        in.readList(this.store_items, StoreItemBean.class.getClassLoader());
+        this.store_items = in.createTypedArrayList(StoreItemBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<CreateOrderBean> CREATOR = new Parcelable.Creator<CreateOrderBean>() {
+    public static final Creator<CreateOrderBean> CREATOR = new Creator<CreateOrderBean>() {
         @Override
         public CreateOrderBean createFromParcel(Parcel source) {
             return new CreateOrderBean(source);

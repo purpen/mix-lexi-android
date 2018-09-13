@@ -90,7 +90,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
                 return@setOnClickListener
             }
 
-            createOrderBean.address_rid = selectedItem.rid
+            createOrderBean.consigneeInfo = selectedItem
 
             val intent = Intent(this,ConfirmOrderActivity::class.java)
             intent.putExtra(ConfirmOrderActivity::class.java.simpleName,createOrderBean)
