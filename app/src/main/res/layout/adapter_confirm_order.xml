@@ -180,13 +180,21 @@
         android:text="0"
         android:textColor="@color/color_333"
         android:textSize="14sp" />
+    <include
+        android:id="@+id/line_freight_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="15dp"
+        android:layout_below="@id/textViewFreightTitle"
+        layout="@layout/line_color_eee" />
 
     <!--促销-->
     <RelativeLayout
         android:id="@+id/relativeLayoutPromotion"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewFreightTitle">
+        android:layout_height="40dp"
+        android:layout_below="@id/line_freight_bottom">
+
         <TextView
             android:id="@+id/textViewPromotionTitle"
             android:layout_width="wrap_content"
@@ -215,6 +223,12 @@
             android:text="@string/text_loading"
             android:textColor="@color/color_555"
             android:textSize="12sp" />
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            layout="@layout/line_color_eee" />
     </RelativeLayout>
 
     <!--设计馆优惠券-->
