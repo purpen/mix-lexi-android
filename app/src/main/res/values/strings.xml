@@ -204,4 +204,7 @@
     <string name="text_freight">运费</string>
     <string name="text_pavilion_coupon">设计馆优惠券</string>
     <string name="text_lexi_coupon">乐喜券</string>
+    <string name="text_coupon">优惠券</string>
+    <string name="text_full_reduce_promotion">满减促销</string>
+    <string name="text_get_coupon_packet">选择优惠券红包</string>
 </resources>

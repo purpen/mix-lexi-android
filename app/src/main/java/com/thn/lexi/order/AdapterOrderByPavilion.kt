@@ -2,6 +2,7 @@ package com.thn.lexi.order
 import android.support.annotation.LayoutRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.AppApplication
@@ -17,6 +18,15 @@ class AdapterOrderByPavilion(@LayoutRes res: Int) : BaseQuickAdapter<StoreItemBe
         helper.setText(R.id.textViewPavilionName,productBean?.store_name)
 
         helper.setText(R.id.textViewFromAddress,"从${productBean?.delivery_province}发货")
+
+
+        if (TextUtils.isEmpty(item.fullReductionText)){
+            helper.setText(R.id.textViewPromotion,"无")
+        }else{
+            helper.setText(R.id.textViewPromotion,item.fullReductionText)
+        }
+
+        helper.addOnClickListener(R.id.textViewPavilionCoupon)
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerViewGoods)
 

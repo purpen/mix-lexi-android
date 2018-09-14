@@ -409,4 +409,20 @@ object URL {
      */
     const val GET_USER_EXPRESS_ADDRESS = "${BASE_URL}address"
 
+    /**
+     * 是否72小时内新用户首单
+     */
+    const val NEW_USER_FIRST_ORDER_DISCOUNTS = "${BASE_URL}market/coupons/new_user_discount"
+
+    /**
+     * 获每订单(店铺)的满减信息
+     */
+    const val PERORDER_FULL_REDUCTION = "${BASE_URL}market/user_order_full_reduction"
+
+
+    /**
+     * 获取店铺订单优惠券
+     */
+    const val PAVILION_ORDER_COUPONS = "${BASE_URL}market/user_order_coupons"
+
 }

@@ -178,7 +178,7 @@
             android:layout_below="@+id/textViewFullReduce"
             android:layout_marginTop="13dp"
             android:includeFontPadding="false"
-            android:text="@string/text_first_order_discount"
+            android:text="@string/text_coupon"
             android:textColor="@color/color_9099a6"
             android:textSize="12sp" />
 
@@ -189,7 +189,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/textViewCoupon"
             android:includeFontPadding="false"
-            android:text="@string/text_loading"
+            android:text="未使用"
             android:textColor="@color/color_9099a6"
             android:textSize="12sp" />
 

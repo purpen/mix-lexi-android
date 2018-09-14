@@ -66,6 +66,7 @@ public class ProductBean implements Parcelable {
     public String s_model;
     public String product_name;
     public int quantity;
+    public String sku;
     public String product_rid;
     public int stock_quantity;
     public boolean is_custom_made;
@@ -128,6 +129,7 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.s_model);
         dest.writeString(this.product_name);
         dest.writeInt(this.quantity);
+        dest.writeString(this.sku);
         dest.writeString(this.product_rid);
         dest.writeInt(this.stock_quantity);
         dest.writeByte(this.is_custom_made ? (byte) 1 : (byte) 0);
@@ -182,6 +184,7 @@ public class ProductBean implements Parcelable {
         this.s_model = in.readString();
         this.product_name = in.readString();
         this.quantity = in.readInt();
+        this.sku = in.readString();
         this.product_rid = in.readString();
         this.stock_quantity = in.readInt();
         this.is_custom_made = in.readByte() != 0;

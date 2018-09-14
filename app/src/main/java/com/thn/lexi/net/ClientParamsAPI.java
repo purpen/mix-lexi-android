@@ -6,6 +6,7 @@ import android.util.Base64;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.JsonUtil;
 import com.basemodule.ui.IDataSource;
+import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.user.login.UserProfileUtil;
 
 import org.apache.commons.codec.binary.Hex;
@@ -909,4 +910,18 @@ public class ClientParamsAPI {
         params.put("per_page",Constants.PAGE_SIZE);
         return params;
     }
+
+
+    /**
+     *
+     * @param storeList
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getPerOrderFullReductionParams(@NotNull ArrayList<FullReductionRequestBean> storeList) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("items",storeList);
+        return params;
+    }
+
 }

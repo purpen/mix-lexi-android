@@ -26,6 +26,12 @@ public class StoreItemBean implements Parcelable {
     //优惠券码
     public String coupon_codes;
 
+    //满减数额
+    public Double fullReductionAmount;
+
+    //满减描述
+    public String fullReductionText;
+
     //店铺商品列表
     public ArrayList<ProductBean> items;
 

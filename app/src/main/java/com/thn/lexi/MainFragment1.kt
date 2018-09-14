@@ -177,6 +177,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                     if (TextUtils.equals(storeId, item.product.store_rid)) {
                         goods = item.product
                         goods.quantity = item.quantity
+                        goods.sku = item.product.rid
                         goodsList.add(goods)
                     }
 
