@@ -19,7 +19,7 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
 
     private val presenter: SelectExpressAddressPresenter by lazy { SelectExpressAddressPresenter(this) }
 
-    private val adapter: AdapterUserAddressList by lazy { AdapterUserAddressList(R.layout.adapter_user_express_address) }
+    private val adapter: AdapterOrderByPavilion by lazy { AdapterOrderByPavilion(R.layout.adapter_confirm_order) }
 
     override val layout: Int = R.layout.acticity_submit_order
 
@@ -70,6 +70,8 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
         headerView.textViewZip.text = createOrderBean.consigneeInfo.zipcode
 
         headerView.textViewSubtotalPrice.text = "${createOrderBean.orderTotalPrice}"
+
+        adapter.setNewData(createOrderBean.store_items)
     }
 
     override fun setPresenter(presenter: SelectExpressAddressContract.Presenter?) {
@@ -79,15 +81,11 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
     override fun installListener() {
 
         adapter.setOnItemClickListener { _, _, position ->
-            val data = adapter.data
-            for (item in data) {
-                item.is_default = false
-            }
-
-            val item = adapter.getItem(position) as UserAddressListBean.DataBean
-            item.is_default = true
-
-            adapter.notifyDataSetChanged()
+//            val data = adapter.data
+//            val item = adapter.getItem(position) as UserAddressListBean.DataBean
+//            item.is_default = true
+//
+//            adapter.notifyDataSetChanged()
         }
 
         buttonSubmitOrder.setOnClickListener { //提交订单
@@ -99,8 +97,8 @@ class ConfirmOrderActivity : BaseActivity(), SelectExpressAddressContract.View {
 
 
     override fun setNewData(addresses: MutableList<UserAddressListBean.DataBean>) {
-        swipeRefreshLayout.isRefreshing = false
-        adapter.setNewData(addresses)
+//        swipeRefreshLayout.isRefreshing = false
+//        adapter.setNewData(addresses)
     }
 
 

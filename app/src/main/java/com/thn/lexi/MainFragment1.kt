@@ -176,6 +176,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 for (item in data) {
                     if (TextUtils.equals(storeId, item.product.store_rid)) {
                         goods = item.product
+                        goods.quantity = item.quantity
                         goodsList.add(goods)
                     }
 

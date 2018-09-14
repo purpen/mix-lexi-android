@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/color_f5f7f9"
+    >
 
     <RelativeLayout
         android:id="@+id/relativeLayoutGoods"
@@ -128,6 +130,7 @@
             android:layout_alignTop="@id/textViewSendWay"
             android:drawablePadding="@dimen/dp5"
             android:includeFontPadding="false"
+            android:drawableEnd="@mipmap/icon_arrow_right_5fe4b1"
             android:paddingBottom="16dp"
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
