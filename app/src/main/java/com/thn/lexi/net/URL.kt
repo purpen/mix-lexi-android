@@ -409,4 +409,9 @@ object URL {
      */
     const val GET_USER_EXPRESS_ADDRESS = "${BASE_URL}address"
 
+    /**
+     * 全部省市区列表
+     */
+    const val PROVINCES_CITY_COUNTRY= "${BASE_URL}places/provinces_cities"
+
 }
