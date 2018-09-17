@@ -235,13 +235,26 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         for (item in createOrderBean.store_items){
             val any = data.get(item.store_rid)
             if (any is JSONObject){
-                val reduction = data.getJSONObject(item.store_rid)
-                val amout = reduction.getDouble("amount")
+                val reduction = data.optJSONObject(item.store_rid)
+                var amout:Double
+                if (reduction.has("amount")){
+                    amout = reduction.optDouble("amount")
+                }else{
+                    amout = 0.0
+                }
+
                 item.fullReductionAmount = amout
-                item.fullReductionText = reduction.getString("type_text")
+                var fullReductionText:String
+                if (reduction.has("type_text")){
+                    fullReductionText = reduction.optString("type_text")
+                }else{
+                    fullReductionText = "无"
+                }
+                item.fullReductionText = fullReductionText
                 sumFullReduction+= amout
             }
         }
+
 
         headerView.textViewFullReducePrice.text = "￥${sumFullReduction}"
     }
