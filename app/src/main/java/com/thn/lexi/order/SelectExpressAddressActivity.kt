@@ -12,6 +12,7 @@ import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
+import com.thn.lexi.address.AddressActivity
 import kotlinx.android.synthetic.main.acticity_select_express_address.*
 
 
@@ -59,6 +60,12 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
     }
 
     override fun installListener() {
+
+        footerView.setOnClickListener {
+            val intent =Intent(this,AddressActivity::class.java)
+            intent.putExtra(AddressActivity::class.java.simpleName,createOrderBean.address_rid)
+            startActivity(intent)
+        }
 
         adapter.setOnItemClickListener { _, _, position ->
             val data = adapter.data

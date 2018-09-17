@@ -99,6 +99,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private boolean isPosition;
     private String id_card_front;
     private String id_card_back;
+    private String addressId;
 
     @Override
     protected int getLayout() {
@@ -252,6 +253,8 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         isNew = intent.getBooleanExtra("isNew",true);
         isForeign = intent.getBooleanExtra("idForeign",false);
         rid = intent.getStringExtra("rid");
+        addressId = intent.getStringExtra(AddressActivity.class.getSimpleName());
+
     }
 
     @Override
