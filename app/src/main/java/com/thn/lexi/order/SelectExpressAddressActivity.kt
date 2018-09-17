@@ -78,9 +78,6 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
             adapter.notifyDataSetChanged()
 
-            //设置订单收货地址
-            createOrderBean.address_rid = item.rid
-
             setConfirmOrderButtonState()
         }
 
@@ -124,6 +121,8 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
         var hasChecked = false
         for (item in data) {
             if (item.is_default) {
+                //设置默认地址rid
+                createOrderBean.address_rid = item.rid
                 hasChecked = true
                 break
             }
