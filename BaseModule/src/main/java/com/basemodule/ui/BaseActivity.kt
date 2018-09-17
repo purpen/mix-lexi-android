@@ -3,6 +3,7 @@ package com.basemodule.ui
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.basemodule.tools.LogUtil
 
 /**
@@ -20,6 +21,7 @@ abstract class BaseActivity : AppCompatActivity() {
         LogUtil.e("onCreate()$TAG")
         getIntentData()
         //        ShareSDK.initSDK(this);·
+        LogUtil.e("id:"+layout.toLong())
         setContentView(layout)
         initView()
         installListener()
