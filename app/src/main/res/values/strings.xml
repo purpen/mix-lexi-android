@@ -221,4 +221,5 @@
     <string name="text_default_address">设为默认地址</string>
     <string name="title_edit_address">编辑收货地址</string>
     <string name="title_new_address">新的收货地址</string>
+    <string name="text_pay">付款</string>
 </resources>
