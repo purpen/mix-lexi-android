@@ -45,6 +45,10 @@ class ConfirmOrderContract {
 
         }
 
+        fun setSubmitOrderSuccess() {
+
+        }
+
     }
 
     interface Presenter : BasePresenter {
@@ -53,5 +57,7 @@ class ConfirmOrderContract {
         fun getNewUserFirstOrderDiscounts()
 
         fun getPerOrderFullReduction(list: ArrayList<FullReductionRequestBean>)
+
+        fun submitOrder(createOrderBean: CreateOrderBean)
     }
 }

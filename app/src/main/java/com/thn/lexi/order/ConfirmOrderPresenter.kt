@@ -4,6 +4,7 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.user.areacode.SelectCountryAreaPresenter.Companion.status
 import org.json.JSONObject
 import java.io.IOException
 
@@ -109,6 +110,26 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
                     view.setPavilionCouponByOrderData(data)
                 } else {
                     view.showError(status.getString("message"))
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     *  提交订单
+     */
+    override fun submitOrder(createOrderBean: CreateOrderBean) {
+        dataSource.submitOrder(createOrderBean,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val submitOrderBean = JsonUtil.fromJson(json, SubmitOrderBean::class.java)
+                if (submitOrderBean.success) {
+                    view.setSubmitOrderSuccess()
+                } else {
+                    view.showError(submitOrderBean.status.message)
                 }
             }
 

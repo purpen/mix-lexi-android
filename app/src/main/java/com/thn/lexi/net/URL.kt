@@ -425,4 +425,10 @@ object URL {
      */
     const val PAVILION_ORDER_COUPONS = "${BASE_URL}market/user_order_coupons"
 
+
+    /**
+     * 提交并创建订单
+     */
+    const val SUBMIT_ORDER = "${BASE_URL}orders/create"
+
 }

@@ -121,10 +121,18 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
         buttonSubmitOrder.setOnClickListener {
             //提交订单
-            ToastUtil.showInfo("提交订单")
+            presenter.submitOrder(createOrderBean)
 //            val intent = Intent(this,ConfirmOrderActivity::class.java)
 //            startActivity(intent)
         }
+    }
+
+    /**
+     * 订单提交成功
+     */
+    override fun setSubmitOrderSuccess() {
+        // 跳转支付界面
+        ToastUtil.showInfo("订单提交成功，跳转支付界面")
     }
 
     /**

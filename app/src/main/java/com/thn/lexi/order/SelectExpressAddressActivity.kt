@@ -71,6 +71,9 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
             adapter.notifyDataSetChanged()
 
+            //设置订单收货地址
+            createOrderBean.address_rid = item.rid
+
             setConfirmOrderButtonState()
         }
 

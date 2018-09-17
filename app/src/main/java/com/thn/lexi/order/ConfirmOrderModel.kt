@@ -79,6 +79,24 @@ open class ConfirmOrderModel{
             }
         })
     }
+
+
+    fun submitOrder(createOrderBean: CreateOrderBean, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getSubmitOrderParams(createOrderBean)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.SUBMIT_ORDER, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
 }
 
 

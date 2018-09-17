@@ -6,6 +6,7 @@ import android.util.Base64;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.JsonUtil;
 import com.basemodule.ui.IDataSource;
+import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.user.login.UserProfileUtil;
 
@@ -924,4 +925,18 @@ public class ClientParamsAPI {
         return params;
     }
 
+    /**
+     * 提交订单
+     * @param createOrderBean
+     * @return
+     */
+    @NotNull
+    public static HashMap<String, Object> getSubmitOrderParams(@NotNull CreateOrderBean createOrderBean) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("address_rid",createOrderBean.address_rid);
+        params.put("from_client",createOrderBean.from_client);
+        params.put("bonus_code",createOrderBean.bonus_code);
+        params.put("store_items",createOrderBean.store_items);
+        return params;
+    }
 }
