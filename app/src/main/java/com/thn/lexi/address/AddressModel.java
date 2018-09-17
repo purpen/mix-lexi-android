@@ -162,4 +162,28 @@ public class AddressModel implements IDataSource {
             }
         });
     }
+    public void saveAddress(final HttpRequestCallBack callBack, AddressBean.DataBean bean, boolean is_overseas, String id_card, String id_card_front, String id_card_back ){
+        HashMap<String, Object> params=ClientParamsAPI.getAddressParams(bean,is_overseas,id_card,id_card_front,id_card_back);
+        HttpRequest.sendRequest(HttpRequest.POST, URL.GET_USER_EXPRESS_ADDRESS, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
 }

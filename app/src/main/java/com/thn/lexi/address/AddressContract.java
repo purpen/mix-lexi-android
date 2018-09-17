@@ -31,6 +31,7 @@ public class AddressContract {
         void loadPhoto(UploadTokenBean bean,byte[] data);
         void loadCountry();
         void deleteAddress(String rid);
+        void saveAddress(AddressBean.DataBean bean, boolean is_overseas, String id_card, String id_card_front, String id_card_back);
     }
 
 }

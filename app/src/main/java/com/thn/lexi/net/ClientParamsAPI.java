@@ -6,6 +6,9 @@ import android.util.Base64;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.JsonUtil;
 import com.basemodule.ui.IDataSource;
+import com.thn.lexi.address.AddressBean;
+import com.thn.lexi.order.CreateOrderBean;
+import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.user.login.UserProfileUtil;
 
 import org.apache.commons.codec.binary.Hex;
@@ -908,5 +911,55 @@ public class ClientParamsAPI {
         params.put("page",String.valueOf(page));
         params.put("per_page",Constants.PAGE_SIZE);
         return params;
+    }
+
+
+    /**
+     *
+     * @param storeList
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getPerOrderFullReductionParams(@NotNull ArrayList<FullReductionRequestBean> storeList) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("items",storeList);
+        return params;
+    }
+
+    /**
+     * 提交订单
+     * @param createOrderBean
+     * @return
+     */
+    @NotNull
+    public static HashMap<String, Object> getSubmitOrderParams(@NotNull CreateOrderBean createOrderBean) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("address_rid",createOrderBean.address_rid);
+        params.put("from_client",createOrderBean.from_client);
+        params.put("bonus_code",createOrderBean.bonus_code);
+        params.put("store_items",createOrderBean.store_items);
+        return params;
+    }
+
+    @NotNull
+    public static HashMap<String,Object> getAddressParams(AddressBean.DataBean bean,boolean is_overseas,String id_card,String id_card_front,String id_card_back){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("first_name",bean.getFirst_name());
+        params.put("phone",bean.getPhone());
+        params.put("mobile",bean.getMobile());
+        params.put("country_id",bean.getCountry_id());
+        params.put("province_id",bean.getProvince_id());
+        params.put("city_id",bean.getCity_id());
+        params.put("town_id",bean.getTown_id());
+        params.put("area_id",bean.getArea_id());
+        params.put("street_address",bean.getStreet_address());
+        params.put("street_address_two",bean.getStreet_address_two());
+        params.put("zipcode",bean.getZipcode());
+        params.put("is_default",bean.isIs_default());
+        params.put("is_overseas",is_overseas);//是否保存海关地址
+        params.put("id_card",id_card);//身份号
+        params.put("id_card_front",id_card_front);//正面身份证照片
+        params.put("id_card_back",id_card_back);//反面身份证照片
+     return params;
     }
 }

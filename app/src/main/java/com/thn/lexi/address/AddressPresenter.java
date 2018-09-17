@@ -163,6 +163,31 @@ public class AddressPresenter implements AddressContract.Presenter {
         });
     }
 
+    @Override
+    public void saveAddress(AddressBean.DataBean bean, boolean is_overseas, String id_card, String id_card_front, String id_card_back) {
+        model.saveAddress(new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+
+            }
+        },bean,is_overseas,id_card,id_card_front,id_card_back);
+    }
+
     public void getToken(){
         model.getToken(new IDataSource.HttpRequestCallBack() {
             @Override

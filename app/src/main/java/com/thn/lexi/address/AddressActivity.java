@@ -99,6 +99,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private boolean isPosition;
     private String id_card_front;
     private String id_card_back;
+    private String addressId;
 
     @Override
     protected int getLayout() {
@@ -139,7 +140,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         LinearLayout ll_ID=findViewById(R.id.ll_ID);
         TextView tv_remind=findViewById(R.id.tv_remind);
 
-        /*if (isForeign){
+        if (isForeign){
             LogUtil.e("为什么");
             ll_country.setVisibility(View.VISIBLE);
             ll_country.setEnabled(true);
@@ -154,7 +155,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             rl_photo.setVisibility(View.GONE);
             ll_ID.setVisibility(View.GONE);
             tv_remind.setVisibility(View.GONE);
-        }*/
+        }
 
         bt_save.setOnClickListener(this);
         tv_mobile.setOnClickListener(this);
@@ -180,6 +181,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
                 break;
             case R.id.bt_delete:
+                presenter.deleteAddress(rid);
                 break;
             case R.id.ll_region:
                 LogUtil.e("你有么有被触发");
@@ -252,6 +254,8 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         isNew = intent.getBooleanExtra("isNew",true);
         isForeign = intent.getBooleanExtra("idForeign",false);
         rid = intent.getStringExtra("rid");
+        addressId = intent.getStringExtra(AddressActivity.class.getSimpleName());
+
     }
 
     @Override
