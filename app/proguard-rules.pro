@@ -21,7 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 # EventBus代码混淆
--keepattributes *Annotation*
+-keepattributes *Annotation*cloudfront
 -keepclassmembers class * {
     @org.greenrobot.eventbus.Subscribe <methods>;
 }

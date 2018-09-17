@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_welcome.*
 import org.greenrobot.eventbus.EventBus
 import com.basemodule.tools.LogUtil
 import com.thn.lexi.MessageClose
+import com.thn.lexi.address.AddressActivity
 import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.Subscribe

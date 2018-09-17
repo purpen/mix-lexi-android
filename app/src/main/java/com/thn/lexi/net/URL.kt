@@ -431,4 +431,9 @@ object URL {
      */
     const val SUBMIT_ORDER = "${BASE_URL}orders/create"
 
+    /**
+     * 全部省市区列表
+     */
+    const val PROVINCES_CITY_COUNTRY= "${BASE_URL}places/provinces_cities"
+
 }

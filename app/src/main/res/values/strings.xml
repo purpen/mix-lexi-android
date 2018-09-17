@@ -207,4 +207,18 @@
     <string name="text_coupon">优惠券</string>
     <string name="text_full_reduce_promotion">满减促销</string>
     <string name="text_get_coupon_packet">选择优惠券红包</string>
+    <string name="text_name_address">收件人真实姓名</string>
+    <string name="text_mobile_address">手机号</string>
+    <string name="text_select_address">选择地区</string>
+    <string name="text_detailed_address">详细地址</string>
+    <string name="text_code_address">邮政编码</string>
+    <string name="text_remind_address">海关政策要求，请填写身份证。加密保存，仅用于海关清关</string>
+    <string name="text_country_address">选择国家</string>
+    <string name="text_ID_address">收件人身份证号：</string>
+    <string name="text_positive_photo">清晰正面照片</string>
+    <string name="text_opposite_photo">清晰反面照片</string>
+    <string name="text_delete">删除</string>
+    <string name="text_default_address">设为默认地址</string>
+    <string name="title_edit_address">编辑收货地址</string>
+    <string name="title_new_address">新的收货地址</string>
 </resources>
