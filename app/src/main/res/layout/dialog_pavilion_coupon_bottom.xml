@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_f7f9fb"
+    >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewCoupon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        />
+
+    <include
+        android:id="@+id/line"
+        layout="@layout/line_color_eee"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_below="@+id/recyclerViewCoupon" />
+
+    <LinearLayout
+        android:id="@+id/relativeLayoutBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_below="@+id/line"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/textViewReducePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已抵扣"
+                android:textSize="14sp"
+                android:includeFontPadding="false"
+                android:textColor="@color/color_ff6666"
+                />
+            <TextView
+                android:id="@+id/textViewUseCouponNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_marginTop="@dimen/dp3"
+                android:text="已使用0张"
+                android:textSize="12sp"
+                android:textColor="@color/color_999"
+                />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textViewConfirm"
+            android:layout_width="173dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_marginEnd="@dimen/dp15"
+            android:background="@drawable/bg_color5fe4b1_radius4"
+            android:gravity="center"
+            android:text="@string/text_complete"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp16" />
+    </LinearLayout>
+</RelativeLayout>

@@ -10,7 +10,7 @@ import java.io.Reader;
 import java.util.List;
 
 public class JsonUtil {
-    private static Gson getGson(){
+    public static Gson getGson(){
         return new Gson();
     }
     public static JsonArray getJsonArray(Reader reader) {
@@ -27,6 +27,7 @@ public class JsonUtil {
         return getGson().fromJson(json, clazz);
     }
 
+
 //    public static <T> T fromJson(JsonElement element, Class<T> clazz) {
 //        return getGson().fromJson(element, clazz);
 //    }
@@ -42,5 +43,16 @@ public class JsonUtil {
     public static String toJson(Object object) {
         return getGson().toJson(object);
     }
+
+//    /**
+//     * jsonArray转List
+//     * @param json
+//     * @param clazz
+//     * @param <T>
+//     * @return
+//     */
+//    public static <T> T fromJson(JsonArray json, Class<T> clazz) {
+//        return getGson().fromJson(json, clazz);
+//    }
 }
 
