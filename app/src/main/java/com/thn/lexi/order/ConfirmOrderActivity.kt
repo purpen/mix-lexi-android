@@ -158,10 +158,13 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         //获取新用户首单信息
         presenter.getNewUserFirstOrderDiscounts()
 
+        getDefaultExpressCompany()
+
         getPerOrderFullReduction()
 
         getPavilionCouponByOrder()
     }
+
 
 
     /**
@@ -175,8 +178,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             val any = data.get(item.store_rid)
             if (any is JSONArray) {
                 jsonArrayCoupon = data.getJSONArray(item.store_rid)
-                val length = jsonArrayCoupon.length()
-                for (i in 0..(length-1)){
+                val length = jsonArrayCoupon.length()-1
+                for (i in 0..length){
                     val couponBean = CouponBean()
                     val couponObj = jsonArrayCoupon[i] as JSONObject
                     couponBean.amount = couponObj.optJSONObject("coupon").optInt("amount")
@@ -189,6 +192,60 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             orderCouponMap[item.store_rid] = arrayList
         }
 
+    }
+
+
+    /**
+     * 设置商品默认快递公司
+     */
+    override fun setDefaultExpressCompany(data: JSONObject) {
+        var arrayList:ArrayList<ExpressInfoBean>
+        val store_items = createOrderBean.store_items
+        for (item in store_items) {
+            val any = data.get(item.store_rid)
+            if (any is JSONObject) {
+                val storeJSONObject = data.optJSONObject(item.store_rid)
+                var skuJSONObject: JSONObject
+                var expressJsonArray: JSONArray
+                for (product in item.items) {
+                    arrayList = ArrayList()
+                    skuJSONObject = storeJSONObject.optJSONObject(product.rid)
+                    expressJsonArray = skuJSONObject.optJSONArray("express")
+                    val length = expressJsonArray.length() - 1
+                    for (i in 0..length) {
+                        val expressInfoBean = ExpressInfoBean()
+                        val expressObj = expressJsonArray[i] as JSONObject
+                        expressInfoBean.express_code = expressObj.optString("express_code")
+                        expressInfoBean.express_id = expressObj.optString("express_id")
+                        expressInfoBean.express_name = expressObj.optString("express_name")
+                        expressInfoBean.max_days = expressObj.optInt("max_days")
+                        expressInfoBean.min_days = expressObj.optInt("min_days")
+                        expressInfoBean.is_default = expressObj.optBoolean("is_default")
+                        arrayList.add(expressInfoBean)
+                    }
+
+                    product.express = arrayList
+                }
+            }
+        }
+
+        adapter.notifyDataSetChanged()
+    }
+
+    /**
+     * 获取默认快递公司
+     */
+    private fun getDefaultExpressCompany() {
+        val storeList = ArrayList<FullReductionRequestBean>()
+        var requestBean:FullReductionRequestBean
+        for (item in createOrderBean.store_items){
+            requestBean = FullReductionRequestBean()
+            requestBean.rid = item.store_rid
+            requestBean.sku_items = item.items
+            storeList.add(requestBean)
+        }
+
+        presenter.getDefaultExpressCompany(storeList)
     }
 
     /**

@@ -49,6 +49,10 @@ class ConfirmOrderContract {
 
         }
 
+        fun setDefaultExpressCompany(data: JSONObject) {
+
+        }
+
     }
 
     interface Presenter : BasePresenter {
@@ -57,6 +61,8 @@ class ConfirmOrderContract {
         fun getNewUserFirstOrderDiscounts()
 
         fun getPerOrderFullReduction(list: ArrayList<FullReductionRequestBean>)
+
+        fun getDefaultExpressCompany(stores: ArrayList<FullReductionRequestBean>)
 
         fun submitOrder(createOrderBean: CreateOrderBean)
     }

@@ -436,4 +436,10 @@ object URL {
      */
     const val PROVINCES_CITY_COUNTRY= "${BASE_URL}places/provinces_cities"
 
+
+    /**
+     * 每个SKU商品的快递列表
+     */
+    const val PRODUCT_EXPRESS = "${BASE_URL}logistics/product/express"
+
 }

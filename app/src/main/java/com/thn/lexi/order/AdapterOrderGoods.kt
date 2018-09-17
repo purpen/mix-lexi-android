@@ -35,5 +35,13 @@ class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Bas
 
         helper.setText(R.id.textViewGoodsNum,"x${item.quantity}")
 
+        for (express in item.express){
+            if(express.is_default){
+                helper.setText(R.id.textViewExpressName,"${express.express_name}")
+                helper.setText(R.id.textViewExpressTime,"物流时长：${express.min_days}至${express.max_days}送达")
+                break
+            }
+        }
+
     }
 }
