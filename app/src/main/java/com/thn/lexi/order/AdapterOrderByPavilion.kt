@@ -38,9 +38,10 @@ class AdapterOrderByPavilion(@LayoutRes res: Int) : BaseQuickAdapter<StoreItemBe
         val adapter = AdapterOrderGoods(R.layout.adapter_confirm_order_goods)
         recyclerView.adapter = adapter
 
+        //根据物流模板排序
         Collections.sort(item.items,SortBy())
 
-        //选出添加选择物流item,map的覆盖效果
+        //根据物流模板选出添加选择物流item,map的覆盖效果
         val hashMap = HashMap<String, String>()
         for (product in item.items){
             hashMap[product.fid] = product.rid
