@@ -2,6 +2,7 @@ package com.thn.lexi.order
 
 import android.graphics.Paint
 import android.support.annotation.LayoutRes
+import android.text.TextUtils
 import android.view.View
 import android.widget.*
 import com.basemodule.tools.GlideUtil
@@ -29,6 +30,16 @@ class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Bas
             textViewPrice.text = "${item.sale_price}"
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
             textViewOldPrice.text = "￥${item.price}"
+        }
+
+        val relativeLayoutGoodsItemExpress = helper.getView<RelativeLayout>(R.id.relativeLayoutGoodsItemExpress)
+
+        val skuId:String? = item.map[item.fid]
+
+        if (TextUtils.equals(item.rid,skuId)){
+            relativeLayoutGoodsItemExpress.visibility = View.VISIBLE
+        }else{
+            relativeLayoutGoodsItemExpress.visibility = View.GONE
         }
 
         helper.setText(R.id.textViewSpec,item.s_color+" / "+item.s_model)

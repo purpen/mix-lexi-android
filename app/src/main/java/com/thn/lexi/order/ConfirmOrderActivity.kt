@@ -8,11 +8,12 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
 import com.thn.lexi.beans.CouponBean
+import com.thn.lexi.beans.ProductBean
 import kotlinx.android.synthetic.main.acticity_submit_order.*
 import kotlinx.android.synthetic.main.header_submit_order.view.*
 import org.json.JSONArray
 import org.json.JSONObject
-
+import java.util.*
 
 class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 

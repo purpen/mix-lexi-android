@@ -939,4 +939,18 @@ public class ClientParamsAPI {
         params.put("store_items",createOrderBean.store_items);
         return params;
     }
+
+    /**
+     * 根据商品运费模板获取快递列表
+     * @param expressModelId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,Object> getExpressListByExpressModel(@NotNull String expressModelId) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("address_rid",expressModelId);
+        params.put("fid","fid");
+        params.put("items","items");
+        return params;
+    }
 }

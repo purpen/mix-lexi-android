@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.thn.lexi.order.ExpressInfoBean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProductBean implements Parcelable {
@@ -51,7 +52,7 @@ public class ProductBean implements Parcelable {
      * top_category_id : 一级分类id
      * total_stock : 库存数
      */
-
+    public HashMap<String,String> map;
     public List<ExpressInfoBean> express;
     public String category_id;
     public String commission_price;
@@ -117,6 +118,7 @@ public class ProductBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(this.map);
         dest.writeList(this.express);
         dest.writeString(this.category_id);
         dest.writeString(this.commission_price);
@@ -174,6 +176,7 @@ public class ProductBean implements Parcelable {
     }
 
     protected ProductBean(Parcel in) {
+        this.map = (HashMap<String, String>) in.readSerializable();
         this.express = new ArrayList<ExpressInfoBean>();
         in.readList(this.express, ExpressInfoBean.class.getClassLoader());
         this.category_id = in.readString();
