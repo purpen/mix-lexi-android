@@ -27,7 +27,7 @@ import android.view.View;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
-import com.thn.imagealbum.BuildConfig;
+import com.thn.basemodule.BuildConfig;
 import com.thn.imagealbum.album.ImageLoaderEngine;
 
 import java.io.ByteArrayOutputStream;
@@ -354,6 +354,8 @@ public class ImageUtils {
             return;
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //添加权限
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         activity.startActivityForResult(intent, Constants.REQUEST_CODE_CAPTURE_CAMERA);
     }

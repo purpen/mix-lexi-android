@@ -9,6 +9,8 @@ import com.basemodule.ui.IDataSource;
 import com.thn.lexi.address.AddressBean;
 import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
+import com.thn.lexi.order.CreateOrderBean;
+import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.user.login.UserProfileUtil;
 
 import org.apache.commons.codec.binary.Hex;

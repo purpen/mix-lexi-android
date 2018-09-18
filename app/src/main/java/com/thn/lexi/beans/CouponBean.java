@@ -31,5 +31,5 @@ public class CouponBean {
     public String type_text;
     public long end_date;
     public long start_date;
-    public List<?> products;
+    public List<ProductBean> products;
 }

@@ -410,8 +410,35 @@ object URL {
     const val GET_USER_EXPRESS_ADDRESS = "${BASE_URL}address"
 
     /**
+     * 是否72小时内新用户首单
+     */
+    const val NEW_USER_FIRST_ORDER_DISCOUNTS = "${BASE_URL}market/coupons/new_user_discount"
+
+    /**
+     * 获每订单(店铺)的满减信息
+     */
+    const val PERORDER_FULL_REDUCTION = "${BASE_URL}market/user_order_full_reduction"
+
+
+    /**
+     * 获取店铺订单优惠券
+     */
+    const val PAVILION_ORDER_COUPONS = "${BASE_URL}market/user_order_coupons"
+
+
+    /**
+     * 提交并创建订单
+     */
+    const val SUBMIT_ORDER = "${BASE_URL}orders/create"
+
+    /**
      * 全部省市区列表
      */
     const val PROVINCES_CITY_COUNTRY= "${BASE_URL}places/provinces_cities"
 
+    /**
+     * 订单全部列表
+     */
+
+    const val GET_ORDER="${BASE_URL}orders"
 }

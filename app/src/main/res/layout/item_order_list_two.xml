@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_order_shoping"
+        android:layout_width="@dimen/dp60"
+        android:layout_height="@dimen/dp60"
+        android:layout_marginLeft="@dimen/dp48"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp10"
+        android:scaleType="fitXY"/>
+    <TextView
+        android:id="@+id/tv_order_shoping_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="@string/text_loading"
+        android:layout_alignTop="@+id/iv_order_shoping"
+        android:layout_toRightOf="@+id/iv_order_shoping"/>
+    <TextView
+        android:id="@+id/tv_order_shoping_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x1"
+        android:layout_below="@+id/tv_order_shoping_name"
+        android:layout_alignLeft="@+id/tv_order_shoping_name"
+        android:layout_marginTop="@dimen/dp5"
+        android:textColor="@color/color_999"/>
+    <Button
+        android:id="@+id/bt_logistics"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp29"
+        android:background="@drawable/bg_stroke_color_999"
+        android:textSize="@dimen/sp12"
+        android:text="@string/order_logistics"
+        android:layout_below="@+id/iv_order_shoping"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:textColor="@color/color_999"
+        android:visibility="gone"/>
+</RelativeLayout>

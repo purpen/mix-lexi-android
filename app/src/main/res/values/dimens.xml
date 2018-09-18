@@ -32,4 +32,7 @@
     <dimen name="dp125">125dp</dimen>
     <dimen name="dp6">6dp</dimen>
     <dimen name="dp14">14dp</dimen>
+    <dimen name="dp23">23dp</dimen>
+    <dimen name="dp68">68dp</dimen>
+
 </resources>

@@ -3,7 +3,6 @@ package com.basemodule.tools;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.AnimatorRes;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -14,9 +13,11 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import com.thn.basemodule.R;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -91,4 +92,5 @@ public class Util {
         }
         return drawable;
     }
+
 }

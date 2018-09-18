@@ -61,7 +61,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initZCManifest() {
         presenter.getZCManifest()
         adapterZCManifest = ZCManifestAdapter(R.layout.adapter_zc_manifest)
-        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val staggeredGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        staggeredGridLayoutManager.setScrollEnabled(false)
         recyclerViewZCManifest.layoutManager = staggeredGridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
         recyclerViewZCManifest.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
@@ -80,8 +81,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initGoodSelection() {
         presenter.getGoodSelection()
         adapterGoodSelection = GoodSelectionAdapter(R.layout.adapter_editor_recommend)
-        val gridLayoutManager = GridLayoutManager(activity, 2)
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
+        gridLayoutManager.setScrollEnabled(false)
+        gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerViewGoodSelection.setHasFixedSize(true)
         recyclerViewGoodSelection.layoutManager = gridLayoutManager
         recyclerViewGoodSelection.adapter = adapterGoodSelection
@@ -162,7 +164,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun initHotRecommend() {
         presenter.getHotRecommend()
-        val manager = GridLayoutManager(activity, 6)
+        val manager = CustomGridLayoutManager(AppApplication.getContext(), 6)
+        manager.setScrollEnabled(false)
         recyclerViewHotRecommend.layoutManager = manager
     }
 

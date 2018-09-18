@@ -1,6 +1,7 @@
 package com.thn.lexi.address;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.basemodule.tools.LogUtil;
 import com.basemodule.ui.IDataSource;
@@ -177,6 +178,7 @@ public class AddressModel implements IDataSource {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("保存的数据："+json);
                 callBack.onSuccess(json);
             }
 

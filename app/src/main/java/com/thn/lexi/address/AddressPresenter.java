@@ -150,7 +150,7 @@ public class AddressPresenter implements AddressContract.Presenter {
             public void onSuccess(@NotNull String json) {
                 view.dismissLoadingView();
                 AddressBean bean= JsonUtil.fromJson(json,AddressBean.class);
-                if ("200".equals(bean.getStatus().getCode())){
+                if ("204".equals(bean.getStatus().getCode())){
                     view.finishActivity();
                 }
             }
@@ -173,17 +173,22 @@ public class AddressPresenter implements AddressContract.Presenter {
 
             @Override
             public void onStart() {
-
+                view.showLoadingView();
             }
 
             @Override
             public void onSuccess(@NotNull String json) {
-
+                AddressBean bean= JsonUtil.fromJson(json,AddressBean.class);
+                if ("200".equals(bean.getStatus().getCode())||"201".equals(bean.getStatus().getCode())){
+                    view.finishActivity();
+                }
+                view.dismissLoadingView();
             }
 
             @Override
             public void onFailure(@NotNull IOException e) {
-
+                view.dismissLoadingView();
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error));
             }
         },bean,is_overseas,id_card,id_card_front,id_card_back);
     }

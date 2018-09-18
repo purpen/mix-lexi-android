@@ -15,6 +15,7 @@ import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +60,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -83,7 +85,6 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private LinearLayout ll_country;
     private LinearLayout ll_city;
     private EditText et_detailed;
-    private EditText et_detailed1;
     private ImageView iv_position;
     private ImageView iv_opposion;
     private Button bt_delete;
@@ -100,6 +101,11 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private String id_card_front;
     private String id_card_back;
     private String addressId;
+    private AddressBean.DataBean dataBean;
+    private int provinceId;
+    private int cityId;
+    private int areaId;
+    private boolean isdefault;
 
     @Override
     protected int getLayout() {
@@ -111,6 +117,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         context=this;
         EventBus.getDefault().register(this);
        dialog =new WaitingDialog(AddressActivity.this);
+       dataBean=new AddressBean.DataBean();
         super.initView();
         presenter=new AddressPresenter(this);
 
@@ -157,6 +164,12 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             tv_remind.setVisibility(View.GONE);
         }
 
+        if (isNew){
+            bt_delete.setVisibility(View.GONE);
+        }else{
+            bt_delete.setVisibility(View.VISIBLE);
+        }
+
         bt_save.setOnClickListener(this);
         tv_mobile.setOnClickListener(this);
         bt_delete.setOnClickListener(this);
@@ -164,6 +177,12 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         ll_country.setOnClickListener(this);
         iv_position.setOnClickListener(this);
         iv_opposion.setOnClickListener(this);
+        swit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isdefault=isChecked;
+            }
+        });
     }
 
     @Override
@@ -175,10 +194,17 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
+    public void requestNet() {
+        super.requestNet();
+        presenter.getToken();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_save:
-
+                if (setDataBean())
+                presenter.saveAddress(dataBean,false,null,null,null);
                 break;
             case R.id.bt_delete:
                 presenter.deleteAddress(rid);
@@ -258,6 +284,39 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+    private boolean setDataBean(){
+        if (et_name.getText().toString().isEmpty()){
+            ToastUtil.showInfo("请输入姓名");
+        }else {
+            dataBean.setFirst_name(et_name.getText().toString());
+            if (et_mobile.getText().toString().isEmpty())
+                ToastUtil.showInfo("请输入手机号");
+            else {
+                dataBean.setMobile(et_mobile.getText().toString());
+                et_mobile.getText().toString();
+                if (areaId==0){
+                    ToastUtil.showInfo("请选择地址");
+                }else{
+                    dataBean.setProvince_id(provinceId);
+                    dataBean.setCity_id(cityId);
+                    dataBean.setTown_id(areaId);
+                    if (et_detailed.getText().toString().isEmpty()){
+                        ToastUtil.showInfo("请输入详细地址");
+                    }else{
+                        dataBean.setStreet_address(et_detailed.getText().toString());
+                        //dataBean.setCountry_id(Integer.valueOf(rid));
+                        dataBean.setZipcode(et_code.getText().toString());
+                        dataBean.setIs_default(isdefault);
+                        return true;
+                    }
+                }
+            }
+
+        }
+
+        return false;
+    }
+
     @Override
     public void setPresenter(AddressContract.Presenter presenter) {
         setPresenter(presenter);
@@ -285,7 +344,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         et_code.setText((Integer) data.getZipcode());
         tv_city.setText(data.getFull_address());
         tv_country.setText(data.getCountry_name());
-
+        dataBean=data;
     }
 
     @Override
@@ -293,8 +352,13 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         //地址选择器
         AddressDialog addressDialog=new AddressDialog(context,map);
         addressDialog.setDialogCallback(new AddressDialog.DialogCallback() {
+
             @Override
             public void callBack(String addressName, int pId, int cId, int aId) {
+                provinceId=pId;
+                cityId=cId;
+                areaId=aId;
+                tv_city.setText(addressName);
             }
         });
         addressDialog.show();

@@ -25,6 +25,7 @@ import com.flyco.dialog.listener.OnBtnClickL
 import com.flyco.dialog.widget.ActionSheetDialog
 import com.flyco.dialog.widget.NormalDialog
 import com.thn.lexi.AppApplication
+import com.thn.lexi.CustomGridLayoutManager
 import com.thn.lexi.R
 import com.thn.lexi.album.ImageCropActivity
 import com.thn.lexi.album.ImageUtils
@@ -203,7 +204,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         val recyclerViewWelcome = footerWelcome.recyclerViewWelcome
 
         adapterWelcomeInWeek = WelcomeInWeekAdapter(R.layout.adapter_editor_recommend)
-        val gridLayoutManager = GridLayoutManager(activity, 2)
+        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
+        gridLayoutManager.setScrollEnabled(false)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerViewWelcome.setHasFixedSize(true)
         recyclerViewWelcome.layoutManager = gridLayoutManager

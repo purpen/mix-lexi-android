@@ -56,6 +56,8 @@ public class ProductBean implements Parcelable {
     public String cover_id;
     public String custom_details;
     public String delivery_country;
+    public String delivery_province;
+    public String delivery_city;
     public String delivery_country_id;
     public String features;
     public String have_distributed;
@@ -63,6 +65,8 @@ public class ProductBean implements Parcelable {
     public String s_color;
     public String s_model;
     public String product_name;
+    public int quantity;
+    public String sku;
     public String product_rid;
     public int stock_quantity;
     public boolean is_custom_made;
@@ -115,10 +119,19 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.cover_id);
         dest.writeString(this.custom_details);
         dest.writeString(this.delivery_country);
+        dest.writeString(this.delivery_province);
+        dest.writeString(this.delivery_city);
         dest.writeString(this.delivery_country_id);
         dest.writeString(this.features);
         dest.writeString(this.have_distributed);
         dest.writeString(this.id_code);
+        dest.writeString(this.s_color);
+        dest.writeString(this.s_model);
+        dest.writeString(this.product_name);
+        dest.writeInt(this.quantity);
+        dest.writeString(this.sku);
+        dest.writeString(this.product_rid);
+        dest.writeInt(this.stock_quantity);
         dest.writeByte(this.is_custom_made ? (byte) 1 : (byte) 0);
         dest.writeByte(this.is_custom_service ? (byte) 1 : (byte) 0);
         dest.writeByte(this.is_distributed ? (byte) 1 : (byte) 0);
@@ -132,9 +145,12 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.made_cycle);
         dest.writeString(this.max_price);
         dest.writeString(this.max_sale_price);
+        dest.writeDouble(this.sale_price);
+        dest.writeDouble(this.price);
         dest.writeString(this.min_price);
         dest.writeString(this.min_sale_price);
         dest.writeString(this.name);
+        dest.writeString(this.stick_text);
         dest.writeString(this.published_at);
         dest.writeDouble(this.real_price);
         dest.writeDouble(this.real_sale_price);
@@ -147,6 +163,7 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.top_category_id);
         dest.writeString(this.total_stock);
         dest.writeStringList(this.modes);
+        dest.writeTypedList(this.product_like_users);
     }
 
     protected ProductBean(Parcel in) {
@@ -157,10 +174,19 @@ public class ProductBean implements Parcelable {
         this.cover_id = in.readString();
         this.custom_details = in.readString();
         this.delivery_country = in.readString();
+        this.delivery_province = in.readString();
+        this.delivery_city = in.readString();
         this.delivery_country_id = in.readString();
         this.features = in.readString();
         this.have_distributed = in.readString();
         this.id_code = in.readString();
+        this.s_color = in.readString();
+        this.s_model = in.readString();
+        this.product_name = in.readString();
+        this.quantity = in.readInt();
+        this.sku = in.readString();
+        this.product_rid = in.readString();
+        this.stock_quantity = in.readInt();
         this.is_custom_made = in.readByte() != 0;
         this.is_custom_service = in.readByte() != 0;
         this.is_distributed = in.readByte() != 0;
@@ -174,9 +200,12 @@ public class ProductBean implements Parcelable {
         this.made_cycle = in.readString();
         this.max_price = in.readString();
         this.max_sale_price = in.readString();
+        this.sale_price = in.readDouble();
+        this.price = in.readDouble();
         this.min_price = in.readString();
         this.min_sale_price = in.readString();
         this.name = in.readString();
+        this.stick_text = in.readString();
         this.published_at = in.readString();
         this.real_price = in.readDouble();
         this.real_sale_price = in.readDouble();
@@ -189,6 +218,7 @@ public class ProductBean implements Parcelable {
         this.top_category_id = in.readString();
         this.total_stock = in.readString();
         this.modes = in.createStringArrayList();
+        this.product_like_users = in.createTypedArrayList(UserBean.CREATOR);
     }
 
     public static final Creator<ProductBean> CREATOR = new Creator<ProductBean>() {

@@ -12,6 +12,8 @@ import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
+import com.thn.lexi.address.AddressActivity
+import com.thn.lexi.orderList.OrderListActivity
 import kotlinx.android.synthetic.main.acticity_select_express_address.*
 
 
@@ -27,11 +29,12 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     private lateinit var footerView: View
 
-    private var goodsId: String? = null
+    //订单信息
+    private lateinit var createOrderBean: CreateOrderBean
 
     override fun getIntentData() {
         if (intent.hasExtra(SelectExpressAddressActivity::class.java.simpleName)) {
-            goodsId = intent.getStringExtra(SelectExpressAddressActivity::class.java.simpleName)
+            createOrderBean = intent.getParcelableExtra(SelectExpressAddressActivity::class.java.simpleName)
         }
     }
 
@@ -59,6 +62,12 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     override fun installListener() {
 
+        footerView.setOnClickListener {
+            val intent =Intent(this,OrderListActivity::class.java)
+            intent.putExtra(OrderListActivity::class.java.simpleName,createOrderBean.address_rid)
+            startActivity(intent)
+        }
+
         adapter.setOnItemClickListener { _, _, position ->
             val data = adapter.data
             for (item in data) {
@@ -74,11 +83,25 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
         }
 
         buttonConfirmOrder.setOnClickListener {
-            if (!buttonConfirmOrder.isEnabled){
+
+            var selectedItem: UserAddressListBean.DataBean? =null
+
+            for (item in adapter.data){
+                if (item.is_default){
+                    selectedItem = item
+                    break
+                }
+            }
+
+            if (selectedItem==null) {
                 ToastUtil.showInfo("请先选择收货地址")
                 return@setOnClickListener
             }
+
+            createOrderBean.consigneeInfo = selectedItem
+
             val intent = Intent(this,ConfirmOrderActivity::class.java)
+            intent.putExtra(ConfirmOrderActivity::class.java.simpleName,createOrderBean)
             startActivity(intent)
         }
     }
@@ -99,6 +122,8 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
         var hasChecked = false
         for (item in data) {
             if (item.is_default) {
+                //设置默认地址rid
+                createOrderBean.address_rid = item.rid
                 hasChecked = true
                 break
             }
