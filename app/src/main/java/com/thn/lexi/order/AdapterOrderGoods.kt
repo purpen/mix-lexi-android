@@ -42,6 +42,9 @@ class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Bas
             relativeLayoutGoodsItemExpress.visibility = View.GONE
         }
 
+        //选择物流
+        helper.addOnClickListener(R.id.relativeLayoutGoodsItemExpress)
+
         helper.setText(R.id.textViewSpec,item.s_color+" / "+item.s_model)
 
         helper.setText(R.id.textViewGoodsNum,"x${item.quantity}")

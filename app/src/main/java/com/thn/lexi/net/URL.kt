@@ -442,4 +442,9 @@ object URL {
      */
     const val PRODUCT_EXPRESS = "${BASE_URL}logistics/product/express"
 
+    /**
+     *  根据商品运费模板获取快递
+     */
+    const val SAME_TEMPLATE_EXPRESS = "${BASE_URL}logistics/same_template_express"
+
 }

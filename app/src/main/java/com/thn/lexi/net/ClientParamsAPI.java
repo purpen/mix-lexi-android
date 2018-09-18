@@ -8,6 +8,7 @@ import com.basemodule.tools.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
+import com.thn.lexi.order.SelectExpressRequestBean;
 import com.thn.lexi.user.login.UserProfileUtil;
 
 import org.apache.commons.codec.binary.Hex;
@@ -942,15 +943,15 @@ public class ClientParamsAPI {
 
     /**
      * 根据商品运费模板获取快递列表
-     * @param expressModelId
+     * @param selectExpressRequestBean
      * @return
      */
     @Nullable
-    public static HashMap<String,Object> getExpressListByExpressModel(@NotNull String expressModelId) {
+    public static HashMap<String,Object> getExpressListByExpressModel(@NotNull SelectExpressRequestBean selectExpressRequestBean) {
         HashMap<String, Object> params = generateCommonParams();
-        params.put("address_rid",expressModelId);
-        params.put("fid","fid");
-        params.put("items","items");
+        params.put("address_rid",selectExpressRequestBean.address_rid);
+        params.put("fid",selectExpressRequestBean.fid);
+        params.put("items",selectExpressRequestBean.items);
         return params;
     }
 }

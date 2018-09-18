@@ -3,10 +3,10 @@ import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.index.detail.FavoriteGoodsUsersBean
 import java.io.IOException
 
 class SelectExpressPresenter(view: SelectExpressContract.View) : SelectExpressContract.Presenter {
+
     private var view: SelectExpressContract.View = checkNotNull(view)
 
     private val dataSource: SelectExpressModel by lazy { SelectExpressModel() }
@@ -14,9 +14,9 @@ class SelectExpressPresenter(view: SelectExpressContract.View) : SelectExpressCo
     /**
      * 加载数据
      */
-    override fun loadData(expressModelId:String) {
+    override fun loadData(selectExpressRequestBean: SelectExpressRequestBean) {
 
-        dataSource.loadData(expressModelId,object : IDataSource.HttpRequestCallBack {
+        dataSource.loadData(selectExpressRequestBean,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                view.showLoadingView()
             }
@@ -24,12 +24,11 @@ class SelectExpressPresenter(view: SelectExpressContract.View) : SelectExpressCo
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
 
-
-                val favoriteGoodsUsersBean = JsonUtil.fromJson(json, FavoriteGoodsUsersBean::class.java)
-                if (favoriteGoodsUsersBean.success) {
-                    view.setNewData(favoriteGoodsUsersBean.data.product_like_users)
+                val selectExpressResponseBean = JsonUtil.fromJson(json, SelectExpressResponseBean::class.java)
+                if (selectExpressResponseBean.success) {
+                    view.setNewData(selectExpressResponseBean.data)
                 } else {
-                    view.showError(favoriteGoodsUsersBean.status.message)
+                    view.showError(selectExpressResponseBean.status.message)
                 }
             }
 

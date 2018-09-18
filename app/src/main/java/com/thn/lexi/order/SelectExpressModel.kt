@@ -7,11 +7,11 @@ import java.io.IOException
 
 open class SelectExpressModel{
 
-    fun loadData(expressModelId:String,callBack: IDataSource.HttpRequestCallBack) {
+    fun loadData(selectExpressRequestBean: SelectExpressRequestBean,callBack: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getExpressListByExpressModel(expressModelId)
+        val params = ClientParamsAPI.getExpressListByExpressModel(selectExpressRequestBean)
 
-        HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_FAVORITE_USERS, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.POST, URL.SAME_TEMPLATE_EXPRESS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callBack.onStart()
             }

@@ -136,7 +136,7 @@
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
             android:paddingTop="20dp"
-            android:text="@string/text_select_express"
+            android:text="@string/text_select_other_express"
             android:textColor="@color/color_6ed7af"
             android:textSize="@dimen/sp14" />
 

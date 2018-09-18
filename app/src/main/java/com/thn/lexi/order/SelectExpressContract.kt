@@ -13,16 +13,13 @@ class SelectExpressContract {
 
         fun goPage()
 
-        fun setNewData(users: MutableList<UserBean>) {
+        fun setNewData(users: MutableList<ExpressInfoBean>) {
 
         }
 
-        fun addData(users: MutableList<UserBean>) {
-
-        }
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(expressModelId:String)
+        fun loadData(selectExpressRequestBean: SelectExpressRequestBean)
     }
 }
