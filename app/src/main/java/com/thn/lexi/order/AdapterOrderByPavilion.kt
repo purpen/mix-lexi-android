@@ -69,7 +69,7 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
         }
 
 
-        if (hashMap.size > 2) {//两种以上物流摸板执行排序
+        if (hashMap.size > 1) {//两种及2种以上物流摸板执行排序
             Collections.sort(item.items, SortBy())
         }
 
