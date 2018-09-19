@@ -35,6 +35,13 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
             helper.setText(R.id.textViewPromotion, item.fullReductionText)
         }
 
+        if (item.expressExpense==0.0){
+            helper.setText(R.id.textViewFreight,"包邮")
+        }else{
+            helper.setText(R.id.textViewFreight,"${item.expressExpense}")
+        }
+
+
         helper.addOnClickListener(R.id.textViewPavilionCoupon)
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerViewGoods)

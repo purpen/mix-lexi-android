@@ -4,8 +4,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.basemodule.tools.Constants;
-import com.basemodule.tools.JsonUtil;
-import com.basemodule.ui.IDataSource;
+import com.thn.lexi.order.CalculateExpressExpenseRequestBean;
 import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.order.SelectExpressRequestBean;
@@ -952,6 +951,20 @@ public class ClientParamsAPI {
         params.put("address_rid",selectExpressRequestBean.address_rid);
         params.put("fid",selectExpressRequestBean.fid);
         params.put("items",selectExpressRequestBean.items);
+        return params;
+    }
+
+
+    /**
+     * 获取订单运费列表
+     * @return
+     * @param requestBean
+     */
+    @Nullable
+    public static HashMap<String, Object> calculateExpressExpenseForEachOrderParams(CalculateExpressExpenseRequestBean requestBean) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("address_rid", requestBean.address_rid);
+        params.put("items", requestBean.items);
         return params;
     }
 }

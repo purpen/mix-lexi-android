@@ -49,6 +49,8 @@ class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Bas
 
         helper.setText(R.id.textViewGoodsNum,"x${item.quantity}")
 
+        if (item.express==null) return
+
         for (express in item.express){
             if(express.is_default){
                 helper.setText(R.id.textViewExpressName,"${express.express_name}")

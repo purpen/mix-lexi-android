@@ -53,6 +53,10 @@ class ConfirmOrderContract {
 
         }
 
+        fun setCalculateExpressExpenseForEachOrder(data: JSONObject) {
+
+        }
+
     }
 
     interface Presenter : BasePresenter {

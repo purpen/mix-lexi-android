@@ -50,6 +50,7 @@ class SelectExpressActivity : BaseActivity(), SelectExpressContract.View {
         headerViewGoods.layoutManager = customLinearLayoutManager
         headerViewGoods.adapter = adapterGoods
         adapterGoods.setNewData(selectExpressRequestBean.items)
+        headerViewGoods.addItemDecoration(DividerItemDecoration(AppApplication.getContext(), R.color.color_e9e9e9, headerViewGoods, 1f))
         adapter.setHeaderView(headerViewGoods)
 
         val linearLayoutManager = LinearLayoutManager(this)
@@ -70,12 +71,6 @@ class SelectExpressActivity : BaseActivity(), SelectExpressContract.View {
     }
 
     override fun installListener() {
-
-        adapter.setOnItemChildClickListener { adapter, v, position ->
-
-
-        }
-
 
         //快递类型
         adapter.setOnItemClickListener { _,_, position ->

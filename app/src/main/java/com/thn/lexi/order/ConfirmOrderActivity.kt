@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.header_submit_order.view.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
@@ -38,7 +39,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
     //首单优惠
     private var firstOrderDiscount:Double = 0.0
-    //邮费
+    //总运费
     private var expressTotalPrice:Double = 0.0
 
     //满减总额
@@ -166,7 +167,6 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     }
 
 
-
     /**
      * 设置每个订单店铺优惠券
      */
@@ -191,7 +191,6 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             }
             orderCouponMap[item.store_rid] = arrayList
         }
-
     }
 
 
@@ -212,6 +211,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
                     skuJSONObject = storeJSONObject.optJSONObject(product.rid)
                     expressJsonArray = skuJSONObject.optJSONArray("express")
                     val length = expressJsonArray.length() - 1
+
                     for (i in 0..length) {
                         val expressInfoBean = ExpressInfoBean()
                         val expressObj = expressJsonArray[i] as JSONObject
@@ -221,6 +221,9 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
                         expressInfoBean.max_days = expressObj.optInt("max_days")
                         expressInfoBean.min_days = expressObj.optInt("min_days")
                         expressInfoBean.is_default = expressObj.optBoolean("is_default")
+                        if (expressInfoBean.is_default){
+                            product.express_id = expressInfoBean.express_id
+                        }
                         arrayList.add(expressInfoBean)
                     }
 
@@ -230,6 +233,51 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         }
 
         adapter.notifyDataSetChanged()
+
+        //设置完默认快递公司，计算邮费
+        calculateExpressExpenseForEachOrder()
+    }
+
+
+    override fun setCalculateExpressExpenseForEachOrder(data: JSONObject) {
+        for (store in createOrderBean.store_items){
+            val expense = data.optDouble(store.store_rid)
+            store.expressExpense = expense
+            expressTotalPrice += expense
+        }
+
+        adapter.notifyDataSetChanged()
+
+        if (expressTotalPrice==0.0){
+            headerView.textViewDeliveryPrice.text = "包邮"
+            headerView.textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_c2a67d))
+        }else{
+            headerView.textViewDeliveryPrice.text = "￥$expressTotalPrice"
+            headerView.textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_9099a6))
+        }
+
+
+    }
+
+
+    /**
+     * 获取订单运费列表
+     */
+    private fun calculateExpressExpenseForEachOrder() {
+        var requestBean=CalculateExpressExpenseRequestBean()
+        //用户收货地址相同
+        requestBean.address_rid = createOrderBean.address_rid
+
+        val storeList = ArrayList<StoreItemBean>()
+
+        for (store in createOrderBean.store_items){
+            val storeItemBean = StoreItemBean()
+            storeItemBean.rid = store.store_rid
+            storeItemBean.sku_items = store.items
+            storeList.add(storeItemBean)
+        }
+        requestBean.items = storeList
+        presenter.calculateExpressExpenseForEachOrder(requestBean)
     }
 
     /**

@@ -52,6 +52,10 @@ public class ProductBean implements Parcelable {
      * top_category_id : 一级分类id
      * total_stock : 库存数
      */
+
+    //商品默认快递id
+    public String express_id;
+
     public HashMap<String,String> map;
     public List<ExpressInfoBean> express;
     public String category_id;
@@ -118,8 +122,9 @@ public class ProductBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.express_id);
         dest.writeSerializable(this.map);
-        dest.writeList(this.express);
+        dest.writeTypedList(this.express);
         dest.writeString(this.category_id);
         dest.writeString(this.commission_price);
         dest.writeString(this.commission_rate);
@@ -176,9 +181,9 @@ public class ProductBean implements Parcelable {
     }
 
     protected ProductBean(Parcel in) {
+        this.express_id = in.readString();
         this.map = (HashMap<String, String>) in.readSerializable();
-        this.express = new ArrayList<ExpressInfoBean>();
-        in.readList(this.express, ExpressInfoBean.class.getClassLoader());
+        this.express = in.createTypedArrayList(ExpressInfoBean.CREATOR);
         this.category_id = in.readString();
         this.commission_price = in.readString();
         this.commission_rate = in.readString();

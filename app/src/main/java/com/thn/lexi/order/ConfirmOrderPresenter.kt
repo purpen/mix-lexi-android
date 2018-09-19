@@ -161,5 +161,28 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
     }
 
 
+    /**
+     * 获取订单运费列表
+     */
+    fun calculateExpressExpenseForEachOrder(requestBean: CalculateExpressExpenseRequestBean) {
+        dataSource.calculateExpressExpenseForEachOrder(requestBean,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val response = JSONObject(json)
+                val isSuccess = response.getBoolean("success")
+                val status = response.getJSONObject("status")
+                val data = response.getJSONObject("data")
+                if (isSuccess) {
+                    view.setCalculateExpressExpenseForEachOrder(data)
+                } else {
+                    view.showError(status.getString("message"))
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 
 }

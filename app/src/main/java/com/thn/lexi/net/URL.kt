@@ -447,4 +447,9 @@ object URL {
      */
     const val SAME_TEMPLATE_EXPRESS = "${BASE_URL}logistics/same_template_express"
 
+    /**
+     * 计算运费列表
+     */
+    const val FREIGHT_CALCULATE = "${BASE_URL}logistics/freight/calculate"
+
 }
