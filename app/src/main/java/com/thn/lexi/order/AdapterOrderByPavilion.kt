@@ -41,6 +41,13 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
             helper.setText(R.id.textViewFreight,"${item.expressExpense}")
         }
 
+        val textViewPavilionCoupon = helper.getView<TextView>(R.id.textViewPavilionCoupon)
+
+        if (item.couponPrice==0){
+            textViewPavilionCoupon.text = "选择优惠券"
+        }else{
+            helper.setText(R.id.textViewPavilionCoupon,"已抵扣￥${item.couponPrice}")
+        }
 
         helper.addOnClickListener(R.id.textViewPavilionCoupon)
 

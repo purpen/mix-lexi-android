@@ -6,10 +6,14 @@ import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
+import com.thn.lexi.MessageUpdate
 import com.thn.lexi.R
 import com.thn.lexi.beans.CouponBean
 import kotlinx.android.synthetic.main.acticity_submit_order.*
 import kotlinx.android.synthetic.main.header_submit_order.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -21,7 +25,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
     private val presenter: ConfirmOrderPresenter by lazy { ConfirmOrderPresenter(this) }
 
-    private val adapter: AdapterOrderByPavilion by lazy { AdapterOrderByPavilion(R.layout.adapter_confirm_order,createOrderBean.address_rid) }
+    private val adapter: AdapterOrderByPavilion by lazy { AdapterOrderByPavilion(R.layout.adapter_confirm_order, createOrderBean.address_rid) }
 
     override val layout: Int = R.layout.acticity_submit_order
 
@@ -35,18 +39,19 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     /**
      * 所有订单优惠券
      */
-    private val orderCouponMap:HashMap<String,ArrayList<CouponBean>> by lazy { HashMap<String,ArrayList<CouponBean>>() }
+    private val orderCouponMap: HashMap<String, ArrayList<CouponBean>> by lazy { HashMap<String, ArrayList<CouponBean>>() }
 
     //首单优惠
-    private var firstOrderDiscount:Double = 0.0
+    private var firstOrderDiscountPrice: Double = 0.0
     //总运费
-    private var expressTotalPrice:Double = 0.0
+    private var expressTotalPrice: Double = 0.0
 
     //满减总额
-    private var fullReductionTotalPrice:Double = 0.0
+    private var fullReductionTotalPrice: Double = 0.0
 
     //优惠券总额(店铺和乐喜券)
-    private var couponTotalPrice:Double = 0.0
+    private var couponTotalPrice: Int = 0
+
 
     override fun getIntentData() {
         if (intent.hasExtra(ConfirmOrderActivity::class.java.simpleName)) {
@@ -55,6 +60,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     }
 
     override fun initView() {
+        EventBus.getDefault().register(this)
+
         customHeadView.setHeadCenterTxtShow(true, R.string.title_submit_order)
         swipeRefreshLayout.isEnabled = false
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
@@ -95,18 +102,44 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         setPresenter(presenter)
     }
 
+
+    /**
+     * 选完优惠券，更新支付价格
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onCouponSelected(messageUpdate: MessageUpdate) {
+        adapter.notifyDataSetChanged()
+
+        val stores = createOrderBean.store_items
+
+        //累加优惠券总面值先重置
+        couponTotalPrice = 0
+
+        for (store in stores) {
+            couponTotalPrice += store.couponPrice
+        }
+
+        if (couponTotalPrice == 0) {
+            headerView.textViewCouponPrice.text = "无"
+        } else {
+            headerView.textViewCouponPrice.text = "-￥$couponTotalPrice"
+        }
+
+        calculateUserPayTotalPrice()
+    }
+
     override fun installListener() {
         adapter.setOnItemChildClickListener { _, view, position ->
             val id = view.id
-            when(id){
-                R.id.textViewPavilionCoupon ->{
+            when (id) {
+                R.id.textViewPavilionCoupon -> {
                     val itemBean = adapter.getItem(position) as StoreItemBean
                     val list = orderCouponMap[itemBean.store_rid]
-                    if (list==null || list.isEmpty()) {
+                    if (list == null || list.isEmpty()) {
                         ToastUtil.showInfo("当前品牌馆没有可用优惠券")
                         return@setOnItemChildClickListener
                     }
-                    val pavilionCouponBottomDialog = PavilionCouponBottomDialog(this, presenter,list)
+                    val pavilionCouponBottomDialog = PavilionCouponBottomDialog(this, presenter, list, itemBean)
                     pavilionCouponBottomDialog.show()
                 }
             }
@@ -140,10 +173,11 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      * 设置新用户首单优惠信息
      */
     override fun setNewUserDiscountData(data: NewUserDiscountBean.DataBean) {
-        if (data.is_new_user){
-            val newUserPrice = createOrderBean.orderTotalPrice *(1- data.discount_ratio)
+        if (data.is_new_user) {
+            val newUserPrice = createOrderBean.orderTotalPrice * (1 - data.discount_ratio)
             headerView.textViewFirstOrderDiscountPrice.text = "￥ $newUserPrice"
-        }else{
+        } else {
+            firstOrderDiscountPrice = 0.0
             headerView.textViewFirstOrderDiscountPrice.text = "无"
         }
     }
@@ -171,15 +205,15 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      * 设置每个订单店铺优惠券
      */
     override fun setPavilionCouponByOrderData(data: JSONObject) {
-        var arrayList:ArrayList<CouponBean>
-        var jsonArrayCoupon:JSONArray
-        for (item in createOrderBean.store_items){
+        var arrayList: ArrayList<CouponBean>
+        var jsonArrayCoupon: JSONArray
+        for (item in createOrderBean.store_items) {
             arrayList = ArrayList()
             val any = data.get(item.store_rid)
             if (any is JSONArray) {
                 jsonArrayCoupon = data.getJSONArray(item.store_rid)
-                val length = jsonArrayCoupon.length()-1
-                for (i in 0..length){
+                val length = jsonArrayCoupon.length() - 1
+                for (i in 0..length) {
                     val couponBean = CouponBean()
                     val couponObj = jsonArrayCoupon[i] as JSONObject
                     couponBean.amount = couponObj.optJSONObject("coupon").optInt("amount")
@@ -198,7 +232,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      * 设置商品默认快递公司
      */
     override fun setDefaultExpressCompany(data: JSONObject) {
-        var arrayList:ArrayList<ExpressInfoBean>
+        var arrayList: ArrayList<ExpressInfoBean>
         val store_items = createOrderBean.store_items
         for (item in store_items) {
             val any = data.get(item.store_rid)
@@ -221,7 +255,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
                         expressInfoBean.max_days = expressObj.optInt("max_days")
                         expressInfoBean.min_days = expressObj.optInt("min_days")
                         expressInfoBean.is_default = expressObj.optBoolean("is_default")
-                        if (expressInfoBean.is_default){
+                        if (expressInfoBean.is_default) {
                             product.express_id = expressInfoBean.express_id
                         }
                         arrayList.add(expressInfoBean)
@@ -239,24 +273,29 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     }
 
 
+    /**
+     * 设置每个店铺运费并设置总运费
+     */
     override fun setCalculateExpressExpenseForEachOrder(data: JSONObject) {
-        for (store in createOrderBean.store_items){
+        for (store in createOrderBean.store_items) {
             val expense = data.optDouble(store.store_rid)
             store.expressExpense = expense
+
+            //运费总计
             expressTotalPrice += expense
         }
 
         adapter.notifyDataSetChanged()
 
-        if (expressTotalPrice==0.0){
+        if (expressTotalPrice == 0.0) {
             headerView.textViewDeliveryPrice.text = "包邮"
             headerView.textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_c2a67d))
-        }else{
+        } else {
             headerView.textViewDeliveryPrice.text = "￥$expressTotalPrice"
             headerView.textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_9099a6))
         }
 
-
+        calculateUserPayTotalPrice()
     }
 
 
@@ -264,13 +303,13 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      * 获取订单运费列表
      */
     private fun calculateExpressExpenseForEachOrder() {
-        var requestBean=CalculateExpressExpenseRequestBean()
+        var requestBean = CalculateExpressExpenseRequestBean()
         //用户收货地址相同
         requestBean.address_rid = createOrderBean.address_rid
 
         val storeList = ArrayList<StoreItemBean>()
 
-        for (store in createOrderBean.store_items){
+        for (store in createOrderBean.store_items) {
             val storeItemBean = StoreItemBean()
             storeItemBean.rid = store.store_rid
             storeItemBean.sku_items = store.items
@@ -285,8 +324,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      */
     private fun getDefaultExpressCompany() {
         val storeList = ArrayList<FullReductionRequestBean>()
-        var requestBean:FullReductionRequestBean
-        for (item in createOrderBean.store_items){
+        var requestBean: FullReductionRequestBean
+        for (item in createOrderBean.store_items) {
             requestBean = FullReductionRequestBean()
             requestBean.rid = item.store_rid
             requestBean.sku_items = item.items
@@ -302,8 +341,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
     private fun getPavilionCouponByOrder() {
         val storeList = ArrayList<FullReductionRequestBean>()
-        var requestBean:FullReductionRequestBean
-        for (item in createOrderBean.store_items){
+        var requestBean: FullReductionRequestBean
+        for (item in createOrderBean.store_items) {
             requestBean = FullReductionRequestBean()
             requestBean.rid = item.store_rid
             requestBean.sku_items = item.items
@@ -319,8 +358,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      */
     private fun getPerOrderFullReduction() {
         val storeList = ArrayList<FullReductionRequestBean>()
-        var requestBean:FullReductionRequestBean
-        for (item in createOrderBean.store_items){
+        var requestBean: FullReductionRequestBean
+        for (item in createOrderBean.store_items) {
             requestBean = FullReductionRequestBean()
             requestBean.rid = item.store_rid
             requestBean.sku_items = item.items
@@ -335,33 +374,45 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      */
     override fun setPerOrderFullReductionData(data: JSONObject) {
 
-        var sumFullReduction=0.0
+        var sumFullReduction = 0.0
 
-        for (item in createOrderBean.store_items){
+        for (item in createOrderBean.store_items) {
             val any = data.get(item.store_rid)
-            if (any is JSONObject){
+            if (any is JSONObject) {
                 val reduction = data.optJSONObject(item.store_rid)
-                var amout:Double
-                if (reduction.has("amount")){
+                var amout: Double
+                if (reduction.has("amount")) {
                     amout = reduction.optDouble("amount")
-                }else{
+                } else {
                     amout = 0.0
                 }
 
                 item.fullReductionAmount = amout
-                var fullReductionText:String
-                if (reduction.has("type_text")){
+
+                //满减总计
+                fullReductionTotalPrice += amout
+                var fullReductionText: String
+                if (reduction.has("type_text")) {
                     fullReductionText = reduction.optString("type_text")
-                }else{
+                } else {
                     fullReductionText = "无"
                 }
                 item.fullReductionText = fullReductionText
-                sumFullReduction+= amout
+                sumFullReduction += amout
             }
         }
 
 
+        calculateUserPayTotalPrice()
         headerView.textViewFullReducePrice.text = "￥${sumFullReduction}"
+    }
+
+    /**
+     * 计算用户应支付价格
+     */
+    private fun calculateUserPayTotalPrice() {
+        val userPayPrice = createOrderBean.orderTotalPrice + expressTotalPrice - firstOrderDiscountPrice - couponTotalPrice - fullReductionTotalPrice
+        headerView.textViewTotalPrice.text = "￥ $userPayPrice"
     }
 
     override fun loadMoreComplete() {
@@ -393,5 +444,9 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
     }
 
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
 }
 

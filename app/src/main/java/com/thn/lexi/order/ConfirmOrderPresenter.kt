@@ -109,14 +109,6 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
 
 
     /**
-     * 用户领取店铺优惠券
-     */
-    fun clickGetCoupon(storeId: String, code: String?, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-
-    }
-
-
-    /**
      * 根据获取当前店铺订单优惠券列表
      */
     fun getPavilionCouponByOrder(stores: ArrayList<FullReductionRequestBean>) {

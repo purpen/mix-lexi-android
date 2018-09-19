@@ -31,8 +31,11 @@ public class StoreItemBean implements Parcelable {
     //优惠券码
     public String coupon_codes;
 
+    //优惠券面值
+    public int couponPrice;
+
     //满减数额
-    public Double fullReductionAmount;
+    public double fullReductionAmount;
 
     //满减描述
     public String fullReductionText;
@@ -61,7 +64,8 @@ public class StoreItemBean implements Parcelable {
         dest.writeString(this.blessing_utterance);
         dest.writeValue(this.expressExpense);
         dest.writeString(this.coupon_codes);
-        dest.writeValue(this.fullReductionAmount);
+        dest.writeInt(this.couponPrice);
+        dest.writeDouble(this.fullReductionAmount);
         dest.writeString(this.fullReductionText);
         dest.writeTypedList(this.sku_items);
         dest.writeTypedList(this.items);
@@ -76,7 +80,8 @@ public class StoreItemBean implements Parcelable {
         this.blessing_utterance = in.readString();
         this.expressExpense = (Double) in.readValue(Double.class.getClassLoader());
         this.coupon_codes = in.readString();
-        this.fullReductionAmount = (Double) in.readValue(Double.class.getClassLoader());
+        this.couponPrice = in.readInt();
+        this.fullReductionAmount = in.readDouble();
         this.fullReductionText = in.readString();
         this.sku_items = in.createTypedArrayList(ProductBean.CREATOR);
         this.items = in.createTypedArrayList(ProductBean.CREATOR);
