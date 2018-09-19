@@ -9,6 +9,9 @@ import java.util.List;
 
 public class SelectExpressRequestBean implements Parcelable {
 
+    //显示请选择的SKU
+    public ProductBean productBean;
+
     //默认快递
     public ExpressInfoBean defaultExpress;
 
@@ -33,6 +36,7 @@ public class SelectExpressRequestBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.productBean, flags);
         dest.writeParcelable(this.defaultExpress, flags);
         dest.writeString(this.expressSendAddress);
         dest.writeString(this.address_rid);
@@ -41,6 +45,7 @@ public class SelectExpressRequestBean implements Parcelable {
     }
 
     protected SelectExpressRequestBean(Parcel in) {
+        this.productBean = in.readParcelable(ProductBean.class.getClassLoader());
         this.defaultExpress = in.readParcelable(ExpressInfoBean.class.getClassLoader());
         this.expressSendAddress = in.readString();
         this.address_rid = in.readString();

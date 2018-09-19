@@ -1,13 +1,11 @@
 package com.thn.lexi.order
 
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
-import com.thn.lexi.AppApplication
-import com.thn.lexi.DividerItemDecoration
-import com.thn.lexi.MessageUpdate
-import com.thn.lexi.R
+import com.thn.lexi.*
 import com.thn.lexi.beans.CouponBean
 import kotlinx.android.synthetic.main.acticity_submit_order.*
 import kotlinx.android.synthetic.main.header_submit_order.view.*
@@ -126,6 +124,27 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         }
 
         calculateUserPayTotalPrice()
+    }
+
+    /**
+     * 更新默认快递
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onChangeExpress(message: MessageUpdateDefaultExpress) {
+        for (store in createOrderBean.store_items){
+            if (TextUtils.equals(message.store_rid,store.store_rid)){
+                for (product in store.items){
+                    if (TextUtils.equals(product.product_rid,message.product_rid)){
+                        for (express in product.express){
+                            express.is_default = TextUtils.equals(express.express_id,message.express_id)
+                        }
+                    }
+                    break
+                }
+                break
+            }
+        }
+        adapter.notifyDataSetChanged()
     }
 
     override fun installListener() {

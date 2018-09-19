@@ -91,6 +91,7 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
             when(view.id){
                 R.id.relativeLayoutGoodsItemExpress ->{
                     val selectExpressRequestBean = SelectExpressRequestBean()
+                    selectExpressRequestBean.productBean = bean
                     selectExpressRequestBean.defaultExpress = defaultExpress
                     selectExpressRequestBean.expressSendAddress = "从${productBean?.delivery_province}发货"
                     selectExpressRequestBean.address_rid = addressId

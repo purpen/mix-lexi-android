@@ -4,17 +4,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
-import com.thn.lexi.AppApplication
-import com.thn.lexi.CustomLinearLayoutManager
-import com.thn.lexi.DividerItemDecoration
-import com.thn.lexi.R
+import com.thn.lexi.*
 import kotlinx.android.synthetic.main.acticity_header_recyclerview.*
 import kotlinx.android.synthetic.main.footer_select_express.view.*
 import kotlinx.android.synthetic.main.header_express_send_address.view.*
+import org.greenrobot.eventbus.EventBus
 
 
 class SelectExpressActivity : BaseActivity(), SelectExpressContract.View {
@@ -30,6 +29,8 @@ class SelectExpressActivity : BaseActivity(), SelectExpressContract.View {
 
     //选择配送方式参数
     private lateinit var selectExpressRequestBean: SelectExpressRequestBean
+
+    private var clickedExpress: ExpressInfoBean? = null
 
     override fun getIntentData() {
         if (intent.hasExtra(SelectExpressActivity::class.java.simpleName)) {
@@ -73,24 +74,25 @@ class SelectExpressActivity : BaseActivity(), SelectExpressContract.View {
     override fun installListener() {
 
         //快递类型
-        adapter.setOnItemClickListener { _,_, position ->
+        adapter.setOnItemClickListener { _, _, position ->
             val data = adapter.data
             for (item in data) {
                 item.is_default = false
             }
             val item = adapter.getItem(position) as ExpressInfoBean
+            clickedExpress = item
             item.is_default = true
-            footerView.textViewPrice.text ="${item.freight}"
+            footerView.textViewPrice.text = "${item.freight}"
             adapter.notifyDataSetChanged()
         }
     }
 
 
     override fun setNewData(expresses: MutableList<ExpressInfoBean>) {
-        for (item in expresses){
-            if (TextUtils.equals(item.express_id,selectExpressRequestBean.defaultExpress.express_id)){
+        for (item in expresses) {
+            if (TextUtils.equals(item.express_id, selectExpressRequestBean.defaultExpress.express_id)) {
                 item.is_default = true
-                footerView.textViewPrice.text ="${item.freight}"
+                footerView.textViewPrice.text = "${item.freight}"
                 break
             }
         }
@@ -118,6 +120,31 @@ class SelectExpressActivity : BaseActivity(), SelectExpressContract.View {
 
     override fun goPage() {
 
+    }
+
+
+    /**
+     * 改变默认物流
+     */
+    private fun changeDefaultExpress() {
+        val express = MessageUpdateDefaultExpress()
+        if (clickedExpress != null) {
+            val list = selectExpressRequestBean.productBean.express
+            express.product_rid = selectExpressRequestBean.productBean.product_rid
+            express.store_rid = selectExpressRequestBean.productBean.store_rid
+            for (item in list) {
+                if(TextUtils.equals(item.express_id, clickedExpress!!.express_id)){
+                    express.express_id = item.express_id
+                    break
+                }
+            }
+            EventBus.getDefault().post(express)
+        }
+    }
+
+    override fun onDestroy() {
+        changeDefaultExpress()
+        super.onDestroy()
     }
 
 }
