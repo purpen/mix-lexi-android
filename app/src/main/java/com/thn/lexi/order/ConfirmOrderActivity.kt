@@ -127,23 +127,31 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     }
 
     /**
-     * 更新默认快递
+     * 更换快递
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onChangeExpress(message: MessageUpdateDefaultExpress) {
         for (store in createOrderBean.store_items){
             if (TextUtils.equals(message.store_rid,store.store_rid)){
                 for (product in store.items){
+
+                    if (TextUtils.equals(message.fid,product.fid)){
+                        product.express_id = message.express_id
+                    }
+
                     if (TextUtils.equals(product.product_rid,message.product_rid)){
                         for (express in product.express){
                             express.is_default = TextUtils.equals(express.express_id,message.express_id)
                         }
                     }
-                    break
+
                 }
                 break
             }
         }
+
+        //换了快递重新计算运费
+        calculateExpressExpenseForEachOrder()
         adapter.notifyDataSetChanged()
     }
 
@@ -296,10 +304,11 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      * 设置每个店铺运费并设置总运费
      */
     override fun setCalculateExpressExpenseForEachOrder(data: JSONObject) {
+        //计算前先将邮费清零
+        expressTotalPrice =0.0
         for (store in createOrderBean.store_items) {
             val expense = data.optDouble(store.store_rid)
             store.expressExpense = expense
-
             //运费总计
             expressTotalPrice += expense
         }

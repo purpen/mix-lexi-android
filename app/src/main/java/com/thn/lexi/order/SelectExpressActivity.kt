@@ -4,7 +4,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -129,15 +128,10 @@ class SelectExpressActivity : BaseActivity(), SelectExpressContract.View {
     private fun changeDefaultExpress() {
         val express = MessageUpdateDefaultExpress()
         if (clickedExpress != null) {
-            val list = selectExpressRequestBean.productBean.express
             express.product_rid = selectExpressRequestBean.productBean.product_rid
             express.store_rid = selectExpressRequestBean.productBean.store_rid
-            for (item in list) {
-                if(TextUtils.equals(item.express_id, clickedExpress!!.express_id)){
-                    express.express_id = item.express_id
-                    break
-                }
-            }
+            express.fid = selectExpressRequestBean.productBean.fid
+            express.express_id = clickedExpress!!.express_id
             EventBus.getDefault().post(express)
         }
     }

@@ -173,7 +173,7 @@ public class SubmitOrderBean {
                 public String rid;
                 public String s_color;
                 public String s_model;
-                public int s_weight;
+                public double s_weight;
                 public int sale_price;
                 public int stock_count;
             }

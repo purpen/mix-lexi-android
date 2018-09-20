@@ -91,9 +91,9 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
         dataSource.getDefaultExpressCompany(stores,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val response = JSONObject(json)
-                val isSuccess = response.getBoolean("success")
-                val status = response.getJSONObject("status")
-                val data = response.getJSONObject("data")
+                val isSuccess = response.optBoolean("success")
+                val status = response.optJSONObject("status")
+                val data = response.optJSONObject("data")
                 if (isSuccess) {
                     view.setDefaultExpressCompany(data)
                 } else {
