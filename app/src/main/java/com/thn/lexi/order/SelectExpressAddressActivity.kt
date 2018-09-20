@@ -63,8 +63,8 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
     override fun installListener() {
 
         footerView.setOnClickListener {
-            val intent =Intent(this,OrderListActivity::class.java)
-            intent.putExtra(OrderListActivity::class.java.simpleName,createOrderBean.address_rid)
+            val intent =Intent(this,AddressActivity::class.java)
+            intent.putExtra(AddressActivity::class.java.simpleName,createOrderBean.address_rid)
             startActivity(intent)
         }
 

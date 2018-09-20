@@ -87,14 +87,13 @@ public class OrderListBean {
             public boolean distributed;
             public Object remark;
             public String rid;
-            public int user_order_status;
             public int ship_mode;
             public int status;
             public StoreBean store;
-            public double total_amount;
+            public int total_amount;
             public int total_quantity;
             public String blessing_utterance;
-            public String payed_at;
+            public int payed_at;
             public int received_at;
             public boolean is_many_express;
             public List<ItemsBean> items;

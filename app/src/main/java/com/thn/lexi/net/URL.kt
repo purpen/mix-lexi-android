@@ -439,6 +439,9 @@ object URL {
     /**
      * 订单全部列表
      */
-
     const val GET_ORDER="${BASE_URL}orders"
+    /**
+     * 删除订单
+     */
+    const val DELETE_ORDER="${BASE_URL}orders/delete"
 }

@@ -34,5 +34,7 @@
     <dimen name="dp14">14dp</dimen>
     <dimen name="dp23">23dp</dimen>
     <dimen name="dp68">68dp</dimen>
-
+    <dimen name="dp66">66dp</dimen>
+    <dimen name="dp18">18dp</dimen>
+    <dimen name="dp17">17dp</dimen>
 </resources>

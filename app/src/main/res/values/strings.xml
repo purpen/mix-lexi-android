@@ -228,4 +228,13 @@
     <string name="order_delete">删除订单</string>
     <string name="order_confirm">确认收货</string>
     <string name="order_evaluate">去评价</string>
+    <string name="order_code">订单编号</string>
+    <string name="pay_type">支付方式</string>
+    <string name="order_subtotal">小计：</string>
+    <string name="order_freight">配送：</string>
+    <string name="order_freight_type">配送方式</string>
+    <string name="order_amount">订单总计</string>
+    <string name="order_address">寄送地址</string>
+    <string name="order_detail">订单详情</string>
+    <string name="order_pay_type_wx">微信在线支付</string>
 </resources>

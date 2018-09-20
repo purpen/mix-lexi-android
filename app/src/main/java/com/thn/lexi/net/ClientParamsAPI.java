@@ -943,6 +943,15 @@ public class ClientParamsAPI {
         return params;
     }
 
+    /**
+     * 更新地址
+     * @param bean
+     * @param is_overseas
+     * @param id_card
+     * @param id_card_front
+     * @param id_card_back
+     * @return
+     */
     @NotNull
     public static HashMap<String,Object> getAddressParams(AddressBean.DataBean bean,boolean is_overseas,String id_card,String id_card_front,String id_card_back){
         HashMap<String,Object> params=generateCommonParams();
@@ -963,5 +972,16 @@ public class ClientParamsAPI {
         params.put("id_card_front",id_card_front);//正面身份证照片
         params.put("id_card_back",id_card_back);//反面身份证照片
      return params;
+    }
+
+    /**
+     * 获取订单的id
+     * @param rid
+     * @return
+     */
+    public static HashMap<String,Object> getDeleteOrderParams(String rid){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("rid",rid);
+        return params;
     }
 }
