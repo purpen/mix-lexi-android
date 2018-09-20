@@ -57,6 +57,7 @@
         <activity android:name=".order.SelectExpressAddressActivity" />
         <activity android:name=".order.ConfirmOrderActivity" />
         <activity android:name=".address.AddressActivity" />
+        <activity android:name=".order.SelectExpressActivity" />
     </application>
 
 </manifest>

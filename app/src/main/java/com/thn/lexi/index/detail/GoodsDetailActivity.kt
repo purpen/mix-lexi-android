@@ -398,7 +398,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
         }
 
-        headerView.textViewLightSpot.text = "亮点：" + data.features
+        if(TextUtils.isEmpty(data.features)){
+            headerView.textViewLightSpot.visibility = View.GONE
+        }else{
+            headerView.textViewLightSpot.visibility = View.VISIBLE
+            headerView.textViewLightSpot.text = "亮点：${data.features}"
+        }
+
 
         if (data.is_custom_service) { //可定制
             headerView.textViewCharacter.visibility = View.VISIBLE
@@ -407,7 +413,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.textViewCharacter.visibility = View.GONE
         }
 
-        headerView.textViewMaterial.text = "材质：${data.material_name}"
+        if (TextUtils.isEmpty(data.material_name)){
+            headerView.textViewMaterial.visibility = View.GONE
+        }else{
+            headerView.textViewMaterial.visibility = View.VISIBLE
+            headerView.textViewMaterial.text = "材质：${data.material_name}"
+        }
 
         headerView.textViewCount.text = "数量：${data.total_stock}件"
 

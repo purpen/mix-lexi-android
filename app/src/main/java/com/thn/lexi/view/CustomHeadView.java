@@ -98,7 +98,7 @@ public class CustomHeadView extends RelativeLayout {
                         mIGobackListener.goback();
                     } else {
                         if (context instanceof Activity) {
-                            ((Activity)context).onBackPressed();
+                            ((Activity)context).finish();
                         }
                     }
                     break;
