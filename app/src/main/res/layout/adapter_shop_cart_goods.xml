@@ -106,6 +106,23 @@
         android:layout_alignStart="@+id/textViewName"
         />
 
+    <!--重选规格-->
+    <TextView
+        android:id="@+id/textViewReselectSpec"
+        android:layout_width="64dp"
+        android:layout_height="24dp"
+        android:text="@string/text_reselect_spec"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:textColor="@color/color_666"
+        android:background="@drawable/border_radius4_999"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_marginEnd="@dimen/dp15"
+        />
+
+
+    <!--编辑数量-->
     <com.thn.lexi.view.AddSubView
         android:id="@+id/addSubView"
         android:layout_width="wrap_content"
@@ -114,6 +131,7 @@
         android:layout_alignBottom="@+id/imageView"
         android:layout_marginEnd="@dimen/dp15"
         />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"

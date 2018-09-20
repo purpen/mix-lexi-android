@@ -46,6 +46,8 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
             EventBus.getDefault().post(MessageUpdate())
         }
 
+
+
         val checkBox = helper.getView<CheckBox>(R.id.checkBox)
 
         checkBox.isChecked = item.isChecked
@@ -61,5 +63,9 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
             checkBox.visibility = View.GONE
             addSubView.visibility = View.VISIBLE
         }
+
+        val textViewReselectSpec = helper.getView<TextView>(R.id.textViewReselectSpec)
+
+        helper.addOnClickListener(R.id.textViewReselectSpec)
     }
 }
