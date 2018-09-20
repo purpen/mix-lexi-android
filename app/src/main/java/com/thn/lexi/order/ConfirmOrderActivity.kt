@@ -226,6 +226,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
         buttonSubmitOrder.setOnClickListener {
             //提交订单
+
             presenter.submitOrder(createOrderBean)
 //            val intent = Intent(this,ConfirmOrderActivity::class.java)
 //            startActivity(intent)
@@ -277,11 +278,13 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
                 val length = jsonArrayCoupon.length() - 1
                 for (i in 0..length) {
                     val couponBean = CouponBean()
-                    val couponObj = jsonArrayCoupon[i] as JSONObject
-                    couponBean.amount = couponObj.optJSONObject("coupon").optInt("amount")
-                    couponBean.min_amount = couponObj.optJSONObject("coupon").optInt("min_amount")
-                    couponBean.start_date = couponObj.optJSONObject("coupon").optLong("start_date")
-                    couponBean.end_date = couponObj.optLong("end_at")
+                    val couponInfo = jsonArrayCoupon[i] as JSONObject
+                    val coupon = couponInfo.optJSONObject("coupon")
+                    couponBean.amount = coupon.optInt("amount")
+                    couponBean.min_amount = coupon.optInt("min_amount")
+                    couponBean.start_date = coupon.optLong("start_date")
+                    couponBean.code = coupon.optString("code")
+                    couponBean.end_date = couponInfo.optLong("end_at")
                     arrayList.add(couponBean)
                 }
             }

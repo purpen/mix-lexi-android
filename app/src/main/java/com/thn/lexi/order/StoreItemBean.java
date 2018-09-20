@@ -15,6 +15,7 @@ public class StoreItemBean implements Parcelable {
     //计算运费时店铺id字段
     public String rid;
 
+    //是否分销 0、否 1、是
     public String is_distribute;
 
     public String original_store_rid;

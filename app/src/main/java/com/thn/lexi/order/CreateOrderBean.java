@@ -36,9 +36,6 @@ public class CreateOrderBean implements Parcelable {
     //推广码
     public String affiliate_code;
 
-    //官方红包码
-    public String bonus_code;
-
     //是否同步返回支付参数 0、否 1、是
     public String sync_pay;
 
@@ -68,7 +65,6 @@ public class CreateOrderBean implements Parcelable {
         dest.writeString(this.ship_mode);
         dest.writeString(this.from_client);
         dest.writeString(this.affiliate_code);
-        dest.writeString(this.bonus_code);
         dest.writeString(this.sync_pay);
         dest.writeString(this.last_store_rid);
         dest.writeTypedList(this.store_items);
@@ -85,7 +81,6 @@ public class CreateOrderBean implements Parcelable {
         this.ship_mode = in.readString();
         this.from_client = in.readString();
         this.affiliate_code = in.readString();
-        this.bonus_code = in.readString();
         this.sync_pay = in.readString();
         this.last_store_rid = in.readString();
         this.store_items = in.createTypedArrayList(StoreItemBean.CREATOR);

@@ -179,6 +179,12 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                         goods.quantity = item.quantity
                         goods.sku = item.product.rid
                         goodsList.add(goods)
+
+                        if (item.product.is_distributed){ //分销1，不是分销0
+                            storeItemBean.is_distribute = "1"
+                        }else{
+                            storeItemBean.is_distribute = "0"
+                        }
                     }
 
                 }
