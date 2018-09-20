@@ -1,11 +1,9 @@
 package com.thn.lexi.order
 
 import android.support.annotation.LayoutRes
-import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import com.basemodule.tools.DateUtil
-import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R

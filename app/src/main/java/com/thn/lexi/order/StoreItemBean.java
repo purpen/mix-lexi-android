@@ -28,10 +28,10 @@ public class StoreItemBean implements Parcelable {
     //每个店铺的运费
     public Double expressExpense;
 
-    //优惠券码
+    //店铺优惠券码
     public String coupon_codes;
 
-    //优惠券面值
+    //店铺优惠券面值
     public int couponPrice;
 
     //满减数额

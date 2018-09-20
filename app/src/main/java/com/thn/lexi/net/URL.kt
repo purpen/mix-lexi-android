@@ -452,4 +452,9 @@ object URL {
      */
     const val FREIGHT_CALCULATE = "${BASE_URL}logistics/freight/calculate"
 
+    /**
+     * 根据订单价格获取官方优惠券
+     */
+    const val ORDER_OFFICIAL_COUPONS = "${BASE_URL}market/user_official_fill"
+
 }

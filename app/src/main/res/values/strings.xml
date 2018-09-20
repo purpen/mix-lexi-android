@@ -226,4 +226,5 @@
     <string name="title_select_send_express">选择配送方式</string>
     <string name="text_expected_freight">预计运费</string>
     <string name="text_express_note">采用不同的配送方式的到达天数不同，运费价格也有所不同，实际运费返回明细查看.</string>
+    <string name="text_official_coupon">乐喜优惠券</string>
 </resources>

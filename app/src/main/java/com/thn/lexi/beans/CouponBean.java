@@ -37,4 +37,6 @@ public class CouponBean {
     public long start_date;
     public List<ProductBean> products;
     public boolean selected;
+    public boolean is_expired;
+    public boolean is_used;
 }

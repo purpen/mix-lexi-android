@@ -967,4 +967,17 @@ public class ClientParamsAPI {
         params.put("items", requestBean.items);
         return params;
     }
+
+
+    /**
+     * 获取官方优惠券
+     * @param price
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getOfficialCouponsParams(double price) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("amount", String.valueOf(price));
+        return params;
+    }
 }

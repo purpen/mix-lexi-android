@@ -105,27 +105,27 @@ public class SubmitOrderBean {
                  * store_rid : 2
                  */
 
-                public StoreLogoBean store_logo;
+//                public StoreLogoBean store_logo;
                 public String store_name;
                 public String store_rid;
 
-                public static class StoreLogoBean {
-                    /**
-                     * created_at : 1
-                     * filename : 1
-                     * filepath : 180523/8f51855eedae984.jpg
-                     * id : 1
-                     * type : 1
-                     * view_url : http://0.0.0.0:9000/_uploads/photos/180523/8f51855eedae984.jpg
-                     */
-
-                    public int created_at;
-                    public String filename;
-                    public String filepath;
-                    public int id;
-                    public int type;
-                    public String view_url;
-                }
+//                public static class StoreLogoBean {
+//                    /**
+//                     * created_at : 1
+//                     * filename : 1
+//                     * filepath : 180523/8f51855eedae984.jpg
+//                     * id : 1
+//                     * type : 1
+//                     * view_url : http://0.0.0.0:9000/_uploads/photos/180523/8f51855eedae984.jpg
+//                     */
+//
+//                    public int created_at;
+//                    public String filename;
+//                    public String filepath;
+//                    public int id;
+//                    public int type;
+//                    public String view_url;
+//                }
             }
 
             public static class ItemsBean {
