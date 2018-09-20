@@ -1,7 +1,6 @@
 package com.thn.lexi.order
 
 import android.content.Context
-import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.thn.lexi.CustomLinearLayoutManager
 import com.thn.lexi.DividerItemDecoration
-import com.thn.lexi.MessageUpdate
 import com.thn.lexi.R
 import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.index.detail.ShopCouponListBean
@@ -23,8 +21,9 @@ import org.greenrobot.eventbus.EventBus
 import java.io.IOException
 
 
-class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresenter, sumPrice: Double) : BottomBaseDialog<OfficialCouponBottomDialog>(context) {
+class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresenter, sumPrice: Double, createOrderBean: CreateOrderBean) : BottomBaseDialog<OfficialCouponBottomDialog>(context) {
     private val present: ConfirmOrderPresenter by lazy { presenter }
+    private val orderBean: CreateOrderBean by lazy { createOrderBean }
     private val price: Double by lazy { sumPrice }
     private val adapterDialogCoupon: AdapterDialogPavilionCoupon by lazy { AdapterDialogPavilionCoupon(R.layout.adapter_dialog_official_coupon) }
     private lateinit var view: View
@@ -57,7 +56,6 @@ class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
 
     override fun setUiBeforShow() {
         headerView = View.inflate(context, R.layout.header_coupon_bottom_dialog, null)
-        headerView.textViewCouponTitle.text = Util.getString(R.string.text_get_coupon_packet)
         headerView.textViewCouponTitle.text = Util.getString(R.string.text_official_coupon)
         adapterDialogCoupon.addHeaderView(headerView)
 
@@ -76,12 +74,11 @@ class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
         view.recyclerViewCoupon.adapter = adapterDialogCoupon
         view.recyclerViewCoupon.addItemDecoration(DividerItemDecoration(context, android.R.color.transparent, view.recyclerViewCoupon, 15f))
 
-        val coupons = adapterDialogCoupon.data
 
-        var selectedCoupon: CouponBean
+        var selectedCoupon: CouponBean? =null
 
         //有选中优惠券
-        for (coupon in coupons) {
+        for (coupon in adapterDialogCoupon.data) {
             if (coupon.selected) {
                 selectedCoupon =coupon
                 view.textViewReducePrice.text = "已抵扣${coupon.amount}元"
@@ -93,16 +90,18 @@ class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
         adapterDialogCoupon.setOnItemClickListener { _, _, position ->
             selectedCoupon = adapterDialogCoupon.getItem(position) as CouponBean
 
-            var selected = selectedCoupon.selected
-            for (item in coupons) {
+            var selected = selectedCoupon!!.selected
+
+            for (item in adapterDialogCoupon.data) {
                 item.selected = false
             }
 
-            selectedCoupon.selected = !selected
+            selectedCoupon!!.selected = !selected
+
             adapterDialogCoupon.notifyDataSetChanged()
 
-            if (selectedCoupon.selected) {
-                view.textViewReducePrice.text = "已抵扣${selectedCoupon.amount}元"
+            if (selectedCoupon!!.selected) {
+                view.textViewReducePrice.text = "已抵扣${selectedCoupon!!.amount}元"
                 view.textViewUseCouponNum.text = "使用1张"
             } else {
                 view.textViewReducePrice.text = "已抵扣0元"
@@ -113,26 +112,20 @@ class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
         //点击完成
         view.textViewConfirm.setOnClickListener {
 
-//            if (selectedCoupon == null) {
-//                dismiss()
-//                return@setOnClickListener
-//            }
-//
-//            if (!selectedCoupon!!.selected) { //未选中取消优惠券
-//                store.couponPrice = 0
-//                store.coupon_codes = ""
-//            } else {
-//                store.couponPrice = selectedCoupon!!.amount
-//                store.coupon_codes = selectedCoupon!!.code
-//            }
-            EventBus.getDefault().post(MessageUpdate())
+            if (selectedCoupon == null) {
+                dismiss()
+                return@setOnClickListener
+            }
+
+            if (!selectedCoupon!!.selected) { //取消选中优惠券
+                orderBean.officialCouponPrice = 0
+                orderBean.officialCouponCode = ""
+            } else {
+                orderBean.officialCouponPrice = selectedCoupon!!.amount
+                orderBean.officialCouponCode = selectedCoupon!!.code
+            }
+            EventBus.getDefault().post(selectedCoupon)
             dismiss()
         }
-
-//        setOnDismissListener {
-//            for (coupon in coupons){
-//                coupon.selected = false
-//            }
-//        }
     }
 }

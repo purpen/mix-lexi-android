@@ -11,7 +11,7 @@
         android:background="@color/color_f5f7f9"
         />
     <TextView
-        android:id="@+id/textViewOfficalCouponTitle"
+        android:id="@+id/textViewOfficialCouponTitle"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_below="@id/line_footer"
@@ -24,11 +24,11 @@
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textViewOfficalCoupon"
+        android:id="@+id/textViewOfficialCoupon"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@id/textViewOfficalCouponTitle"
+        android:layout_alignTop="@id/textViewOfficialCouponTitle"
         android:drawableEnd="@mipmap/icon_arrow_right_999"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
@@ -42,7 +42,7 @@
         android:id="@+id/line_footer2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/textViewOfficalCouponTitle"
+        android:layout_below="@id/textViewOfficialCouponTitle"
         layout="@layout/line_color_eee" />
     <View
         android:layout_width="match_parent"

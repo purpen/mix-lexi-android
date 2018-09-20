@@ -35,6 +35,8 @@ public class CouponBean {
     public String type_text;
     public long end_date;
     public long start_date;
+    public long expired_at;
+    public long start_at;
     public List<ProductBean> products;
     public boolean selected;
     public boolean is_expired;

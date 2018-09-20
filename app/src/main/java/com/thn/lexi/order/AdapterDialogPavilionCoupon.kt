@@ -17,7 +17,14 @@ class AdapterDialogPavilionCoupon(@LayoutRes res: Int) : BaseQuickAdapter<Coupon
         val textViewTime = helper.getView<TextView>(R.id.textViewTime)
         textViewValue.text = "${item.amount}"
         textViewContent.text = "满${item.min_amount}使用"
-        textViewTime.text = "${DateUtil.getDateByTimestamp(item.start_date, DateUtil.PATTERN_DOT)}至${DateUtil.getDateByTimestamp(item.end_date, DateUtil.PATTERN_DOT)}"
+
+        if (item.expired_at==0L || item.start_at==0L){
+            textViewTime.text = "${DateUtil.getDateByTimestamp(item.start_date, DateUtil.PATTERN_DOT)}至${DateUtil.getDateByTimestamp(item.end_date, DateUtil.PATTERN_DOT)}"
+        }else{
+            textViewTime.text = "${DateUtil.getDateByTimestamp(item.start_at, DateUtil.PATTERN_DOT)}至${DateUtil.getDateByTimestamp(item.expired_at, DateUtil.PATTERN_DOT)}"
+        }
+
+
         val checkBox = helper.getView<CheckBox>(R.id.checkBox)
         checkBox.isChecked = item.selected
     }

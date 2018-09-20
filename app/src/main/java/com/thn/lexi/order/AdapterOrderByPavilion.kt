@@ -27,7 +27,7 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
 
         val textViewPavilionName = helper.getView<TextView>(R.id.textViewFromAddress)
 
-        textViewPavilionName.text = "从${productBean?.delivery_province}发货"
+        textViewPavilionName.text = "从${productBean?.delivery_country}${productBean?.delivery_province}发货"
 
         if (TextUtils.isEmpty(item.fullReductionText)) {
             helper.setText(R.id.textViewPromotion, "无")
@@ -93,7 +93,7 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
                     val selectExpressRequestBean = SelectExpressRequestBean()
                     selectExpressRequestBean.productBean = bean
                     selectExpressRequestBean.defaultExpress = defaultExpress
-                    selectExpressRequestBean.expressSendAddress = "从${productBean?.delivery_province}发货"
+                    selectExpressRequestBean.expressSendAddress = "从${productBean?.delivery_country}${productBean?.delivery_province}发货"
                     selectExpressRequestBean.address_rid = addressId
                     selectExpressRequestBean.fid = bean.fid
 

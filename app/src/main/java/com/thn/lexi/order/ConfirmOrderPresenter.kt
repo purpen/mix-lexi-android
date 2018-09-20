@@ -182,6 +182,10 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
      */
     override fun getOfficialCoupons(price: Double, callback: IDataSource.HttpRequestCallBack) {
         dataSource.getOfficialCoupons(price,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callback.onStart()
+            }
+
             override fun onSuccess(json: String) {
                 callback.onSuccess(json)
             }

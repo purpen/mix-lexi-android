@@ -19,21 +19,6 @@ class ConfirmOrderContract {
 
         }
 
-        fun loadMoreEnd() {
-
-        }
-
-        fun loadMoreComplete() {
-
-        }
-
-        fun setFavorite(b: Boolean, position: Int) {
-
-        }
-
-        fun loadMoreFail() {
-
-        }
 
         fun setNewUserDiscountData(data: NewUserDiscountBean.DataBean) {
 
@@ -59,9 +44,7 @@ class ConfirmOrderContract {
 
         }
 
-        fun setOfficialCoupons(coupons: MutableList<CouponBean>) {
 
-        }
 
     }
 
