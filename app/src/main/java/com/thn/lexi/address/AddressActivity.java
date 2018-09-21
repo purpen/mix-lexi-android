@@ -148,14 +148,12 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         TextView tv_remind=findViewById(R.id.tv_remind);
 
         if (isForeign){
-            LogUtil.e("为什么");
             ll_country.setVisibility(View.VISIBLE);
             ll_country.setEnabled(true);
             rl_photo.setVisibility(View.VISIBLE);
             ll_ID.setVisibility(View.VISIBLE);
             tv_remind.setVisibility(View.VISIBLE);
         }else{
-            LogUtil.e("为什么啊");
             ll_country.setVisibility(View.GONE);
             ll_country.setEnabled(false);
             ll_country.setClickable(false);
@@ -278,7 +276,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         super.getIntentData();
         Intent intent=getIntent();
         isNew = intent.getBooleanExtra("isNew",true);
-        isForeign = intent.getBooleanExtra("idForeign",false);
+        isForeign = intent.getBooleanExtra("idForeign",true);
         rid = intent.getStringExtra("rid");
         addressId = intent.getStringExtra(AddressActivity.class.getSimpleName());
 

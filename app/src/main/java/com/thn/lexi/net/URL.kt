@@ -444,4 +444,8 @@ object URL {
      * 删除订单
      */
     const val DELETE_ORDER="${BASE_URL}orders/delete"
+    /**
+     * 获取商品物流信息
+     */
+    const val GET_LOGISTICS="${BASE_URL}logistics/information"
 }

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15">
+
+        <ImageView
+            android:id="@+id/iv_goods"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp60"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_sale_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/iv_goods"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp5"
+            android:text="80"
+            android:textColor="@color/color_333" />
+
+        <TextView
+            android:id="@+id/tv_goods_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_sale_price"
+            android:layout_marginRight="@dimen/dp15"
+            android:text="¥345"
+            android:textColor="@color/color_b2b2b2"
+            android:textSize="@dimen/sp12" />
+
+        <TextView
+            android:id="@+id/tv_goods_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_goods"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/tv_sale_price"
+            android:layout_toRightOf="@+id/iv_goods"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="ssssssssssssssssssssssssssssss"
+            android:textColor="@color/color_333" />
+
+        <TextView
+            android:id="@+id/tv_goods_parm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_goods_name"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_toRightOf="@+id/iv_goods"
+            android:text="黑色／M"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp12" />
+
+        <TextView
+            android:id="@+id/tv_shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_goods_parm"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_toRightOf="@+id/iv_goods"
+            android:text="黑色／M"
+            android:textColor="@color/color_b2b2b2"
+            android:textSize="@dimen/sp11" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp1"
+        android:background="@android:color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15">
+
+        <com.thn.lexi.view.MyRatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp20"
+            app:starCount="5"
+            app:starEmpty="@drawable/icon_evaluate_gray"
+            app:starFill="@drawable/icon_evaluate_yellow"
+            app:starImageSize="@dimen/dp20"
+            app:starPadding="@dimen/dp12"
+            app:stepSize="Full" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp20"
+            android:text="@string/evaluate_ratingbar"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp12" />
+
+        <EditText
+            android:id="@+id/et_evaluate"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp18"
+            android:background="@drawable/bg_coloref0f4f7_radius4"
+            android:gravity="top"
+            android:maxLength="100"
+            android:hint="@string/evaluate_suggest"
+            android:padding="@dimen/dp12"
+            android:textSize="@dimen/sp12" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_image" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:text="@string/max_image_num"
+            android:textSize="@dimen/sp11"
+            android:layout_marginBottom="@dimen/dp13"/>
+    </LinearLayout>
+
+</LinearLayout>

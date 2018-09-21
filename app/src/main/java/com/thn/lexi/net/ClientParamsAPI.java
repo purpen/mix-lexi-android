@@ -984,4 +984,17 @@ public class ClientParamsAPI {
         params.put("rid",rid);
         return params;
     }
+
+    /**
+     * 获取物流信息
+     * @param logistic_code
+     * @param kdn_company_code
+     * @return
+     */
+    public static HashMap<String,Object> getLogistics(String logistic_code, String kdn_company_code){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("logistic_code",logistic_code);
+        params.put("kdn_company_code",kdn_company_code);
+        return params;
+    }
 }

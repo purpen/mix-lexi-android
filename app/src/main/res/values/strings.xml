@@ -237,4 +237,13 @@
     <string name="order_address">寄送地址</string>
     <string name="order_detail">订单详情</string>
     <string name="order_pay_type_wx">微信在线支付</string>
+    <string name="logistics_code">物流编号：</string>
+    <string name="logistics_freight_type">配送方式：</string>
+    <string name="logistics_state">物流状态：</string>
+    <string name="logistics_distribution">配送中</string>
+    <string name="logistics_finish">交易成功</string>
+    <string name="evaluate_ratingbar">轻点星形来评分</string>
+    <string name="evaluate_suggest">我们希望收到你的建议，优化我们的不足。长度在100字以内</string>
+    <string name="add_image">添加图片</string>
+    <string name="max_image_num">（最多添加9张图片）</string>
 </resources>

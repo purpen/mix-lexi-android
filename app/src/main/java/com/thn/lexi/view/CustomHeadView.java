@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.basemodule.tools.Util;
 import com.thn.lexi.R;
 
 public class CustomHeadView extends RelativeLayout {
@@ -200,6 +201,17 @@ public class CustomHeadView extends RelativeLayout {
         if (isShow) {
             head_center_tv.setVisibility(View.VISIBLE);
             head_center_tv.setText(string);
+        } else {
+            head_center_tv.setVisibility(View.GONE);
+        }
+
+    }
+
+    public void setHeadCenterTxtShow(boolean isShow, int string,int color) {
+        if (isShow) {
+            head_center_tv.setVisibility(View.VISIBLE);
+            head_center_tv.setText(string);
+            head_center_tv.setTextColor(Util.getColor(color));
         } else {
             head_center_tv.setVisibility(View.GONE);
         }

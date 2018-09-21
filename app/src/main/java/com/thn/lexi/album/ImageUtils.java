@@ -401,8 +401,10 @@ public class ImageUtils {
     public static Uri getUriForFile(Context context,File file) {
         if (null == file) file = getDefaultFile();
         Uri uri;
+        LogUtil.e("当前的版本号："+Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", file);
+            LogUtil.e("8.0有没有被调起");
         } else {
             uri = Uri.fromFile(file);
         }
@@ -416,6 +418,7 @@ public class ImageUtils {
             return null;
         }
         file = new File(PHOTO_DIR, getPhotoFileName());
+        file.getParentFile().mkdirs();
         if (file.exists()) {
             file.delete();
         }
