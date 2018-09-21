@@ -19,7 +19,7 @@ class ShopCartContract {
 
         }
 
-        fun setNewData(products: List<ProductBean>) {
+        fun setNewData(products: MutableList<ProductBean>) {
 
         }
 

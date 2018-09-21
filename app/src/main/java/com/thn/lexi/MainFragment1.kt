@@ -41,6 +41,8 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     //判断当前fragment是否初始化
     private var isFragmentInitiate = false
 
+    private var headerViewWishOrder: View? = null
+
     companion object {
         fun newInstance(): MainFragment1 {
             return MainFragment1()
@@ -75,7 +77,6 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapterWish
 
-        adapterWish.addHeaderView(View.inflate(activity, R.layout.header_shop_cart_wish_order, null))
         textViewTotalPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp11, R.dimen.dp14), null, null, null)
     }
 
@@ -93,7 +94,8 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerViewGoods.setHasFixedSize(true)
         recyclerViewGoods.adapter = adapterOrder
         val shopCartEmpty = View.inflate(activity, R.layout.header_empty_shop_cart, null)
-        shopCartEmpty.textViewLookAround.setOnClickListener{ //跳转首页
+        shopCartEmpty.textViewLookAround.setOnClickListener {
+            //跳转首页
             EventBus.getDefault().post(MessageChangePage(MainFragment0::class.java.simpleName))
         }
         adapterOrder.emptyView = shopCartEmpty
@@ -206,6 +208,13 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         customHeadView.headRightTV.setOnClickListener {
+
+            val data = adapterOrder.data
+            if (data.isEmpty()) {
+                ToastUtil.showInfo("您的购物车还没有商品")
+                return@setOnClickListener
+            }
+
             if (swipeRefreshLayout.isShown) { //编辑状态
                 swipeRefreshLayout.visibility = View.GONE
                 recyclerViewEditShopCart.visibility = View.VISIBLE
@@ -226,7 +235,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 buttonSettleAccount.visibility = View.VISIBLE
             }
 
-            for (item in adapterOrder.data) {
+            for (item in data) {
                 item.isEdit = !item.isEdit
             }
 
@@ -378,7 +387,13 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         })
     }
 
-    override fun setNewData(products: List<ProductBean>) {
+    override fun setNewData(products: MutableList<ProductBean>) {
+        if (products.isEmpty()) {
+            adapterWish.removeHeaderView(headerViewWishOrder)
+        } else {
+            headerViewWishOrder = View.inflate(activity, R.layout.header_shop_cart_wish_order, null)
+            adapterWish.addHeaderView(headerViewWishOrder)
+        }
         adapterWish.setNewData(products)
     }
 
@@ -400,10 +415,9 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
      * 设置购物车商品数据
      */
     override fun setShopCartGoodsData(data: ShopCartBean.DataBean) {
-        data.items.clear()
-        if (data.items.isEmpty()){
+        if (data.items.isEmpty()) {
             linearLayoutNum.visibility = View.GONE
-        }else{
+        } else {
             linearLayoutNum.visibility = View.VISIBLE
         }
         adapterOrder.setNewData(data.items)
@@ -419,7 +433,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         val items = adapterOrder.data
         var count = 0
         for (item in items) {
-            count+=item.quantity
+            count += item.quantity
             val product = item.product
             if (product.sale_price == 0.0) {
                 totalPrice += product.price * item.quantity
