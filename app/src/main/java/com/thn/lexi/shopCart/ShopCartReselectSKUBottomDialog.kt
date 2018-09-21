@@ -75,7 +75,7 @@ class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPrese
     }
 
     private fun loadData() {
-        present.getGoodsSKUs(goods.rid, object : IDataSource.HttpRequestCallBack {
+        present.getGoodsSKUs(goods.product_rid, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.progressBar.visibility = View.VISIBLE
             }
@@ -132,13 +132,13 @@ class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPrese
 
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
-        if (goods?.real_sale_price == 0.0) {
-            view.textViewPrice.text = "${goods.real_price}"
+        if (goods.real_sale_price == 0.0) {
+            view.textViewPrice.text = "${goods.sale_price}"
         } else {
-            view.textViewPrice.text = "${goods?.real_sale_price}"
+            view.textViewPrice.text = "${goods.real_sale_price}"
         }
 
-        view.textViewName.text = goods?.name
+        view.textViewName.text = goods.product_name
 
         val marginRight = DimenUtil.getDimensionPixelSize(R.dimen.dp15)
         val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DimenUtil.getDimensionPixelSize(R.dimen.dp24))

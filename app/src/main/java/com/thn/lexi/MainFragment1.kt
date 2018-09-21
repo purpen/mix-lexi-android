@@ -1,7 +1,6 @@
 package com.thn.lexi
 
 import android.content.Intent
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.Gravity
@@ -193,8 +192,8 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         adapterOrder.setOnItemChildClickListener { adapter, view, position ->
             when (view.id) {
                 R.id.textViewReselectSpec -> { //重新选择规格
-                    val productBean = adapter.getItem(position) as ProductBean
-                    val addShopCartBottomDialog = ShopCartReselectSKUBottomDialog(activity!!, presenter, productBean)
+                    val itemBean = adapter.getItem(position) as ShopCartBean.DataBean.ItemsBean
+                    val addShopCartBottomDialog = ShopCartReselectSKUBottomDialog(activity!!, presenter, itemBean.product)
                     addShopCartBottomDialog.show()
                 }
             }
@@ -472,6 +471,14 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     override fun goPage() {
 
     }
+
+    //订单提交成功清空购物车
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onOrderSubmitSuccess(message: MessageUpdate) {
+        adapterOrder.data.clear()
+        adapterOrder.notifyDataSetChanged()
+    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onJumpShopCart(message: String) {

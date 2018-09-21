@@ -47,7 +47,6 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
         }
 
 
-
         val checkBox = helper.getView<CheckBox>(R.id.checkBox)
 
         checkBox.isChecked = item.isChecked
@@ -64,18 +63,24 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
             addSubView.visibility = View.VISIBLE
         }
 
-
         val textViewSoldOut = helper.getView<TextView>(R.id.textViewSoldOut)
         val textViewReselectSpec = helper.getView<TextView>(R.id.textViewReselectSpec)
 
         if (item.isEdit){ //编辑状态
+
             textViewReselectSpec.visibility = View.GONE
             addSubView.visibility = View.GONE
 
             if (product.status==1){ //上架状态
-                if (product.stock_quantity==0){//库存为0，已售罄
+                if (product.product_total_stock==0){ //该商品总库存为0，商品售罄
                     textViewSoldOut.visibility = View.VISIBLE
                     textViewSoldOut.text = Util.getString(R.string.text_sold_out)
+                    return
+                }
+
+                if (product.stock_quantity==0){//该SKU库存为0，该规格已售罄
+                    textViewSoldOut.visibility = View.VISIBLE
+                    textViewSoldOut.text = Util.getString(R.string.text_sku_sold_out)
                 }else{
                     textViewSoldOut.visibility = View.GONE
                 }
@@ -86,7 +91,16 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
             }
         }else{ //正常状态
             if (product.status==1){ //上架状态
-                if (product.stock_quantity==0){//库存为0，已售罄
+
+                if (product.product_total_stock==0){ //该商品总库存为0，商品售罄
+                    textViewReselectSpec.visibility = View.GONE
+                    addSubView.visibility = View.GONE
+                    textViewSoldOut.visibility = View.VISIBLE
+                    textViewSoldOut.text = Util.getString(R.string.text_sold_out)
+                    return
+                }
+
+                if (product.stock_quantity==0){//该SKU库存为0，该规格商品已售罄
                     addSubView.visibility = View.GONE
                     textViewReselectSpec.visibility = View.VISIBLE
                     helper.addOnClickListener(R.id.textViewReselectSpec)

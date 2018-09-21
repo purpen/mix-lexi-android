@@ -225,11 +225,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 //        }
 
         buttonSubmitOrder.setOnClickListener {
-            //提交订单
-
+            //TODO 提交订单
             presenter.submitOrder(createOrderBean)
-//            val intent = Intent(this,ConfirmOrderActivity::class.java)
-//            startActivity(intent)
         }
     }
 
@@ -237,7 +234,13 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      * 订单提交成功
      */
     override fun setSubmitOrderSuccess() {
+//        清空购物车
+        ToastUtil.showInfo("订单提交成功，等待支付....")
+        EventBus.getDefault().post(MessageUpdate())
+        finish()
         // 跳转支付界面
+        // val intent = Intent(this,ConfirmOrderActivity::class.java)
+//            startActivity(intent)
         LogUtil.e("订单提交成功，跳转支付界面")
     }
 

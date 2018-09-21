@@ -230,4 +230,5 @@
     <string name="text_reselect_spec">重选规格</string>
     <string name="text_remove_sold">该商品已下架</string>
     <string name="text_remove_selected_goods">确认删除已选中的商品吗?</string>
+    <string name="text_sku_sold_out">该规格已售罄</string>
 </resources>

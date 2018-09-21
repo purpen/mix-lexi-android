@@ -210,25 +210,4 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
         })
     }
 
-    /**
-     *  获取购物车商品数量
-     */
-//    override fun getShopCartProductsNum() {
-//
-//        dataSource.getShopCartProductsNum(object : IDataSource.HttpRequestCallBack {
-//            override fun onSuccess(json: String) {
-//                val shopCartProductNumBean = JsonUtil.fromJson(json, ShopCartProductNumBean::class.java)
-//                if (shopCartProductNumBean.success) {
-//                    LogUtil.e(json)
-//                    view.setShopCartNum(shopCartProductNumBean.data.item_count)
-//                } else {
-//                    view.showError(shopCartProductNumBean.status.message)
-//                }
-//            }
-//
-//            override fun onFailure(e: IOException) {
-//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-//            }
-//        })
-//    }
 }

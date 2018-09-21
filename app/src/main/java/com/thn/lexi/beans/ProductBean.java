@@ -78,6 +78,8 @@ public class ProductBean implements Parcelable {
     public int quantity;
     public String sku;
     public String product_rid;
+    //该商品所有库存
+    public int product_total_stock;
     //判断sku库存
     public int stock_quantity;
     public boolean is_custom_made;
@@ -146,6 +148,7 @@ public class ProductBean implements Parcelable {
         dest.writeInt(this.quantity);
         dest.writeString(this.sku);
         dest.writeString(this.product_rid);
+        dest.writeInt(this.product_total_stock);
         dest.writeInt(this.stock_quantity);
         dest.writeByte(this.is_custom_made ? (byte) 1 : (byte) 0);
         dest.writeByte(this.is_custom_service ? (byte) 1 : (byte) 0);
@@ -205,6 +208,7 @@ public class ProductBean implements Parcelable {
         this.quantity = in.readInt();
         this.sku = in.readString();
         this.product_rid = in.readString();
+        this.product_total_stock = in.readInt();
         this.stock_quantity = in.readInt();
         this.is_custom_made = in.readByte() != 0;
         this.is_custom_service = in.readByte() != 0;
