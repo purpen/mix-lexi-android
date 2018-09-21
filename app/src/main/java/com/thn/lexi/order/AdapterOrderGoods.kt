@@ -2,6 +2,7 @@ package com.thn.lexi.order
 
 import android.graphics.Paint
 import android.support.annotation.LayoutRes
+import android.text.TextUtils
 import android.view.View
 import android.widget.*
 import com.basemodule.tools.GlideUtil
@@ -31,9 +32,32 @@ class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Bas
             textViewOldPrice.text = "￥${item.price}"
         }
 
+        val relativeLayoutGoodsItemExpress = helper.getView<RelativeLayout>(R.id.relativeLayoutGoodsItemExpress)
+
+        val skuId:String? = item.map[item.fid]
+
+        if (TextUtils.equals(item.rid,skuId)){
+            relativeLayoutGoodsItemExpress.visibility = View.VISIBLE
+        }else{
+            relativeLayoutGoodsItemExpress.visibility = View.GONE
+        }
+
+        //选择物流
+        helper.addOnClickListener(R.id.relativeLayoutGoodsItemExpress)
+
         helper.setText(R.id.textViewSpec,item.s_color+" / "+item.s_model)
 
         helper.setText(R.id.textViewGoodsNum,"x${item.quantity}")
+
+        if (item.express==null) return
+
+        for (express in item.express){
+            if(express.is_default){
+                helper.setText(R.id.textViewExpressName,"${express.express_name}")
+                helper.setText(R.id.textViewExpressTime,"物流时长：${express.min_days}至${express.max_days}送达")
+                break
+            }
+        }
 
     }
 }

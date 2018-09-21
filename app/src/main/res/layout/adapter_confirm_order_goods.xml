@@ -106,7 +106,9 @@
         android:id="@+id/relativeLayoutGoodsItemExpress"
         android:layout_below="@id/relativeLayoutGoods"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:visibility="gone"
+        >
 
         <TextView
             android:id="@+id/textViewSendWay"
@@ -134,7 +136,7 @@
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
             android:paddingTop="20dp"
-            android:text="@string/text_select_express"
+            android:text="@string/text_select_other_express"
             android:textColor="@color/color_6ed7af"
             android:textSize="@dimen/sp14" />
 

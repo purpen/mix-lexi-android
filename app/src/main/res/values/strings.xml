@@ -198,7 +198,8 @@
     <string name="text_full_reduce">满减：</string>
     <string name="text_order_total">订单总计</string>
     <string name="text_send_way">配送方式</string>
-    <string name="text_select_express">选择其它</string>
+    <string name="text_select_other_express">选择其它</string>
+    <string name="text_select_express">选择物流</string>
     <string name="hint_goods_note">送给他/她，记得添加礼物赠言哦！</string>
     <string name="hint_shop_note">给商家的说明和注意事项</string>
     <string name="text_freight">运费</string>
@@ -221,6 +222,11 @@
     <string name="text_default_address">设为默认地址</string>
     <string name="title_edit_address">编辑收货地址</string>
     <string name="title_new_address">新的收货地址</string>
+    <string name="text_pay">付款</string>
+    <string name="title_select_send_express">选择配送方式</string>
+    <string name="text_expected_freight">预计运费</string>
+    <string name="text_express_note">采用不同的配送方式的到达天数不同，运费价格也有所不同，实际运费返回明细查看.</string>
+    <string name="text_official_coupon">乐喜优惠券</string>
     <string name="title_order_list">我的订单</string>
     <string name="order_total">订单总计</string>
     <string name="order_status">状态:</string>
