@@ -33,6 +33,7 @@ class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Bas
         }
 
         val relativeLayoutGoodsItemExpress = helper.getView<RelativeLayout>(R.id.relativeLayoutGoodsItemExpress)
+        val textViewSelectExpress = helper.getView<TextView>(R.id.textViewSelectExpress)
 
         val skuId:String? = item.map[item.fid]
 
@@ -49,14 +50,25 @@ class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Bas
 
         helper.setText(R.id.textViewGoodsNum,"x${item.quantity}")
 
+        //物流为空
         if (item.express==null) return
 
-        for (express in item.express){
+        val expressList = item.express
+        for (express in expressList){
             if(express.is_default){
                 helper.setText(R.id.textViewExpressName,"${express.express_name}")
                 helper.setText(R.id.textViewExpressTime,"物流时长：${express.min_days}至${express.max_days}送达")
                 break
             }
+        }
+
+        //物流模板下只有一个物流公司
+        if (expressList.size==1){
+            textViewSelectExpress.visibility = View.GONE
+            relativeLayoutGoodsItemExpress.isEnabled = false
+        }else{
+            textViewSelectExpress.visibility = View.VISIBLE
+            relativeLayoutGoodsItemExpress.isEnabled = true
         }
 
     }
