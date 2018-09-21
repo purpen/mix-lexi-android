@@ -13,6 +13,7 @@ public class StoreItemBean implements Parcelable {
     public String store_rid;
 
 
+    //是否分销 0、否 1、是
     public String is_distribute;
 
     public String original_store_rid;

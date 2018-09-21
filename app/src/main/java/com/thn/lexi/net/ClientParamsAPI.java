@@ -938,7 +938,7 @@ public class ClientParamsAPI {
         HashMap<String, Object> params = generateCommonParams();
         params.put("address_rid",createOrderBean.address_rid);
         params.put("from_client",createOrderBean.from_client);
-        params.put("bonus_code",createOrderBean.bonus_code);
+        params.put("bonus_code",createOrderBean.officialCouponCode);
         params.put("store_items",createOrderBean.store_items);
         return params;
     }
@@ -995,6 +995,22 @@ public class ClientParamsAPI {
         HashMap<String,Object> params=generateCommonParams();
         params.put("logistic_code",logistic_code);
         params.put("kdn_company_code",kdn_company_code);
+        return params;
+    }
+
+    /**
+     * 更新购物车SKU
+     * @param newSKU
+     * @param oldSKU
+     * @param quantity
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getUpdateReselectSKUParams(@NotNull String newSKU, @NotNull String oldSKU, int quantity) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("new_sku", newSKU);
+        params.put("old_sku",oldSKU);
+        params.put("new_quantity",String.valueOf(quantity));
         return params;
     }
 }

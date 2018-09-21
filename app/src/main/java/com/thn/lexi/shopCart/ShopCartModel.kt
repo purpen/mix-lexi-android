@@ -114,4 +114,21 @@ class ShopCartModel : IDataSource {
         })
     }
 
+    fun updateReselectSKU(newSKU: String, oldSKU: String, quantity: Int, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getUpdateReselectSKUParams(newSKU,oldSKU,quantity)
+        HttpRequest.sendRequest(HttpRequest.PUT, URL.SHOP_CART_RESELECT_SKU, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }

@@ -187,24 +187,23 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
     }
 
     /**
-     *  获取购物车商品数量
+     * 更新SKU
      */
-//    override fun getShopCartProductsNum() {
-//
-//        dataSource.getShopCartProductsNum(object : IDataSource.HttpRequestCallBack {
-//            override fun onSuccess(json: String) {
-//                val shopCartProductNumBean = JsonUtil.fromJson(json, ShopCartProductNumBean::class.java)
-//                if (shopCartProductNumBean.success) {
-//                    LogUtil.e(json)
-//                    view.setShopCartNum(shopCartProductNumBean.data.item_count)
-//                } else {
-//                    view.showError(shopCartProductNumBean.status.message)
-//                }
-//            }
-//
-//            override fun onFailure(e: IOException) {
-//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-//            }
-//        })
-//    }
+    override fun updateReselectSKU(newSKU: String, oldSKU: String, quantity: Int) {
+        dataSource.updateReselectSKU(newSKU,oldSKU,quantity, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    view.updateShopCart()
+                } else {
+                    view.showError(netStatusBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 }

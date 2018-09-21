@@ -141,11 +141,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
-        if (goods?.real_sale_price == 0.0) {
-            view.textViewPrice.text = "${goods.real_price}"
-        } else {
-            view.textViewPrice.text = "${goods?.real_sale_price}"
-        }
+        view.textViewPrice.text = "${goods?.min_sale_price}"
 
         view.textViewName.text = goods?.name
 
@@ -160,7 +156,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 val item = getItem(position)
                 val textView = TextView(context)
                 textView.layoutParams = layoutParams
-                textView.setPadding(dp6, 0, dp6, 0)
+                textView.setPadding(dp6, dp6, dp6, dp6)
                 textView.includeFontPadding = false
                 textView.gravity = Gravity.CENTER
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
@@ -178,42 +174,42 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                     textView.setBackgroundResource(R.drawable.borderb2b2b2_bg_white)
                 }
 
-                return textView
-            }
-        }
-
-        adapterSize = object : TagAdapter<GoodsAllSKUBean.DataBean.ModesBean>(modes) {
-            override fun getView(parent: FlowLayout, position: Int, t: GoodsAllSKUBean.DataBean.ModesBean): View {
-                val item = getItem(position)
-                val textView = TextView(context)
-                textView.layoutParams = layoutParams
-                textView.setPadding(dp6, 0, dp6, 0)
-                textView.includeFontPadding = false
-                textView.gravity = Gravity.CENTER
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-                textView.text = item.name
-                if (item.valid) {
-                    if (item.selected) {
-                        textView.setTextColor(Util.getColor(android.R.color.white))
-                        textView.setBackgroundResource(R.drawable.bg_color5fe4b1_radius4)
-                    } else {
-                        textView.setTextColor(Util.getColor(R.color.color_333))
-                        textView.setBackgroundResource(R.drawable.border333_bg_white)
-                    }
-                } else {
-                    textView.setTextColor(Util.getColor(R.color.color_b2b2b2))
-                    textView.setBackgroundResource(R.drawable.borderb2b2b2_bg_white)
-                }
                 return textView
             }
         }
 
         view.flowLayoutColor.adapter = adapterColor
 
+        adapterSize = object : TagAdapter<GoodsAllSKUBean.DataBean.ModesBean>(modes) {
+            override fun getView(parent: FlowLayout, position: Int, t: GoodsAllSKUBean.DataBean.ModesBean): View {
+                val item = getItem(position)
+                val textView = TextView(context)
+                textView.layoutParams = layoutParams
+                textView.setPadding(dp6, dp6, dp6, dp6)
+                textView.includeFontPadding = false
+                textView.gravity = Gravity.CENTER
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
+                textView.text = item.name
+                if (item.valid) {
+                    if (item.selected) {
+                        textView.setTextColor(Util.getColor(android.R.color.white))
+                        textView.setBackgroundResource(R.drawable.bg_color5fe4b1_radius4)
+                    } else {
+                        textView.setTextColor(Util.getColor(R.color.color_333))
+                        textView.setBackgroundResource(R.drawable.border333_bg_white)
+                    }
+                } else {
+                    textView.setTextColor(Util.getColor(R.color.color_b2b2b2))
+                    textView.setBackgroundResource(R.drawable.borderb2b2b2_bg_white)
+                }
+                return textView
+            }
+        }
+
         view.flowLayoutSize.adapter = adapterSize
 
 
-        view.flowLayoutColor.setOnTagClickListener { view, position, parent ->
+        view.flowLayoutColor.setOnTagClickListener { _, position, _ ->
             if (colors[position].valid) {
                 val size = colors.size
                 var colorsBean: GoodsAllSKUBean.DataBean.ColorsBean
