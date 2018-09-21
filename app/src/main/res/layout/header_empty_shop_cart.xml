@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="295dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:layout_width="94dp"
+        android:layout_height="69dp"
+        android:src="@mipmap/icon_shop_cart_empty"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="您的购物车还没有任何礼品"
+        android:textColor="@color/color_333"
+        android:includeFontPadding="false"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15sp"
+        android:layout_marginTop="22dp"
+        />
+
+    <TextView
+        android:id="@+id/textViewLookAround"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_color5fe4b1_radius4"
+        android:includeFontPadding="false"
+        android:text="现在去逛逛"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15sp"
+        android:layout_marginBottom="60dp"
+        />
+</LinearLayout>
+

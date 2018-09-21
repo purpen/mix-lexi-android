@@ -7,6 +7,9 @@ import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : BaseActivity() {
 
@@ -24,6 +27,7 @@ class MainActivity : BaseActivity() {
     private var lastClickedId: Int = -1
 
     override fun initView() {
+        EventBus.getDefault().register(this)
         switchFragment(R.id.button0)
     }
 
@@ -43,6 +47,17 @@ class MainActivity : BaseActivity() {
         if (TextUtils.equals(MainFragment1::class.java.simpleName,str)){
             switchFragment(R.id.button2)
             customBottomBar.getButton(R.id.button2).performClick()
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun changeFragment(messageChangePage: MessageChangePage) {
+        when(messageChangePage.page){
+            MainFragment0::class.java.simpleName ->{
+                switchFragment(R.id.button0)
+                customBottomBar.getButton(R.id.button0).performClick()
+            }
         }
     }
 
@@ -106,6 +121,11 @@ class MainActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         fragment0.onActivityResult(requestCode, resultCode, data)
         LogUtil.e("${TAG};;;requestCode=$requestCode;resultCode=$resultCode")
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 
 }

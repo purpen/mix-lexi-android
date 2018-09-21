@@ -68,6 +68,9 @@ public class ProductBean implements Parcelable {
     public int quantity;
     public String sku;
     public String product_rid;
+    //该商品所有库存
+    public int product_total_stock;
+    //判断sku库存
     public int stock_quantity;
     public boolean is_custom_made;
     public boolean is_custom_service;
@@ -93,12 +96,12 @@ public class ProductBean implements Parcelable {
     public double real_sale_price;
     public String rid;
     public String second_category_id;
-    public String status;
+    public int status;
     public String sticked;
     public String store_name;
     public String store_rid;
     public String top_category_id;
-    public String total_stock;
+    public int total_stock;
     public List<String> modes;
     public List<UserBean> product_like_users;
 
@@ -131,6 +134,7 @@ public class ProductBean implements Parcelable {
         dest.writeInt(this.quantity);
         dest.writeString(this.sku);
         dest.writeString(this.product_rid);
+        dest.writeInt(this.product_total_stock);
         dest.writeInt(this.stock_quantity);
         dest.writeByte(this.is_custom_made ? (byte) 1 : (byte) 0);
         dest.writeByte(this.is_custom_service ? (byte) 1 : (byte) 0);
@@ -156,12 +160,12 @@ public class ProductBean implements Parcelable {
         dest.writeDouble(this.real_sale_price);
         dest.writeString(this.rid);
         dest.writeString(this.second_category_id);
-        dest.writeString(this.status);
+        dest.writeInt(this.status);
         dest.writeString(this.sticked);
         dest.writeString(this.store_name);
         dest.writeString(this.store_rid);
         dest.writeString(this.top_category_id);
-        dest.writeString(this.total_stock);
+        dest.writeInt(this.total_stock);
         dest.writeStringList(this.modes);
         dest.writeTypedList(this.product_like_users);
     }
@@ -186,6 +190,7 @@ public class ProductBean implements Parcelable {
         this.quantity = in.readInt();
         this.sku = in.readString();
         this.product_rid = in.readString();
+        this.product_total_stock = in.readInt();
         this.stock_quantity = in.readInt();
         this.is_custom_made = in.readByte() != 0;
         this.is_custom_service = in.readByte() != 0;
@@ -211,12 +216,12 @@ public class ProductBean implements Parcelable {
         this.real_sale_price = in.readDouble();
         this.rid = in.readString();
         this.second_category_id = in.readString();
-        this.status = in.readString();
+        this.status = in.readInt();
         this.sticked = in.readString();
         this.store_name = in.readString();
         this.store_rid = in.readString();
         this.top_category_id = in.readString();
-        this.total_stock = in.readString();
+        this.total_stock = in.readInt();
         this.modes = in.createStringArrayList();
         this.product_like_users = in.createTypedArrayList(UserBean.CREATOR);
     }

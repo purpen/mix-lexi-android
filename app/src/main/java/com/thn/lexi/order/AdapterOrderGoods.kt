@@ -31,9 +31,44 @@ class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Bas
             textViewOldPrice.text = "￥${item.price}"
         }
 
+        val relativeLayoutGoodsItemExpress = helper.getView<RelativeLayout>(R.id.relativeLayoutGoodsItemExpress)
+        val textViewSelectExpress = helper.getView<TextView>(R.id.textViewSelectExpress)
+
+        val skuId:String? = item.map[item.fid]
+
+        if (TextUtils.equals(item.rid,skuId)){
+            relativeLayoutGoodsItemExpress.visibility = View.VISIBLE
+        }else{
+            relativeLayoutGoodsItemExpress.visibility = View.GONE
+        }
+
+        //选择物流
+        helper.addOnClickListener(R.id.relativeLayoutGoodsItemExpress)
+
         helper.setText(R.id.textViewSpec,item.s_color+" / "+item.s_model)
 
         helper.setText(R.id.textViewGoodsNum,"x${item.quantity}")
+
+        //物流为空
+        if (item.express==null) return
+
+        val expressList = item.express
+        for (express in expressList){
+            if(express.is_default){
+                helper.setText(R.id.textViewExpressName,"${express.express_name}")
+                helper.setText(R.id.textViewExpressTime,"物流时长：${express.min_days}至${express.max_days}送达")
+                break
+            }
+        }
+
+        //物流模板下只有一个物流公司
+        if (expressList.size==1){
+            textViewSelectExpress.visibility = View.GONE
+            relativeLayoutGoodsItemExpress.isEnabled = false
+        }else{
+            textViewSelectExpress.visibility = View.VISIBLE
+            relativeLayoutGoodsItemExpress.isEnabled = true
+        }
 
     }
 }

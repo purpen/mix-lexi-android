@@ -19,7 +19,7 @@ class ShopCartContract {
 
         }
 
-        fun setNewData(products: List<ProductBean>) {
+        fun setNewData(products: MutableList<ProductBean>) {
 
         }
 
@@ -50,6 +50,10 @@ class ShopCartContract {
         fun removeShopCartSuccess() {
 
         }
+
+        fun updateShopCart() {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -57,6 +61,7 @@ class ShopCartContract {
         fun loadMoreData()
         fun getShopCartGoods()
         fun getGoodsSKUs(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack)
+        fun updateReselectSKU(newSKU: String, oldSKU: String, quantity: Int)
         fun addShopCart(rid: String, quantity: Int)
         fun addWishOrder(list: ArrayList<String>)
         fun removeProductFromShopCart(list: ArrayList<String>)

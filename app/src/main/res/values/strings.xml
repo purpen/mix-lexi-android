@@ -221,6 +221,15 @@
     <string name="text_default_address">设为默认地址</string>
     <string name="title_edit_address">编辑收货地址</string>
     <string name="title_new_address">新的收货地址</string>
+    <string name="text_pay">付款</string>
+    <string name="title_select_send_express">选择配送方式</string>
+    <string name="text_expected_freight">预计运费</string>
+    <string name="text_express_note">采用不同的配送方式的到达天数不同，运费价格也有所不同，实际运费返回明细查看.</string>
+    <string name="text_official_coupon">乐喜优惠券</string>
+    <string name="text_reselect_spec">重选规格</string>
+    <string name="text_remove_sold">该商品已下架</string>
+    <string name="text_remove_selected_goods">确认删除已选中的商品吗?</string>
+    <string name="text_sku_sold_out">该规格已售罄</string>
     <string name="title_order_list">我的订单</string>
     <string name="order_total">订单总计</string>
     <string name="order_status">状态:</string>

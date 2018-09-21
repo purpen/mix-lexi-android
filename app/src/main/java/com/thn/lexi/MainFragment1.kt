@@ -3,16 +3,21 @@ package com.thn.lexi
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
+import com.flyco.dialog.listener.OnBtnClickL
+import com.flyco.dialog.widget.NormalDialog
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.AddShopCartBean
+import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.order.*
 import com.thn.lexi.shopCart.*
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
 import kotlinx.android.synthetic.main.fragment_main1.*
+import kotlinx.android.synthetic.main.header_empty_shop_cart.view.*
 import kotlinx.android.synthetic.main.view_custom_headview.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -32,7 +37,11 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     private val adapterWish: AdapterShopCartWishGoods by lazy { AdapterShopCartWishGoods(R.layout.adapter_shop_cart_wish_goods) }
 
     private val adapterOrder: AdapterShopCartGoods by lazy { AdapterShopCartGoods(R.layout.adapter_shop_cart_goods) }
-    private var items: MutableList<ShopCartBean.DataBean.ItemsBean>? = null
+
+    //判断当前fragment是否初始化
+    private var isFragmentInitiate = false
+
+    private var headerViewWishOrder: View? = null
 
     companion object {
         fun newInstance(): MainFragment1 {
@@ -48,6 +57,9 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     }
 
     override fun initView() {
+
+        isFragmentInitiate = true
+
         EventBus.getDefault().register(this)
         swipeRefreshLayout.isEnabled = false
         swipeRefreshLayout.setColorSchemeColors(color6e)
@@ -65,7 +77,6 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapterWish
 
-        adapterWish.addHeaderView(View.inflate(activity, R.layout.header_shop_cart_wish_order, null))
         textViewTotalPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp11, R.dimen.dp14), null, null, null)
     }
 
@@ -82,13 +93,19 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerViewGoods.layoutManager = linearLayoutManager
         recyclerViewGoods.setHasFixedSize(true)
         recyclerViewGoods.adapter = adapterOrder
+        val shopCartEmpty = View.inflate(activity, R.layout.header_empty_shop_cart, null)
+        shopCartEmpty.textViewLookAround.setOnClickListener {
+            //跳转首页
+            EventBus.getDefault().post(MessageChangePage(MainFragment0::class.java.simpleName))
+        }
+        adapterOrder.emptyView = shopCartEmpty
+        adapterOrder.setHeaderAndEmpty(true)
 
         //编辑状态购物车
         val linearLayoutManagerEdit = LinearLayoutManager(activity)
         linearLayoutManagerEdit.orientation = LinearLayoutManager.VERTICAL
         recyclerViewEditShopCart.setHasFixedSize(true)
         recyclerViewEditShopCart.layoutManager = linearLayoutManagerEdit
-        recyclerViewEditShopCart.adapter = adapterOrder
     }
 
     /**
@@ -135,86 +152,24 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     }
 
 
+    /**
+     * 重新选择SKU后更新购物车
+     */
+    override fun updateShopCart() {
+        presenter.getShopCartGoods()
+    }
+
     override fun installListener() {
 
         buttonSettleAccount.setOnClickListener {
-            val data = adapterOrder.data
-            if (data.isEmpty()) {
-                ToastUtil.showInfo("您的购物车还没有商品")
-                return@setOnClickListener
-            }
-
-            val createOrderBean = CreateOrderBean()
-
-            val storeIds = getStoreIds()
-
-            //店铺列表
-            val storeList = ArrayList<StoreItemBean>()
-
-            //当前店铺
-            var storeItemBean: StoreItemBean
-
-            //商品列表
-            var goodsList: ArrayList<ProductBean>
-
-            //商品
-            var goods: ProductBean
-
-            for (storeId in storeIds) {
-
-                //创建店铺
-                storeItemBean = StoreItemBean()
-
-                storeItemBean.store_rid = storeId
-
-                //创建商品列表
-                goodsList = ArrayList()
-
-                //添加店铺
-                storeList.add(storeItemBean)
-
-                for (item in data) {
-                    if (TextUtils.equals(storeId, item.product.store_rid)) {
-                        goods = item.product
-                        goods.quantity = item.quantity
-                        goods.sku = item.product.rid
-                        goodsList.add(goods)
-                    }
-
-                }
-                //添加商品列表
-                storeItemBean.items = goodsList
-            }
-
-            // 添加有所店铺
-            createOrderBean.store_items = storeList
-
-            createOrderBean.orderTotalPrice =  textViewTotalPrice.text.toString().toDouble()
-
-            //结算
-            val intent =Intent(activity,SelectExpressAddressActivity::class.java)
-            intent.putExtra(SelectExpressAddressActivity::class.java.simpleName,createOrderBean)
-            startActivity(intent)
+            //点击结算
+            clickedSettleAccount()
         }
 
 
-
         buttonDelete.setOnClickListener {
-            //从购物车移除
-            val data = adapterOrder.data
-            val list = ArrayList<String>()
-            for (item in data) {
-                if (item.isChecked) {
-                    list.add(item.product.rid)
-                }
-            }
-
-            if (list.isEmpty()) {
-                ToastUtil.showInfo(Util.getString(R.string.text_plesse_select_goods))
-                return@setOnClickListener
-            }
-
-            presenter.removeProductFromShopCart(list)
+            //从购物车移除商品
+            showDeleteDialog()
         }
 
         buttonAddWish.setOnClickListener {
@@ -235,6 +190,33 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
 
+        adapterOrder.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
+                R.id.textViewReselectSpec -> { //重新选择规格
+                    val itemBean = adapter.getItem(position) as ShopCartBean.DataBean.ItemsBean
+                    val addShopCartBottomDialog = ShopCartReselectSKUBottomDialog(activity!!, presenter, itemBean.product)
+                    addShopCartBottomDialog.show()
+                }
+            }
+        }
+
+        //商品点击进入详情
+        adapterOrder.setOnItemClickListener { adapter, view, position ->
+            val itemBean = adapter.getItem(position) as ShopCartBean.DataBean.ItemsBean
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, itemBean.product)
+            intent.putExtra(MainFragment1::class.java.simpleName,MainFragment1::class.java.simpleName)
+            startActivity(intent)
+        }
+
+        // 心愿单点击进入详情
+        adapterWish.setOnItemClickListener { adapter, view, position ->
+            val productBean = adapter.getItem(position) as ProductBean
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
+            startActivity(intent)
+        }
+
         // 心愿单添加购物车
         adapterWish.setOnItemChildClickListener { adapter, view, position ->
             val productBean = adapter.getItem(position) as ProductBean
@@ -243,7 +225,14 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         customHeadView.headRightTV.setOnClickListener {
-            if (swipeRefreshLayout.isShown) { //显示编辑状态
+
+            val data = adapterOrder.data
+            if (data.isEmpty()) {
+                ToastUtil.showInfo("您的购物车还没有商品")
+                return@setOnClickListener
+            }
+
+            if (swipeRefreshLayout.isShown) { //编辑状态
                 swipeRefreshLayout.visibility = View.GONE
                 recyclerViewEditShopCart.visibility = View.VISIBLE
                 customHeadView.setRightTxt(Util.getString(R.string.text_complete), color6e)
@@ -262,11 +251,12 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 textViewTotalPrice.visibility = View.VISIBLE
                 buttonSettleAccount.visibility = View.VISIBLE
             }
-            for (item in adapterOrder.data) {
+
+            for (item in data) {
                 item.isEdit = !item.isEdit
             }
 
-            adapterOrder.notifyDataSetChanged()
+            recyclerViewEditShopCart.adapter = adapterOrder
         }
 
         adapterWish.setOnLoadMoreListener({
@@ -275,7 +265,152 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
     }
 
-    override fun setNewData(products: List<ProductBean>) {
+    /**
+     * 点击结算
+     */
+    private fun clickedSettleAccount() {
+        val data = adapterOrder.data
+
+        if (data.isEmpty()) {
+            ToastUtil.showInfo("您的购物车还没有商品")
+            return
+        }
+
+        var canSubmit = true
+
+        for (item in data) {
+            if (item.product.status != 1) {
+                canSubmit = false
+                break
+            }
+        }
+
+        if (!canSubmit) {
+            ToastUtil.showInfo("请先移除已下架商品")
+            return
+        }
+
+        for (item in data) {
+            if (item.product.stock_quantity == 0) {
+                canSubmit = false
+                break
+            }
+        }
+
+        if (!canSubmit) {
+            ToastUtil.showInfo("存在已售罄商品")
+            return
+        }
+
+        val createOrderBean = CreateOrderBean()
+
+        val storeIds = getStoreIds()
+
+        //店铺列表
+        val storeList = ArrayList<StoreItemBean>()
+
+        //当前店铺
+        var storeItemBean: StoreItemBean
+
+        //商品列表
+        var goodsList: ArrayList<ProductBean>
+
+        //商品
+        var goods: ProductBean
+
+        for (storeId in storeIds) {
+
+            //创建店铺
+            storeItemBean = StoreItemBean()
+
+            storeItemBean.store_rid = storeId
+
+            //创建商品列表
+            goodsList = ArrayList()
+
+            //添加店铺
+            storeList.add(storeItemBean)
+
+            for (item in data) {
+                if (TextUtils.equals(storeId, item.product.store_rid)) {
+                    goods = item.product
+                    goods.quantity = item.quantity
+                    goods.sku = item.product.rid
+                    goodsList.add(goods)
+
+                    if (item.product.is_distributed) { //分销1，不是分销0
+                        storeItemBean.is_distribute = "1"
+                    } else {
+                        storeItemBean.is_distribute = "0"
+                    }
+                }
+
+            }
+            //添加商品列表
+            storeItemBean.items = goodsList
+        }
+
+        // 添加有所店铺
+        createOrderBean.store_items = storeList
+
+        createOrderBean.orderTotalPrice = textViewTotalPrice.text.toString().toDouble()
+
+        //结算
+        val intent = Intent(activity, SelectExpressAddressActivity::class.java)
+        intent.putExtra(SelectExpressAddressActivity::class.java.simpleName, createOrderBean)
+        startActivity(intent)
+    }
+
+    /**
+     * 显示确认删除对话框
+     */
+    private fun showDeleteDialog() {
+        val data = adapterOrder.data
+        val list = ArrayList<String>()
+        for (item in data) {
+            if (item.isChecked) {
+                list.add(item.product.rid)
+            }
+        }
+
+        if (list.isEmpty()) {
+            ToastUtil.showInfo(Util.getString(R.string.text_plesse_select_goods))
+            return
+        }
+
+
+        val color333 = Util.getColor(R.color.color_333)
+        val white = Util.getColor(android.R.color.white)
+        val dialog = NormalDialog(activity)
+        dialog.isTitleShow(false)
+                .bgColor(white)
+                .cornerRadius(4f)
+                .content(Util.getString(R.string.text_remove_selected_goods))
+                .contentGravity(Gravity.CENTER)
+                .contentTextColor(color333)
+                .contentTextSize(16f)
+                .dividerColor(Util.getColor(R.color.color_ccc))
+                .btnText(Util.getString(R.string.text_qd), Util.getString(R.string.text_cancel))
+                .btnTextSize(15f, 15f)
+                .btnTextColor(color333, Util.getColor(R.color.color_6ed7af))
+                .btnPressColor(white)
+                .widthScale(0.85f)
+                .show()
+        dialog.setOnBtnClickL(OnBtnClickL {
+            presenter.removeProductFromShopCart(list)
+            dialog.dismiss()
+        }, OnBtnClickL {
+            dialog.dismiss()
+        })
+    }
+
+    override fun setNewData(products: MutableList<ProductBean>) {
+        if (products.isEmpty()) {
+            adapterWish.removeHeaderView(headerViewWishOrder)
+        } else {
+            headerViewWishOrder = View.inflate(activity, R.layout.header_shop_cart_wish_order, null)
+            adapterWish.addHeaderView(headerViewWishOrder)
+        }
         adapterWish.setNewData(products)
     }
 
@@ -297,22 +432,25 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
      * 设置购物车商品数据
      */
     override fun setShopCartGoodsData(data: ShopCartBean.DataBean) {
-        if (data.item_count == 0) return//添加购物车为空的 占位图
-        textViewNum.text = "${data.item_count}件礼品"
-        items = data.items
-
+        if (data.items.isEmpty()) {
+            linearLayoutNum.visibility = View.GONE
+        } else {
+            linearLayoutNum.visibility = View.VISIBLE
+        }
         adapterOrder.setNewData(data.items)
 
         setShopCartTotalPrice()
     }
 
     /**
-     * 设置购物车总价
+     * 设置购物车总价和商品数量
      */
     private fun setShopCartTotalPrice() {
         var totalPrice = 0.0
         val items = adapterOrder.data
+        var count = 0
         for (item in items) {
+            count += item.quantity
             val product = item.product
             if (product.sale_price == 0.0) {
                 totalPrice += product.price * item.quantity
@@ -320,7 +458,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 totalPrice += product.sale_price * item.quantity
             }
         }
-
+        textViewNum.text = "${count}件礼品"
         textViewTotalPrice.text = "$totalPrice"
     }
 
@@ -352,14 +490,21 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
     }
 
+    //订单提交成功清空购物车
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onOrderSubmitSuccess(message: MessageOrderSuccess) {
+        adapterOrder.data.clear()
+        adapterOrder.notifyDataSetChanged()
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onJumpShopCart(message: String) {
+        presenter.getShopCartGoods()
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onCountChange(message: MessageUpdate) {
-        val data = adapterOrder.data
-        var count = 0
-        for (item in data) {
-            count += item.quantity
-        }
-        textViewNum.text = "${count}件礼品"
         setShopCartTotalPrice()
     }
 
