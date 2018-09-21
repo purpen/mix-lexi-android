@@ -52,6 +52,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var couponList: ArrayList<CouponBean>
 
+    private lateinit var productId:String
 
     //商品详情数据
     private var goodsData: GoodsAllDetailBean.DataBean? = null
@@ -61,18 +62,27 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     override fun getIntentData() {
         product = intent.extras.getParcelable(GoodsDetailActivity::class.java.simpleName)
+        val pageName = intent.extras.getString(MainFragment1::class.java.simpleName)
+
+        if (!TextUtils.isEmpty(pageName)) {
+            if (TextUtils.equals(pageName, MainFragment1::class.java.simpleName)) { //购物车界面为product_rid
+                productId = product.product_rid
+            }
+        } else {
+            productId = product.rid
+        }
     }
 
     override fun initView() {
 
-        if(product.is_distributed){ //分销商品
+        if (product.is_distributed) { //分销商品
             buttonPurchase.visibility = View.VISIBLE
-            buttonSaleDistribution.visibility= View.VISIBLE
-        }else{  //非分销商品
+            buttonSaleDistribution.visibility = View.VISIBLE
+        } else {  //非分销商品
             buttonAddShopCart.visibility = View.VISIBLE
-            if (product.is_custom_made){ //支持接单订制
+            if (product.is_custom_made) { //支持接单订制
                 buttonOrderMake.visibility = View.VISIBLE
-            }else{  //不支持接单订制
+            } else {  //不支持接单订制
                 buttonGoOrderConfirm.visibility = View.VISIBLE
             }
         }
@@ -111,13 +121,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     }
 
     override fun requestNet() {
-        presenter.loadData(product.rid)
+
+        presenter.loadData(productId)
 
         //获取相似商品
-        presenter.getSimilarGoods(product.rid)
+        presenter.getSimilarGoods(productId)
 
         //获取喜欢商品用户
-        presenter.getFavoriteUsers(product.rid)
+        presenter.getFavoriteUsers(productId)
 
         //获取优惠券
         presenter.getCouponsByStoreId(product.store_rid)
@@ -134,9 +145,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      * 设置购物车商品数量
      */
     override fun setShopCartNum(item_count: Int) {
-        if (item_count>0){
+        if (item_count > 0) {
             textViewProductCount.visibility = View.VISIBLE
-        }else{
+        } else {
             textViewProductCount.visibility = View.GONE
         }
 
@@ -214,7 +225,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.buttonFocus.text = Util.getString(R.string.text_focused)
             headerView.buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
             headerView.buttonFocus.setBackgroundResource(R.drawable.bg_coloreff3f2_radius4)
-            headerView.buttonFocus.setPadding(0,0,0,0)
+            headerView.buttonFocus.setPadding(0, 0, 0, 0)
             headerView.buttonFocus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
         } else {
             headerView.buttonFocus.text = Util.getString(R.string.text_focus)
@@ -242,7 +253,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
             headerView.buttonFocus.setBackgroundResource(R.drawable.bg_coloreff3f2_radius4)
             headerView.buttonFocus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-            headerView.buttonFocus.setPadding(0,0,0,0)
+            headerView.buttonFocus.setPadding(0, 0, 0, 0)
         } else {
             headerView.buttonFocus.text = Util.getString(R.string.text_focus)
             headerView.buttonFocus.setTextColor(Util.getColor(android.R.color.white))
@@ -313,7 +324,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     }
 
 
-
     /**
      * 设置商品信息
      */
@@ -322,7 +332,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         goodsData = data
 
         // 获取交货时间
-        presenter.getExpressTime(data.fid, product.store_rid, product.rid)
+        presenter.getExpressTime(data.fid, product.store_rid, productId)
 
         for (item in data.deal_content) {
             if (TextUtils.equals("text", item.type)) {
@@ -399,9 +409,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
         }
 
-        if(TextUtils.isEmpty(data.features)){
+        if (TextUtils.isEmpty(data.features)) {
             headerView.textViewLightSpot.visibility = View.GONE
-        }else{
+        } else {
             headerView.textViewLightSpot.visibility = View.VISIBLE
             headerView.textViewLightSpot.text = "亮点：${data.features}"
         }
@@ -414,9 +424,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.textViewCharacter.visibility = View.GONE
         }
 
-        if (TextUtils.isEmpty(data.material_name)){
+        if (TextUtils.isEmpty(data.material_name)) {
             headerView.textViewMaterial.visibility = View.GONE
-        }else{
+        } else {
             headerView.textViewMaterial.visibility = View.VISIBLE
             headerView.textViewMaterial.text = "材质：${data.material_name}"
         }
@@ -449,7 +459,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         //设置关注人头像
         headerView.recyclerViewHeader.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true)
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
         val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
 
         headImageAdapter.setNewData(urlList)
@@ -532,10 +542,11 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         buttonAddShopCart.setOnClickListener(this)
 
-        relativeLayoutShopCart.setOnClickListener { //跳转购物车
+        relativeLayoutShopCart.setOnClickListener {
+            //跳转购物车
             EventBus.getDefault().post(MainFragment1::class.java.simpleName)
-            val intent = Intent(applicationContext,MainActivity::class.java)
-            intent.putExtra(MainActivity::class.java.simpleName,MainFragment1::class.java.simpleName)
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            intent.putExtra(MainActivity::class.java.simpleName, MainFragment1::class.java.simpleName)
             startActivity(intent)
         }
 
@@ -587,15 +598,15 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 ToastUtil.showInfo("分享产品")
             }
 
-            R.id.imageButton ->{ //喜欢用户列表
-                val intent = Intent(applicationContext,FavoriteUserListActivity::class.java)
-                intent.putExtra(FavoriteUserListActivity::class.java.simpleName,product.rid)
+            R.id.imageButton -> { //喜欢用户列表
+                val intent = Intent(applicationContext, FavoriteUserListActivity::class.java)
+                intent.putExtra(FavoriteUserListActivity::class.java.simpleName, productId)
                 startActivity(intent)
             }
 
             R.id.buttonFocus -> { //关注大B/品牌馆/店铺
                 if (brandPavilionData == null) return
-                presenter.focusBrandPavilion(goodsData!!.store_rid,!brandPavilionData!!.is_followed)
+                presenter.focusBrandPavilion(goodsData!!.store_rid, !brandPavilionData!!.is_followed)
             }
 
             R.id.buttonLike -> {
@@ -624,7 +635,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 couponBottomDialog.show()
             }
 
-            R.id.buttonPurchase,R.id.textViewSelectSpec -> { //请选择规格
+            R.id.buttonPurchase, R.id.textViewSelectSpec -> { //请选择规格
                 val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData, R.id.textViewSelectSpec)
                 selectSpecificationBottomDialog.show()
             }

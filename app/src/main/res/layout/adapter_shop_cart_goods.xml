@@ -85,7 +85,7 @@
         android:layout_marginEnd="@dimen/dp10"
         android:includeFontPadding="false"
         android:textSize="@dimen/sp12"
-        android:text="规格"
+        android:text=""
         android:layout_alignStart="@+id/textViewName"
         android:layout_below="@+id/textViewName"
         android:layout_marginTop="@dimen/dp10"

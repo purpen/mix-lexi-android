@@ -236,7 +236,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     override fun setSubmitOrderSuccess() {
 //        清空购物车
         ToastUtil.showInfo("订单提交成功，等待支付....")
-        EventBus.getDefault().post(MessageUpdate())
+        EventBus.getDefault().post(MessageOrderSuccess())
         finish()
         // 跳转支付界面
         // val intent = Intent(this,ConfirmOrderActivity::class.java)

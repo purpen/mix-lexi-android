@@ -12,6 +12,7 @@ import com.flyco.dialog.listener.OnBtnClickL
 import com.flyco.dialog.widget.NormalDialog
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.AddShopCartBean
+import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.order.*
 import com.thn.lexi.shopCart.*
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
@@ -197,6 +198,23 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                     addShopCartBottomDialog.show()
                 }
             }
+        }
+
+        //商品点击进入详情
+        adapterOrder.setOnItemClickListener { adapter, view, position ->
+            val itemBean = adapter.getItem(position) as ShopCartBean.DataBean.ItemsBean
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, itemBean.product)
+            intent.putExtra(MainFragment1::class.java.simpleName,MainFragment1::class.java.simpleName)
+            startActivity(intent)
+        }
+
+        // 心愿单点击进入详情
+        adapterWish.setOnItemClickListener { adapter, view, position ->
+            val productBean = adapter.getItem(position) as ProductBean
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
+            startActivity(intent)
         }
 
         // 心愿单添加购物车
@@ -474,7 +492,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
     //订单提交成功清空购物车
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onOrderSubmitSuccess(message: MessageUpdate) {
+    fun onOrderSubmitSuccess(message: MessageOrderSuccess) {
         adapterOrder.data.clear()
         adapterOrder.notifyDataSetChanged()
     }
