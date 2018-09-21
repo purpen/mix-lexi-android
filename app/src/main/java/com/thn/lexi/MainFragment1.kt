@@ -1,6 +1,7 @@
 package com.thn.lexi
 
 import android.content.Intent
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.Gravity
@@ -16,6 +17,7 @@ import com.thn.lexi.order.*
 import com.thn.lexi.shopCart.*
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
 import kotlinx.android.synthetic.main.fragment_main1.*
+import kotlinx.android.synthetic.main.header_empty_shop_cart.view.*
 import kotlinx.android.synthetic.main.view_custom_headview.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -35,7 +37,9 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     private val adapterWish: AdapterShopCartWishGoods by lazy { AdapterShopCartWishGoods(R.layout.adapter_shop_cart_wish_goods) }
 
     private val adapterOrder: AdapterShopCartGoods by lazy { AdapterShopCartGoods(R.layout.adapter_shop_cart_goods) }
-    private var items: MutableList<ShopCartBean.DataBean.ItemsBean>? = null
+
+    //判断当前fragment是否初始化
+    private var isFragmentInitiate = false
 
     companion object {
         fun newInstance(): MainFragment1 {
@@ -51,6 +55,9 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     }
 
     override fun initView() {
+
+        isFragmentInitiate = true
+
         EventBus.getDefault().register(this)
         swipeRefreshLayout.isEnabled = false
         swipeRefreshLayout.setColorSchemeColors(color6e)
@@ -85,13 +92,18 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         recyclerViewGoods.layoutManager = linearLayoutManager
         recyclerViewGoods.setHasFixedSize(true)
         recyclerViewGoods.adapter = adapterOrder
+        val shopCartEmpty = View.inflate(activity, R.layout.header_empty_shop_cart, null)
+        shopCartEmpty.textViewLookAround.setOnClickListener{ //跳转首页
+            EventBus.getDefault().post(MessageChangePage(MainFragment0::class.java.simpleName))
+        }
+        adapterOrder.emptyView = shopCartEmpty
+        adapterOrder.setHeaderAndEmpty(true)
 
         //编辑状态购物车
         val linearLayoutManagerEdit = LinearLayoutManager(activity)
         linearLayoutManagerEdit.orientation = LinearLayoutManager.VERTICAL
         recyclerViewEditShopCart.setHasFixedSize(true)
         recyclerViewEditShopCart.layoutManager = linearLayoutManagerEdit
-        recyclerViewEditShopCart.adapter = adapterOrder
     }
 
     /**
@@ -138,14 +150,23 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     }
 
 
+    /**
+     * 重新选择SKU后更新购物车
+     */
+    override fun updateShopCart() {
+        presenter.getShopCartGoods()
+    }
+
     override fun installListener() {
 
-        buttonSettleAccount.setOnClickListener { //点击结算
+        buttonSettleAccount.setOnClickListener {
+            //点击结算
             clickedSettleAccount()
         }
 
 
-        buttonDelete.setOnClickListener {//从购物车移除商品
+        buttonDelete.setOnClickListener {
+            //从购物车移除商品
             showDeleteDialog()
         }
 
@@ -167,6 +188,16 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
 
+        adapterOrder.setOnItemChildClickListener { adapter, view, position ->
+            when (view.id) {
+                R.id.textViewReselectSpec -> { //重新选择规格
+                    val productBean = adapter.getItem(position) as ProductBean
+                    val addShopCartBottomDialog = ShopCartReselectSKUBottomDialog(activity!!, presenter, productBean)
+                    addShopCartBottomDialog.show()
+                }
+            }
+        }
+
         // 心愿单添加购物车
         adapterWish.setOnItemChildClickListener { adapter, view, position ->
             val productBean = adapter.getItem(position) as ProductBean
@@ -175,7 +206,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         customHeadView.headRightTV.setOnClickListener {
-            if (swipeRefreshLayout.isShown) { //显示编辑状态
+            if (swipeRefreshLayout.isShown) { //编辑状态
                 swipeRefreshLayout.visibility = View.GONE
                 recyclerViewEditShopCart.visibility = View.VISIBLE
                 customHeadView.setRightTxt(Util.getString(R.string.text_complete), color6e)
@@ -194,11 +225,12 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 textViewTotalPrice.visibility = View.VISIBLE
                 buttonSettleAccount.visibility = View.VISIBLE
             }
+
             for (item in adapterOrder.data) {
                 item.isEdit = !item.isEdit
             }
 
-            adapterOrder.notifyDataSetChanged()
+            recyclerViewEditShopCart.adapter = adapterOrder
         }
 
         adapterWish.setOnLoadMoreListener({
@@ -368,22 +400,26 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
      * 设置购物车商品数据
      */
     override fun setShopCartGoodsData(data: ShopCartBean.DataBean) {
-        if (data.item_count == 0) return//添加购物车为空的 占位图
-        textViewNum.text = "${data.item_count}件礼品"
-        items = data.items
-
+        data.items.clear()
+        if (data.items.isEmpty()){
+            linearLayoutNum.visibility = View.GONE
+        }else{
+            linearLayoutNum.visibility = View.VISIBLE
+        }
         adapterOrder.setNewData(data.items)
 
         setShopCartTotalPrice()
     }
 
     /**
-     * 设置购物车总价
+     * 设置购物车总价和商品数量
      */
     private fun setShopCartTotalPrice() {
         var totalPrice = 0.0
         val items = adapterOrder.data
+        var count = 0
         for (item in items) {
+            count+=item.quantity
             val product = item.product
             if (product.sale_price == 0.0) {
                 totalPrice += product.price * item.quantity
@@ -391,7 +427,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 totalPrice += product.sale_price * item.quantity
             }
         }
-
+        textViewNum.text = "${count}件礼品"
         textViewTotalPrice.text = "$totalPrice"
     }
 
@@ -424,13 +460,12 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onJumpShopCart(message: String) {
+        presenter.getShopCartGoods()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onCountChange(message: MessageUpdate) {
-        val data = adapterOrder.data
-        var count = 0
-        for (item in data) {
-            count += item.quantity
-        }
-        textViewNum.text = "${count}件礼品"
         setShopCartTotalPrice()
     }
 

@@ -457,4 +457,9 @@ object URL {
      */
     const val ORDER_OFFICIAL_COUPONS = "${BASE_URL}market/user_official_fill"
 
+    /**
+     * 购物车重新选择SKU
+     */
+    const val SHOP_CART_RESELECT_SKU = "${BASE_URL}cart/re_election"
+
 }

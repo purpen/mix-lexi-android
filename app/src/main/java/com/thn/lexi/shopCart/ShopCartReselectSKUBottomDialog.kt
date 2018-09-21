@@ -21,9 +21,11 @@ import java.io.IOException
 import java.util.HashMap
 
 
-class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, product: ProductBean) : BottomBaseDialog<AddShopCartBottomDialog>(context) {
+class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPresenter, product: ProductBean) : BottomBaseDialog<ShopCartReselectSKUBottomDialog>(context) {
     private val present: ShopCartPresenter by lazy { presenter }
-    private val goods: ProductBean = product
+    //初始SKU商品
+    private val goods: ProductBean by lazy { product }
+
     private val items: ArrayList<GoodsAllSKUBean.DataBean.ItemsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ItemsBean>() }
     private val colors: ArrayList<GoodsAllSKUBean.DataBean.ColorsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ColorsBean>() }
     private val modes: ArrayList<GoodsAllSKUBean.DataBean.ModesBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ModesBean>() }
@@ -38,19 +40,7 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
         loadData()
-        if (goods.is_distributed) {
-            view.buttonAddShopCart.visibility = View.VISIBLE
-            view.buttonGoOrderConfirm.visibility = View.VISIBLE
-            if (goods.is_custom_made){ //接单订制和购买都跳转订单确认
-                view.buttonGoOrderConfirm.text = Util.getString(R.string.text_order_make)
-            }else{
-                view.buttonGoOrderConfirm.text = Util.getString(R.string.text_purchase)
-
-            }
-
-        } else {
-            view.buttonConfirm.visibility = View.VISIBLE
-        }
+        view.buttonConfirm.visibility = View.VISIBLE
         return view
     }
 
@@ -183,6 +173,8 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
             }
         }
 
+        view.flowLayoutColor.adapter = adapterColor
+
         adapterSize = object : TagAdapter<GoodsAllSKUBean.DataBean.ModesBean>(modes) {
             override fun getView(parent: FlowLayout, position: Int, t: GoodsAllSKUBean.DataBean.ModesBean): View {
                 val item = getItem(position)
@@ -209,12 +201,10 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
             }
         }
 
-        view.flowLayoutColor.adapter = adapterColor
-
         view.flowLayoutSize.adapter = adapterSize
 
 
-        view.flowLayoutColor.setOnTagClickListener { view, position, parent ->
+        view.flowLayoutColor.setOnTagClickListener { _, position, _ ->
             if (colors[position].valid) {
                 val size = colors.size
                 var colorsBean: GoodsAllSKUBean.DataBean.ColorsBean
@@ -236,7 +226,7 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
         }
 
 
-        view.flowLayoutSize.setOnTagClickListener { view, position, parent ->
+        view.flowLayoutSize.setOnTagClickListener { _, position, _ ->
             if (modes[position].valid) {
                 val size = modes.size
                 var modesBean: GoodsAllSKUBean.DataBean.ModesBean
@@ -270,34 +260,10 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
                 ToastUtil.showInfo("请选择规格")
                 return@setOnClickListener
             }
+            present.updateReselectSKU(selectedSKU!!.rid,goods.rid,1)
             dismiss()
-
-            present.addShopCart(selectedSKU!!.rid,1)
-//            val intent = Intent()
-//            intent.putExtra(GoodsAllSKUBean::class.java.simpleName, selectedSKU)
-//            context.startActivity(intent)
         }
 
-        //添加购物车按钮
-        view.buttonAddShopCart.setOnClickListener {
-            if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
-                ToastUtil.showInfo("请选择颜色分类")
-                return@setOnClickListener
-            }
-
-            if (modes.size > 0 && TextUtils.isEmpty(selectedSize)) {
-                ToastUtil.showInfo("请选择规格")
-                return@setOnClickListener
-            }
-            dismiss()
-
-            present.addShopCart(selectedSKU!!.rid,1)
-        }
-
-        //购买->跳转确认订单
-        view.buttonGoOrderConfirm.setOnClickListener {
-            ToastUtil.showInfo("跳转确认订单...")
-        }
     }
 
     /**

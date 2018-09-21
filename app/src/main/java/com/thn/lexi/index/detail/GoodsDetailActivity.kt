@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.header_goods_detail.view.*
 import kotlinx.android.synthetic.main.view_goods_description.view.*
 import kotlinx.android.synthetic.main.view_goods_shop.view.*
 import kotlinx.android.synthetic.main.view_similar_goods.view.*
+import org.greenrobot.eventbus.EventBus
 
 class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener {
     private val showTagCount: Int = 5
@@ -531,7 +532,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         buttonAddShopCart.setOnClickListener(this)
 
-        relativeLayoutShopCart.setOnClickListener {
+        relativeLayoutShopCart.setOnClickListener { //跳转购物车
+            EventBus.getDefault().post(MainFragment1::class.java.simpleName)
             val intent = Intent(applicationContext,MainActivity::class.java)
             intent.putExtra(MainActivity::class.java.simpleName,MainFragment1::class.java.simpleName)
             startActivity(intent)

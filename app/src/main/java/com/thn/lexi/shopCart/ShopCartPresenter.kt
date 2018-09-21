@@ -191,6 +191,26 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
     }
 
     /**
+     * 更新SKU
+     */
+    override fun updateReselectSKU(newSKU: String, oldSKU: String, quantity: Int) {
+        dataSource.updateReselectSKU(newSKU,oldSKU,quantity, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    view.updateShopCart()
+                } else {
+                    view.showError(netStatusBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
      *  获取购物车商品数量
      */
 //    override fun getShopCartProductsNum() {

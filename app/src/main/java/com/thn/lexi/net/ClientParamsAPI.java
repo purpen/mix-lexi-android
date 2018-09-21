@@ -980,4 +980,20 @@ public class ClientParamsAPI {
         params.put("amount", String.valueOf(price));
         return params;
     }
+
+    /**
+     * 更新购物车SKU
+     * @param newSKU
+     * @param oldSKU
+     * @param quantity
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getUpdateReselectSKUParams(@NotNull String newSKU, @NotNull String oldSKU, int quantity) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("new_sku", newSKU);
+        params.put("old_sku",oldSKU);
+        params.put("new_quantity",String.valueOf(quantity));
+        return params;
+    }
 }
