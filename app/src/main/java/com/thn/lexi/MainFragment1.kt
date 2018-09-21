@@ -140,118 +140,13 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
     override fun installListener() {
 
-        buttonSettleAccount.setOnClickListener {
-            val data = adapterOrder.data
-
-            if (data.isEmpty()) {
-                ToastUtil.showInfo("您的购物车还没有商品")
-                return@setOnClickListener
-            }
-
-            var canSubmit = true
-
-            for (item in data) {
-                if (item.product.status != 1) {
-                    canSubmit = false
-                    break
-                }
-            }
-
-            if (!canSubmit) {
-                ToastUtil.showInfo("请先移除已下架商品")
-                return@setOnClickListener
-            }
-
-            for (item in data) {
-                if (item.product.stock_quantity == 0) {
-                    canSubmit = false
-                    break
-                }
-            }
-
-            if (!canSubmit) {
-                ToastUtil.showInfo("存在已售罄商品")
-                return@setOnClickListener
-            }
-
-
-            val createOrderBean = CreateOrderBean()
-
-            val storeIds = getStoreIds()
-
-            //店铺列表
-            val storeList = ArrayList<StoreItemBean>()
-
-            //当前店铺
-            var storeItemBean: StoreItemBean
-
-            //商品列表
-            var goodsList: ArrayList<ProductBean>
-
-            //商品
-            var goods: ProductBean
-
-            for (storeId in storeIds) {
-
-                //创建店铺
-                storeItemBean = StoreItemBean()
-
-                storeItemBean.store_rid = storeId
-
-                //创建商品列表
-                goodsList = ArrayList()
-
-                //添加店铺
-                storeList.add(storeItemBean)
-
-                for (item in data) {
-                    if (TextUtils.equals(storeId, item.product.store_rid)) {
-                        goods = item.product
-                        goods.quantity = item.quantity
-                        goods.sku = item.product.rid
-                        goodsList.add(goods)
-
-                        if (item.product.is_distributed) { //分销1，不是分销0
-                            storeItemBean.is_distribute = "1"
-                        } else {
-                            storeItemBean.is_distribute = "0"
-                        }
-                    }
-
-                }
-                //添加商品列表
-                storeItemBean.items = goodsList
-            }
-
-            // 添加有所店铺
-            createOrderBean.store_items = storeList
-
-            createOrderBean.orderTotalPrice = textViewTotalPrice.text.toString().toDouble()
-
-            //结算
-            val intent = Intent(activity, SelectExpressAddressActivity::class.java)
-            intent.putExtra(SelectExpressAddressActivity::class.java.simpleName, createOrderBean)
-            startActivity(intent)
+        buttonSettleAccount.setOnClickListener { //点击结算
+            clickedSettleAccount()
         }
 
 
-
-        buttonDelete.setOnClickListener {
-            //从购物车移除
-            val data = adapterOrder.data
-            val list = ArrayList<String>()
-            for (item in data) {
-                if (item.isChecked) {
-                    list.add(item.product.rid)
-                }
-            }
-
-            if (list.isEmpty()) {
-                ToastUtil.showInfo(Util.getString(R.string.text_plesse_select_goods))
-                return@setOnClickListener
-            }
-
-            showDeleteDialog(list)
+        buttonDelete.setOnClickListener {//从购物车移除商品
+            showDeleteDialog()
         }
 
         buttonAddWish.setOnClickListener {
@@ -313,9 +208,119 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     }
 
     /**
+     * 点击结算
+     */
+    private fun clickedSettleAccount() {
+        val data = adapterOrder.data
+
+        if (data.isEmpty()) {
+            ToastUtil.showInfo("您的购物车还没有商品")
+            return
+        }
+
+        var canSubmit = true
+
+        for (item in data) {
+            if (item.product.status != 1) {
+                canSubmit = false
+                break
+            }
+        }
+
+        if (!canSubmit) {
+            ToastUtil.showInfo("请先移除已下架商品")
+            return
+        }
+
+        for (item in data) {
+            if (item.product.stock_quantity == 0) {
+                canSubmit = false
+                break
+            }
+        }
+
+        if (!canSubmit) {
+            ToastUtil.showInfo("存在已售罄商品")
+            return
+        }
+
+        val createOrderBean = CreateOrderBean()
+
+        val storeIds = getStoreIds()
+
+        //店铺列表
+        val storeList = ArrayList<StoreItemBean>()
+
+        //当前店铺
+        var storeItemBean: StoreItemBean
+
+        //商品列表
+        var goodsList: ArrayList<ProductBean>
+
+        //商品
+        var goods: ProductBean
+
+        for (storeId in storeIds) {
+
+            //创建店铺
+            storeItemBean = StoreItemBean()
+
+            storeItemBean.store_rid = storeId
+
+            //创建商品列表
+            goodsList = ArrayList()
+
+            //添加店铺
+            storeList.add(storeItemBean)
+
+            for (item in data) {
+                if (TextUtils.equals(storeId, item.product.store_rid)) {
+                    goods = item.product
+                    goods.quantity = item.quantity
+                    goods.sku = item.product.rid
+                    goodsList.add(goods)
+
+                    if (item.product.is_distributed) { //分销1，不是分销0
+                        storeItemBean.is_distribute = "1"
+                    } else {
+                        storeItemBean.is_distribute = "0"
+                    }
+                }
+
+            }
+            //添加商品列表
+            storeItemBean.items = goodsList
+        }
+
+        // 添加有所店铺
+        createOrderBean.store_items = storeList
+
+        createOrderBean.orderTotalPrice = textViewTotalPrice.text.toString().toDouble()
+
+        //结算
+        val intent = Intent(activity, SelectExpressAddressActivity::class.java)
+        intent.putExtra(SelectExpressAddressActivity::class.java.simpleName, createOrderBean)
+        startActivity(intent)
+    }
+
+    /**
      * 显示确认删除对话框
      */
-    private fun showDeleteDialog(list: ArrayList<String>) {
+    private fun showDeleteDialog() {
+        val data = adapterOrder.data
+        val list = ArrayList<String>()
+        for (item in data) {
+            if (item.isChecked) {
+                list.add(item.product.rid)
+            }
+        }
+
+        if (list.isEmpty()) {
+            ToastUtil.showInfo(Util.getString(R.string.text_plesse_select_goods))
+            return
+        }
+
+
         val color333 = Util.getColor(R.color.color_333)
         val white = Util.getColor(android.R.color.white)
         val dialog = NormalDialog(activity)
