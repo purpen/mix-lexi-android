@@ -152,7 +152,7 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
             override fun onSuccess(json: String) {
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
-                    view.setAddWishOrderStatus()
+                    view.setAddWishOrderStatus(list)
                 } else {
                     view.showError(netStatusBean.status.message)
                 }

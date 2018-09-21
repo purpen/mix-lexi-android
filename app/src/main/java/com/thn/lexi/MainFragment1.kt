@@ -118,7 +118,14 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     /**
      *  放入心愿单
      */
-    override fun setAddWishOrderStatus() {
+    override fun setAddWishOrderStatus(list: ArrayList<String>) {
+        //从产品列表删除加入心愿单产品
+        val iterator = adapterOrder.data.iterator()
+        while (iterator.hasNext()){
+            val itemsBean = iterator.next()
+            if (list.contains(itemsBean.product.product_rid)) iterator.remove()
+        }
+        adapterOrder.notifyDataSetChanged()
         presenter.loadData(true)
     }
 
@@ -408,11 +415,13 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         if (products.isEmpty()) {
             adapterWish.removeHeaderView(headerViewWishOrder)
         } else {
+            adapterWish.removeHeaderView(headerViewWishOrder)
             headerViewWishOrder = View.inflate(activity, R.layout.header_shop_cart_wish_order, null)
             adapterWish.addHeaderView(headerViewWishOrder)
         }
         adapterWish.setNewData(products)
     }
+
 
     override fun addData(products: List<ProductBean>) {
         adapterWish.addData(products)

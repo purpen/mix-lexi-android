@@ -43,7 +43,7 @@ class ShopCartContract {
 
         }
 
-        fun setAddWishOrderStatus() {
+        fun setAddWishOrderStatus(list: ArrayList<String>) {
 
         }
 
