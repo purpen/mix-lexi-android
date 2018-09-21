@@ -139,10 +139,38 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
         buttonSettleAccount.setOnClickListener {
             val data = adapterOrder.data
+
             if (data.isEmpty()) {
                 ToastUtil.showInfo("您的购物车还没有商品")
                 return@setOnClickListener
             }
+
+            var canSubmit = true
+
+            for (item in data) {
+                if (item.product.status != 1) {
+                    canSubmit = false
+                    break
+                }
+            }
+
+            if (!canSubmit) {
+                ToastUtil.showInfo("请先移除已下架商品")
+                return@setOnClickListener
+            }
+
+            for (item in data) {
+                if (item.product.stock_quantity == 0) {
+                    canSubmit = false
+                    break
+                }
+            }
+
+            if (!canSubmit) {
+                ToastUtil.showInfo("存在已售罄商品")
+                return@setOnClickListener
+            }
+
 
             val createOrderBean = CreateOrderBean()
 
@@ -180,9 +208,9 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                         goods.sku = item.product.rid
                         goodsList.add(goods)
 
-                        if (item.product.is_distributed){ //分销1，不是分销0
+                        if (item.product.is_distributed) { //分销1，不是分销0
                             storeItemBean.is_distribute = "1"
-                        }else{
+                        } else {
                             storeItemBean.is_distribute = "0"
                         }
                     }
@@ -195,11 +223,11 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
             // 添加有所店铺
             createOrderBean.store_items = storeList
 
-            createOrderBean.orderTotalPrice =  textViewTotalPrice.text.toString().toDouble()
+            createOrderBean.orderTotalPrice = textViewTotalPrice.text.toString().toDouble()
 
             //结算
-            val intent =Intent(activity,SelectExpressAddressActivity::class.java)
-            intent.putExtra(SelectExpressAddressActivity::class.java.simpleName,createOrderBean)
+            val intent = Intent(activity, SelectExpressAddressActivity::class.java)
+            intent.putExtra(SelectExpressAddressActivity::class.java.simpleName, createOrderBean)
             startActivity(intent)
         }
 

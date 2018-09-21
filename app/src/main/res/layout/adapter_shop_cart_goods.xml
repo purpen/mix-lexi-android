@@ -48,7 +48,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-
         android:drawableStart="@mipmap/icon_price_unit"
         android:includeFontPadding="false"
         android:textSize="@dimen/sp14"
@@ -101,9 +100,13 @@
         android:text="@string/app_name"
         android:includeFontPadding="false"
         android:drawablePadding="@dimen/dp5"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginEnd="10dp"
         android:drawableStart="@mipmap/icon_shop_gray"
         android:layout_alignBottom="@+id/imageView"
         android:layout_alignStart="@+id/textViewName"
+        android:layout_toStartOf="@id/textViewSoldOut"
         />
 
     <!--重选规格-->
@@ -119,8 +122,22 @@
         android:layout_alignParentEnd="true"
         android:layout_alignBottom="@+id/imageView"
         android:layout_marginEnd="@dimen/dp15"
+        android:visibility="gone"
         />
 
+    <TextView
+        android:id="@+id/textViewSoldOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/color_ff6666"
+        android:includeFontPadding="false"
+        android:textSize="@dimen/sp11"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_marginEnd="@dimen/dp15"
+        android:visibility="gone"
+        />
 
     <!--编辑数量-->
     <com.thn.lexi.view.AddSubView

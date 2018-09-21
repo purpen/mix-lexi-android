@@ -56,7 +56,7 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
             item.isChecked = isChecked
         }
 
-        if (item.isEdit){
+        if (item.isEdit){//编辑状态
             checkBox.visibility = View.VISIBLE
             addSubView.visibility = View.GONE
         }else{
@@ -64,8 +64,45 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
             addSubView.visibility = View.VISIBLE
         }
 
+
+        val textViewSoldOut = helper.getView<TextView>(R.id.textViewSoldOut)
         val textViewReselectSpec = helper.getView<TextView>(R.id.textViewReselectSpec)
 
-        helper.addOnClickListener(R.id.textViewReselectSpec)
+        if (item.isEdit){ //编辑状态
+            textViewReselectSpec.visibility = View.GONE
+            addSubView.visibility = View.GONE
+
+            if (product.status==1){ //上架状态
+                if (product.stock_quantity==0){//库存为0，已售罄
+                    textViewSoldOut.visibility = View.VISIBLE
+                    textViewSoldOut.text = Util.getString(R.string.text_sold_out)
+                }else{
+                    textViewSoldOut.visibility = View.GONE
+                }
+
+            }else{ //下架状态
+                textViewSoldOut.visibility = View.VISIBLE
+                textViewSoldOut.text = Util.getString(R.string.text_remove_sold)
+            }
+        }else{ //正常状态
+            if (product.status==1){ //上架状态
+                if (product.stock_quantity==0){//库存为0，已售罄
+                    addSubView.visibility = View.GONE
+                    textViewReselectSpec.visibility = View.VISIBLE
+                    helper.addOnClickListener(R.id.textViewReselectSpec)
+                }else{
+                    addSubView.visibility = View.VISIBLE
+                    textViewReselectSpec.visibility = View.GONE
+                }
+                textViewSoldOut.visibility = View.GONE
+            }else{ //下架状态
+                addSubView.visibility = View.GONE
+                textViewReselectSpec.visibility = View.GONE
+                textViewSoldOut.visibility = View.VISIBLE
+                textViewSoldOut.text = Util.getString(R.string.text_remove_sold)
+            }
+        }
+
+
     }
 }
