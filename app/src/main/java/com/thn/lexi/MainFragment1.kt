@@ -3,10 +3,13 @@ package com.thn.lexi
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
+import com.flyco.dialog.listener.OnBtnClickL
+import com.flyco.dialog.widget.NormalDialog
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.AddShopCartBean
 import com.thn.lexi.order.*
@@ -248,7 +251,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 return@setOnClickListener
             }
 
-            presenter.removeProductFromShopCart(list)
+            showDeleteDialog(list)
         }
 
         buttonAddWish.setOnClickListener {
@@ -307,6 +310,35 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
             presenter.loadMoreData()
         }, recyclerView)
 
+    }
+
+    /**
+     * 显示确认删除对话框
+     */
+    private fun showDeleteDialog(list: ArrayList<String>) {
+        val color333 = Util.getColor(R.color.color_333)
+        val white = Util.getColor(android.R.color.white)
+        val dialog = NormalDialog(activity)
+        dialog.isTitleShow(false)
+                .bgColor(white)
+                .cornerRadius(4f)
+                .content(Util.getString(R.string.text_remove_selected_goods))
+                .contentGravity(Gravity.CENTER)
+                .contentTextColor(color333)
+                .contentTextSize(16f)
+                .dividerColor(Util.getColor(R.color.color_ccc))
+                .btnText(Util.getString(R.string.text_qd), Util.getString(R.string.text_cancel))
+                .btnTextSize(15f, 15f)
+                .btnTextColor(color333, Util.getColor(R.color.color_6ed7af))
+                .btnPressColor(white)
+                .widthScale(0.85f)
+                .show()
+        dialog.setOnBtnClickL(OnBtnClickL {
+            presenter.removeProductFromShopCart(list)
+            dialog.dismiss()
+        }, OnBtnClickL {
+            dialog.dismiss()
+        })
     }
 
     override fun setNewData(products: List<ProductBean>) {

@@ -229,4 +229,5 @@
     <string name="text_official_coupon">乐喜优惠券</string>
     <string name="text_reselect_spec">重选规格</string>
     <string name="text_remove_sold">该商品已下架</string>
+    <string name="text_remove_selected_goods">确认删除已选中的商品吗?</string>
 </resources>
