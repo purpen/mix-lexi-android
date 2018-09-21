@@ -12,6 +12,7 @@ import org.greenrobot.eventbus.EventBus
 import com.basemodule.tools.LogUtil
 import com.thn.lexi.MessageClose
 import com.thn.lexi.address.AddressActivity
+import com.thn.lexi.orderList.EvaluateActivity
 import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.Subscribe
@@ -36,7 +37,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.textViewSkip -> {
-                startActivity(Intent(applicationContext, MainActivity::class.java))
+                startActivity(Intent(applicationContext, EvaluateActivity::class.java))
                 finish()
             }
             R.id.button0 -> startActivity(Intent(this, RegisterActivity::class.java))

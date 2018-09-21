@@ -12,6 +12,7 @@ import com.thn.lexi.mine.designPavilion.FavoriteShopFragment
 import com.thn.lexi.mine.dynamic.DynamicActivity
 import com.thn.lexi.mine.enshrine.EnshrineFragment
 import com.thn.lexi.mine.like.FavoriteFragment
+import com.thn.lexi.orderList.OrderListActivity
 import com.thn.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
@@ -109,6 +110,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
         imageViewShare.setOnClickListener(this)
         imageViewSetting.setOnClickListener(this)
+        buttonOrder.setOnClickListener(this)
 
         linearLayoutLike.setOnClickListener{
             customViewPager.setCurrentItem(0,true)
@@ -132,6 +134,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         when (id) {
             R.id.imageViewShare -> ToastUtil.showInfo("分享")
             R.id.imageViewSetting -> startActivity(Intent(activity, SettingActivity::class.java))
+            R.id.buttonOrder->startActivity(Intent(activity,OrderListActivity::class.java))
         }
     }
 

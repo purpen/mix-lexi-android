@@ -107,10 +107,6 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
      */
     override fun getGoodsSKUs(rid: String, callBack: IDataSource.HttpRequestCallBack) {
         dataSource.getGoodsSKUs(rid, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                callBack.onStart()
-            }
-
             override fun onSuccess(json: String) {
                 callBack.onSuccess(json)
             }

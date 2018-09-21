@@ -152,9 +152,6 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
      */
     override fun getGoodsSKUs(id: String, callBack: IDataSource.HttpRequestCallBack) {
         dataSource.getGoodsSKUs(id, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                callBack.onStart()
-            }
             override fun onSuccess(json: String) {
                 callBack.onSuccess(json)
             }

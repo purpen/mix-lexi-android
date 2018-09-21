@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="@dimen/dp15"
+    android:paddingLeft="@dimen/dp15"
+    android:background="@android:color/white">
+    <TextView
+        android:id="@+id/tv_acceptStation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp12"
+        android:layout_marginLeft="@dimen/dp22"
+        android:layout_marginTop="@dimen/dp15"
+        android:text="已签收，感谢您在乐喜购买礼品，欢迎再次光临！"
+        android:textColor="@color/color_999"/>
+    <TextView
+        android:id="@+id/tv_acceptTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_b2b2b2"
+        android:textSize="@dimen/sp11"
+        android:text="2017-01-22 01:23:46"
+        android:layout_marginTop="@dimen/dp6"
+        android:layout_marginLeft="@dimen/dp22"
+        android:layout_below="@+id/tv_acceptStation"
+        android:layout_marginBottom="@dimen/dp15"/>
+    <View
+        android:id="@+id/line_top"
+        android:layout_width="@dimen/dp1"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="2.25dp"
+        android:background="@color/color_6ed7af"
+        android:layout_alignBottom="@+id/tv_acceptStation"/>
+
+    <View
+        android:id="@+id/line_bottom"
+        android:layout_width="@dimen/dp1"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/tv_acceptStation"
+        android:background="@color/color_e9e9e9"
+        android:layout_marginLeft="2.25dp"
+        android:layout_marginTop="7dp"/>
+    <ImageView
+        android:id="@+id/dot"
+        android:layout_width="@dimen/dp6"
+        android:layout_height="@dimen/dp6"
+        android:background="@drawable/bg_dot_color5fe4b1"
+        android:layout_alignTop="@+id/tv_acceptStation"
+        android:layout_marginTop="@dimen/dp6"/>
+</RelativeLayout>

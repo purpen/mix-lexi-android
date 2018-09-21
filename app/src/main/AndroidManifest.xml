@@ -13,7 +13,7 @@
         >
         <!--android8.0需要的配置，主要是调用相机-->
         <provider
-            android:authorities="包名.fileprovider"
+            android:authorities="com.thn.basemodule.fileprovider"
             android:name="android.support.v4.content.FileProvider"
             android:grantUriPermissions="true"
             android:exported="false">
@@ -56,8 +56,12 @@
         <activity android:name=".index.detail.FavoriteUserListActivity" />
         <activity android:name=".order.SelectExpressAddressActivity" />
         <activity android:name=".order.ConfirmOrderActivity" />
-        <activity android:name=".address.AddressActivity" />
-        <activity android:name=".order.SelectExpressActivity" />
+        <activity android:name=".address.AddressActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name=".orderList.OrderListActivity" />
+        <activity android:name=".orderList.LogisticsActivity"/>
+        <activity android:name=".orderList.EvaluateActivity"/>
+        <activity android:name=".orderList.OrderDetailActivity"/>
     </application>
 
 </manifest>

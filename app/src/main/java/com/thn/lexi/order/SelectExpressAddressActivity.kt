@@ -13,6 +13,7 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
 import com.thn.lexi.address.AddressActivity
+import com.thn.lexi.orderList.OrderListActivity
 import kotlinx.android.synthetic.main.acticity_select_express_address.*
 
 

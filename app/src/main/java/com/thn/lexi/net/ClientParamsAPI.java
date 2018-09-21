@@ -4,10 +4,13 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.basemodule.tools.Constants;
-import com.thn.lexi.order.CalculateExpressExpenseRequestBean;
+import com.basemodule.tools.JsonUtil;
+import com.basemodule.ui.IDataSource;
+import com.thn.lexi.address.AddressBean;
 import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
-import com.thn.lexi.order.SelectExpressRequestBean;
+import com.thn.lexi.order.CreateOrderBean;
+import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.user.login.UserProfileUtil;
 
 import org.apache.commons.codec.binary.Hex;
@@ -941,43 +944,57 @@ public class ClientParamsAPI {
     }
 
     /**
-     * 根据商品运费模板获取快递列表
-     * @param selectExpressRequestBean
+     * 更新地址
+     * @param bean
+     * @param is_overseas
+     * @param id_card
+     * @param id_card_front
+     * @param id_card_back
      * @return
      */
-    @Nullable
-    public static HashMap<String,Object> getExpressListByExpressModel(@NotNull SelectExpressRequestBean selectExpressRequestBean) {
-        HashMap<String, Object> params = generateCommonParams();
-        params.put("address_rid",selectExpressRequestBean.address_rid);
-        params.put("fid",selectExpressRequestBean.fid);
-        params.put("items",selectExpressRequestBean.items);
+    @NotNull
+    public static HashMap<String,Object> getAddressParams(AddressBean.DataBean bean,boolean is_overseas,String id_card,String id_card_front,String id_card_back){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("first_name",bean.getFirst_name());
+        params.put("phone",bean.getPhone());
+        params.put("mobile",bean.getMobile());
+        params.put("country_id",bean.getCountry_id());
+        params.put("province_id",bean.getProvince_id());
+        params.put("city_id",bean.getCity_id());
+        params.put("town_id",bean.getTown_id());
+        params.put("area_id",bean.getArea_id());
+        params.put("street_address",bean.getStreet_address());
+        params.put("street_address_two",bean.getStreet_address_two());
+        params.put("zipcode",bean.getZipcode());
+        params.put("is_default",bean.isIs_default());
+        params.put("is_overseas",is_overseas);//是否保存海关地址
+        params.put("id_card",id_card);//身份号
+        params.put("id_card_front",id_card_front);//正面身份证照片
+        params.put("id_card_back",id_card_back);//反面身份证照片
+     return params;
+    }
+
+    /**
+     * 获取订单的id
+     * @param rid
+     * @return
+     */
+    public static HashMap<String,Object> getDeleteOrderParams(String rid){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("rid",rid);
         return params;
     }
 
-
     /**
-     * 获取订单运费列表
-     * @return
-     * @param requestBean
-     */
-    @Nullable
-    public static HashMap<String, Object> calculateExpressExpenseForEachOrderParams(CalculateExpressExpenseRequestBean requestBean) {
-        HashMap<String, Object> params = generateCommonParams();
-        params.put("address_rid", requestBean.address_rid);
-        params.put("items", requestBean.items);
-        return params;
-    }
-
-
-    /**
-     * 获取官方优惠券
-     * @param price
+     * 获取物流信息
+     * @param logistic_code
+     * @param kdn_company_code
      * @return
      */
-    @Nullable
-    public static HashMap<String, Object> getOfficialCouponsParams(double price) {
-        HashMap<String, Object> params = generateCommonParams();
-        params.put("amount", String.valueOf(price));
+    public static HashMap<String,Object> getLogistics(String logistic_code, String kdn_company_code){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("logistic_code",logistic_code);
+        params.put("kdn_company_code",kdn_company_code);
         return params;
     }
 }

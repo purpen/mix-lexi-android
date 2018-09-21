@@ -27,7 +27,7 @@ import android.view.View;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
-import com.thn.imagealbum.BuildConfig;
+import com.thn.basemodule.BuildConfig;
 import com.thn.imagealbum.album.ImageLoaderEngine;
 
 import java.io.ByteArrayOutputStream;
@@ -354,6 +354,8 @@ public class ImageUtils {
             return;
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //添加权限
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         activity.startActivityForResult(intent, Constants.REQUEST_CODE_CAPTURE_CAMERA);
     }
@@ -399,8 +401,10 @@ public class ImageUtils {
     public static Uri getUriForFile(Context context,File file) {
         if (null == file) file = getDefaultFile();
         Uri uri;
+        LogUtil.e("当前的版本号："+Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", file);
+            LogUtil.e("8.0有没有被调起");
         } else {
             uri = Uri.fromFile(file);
         }
@@ -414,6 +418,7 @@ public class ImageUtils {
             return null;
         }
         file = new File(PHOTO_DIR, getPhotoFileName());
+        file.getParentFile().mkdirs();
         if (file.exists()) {
             file.delete();
         }

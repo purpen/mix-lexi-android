@@ -436,25 +436,16 @@ object URL {
      */
     const val PROVINCES_CITY_COUNTRY= "${BASE_URL}places/provinces_cities"
 
-
     /**
-     * 每个SKU商品的快递列表
+     * 订单全部列表
      */
-    const val PRODUCT_EXPRESS = "${BASE_URL}logistics/product/express"
-
+    const val GET_ORDER="${BASE_URL}orders"
     /**
-     *  根据商品运费模板获取快递
+     * 删除订单
      */
-    const val SAME_TEMPLATE_EXPRESS = "${BASE_URL}logistics/same_template_express"
-
+    const val DELETE_ORDER="${BASE_URL}orders/delete"
     /**
-     * 计算运费列表
+     * 获取商品物流信息
      */
-    const val FREIGHT_CALCULATE = "${BASE_URL}logistics/freight/calculate"
-
-    /**
-     * 根据订单价格获取官方优惠券
-     */
-    const val ORDER_OFFICIAL_COUPONS = "${BASE_URL}market/user_official_fill"
-
+    const val GET_LOGISTICS="${BASE_URL}logistics/information"
 }
