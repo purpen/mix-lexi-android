@@ -4,7 +4,6 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.basemodule.tools.Constants;
-import com.thn.lexi.order.CalculateExpressExpenseRequestBean;
 import com.basemodule.tools.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.address.AddressBean;
@@ -12,7 +11,6 @@ import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
-import com.thn.lexi.order.SelectExpressRequestBean;
 import com.thn.lexi.user.login.UserProfileUtil;
 
 import org.apache.commons.codec.binary.Hex;
@@ -942,47 +940,6 @@ public class ClientParamsAPI {
         params.put("from_client",createOrderBean.from_client);
         params.put("bonus_code",createOrderBean.bonus_code);
         params.put("store_items",createOrderBean.store_items);
-        return params;
-    }
-
-    /**
-     * 根据商品运费模板获取快递列表
-     * @param selectExpressRequestBean
-     * @return
-     */
-    @Nullable
-    public static HashMap<String,Object> getExpressListByExpressModel(@NotNull SelectExpressRequestBean selectExpressRequestBean) {
-        HashMap<String, Object> params = generateCommonParams();
-        params.put("address_rid",selectExpressRequestBean.address_rid);
-        params.put("fid",selectExpressRequestBean.fid);
-        params.put("items",selectExpressRequestBean.items);
-        return params;
-    }
-
-
-    /**
-     * 获取订单运费列表
-     * @return
-     * @param requestBean
-     */
-    @Nullable
-    public static HashMap<String, Object> calculateExpressExpenseForEachOrderParams(CalculateExpressExpenseRequestBean requestBean) {
-        HashMap<String, Object> params = generateCommonParams();
-        params.put("address_rid", requestBean.address_rid);
-        params.put("items", requestBean.items);
-        return params;
-    }
-
-
-    /**
-     * 获取官方优惠券
-     * @param price
-     * @return
-     */
-    @Nullable
-    public static HashMap<String, Object> getOfficialCouponsParams(double price) {
-        HashMap<String, Object> params = generateCommonParams();
-        params.put("amount", String.valueOf(price));
         return params;
     }
 

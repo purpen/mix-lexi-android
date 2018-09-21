@@ -11,6 +11,5 @@ public class FullReductionRequestBean {
     public static class SKU{
         public String sku;
         public int quantity;
-        public String express_id;
     }
 }

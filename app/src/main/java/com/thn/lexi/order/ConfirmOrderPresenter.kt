@@ -1,9 +1,10 @@
 package com.thn.lexi.order
 import com.basemodule.tools.JsonUtil
+import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.index.detail.ShopCouponListBean
+import com.thn.lexi.user.areacode.SelectCountryAreaPresenter.Companion.status
 import org.json.JSONObject
 import java.io.IOException
 
@@ -85,27 +86,12 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
         })
     }
 
-    /**
-     * 获取默认快递公司
-     */
-    override fun getDefaultExpressCompany(stores: ArrayList<FullReductionRequestBean>) {
-        dataSource.getDefaultExpressCompany(stores,object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val response = JSONObject(json)
-                val isSuccess = response.optBoolean("success")
-                val status = response.optJSONObject("status")
-                val data = response.optJSONObject("data")
-                if (isSuccess) {
-                    view.setDefaultExpressCompany(data)
-                } else {
-                    view.showError(status.getString("message"))
-                }
-            }
 
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
+    /**
+     * 用户领取店铺优惠券
+     */
+    fun clickGetCoupon(storeId: String, code: String?, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+
     }
 
 
@@ -152,50 +138,5 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
             }
         })
     }
-
-
-    /**
-     * 获取订单运费列表
-     */
-    fun calculateExpressExpenseForEachOrder(requestBean: CalculateExpressExpenseRequestBean) {
-        dataSource.calculateExpressExpenseForEachOrder(requestBean,object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val response = JSONObject(json)
-                val isSuccess = response.getBoolean("success")
-                val status = response.getJSONObject("status")
-                val data = response.getJSONObject("data")
-                if (isSuccess) {
-                    view.setCalculateExpressExpenseForEachOrder(data)
-                } else {
-                    view.showError(status.getString("message"))
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
-
-    /**
-     * 获取官方优惠券
-     */
-    override fun getOfficialCoupons(price: Double, callback: IDataSource.HttpRequestCallBack) {
-        dataSource.getOfficialCoupons(price,object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                callback.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                callback.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                callback.onFailure(e)
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
-
 
 }
