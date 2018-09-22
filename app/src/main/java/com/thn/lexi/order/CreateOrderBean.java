@@ -11,10 +11,11 @@ public class CreateOrderBean implements Parcelable {
 
     //官方券
     public int officialCouponPrice;
+
     //官方券码
     public String officialCouponCode;
-    //购物车总价
 
+    //购物车总价
     public double orderTotalPrice;
 
     //收货地址ID
@@ -38,7 +39,7 @@ public class CreateOrderBean implements Parcelable {
     //是否同步返回支付参数 0、否 1、是
     public String sync_pay;
 
-//    上一次浏览的小b店铺rid
+    //    上一次浏览的小b店铺rid
     public String last_store_rid;
 
     //店铺列表
@@ -55,13 +56,13 @@ public class CreateOrderBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(this.consigneeInfo, flags);
+        dest.writeInt(this.officialCouponPrice);
+        dest.writeString(this.officialCouponCode);
         dest.writeDouble(this.orderTotalPrice);
         dest.writeString(this.address_rid);
         dest.writeString(this.outside_target_id);
         dest.writeString(this.invoice_type);
         dest.writeString(this.ship_mode);
-        dest.writeInt(this.officialCouponPrice);
-        dest.writeString(this.officialCouponCode);
         dest.writeString(this.from_client);
         dest.writeString(this.affiliate_code);
         dest.writeString(this.sync_pay);

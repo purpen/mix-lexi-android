@@ -24,15 +24,15 @@ class ShopCartContract {
         }
 
         fun loadMoreEnd() {
-            
+
         }
 
         fun loadMoreComplete() {
-            
+
         }
 
         fun loadMoreFail() {
-            
+
         }
 
         fun addData(products: List<ProductBean>) {

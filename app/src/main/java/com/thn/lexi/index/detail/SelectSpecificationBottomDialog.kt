@@ -35,10 +35,6 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
     private lateinit var adapterColor: TagAdapter<GoodsAllSKUBean.DataBean.ColorsBean>
     private lateinit var adapterSize: TagAdapter<GoodsAllSKUBean.DataBean.ModesBean>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        loadData()
-    }
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
@@ -95,9 +91,9 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 view.progressBar.visibility = View.VISIBLE
             }
             override fun onSuccess(json: String) {
+                view.progressBar.visibility = View.GONE
                 val goodsAllSKUBean = JsonUtil.fromJson(json, GoodsAllSKUBean::class.java)
                 if (goodsAllSKUBean.success) {
-                    view.progressBar.visibility = View.GONE
                     setData(goodsAllSKUBean)
                     SPUtil.write(GoodsAllSKUBean::class.java.simpleName, json)
                 } else {
