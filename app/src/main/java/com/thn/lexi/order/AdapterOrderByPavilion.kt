@@ -4,7 +4,10 @@ import android.content.Intent
 import android.support.annotation.LayoutRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -16,6 +19,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQuickAdapter<StoreItemBean, BaseViewHolder>(res) {
+
     private val addressId:String by lazy { address_rid }
     override fun convert(helper: BaseViewHolder, item: StoreItemBean) {
 
@@ -74,6 +78,38 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
 
         adapter.setNewData(item.items)
 
+
+        val editTextShopNote = helper.getView<EditText>(R.id.editTextShopNote)
+
+        //给卖家备注
+        editTextShopNote.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+            override fun afterTextChanged(s: Editable?) {
+                //给商家留言
+                item.buyer_remark = s?.toString()
+            }
+        })
+
+        //给商品备注
+        val editTextGoodsNote = helper.getView<EditText>(R.id.editTextGoodsNote)
+
+        editTextGoodsNote.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+            override fun afterTextChanged(s: Editable?) {
+                //给商家留言
+                item.blessing_utterance = s?.toString()
+            }
+        })
 
         adapter.setOnItemChildClickListener { _, view, position ->
             val bean = adapter.getItem(position) as ProductBean
