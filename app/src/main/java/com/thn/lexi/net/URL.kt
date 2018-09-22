@@ -469,11 +469,6 @@ object URL {
      * 获取商品物流信息
      */
     const val GET_LOGISTICS="${BASE_URL}logistics/information"
-    const val ORDER_OFFICIAL_COUPONS = "${BASE_URL}market/user_official_fill"
 
-    /**
-     * 购物车重新选择SKU
-     */
-    const val SHOP_CART_RESELECT_SKU = "${BASE_URL}cart/re_election"
 
 }
