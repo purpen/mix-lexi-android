@@ -1,6 +1,7 @@
 package com.thn.lexi.beans;
 
 import java.util.List;
+import com.thn.lexi.order.StoreItemBean;
 
 public class CouponBean {
     /**
@@ -21,6 +22,8 @@ public class CouponBean {
 
     public int amount;
     public String code;
+    //coupon所在店铺
+    public StoreItemBean storeItemBean;
     public int count;
     public int created_at;
     public int days;
@@ -31,5 +34,10 @@ public class CouponBean {
     public String type_text;
     public long end_date;
     public long start_date;
+    public long expired_at;
+    public long start_at;
     public List<ProductBean> products;
+    public boolean selected;
+    public boolean is_expired;
+    public boolean is_used;
 }

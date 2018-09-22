@@ -4,6 +4,8 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import org.json.JSONObject
+import com.basemodule.ui.IDataSource
+import com.thn.lexi.beans.CouponBean
 
 class ConfirmOrderContract {
     interface View : BaseView<Presenter> {
@@ -37,7 +39,15 @@ class ConfirmOrderContract {
 
         }
 
+        fun setDefaultExpressCompany(data: JSONObject) {
+
+        }
+
         fun setPerOrderFullReductionData(data: JSONObject) {
+
+        }
+
+        fun setCalculateExpressExpenseForEachOrder(data: JSONObject) {
 
         }
 
@@ -57,6 +67,9 @@ class ConfirmOrderContract {
         fun getNewUserFirstOrderDiscounts()
 
         fun getPerOrderFullReduction(list: ArrayList<FullReductionRequestBean>)
+
+        fun getDefaultExpressCompany(stores: ArrayList<FullReductionRequestBean>)
+        fun getOfficialCoupons(price: Double, param: IDataSource.HttpRequestCallBack)
 
         fun submitOrder(createOrderBean: CreateOrderBean)
     }

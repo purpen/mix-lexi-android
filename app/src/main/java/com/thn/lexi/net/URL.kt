@@ -336,7 +336,28 @@ object URL {
      */
     const val USER_DYNAMIC_URL = "${BASE_URL}users/user_dynamic"
 
+    /**
+     * 每个SKU商品的快递列表
+     */
+    const val PRODUCT_EXPRESS = "${BASE_URL}logistics/product/express"
 
+    /**
+     *  根据商品运费模板获取快递
+     */
+    const val SAME_TEMPLATE_EXPRESS = "${BASE_URL}logistics/same_template_express"
+
+    /**
+     * 计算运费列表
+     */
+    const val FREIGHT_CALCULATE = "${BASE_URL}logistics/freight/calculate"
+    /**
+     * 根据订单价格获取官方优惠券
+     */
+    const val ORDER_OFFICIAL_COUPONS = "${BASE_URL}market/user_official_fill"
+    /**
+     * 购物车重新选择SKU
+     */
+    const val SHOP_CART_RESELECT_SKU = "${BASE_URL}cart/re_election"
     /**
      * 获取品牌馆中商品列表
      */
@@ -448,11 +469,4 @@ object URL {
      * 获取商品物流信息
      */
     const val GET_LOGISTICS="${BASE_URL}logistics/information"
-    const val ORDER_OFFICIAL_COUPONS = "${BASE_URL}market/user_official_fill"
-
-    /**
-     * 购物车重新选择SKU
-     */
-    const val SHOP_CART_RESELECT_SKU = "${BASE_URL}cart/re_election"
-
 }

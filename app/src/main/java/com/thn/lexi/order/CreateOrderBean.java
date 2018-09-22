@@ -9,6 +9,12 @@ public class CreateOrderBean implements Parcelable {
 
     public UserAddressListBean.DataBean consigneeInfo;
 
+    //官方券
+    public int officialCouponPrice;
+    //官方券码
+    public String officialCouponCode;
+    //购物车总价
+
     public double orderTotalPrice;
 
     //收货地址ID
@@ -54,6 +60,8 @@ public class CreateOrderBean implements Parcelable {
         dest.writeString(this.outside_target_id);
         dest.writeString(this.invoice_type);
         dest.writeString(this.ship_mode);
+        dest.writeInt(this.officialCouponPrice);
+        dest.writeString(this.officialCouponCode);
         dest.writeString(this.from_client);
         dest.writeString(this.affiliate_code);
         dest.writeString(this.sync_pay);
@@ -63,6 +71,8 @@ public class CreateOrderBean implements Parcelable {
 
     protected CreateOrderBean(Parcel in) {
         this.consigneeInfo = in.readParcelable(UserAddressListBean.DataBean.class.getClassLoader());
+        this.officialCouponPrice = in.readInt();
+        this.officialCouponCode = in.readString();
         this.orderTotalPrice = in.readDouble();
         this.address_rid = in.readString();
         this.outside_target_id = in.readString();

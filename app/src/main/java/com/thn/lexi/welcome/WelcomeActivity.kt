@@ -37,7 +37,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.textViewSkip -> {
-                startActivity(Intent(applicationContext, EvaluateActivity::class.java))
+                startActivity(Intent(applicationContext, MainActivity::class.java))
                 finish()
             }
             R.id.button0 -> startActivity(Intent(this, RegisterActivity::class.java))

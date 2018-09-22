@@ -63,6 +63,7 @@
         android:paddingEnd="@dimen/dp20"
         android:paddingStart="@dimen/dp0"
         android:checked="false"
+        android:clickable="false"
         android:background="@null"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"

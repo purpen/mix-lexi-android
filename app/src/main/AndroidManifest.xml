@@ -62,6 +62,7 @@
         <activity android:name=".orderList.LogisticsActivity"/>
         <activity android:name=".orderList.EvaluateActivity"/>
         <activity android:name=".orderList.OrderDetailActivity"/>
+        <activity android:name=".order.SelectExpressActivity" />
     </application>
 
 </manifest>

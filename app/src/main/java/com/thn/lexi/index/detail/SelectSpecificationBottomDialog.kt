@@ -42,6 +42,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
+        loadData()
         if (goods!!.is_distributed) {
             view.buttonAddShopCart.visibility = View.VISIBLE
             view.buttonGoOrderConfirm.visibility = View.VISIBLE
@@ -90,9 +91,13 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
     private fun loadData() {
         present.getGoodsSKUs(goods!!.rid, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.progressBar.visibility = View.VISIBLE
+            }
             override fun onSuccess(json: String) {
                 val goodsAllSKUBean = JsonUtil.fromJson(json, GoodsAllSKUBean::class.java)
                 if (goodsAllSKUBean.success) {
+                    view.progressBar.visibility = View.GONE
                     setData(goodsAllSKUBean)
                     SPUtil.write(GoodsAllSKUBean::class.java.simpleName, json)
                 } else {
@@ -101,6 +106,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             }
 
             override fun onFailure(e: IOException) {
+                view.progressBar.visibility = View.GONE
                 ToastUtil.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

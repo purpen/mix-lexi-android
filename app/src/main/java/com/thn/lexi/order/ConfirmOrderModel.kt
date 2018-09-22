@@ -97,6 +97,49 @@ open class ConfirmOrderModel{
             }
         })
     }
+
+    fun getDefaultExpressCompany(stores: ArrayList<FullReductionRequestBean>, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getPerOrderFullReductionParams(stores)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.PRODUCT_EXPRESS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+    fun calculateExpressExpenseForEachOrder(requestBean: CalculateExpressExpenseRequestBean,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.calculateExpressExpenseForEachOrderParams(requestBean)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.FREIGHT_CALCULATE, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+    fun getOfficialCoupons(price: Double, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getOfficialCouponsParams(price)
+        HttpRequest.sendRequest(HttpRequest.GET, URL.ORDER_OFFICIAL_COUPONS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
 }
 
 
