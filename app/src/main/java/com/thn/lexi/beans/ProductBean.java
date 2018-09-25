@@ -67,7 +67,7 @@ public class ProductBean implements Parcelable {
     public String delivery_country;
     public String delivery_province;
     public String delivery_city;
-    public String delivery_country_id;
+    public int delivery_country_id;
     public String features;
     public String have_distributed;
     public String id_code;
@@ -137,7 +137,7 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.delivery_country);
         dest.writeString(this.delivery_province);
         dest.writeString(this.delivery_city);
-        dest.writeString(this.delivery_country_id);
+        dest.writeInt(this.delivery_country_id);
         dest.writeString(this.features);
         dest.writeString(this.have_distributed);
         dest.writeString(this.id_code);
@@ -197,7 +197,7 @@ public class ProductBean implements Parcelable {
         this.delivery_country = in.readString();
         this.delivery_province = in.readString();
         this.delivery_city = in.readString();
-        this.delivery_country_id = in.readString();
+        this.delivery_country_id = in.readInt();
         this.features = in.readString();
         this.have_distributed = in.readString();
         this.id_code = in.readString();

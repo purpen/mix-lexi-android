@@ -16,7 +16,7 @@ class AdapterUserAddressList(@LayoutRes res: Int) : BaseQuickAdapter<UserAddress
 
         checkBox.isChecked = item.is_default
 
-        helper.setText(R.id.textViewName,item.full_name)
+        helper.setText(R.id.textViewName,item.first_name)
         helper.setText(R.id.textViewFullAddress,item.full_address)
         helper.setText(R.id.textViewProvinceCity,"${item.province}，${item.city}")
 
@@ -30,6 +30,6 @@ class AdapterUserAddressList(@LayoutRes res: Int) : BaseQuickAdapter<UserAddress
         }
 
         helper.setText(R.id.textViewPhone,item.mobile)
-
+        helper.addOnClickListener(R.id.checkBox)
     }
 }

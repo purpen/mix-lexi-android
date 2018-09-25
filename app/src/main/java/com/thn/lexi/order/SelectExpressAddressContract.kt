@@ -3,7 +3,7 @@ package com.thn.lexi.order
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.thn.lexi.beans.UserBean
+import org.json.JSONObject
 
 class SelectExpressAddressContract {
     interface View : BaseView<Presenter> {
@@ -33,9 +33,14 @@ class SelectExpressAddressContract {
 
         }
 
+        fun setUserIndentityInfo(data: JSONObject, selectedItem: UserAddressListBean.DataBean) {
+
+        }
+
     }
 
     interface Presenter : BasePresenter {
         fun loadData()
+        fun getUserIdentifyInfo(first_name: String, mobile: String, selectedItem: UserAddressListBean.DataBean)
     }
 }

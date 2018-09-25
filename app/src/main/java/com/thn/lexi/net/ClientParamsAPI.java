@@ -1052,4 +1052,18 @@ public class ClientParamsAPI {
         params.put("new_quantity",String.valueOf(quantity));
         return params;
     }
+
+    /**
+     * 获取用户海关信息
+     * @param first_name
+     * @param mobile
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getUserIdentifyParams(@NotNull String first_name, @NotNull String mobile) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("user_name", first_name);
+        params.put("mobile",mobile);
+        return params;
+    }
 }

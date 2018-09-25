@@ -51,6 +51,24 @@ open class SelectExpressAddressModel{
         })
     }
 
+
+    fun getUserIdentifyInfo(first_name: String, mobile: String, callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getUserIdentifyParams(first_name,mobile)
+        HttpRequest.sendRequest(HttpRequest.GET, URL.GET_USER_IDENTITY, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
 }
 
 

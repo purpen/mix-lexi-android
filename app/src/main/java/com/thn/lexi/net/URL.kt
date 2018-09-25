@@ -470,5 +470,10 @@ object URL {
      */
     const val GET_LOGISTICS="${BASE_URL}logistics/information"
 
+    /**
+     * 获取用身份信息
+     */
+    const val GET_USER_IDENTITY = "${BASE_URL}address/custom"
+
 
 }

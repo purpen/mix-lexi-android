@@ -2,6 +2,7 @@ package com.thn.lexi.order
 
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import com.basemodule.tools.DimenUtil
@@ -13,8 +14,8 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
 import com.thn.lexi.address.AddressActivity
-import com.thn.lexi.orderList.OrderListActivity
 import kotlinx.android.synthetic.main.acticity_select_express_address.*
+import org.json.JSONObject
 
 
 class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContract.View {
@@ -63,12 +64,22 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
     override fun installListener() {
 
         footerView.setOnClickListener {
-            val intent =Intent(this,AddressActivity::class.java)
-            intent.putExtra(AddressActivity::class.java.simpleName,createOrderBean.address_rid)
+            val intent = Intent(this, AddressActivity::class.java)
+            intent.putExtra(AddressActivity::class.java.simpleName, createOrderBean.address_rid)
             startActivity(intent)
         }
 
+        //编辑地址
         adapter.setOnItemClickListener { _, _, position ->
+            val item = adapter.getItem(position) as UserAddressListBean.DataBean
+            val intent = Intent(this, AddressActivity::class.java)
+            intent.putExtra("isNew", false)
+            intent.putExtra(AddressActivity::class.java.simpleName, item.rid)
+            startActivity(intent)
+        }
+
+        //checkBox点击
+        adapter.setOnItemChildClickListener { _, _, position ->
             val data = adapter.data
             for (item in data) {
                 item.is_default = false
@@ -82,30 +93,67 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
             setConfirmOrderButtonState()
         }
 
+
         buttonConfirmOrder.setOnClickListener {
 
-            var selectedItem: UserAddressListBean.DataBean? =null
+            var selectedItem: UserAddressListBean.DataBean? = null
 
-            for (item in adapter.data){
-                if (item.is_default){
+            for (item in adapter.data) {
+                if (item.is_default) {
                     selectedItem = item
                     break
                 }
             }
 
-            if (selectedItem==null) {
+            if (selectedItem == null) {
                 ToastUtil.showInfo("请先选择收货地址")
                 return@setOnClickListener
             }
 
-            createOrderBean.consigneeInfo = selectedItem
+            var isNeedIdentify = false
+            //判断是否需要海关信息
+            for (store in createOrderBean.store_items) {
+                for (product in store.items) {
+                    if (product.delivery_country_id != selectedItem.country_id){
+                        isNeedIdentify = true
+                        break
+                    }
+                }
+            }
 
-            val intent = Intent(this,ConfirmOrderActivity::class.java)
-            intent.putExtra(ConfirmOrderActivity::class.java.simpleName,createOrderBean)
-            startActivity(intent)
+            createOrderBean.consigneeInfo = selectedItem
+            //判断用户是否有上传海关信息
+            if (isNeedIdentify){
+                presenter.getUserIdentifyInfo(selectedItem.first_name,selectedItem.mobile,selectedItem)
+            }else{ //发货地与收货地同一个国家
+                jump2ConfirmOrder()
+            }
         }
     }
 
+    /**
+     * 去确认订单界面
+     */
+    private fun jump2ConfirmOrder(){
+        val intent = Intent(this, ConfirmOrderActivity::class.java)
+        intent.putExtra(ConfirmOrderActivity::class.java.simpleName, createOrderBean)
+        startActivity(intent)
+    }
+
+    /**
+     * 获取用户身份信息
+     */
+    override fun setUserIndentityInfo(data: JSONObject, selectedItem: UserAddressListBean.DataBean) {
+        val identify = data.optString("id_card")
+        if (TextUtils.isEmpty(identify)){ //未上传身份信息
+            val intent = Intent(this, AddressActivity::class.java)
+            intent.putExtra("isForeign", true)
+            intent.putExtra(AddressActivity::class.java.simpleName, selectedItem.rid)
+            startActivity(intent)
+        }else{ //已上传身份信息
+            jump2ConfirmOrder()
+        }
+    }
 
     override fun setNewData(addresses: MutableList<UserAddressListBean.DataBean>) {
         swipeRefreshLayout.isRefreshing = false
