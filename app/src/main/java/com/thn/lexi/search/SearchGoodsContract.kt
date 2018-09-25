@@ -1,45 +1,31 @@
-package com.thn.lexi.selectionGoodsCenter
+package com.thn.lexi.search
 
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.basemodule.ui.IDataSource
 import com.thn.lexi.beans.ProductBean
 
-class AllGoodsContract {
+class SearchGoodsContract {
     interface View : BaseView<Presenter> {
         fun showLoadingView()
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
+        fun setNewData(data: List<ProductBean>) {
+        }
 
-        fun goPage()
-
-        fun setNewData(products: MutableList<ProductBean>) {
+        fun addData(products: MutableList<ProductBean>) {
 
         }
 
-        fun addData(products: List<ProductBean>) {
-
-        }
-
-        fun loadMoreEnd() {
-
-        }
-
-        fun loadMoreComplete() {
-
-        }
-
-        fun setGoodsCount(count: Int) {
-
-        }
-
+        fun loadMoreEnd() {}
+        fun loadMoreComplete() {}
+        fun loadMoreFail() {}
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(isRefresh:Boolean)
-        fun loadMoreData()
+
         fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String)
-        fun getGoodsClassify(param: IDataSource.HttpRequestCallBack)
+        fun loadMoreData()
+        fun loadData(isRefresh: Boolean, searchString: String)
     }
 }

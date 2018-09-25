@@ -475,5 +475,10 @@ object URL {
      */
     const val GET_USER_IDENTITY = "${BASE_URL}address/custom"
 
+    /**
+     * 搜索商品
+     */
+    const val SEARCH_GOODS_URL = "${BASE_URL}core_platforms/search/products"
+
 
 }

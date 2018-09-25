@@ -63,6 +63,7 @@
         <activity android:name=".orderList.EvaluateActivity"/>
         <activity android:name=".orderList.OrderDetailActivity"/>
         <activity android:name=".order.SelectExpressActivity" />
+        <activity android:name=".search.SearchActivity" />
     </application>
 
 </manifest>

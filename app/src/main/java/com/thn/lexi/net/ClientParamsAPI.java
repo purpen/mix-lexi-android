@@ -600,12 +600,13 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, Object> getAllGoodsParams(int page, @NotNull String sortType, @NotNull String profitType, @NotNull String filterCondition, @NotNull String minePrice, @NotNull String maxPrice) {
+    public static HashMap<String, Object> getAllGoodsParams(int page, @NotNull String sortType, @NotNull String profitType, @NotNull String filterCondition,@NotNull String status, @NotNull String minePrice, @NotNull String maxPrice) {
         HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page",Constants.PAGE_SIZE);
         params.put("sort_type", sortType);
         params.put("profit_type", profitType);
+        params.put("status", status);
         params.put("qk", filterCondition);
         params.put("min_price", minePrice);
         params.put("max_price", maxPrice);

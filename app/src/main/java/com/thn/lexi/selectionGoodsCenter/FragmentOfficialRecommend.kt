@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.R
+import com.thn.lexi.beans.ProductBean
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class FragmentOfficialRecommend:BaseFragment(),OfficialRecommendContract.View {
@@ -35,12 +36,12 @@ class FragmentOfficialRecommend:BaseFragment(),OfficialRecommendContract.View {
         presenter.loadData(page)
     }
 
-    override fun setNewData(products: MutableList<HotGoodsBean.DataBean.ProductsBean>) {
+    override fun setNewData(products: MutableList<ProductBean>) {
         adapter.setNewData(products)
         ++page
     }
 
-    override fun addData(products: List<HotGoodsBean.DataBean.ProductsBean>) {
+    override fun addData(products: List<ProductBean>) {
         adapter.addData(products)
         adapter.notifyDataSetChanged()
         ++page
@@ -48,7 +49,7 @@ class FragmentOfficialRecommend:BaseFragment(),OfficialRecommendContract.View {
 
     override fun installListener() {
         adapter.setOnItemChildClickListener { adapter, view, position ->
-            val productsBean = adapter.getItem(position) as HotGoodsBean.DataBean.ProductsBean
+            val productsBean = adapter.getItem(position) as ProductBean
             when (view.id) {
                 R.id.textView4 -> ToastUtil.showInfo("卖")
                 R.id.textView5 -> ToastUtil.showInfo("上架")

@@ -11,6 +11,7 @@ import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.R
+import com.thn.lexi.beans.ProductBean
 import kotlinx.android.synthetic.main.fragment_all_goods.*
 
 class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
@@ -69,13 +70,13 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         presenter.loadData(false)
     }
 
-    override fun setNewData(products: MutableList<HotGoodsBean.DataBean.ProductsBean>) {
+    override fun setNewData(products: MutableList<ProductBean>) {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(products)
         adapter.setEnableLoadMore(true)
     }
 
-    override fun addData(products: List<HotGoodsBean.DataBean.ProductsBean>) {
+    override fun addData(products: List<ProductBean>) {
         adapter.addData(products)
     }
 
@@ -134,7 +135,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         }, recyclerView)
 
         adapter.setOnItemChildClickListener { adapter, view, position ->
-            val productsBean = adapter.getItem(position) as HotGoodsBean.DataBean.ProductsBean
+            val productsBean = adapter.getItem(position) as ProductBean
             when (view.id) {
                 R.id.textView4 -> ToastUtil.showInfo("卖")
                 R.id.textView5 -> ToastUtil.showInfo("上架")

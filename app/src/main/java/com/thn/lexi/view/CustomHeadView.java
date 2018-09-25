@@ -1,27 +1,27 @@
 package com.thn.lexi.view;
-
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.basemodule.tools.Util;
 import com.thn.lexi.R;
 
 public class CustomHeadView extends RelativeLayout {
     private Context context;
     private ImageButton head_goback;
-    private ImageButton iv_left;
     private TextView head_center_tv;
     private ImageView iv_center_logo;
-    private ImageButton iv_head_search;
+    private ImageView imageViewClear;
     private ImageButton head_view_shop;
     private RelativeLayout rl_head_shop;
+    private RelativeLayout relativeSearch;
+    private EditText editTextSearch;
     private TextView tv_head_right;
     private TextView tv_tip_num;
     private ImageButton ib_right;
@@ -57,10 +57,12 @@ public class CustomHeadView extends RelativeLayout {
 
     private void initViews(View view) {
         head_goback = (ImageButton) view.findViewById(R.id.head_goback);
-        iv_left = (ImageButton) view.findViewById(R.id.iv_left);
         head_center_tv = (TextView) view.findViewById(R.id.head_center_tv);
         iv_center_logo = (ImageView) view.findViewById(R.id.iv_center_logo);
-//        iv_head_search = (ImageButton) view_link_help.findViewById(R.id.iv_head_search);
+        relativeSearch = findViewById(R.id.relativeSearch);
+        imageViewClear = findViewById(R.id.imageViewClear);
+        editTextSearch = findViewById(R.id.editTextSearch);
+
         rl_head_shop = (RelativeLayout) view.findViewById(R.id.rl_head_shop);
         head_view_shop = (ImageButton) view.findViewById(R.id.head_view_shop);
         tv_tip_num = (TextView) view.findViewById(R.id.tv_tip_num);
@@ -69,8 +71,7 @@ public class CustomHeadView extends RelativeLayout {
         head_goback.setOnClickListener(onClickListener);
 //        head_view_shop.setOnClickListener(onClickListener);
         rl_head_shop.setOnClickListener(onClickListener);
-//        iv_head_search.setOnClickListener(onClickListener);
-        iv_left.setOnClickListener(onClickListener);
+        imageViewClear.setOnClickListener(onClickListener);
     }
 
     public void setRightImgBtnShow(boolean isShow) {
@@ -99,20 +100,14 @@ public class CustomHeadView extends RelativeLayout {
                         mIGobackListener.goback();
                     } else {
                         if (context instanceof Activity) {
-                            ((Activity)context).onBackPressed();
+                            ((Activity)context).finish();
                         }
                     }
                     break;
-                case R.id.iv_left:
-                    //TODO
+                case R.id.imageViewClear: //清空输入的内容
+                    editTextSearch.getText().clear();
                     break;
-//                case R.id.head_view_shop:
-//                    if (UserProfileUtil.isLogin()){
-//                        activity.startActivity(new Intent(activity, UserShopCartActivity.class));
-//                    }else {
-//                        activity.startActivity(new Intent(activity, UserLoginActivity.class));
-//                    }
-//                    break;
+
                 case R.id.rl_head_shop:
 //                    if (UserProfileUtil.isLogin()){
 //                        activity.startActivity(new Intent(activity, UserShopCartActivity.class));
@@ -148,20 +143,11 @@ public class CustomHeadView extends RelativeLayout {
         }
     }
 
-    public void setIvLeft(int imgId) {
-        iv_left.setVisibility(VISIBLE);
-        iv_left.setImageResource(imgId);
-    }
-
-    public ImageButton getIvLeft() {
-        return iv_left;
-    }
-
     public void setHeadSearchShow(boolean isShow) {
         if (isShow) {
-            iv_head_search.setVisibility(View.VISIBLE);
+            relativeSearch.setVisibility(View.VISIBLE);
         } else {
-            iv_head_search.setVisibility(View.GONE);
+            relativeSearch.setVisibility(View.GONE);
         }
 
     }

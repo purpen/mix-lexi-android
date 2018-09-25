@@ -10,12 +10,13 @@ import com.basemodule.tools.ScreenUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
+import com.thn.lexi.beans.ProductBean
 
-class AdapterAllGoods(@LayoutRes res: Int) : BaseQuickAdapter<HotGoodsBean.DataBean.ProductsBean, BaseViewHolder>(res) {
+class AdapterAllGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
 
     private var imageViewWidth:Int = ((ScreenUtil.getScreenWidth()- DimenUtil.getDimensionPixelSize(R.dimen.dp50))*0.5).toInt()
 
-    override fun convert(helper: BaseViewHolder, item: HotGoodsBean.DataBean.ProductsBean) {
+    override fun convert(helper: BaseViewHolder, item: ProductBean) {
         helper.setText(R.id.textView0, item.name)
 
 //        val textView2 = helper.getView<TextView>(R.id.textView2)
