@@ -2,6 +2,7 @@ package com.thn.lexi.orderList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -82,14 +83,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     @Override
     public void installListener() {
         super.installListener();
-        adapterOrderList.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId()==R.id.bt_logistics){
 
-                }
-            }
-        });
     }
 
     @Override
@@ -172,6 +166,18 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                 tv_zipcode.setText(bean.data.getBuyer_zipcode());
 
             recyclerView.setAdapter(adapterOrderList);
+
+            adapterOrderList.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                @Override
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (view.getId()==R.id.bt_logistics){
+                        Intent intent=new Intent(OrderDetailActivity.this,LogisticsActivity.class);
+                        intent.putExtra("logistic_code", String.valueOf(adapterOrderList.getData().get(position).getExpress_no()));
+                        intent.putExtra("kdn_company_code", String.valueOf(adapterOrderList.getData().get(position).getExpress()));
+                        startActivity(intent);
+                    }
+                }
+            });
         }else{
             ToastUtil.showInfo(AppApplication.getContext().getString(R.string.text_net_error));
         }

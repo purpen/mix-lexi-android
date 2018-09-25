@@ -2,6 +2,7 @@ package com.thn.lexi.orderList;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.AppApplication;
 import com.thn.lexi.R;
@@ -33,7 +34,9 @@ public class OrderDetailPresenter implements OrderDetailContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
-
+                OrderDetailBean bean= JsonUtil.fromJson(json,OrderDetailBean.class);
+                view.getData(bean);
+                view.dismissLoadingView();
             }
 
             @Override

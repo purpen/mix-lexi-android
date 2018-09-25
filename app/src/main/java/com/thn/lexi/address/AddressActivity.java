@@ -106,6 +106,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private int cityId;
     private int areaId;
     private boolean isdefault;
+    private String id_card;
 
     @Override
     protected int getLayout() {
@@ -122,11 +123,6 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         presenter=new AddressPresenter(this);
 
         customHeadView = findViewById(R.id.customHeadView);
-        if (isNew) {
-            customHeadView.setHeadCenterTxtShow(true, R.string.title_new_address);
-        }else{
-            customHeadView.setHeadCenterTxtShow(true,R.string.title_edit_address);
-        }
         bt_save = findViewById(R.id.bt_save);
         et_name = findViewById(R.id.editText_name);
         et_id = findViewById(R.id.et_ID);
@@ -142,6 +138,13 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         swit = findViewById(R.id.Switch);
         tv_city = findViewById(R.id.tv_region);
         tv_country = findViewById(R.id.tv_country);
+        if (isNew) {
+            customHeadView.setHeadCenterTxtShow(true, R.string.title_new_address);
+            bt_delete.setVisibility(View.GONE);
+        }else{
+            customHeadView.setHeadCenterTxtShow(true,R.string.title_edit_address);
+            bt_delete.setVisibility(View.VISIBLE);
+        }
 
         RelativeLayout rl_photo=findViewById(R.id.rl_photo);
         LinearLayout ll_ID=findViewById(R.id.ll_ID);
@@ -202,7 +205,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()){
             case R.id.bt_save:
                 if (setDataBean())
-                presenter.saveAddress(dataBean,false,null,null,null);
+                presenter.saveAddress(dataBean,isForeign,id_card,id_card_front,id_card_back);
                 break;
             case R.id.bt_delete:
                 presenter.deleteAddress(rid);
@@ -231,6 +234,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 dialog.setOnOperItemClickL(new OnOperItemClickL() {
                     @Override
                     public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        LogUtil.e("点击了第几个："+position);
                         switch (position){
                             case 0:
                                 cameraTask();
@@ -276,7 +280,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         super.getIntentData();
         Intent intent=getIntent();
         isNew = intent.getBooleanExtra("isNew",true);
-        isForeign = intent.getBooleanExtra("idForeign",true);
+        isForeign = intent.getBooleanExtra("isForeign",true);
         rid = intent.getStringExtra("rid");
         addressId = intent.getStringExtra(AddressActivity.class.getSimpleName());
 
@@ -301,11 +305,24 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                     if (et_detailed.getText().toString().isEmpty()){
                         ToastUtil.showInfo("请输入详细地址");
                     }else{
-                        dataBean.setStreet_address(et_detailed.getText().toString());
-                        //dataBean.setCountry_id(Integer.valueOf(rid));
-                        dataBean.setZipcode(et_code.getText().toString());
-                        dataBean.setIs_default(isdefault);
-                        return true;
+                        if (isForeign) {
+                            dataBean.setStreet_address(et_detailed.getText().toString());
+                            //dataBean.setCountry_id(Integer.valueOf(rid));
+                            dataBean.setZipcode(et_code.getText().toString());
+                            dataBean.setIs_default(isdefault);
+                            return true;
+                        }else{
+                            if (id_card.isEmpty()){
+                                ToastUtil.showInfo("请输入身份证号");
+                            }else{
+                                id_card=et_id.getText().toString();
+                                if (!id_card_back.isEmpty()&&!id_card_front.isEmpty()){
+                                    return true;
+                                }else{
+                                    ToastUtil.showInfo("请上传身份证照片");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -392,6 +409,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                             +options2Items.get(options1).get(option2)
                                     + options3Items.get(options1).get(option2).get(options3).getPickerViewText();*/
                     //tvOptions.setText(tx);
+                    tv_country.setText(countryList.get(options1));
                 }
             }).build();
             pvOptions1.setPicker(countryList);
@@ -407,10 +425,10 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @AfterPermissionGranted(Constants.REQUEST_CODE_CAPTURE_CAMERA)
     private void cameraTask(){
         if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
+            LogUtil.e("有权限");
             openCamera();
         } else {
-            EasyPermissions.requestPermissions(this, getString(R.string.rationale_camera),
-                    Constants.REQUEST_CODE_CAPTURE_CAMERA, Manifest.permission.CAMERA);
+            EasyPermissions.requestPermissions(AddressActivity.this, getString(R.string.rationale_camera), Constants.REQUEST_CODE_CAPTURE_CAMERA, Manifest.permission.CAMERA);
         }
     }
 
@@ -441,6 +459,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             return;
         switch (requestCode){
             case Constants.REQUEST_CODE_CAPTURE_CAMERA:
+                if (null == mCurrentPhotoFile)
+                    return;
+                        toCropActivity(ImageUtils.getUriForFile(getApplicationContext(), mCurrentPhotoFile));
                 break;
             case Constants.REQUEST_CODE_PICK_IMAGE:
                 LogUtil.e("调用成功");
@@ -496,8 +517,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-           new AppSettingsDialog.Builder(this).build().show();
-
+           new AppSettingsDialog.Builder(AddressActivity.this).build().show();
         }
     }
 

@@ -49,7 +49,7 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
         CustomHeadView customHeadView=findViewById(R.id.customHeadView);
         customHeadView.setBackgroundColor(Util.getColor(R.color.color_2d343a));
         customHeadView.setLeftImageButton(R.mipmap.icon_return_white);
-        customHeadView.setHeadCenterTxtShow(true,R.string.order_logistics,R.color.color_2d343a);
+        customHeadView.setHeadCenterTxtShow(true,R.string.order_logistics,R.color.color_white);
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         recyclerView = findViewById(R.id.recyclerView);
         ll_null = findViewById(R.id.ll_null);
@@ -110,7 +110,7 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
                 break;
         }
         Collections.reverse(bean.getTraces());
-        AdapterLogistics adapterLogistics=new AdapterLogistics(R.layout.item_logistics,bean.getTraces(),bean.getTraces().size());
+        AdapterLogistics adapterLogistics=new AdapterLogistics(R.layout.item_logistics,bean.getTraces(),bean.getTraces().size(),this);
         recyclerView.setAdapter(adapterLogistics);
     }
 

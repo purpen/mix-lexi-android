@@ -145,5 +145,24 @@
             android:textSize="@dimen/sp11"
             android:layout_marginBottom="@dimen/dp13"/>
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp1"
+        android:background="@android:color/white">
+        <ImageView
+            android:id="@+id/iv_evaluate0"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp60"
+            android:layout_margin="@dimen/dp15"
+            android:src="@mipmap/icon_evaluate_image"/>
+        <ImageView
+            android:id="@+id/iv_delete0"
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
+            android:src="@mipmap/icon_evaluate_delete_Image"
+            android:layout_marginTop="@dimen/dp7.5"
+            android:layout_marginLeft="67.5dp"/>
+    </RelativeLayout>
 
 </LinearLayout>

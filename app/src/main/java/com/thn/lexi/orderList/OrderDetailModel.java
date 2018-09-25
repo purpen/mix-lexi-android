@@ -2,6 +2,7 @@ package com.thn.lexi.orderList;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.net.ClientParamsAPI;
 import com.thn.lexi.net.HttpRequest;
@@ -14,8 +15,8 @@ import java.util.HashMap;
 
 public class OrderDetailModel {
     public void getData(String rid, final IDataSource.HttpRequestCallBack callBack){
-        HashMap<String,Object> param= ClientParamsAPI.getDeleteDistributeGoodsParams(rid);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.GET_ORDER, param, new IDataSource.HttpRequestCallBack() {
+        HashMap<String,Object> param= ClientParamsAPI.getDefaultParams();
+        HttpRequest.sendRequest(HttpRequest.GET, URL.GET_ORDER+"/"+rid, param, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
@@ -28,6 +29,7 @@ public class OrderDetailModel {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("订单详情的数据："+json);
                 callBack.onSuccess(json);
             }
 

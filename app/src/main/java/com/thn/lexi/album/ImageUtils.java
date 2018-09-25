@@ -403,7 +403,7 @@ public class ImageUtils {
         Uri uri;
         LogUtil.e("当前的版本号："+Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", file);
+            uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
             LogUtil.e("8.0有没有被调起");
         } else {
             uri = Uri.fromFile(file);

@@ -470,5 +470,8 @@ object URL {
      */
     const val GET_LOGISTICS="${BASE_URL}logistics/information"
 
-
+    /**
+     * 订单确认收货
+     */
+    const val ORDERF_FINISH="${BASE_URL}orders/signed"
 }

@@ -1018,7 +1018,7 @@ public class ClientParamsAPI {
      * @param rid
      * @return
      */
-    public static HashMap<String,Object> getDeleteOrderParams(String rid){
+    public static HashMap<String,Object> getOrderParams(String rid){
         HashMap<String,Object> params=generateCommonParams();
         params.put("rid",rid);
         return params;
@@ -1051,5 +1051,22 @@ public class ClientParamsAPI {
         params.put("old_sku",oldSKU);
         params.put("new_quantity",String.valueOf(quantity));
         return params;
+    }
+
+    /**
+     * 获取全部省市区
+     * @param country
+     * @return
+     */
+    public static HashMap<String,Object> getCountry(@NotNull String country){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("country_id",country);
+        return  params;
+    }
+
+    public static HashMap<String,Object> getAddressIdParams(@NotNull String rid){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("rid",rid);
+        return  params;
     }
 }

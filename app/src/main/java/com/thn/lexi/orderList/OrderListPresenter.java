@@ -76,8 +76,45 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                view.dismissLoadingView();
                 MyOrderListBean bean=JsonUtil.fromJson(json,MyOrderListBean.class);
-                view.getDelete(bean);
+                if (bean.isSuccess()) {
+                    view.getDelete();
+                }else{
+                    view.showError(AppApplication.getContext().getString(R.string.text_net_error));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.dismissLoadingView();
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error));
+            }
+        });
+    }
+
+    @Override
+    public void finishOrder(String rid) {
+        model.finishOrder(rid, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                view.dismissLoadingView();
+                MyOrderListBean bean=JsonUtil.fromJson(json,MyOrderListBean.class);
+                if (bean.isSuccess()) {
+                    view.getFinish();
+                }else{
+                    view.showError(AppApplication.getContext().getString(R.string.text_net_error));
+                }
             }
 
             @Override

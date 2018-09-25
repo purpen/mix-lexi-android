@@ -24,7 +24,8 @@ import java.util.Map;
 
 public class AddressModel implements IDataSource {
     public void getData(String rid, final HttpRequestCallBack httpRequestCallBack) {
-        HttpRequest.sendRequest(HttpRequest.GET, URL.GET_USER_EXPRESS_ADDRESS + rid, new HttpRequestCallBack() {
+        HashMap<String,Object> params=ClientParamsAPI.getOrderParams(rid);
+        HttpRequest.sendRequest(HttpRequest.GET, URL.GET_USER_EXPRESS_ADDRESS,params, new HttpRequestCallBack() {
             public void onStart() {
                 httpRequestCallBack.onStart();
             }
@@ -44,8 +45,7 @@ public class AddressModel implements IDataSource {
     }
 
     public void getCityData(String country, final HttpRequestCallBack httpRequestCallBack) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("country_id", country);
+        HashMap<String, Object> map=ClientParamsAPI.getCountry(country);
         HttpRequest.sendRequest(HttpRequest.GET, URL.PROVINCES_CITY_COUNTRY, map, new HttpRequestCallBack() {
             public void onStart() {
                 httpRequestCallBack.onStart();
@@ -66,7 +66,8 @@ public class AddressModel implements IDataSource {
     }
 
     public void getCountry(final HttpRequestCallBack callBack) {
-        HttpRequest.sendRequest(HttpRequest.GET, URL.AREA_CODE_URL, new HttpRequestCallBack() {
+        HashMap<String,Object> params=ClientParamsAPI.getDefaultParams();
+        HttpRequest.sendRequest(HttpRequest.GET, URL.AREA_CODE_URL,params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
@@ -141,7 +142,8 @@ public class AddressModel implements IDataSource {
         });
     }
     public void deleteAddress(String rid, final HttpRequestCallBack callBack){
-        HttpRequest.sendRequest(HttpRequest.DELETE, URL.GET_USER_EXPRESS_ADDRESS + "/" + rid, new HttpRequestCallBack() {
+        HashMap<String,Object> params=ClientParamsAPI.getDefaultParams();
+        HttpRequest.sendRequest(HttpRequest.DELETE, URL.GET_USER_EXPRESS_ADDRESS+"/"+rid,params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 

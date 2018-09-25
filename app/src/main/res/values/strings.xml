@@ -189,7 +189,7 @@
     <string name="text_continue_commit_order">继续以确认订单</string>
     <string name="text_add_new_address">新的收货地址</string>
     <string name="hint_please_select_consignee_address">请先选择收货地址</string>
-    <string name="title_submit_order">提交订单</string>
+    <string name="title_submit_order">订单</string>
     <string name="text_loading">加载中...</string>
     <string name="text_subtotal">小计：</string>
     <string name="text_send_address_user">寄送地址</string>
@@ -256,4 +256,5 @@
     <string name="evaluate_suggest">我们希望收到你的建议，优化我们的不足。长度在100字以内</string>
     <string name="add_image">添加图片</string>
     <string name="max_image_num">（最多添加9张图片）</string>
+    <string name="text_submit">提交</string>
 </resources>

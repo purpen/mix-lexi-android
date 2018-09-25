@@ -1,13 +1,13 @@
 package com.thn.lexi.orderList;
 
-import android.util.Log;
-import android.widget.ImageView;
-
 import com.basemodule.tools.LogUtil;
 import com.basemodule.ui.BaseActivity;
 import com.thn.lexi.R;
 import com.thn.lexi.view.MyRatingBar;
 
+/**
+ * 评价页面
+ */
 public class EvaluateActivity extends BaseActivity{
     @Override
     protected int getLayout() {

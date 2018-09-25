@@ -1,58 +1,60 @@
 package com.thn.lexi.orderList;
 
-import android.app.backup.BackupHelper;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
-import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.thn.lexi.CustomLinearLayoutManager;
 import com.thn.lexi.R;
-import com.thn.lexi.order.OrderBean;
-import com.thn.lexi.order.OrderListBean;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.OrdersBean,BaseViewHolder> {
     Calendar c= Calendar.getInstance();
     private Button button;
     private long between;
-    private Context context;
-    public AdapterOrderList(int layoutResId, @Nullable List data,Context context) {
+    private Activity activity;
+    private Handler handler;
+    private Date date;
+    private Intent intent;
+
+    public AdapterOrderList(int layoutResId, @Nullable List data,Activity activity) {
         super(layoutResId, data);
-        this.context=context;
+        this.activity=activity;
     }
 
-    Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (between>0) {
-                button.setText("付款 " + (between % (60 * 60) / 60) + ":" + (between % (60 * 60) % 60));
-                handler.sendEmptyMessageDelayed(0, 1000);
-            }else{
-            }
-        }
-    };
+
     @Override
-    protected void convert(BaseViewHolder helper, MyOrderListBean.DataBean.OrdersBean item) {
+    protected void convert(BaseViewHolder helper, final MyOrderListBean.DataBean.OrdersBean item) {
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (between>0) {
+                    LogUtil.e("当前剩余时间："+between);
+                    button.setText("付款 " + (between % (60 * 60) / 60) + ":" + (between % (60 * 60) % 60));
+                    between--;
+                    handler.sendEmptyMessageDelayed(0, 1000);
+                }else{
+                }
+            }
+        };
         helper.setText(R.id.tv_shop_name,item.getStore().getStore_name());
         GlideUtil.loadImage(item.getStore().getStore_logo(),(ImageView)helper.getView(R.id.iv_shop));
         helper.setText(R.id.tv_order_money, String.valueOf(item.getPay_amount()));
@@ -91,16 +93,47 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                 helper.setGone(R.id.bt_money, false);
                 break;
             case 4:
-                helper.setText(R.id.tv_order_status,"待付款");
-                helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_6ed7af));
-                helper.setGone(R.id.bt_delete1, false);
-                helper.setGone(R.id.bt_confirm,false);
-                helper.setGone(R.id.bt_delete, false);
-                helper.setGone(R.id.bt_evaluate,false);
-                helper.setVisible(R.id.bt_money, true);
-                between=Long.valueOf(600-((item.getCurrent_time()-item.getCreated_at())/1000));
+                date=new Date(System.currentTimeMillis());
+                LogUtil.e("当前时间："+date.getTime()+"订单创建时间："+item.getCreated_at());
+                GetTime getTime = null;
+                LogUtil.e("间隔时间："+(date.getTime()/1000-item.getCreated_at()));
+                //判断订单剩余时间，如果已经结束改变订单状态
+                if((date.getTime()/1000-item.getCreated_at())<600){
+                    helper.setText(R.id.tv_order_status,"待付款");
+                    helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_6ed7af));
+                    helper.setGone(R.id.bt_delete1, false);
+                    helper.setGone(R.id.bt_confirm,false);
+                    helper.setGone(R.id.bt_delete, false);
+                    helper.setGone(R.id.bt_evaluate,false);
+                    helper.setVisible(R.id.bt_money, true);
+                    date=new Date(System.currentTimeMillis());
+                    if (getTime==null){
+                        getTime=new GetTime((Button) helper.getView(R.id.bt_money),item.getCreated_at()+600);
+                    }
+                    getTime.getData(new OnRemainingTime() {
+                        @Override
+                        public void onEndTime(int time) {
+                            if (time==0){
+                                item.setUser_order_status(6);
+                                notifyDataSetChanged();
+                            }
+                        }
+                    });
+                }else{
+                    item.setUser_order_status(6);
+                    helper.setText(R.id.tv_order_status,"交易取消");
+                    helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_ff6666));
+                    helper.setVisible(R.id.bt_delete1, true);
+                    helper.setGone(R.id.bt_confirm,false);
+                    helper.setGone(R.id.bt_delete, false);
+                    helper.setGone(R.id.bt_evaluate,false);
+                    helper.setGone(R.id.bt_money, false);
+                }
+                /*between=Long.valueOf(600-((item.getCurrent_time()-)/1000));
+                LogUtil.e("创建时间"+item.getCurrent_time());
+                LogUtil.e("系统当前时间"+item.getCurrent_time());
                 button=helper.getView(R.id.bt_money);
-                handler.sendEmptyMessage(0);
+                handler.sendEmptyMessage(0);*/
                 break;
             case 5:
                 helper.setText(R.id.tv_order_status,"交易成功");
@@ -123,13 +156,78 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                 break;
         }
         RecyclerView recyclerView=helper.getView(R.id.recyclerView);
-        recyclerView.setLayoutManager(new CustomLinearLayoutManager(context));
-        recyclerView.setAdapter(new AdapterOrderListTow(R.layout.item_order_list_two,item.getItems(),item.getUser_order_status()));
+        recyclerView.setLayoutManager(new CustomLinearLayoutManager(activity));
+        AdapterOrderListTow adapterOrderListTow=new AdapterOrderListTow(R.layout.item_order_list_two,item.getItems(),item.getUser_order_status());
+        recyclerView.setAdapter(adapterOrderListTow);
         helper.addOnClickListener(R.id.bt_confirm)
                 .addOnClickListener(R.id.bt_delete)
                 .addOnClickListener(R.id.bt_money)
                 .addOnClickListener(R.id.bt_delete1)
                 .addOnClickListener(R.id.bt_logistics)
                 .addOnClickListener(R.id.recyclerView);
+        adapterOrderListTow.setOnItemChildClickListener(new OnItemChildClickListener() {
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()){
+                    case R.id.bt_logistics:
+                        intent = new Intent(activity,LogisticsActivity.class);
+                        intent.putExtra("logistic_code",String.valueOf(item.getItems().get(position).getExpress_no()));
+                        intent.putExtra("kdn_company_code",String.valueOf(item.getItems().get(position).getExpress()));
+                        activity.startActivity(intent);
+                        break;
+                }
+            }
+        });
+
+        adapterOrderListTow.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                LogUtil.e("点击的具体的商品");
+                intent = new Intent(activity,OrderDetailActivity.class);
+                intent.putExtra("rid",item.getRid());
+                activity.startActivity(intent);
+            }
+        });
+    }
+    class GetTime{
+        private Date curDate;
+        private OnRemainingTime onRemainingTime;
+        private Button button;
+        private int endTime;
+        private long time;
+        Handler handler=new Handler(){
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                curDate = new Date(System.currentTimeMillis());
+                time = endTime-(curDate.getTime()/1000);
+                if (time>0) {
+                    button.setText("付款 " + (time % (60 * 60) / 60) + ":" + (time % (60 * 60) % 60));
+                }else{
+                    onRemainingTime.onEndTime(0);
+                }
+                handler.sendEmptyMessageDelayed(0,1000);
+            }
+        };
+        public GetTime(Button button, int endTime) {
+            this.button=button;
+            this.endTime=endTime;
+            handler.sendEmptyMessage(0);
+        }
+
+        public void getData(OnRemainingTime remainingTime){
+            this.onRemainingTime=remainingTime;
+        }
+    }
+
+    public interface OnRemainingTime {
+        /**
+         * 订单付款剩余时间
+         * @param time
+         */
+        void onEndTime(int time);
+
     }
 }

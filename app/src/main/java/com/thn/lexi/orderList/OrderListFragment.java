@@ -1,5 +1,6 @@
 package com.thn.lexi.orderList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +35,8 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     private boolean isVisibleToUser;
     private boolean isInit;
     private int positions;
+    private Intent intent;
+    private InquiryDialog inquiryDialog;
 
 
     @Override
@@ -55,7 +58,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
         dialog = new WaitingDialog(getActivity());
         status = bundle.getInt("key");
         recyclerView = this.getView().findViewById(R.id.recyclerView);
-        adapterOrderList = new AdapterOrderList(R.layout.item_order_list,null,getContext());
+        adapterOrderList = new AdapterOrderList(R.layout.item_order_list,null,getActivity());
         //上拉加载
         adapterOrderList.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
@@ -70,20 +73,38 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
 
 
         adapterOrderList.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, final int position) {
+                positions=position;
                 switch (view.getId()){
                     case R.id.bt_delete1:
                     case R.id.bt_delete:
                         LogUtil.e("删除订单啊啊啊啊啊啊啊");
-                        positions=position;
-                        presenter.deleteOrder(adapterOrderList.getData().get(position).getRid());
+                        inquiryDialog=new InquiryDialog("确定删除订单？", getContext(), new InquiryDialog.ImagePopwindowInterface() {
+                            @Override
+                            public void getCheck(boolean isCheck) {
+                                if (isCheck){
+                                    presenter.deleteOrder(adapterOrderList.getData().get(position).getRid());
+                                }
+                            }
+                        });
+
                         break;
                     case R.id.bt_evaluate:
                         LogUtil.e("评价订单啊啊啊啊啊啊啊");
                         break;
                     case R.id.bt_confirm:
                         LogUtil.e("收货订单啊啊啊啊啊啊啊");
+                        inquiryDialog = new InquiryDialog("确定删除订单？", getContext(), new InquiryDialog.ImagePopwindowInterface() {
+                            @Override
+                            public void getCheck(boolean isCheck) {
+                                if (isCheck){
+                                    presenter.deleteOrder(adapterOrderList.getData().get(position).getRid());
+                                }
+                            }
+                        });
+
                         break;
                     case R.id.bt_money:
                         LogUtil.e("支付订单啊啊啊啊啊啊啊");
@@ -94,6 +115,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                 }
             }
         });
+
     }
     public static OrderListFragment newInstance(int id){
         OrderListFragment OrderListfragment = new OrderListFragment();
@@ -157,10 +179,14 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     }
 
     @Override
-    public void getDelete(MyOrderListBean bean) {
-        if (bean.isSuccess()) {
-            adapterOrderList.remove(positions);
-        }
+    public void getDelete() {
+        adapterOrderList.remove(positions);
+    }
+
+    @Override
+    public void getFinish() {
+        adapterOrderList.getData().get(positions).setUser_order_status(5);
+        adapterOrderList.notifyDataSetChanged();
     }
 
     @Override

@@ -41,8 +41,32 @@ public class OrderListModel implements IDataSource {
         });
     }
     public void deleteOrder(String rid, final HttpRequestCallBack callBack){
-        HashMap<String,Object> params=ClientParamsAPI.getDeleteOrderParams(rid);
+        HashMap<String,Object> params=ClientParamsAPI.getOrderParams(rid);
         HttpRequest.sendRequest(HttpRequest.DELETE, URL.DELETE_ORDER, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
+    public void finishOrder(String rid, final HttpRequestCallBack callBack){
+        HashMap<String,Object> params=ClientParamsAPI.getOrderParams(rid);
+        HttpRequest.sendRequest(HttpRequest.POST, URL.ORDERF_FINISH, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
