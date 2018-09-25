@@ -1,5 +1,4 @@
 package com.thn.lexi
-
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -37,6 +36,8 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     private val adapterWish: AdapterShopCartWishGoods by lazy { AdapterShopCartWishGoods(R.layout.adapter_shop_cart_wish_goods) }
 
     private val adapterOrder: AdapterShopCartGoods by lazy { AdapterShopCartGoods(R.layout.adapter_shop_cart_goods) }
+
+    private val adapterEditShopCartGoods: AdapterEditShopCartGoods by lazy { AdapterEditShopCartGoods(R.layout.adapter_shop_cart_goods) }
 
     //判断当前fragment是否初始化
     private var isFragmentInitiate = false
@@ -102,10 +103,14 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         adapterOrder.setHeaderAndEmpty(true)
 
         //编辑状态购物车
+        val editShopCartEmpty = View.inflate(activity, R.layout.header_empty_shop_cart, null)
         val linearLayoutManagerEdit = LinearLayoutManager(activity)
         linearLayoutManagerEdit.orientation = LinearLayoutManager.VERTICAL
         recyclerViewEditShopCart.setHasFixedSize(true)
         recyclerViewEditShopCart.layoutManager = linearLayoutManagerEdit
+        recyclerViewEditShopCart.adapter = adapterEditShopCartGoods
+        adapterEditShopCartGoods.emptyView = editShopCartEmpty
+        adapterEditShopCartGoods.setHeaderAndEmpty(true)
     }
 
     /**
@@ -120,12 +125,14 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
      */
     override fun setAddWishOrderStatus(list: ArrayList<String>) {
         //从产品列表删除加入心愿单产品
-        val iterator = adapterOrder.data.iterator()
+        val iterator = adapterEditShopCartGoods.data.iterator()
         while (iterator.hasNext()){
             val itemsBean = iterator.next()
             if (list.contains(itemsBean.product.product_rid)) iterator.remove()
         }
+        adapterEditShopCartGoods.notifyDataSetChanged()
         adapterOrder.notifyDataSetChanged()
+        setShopCartTotalPrice()
         presenter.loadData(true)
     }
 
@@ -233,10 +240,12 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
         customHeadView.headRightTV.setOnClickListener {
 
-            val data = adapterOrder.data
-            if (data.isEmpty()) {
-                ToastUtil.showInfo("您的购物车还没有商品")
-                return@setOnClickListener
+            val data = adapterEditShopCartGoods.data
+
+            if (!data.isEmpty()){
+                for (item in data) {
+                    item.isEdit = !item.isEdit
+                }
             }
 
             if (swipeRefreshLayout.isShown) { //编辑状态
@@ -259,11 +268,6 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 buttonSettleAccount.visibility = View.VISIBLE
             }
 
-            for (item in data) {
-                item.isEdit = !item.isEdit
-            }
-
-            recyclerViewEditShopCart.adapter = adapterOrder
         }
 
         adapterWish.setOnLoadMoreListener({
@@ -447,7 +451,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
             linearLayoutNum.visibility = View.VISIBLE
         }
         adapterOrder.setNewData(data.items)
-
+        adapterEditShopCartGoods.setNewData(data.items)
         setShopCartTotalPrice()
     }
 
