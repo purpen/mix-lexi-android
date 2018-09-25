@@ -26,7 +26,7 @@ class MainFragment2 : BaseFragment(), MessageContract.View {
     override fun initView() {
         presenter = MessagePresenter(this)
         customHeadView.head_goback.visibility = View.GONE
-        customHeadView.setHeadCenterTxtShow(true, R.string.title_inbox)
+        customHeadView.setHeadCenterTxtShow(true, R.string.title_discover)
     }
 
     override fun loadData() {
