@@ -1,4 +1,4 @@
-package com.thn.lexi.mine.designPavilion
+package com.thn.lexi.search
 
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI
@@ -6,13 +6,13 @@ import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
 import java.io.IOException
 
-open class FavoriteDesignModel:IDataSource{
+open class SearchBrandModel:IDataSource{
 
-    //TODO 改为FOLLOWED_STORES
-    fun loadData(page:Int,callBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getFocusedDesignPavilionParams(page)
+    fun loadData(page:Int,searchString:String,callBack: IDataSource.HttpRequestCallBack) {
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.FOCUSED_BRAND_PAVILION_URL,params,object : IDataSource.HttpRequestCallBack{
+        val params = ClientParamsAPI.getSearchBrandPavilionParams(page,searchString)
+
+        HttpRequest.sendRequest(HttpRequest.GET,URL.SEARCH_BRAND_PAVILION_URL,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }

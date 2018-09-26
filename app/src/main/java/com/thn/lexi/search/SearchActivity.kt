@@ -25,7 +25,7 @@ class SearchActivity : BaseActivity(){
         val titles = resources.getStringArray(R.array.strings_search_titles)
         val fragments = ArrayList<BaseFragment>()
         fragments.add(FragmentSearchGoods.newInstance())
-        fragments.add(FragmentExplore.newInstance())
+        fragments.add(FragmentSearchBrandPavilion.newInstance())
         fragments.add(FragmentExplore.newInstance())
 
         adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles.toMutableList())

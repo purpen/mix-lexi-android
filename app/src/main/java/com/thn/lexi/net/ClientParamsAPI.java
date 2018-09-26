@@ -1068,4 +1068,19 @@ public class ClientParamsAPI {
         params.put("mobile",mobile);
         return params;
     }
+
+    /**
+     * 获取品牌馆搜索参数
+     * @param page
+     * @param searchString
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getSearchBrandPavilionParams(int page, @NotNull String searchString) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("qk",searchString);
+        return params;
+    }
 }

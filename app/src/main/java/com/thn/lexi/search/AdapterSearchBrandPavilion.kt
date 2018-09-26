@@ -1,8 +1,9 @@
-package com.thn.lexi.mine.designPavilion
+package com.thn.lexi.search
 
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.widget.Button
 import android.widget.ImageView
 import com.basemodule.tools.DimenUtil
@@ -14,8 +15,10 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.index.detail.GoodsDetailActivity
+import com.thn.lexi.mine.designPavilion.DesignPavilionBean
+import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
 
-class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionBean, BaseViewHolder>(layoutResId) {
+class AdapterSearchBrandPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionBean, BaseViewHolder>(layoutResId) {
 
     override fun convert(helper: BaseViewHolder, item: DesignPavilionBean) {
 
@@ -25,11 +28,11 @@ class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionB
 
         helper.setText(R.id.textViewTitle, item.name)
 
-        helper.setText(R.id.textViewCount, "${item.store_products_counts}件商品")
+        helper.setText(R.id.textViewCount, "${item.product_count}件商品")
 
         val buttonFocus = helper.getView<Button>(R.id.buttonFocus)
 
-        if (item.followed_status == 1) {
+        if (item.is_follow_store) {
             buttonFocus.textSize = 14f
             buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
             buttonFocus.text = Util.getString(R.string.text_focused)
@@ -52,11 +55,11 @@ class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionB
 
         if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
 
+
         val covers = ArrayList<String>()
-        for (product in item.products){
+        for (product in item.products) {
             covers.add(product.cover)
         }
-
         adapter.setNewData(covers)
 
         helper.addOnClickListener(R.id.buttonFocus)

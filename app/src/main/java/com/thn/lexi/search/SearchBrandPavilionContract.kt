@@ -1,10 +1,11 @@
-package com.thn.lexi.mine.designPavilion
+package com.thn.lexi.search
 
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.mine.designPavilion.DesignPavilionBean
 
-class FavoriteDesignContract {
+class SearchBrandPavilionContract {
 
     interface View : BaseView<Presenter> {
 
@@ -37,7 +38,7 @@ class FavoriteDesignContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData()
+        fun loadData(searchString: String)
         fun loadMoreData()
         fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int)
     }

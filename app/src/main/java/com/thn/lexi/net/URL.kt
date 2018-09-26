@@ -480,5 +480,15 @@ object URL {
      */
     const val SEARCH_GOODS_URL = "${BASE_URL}core_platforms/search/products"
 
+    /**
+     * 搜索品牌馆
+     */
+    const val SEARCH_BRAND_PAVILION_URL = "${BASE_URL}core_platforms/search/stores"
+
+    /**
+     * 关注的品牌馆列表
+     */
+    const val FOCUSED_BRAND_PAVILION_URL = "${BASE_URL}users/followed_stores"
+
 
 }

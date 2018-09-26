@@ -1,4 +1,4 @@
-package com.thn.lexi.mine.designPavilion
+package com.thn.lexi.search
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.basemodule.tools.ToastUtil
@@ -7,21 +7,22 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
+import com.thn.lexi.mine.designPavilion.DesignPavilionBean
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
 
-class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
+class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_recyclerview
-    private lateinit var presenter: FavoriteDesignPresenter
-    private val adapter: AdapterDesignPavilion by lazy { AdapterDesignPavilion(R.layout.adapter_design_pavilion) }
+    private lateinit var presenter: SearchBrandPavilionPresenter
+    private val adapter: AdapterSearchBrandPavilion by lazy { AdapterSearchBrandPavilion(R.layout.adapter_design_pavilion) }
 
     companion object {
         @JvmStatic
-        fun newInstance(): FavoriteShopFragment = FavoriteShopFragment()
+        fun newInstance(): FragmentSearchBrandPavilion = FragmentSearchBrandPavilion()
     }
 
     override fun initView() {
-        presenter = FavoriteDesignPresenter(this)
+        presenter = SearchBrandPavilionPresenter(this)
 //        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
 //        swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(activity)
@@ -35,7 +36,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
 //        adapter.emptyView =
     }
 
-    override fun setPresenter(presenter: FavoriteDesignContract.Presenter?) {
+    override fun setPresenter(presenter: SearchBrandPavilionContract.Presenter?) {
         setPresenter(presenter)
     }
 
@@ -46,11 +47,14 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
 //            adapter.setEnableLoadMore(false)
 //            loadData()
 //        }
+        adapter.setOnItemClickListener { _, _, position ->
+            ToastUtil.showInfo("跳转品牌馆详情$position")
+        }
 
         //关注品牌馆
         adapter.setOnItemChildClickListener { _, _, position ->
             val pavilionBean = adapter.getItem(position) as DesignPavilionBean
-            if (pavilionBean.followed_status==1){ //点击取消关注
+            if (pavilionBean.is_follow_store){ //点击取消关注
                 presenter.focusBrandPavilion(pavilionBean.rid,false,position)
             }else{
                 presenter.focusBrandPavilion(pavilionBean.rid,true,position)
@@ -62,22 +66,17 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         },recyclerView)
     }
 
-    /**
-     *  设置品牌馆关注状态
-     */
+
+    //设置品牌馆关注状态
     override fun setBrandPavilionFocusState(favorite: Boolean, position: Int) {
         val pavilionBean = adapter.getItem(position) as DesignPavilionBean
-        if (favorite){
-            pavilionBean.followed_status = 1
-        }else{
-            pavilionBean.followed_status = 0
-        }
-
+        pavilionBean.is_follow_store = favorite
         adapter.notifyDataSetChanged()
     }
 
+
     override fun loadData() {
-        presenter.loadData()
+        presenter.loadData("乐")
     }
 
 
