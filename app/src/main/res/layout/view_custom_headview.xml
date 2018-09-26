@@ -37,7 +37,11 @@
             android:drawablePadding="10dp"
             android:paddingEnd="10dp"
             android:drawableStart="@mipmap/icon_search_head"
-            android:imeOptions="actionSearch"
+            android:hint="@string/text_search_hint"
+            android:textColorHint="@color/color_555"
+            android:imeOptions="actionSend"
+            android:textColor="@color/color_333"
+            android:maxLength="50"
             android:maxLines = "1"
             android:textSize="@dimen/sp14" />
         <ImageView

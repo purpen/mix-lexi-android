@@ -1,5 +1,6 @@
 package com.thn.lexi.search
 import android.support.v4.view.ViewPager
+import android.text.InputType
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
@@ -18,6 +19,7 @@ class SearchActivity : BaseActivity(){
 
     override fun initView() {
         customHeadView.setHeadSearchShow(true)
+        customHeadView.editTextSearch.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         setUpViewPager()
     }
 

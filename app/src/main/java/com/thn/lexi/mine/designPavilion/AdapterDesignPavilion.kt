@@ -1,5 +1,4 @@
 package com.thn.lexi.mine.designPavilion
-
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -67,6 +66,7 @@ class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionB
             val productBean = item.products[position]
             val intent = Intent(context, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }
     }

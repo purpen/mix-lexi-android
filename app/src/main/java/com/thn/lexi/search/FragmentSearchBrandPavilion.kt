@@ -1,6 +1,5 @@
 package com.thn.lexi.search
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
@@ -30,8 +29,8 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-        val view = View(activity)
-        adapter.addHeaderView(view)
+//        val view = View(activity)
+//        adapter.addHeaderView(view)
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(),R.color.color_f5f7f9,recyclerView))
 //        adapter.emptyView =
     }

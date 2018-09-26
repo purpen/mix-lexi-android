@@ -82,6 +82,10 @@ public class CustomHeadView extends RelativeLayout {
         }
     }
 
+    public EditText getEditTextSearch(){
+        return editTextSearch;
+    }
+
     public ImageButton getRightImgBtn() {
         return ib_right;
     }

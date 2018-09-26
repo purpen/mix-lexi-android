@@ -256,4 +256,5 @@
     <string name="evaluate_suggest">我们希望收到你的建议，优化我们的不足。长度在100字以内</string>
     <string name="add_image">添加图片</string>
     <string name="max_image_num">（最多添加9张图片）</string>
+    <string name="text_search_hint">关键字/商品/品牌馆/人</string>
 </resources>
