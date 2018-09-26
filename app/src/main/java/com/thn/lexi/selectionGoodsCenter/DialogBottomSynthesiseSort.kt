@@ -63,7 +63,8 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllGoods
             val minPrice = ""
             val maxPrice = ""
             val profitType = ""
-            present.loadData(page, AllGoodsPresenter.SORT_TYPE_SYNTHESISE, profitType, filterCondition, minPrice, maxPrice)
+            val cids = ""
+            present.loadData(page, AllGoodsPresenter.SORT_TYPE_SYNTHESISE, profitType, filterCondition, minPrice, maxPrice,cids)
             dismiss()
         }
 
@@ -75,7 +76,8 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllGoods
             val minPrice = ""
             val maxPrice = ""
             val profitType = ""
-            present.loadData(page, AllGoodsPresenter.SORT_TYPE_LOW_UP, profitType, filterCondition, minPrice, maxPrice)
+            val cids = ""
+            present.loadData(page, AllGoodsPresenter.SORT_TYPE_LOW_UP, profitType, filterCondition, minPrice, maxPrice,cids)
             dismiss()
         }
 
@@ -87,7 +89,8 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllGoods
             val minPrice = ""
             val maxPrice = ""
             val profitType = ""
-            present.loadData(page, AllGoodsPresenter.SORT_TYPE_UP_LOW, profitType, filterCondition, minPrice, maxPrice)
+            val cids = ""
+            present.loadData(page, AllGoodsPresenter.SORT_TYPE_UP_LOW, profitType, filterCondition, minPrice, maxPrice,cids)
             dismiss()
         }
     }

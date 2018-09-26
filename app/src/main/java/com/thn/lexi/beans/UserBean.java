@@ -51,6 +51,7 @@ public class UserBean implements Parcelable {
     public String date;
     public String email;
     public int followed_status;
+    public int follow_status;
     public int gender;
     public boolean is_distributor;
     public int last_seen;
@@ -64,6 +65,11 @@ public class UserBean implements Parcelable {
     public String uid;
     public String username;
     public List<String> user_areacode;
+    public int wish_list_counts;
+    public int user_like_counts;
+
+    public UserBean() {
+    }
 
     @Override
     public int describeContents() {
@@ -99,9 +105,7 @@ public class UserBean implements Parcelable {
         dest.writeString(this.uid);
         dest.writeString(this.username);
         dest.writeStringList(this.user_areacode);
-    }
-
-    public UserBean() {
+        dest.writeInt(this.wish_list_counts);
     }
 
     protected UserBean(Parcel in) {
@@ -132,9 +136,10 @@ public class UserBean implements Parcelable {
         this.uid = in.readString();
         this.username = in.readString();
         this.user_areacode = in.createStringArrayList();
+        this.wish_list_counts = in.readInt();
     }
 
-    public static final Parcelable.Creator<UserBean> CREATOR = new Parcelable.Creator<UserBean>() {
+    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
         @Override
         public UserBean createFromParcel(Parcel source) {
             return new UserBean(source);

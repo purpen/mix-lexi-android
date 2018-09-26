@@ -475,6 +475,27 @@ object URL {
      */
     const val GET_USER_IDENTITY = "${BASE_URL}address/custom"
 
+    /**
+     * 搜索商品
+     */
+    const val SEARCH_GOODS_URL = "${BASE_URL}core_platforms/search/products"
+
+    /**
+     * 搜索品牌馆
+     */
+    const val SEARCH_BRAND_PAVILION_URL = "${BASE_URL}core_platforms/search/stores"
+
+    /**
+     * 关注的品牌馆列表
+     */
+    const val FOCUSED_BRAND_PAVILION_URL = "${BASE_URL}users/followed_stores"
+
+
+    /**
+     * 搜索用户
+     */
+   const val SEARCH_USERS_URL = "${BASE_URL}core_platforms/search/users"
+
 
     /**
      * 订单确认收货

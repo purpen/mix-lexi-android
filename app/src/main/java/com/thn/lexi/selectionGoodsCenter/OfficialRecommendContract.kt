@@ -1,9 +1,8 @@
 package com.thn.lexi.selectionGoodsCenter
-
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.thn.lexi.index.explore.ExploreBannerBean
+import com.thn.lexi.beans.ProductBean
 
 class OfficialRecommendContract {
     interface View : BaseView<Presenter> {
@@ -13,11 +12,11 @@ class OfficialRecommendContract {
 
         fun goPage()
 
-        fun setNewData(products: MutableList<HotGoodsBean.DataBean.ProductsBean>) {
+        fun setNewData(products: MutableList<ProductBean>) {
 
         }
 
-        fun addData(products: List<HotGoodsBean.DataBean.ProductsBean>) {
+        fun addData(products: List<ProductBean>) {
 
         }
 

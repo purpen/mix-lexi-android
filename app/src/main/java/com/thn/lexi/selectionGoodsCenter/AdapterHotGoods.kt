@@ -9,9 +9,10 @@ import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
+import com.thn.lexi.beans.ProductBean
 
-class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<HotGoodsBean.DataBean.ProductsBean, BaseViewHolder>(res) {
-    override fun convert(helper: BaseViewHolder, item: HotGoodsBean.DataBean.ProductsBean) {
+class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
+    override fun convert(helper: BaseViewHolder, item: ProductBean) {
         helper.setText(R.id.textView0, item.name)
 
 //        val textView2 = helper.getView<TextView>(R.id.textView2)

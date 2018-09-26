@@ -4,6 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.basemodule.ui.IDataSource
+import com.thn.lexi.beans.ProductBean
 
 class AllGoodsContract {
     interface View : BaseView<Presenter> {
@@ -13,11 +14,11 @@ class AllGoodsContract {
 
         fun goPage()
 
-        fun setNewData(products: MutableList<HotGoodsBean.DataBean.ProductsBean>) {
+        fun setNewData(products: MutableList<ProductBean>) {
 
         }
 
-        fun addData(products: List<HotGoodsBean.DataBean.ProductsBean>) {
+        fun addData(products: List<ProductBean>) {
 
         }
 
@@ -38,7 +39,7 @@ class AllGoodsContract {
     interface Presenter : BasePresenter {
         fun loadData(isRefresh:Boolean)
         fun loadMoreData()
-        fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String)
+        fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids:String)
         fun getGoodsClassify(param: IDataSource.HttpRequestCallBack)
     }
 }

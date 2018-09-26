@@ -3,6 +3,7 @@ import com.basemodule.tools.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.net.NetStatusBean
 import java.io.IOException
 
 class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesignContract.Presenter {
@@ -39,12 +40,7 @@ class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesig
 
     override fun loadMoreData() {
         dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                view.showLoadingView()
-            }
-
             override fun onSuccess(json: String) {
-                view.dismissLoadingView()
                 val designPavilionListBean = JsonUtil.fromJson(json, DesignPavilionListBean::class.java)
                 if (designPavilionListBean.success) {
                     val stores = designPavilionListBean.data.stores
@@ -61,7 +57,26 @@ class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesig
             }
 
             override fun onFailure(e: IOException) {
-                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 关注/取消品牌馆
+     */
+    override fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int) {
+        dataSource.focusBrandPavilion(store_rid,isFavorite,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    view.setBrandPavilionFocusState(isFavorite,position)
+                } else {
+                    view.showError(netStatusBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

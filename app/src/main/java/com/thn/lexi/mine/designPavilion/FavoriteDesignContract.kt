@@ -29,11 +29,16 @@ class FavoriteDesignContract {
 
         }
 
+        fun setBrandPavilionFocusState(favorite: Boolean, position: Int) {
+
+        }
+
 
     }
 
     interface Presenter : BasePresenter {
         fun loadData()
         fun loadMoreData()
+        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int)
     }
 }

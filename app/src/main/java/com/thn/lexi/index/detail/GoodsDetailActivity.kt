@@ -355,13 +355,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.textViewName.text = data.name
 
         headerView.textViewNowPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
-        if (data.real_sale_price == 0.0) {
+        if (data.min_sale_price == 0.0) {
             headerView.textViewOriginalPrice.visibility = View.GONE
-            headerView.textViewNowPrice.text = data.real_price.toString()
+            headerView.textViewNowPrice.text = data.min_price.toString()
         } else {
-            headerView.textViewNowPrice.text = data.real_sale_price.toString()
+            headerView.textViewOriginalPrice.visibility = View.VISIBLE
+            headerView.textViewNowPrice.text = data.min_sale_price.toString()
             headerView.textViewOriginalPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            headerView.textViewOriginalPrice.text = data.real_price.toString()
+            headerView.textViewOriginalPrice.text = data.min_price.toString()
         }
 
 

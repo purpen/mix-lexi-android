@@ -601,13 +601,15 @@ public class ClientParamsAPI {
      * @return
      */
     @Nullable
-    public static HashMap<String, Object> getAllGoodsParams(int page, @NotNull String sortType, @NotNull String profitType, @NotNull String filterCondition, @NotNull String minePrice, @NotNull String maxPrice) {
+    public static HashMap<String, Object> getAllGoodsParams(int page, @NotNull String sortType, @NotNull String profitType, @NotNull String filterCondition,@NotNull String status, @NotNull String minePrice, @NotNull String maxPrice,String cids) {
         HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page",Constants.PAGE_SIZE);
         params.put("sort_type", sortType);
         params.put("profit_type", profitType);
+        params.put("status", status);
         params.put("qk", filterCondition);
+        params.put("cids", cids);
         params.put("min_price", minePrice);
         params.put("max_price", maxPrice);
         return params;
@@ -1069,6 +1071,36 @@ public class ClientParamsAPI {
     }
 
     /**
+     * 获取品牌馆搜索参数
+     * @param page
+     * @param searchString
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getSearchBrandPavilionParams(int page, @NotNull String searchString) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("qk",searchString);
+        return params;
+    }
+
+    /**
+     * 搜索用户
+     * @param searchString
+     * @param page
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getSearchUsers(@NotNull String searchString, int page) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("qk",searchString);
+        return params;
+    }
+
+    /**
      * 获取全部省市区
      * @param country
      * @return
@@ -1085,6 +1117,12 @@ public class ClientParamsAPI {
         return  params;
     }
 
+    /**
+     * 上传商品评价
+     * @param order_rid
+     * @param items
+     * @return
+     */
     public static HashMap<String,Object> getEvaluateParams(String order_rid, ArrayList<EvaluateBean> items){
         HashMap<String,Object> params=generateCommonParams();
         params.put("order_rid",order_rid);

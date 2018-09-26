@@ -8,11 +8,13 @@ import java.io.IOException
 
 open class AllGoodsModel{
 
+    companion object { //只查询出售中的商品
+        const val STATUS = "1"
+    }
 
+    fun loadData(page: Int,sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids: String, callBack: IDataSource.HttpRequestCallBack) {
 
-    fun loadData(page: Int,sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String, callBack: IDataSource.HttpRequestCallBack) {
-
-        val params = ClientParamsAPI.getAllGoodsParams(page,sortType,profitType,filterCondition,minePrice,maxPrice)
+        val params = ClientParamsAPI.getAllGoodsParams(page,sortType,profitType,filterCondition,STATUS,minePrice,maxPrice,cids)
 
         HttpRequest.sendRequest(HttpRequest.GET,URL.ALL_GOODS_URL,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {

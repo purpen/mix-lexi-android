@@ -60,7 +60,8 @@ class DialogBottomProfit(context: FragmentActivity?, presenter: AllGoodsPresente
             val minPrice = ""
             val maxPrice = ""
             val sortType = ""
-            present.loadData(page, sortType, AllGoodsPresenter.PROFIT_TYPE_DEFAULT, filterCondition, minPrice, maxPrice)
+            val cids =""
+            present.loadData(page, sortType, AllGoodsPresenter.PROFIT_TYPE_DEFAULT, filterCondition, minPrice, maxPrice,cids)
             dismiss()
         }
 
@@ -71,7 +72,8 @@ class DialogBottomProfit(context: FragmentActivity?, presenter: AllGoodsPresente
             val minPrice = ""
             val maxPrice = ""
             val sortType =""
-            present.loadData(page, sortType, AllGoodsPresenter.PROFIT_TYPE_LOW_UP, filterCondition, minPrice, maxPrice)
+            val cids =""
+            present.loadData(page, sortType, AllGoodsPresenter.PROFIT_TYPE_LOW_UP, filterCondition, minPrice, maxPrice,cids)
             dismiss()
         }
 
@@ -84,8 +86,8 @@ class DialogBottomProfit(context: FragmentActivity?, presenter: AllGoodsPresente
             val minPrice = ""
             val maxPrice = ""
             val sortType = ""
-
-            present.loadData(page, sortType, AllGoodsPresenter.PROFIT_TYPE_UP_LOW, filterCondition, minPrice, maxPrice)
+            val cids =""
+            present.loadData(page, sortType, AllGoodsPresenter.PROFIT_TYPE_UP_LOW, filterCondition, minPrice, maxPrice,cids)
             dismiss()
         }
     }

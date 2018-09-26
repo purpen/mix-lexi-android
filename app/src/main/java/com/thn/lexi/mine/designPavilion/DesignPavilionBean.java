@@ -68,11 +68,12 @@ public class DesignPavilionBean {
     public String delivery_province;
     public int delivery_province_id;
     public Object description;
-    public String detail;
+    public Object detail;
     public int distribution_type;
     public String end_date;
     public String fans_count;
     public int followed_status;
+    public boolean is_follow_store;
     public boolean is_closed;
     public String logo;
     public String logo_id;
@@ -86,6 +87,7 @@ public class DesignPavilionBean {
     public String rid;
     public int status;
     public int type;
+    public String product_count;
     public String store_products_counts;
     public List<?> categories;
 }

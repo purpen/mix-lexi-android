@@ -3,6 +3,7 @@ package com.thn.lexi.selectionGoodsCenter
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.explore.ExploreBannerBean
 
 class FirstPublishContract {
@@ -13,11 +14,11 @@ class FirstPublishContract {
 
         fun goPage()
 
-        fun setNewData(products: MutableList<HotGoodsBean.DataBean.ProductsBean>) {
+        fun setNewData(products: MutableList<ProductBean>) {
 
         }
 
-        fun addData(products: List<HotGoodsBean.DataBean.ProductsBean>) {
+        fun addData(products: List<ProductBean>) {
 
         }
 

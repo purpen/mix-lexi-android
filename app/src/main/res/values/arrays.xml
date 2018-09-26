@@ -16,6 +16,13 @@
         <item>新品首发</item>
     </string-array>
 
+    <string-array name="strings_search_titles">
+        <item>商品</item>
+        <item>品牌馆</item>
+        <item>用户</item>
+    </string-array>
+
+
     <string-array name="strings_photo_titles">
         <item>相机</item>
         <item>从手机相册中选照片</item>
