@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ScreenUtil
+import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
@@ -40,19 +41,20 @@ class AdapterSearchGoods(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
     override fun convert(helper: BaseViewHolder, item: AdapterSearchGoods.MultipleItem) {
         val product = item.product
         val layoutParams: ViewGroup.LayoutParams
-//        val relativeLayout = helper.getView<RelativeLayout>(R.id.relativeLayout)
+        val relativeLayout = helper.getView<RelativeLayout>(R.id.relativeLayout)
         val imageView = helper.getView<ImageView>(R.id.imageView)
         val sizeScreen = ScreenUtil.getScreenWidth()-DimenUtil.dp2px(30.0)
-        val sizeSmall = ((ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))*0.5).toInt()
+        val sizeSmall = ((ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp40))*0.5).toInt()
 
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
             layoutParams = RelativeLayout.LayoutParams(sizeScreen,sizeScreen)
+            relativeLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
         } else {
             layoutParams = RelativeLayout.LayoutParams(sizeSmall, sizeSmall)
+            relativeLayout.layoutParams = ViewGroup.LayoutParams(sizeSmall,ViewGroup.LayoutParams.WRAP_CONTENT)
         }
         imageView.layoutParams = layoutParams
-
-        GlideUtil.loadImageWithFading(product.cover, imageView)
+        GlideUtil.loadImageWithRadius(product.cover, imageView,DimenUtil.dp2px(4.0))
 
         helper.setText(R.id.textViewTitle,product.name)
 
