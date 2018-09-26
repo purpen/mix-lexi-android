@@ -1,6 +1,7 @@
 package com.thn.lexi.search
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -13,6 +14,7 @@ import com.thn.lexi.R
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.detail.GoodsDetailActivity
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_Divider
@@ -52,7 +54,6 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
         val headerView = View(activity)
         headerView.setBackgroundColor(colorWhite)
-        headerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,DimenUtil.dp2px(10.0))
         adapter.setHeaderView(headerView)
     }
 
@@ -62,12 +63,11 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
             presenter.loadMoreData()
         }, recyclerView)
 
-        adapter.setOnItemClickListener { adapter, view, position ->
-            //            ToastUtil.showInfo("跳转用户")
-//            val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
-//            val intent = Intent(context, ShowWindowDetailActivity::class.java)
-//            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName, showWindowBean)
-//            startActivity(intent)
+        adapter.setOnItemClickListener { _, _, position ->
+            val item = adapter.getItem(position) as AdapterSearchGoods.MultipleItem
+            val intent = Intent(context, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.product)
+            startActivity(intent)
         }
     }
 
@@ -143,18 +143,19 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
             when (itemPosition) {
                 0 ->{
                     divider = Y_DividerBuilder()
-                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .setBottomSideLine(true, color, 10f, 0f, 0f)
                             .create()
+                    return divider
                 }
                 count - 2 -> {
                     divider = Y_DividerBuilder()
-                            .setBottomSideLine(false, color, height, 0f, 0f)
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
                             .create()
                 }
 
                 count - 1 -> {
                     divider = Y_DividerBuilder()
-                            .setBottomSideLine(false, color, height, 0f, 0f)
+                            .setBottomSideLine(true, color, height, 0f, 0f)
                             .create()
                 }
                 else -> {

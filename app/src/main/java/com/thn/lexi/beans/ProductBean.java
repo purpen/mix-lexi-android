@@ -97,8 +97,8 @@ public class ProductBean implements Parcelable {
     public String max_sale_price;
     public double sale_price;
     public double price;
-    public String min_price;
-    public String min_sale_price;
+    public double min_price;
+    public double min_sale_price;
     public String name;
     public String stick_text;
     public String published_at;
@@ -166,8 +166,8 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.max_sale_price);
         dest.writeDouble(this.sale_price);
         dest.writeDouble(this.price);
-        dest.writeString(this.min_price);
-        dest.writeString(this.min_sale_price);
+        dest.writeDouble(this.min_price);
+        dest.writeDouble(this.min_sale_price);
         dest.writeString(this.name);
         dest.writeString(this.stick_text);
         dest.writeString(this.published_at);
@@ -227,8 +227,8 @@ public class ProductBean implements Parcelable {
         this.max_sale_price = in.readString();
         this.sale_price = in.readDouble();
         this.price = in.readDouble();
-        this.min_price = in.readString();
-        this.min_sale_price = in.readString();
+        this.min_price = in.readDouble();
+        this.min_sale_price = in.readDouble();
         this.name = in.readString();
         this.stick_text = in.readString();
         this.published_at = in.readString();

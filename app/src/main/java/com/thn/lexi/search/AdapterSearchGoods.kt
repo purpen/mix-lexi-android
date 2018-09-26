@@ -54,20 +54,21 @@ class AdapterSearchGoods(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
             relativeLayout.layoutParams = ViewGroup.LayoutParams(sizeSmall,ViewGroup.LayoutParams.WRAP_CONTENT)
         }
         imageView.layoutParams = layoutParams
+
         GlideUtil.loadImageWithRadius(product.cover, imageView,DimenUtil.dp2px(4.0))
 
         helper.setText(R.id.textViewTitle,product.name)
 
         val textViewOldPrice =helper.getView<TextView>(R.id.textViewOldPrice)
 
-        if (product.real_sale_price ==0.0){ //折扣价为0,显示真实价格
-            helper.setText(R.id.textViewPrice, "${product.real_price}")
+        if (product.min_sale_price ==0.0){ //折扣价为0,显示真实价格
+            helper.setText(R.id.textViewPrice, "${product.min_price}")
             textViewOldPrice.visibility = View.GONE
         }else{ //折扣价不为0显示折扣价格和带划线的真实价格
             textViewOldPrice.visibility = View.VISIBLE
-            helper.setText(R.id.textViewPrice, "${product.real_sale_price}")
+            helper.setText(R.id.textViewPrice, "${product.min_sale_price}")
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥" + product.real_price
+            textViewOldPrice.text = "￥" + product.min_price
         }
 
     }
