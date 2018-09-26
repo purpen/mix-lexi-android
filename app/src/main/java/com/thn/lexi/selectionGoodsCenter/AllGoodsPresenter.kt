@@ -24,6 +24,8 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
 
     private var curPage: Int = 1
 
+    private var cids:String = ""
+
     companion object {
         //默认排序
         const val SORT_TYPE_DEFAULT: String = "0"
@@ -55,19 +57,19 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
     override fun loadData(isRefresh: Boolean) {
         if (isRefresh) this.curPage = 1
 
-        loadData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice)
+        loadData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice,cids)
     }
 
 
-    override fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String) {
+    override fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids:String) {
         this.curPage = page
         this.sortType = sortType
         this.profitType = profitType
         this.filterCondition = filterCondition
         this.minePrice = minePrice
         this.maxPrice = maxPrice
-
-        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice, object : IDataSource.HttpRequestCallBack {
+        this.cids = cids
+        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice, cids,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -94,8 +96,8 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
     /**
      * 加载更多
      */
-    fun loadMoreData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String) {
-        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice, object : IDataSource.HttpRequestCallBack {
+    fun loadMoreData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids: String) {
+        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice,cids, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
                 val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
@@ -123,8 +125,13 @@ class AllGoodsPresenter(view: AllGoodsContract.View) : AllGoodsContract.Presente
      * 默认条件加载更多
      */
     override fun loadMoreData() {
-        loadMoreData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice)
+        loadMoreData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice,cids)
     }
+
+    fun getFilterCondition(): String {
+        return this.filterCondition
+    }
+
 
     fun getSortType(): String {
         return this.sortType

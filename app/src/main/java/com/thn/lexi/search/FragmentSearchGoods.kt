@@ -5,7 +5,6 @@ import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.view.ViewGroup
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -15,10 +14,10 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
+import kotlinx.android.synthetic.main.fragment_search_goods.*
 
 
 class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
@@ -26,6 +25,8 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
 
     private val presenter: SearchGoodsPresenter by lazy { SearchGoodsPresenter(this) }
+
+    private val dialogBottomFilter: DialogBottomFilter by lazy { DialogBottomFilter(activity, presenter) }
 
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
 
@@ -38,7 +39,7 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
         }
     }
 
-    override val layout: Int = R.layout.fragment_recyclerview
+    override val layout: Int = R.layout.fragment_search_goods
 
     override fun initView() {
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
@@ -59,6 +60,28 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
 
 
     override fun installListener() {
+        linearLayoutSort.setOnClickListener { _ ->
+            Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
+            val dialog = DialogBottomSynthesiseSort(activity, presenter)
+            dialog.setOnDismissListener {
+                Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
+                when (presenter.getSortType()) {
+                    SearchGoodsPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
+                    SearchGoodsPresenter.SORT_TYPE_LOW_UP -> textViewSort.text = Util.getString(R.string.text_price_low_up)
+                    SearchGoodsPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
+                }
+            }
+            dialog.show()
+        }
+
+        linearLayoutFilter.setOnClickListener { _ ->
+            Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
+            dialogBottomFilter.show()
+            dialogBottomFilter.setOnDismissListener {
+                Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
+            }
+        }
+
         adapter.setOnLoadMoreListener({
             presenter.loadMoreData()
         }, recyclerView)
@@ -113,7 +136,7 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
     }
 
     override fun loadMoreFail() {
-        super.loadMoreFail()
+        adapter.loadMoreFail()
     }
 
     override fun setPresenter(presenter: SearchGoodsContract.Presenter?) {

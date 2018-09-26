@@ -22,6 +22,8 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
 
     private var maxPrice: String = ""
 
+    private var cids:String = ""
+
     private var curPage: Int = 1
 
     companion object {
@@ -50,6 +52,19 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
     }
 
     /**
+     * 获取排序类型
+     */
+    fun getSortType(): String {
+        return this.sortType
+    }
+
+    /**
+     * 获取查询条件
+     */
+    fun getFilterCondition(): String {
+        return this.filterCondition
+    }
+    /**
      * 默认参数加载数据
      */
     override fun loadData(isRefresh: Boolean,searchString:String) {
@@ -57,21 +72,21 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
 
         this.filterCondition = searchString
 
-        loadData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice)
+        loadData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice,cids)
     }
 
     /**
      * 根据用户选择条件搜索
      */
-    override fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String) {
+    override fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids:String) {
         this.curPage = page
         this.sortType = sortType
         this.profitType = profitType
         this.filterCondition = filterCondition
         this.minePrice = minePrice
         this.maxPrice = maxPrice
-
-        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice, object : IDataSource.HttpRequestCallBack {
+        this.cids = cids
+        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice, cids, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -97,8 +112,8 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
     /**
      * 加载更多
      */
-    fun loadMoreData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String) {
-        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice, object : IDataSource.HttpRequestCallBack {
+    fun loadMoreData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids: String) {
+        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice,cids, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
                 val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
@@ -126,10 +141,26 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
      * 默认条件加载更多
      */
     override fun loadMoreData() {
-        loadMoreData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice)
+        loadMoreData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice,cids)
     }
 
 
+
+    /**
+     * 获取商品分类
+     */
+    override fun getGoodsClassify(callBacks: IDataSource.HttpRequestCallBack) {
+        dataSource.getGoodsClassify(object : IDataSource.HttpRequestCallBack {
+
+            override fun onSuccess(json: String) {
+                callBacks.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
 
 
 }

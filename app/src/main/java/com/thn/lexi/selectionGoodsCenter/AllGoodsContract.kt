@@ -39,7 +39,7 @@ class AllGoodsContract {
     interface Presenter : BasePresenter {
         fun loadData(isRefresh:Boolean)
         fun loadMoreData()
-        fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String)
+        fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids:String)
         fun getGoodsClassify(param: IDataSource.HttpRequestCallBack)
     }
 }

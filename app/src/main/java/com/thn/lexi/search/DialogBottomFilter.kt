@@ -1,4 +1,4 @@
-package com.thn.lexi.selectionGoodsCenter
+package com.thn.lexi.search
 
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -11,12 +11,14 @@ import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
+import com.thn.lexi.selectionGoodsCenter.AdapterGoodsClassify
+import com.thn.lexi.selectionGoodsCenter.GoodsClassifyBean
 import kotlinx.android.synthetic.main.dialog_filter_sort_bottom.view.*
 import java.io.IOException
 
-class DialogBottomFilter(context: FragmentActivity?, presenter: AllGoodsPresenter) : BottomBaseDialog<DialogBottomFilter>(context) {
+class DialogBottomFilter(context: FragmentActivity?, presenter: SearchGoodsPresenter) : BottomBaseDialog<DialogBottomFilter>(context) {
     private lateinit var view: View
-    private val present: AllGoodsPresenter = presenter
+    private val present: SearchGoodsPresenter = presenter
     private val adapter: AdapterGoodsClassify by lazy { AdapterGoodsClassify(R.layout.adapter_text_border) }
 
     private var minPrice: String = ""
@@ -31,7 +33,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: AllGoodsPresente
             //            LogUtil.e("list[leftPostion]=" + list[leftPostion] + ";list[rightPostion]=" + list[rightPostion])
 
             val page = 1
-            val filterCondition = ""
+            val filterCondition = present.getFilterCondition()
 
             if (leftPostion == list.size - 1) {
                 minPrice = ""
@@ -46,8 +48,8 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: AllGoodsPresente
             }
 //            LogUtil.e("minPrice==" + minPrice + ";maxPrice==" + maxPrice)
             val sortType = ""
-            val cids = ""
-            present.loadData(page, sortType, AllGoodsPresenter.PROFIT_TYPE_DEFAULT, filterCondition, minPrice, maxPrice,cids)
+            val cids = present.getFilterCondition()
+            present.loadData(page, sortType, SearchGoodsPresenter.PROFIT_TYPE_DEFAULT, filterCondition, minPrice, maxPrice, cids)
         }
 
         return view
@@ -79,17 +81,15 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: AllGoodsPresente
     }
 
     private fun installListener() {
-        adapter.setOnItemClickListener { adapter, view, position ->
+        adapter.setOnItemClickListener { _, _, position ->
             val item = adapter.getItem(position) as GoodsClassifyBean.DataBean.CategoriesBean
             item.selected = !item.selected
             adapter.notifyItemChanged(position)
-
-
             val page = 1
             val filterCondition = present.getFilterCondition()
             val cids = getSelectedItem()
             val sortType = ""
-            present.loadData(page, sortType, AllGoodsPresenter.PROFIT_TYPE_DEFAULT, filterCondition, minPrice, maxPrice,cids)
+            present.loadData(page, sortType, SearchGoodsPresenter.PROFIT_TYPE_DEFAULT, filterCondition, minPrice, maxPrice, cids)
         }
     }
 

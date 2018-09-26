@@ -49,7 +49,7 @@ public class ExpressInfoBean {
 
             public int continuous_amount;
             public int continuous_item;
-            public int continuous_weight;
+            public double continuous_weight;
             public String express_code;
             public int express_id;
             public String express_name;
@@ -77,7 +77,7 @@ public class ExpressInfoBean {
 
                 public int continuous_amount;
                 public int continuous_item;
-                public int continuous_weight;
+                public double continuous_weight;
                 public int first_amount;
                 public int first_item;
                 public int first_weight;
