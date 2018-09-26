@@ -491,4 +491,10 @@ object URL {
     const val FOCUSED_BRAND_PAVILION_URL = "${BASE_URL}users/followed_stores"
 
 
+    /**
+     * 搜索用户
+     */
+   const val SEARCH_USERS_URL = "${BASE_URL}core_platforms/search/users"
+
+
 }

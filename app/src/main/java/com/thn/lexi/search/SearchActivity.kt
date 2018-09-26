@@ -26,7 +26,7 @@ class SearchActivity : BaseActivity(){
         val fragments = ArrayList<BaseFragment>()
         fragments.add(FragmentSearchGoods.newInstance())
         fragments.add(FragmentSearchBrandPavilion.newInstance())
-        fragments.add(FragmentExplore.newInstance())
+        fragments.add(FragmentSearchUserList.newInstance())
 
         adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles.toMutableList())
         customViewPager.adapter = adapter

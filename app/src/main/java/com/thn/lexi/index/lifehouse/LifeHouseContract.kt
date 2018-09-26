@@ -4,6 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.beans.UserBean
 import org.json.JSONArray
 
 class LifeHouseContract {
@@ -29,7 +30,7 @@ class LifeHouseContract {
 
         }
 
-        fun setLookPeopleData(users: List<LookPeopleBean.DataBean.UsersBean>) {
+        fun setLookPeopleData(users: List<UserBean>) {
 
         }
 

@@ -1,5 +1,7 @@
 package com.thn.lexi.index.lifehouse;
 
+import com.thn.lexi.beans.UserBean;
+
 import java.util.List;
 
 public class LookPeopleBean {
@@ -24,67 +26,7 @@ public class LookPeopleBean {
          */
 
         public int count;
-        public List<UsersBean> users;
-
-        public static class UsersBean {
-            /**
-             * about_me : 天道酬勤
-             * area :
-             * area_id : 0
-             * areacode : +86
-             * avatar : https://kg.erp.taihuoniao.com/20180730/3210Fheo2XhNuVLxwVLlkb8Bc_BTvN9h.jpeg
-             * avatar_id : 3155
-             * city :
-             * city_id : 0
-             * country :
-             * country_id : null
-             * created_at : 1531570515
-             * date : 1993-01-01
-             * description : null
-             * email : 18610320751
-             * gender : 1
-             * is_distributor : false
-             * last_seen : 1531570515
-             * mail : lexi@moebeast.com
-             * master_uid : 0
-             * mobile : 18610320751
-             * phone : null
-             * province :
-             * province_id : 0
-             * street_address : null
-             * uid : 11962435078
-             * user_areacode : ["18610320751"]
-             * username : 乐喜七号
-             */
-
-            public String about_me;
-            public String area;
-            public int area_id;
-            public String areacode;
-            public String avatar;
-            public int avatar_id;
-            public String city;
-            public int city_id;
-            public String country;
-            public Object country_id;
-            public int created_at;
-            public String date;
-            public Object description;
-            public String email;
-            public int gender;
-            public boolean is_distributor;
-            public int last_seen;
-            public String mail;
-            public int master_uid;
-            public String mobile;
-            public Object phone;
-            public String province;
-            public int province_id;
-            public Object street_address;
-            public String uid;
-            public String username;
-            public List<String> user_areacode;
-        }
+        public List<UserBean> users;
     }
 
     public static class StatusBean {

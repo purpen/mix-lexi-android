@@ -1083,4 +1083,19 @@ public class ClientParamsAPI {
         params.put("qk",searchString);
         return params;
     }
+
+    /**
+     * 搜索用户
+     * @param searchString
+     * @param page
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getSearchUsers(@NotNull String searchString, int page) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("qk",searchString);
+        return params;
+    }
 }

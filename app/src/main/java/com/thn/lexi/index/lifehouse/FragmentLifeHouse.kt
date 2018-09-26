@@ -31,6 +31,7 @@ import com.thn.lexi.album.ImageCropActivity
 import com.thn.lexi.album.ImageUtils
 import com.thn.lexi.album.PicturePickerUtils
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.beans.UserBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.selection.HeadImageAdapter
 import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
@@ -144,7 +145,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     /**
      * 设置看过的用户信息
      */
-    override fun setLookPeopleData(users: List<LookPeopleBean.DataBean.UsersBean>) {
+    override fun setLookPeopleData(users: List<UserBean>) {
         val count = users.size
 
         if (count == 0) return
