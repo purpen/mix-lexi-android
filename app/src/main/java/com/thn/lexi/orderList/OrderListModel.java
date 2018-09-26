@@ -66,7 +66,7 @@ public class OrderListModel implements IDataSource {
     }
     public void finishOrder(String rid, final HttpRequestCallBack callBack){
         HashMap<String,Object> params=ClientParamsAPI.getOrderParams(rid);
-        HttpRequest.sendRequest(HttpRequest.POST, URL.ORDERF_FINISH, params, new HttpRequestCallBack() {
+        HttpRequest.sendRequest(HttpRequest.POST, URL.ORDER_FINISH, params, new HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 

@@ -97,7 +97,7 @@
     <string name="text_explore_good100">百元好物</string>
     <string name="text_good_design">特惠好设计</string>
     <string name="rationale_photo">需要获取相册权限</string>
-    <string name="rationale_camera">需要获取相机权限</string>
+    <string name="rationale_camera">需要获取相机与文件权限</string>
     <string name="hint_text_upload_avatar">请先上传头像</string>
     <string name="tex_hint_new_password_again">请再次输入新密码</string>
     <string name="text_open_store_guide">开馆指引</string>
@@ -257,4 +257,5 @@
     <string name="add_image">添加图片</string>
     <string name="max_image_num">（最多添加9张图片）</string>
     <string name="text_submit">提交</string>
+    <string name="title_evaluate">评价</string>
 </resources>

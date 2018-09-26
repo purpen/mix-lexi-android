@@ -24,8 +24,8 @@ import java.util.Map;
 
 public class AddressModel implements IDataSource {
     public void getData(String rid, final HttpRequestCallBack httpRequestCallBack) {
-        HashMap<String,Object> params=ClientParamsAPI.getOrderParams(rid);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.GET_USER_EXPRESS_ADDRESS,params, new HttpRequestCallBack() {
+        HashMap<String,Object> params=ClientParamsAPI.getDefaultParams();
+        HttpRequest.sendRequest(HttpRequest.GET, URL.GET_USER_EXPRESS_ADDRESS+"/"+rid,params, new HttpRequestCallBack() {
             public void onStart() {
                 httpRequestCallBack.onStart();
             }

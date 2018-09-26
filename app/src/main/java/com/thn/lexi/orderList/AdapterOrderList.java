@@ -34,7 +34,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
     private Date date;
     private Intent intent;
 
-    public AdapterOrderList(int layoutResId, @Nullable List data,Activity activity) {
+    public AdapterOrderList(int layoutResId, @Nullable List<MyOrderListBean.DataBean.OrdersBean> data,Activity activity) {
         super(layoutResId, data);
         this.activity=activity;
     }
@@ -56,7 +56,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
             }
         };
         helper.setText(R.id.tv_shop_name,item.getStore().getStore_name());
-        GlideUtil.loadImage(item.getStore().getStore_logo(),(ImageView)helper.getView(R.id.iv_shop));
+        GlideUtil.loadImageWithFading(item.getStore().getStore_logo(),(ImageView)helper.getView(R.id.iv_shop));
         helper.setText(R.id.tv_order_money, String.valueOf(item.getPay_amount()));
         long millions=new Long(item.getCreated_at()).longValue()*1000;
         c.setTimeInMillis(millions);
@@ -148,10 +148,12 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
             case 6:
                 helper.setText(R.id.tv_order_status,"交易取消");
                 helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_ff6666));
-                helper.setVisible(R.id.bt_delete1, true);
+                //helper.setVisible(R.id.bt_delete1, true);
+                helper.setGone(R.id.bt_delete1, false);
                 helper.setGone(R.id.bt_confirm,false);
                 helper.setGone(R.id.bt_delete, false);
-                helper.setGone(R.id.bt_evaluate,false);
+                //helper.setGone(R.id.bt_evaluate,false);
+                helper.setVisible(R.id.bt_evaluate,true );
                 helper.setGone(R.id.bt_money, false);
                 break;
         }
@@ -164,6 +166,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                 .addOnClickListener(R.id.bt_money)
                 .addOnClickListener(R.id.bt_delete1)
                 .addOnClickListener(R.id.bt_logistics)
+                .addOnClickListener(R.id.bt_evaluate)
                 .addOnClickListener(R.id.recyclerView);
         adapterOrderListTow.setOnItemChildClickListener(new OnItemChildClickListener() {
 

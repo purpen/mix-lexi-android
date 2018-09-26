@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.animation.Animation;
@@ -39,10 +37,10 @@ import com.thn.lexi.R;
 import com.thn.lexi.album.ImageCropActivity;
 import com.thn.lexi.album.ImageUtils;
 import com.thn.lexi.album.PicturePickerUtils;
+import com.thn.lexi.orderList.InquiryDialog;
 import com.thn.lexi.user.areacode.CountryAreaCodeBean;
 import com.thn.lexi.user.areacode.MessageAreaCode;
 import com.thn.lexi.user.areacode.SelectCountryOrAreaActivity;
-import com.thn.lexi.user.completeinfo.CompleteInfoActivity;
 import com.thn.lexi.user.completeinfo.UploadTokenBean;
 import com.thn.lexi.view.CustomHeadView;
 
@@ -53,20 +51,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.File;
-import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.thn.lexi.album.PicturePickerUtils.obtainResult;
 
 /**
  * 收货地址详情页面
@@ -91,22 +83,21 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private Switch swit;
     private boolean isNew;
     private boolean isForeign;
-    private String rid="1";
     private TextView tv_city;
     private TextView tv_country;
     private List<String> countryList;//国家的数据
     private Map<String,ArrayList<CityBean.CityNameBean>> map;
     private UploadTokenBean bean;
     private boolean isPosition;
-    private String id_card_front;
-    private String id_card_back;
+    private String id_card_front=null;
+    private String id_card_back=null;
     private String addressId;
     private AddressBean.DataBean dataBean;
     private int provinceId;
     private int cityId;
     private int areaId;
     private boolean isdefault;
-    private String id_card;
+    private String id_card=null;
 
     @Override
     protected int getLayout() {
@@ -116,6 +107,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void initView() {
         context=this;
+        //注册eventBus
         EventBus.getDefault().register(this);
        dialog =new WaitingDialog(AddressActivity.this);
        dataBean=new AddressBean.DataBean();
@@ -191,7 +183,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         super.installListener();
         //如果是编辑地址，先请求网络获取地址
         if (!isNew)
-            presenter.loadData(rid);
+            presenter.loadData(addressId);
     }
 
     @Override
@@ -208,7 +200,13 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 presenter.saveAddress(dataBean,isForeign,id_card,id_card_front,id_card_back);
                 break;
             case R.id.bt_delete:
-                presenter.deleteAddress(rid);
+                InquiryDialog inquiryDialog=new InquiryDialog("确定删除地址？", this, new InquiryDialog.ImagePopwindowInterface() {
+                    @Override
+                    public void getCheck(boolean isCheck) {
+                        if (isCheck)
+                            presenter.deleteAddress(addressId);
+                    }
+                });
                 break;
             case R.id.ll_region:
                 LogUtil.e("你有么有被触发");
@@ -218,7 +216,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 presenter.loadCountry();
                 break;
             case R.id.textView_mobile:
-                startActivity(new Intent(context,SelectCountryOrAreaActivity.class));
+                //startActivity(new Intent(context,SelectCountryOrAreaActivity.class));
                 break;
             case R.id.iv_photo_position:
 
@@ -281,7 +279,6 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         Intent intent=getIntent();
         isNew = intent.getBooleanExtra("isNew",true);
         isForeign = intent.getBooleanExtra("isForeign",true);
-        rid = intent.getStringExtra("rid");
         addressId = intent.getStringExtra(AddressActivity.class.getSimpleName());
 
     }
@@ -305,7 +302,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                     if (et_detailed.getText().toString().isEmpty()){
                         ToastUtil.showInfo("请输入详细地址");
                     }else{
-                        if (isForeign) {
+                        if (!isForeign) {
                             dataBean.setStreet_address(et_detailed.getText().toString());
                             //dataBean.setCountry_id(Integer.valueOf(rid));
                             dataBean.setZipcode(et_code.getText().toString());
@@ -354,11 +351,13 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setAddressData(AddressBean.DataBean data) {
-        et_name.setText(data.getFirst_name());
+        et_name.setText(data.getFull_name());
+        et_mobile.setText(data.getMobile());
         swit.setChecked(data.isIs_default());
-        et_code.setText((Integer) data.getZipcode());
-        tv_city.setText(data.getFull_address());
-        tv_country.setText(data.getCountry_name());
+        if (!data.getZipcode().isEmpty())
+        et_code.setText(data.getZipcode());
+        et_detailed.setText(data.getStreet_address());
+        tv_city.setText(data.getProvince()+data.getCity()+data.getTown());
         dataBean=data;
     }
 
@@ -424,18 +423,19 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     //相机
     @AfterPermissionGranted(Constants.REQUEST_CODE_CAPTURE_CAMERA)
     private void cameraTask(){
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
+        String[] perms = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
             LogUtil.e("有权限");
             openCamera();
         } else {
-            EasyPermissions.requestPermissions(AddressActivity.this, getString(R.string.rationale_camera), Constants.REQUEST_CODE_CAPTURE_CAMERA, Manifest.permission.CAMERA);
+            EasyPermissions.requestPermissions(AddressActivity.this, getString(R.string.rationale_camera), Constants.REQUEST_CODE_CAPTURE_CAMERA, perms);
         }
     }
 
     private File mCurrentPhotoFile;
     private void openCamera(){
         mCurrentPhotoFile = ImageUtils.getDefaultFile();
-        ImageUtils.getImageFromCamera(this, ImageUtils.getUriForFile(getApplicationContext(), mCurrentPhotoFile));
+        ImageUtils.getImageFromCamera(AddressActivity.this, ImageUtils.getUriForFile(getApplicationContext(), mCurrentPhotoFile));
     }
 
     //相册
@@ -454,14 +454,16 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LogUtil.e("这里有没有调用"+requestCode);
-        if (resultCode!= Activity.RESULT_OK)
+        LogUtil.e("这里有没有调用"+requestCode+"这个code："+RESULT_OK+"resultCode:"+resultCode);
+        if (resultCode!= RESULT_OK)
             return;
         switch (requestCode){
             case Constants.REQUEST_CODE_CAPTURE_CAMERA:
+                LogUtil.e("有没有调用成功");
                 if (null == mCurrentPhotoFile)
                     return;
-                        toCropActivity(ImageUtils.getUriForFile(getApplicationContext(), mCurrentPhotoFile));
+                LogUtil.e("调用成功了");
+                toCropActivity(ImageUtils.getUriForFile(getApplicationContext(), mCurrentPhotoFile));
                 break;
             case Constants.REQUEST_CODE_PICK_IMAGE:
                 LogUtil.e("调用成功");
@@ -496,11 +498,16 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //反注册eventBus
         EventBus.getDefault().unregister(this);
     }
 
     private void setImageUri(byte[] bytes){
-        GlideUtil.loadImageAsBitmap(bytes,iv_position);
+        if (isPosition) {
+            GlideUtil.loadImageAsBitmap(bytes, iv_position);
+        }else{
+            GlideUtil.loadImageAsBitmap(bytes, iv_opposion);
+        }
     }
 
     @Override

@@ -1,11 +1,31 @@
 package com.thn.lexi.orderList;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyOrderListBean {
+public class MyOrderListBean implements Parcelable{
     private DataBean data;
     private StatusBean status;
     private boolean success;
+
+    protected MyOrderListBean(Parcel in) {
+        success = in.readByte() != 0;
+    }
+
+    public static final Creator<MyOrderListBean> CREATOR = new Creator<MyOrderListBean>() {
+        @Override
+        public MyOrderListBean createFromParcel(Parcel in) {
+            return new MyOrderListBean(in);
+        }
+
+        @Override
+        public MyOrderListBean[] newArray(int size) {
+            return new MyOrderListBean[size];
+        }
+    };
 
     public DataBean getData() {
         return data;
@@ -31,12 +51,40 @@ public class MyOrderListBean {
         this.success = success;
     }
 
-    public static class DataBean {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (success ? 1 : 0));
+    }
+
+    public static class DataBean implements Parcelable {
 
         private int count;
         private String next;
         private Object prev;
         private List<OrdersBean> orders;
+
+        protected DataBean(Parcel in) {
+            count = in.readInt();
+            next = in.readString();
+            orders = in.createTypedArrayList(OrdersBean.CREATOR);
+        }
+
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel in) {
+                return new DataBean(in);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
 
         public int getCount() {
             return count;
@@ -70,7 +118,19 @@ public class MyOrderListBean {
             this.orders = orders;
         }
 
-        public static class OrdersBean {
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(count);
+            dest.writeString(next);
+            dest.writeTypedList(orders);
+        }
+
+        public static class OrdersBean implements Parcelable{
             /**
              * blessing_utterance : null
              * buyer_address : 北京太火鸟
@@ -153,11 +213,61 @@ public class MyOrderListBean {
             private int ship_mode;
             private int signed_at;
             private int status;
-            private StoreBean store;
+            public StoreBean store;
             private double total_amount;
             private int total_quantity;
             private int user_order_status;
             private List<ItemsBean> items;
+
+            protected OrdersBean(Parcel in) {
+                buyer_address = in.readString();
+                buyer_area = in.readString();
+                buyer_city = in.readString();
+                buyer_country = in.readString();
+                buyer_name = in.readString();
+                buyer_phone = in.readString();
+                buyer_province = in.readString();
+                buyer_remark = in.readString();
+                buyer_tel = in.readString();
+                buyer_town = in.readString();
+                buyer_zipcode = in.readString();
+                coupon_amount = in.readDouble();
+                created_at = in.readInt();
+                current_time = in.readInt();
+                discount_amount = in.readDouble();
+                distributed = in.readByte() != 0;
+                first_discount = in.readDouble();
+                freight = in.readDouble();
+                is_many_express = in.readByte() != 0;
+                order_total_commission_price = in.readInt();
+                outside_target_id = in.readString();
+                pay_amount = in.readDouble();
+                payed_at = in.readInt();
+                reach_minus = in.readDouble();
+                received_at = in.readInt();
+                refund_amount = in.readDouble();
+                rid = in.readString();
+                ship_mode = in.readInt();
+                signed_at = in.readInt();
+                status = in.readInt();
+                store = in.readParcelable(StoreBean.class.getClassLoader());
+                total_amount = in.readDouble();
+                total_quantity = in.readInt();
+                user_order_status = in.readInt();
+                items = in.createTypedArrayList(ItemsBean.CREATOR);
+            }
+
+            public static final Creator<OrdersBean> CREATOR = new Creator<OrdersBean>() {
+                @Override
+                public OrdersBean createFromParcel(Parcel in) {
+                    return new OrdersBean(in);
+                }
+
+                @Override
+                public OrdersBean[] newArray(int size) {
+                    return new OrdersBean[size];
+                }
+            };
 
             public Object getBlessing_utterance() {
                 return blessing_utterance;
@@ -479,7 +589,52 @@ public class MyOrderListBean {
                 this.items = items;
             }
 
-            public static class StoreBean {
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(buyer_address);
+                dest.writeString(buyer_area);
+                dest.writeString(buyer_city);
+                dest.writeString(buyer_country);
+                dest.writeString(buyer_name);
+                dest.writeString(buyer_phone);
+                dest.writeString(buyer_province);
+                dest.writeString(buyer_remark);
+                dest.writeString(buyer_tel);
+                dest.writeString(buyer_town);
+                dest.writeString(buyer_zipcode);
+                dest.writeDouble(coupon_amount);
+                dest.writeInt(created_at);
+                dest.writeInt(current_time);
+                dest.writeDouble(discount_amount);
+                dest.writeByte((byte) (distributed ? 1 : 0));
+                dest.writeDouble(first_discount);
+                dest.writeDouble(freight);
+                dest.writeByte((byte) (is_many_express ? 1 : 0));
+                dest.writeInt(order_total_commission_price);
+                dest.writeString(outside_target_id);
+                dest.writeDouble(pay_amount);
+                dest.writeInt(payed_at);
+                dest.writeDouble(reach_minus);
+                dest.writeInt(received_at);
+                dest.writeDouble(refund_amount);
+                dest.writeString(rid);
+                dest.writeInt(ship_mode);
+                dest.writeInt(signed_at);
+                dest.writeInt(status);
+                dest.writeParcelable(store, flags);
+                dest.writeDouble(total_amount);
+                dest.writeInt(total_quantity);
+                dest.writeInt(user_order_status);
+                dest.writeTypedList(items);
+            }
+
+
+            public static class StoreBean implements Parcelable{
                 /**
                  * store_logo : https://kg.erp.taihuoniao.com/20180726/3621Fg896_2PBRG2DP7T06lFUZqnZX_3.jpg
                  * store_name : 乐喜小馆
@@ -489,6 +644,24 @@ public class MyOrderListBean {
                 private String store_logo;
                 private String store_name;
                 private String store_rid;
+
+                protected StoreBean(Parcel in) {
+                    store_logo = in.readString();
+                    store_name = in.readString();
+                    store_rid = in.readString();
+                }
+
+                public static final Creator<StoreBean> CREATOR = new Creator<StoreBean>() {
+                    @Override
+                    public StoreBean createFromParcel(Parcel in) {
+                        return new StoreBean(in);
+                    }
+
+                    @Override
+                    public StoreBean[] newArray(int size) {
+                        return new StoreBean[size];
+                    }
+                };
 
                 public String getStore_logo() {
                     return store_logo;
@@ -513,9 +686,21 @@ public class MyOrderListBean {
                 public void setStore_rid(String store_rid) {
                     this.store_rid = store_rid;
                 }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeString(store_logo);
+                    dest.writeString(store_name);
+                    dest.writeString(store_rid);
+                }
             }
 
-            public static class ItemsBean {
+            public static class ItemsBean implements Parcelable{
                 /**
                  * bgcover : https://kg.erp.taihuoniao.com/20180831/2914Fmxc2aINCXzpVSBnlySJNwri4bn_.jpg
                  * city : 门头沟
@@ -602,6 +787,70 @@ public class MyOrderListBean {
                 private String tag_line;
                 private String town;
                 public boolean isShow;
+                public int score;
+                public String content;
+                public List<String> asset_ids=new ArrayList<>();
+                public List<byte[]> asset_image=new ArrayList<>();
+
+
+                protected ItemsBean(Parcel in) {
+                    bgcover = in.readString();
+                    city = in.readString();
+                    commission_price = in.readDouble();
+                    commission_rate = in.readDouble();
+                    country = in.readString();
+                    cover = in.readString();
+                    cover_id = in.readInt();
+                    deal_price = in.readDouble();
+                    delivery_city = in.readString();
+                    delivery_country = in.readString();
+                    delivery_country_id = in.readInt();
+                    delivery_province = in.readString();
+                    distribution_type = in.readInt();
+                    express = in.readInt();
+                    express_at = in.readInt();
+                    express_code = in.readString();
+                    express_name = in.readString();
+                    fans_count = in.readInt();
+                    freight = in.readDouble();
+                    freight_name = in.readString();
+                    mode = in.readString();
+                    order_sku_commission_price = in.readInt();
+                    order_sku_commission_rate = in.readInt();
+                    price = in.readDouble();
+                    product_name = in.readString();
+                    product_rid = in.readString();
+                    province = in.readString();
+                    quantity = in.readInt();
+                    rid = in.readString();
+                    s_color = in.readString();
+                    s_model = in.readString();
+                    s_weight = in.readDouble();
+                    sale_price = in.readDouble();
+                    stock_count = in.readInt();
+                    stock_quantity = in.readInt();
+                    store_logo = in.readString();
+                    store_name = in.readString();
+                    store_rid = in.readString();
+                    tag_line = in.readString();
+                    town = in.readString();
+                    isShow = in.readByte() != 0;
+                    score = in.readInt();
+                    content = in.readString();
+                    asset_ids = in.createStringArrayList();
+                }
+
+                public static final Creator<ItemsBean> CREATOR = new Creator<ItemsBean>() {
+                    @Override
+                    public ItemsBean createFromParcel(Parcel in) {
+                        return new ItemsBean(in);
+                    }
+
+                    @Override
+                    public ItemsBean[] newArray(int size) {
+                        return new ItemsBean[size];
+                    }
+                };
 
                 public String getBgcover() {
                     return bgcover;
@@ -930,6 +1179,62 @@ public class MyOrderListBean {
                 public void setTown(String town) {
                     this.town = town;
                 }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+
+                    dest.writeString(bgcover);
+                    dest.writeString(city);
+                    dest.writeDouble(commission_price);
+                    dest.writeDouble(commission_rate);
+                    dest.writeString(country);
+                    dest.writeString(cover);
+                    dest.writeInt(cover_id);
+                    dest.writeDouble(deal_price);
+                    dest.writeString(delivery_city);
+                    dest.writeString(delivery_country);
+                    dest.writeInt(delivery_country_id);
+                    dest.writeString(delivery_province);
+                    dest.writeInt(distribution_type);
+                    dest.writeInt(express);
+                    dest.writeInt(express_at);
+                    dest.writeString(express_code);
+                    dest.writeString(express_name);
+                    dest.writeInt(fans_count);
+                    dest.writeDouble(freight);
+                    dest.writeString(freight_name);
+                    dest.writeString(mode);
+                    dest.writeInt(order_sku_commission_price);
+                    dest.writeInt(order_sku_commission_rate);
+                    dest.writeDouble(price);
+                    dest.writeString(product_name);
+                    dest.writeString(product_rid);
+                    dest.writeString(province);
+                    dest.writeInt(quantity);
+                    dest.writeString(rid);
+                    dest.writeString(s_color);
+                    dest.writeString(s_model);
+                    dest.writeDouble(s_weight);
+                    dest.writeDouble(sale_price);
+                    dest.writeInt(stock_count);
+                    dest.writeInt(stock_quantity);
+                    dest.writeString(store_logo);
+                    dest.writeString(store_name);
+                    dest.writeString(store_rid);
+                    dest.writeString(tag_line);
+                    dest.writeString(town);
+                    dest.writeByte((byte) (isShow ? 1 : 0));
+                    dest.writeInt(score);
+                    dest.writeString(content);
+                    dest.writeStringList(asset_ids);
+                }
+
+
             }
         }
     }

@@ -93,10 +93,13 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         break;
                     case R.id.bt_evaluate:
                         LogUtil.e("评价订单啊啊啊啊啊啊啊");
+                        intent=new Intent(getActivity(),EvaluateActivity.class);
+                        intent.putExtra(EvaluateActivity.class.getSimpleName(),adapterOrderList.getData().get(position));
+                        getActivity().startActivity(intent);
                         break;
                     case R.id.bt_confirm:
                         LogUtil.e("收货订单啊啊啊啊啊啊啊");
-                        inquiryDialog = new InquiryDialog("确定删除订单？", getContext(), new InquiryDialog.ImagePopwindowInterface() {
+                        inquiryDialog = new InquiryDialog("确认收货？", getContext(), new InquiryDialog.ImagePopwindowInterface() {
                             @Override
                             public void getCheck(boolean isCheck) {
                                 if (isCheck){

@@ -471,7 +471,18 @@ object URL {
     const val GET_LOGISTICS="${BASE_URL}logistics/information"
 
     /**
+     * 获取用身份信息
+     */
+    const val GET_USER_IDENTITY = "${BASE_URL}address/custom"
+
+
+    /**
      * 订单确认收货
      */
-    const val ORDERF_FINISH="${BASE_URL}orders/signed"
+    const val ORDER_FINISH="${BASE_URL}orders/signed"
+
+    /**
+     *添加商品评价
+     */
+    const val ORDER_EVALUATE="${BASE_URL}orders/user_comment/create"
 }

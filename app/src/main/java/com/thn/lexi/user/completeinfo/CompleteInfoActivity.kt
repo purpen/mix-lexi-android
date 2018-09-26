@@ -121,11 +121,12 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
 
     @AfterPermissionGranted(Constants.REQUEST_CODE_CAPTURE_CAMERA)
     private fun cameraTask() {
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
+        val perms= arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
             openCamera()
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_camera),
-                    Constants.REQUEST_CODE_CAPTURE_CAMERA, Manifest.permission.CAMERA)
+                    Constants.REQUEST_CODE_CAPTURE_CAMERA, *perms)
         }
     }
 

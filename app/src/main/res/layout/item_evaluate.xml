@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/dp10">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +19,8 @@
             android:layout_height="@dimen/dp60"
             android:layout_marginBottom="@dimen/dp10"
             android:layout_marginTop="10dp"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            android:layout_marginRight="@dimen/dp10"/>
 
         <TextView
             android:id="@+id/tv_sale_price"
@@ -130,7 +132,8 @@
         android:background="@android:color/white"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp15"
-        android:paddingRight="@dimen/dp15">
+        android:paddingRight="@dimen/dp15"
+        android:layout_marginBottom="@dimen/dp1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -145,24 +148,15 @@
             android:textSize="@dimen/sp11"
             android:layout_marginBottom="@dimen/dp13"/>
     </LinearLayout>
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp1"
-        android:background="@android:color/white">
-        <ImageView
-            android:id="@+id/iv_evaluate0"
-            android:layout_width="@dimen/dp60"
-            android:layout_height="@dimen/dp60"
-            android:layout_margin="@dimen/dp15"
-            android:src="@mipmap/icon_evaluate_image"/>
-        <ImageView
-            android:id="@+id/iv_delete0"
-            android:layout_width="@dimen/dp15"
-            android:layout_height="@dimen/dp15"
-            android:src="@mipmap/icon_evaluate_delete_Image"
-            android:layout_marginTop="@dimen/dp7.5"
-            android:layout_marginLeft="67.5dp"/>
-    </RelativeLayout>
+        android:background="@android:color/white"
+        android:paddingBottom="@dimen/dp15">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 
 </LinearLayout>

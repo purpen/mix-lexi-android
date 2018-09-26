@@ -11,6 +11,7 @@ import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
+import com.thn.lexi.orderList.EvaluateBean;
 import com.thn.lexi.user.login.UserProfileUtil;
 import com.thn.lexi.order.CalculateExpressExpenseRequestBean;
 import com.thn.lexi.order.SelectExpressRequestBean;
@@ -1054,6 +1055,20 @@ public class ClientParamsAPI {
     }
 
     /**
+     * 获取用户海关信息
+     * @param first_name
+     * @param mobile
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getUserIdentifyParams(@NotNull String first_name, @NotNull String mobile) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("user_name", first_name);
+        params.put("mobile",mobile);
+        return params;
+    }
+
+    /**
      * 获取全部省市区
      * @param country
      * @return
@@ -1068,5 +1083,12 @@ public class ClientParamsAPI {
         HashMap<String,Object> params=generateCommonParams();
         params.put("rid",rid);
         return  params;
+    }
+
+    public static HashMap<String,Object> getEvaluateParams(String order_rid, ArrayList<EvaluateBean> items){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("order_rid",order_rid);
+        params.put("items",items);
+        return params;
     }
 }

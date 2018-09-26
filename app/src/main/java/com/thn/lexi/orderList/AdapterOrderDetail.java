@@ -27,7 +27,7 @@ public class AdapterOrderDetail extends BaseQuickAdapter<MyOrderListBean.DataBea
             helper.setVisible(R.id.relativeLayout,true);
             helper.setText(R.id.tv_logistics_name,item.getExpress_name());
         }
-        GlideUtil.loadImage(item.getStore_logo(),(ImageView) helper.getView(R.id.iv_order_goods));
+        GlideUtil.loadImageWithFading(item.getStore_logo(),(ImageView) helper.getView(R.id.iv_order_goods));
         helper.setText(R.id.tv_goods_sale_price,"¥"+item.getDeal_price());
         helper.setText(R.id.tv_goods_num,"x"+item.getQuantity());
         TextView price=helper.getView(R.id.tv_goods_price);
@@ -35,10 +35,10 @@ public class AdapterOrderDetail extends BaseQuickAdapter<MyOrderListBean.DataBea
         helper.setText(R.id.tv_goods_price,"¥"+item.getPrice());
         helper.setText(R.id.tv_order_goods_name,item.getProduct_name());
         StringBuilder stringBuilder=new StringBuilder("");
-        if(item.getS_color().isEmpty())
-            stringBuilder.append(stringBuilder+item.getS_color());
-        if (item.getS_model().isEmpty())
-            stringBuilder.append(stringBuilder+item.getS_model());
+        if(!item.getS_color().isEmpty())
+            stringBuilder.append(item.getS_color()+"/");
+        if (!item.getS_model().isEmpty())
+            stringBuilder.append(stringBuilder+item.getS_model()+"/");
         if (0!=item.getS_weight())
             stringBuilder.append(stringBuilder+String.valueOf(item.getS_weight()));
         helper.setText(R.id.tv_goods_parm,stringBuilder);

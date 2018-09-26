@@ -9,6 +9,7 @@ import com.basemodule.ui.BaseActivity
 import com.thn.lexi.R
 import com.thn.lexi.address.AddressActivity
 import com.thn.lexi.index.lifehouse.FragmentLifeHouse
+import com.thn.lexi.orderList.EvaluateActivity
 import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import kotlinx.android.synthetic.main.activity_image_crop.*
 import org.greenrobot.eventbus.EventBus
@@ -30,6 +31,8 @@ class ImageCropActivity:BaseActivity(), View.OnClickListener {
             uri = intent.getParcelableExtra(FragmentLifeHouse::class.java.simpleName)
         }else if(intent.hasExtra(AddressActivity::class.java.simpleName)){
             uri = intent.getParcelableExtra(AddressActivity::class.java.simpleName)
+        }else if(intent.hasExtra(EvaluateActivity::class.java.simpleName)){
+            uri = intent.getParcelableExtra(EvaluateActivity::class.java.simpleName)
         }
     }
 

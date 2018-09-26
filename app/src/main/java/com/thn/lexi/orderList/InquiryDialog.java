@@ -30,7 +30,7 @@ public class InquiryDialog {
         //参数都设置完成了，创建并显示出来
         builder.create().show();
     }
-    interface ImagePopwindowInterface {
+    public interface ImagePopwindowInterface {
         void getCheck(boolean isCheck);
     }
 

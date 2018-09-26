@@ -81,8 +81,17 @@ public class AddressBean {
         private Object street_address_two;
         private Object town;
         private int town_id;
-        private Object zipcode;
+        private String zipcode;
         private String country_name;
+        private String area_code;
+
+        public String getArea_code() {
+            return area_code;
+        }
+
+        public void setArea_code(String area_code) {
+            this.area_code = area_code;
+        }
 
         public String getCountry_name() {
             return country_name;
@@ -252,11 +261,11 @@ public class AddressBean {
             this.town_id = town_id;
         }
 
-        public Object getZipcode() {
+        public String getZipcode() {
             return zipcode;
         }
 
-        public void setZipcode(Object zipcode) {
+        public void setZipcode(String zipcode) {
             this.zipcode = zipcode;
         }
     }

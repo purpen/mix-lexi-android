@@ -115,7 +115,7 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
     }
 
     @Override
-    public void setPresenter(OrderDetailContract.Presenter presenter) {
+    public void setPresenter(LogisticsContract.Presenter presenter) {
         setPresenter(presenter);
     }
 }

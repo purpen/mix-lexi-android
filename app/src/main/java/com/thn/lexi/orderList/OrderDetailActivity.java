@@ -155,7 +155,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                     tv_order_status.setText("待付款");
                     break;
             }
-            tv_delivery_city.setText("从"+bean.data.getItems().get(1).getDelivery_province()+"发货");
+            tv_delivery_city.setText("从"+bean.data.getItems().get(0).getDelivery_province()+"发货");
             tv_pay_type.setText(AppApplication.getContext().getString(R.string.order_pay_type_wx));
 
             tv_name.setText(bean.data.getBuyer_name());

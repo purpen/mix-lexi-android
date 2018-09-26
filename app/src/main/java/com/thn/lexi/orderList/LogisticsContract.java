@@ -4,7 +4,7 @@ import com.basemodule.ui.BasePresenter;
 import com.basemodule.ui.BaseView;
 
 public class LogisticsContract {
-    interface View extends BaseView<OrderDetailContract.Presenter> {
+    interface View extends BaseView<Presenter> {
         void showLoadingView();
         void dismissLoadingView();
         void showError(String error);

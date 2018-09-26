@@ -1,6 +1,7 @@
 package com.thn.lexi.address;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 
 import com.basemodule.tools.JsonUtil;
@@ -45,6 +46,7 @@ public class AddressPresenter implements AddressContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e(json);
                 view.dismissLoadingView();
                 AddressBean bean= JsonUtil.fromJson(json,AddressBean.class);
                 view.setAddressData(bean.getData());
@@ -148,9 +150,10 @@ public class AddressPresenter implements AddressContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e(json);
                 view.dismissLoadingView();
                 AddressBean bean= JsonUtil.fromJson(json,AddressBean.class);
-                if ("204".equals(bean.getStatus().getCode())){
+                if (bean.isSuccess()){
                     view.finishActivity();
                 }
             }
@@ -211,7 +214,7 @@ public class AddressPresenter implements AddressContract.Presenter {
                 if (bean.success){
                     view.setToken(bean);
                 }else{
-
+                    view.showError(AppApplication.getContext().getString(R.string.text_net_error));
                 }
                 view.dismissLoadingView();
             }
