@@ -27,10 +27,13 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: SearchGoodsPrese
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_filter_sort_bottom, null)
-//        setSelection(present.getProfitType())
+        setRangeSeekBar()
+        return view
+    }
+
+    private fun setRangeSeekBar(): View {
         val list = listOf("￥0", "￥150", "￥300", "￥400", "￥500", "￥800", "不限")
         view.rangeSeekBarView.setData(list) { leftPostion, rightPostion ->
-            //            LogUtil.e("list[leftPostion]=" + list[leftPostion] + ";list[rightPostion]=" + list[rightPostion])
 
             val page = 1
             val filterCondition = present.getFilterCondition()
@@ -46,9 +49,9 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: SearchGoodsPrese
             } else {
                 maxPrice = list[rightPostion].substring(1)
             }
-//            LogUtil.e("minPrice==" + minPrice + ";maxPrice==" + maxPrice)
+            //            LogUtil.e("minPrice==" + minPrice + ";maxPrice==" + maxPrice)
             val sortType = ""
-            val cids = present.getFilterCondition()
+            val cids = getSelectedItem()
             present.loadData(page, sortType, SearchGoodsPresenter.PROFIT_TYPE_DEFAULT, filterCondition, minPrice, maxPrice, cids)
         }
 
@@ -124,10 +127,21 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: SearchGoodsPrese
      * 重置选中状态
      */
     private fun resetSelectionStatus() {
-
+        val data = adapter.data
+        for (item in data){
+            item.selected = false
+        }
+        adapter.notifyDataSetChanged()
     }
 
     override fun setUiBeforShow() {
+
+        view.textViewReset.setOnClickListener {
+            setRangeSeekBar()
+            resetSelectionStatus()
+            setGoodsCount(0)
+        }
+
         view.imageViewClose.setOnClickListener { dismiss() }
 
         view.button.setOnClickListener {

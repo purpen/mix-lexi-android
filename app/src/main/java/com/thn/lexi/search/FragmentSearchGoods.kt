@@ -94,6 +94,13 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
         }
     }
 
+    /**
+     * 设置符合条件商品数量
+     */
+    override fun setGoodsCount(count: Int) {
+        if (dialogBottomFilter.isShowing) dialogBottomFilter.setGoodsCount(count)
+    }
+
     override fun loadData() {
         presenter.loadData(false, "好")
     }

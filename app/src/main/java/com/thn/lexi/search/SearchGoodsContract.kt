@@ -21,6 +21,9 @@ class SearchGoodsContract {
         fun loadMoreEnd() {}
         fun loadMoreComplete() {}
         fun loadMoreFail() {}
+        fun setGoodsCount(count: Int) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

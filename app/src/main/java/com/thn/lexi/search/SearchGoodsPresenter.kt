@@ -95,6 +95,7 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
                 view.dismissLoadingView()
                 val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
                 if (hotGoodsBean.success) {
+                    view.setGoodsCount(hotGoodsBean.data.count)
                     view.setNewData(hotGoodsBean.data.products)
                     ++curPage
                 } else {
