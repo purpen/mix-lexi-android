@@ -33,4 +33,7 @@ public class Constants {
      */
     @Nullable
     public static final String USER_PROFILE = "USER_PROFILE";
+
+    @Nullable
+    public static final String SEARCH_HISTORY = "SEARCH_HISTORY";
 }

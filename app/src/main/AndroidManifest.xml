@@ -68,7 +68,8 @@
             android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".orderList.OrderDetailActivity"/>
         <activity android:name=".order.SelectExpressActivity" />
-        <activity android:name=".search.SearchResultActivity" />
+        <activity android:name=".search.SearchResultActivity" android:launchMode="singleTask"/>
+        <activity android:name=".search.SearchActivity" android:launchMode="singleTask"/>
     </application>
 
 </manifest>

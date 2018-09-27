@@ -4,7 +4,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.basemodule.tools.Constants;
-import com.basemodule.tools.JsonUtil;
+import com.thn.lexi.JsonUtil;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.SPUtil;
 import com.basemodule.ui.IDataSource;

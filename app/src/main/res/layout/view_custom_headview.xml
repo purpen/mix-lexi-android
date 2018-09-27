@@ -51,7 +51,9 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp10"
-            android:background="@mipmap/icon_clear_search_box" />
+            android:background="@mipmap/icon_clear_search_box"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <TextView

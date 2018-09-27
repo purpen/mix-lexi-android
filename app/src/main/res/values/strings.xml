@@ -259,4 +259,6 @@
     <string name="text_submit">提交</string>
     <string name="title_evaluate">评价</string>
     <string name="text_search_hint">关键字/商品/品牌馆/人</string>
+    <string name="text_search_history">历史搜索</string>
+    <string name="hint_input_search_text">请输入搜索内容</string>
 </resources>

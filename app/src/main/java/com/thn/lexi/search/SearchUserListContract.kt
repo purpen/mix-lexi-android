@@ -44,7 +44,7 @@ class SearchUserListContract {
 
     interface Presenter : BasePresenter {
         fun loadData(searchString:String,isRefresh:Boolean)
-        fun loadMoreData(searchString:String)
+        fun loadMoreData()
         fun focusUser(uid: String, v: android.view.View, focusState: Int, position: Int)
     }
 }

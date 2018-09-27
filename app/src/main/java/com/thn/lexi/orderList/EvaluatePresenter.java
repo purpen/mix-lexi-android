@@ -2,7 +2,7 @@ package com.thn.lexi.orderList;
 
 import android.graphics.Bitmap;
 
-import com.basemodule.tools.JsonUtil;
+import com.thn.lexi.JsonUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.ui.IDataSource;

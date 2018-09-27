@@ -1,5 +1,8 @@
 package com.thn.lexi.search
+
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
@@ -20,9 +23,21 @@ class FragmentSearchUserList : BaseFragment(), SearchUserListContract.View {
 
     override val layout: Int = R.layout.fragment_recyclerview
 
+    private var searchString: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        searchString = arguments?.getString(FragmentSearchUserList::class.java.simpleName)
+    }
+
     companion object {
-        fun newInstance(): FragmentSearchUserList {
-            return FragmentSearchUserList()
+        @JvmStatic
+        fun newInstance(searchString: String): FragmentSearchUserList {
+            val fragment = FragmentSearchUserList()
+            val bundle = Bundle()
+            bundle.putString(FragmentSearchUserList::class.java.simpleName, searchString)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 
@@ -41,18 +56,18 @@ class FragmentSearchUserList : BaseFragment(), SearchUserListContract.View {
     override fun installListener() {
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData("好")
+            presenter.loadMoreData()
         }, recyclerView)
 
 
         adapter.setOnItemChildClickListener { adapter, v, position ->
             val usersBean = adapter.getItem(position) as UserBean
 
-            presenter.focusUser(usersBean.uid, v, usersBean.follow_status,position)
+            presenter.focusUser(usersBean.uid, v, usersBean.follow_status, position)
         }
 
         adapter.setOnItemClickListener { adapter, view, position ->
-//            ToastUtil.showInfo("跳转用户")
+            //            ToastUtil.showInfo("跳转用户")
 //            val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
 //            val intent = Intent(context, ShowWindowDetailActivity::class.java)
 //            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName, showWindowBean)
@@ -70,7 +85,8 @@ class FragmentSearchUserList : BaseFragment(), SearchUserListContract.View {
     }
 
     override fun loadData() {
-        presenter.loadData("好", false)
+        if (TextUtils.isEmpty(searchString)) return
+        presenter.loadData(searchString!!, false)
     }
 
     override fun setNewData(users: MutableList<UserBean>) {

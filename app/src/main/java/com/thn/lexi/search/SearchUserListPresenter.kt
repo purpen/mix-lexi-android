@@ -1,7 +1,7 @@
 package com.thn.lexi.search
 
 import android.view.View
-import com.basemodule.tools.JsonUtil
+import com.thn.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
@@ -13,13 +13,15 @@ class SearchUserListPresenter(view: SearchUserListContract.View) : SearchUserLis
 
     private val dataSource: SearchUserListModel by lazy { SearchUserListModel() }
 
+    private var searchString =""
+
     private var page: Int = 1
     /**
      * 加载数据
      */
     override fun loadData(searchString:String,isRefresh: Boolean) {
         if (isRefresh) this.page = 1
-
+        this.searchString = searchString
         dataSource.loadData(searchString,page, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 if (!isRefresh) view.showLoadingView()
@@ -46,7 +48,7 @@ class SearchUserListPresenter(view: SearchUserListContract.View) : SearchUserLis
     /**
      * 加载更多
      */
-    override fun loadMoreData(searchString :String) {
+    override fun loadMoreData() {
         dataSource.loadData(searchString,page, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {

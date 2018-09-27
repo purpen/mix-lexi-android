@@ -1,4 +1,4 @@
-package com.basemodule.tools;
+package com.thn.lexi;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -28,14 +28,18 @@ public class JsonUtil {
     }
 
 
-//    public static <T> T fromJson(JsonElement element, Class<T> clazz) {
-//        return getGson().fromJson(element, clazz);
-//    }
+    public static <T> T fromJson(JsonElement element, Class<T> clazz) {
+        return getGson().fromJson(element, clazz);
+    }
 
+    public static <T> List<T> fromJson(String json, TypeToken<List<T>> token) throws JsonSyntaxException {
+
+        return (List<T>) getGson().fromJson(json, token.getType());
+    }
 //    public static <T> T fromJson(String json, TypeToken<HttpResponseBean<T>> token) throws JsonSyntaxException {
 //        return ((HttpResponseBean<T>) getGson().fromJson(json, token.getType())).getData();
 //    }
-
+//
 //    public static <T> HttpResponseBean<T> json2Bean(String json, TypeToken<HttpResponseBean<T>> token) throws JsonSyntaxException {
 //        return (HttpResponseBean<T>) getGson().fromJson(json, token.getType());
 //    }
