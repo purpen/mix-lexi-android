@@ -5,12 +5,10 @@ import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.R
-import com.thn.lexi.index.explore.FragmentExplore
-import com.thn.lexi.index.selection.FragmentSelection
 import kotlinx.android.synthetic.main.acticity_search.*
 
 
-class SearchActivity : BaseActivity(){
+class SearchResultActivity : BaseActivity(){
 
     private lateinit var adapter:CustomFragmentPagerAdapter
 
