@@ -4,11 +4,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.basemodule.tools.Constants;
-import com.basemodule.tools.JsonUtil;
-import com.basemodule.ui.IDataSource;
 import com.thn.lexi.address.AddressBean;
-import com.thn.lexi.order.CreateOrderBean;
-import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.order.CreateOrderBean;
 import com.thn.lexi.order.FullReductionRequestBean;
 import com.thn.lexi.orderList.EvaluateBean;

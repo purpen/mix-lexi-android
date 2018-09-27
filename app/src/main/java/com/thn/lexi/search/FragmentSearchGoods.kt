@@ -2,13 +2,12 @@ package com.thn.lexi.search
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.View
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.thn.lexi.R
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
@@ -32,10 +31,21 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
 
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
+    private var searchString: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        searchString = arguments?.getString(FragmentSearchGoods::class.java.simpleName)
+    }
 
     companion object {
-        fun newInstance(): FragmentSearchGoods {
-            return FragmentSearchGoods()
+        @JvmStatic
+        fun newInstance(searchString: String): FragmentSearchGoods {
+            val fragment = FragmentSearchGoods()
+            val bundle = Bundle()
+            bundle.putString(FragmentSearchGoods::class.java.simpleName, searchString)
+            fragment.arguments = bundle
+            return fragment
         }
     }
 
@@ -102,7 +112,8 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
     }
 
     override fun loadData() {
-        presenter.loadData(false, "好")
+        if (TextUtils.isEmpty(searchString)) return
+        presenter.loadData(false, searchString!!)
     }
 
     override fun setNewData(data: List<ProductBean>) {
@@ -171,7 +182,7 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
             val count = adapter.itemCount
             var divider: Y_Divider? = null
             when (itemPosition) {
-                0 ->{
+                0 -> {
                     divider = Y_DividerBuilder()
                             .setBottomSideLine(true, color, 10f, 0f, 0f)
                             .create()
@@ -189,7 +200,7 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
                             .create()
                 }
                 else -> {
-                    val item = adapter.getItem(itemPosition-1) as AdapterSearchGoods.MultipleItem
+                    val item = adapter.getItem(itemPosition - 1) as AdapterSearchGoods.MultipleItem
                     if (item.product.isRight) {
                         divider = Y_DividerBuilder()
                                 .setBottomSideLine(true, color, height, 0f, 0f)

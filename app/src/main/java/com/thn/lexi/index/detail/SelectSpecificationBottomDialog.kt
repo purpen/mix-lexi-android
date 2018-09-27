@@ -1,7 +1,6 @@
 package com.thn.lexi.index.detail
 
 import android.content.Context
-import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
@@ -12,6 +11,7 @@ import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.thn.lexi.AppApplication
+import com.thn.lexi.JsonUtil
 import com.thn.lexi.R
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter

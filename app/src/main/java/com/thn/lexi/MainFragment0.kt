@@ -8,10 +8,11 @@ import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.index.explore.FragmentExplore
 import com.thn.lexi.index.lifehouse.FragmentLifeHouse
 import com.thn.lexi.index.selection.FragmentSelection
-import com.thn.lexi.search.SearchResultActivity
+import com.thn.lexi.search.SearchActivity
 import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_main0.*
 import kotlinx.android.synthetic.main.view_head_search_box.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -30,6 +31,7 @@ class MainFragment0 : BaseFragment() {
     private  val fragmentLifeHouse:FragmentLifeHouse by lazy { FragmentLifeHouse.newInstance() }
 
     override fun initView() {
+        EventBus.getDefault().register(this)
         setUpViewPager()
     }
 
@@ -69,7 +71,8 @@ class MainFragment0 : BaseFragment() {
 
     override fun installListener() {
         relativeLayout.setOnClickListener {
-            startActivity(Intent(AppApplication.getContext(),SearchResultActivity::class.java))
+//            startActivity(Intent(AppApplication.getContext(),SearchResultActivity::class.java))
+            startActivity(Intent(AppApplication.getContext(), SearchActivity::class.java))
         }
 
         customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -100,4 +103,8 @@ class MainFragment0 : BaseFragment() {
         fragmentLifeHouse.onActivityResult(requestCode,resultCode,data)
     }
 
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
 }

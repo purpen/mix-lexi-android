@@ -1,14 +1,11 @@
 package com.thn.lexi.orderList;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
-import com.basemodule.tools.JsonUtil;
-import com.basemodule.tools.LogUtil;
+import com.thn.lexi.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.AppApplication;
 import com.thn.lexi.R;
-import com.thn.lexi.order.OrderListBean;
 
 import org.jetbrains.annotations.NotNull;
 
