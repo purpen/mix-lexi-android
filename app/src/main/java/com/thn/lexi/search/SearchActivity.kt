@@ -12,14 +12,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
-import com.thn.lexi.R
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.acticity_search.*
 import com.google.gson.reflect.TypeToken
-import com.thn.lexi.AppApplication
-import com.thn.lexi.JsonUtil
-import com.thn.lexi.RecyclerViewDivider
+import com.thn.lexi.*
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
 
@@ -31,13 +28,15 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     private val presenter: SearchPresenter by lazy { SearchPresenter(this) }
 
     private val adapterRecent: AdapterSearchRecentLookGoods by lazy { AdapterSearchRecentLookGoods(R.layout.adapter_editor_recommend) }
+    private val adapterHotRecommendPavilion: AdapterHotRecommendPavilion by lazy { AdapterHotRecommendPavilion(R.layout.adapter_hot_recommend_pavilion) }
+    private val adapterHotSearch: AdapterHotSearch by lazy { AdapterHotSearch(R.layout.adapter_hot_search) }
 
     override val layout: Int = R.layout.acticity_search
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        if (intent==null) return
-        if (intent.hasExtra(TAG)){
+        if (intent == null) return
+        if (intent.hasExtra(TAG)) {
             val searchString = intent.getStringExtra(TAG)
             editTextSearch.setText(searchString)
             editTextSearch.setSelection(searchString.length)
@@ -48,8 +47,9 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         editTextSearch.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         initSearchHistory()
         initRecentLookGoods()
+        initHotRecommendPavilion()
+        initHotSearch()
     }
-
 
     /**
      * 搜索记录
@@ -116,13 +116,64 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         recyclerViewRecentGoods.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
+    /**
+     * 最近查看商品
+     */
     override fun setRecentLookData(products: List<ProductBean>) {
-        adapterRecent.setNewData(products)
+        if (products.isEmpty()) {
+            linearLayoutRecentGoods.visibility = View.GONE
+        } else {
+            linearLayoutRecentGoods.visibility = View.VISIBLE
+            adapterRecent.setNewData(products)
+        }
+    }
+
+    /**
+     * 初始化热门品牌馆
+     */
+    private fun initHotRecommendPavilion() {
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerViewHotRecommend.setHasFixedSize(true)
+        recyclerViewHotRecommend.layoutManager = linearLayoutManager
+        recyclerViewHotRecommend.adapter = adapterHotRecommendPavilion
+        recyclerViewHotRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(30.0), Util.getColor(android.R.color.transparent)))
+    }
+
+    override fun setHotRecommendPavilionData(hot_recommends: MutableList<SearchHotRecommendPavilionBean.DataBean.HotRecommendsBean>) {
+        val recommendsBean = SearchHotRecommendPavilionBean.DataBean.HotRecommendsBean()
+        recommendsBean.coverId = R.mipmap.icon_order_made
+        recommendsBean.recommend_title = "接单订制"
+        hot_recommends.add(0,recommendsBean)
+        adapterHotRecommendPavilion.setNewData(hot_recommends)
+    }
+
+    /**
+     * 初始化热门搜索
+     */
+    private fun initHotSearch(){
+        val linearLayoutManager = CustomLinearLayoutManager(this)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerViewHotSearch.setHasFixedSize(true)
+        linearLayoutManager.setScrollEnabled(false)
+        recyclerViewHotSearch.layoutManager = linearLayoutManager
+        recyclerViewHotSearch.adapter = adapterHotSearch
+    }
+
+    /**
+     * 设置热门搜索数据
+     */
+    override fun setHotSearchData(search_items: List<HotSearchBean.DataBean.SearchItemsBean>) {
+        adapterHotSearch.setNewData(search_items)
     }
 
     override fun requestNet() {
         presenter.getUserRecentLook()
+        presenter.getHotRecommendPavilion()
+        presenter.getHotSearch()
     }
+
+
 
     override fun installListener() {
         //点击搜索
@@ -146,10 +197,10 @@ class SearchActivity : BaseActivity(), SearchContract.View {
                     }
 
                     //保存最新10条搜索记录
-                    if (historyList.size>10){
+                    if (historyList.size > 10) {
 
-                        SPUtil.write(Constants.SEARCH_HISTORY, JsonUtil.list2Json(historyList.subList(0,10)))
-                    }else{
+                        SPUtil.write(Constants.SEARCH_HISTORY, JsonUtil.list2Json(historyList.subList(0, 10)))
+                    } else {
                         SPUtil.write(Constants.SEARCH_HISTORY, JsonUtil.list2Json(historyList))
                     }
 
@@ -187,6 +238,10 @@ class SearchActivity : BaseActivity(), SearchContract.View {
             val intent = Intent(this, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
             startActivity(intent)
+        }
+
+        adapterHotRecommendPavilion.setOnItemChildClickListener { adapter, view, position ->
+            ToastUtil.showInfo("跳转品牌馆详情")
         }
     }
 

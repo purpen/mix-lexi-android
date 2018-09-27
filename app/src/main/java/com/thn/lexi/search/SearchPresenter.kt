@@ -37,4 +37,52 @@ class SearchPresenter(view: SearchContract.View) : SearchContract.Presenter {
             }
         })
     }
+
+    /**
+     * 热门推荐品牌馆
+     */
+    fun getHotRecommendPavilion() {
+        dataSource.getHotRecommendPavilion(object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+            }
+
+            override fun onSuccess(json: String) {
+                val searchHotRecommendPavilionBean = JsonUtil.fromJson(json, SearchHotRecommendPavilionBean::class.java)
+                if (searchHotRecommendPavilionBean.success) {
+                    view.setHotRecommendPavilionData(searchHotRecommendPavilionBean.data.hot_recommends)
+                } else {
+                    view.showError(searchHotRecommendPavilionBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取热门搜索
+     */
+    fun getHotSearch() {
+        dataSource.getHotSearch(object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+            }
+
+            override fun onSuccess(json: String) {
+                val hotSearchBean = JsonUtil.fromJson(json, HotSearchBean::class.java)
+                if (hotSearchBean.success) {
+                    view.setHotSearchData(hotSearchBean.data.search_items)
+                } else {
+                    view.showError(hotSearchBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
 }

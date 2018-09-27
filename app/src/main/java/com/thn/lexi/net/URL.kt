@@ -455,20 +455,20 @@ object URL {
     /**
      * 全部省市区列表
      */
-    const val PROVINCES_CITY_COUNTRY= "${BASE_URL}places/provinces_cities"
+    const val PROVINCES_CITY_COUNTRY = "${BASE_URL}places/provinces_cities"
 
     /**
      * 订单全部列表
      */
-    const val GET_ORDER="${BASE_URL}orders"
+    const val GET_ORDER = "${BASE_URL}orders"
     /**
      * 删除订单
      */
-    const val DELETE_ORDER="${BASE_URL}orders/delete"
+    const val DELETE_ORDER = "${BASE_URL}orders/delete"
     /**
      * 获取商品物流信息
      */
-    const val GET_LOGISTICS="${BASE_URL}logistics/information"
+    const val GET_LOGISTICS = "${BASE_URL}logistics/information"
 
     /**
      * 获取用身份信息
@@ -494,16 +494,26 @@ object URL {
     /**
      * 搜索用户
      */
-   const val SEARCH_USERS_URL = "${BASE_URL}core_platforms/search/users"
+    const val SEARCH_USERS_URL = "${BASE_URL}core_platforms/search/users"
 
 
     /**
      * 订单确认收货
      */
-    const val ORDER_FINISH="${BASE_URL}orders/signed"
+    const val ORDER_FINISH = "${BASE_URL}orders/signed"
 
     /**
      *添加商品评价
      */
-    const val ORDER_EVALUATE="${BASE_URL}orders/user_comment/create"
+    const val ORDER_EVALUATE = "${BASE_URL}orders/user_comment/create"
+
+    /**
+     * 搜索->热门推荐品牌馆
+     */
+    const val SEARCH_HOT_RECOMMEND_PAVILION = "${BASE_URL}core_platforms/search/hot_recommend"
+
+    /**
+     * 搜索->热门搜索
+     */
+    const val SEARCH_HOT_URL: String = "${BASE_URL}core_platforms/search/week_hot"
 }

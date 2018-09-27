@@ -20,6 +20,14 @@ class SearchContract {
         fun setRecentLookData(products: List<ProductBean>) {
 
         }
+
+        fun setHotRecommendPavilionData(hot_recommends: MutableList<SearchHotRecommendPavilionBean.DataBean.HotRecommendsBean>) {
+
+        }
+
+        fun setHotSearchData(search_items: List<HotSearchBean.DataBean.SearchItemsBean>) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

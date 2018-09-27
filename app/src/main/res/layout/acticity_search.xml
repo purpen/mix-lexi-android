@@ -102,7 +102,9 @@
                 android:paddingStart="@dimen/dp15"
                 android:layout_marginTop="15dp"
                 android:paddingEnd="0dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
                 <TextView
                     android:id="@+id/textViewRecentGoodsTitle"
                     android:layout_width="wrap_content"
@@ -114,6 +116,58 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewRecentGoods"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    />
+            </LinearLayout>
+
+            <!--热门推荐-->
+            <LinearLayout
+                android:id="@+id/linearLayoutHotRecommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp15"
+                android:layout_marginTop="30dp"
+                android:paddingEnd="0dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewHotRecommendTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/text_hot_recommend_pavilion"
+                    android:textColor="@color/color_949ea6"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewHotRecommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    />
+            </LinearLayout>
+
+            <!--热门搜索-->
+            <LinearLayout
+                android:id="@+id/linearLayoutHotSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp15"
+                android:layout_marginTop="30dp"
+                android:paddingEnd="0dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewHotSearchTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/text_hot_search"
+                    android:textColor="@color/color_949ea6"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewHotSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
