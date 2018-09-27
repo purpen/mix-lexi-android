@@ -148,12 +148,12 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
             case 6:
                 helper.setText(R.id.tv_order_status,"交易取消");
                 helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_ff6666));
-                //helper.setVisible(R.id.bt_delete1, true);
-                helper.setGone(R.id.bt_delete1, false);
+                helper.setVisible(R.id.bt_delete1, true);
+                //helper.setGone(R.id.bt_delete1, false);
                 helper.setGone(R.id.bt_confirm,false);
                 helper.setGone(R.id.bt_delete, false);
-                //helper.setGone(R.id.bt_evaluate,false);
-                helper.setVisible(R.id.bt_evaluate,true );
+                helper.setGone(R.id.bt_evaluate,false);
+                //helper.setVisible(R.id.bt_evaluate,true );
                 helper.setGone(R.id.bt_money, false);
                 break;
         }
