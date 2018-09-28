@@ -72,6 +72,7 @@ public class GoodsAllDetailBean {
          * total_stock : 53
          */
 
+        public String expressTime;
         public int category_id;
         public double commission_price;
         public int commission_rate;

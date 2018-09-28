@@ -141,17 +141,20 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
     override fun setUiBeforShow() {
 
+
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
         view.textViewPrice.text = "${goods?.min_sale_price}"
 
         view.textViewName.text = goods?.name
 
-        val marginRight = DimenUtil.getDimensionPixelSize(R.dimen.dp15)
-        val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DimenUtil.getDimensionPixelSize(R.dimen.dp24))
+        val marginRight = DimenUtil.dp2px(15.0)
+        val marginBottom = DimenUtil.dp2px(10.0)
+        val dp6 = DimenUtil.dp2px(6.0)
+        val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DimenUtil.dp2px(24.0))
         layoutParams.rightMargin = marginRight
+        layoutParams.bottomMargin = marginBottom
 
-        val dp6 = DimenUtil.getDimensionPixelSize(R.dimen.dp6)
 
         adapterColor = object : TagAdapter<GoodsAllSKUBean.DataBean.ColorsBean>(colors) {
             override fun getView(parent: FlowLayout, position: Int, t: GoodsAllSKUBean.DataBean.ColorsBean): View {

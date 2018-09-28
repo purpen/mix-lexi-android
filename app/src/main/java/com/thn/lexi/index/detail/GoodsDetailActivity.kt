@@ -1,5 +1,7 @@
 package com.thn.lexi.index.detail
+
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
@@ -50,7 +52,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var couponList: ArrayList<CouponBean>
 
-    private lateinit var productId:String
+    private lateinit var productId: String
+
+    private var lookGoodsAllDetailDialog: LookGoodsAllDetailDialog? = null
 
     //商品详情数据
     private var goodsData: GoodsAllDetailBean.DataBean? = null
@@ -318,7 +322,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             return
         }
         val expressItem: ExpressInfoBean.DataBean.ItemsBean? = items[0]
-        headerView.textViewExpressTime.text = "预计${expressItem?.min_days}~${expressItem?.max_days}到达"
+        val expressTime = "预计${expressItem?.min_days}~${expressItem?.max_days}到达"
+        headerView.textViewExpressTime.text = expressTime
+        goodsData?.expressTime = expressTime
+        lookGoodsAllDetailDialog?.setExpressTime(expressTime)
     }
 
 
@@ -326,11 +333,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      * 设置商品信息
      */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
-
-        goodsData = data
-
         // 获取交货时间
         presenter.getExpressTime(data.fid, product.store_rid, productId)
+
+        goodsData = data
 
         for (item in data.deal_content) {
             if (TextUtils.equals("text", item.type)) {
@@ -434,7 +440,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         headerView.textViewSendAddress.text = data.delivery_country
 
-        headerView.textViewReturnPolicy.text = data.return_policy_title
+        if (TextUtils.isEmpty(data.return_policy_title)) {
+            headerView.textViewReturnPolicy.visibility = View.GONE
+        } else {
+            headerView.textViewReturnPolicy.text = data.return_policy_title
+        }
+
 
         headerView.textViewProductReturnPolicy.text = data.product_return_policy
     }
@@ -536,6 +547,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
     override fun installListener() {
+        //查看全部
+        headerView.buttonLookAll.setOnClickListener(this)
 
         buttonGoOrderConfirm.setOnClickListener(this)
 
@@ -576,12 +589,34 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         //分销商品->点击购买
         buttonPurchase.setOnClickListener(this)
+
+//        TODO var dySum=0
+//        recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+//            var dp150 = DimenUtil.dp2px(150.0)
+//            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                LogUtil.e("dx==$dx;;;dy=$dy;;dySum=$dySum")
+//                dySum += dy
+//                if (dySum < 0) {
+//                    relativeLayoutHeader.setBackgroundResource(R.mipmap.icon_bg_goods_detail_head)
+//                } else if (dySum > dp150) {
+//                    relativeLayoutHeader.setBackgroundColor(Util.getColor(android.R.color.white))
+//                }else{
+//                    relativeLayoutHeader.setBackgroundResource(R.mipmap.icon_bg_goods_detail_head)
+//                }
+//
+//            }
+//        })
     }
 
     override fun onClick(v: View) {
         val id = v.id
         when (id) {
-
+            R.id.buttonLookAll -> { //查看全部详情
+                if (goodsData == null) return
+                lookGoodsAllDetailDialog = LookGoodsAllDetailDialog(this, goodsData!!)
+                lookGoodsAllDetailDialog?.show()
+            }
             R.id.buttonGoOrderConfirm -> {
                 //TODO 跳转确认订单
                 ToastUtil.showInfo("确认订单")
