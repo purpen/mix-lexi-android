@@ -118,7 +118,8 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_below="@+id/relativeLayoutLine"
         android:layout_above="@+id/linearLayoutConfirmOrder"
-        android:descendantFocusability="beforeDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_marginTop="@dimen/dp4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
