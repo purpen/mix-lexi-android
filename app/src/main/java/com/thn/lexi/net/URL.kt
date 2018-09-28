@@ -515,5 +515,10 @@ object URL {
     /**
      * 搜索->热门搜索
      */
-    const val SEARCH_HOT_URL: String = "${BASE_URL}core_platforms/search/week_hot"
+    const val SEARCH_HOT_URL = "${BASE_URL}core_platforms/search/week_hot"
+
+    /**
+     * 搜索 ->模糊匹配
+     */
+    const val FUZZY_WORD_SEARCH_URL = "${BASE_URL}core_platforms/search"
 }

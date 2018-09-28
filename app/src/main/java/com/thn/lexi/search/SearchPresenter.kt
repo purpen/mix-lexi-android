@@ -41,7 +41,7 @@ class SearchPresenter(view: SearchContract.View) : SearchContract.Presenter {
     /**
      * 热门推荐品牌馆
      */
-    fun getHotRecommendPavilion() {
+    override fun getHotRecommendPavilion() {
         dataSource.getHotRecommendPavilion(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
             }
@@ -65,7 +65,7 @@ class SearchPresenter(view: SearchContract.View) : SearchContract.Presenter {
     /**
      * 获取热门搜索
      */
-    fun getHotSearch() {
+    override fun getHotSearch() {
         dataSource.getHotSearch(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
             }
@@ -76,6 +76,30 @@ class SearchPresenter(view: SearchContract.View) : SearchContract.Presenter {
                     view.setHotSearchData(hotSearchBean.data.search_items)
                 } else {
                     view.showError(hotSearchBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 模糊匹配
+     */
+    override fun getFuzzyWordList(keyWord: String) {
+        dataSource.getFuzzyWordList(keyWord,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+            }
+
+            override fun onSuccess(json: String) {
+                val fuzzyWordMatchListBean = JsonUtil.fromJson(json, FuzzyWordMatchListBean::class.java)
+                if (fuzzyWordMatchListBean.success) {
+                    view.setFuzzyWordListData(fuzzyWordMatchListBean.data.search_items)
+                } else {
+                    view.showError(fuzzyWordMatchListBean.status.message)
                 }
             }
 

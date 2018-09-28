@@ -62,6 +62,25 @@ open class SearchModel {
             }
         })
     }
+
+
+    fun getFuzzyWordList(keyWord: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFuzzyWordParams(keyWord)
+
+        HttpRequest.sendRequest(HttpRequest.GET,URL.FUZZY_WORD_SEARCH_URL,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
 }
 
 

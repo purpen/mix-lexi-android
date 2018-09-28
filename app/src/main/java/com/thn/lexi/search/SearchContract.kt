@@ -28,9 +28,16 @@ class SearchContract {
         fun setHotSearchData(search_items: List<HotSearchBean.DataBean.SearchItemsBean>) {
 
         }
+
+        fun setFuzzyWordListData(search_items: List<FuzzyWordMatchListBean.DataBean.SearchItemsBean>) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
         fun getUserRecentLook()
+        fun getHotRecommendPavilion()
+        fun getHotSearch()
+        fun getFuzzyWordList(keyWord: String)
     }
 }

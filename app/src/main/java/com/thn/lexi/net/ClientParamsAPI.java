@@ -1125,4 +1125,16 @@ public class ClientParamsAPI {
         params.put("items",items);
         return params;
     }
+
+    /**
+     * 获取模糊匹配列表
+     * @param keyWord
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,Object> getFuzzyWordParams(@NotNull String keyWord) {
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("qk",keyWord);
+        return params;
+    }
 }

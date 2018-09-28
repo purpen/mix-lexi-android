@@ -25,7 +25,7 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
 
     private val presenter: SearchGoodsPresenter by lazy { SearchGoodsPresenter(this) }
 
-    private val dialogBottomFilter: DialogBottomFilter by lazy { DialogBottomFilter(activity, presenter) }
+    private var dialogBottomFilter: DialogBottomFilter? = null
 
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
 
@@ -86,8 +86,9 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
 
         linearLayoutFilter.setOnClickListener { _ ->
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter.show()
-            dialogBottomFilter.setOnDismissListener {
+            dialogBottomFilter = DialogBottomFilter(activity, presenter)
+            dialogBottomFilter?.show()
+            dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
             }
         }
@@ -108,7 +109,7 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
      * 设置符合条件商品数量
      */
     override fun setGoodsCount(count: Int) {
-        if (dialogBottomFilter.isShowing) dialogBottomFilter.setGoodsCount(count)
+        if (dialogBottomFilter != null && dialogBottomFilter!!.isShowing) dialogBottomFilter?.setGoodsCount(count)
     }
 
     override fun loadData() {

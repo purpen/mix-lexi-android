@@ -2,8 +2,7 @@ package com.thn.lexi.search
 
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import android.text.InputType
-import android.text.TextUtils
+import android.text.*
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.KeyEvent
@@ -30,6 +29,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     private val adapterRecent: AdapterSearchRecentLookGoods by lazy { AdapterSearchRecentLookGoods(R.layout.adapter_editor_recommend) }
     private val adapterHotRecommendPavilion: AdapterHotRecommendPavilion by lazy { AdapterHotRecommendPavilion(R.layout.adapter_hot_recommend_pavilion) }
     private val adapterHotSearch: AdapterHotSearch by lazy { AdapterHotSearch(R.layout.adapter_hot_search) }
+    private val adapterFuzzyMatch: AdapterFuzzyMatch by lazy { AdapterFuzzyMatch(R.layout.adapter_fuzzy_match_search) }
 
     override val layout: Int = R.layout.acticity_search
 
@@ -49,6 +49,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         initRecentLookGoods()
         initHotRecommendPavilion()
         initHotSearch()
+        initFuzzyWordSearch()
     }
 
     /**
@@ -161,6 +162,17 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     /**
+     * 初始化模糊搜索
+     */
+    private fun initFuzzyWordSearch(){
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerViewFuzzyMatch.setHasFixedSize(true)
+        recyclerViewFuzzyMatch.layoutManager = linearLayoutManager
+        recyclerViewFuzzyMatch.adapter = adapterFuzzyMatch
+    }
+
+    /**
      * 设置热门搜索数据
      */
     override fun setHotSearchData(search_items: List<HotSearchBean.DataBean.SearchItemsBean>) {
@@ -173,10 +185,37 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         presenter.getHotSearch()
     }
 
+    /**
+     * 设置模糊匹配数据
+     */
+    override fun setFuzzyWordListData(search_items: List<FuzzyWordMatchListBean.DataBean.SearchItemsBean>) {
+        adapterFuzzyMatch.setNewData(search_items)
+    }
 
 
     override fun installListener() {
-        //点击搜索
+        editTextSearch.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (TextUtils.isEmpty(s)) {
+                    recyclerViewFuzzyMatch.visibility = View.GONE
+                    return
+                }
+
+                if (!recyclerViewFuzzyMatch.isShown){
+                    recyclerViewFuzzyMatch.visibility = View.VISIBLE
+                }
+                presenter.getFuzzyWordList(s.toString().trim())
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+
+        //点击搜索按钮
         editTextSearch.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 val content = editTextSearch.text.toString().trim()
@@ -229,7 +268,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         //删除历史记录
         imageViewDeleteHistory.setOnClickListener {
             SPUtil.clear(Constants.SEARCH_HISTORY)
-            relativeSearch.visibility = View.GONE
+            relativeLayoutSearchHistory.visibility = View.GONE
         }
 
         //最近查看商品点击
@@ -240,9 +279,57 @@ class SearchActivity : BaseActivity(), SearchContract.View {
             startActivity(intent)
         }
 
-        adapterHotRecommendPavilion.setOnItemChildClickListener { adapter, view, position ->
-            ToastUtil.showInfo("跳转品牌馆详情")
+        /**
+         * 模糊匹配条目点击
+         */
+        adapterFuzzyMatch.setOnItemClickListener { _, _, position ->
+            val item = adapterFuzzyMatch.getItem(position)
+            val intent = Intent(applicationContext, SearchResultActivity::class.java)
+            intent.putExtra(FuzzyWordMatchListBean::class.java.simpleName, item)
+            startActivity(intent)
         }
+
+        /**
+         * 热门搜索点击
+         */
+        adapterHotSearch.setOnItemClickListener { _, _, position ->
+            val item = adapterHotSearch.getItem(position)
+            val intent = Intent(applicationContext, SearchResultActivity::class.java)
+            intent.putExtra(SearchResultActivity::class.java.simpleName, item!!.query_word)
+            startActivity(intent)
+        }
+
+        /**
+         * 热门推荐点击
+         */
+        adapterHotRecommendPavilion.setOnItemClickListener { _, _, position ->
+
+            if (position==0){ //可定制商品列表
+                ToastUtil.showInfo("跳转接单订制")
+                return@setOnItemClickListener
+            }
+
+            val item = adapterHotRecommendPavilion.getItem(position)
+
+            when(item!!.target_type){
+                1 ->{ //跳转商品详情
+                    val productBean = ProductBean()
+                    productBean.rid = item.rid
+                    productBean.is_distributed = item.is_distributed
+                    productBean.is_custom_made = item.is_custom_made
+                    productBean.store_rid = item.store_rid
+                    val intent = Intent(this, GoodsDetailActivity::class.java)
+                    intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
+                    startActivity(intent)
+                }
+                2 ->{ //跳转品牌馆
+//                    val intent = Intent(this, SearchResultActivity::class.java)
+//                    intent.putExtra(SearchResultActivity::class.java.simpleName, item.rid)
+//                    startActivity(intent)
+                }
+            }
+        }
+
     }
 
     override fun showLoadingView() {

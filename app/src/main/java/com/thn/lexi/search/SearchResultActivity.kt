@@ -18,10 +18,16 @@ class SearchResultActivity : BaseActivity(){
 
     private lateinit var searchString:String
 
+    private var page:Int = -1
+
     override fun getIntentData() {
         if(intent.hasExtra(TAG)){
             searchString = intent.getStringExtra(TAG)
-
+        }
+        if (intent.hasExtra(FuzzyWordMatchListBean::class.java.simpleName)){
+            val searchItemsBean = intent.getParcelableExtra<FuzzyWordMatchListBean.DataBean.SearchItemsBean>(FuzzyWordMatchListBean::class.java.simpleName)
+            searchString = searchItemsBean.name
+            page = searchItemsBean.target_type
         }
     }
 
@@ -29,6 +35,9 @@ class SearchResultActivity : BaseActivity(){
         customHeadView.setHeadSearchShow(true)
         customHeadView.editTextSearch.isFocusable = false
         customHeadView.editTextSearch.isFocusableInTouchMode = false
+        customHeadView.editTextSearch.maxEms =15
+        customHeadView.editTextSearch.maxLines =1
+        customHeadView.editTextSearch.ellipsize = TextUtils.TruncateAt.END
         if (!TextUtils.isEmpty(searchString)) {
             customHeadView.editTextSearch.setText(searchString)
             customHeadView.editTextSearch.setSelection(searchString.length)
@@ -50,6 +59,15 @@ class SearchResultActivity : BaseActivity(){
         customViewPager.setPagingEnabled(false)
         slidingTabLayout.setViewPager(customViewPager)
         slidingTabLayout.getTitleView(0).textSize = 20f
+        when(page){ //默认就是商品
+            2->{ //品牌馆
+                slidingTabLayout.setCurrentTab(1,true)
+            }
+
+            3->{ //用户
+                slidingTabLayout.setCurrentTab(2,true)
+            }
+        }
     }
 
 
