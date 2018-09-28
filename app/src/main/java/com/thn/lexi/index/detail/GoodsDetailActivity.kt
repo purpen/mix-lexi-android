@@ -590,23 +590,26 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         //分销商品->点击购买
         buttonPurchase.setOnClickListener(this)
 
-//        TODO var dySum=0
-//        recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
-//            var dp150 = DimenUtil.dp2px(150.0)
-//            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
-//                super.onScrolled(recyclerView, dx, dy)
-//                LogUtil.e("dx==$dx;;;dy=$dy;;dySum=$dySum")
-//                dySum += dy
-//                if (dySum < 0) {
-//                    relativeLayoutHeader.setBackgroundResource(R.mipmap.icon_bg_goods_detail_head)
-//                } else if (dySum > dp150) {
-//                    relativeLayoutHeader.setBackgroundColor(Util.getColor(android.R.color.white))
-//                }else{
-//                    relativeLayoutHeader.setBackgroundResource(R.mipmap.icon_bg_goods_detail_head)
-//                }
-//
-//            }
-//        })
+
+        recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            var dySum=0
+            var dp150 = DimenUtil.dp2px(150.0)
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                dySum += dy
+                if (dySum <= 0) {
+                    textViewTitle.text = ""
+                    imageViewBack.setImageResource(R.mipmap.icon_return_white)
+                    imageViewShare.setImageResource(R.mipmap.icon_share_white)
+                    relativeLayoutHeader.setBackgroundResource(R.mipmap.icon_bg_goods_detail_head)
+                } else if (dySum > dp150) {
+                    textViewTitle.text = goodsData?.name
+                    imageViewBack.setImageResource(R.mipmap.icon_nav_back)
+                    imageViewShare.setImageResource(R.mipmap.icon_click_share)
+                    relativeLayoutHeader.setBackgroundColor(Util.getColor(android.R.color.white))
+                }
+            }
+        })
     }
 
     override fun onClick(v: View) {
