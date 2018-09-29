@@ -30,8 +30,9 @@ class BrandPavilionListActivity : BaseActivity() {
         val adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles.asList())
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
-        customViewPager.setPagingEnabled(true)
+        customViewPager.setPagingEnabled(false)
         slidingTabLayout.setViewPager(customViewPager)
+
     }
 
     override fun installListener() {
