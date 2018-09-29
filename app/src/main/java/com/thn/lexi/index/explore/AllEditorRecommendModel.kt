@@ -4,7 +4,6 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI
 import com.thn.lexi.net.HttpRequest
 import com.thn.lexi.net.URL
-import com.thn.lexi.user.login.UserProfileUtil
 import java.io.IOException
 
 open class AllEditorRecommendModel {
