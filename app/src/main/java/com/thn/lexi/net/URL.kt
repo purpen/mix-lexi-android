@@ -526,4 +526,15 @@ object URL {
      * 搜索 ->模糊匹配
      */
     const val FUZZY_WORD_SEARCH_URL = "${BASE_URL}core_platforms/search"
+
+    /**
+     * 查看全部编辑推荐
+     */
+    const val ALL_EDITOR_RECOMMEND = "${BASE_URL}column/explore_recommend"
+
+    /**
+     * 栏目编码: 编辑推荐=e_recommend, 优质精品=e_new, 特惠好设计=preferential_design, 百元好物=affordable_goods
+     * 用户浏览记录
+     */
+    const val USER_BROWSE_RECORDS = "${BASE_URL}column/browse_records"
 }

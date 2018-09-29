@@ -232,7 +232,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     override fun installListener() {
         //全部编辑推荐
         textViewAllRecommend.setOnClickListener {
-
+            startActivity(Intent(activity,AllEditorRecommendActivity::class.java))
         }
 
         //全部特色品牌馆

@@ -1,84 +1,124 @@
-package com.thn.lexi.search
-
+package com.thn.lexi.index.explore
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
+import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.text.TextUtils
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.basemodule.tools.*
-import com.thn.lexi.R
-import com.basemodule.ui.BaseFragment
+import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
+import com.thn.lexi.R
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.beans.UserBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
+import com.thn.lexi.index.selection.HeadImageAdapter
+import com.thn.lexi.search.AdapterSearchGoods
 import com.yanyusong.y_divideritemdecoration.Y_Divider
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
-import kotlinx.android.synthetic.main.fragment_search_goods.*
+import kotlinx.android.synthetic.main.acticity_all_editor_recommend.*
+import kotlinx.android.synthetic.main.header_all_editor_recommend.view.*
 
 
-class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
+class AllEditorRecommendActivity : BaseActivity(),AllEditorRecommendContract.View{
+    private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
 
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
-
-    private val presenter: SearchGoodsPresenter by lazy { SearchGoodsPresenter(this) }
-
-    private var dialogBottomFilter: DialogBottomFilter? = null
-
+    private val presenter: AllEditorRecommendPresenter by lazy { AllEditorRecommendPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
-
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
-    private var searchString: String? = null
+    private var dialogBottomFilter: DialogBottomFilter? = null
+    override val layout: Int = R.layout.acticity_all_editor_recommend
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        searchString = arguments?.getString(FragmentSearchGoods::class.java.simpleName)
+    private lateinit var  headerView: View
+
+    override fun setPresenter(presenter: AllEditorRecommendContract.Presenter?) {
+        setPresenter(presenter)
     }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(searchString: String): FragmentSearchGoods {
-            val fragment = FragmentSearchGoods()
-            val bundle = Bundle()
-            bundle.putString(FragmentSearchGoods::class.java.simpleName, searchString)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-
-    override val layout: Int = R.layout.fragment_search_goods
-
     override fun initView() {
+        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
+        customHeadView.setHeadCenterTxtShow(true,R.string.text_editor_recommend)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
-        gridLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = adapter
-        recyclerView.setPadding(DimenUtil.dp2px(15.0), 0, DimenUtil.dp2px(15.0), 0)
+//        recyclerView.setPadding(DimenUtil.dp2px(15.0), 0, DimenUtil.dp2px(15.0), 0)
         val colorWhite = Util.getColor(android.R.color.white)
         recyclerView.setBackgroundColor(colorWhite)
         adapter.setSpanSizeLookup { _, position ->
             adapter.data[position].spanSize
         }
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-        val headerView = View(activity)
-        headerView.setBackgroundColor(colorWhite)
+
+        initHeaderView()
+    }
+
+    /**
+     * 初始化头布局
+     */
+    private fun initHeaderView() {
+        presenter.getLookPeople()
+        headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
         adapter.setHeaderView(headerView)
+    }
+
+    /**
+     * 设置看过的用户信息
+     */
+    override fun setLookPeopleData(users: List<UserBean>) {
+        val count = users.size
+
+        if (count == 0) return
+        if (count < 999) {
+            headerView.textViewHeaders.text = "$count"
+        } else {
+            headerView.textViewHeaders.textViewHeaders.text = "+999"
+        }
+
+        val urlList = ArrayList<String>()
+        for (item in users) {
+            urlList.add(item.avatar)
+        }
+
+        //反转头像
+        urlList.reverse()
+
+        val recyclerView = headerView.recyclerViewHeader
+
+        //反转布局
+        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
+        recyclerView.layoutManager = linearLayoutManager
+        recyclerView.setHasFixedSize(true)
+        val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
+        recyclerView.adapter = headImageAdapter
+        if (recyclerView.itemDecorationCount == 0) {
+            recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+                private val dp5 = DimenUtil.dp2px(5.0)
+                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+                    super.getItemOffsets(outRect, view, parent, state)
+                    if (parent.getChildAdapterPosition(view) >= 0 && parent.getChildAdapterPosition(view) != urlList.size - 1) {
+                        outRect.left = -dp5
+                    }
+                }
+            })
+        }
+
+        headImageAdapter.setNewData(urlList)
     }
 
 
     override fun installListener() {
         linearLayoutSort.setOnClickListener { _ ->
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
-            val dialog = DialogBottomSynthesiseSort(activity, presenter)
+            val dialog = DialogBottomSynthesiseSort(this, presenter)
             dialog.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
                 when (presenter.getSortType()) {
-                    SearchGoodsPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
-                    SearchGoodsPresenter.SORT_TYPE_LOW_UP -> textViewSort.text = Util.getString(R.string.text_price_low_up)
-                    SearchGoodsPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
+                    AllEditorRecommendPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
+                    AllEditorRecommendPresenter.SORT_TYPE_LOW_UP -> textViewSort.text = Util.getString(R.string.text_price_low_up)
+                    AllEditorRecommendPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
                 }
             }
             dialog.show()
@@ -86,11 +126,17 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
 
         linearLayoutFilter.setOnClickListener { _ ->
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(activity, presenter)
+            dialogBottomFilter = DialogBottomFilter(this, presenter)
             dialogBottomFilter?.show()
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
             }
+        }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = true
+            adapter.setEnableLoadMore(false)
+            presenter.loadData(true)
         }
 
         adapter.setOnLoadMoreListener({
@@ -99,26 +145,15 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
 
         adapter.setOnItemClickListener { _, _, position ->
             val item = adapter.getItem(position) as AdapterSearchGoods.MultipleItem
-            val intent = Intent(context, GoodsDetailActivity::class.java)
+            val intent = Intent(this, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.product)
             startActivity(intent)
         }
+
     }
 
-    /**
-     * 设置符合条件商品数量
-     */
-    override fun setGoodsCount(count: Int) {
-        if (dialogBottomFilter != null && dialogBottomFilter!!.isShowing) dialogBottomFilter?.setGoodsCount(count)
-    }
-
-    override fun loadData() {
-        if (TextUtils.isEmpty(searchString)) return
-        presenter.loadData(false, searchString!!)
-    }
-
-    override fun setNewData(data: List<ProductBean>) {
-        adapter.setNewData(formatData(data))
+    override fun requestNet() {
+        presenter.loadData(false)
     }
 
     /**
@@ -141,8 +176,14 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
         return curList
     }
 
+    override fun setNewData(data: List<ProductBean>) {
+        adapter.setNewData(formatData(data))
+        swipeRefreshLayout.isRefreshing = false
+    }
+
     override fun addData(products: MutableList<ProductBean>) {
         adapter.addData(formatData(products))
+        adapter.setEnableLoadMore(true)
     }
 
 
@@ -156,10 +197,6 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
 
     override fun loadMoreFail() {
         adapter.loadMoreFail()
-    }
-
-    override fun setPresenter(presenter: SearchGoodsContract.Presenter?) {
-        setPresenter(presenter)
     }
 
 
@@ -192,6 +229,7 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
                 count - 2 -> {
                     divider = Y_DividerBuilder()
                             .setBottomSideLine(true, color, height, 0f, 0f)
+                            .setLeftSideLine(true, color, 15f, 0f, 0f)
                             .create()
                 }
 
@@ -210,6 +248,7 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
                     } else {
                         divider = Y_DividerBuilder()
                                 .setBottomSideLine(true, color, height, 0f, 0f)
+                                .setLeftSideLine(true, color, 15f, 0f, 0f)
                                 .create()
                     }
                 }
@@ -217,4 +256,5 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
             return divider
         }
     }
+
 }
