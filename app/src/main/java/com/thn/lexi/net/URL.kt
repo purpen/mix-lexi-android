@@ -132,6 +132,11 @@ object URL {
     const val FOCUS_BRAND_PAVILION = "${BASE_URL}follow/store"
 
     /**
+     * 探索->全部特色品牌馆
+     */
+    const val ALL_FEATURE_BRAND_PAVILION = "${BASE_URL}column/feature_store_all"
+
+    /**
      * 精选->Banner
      */
     const val SELECTION_BANNER_URL = "${BASE_URL}banners/handpick"

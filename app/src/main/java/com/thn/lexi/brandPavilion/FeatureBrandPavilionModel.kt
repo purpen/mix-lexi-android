@@ -12,7 +12,7 @@ open class FeatureBrandPavilionModel{
 
         val params = ClientParamsAPI.getShowWindowParams(page)
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.BRAND_PAVILION_URL,params,object : IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.GET,URL.ALL_FEATURE_BRAND_PAVILION,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }

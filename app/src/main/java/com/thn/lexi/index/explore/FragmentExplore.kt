@@ -230,7 +230,12 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
 
     override fun installListener() {
+        //全部编辑推荐
+        textViewAllRecommend.setOnClickListener {
 
+        }
+
+        //全部特色品牌馆
         textViewAllBrand.setOnClickListener {
             startActivity(Intent(activity,BrandPavilionListActivity::class.java))
         }
@@ -249,7 +254,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         adapterBrandPavilion.setOnItemChildClickListener { _, view, position ->
             val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
             when(view.id){
-                R.id.textViewFocus ->{
+                R.id.textViewFocus ->{ //关注品牌馆
                     if (item.is_followed) {
                         presenter.unFocusBrandPavilion(item.rid,position)
                     } else {
