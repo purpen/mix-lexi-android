@@ -37,6 +37,7 @@ class AdapterShopCartWishGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBe
 
 
         if (item.status==1){ //上架状态
+            helper.itemView.isEnabled = true
             if (item.total_stock==0){//库存为0，已售罄
                 linearLayoutAddShopCart.visibility = View.GONE
                 textViewSoldOut.visibility = View.VISIBLE
@@ -49,6 +50,7 @@ class AdapterShopCartWishGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBe
             }
 
         }else{ //下架状态
+            helper.itemView.isEnabled = false
             linearLayoutAddShopCart.visibility = View.GONE
             textViewSoldOut.visibility = View.VISIBLE
             textViewSoldOut.text = Util.getString(R.string.text_remove_sold)
