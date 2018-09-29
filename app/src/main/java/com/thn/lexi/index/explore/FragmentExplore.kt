@@ -1,6 +1,7 @@
 package com.thn.lexi.index.explore
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -238,17 +239,17 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
             position ->ToastUtil.showInfo("你点击了$position")
         }
 
-        adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-            val item = adapter.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
+        //去品牌馆详情
+        adapterBrandPavilion.setOnItemClickListener { _, _, position ->
+            val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
+            ToastUtil.showInfo("去店铺")
+        }
+
+
+        adapterBrandPavilion.setOnItemChildClickListener { _, view, position ->
+            val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
             when(view.id){
-                R.id.imageViewShop->ToastUtil.showInfo("去店铺")
-
-//                R.id.imageViewGoods0,R.id.imageViewGoods1,R.id.imageViewGoods2->{
-//                    //TODO 去商品详情
-//                    startActivity(Intent(activity,GoodsDetailActivity::class.java))
-//                }
-
-                R.id.buttonFocus ->{
+                R.id.textViewFocus ->{
                     if (item.is_followed) {
                         presenter.unFocusBrandPavilion(item.rid,position)
                     } else {
@@ -256,8 +257,8 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
                     }
                 }
             }
-
         }
+
 
         adapterEditorRecommend.setOnItemClickListener { adapter, _, position ->
             jump2GoodsDetail(adapter, position)

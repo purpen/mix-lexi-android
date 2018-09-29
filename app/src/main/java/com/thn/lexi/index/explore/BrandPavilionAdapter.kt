@@ -3,8 +3,10 @@ package com.thn.lexi.index.explore
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
+import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -14,29 +16,43 @@ class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionLis
     override fun convert(helper: BaseViewHolder, item: BrandPavilionListBean.DataBean.StoresBean) {
         val imageViewBg = helper.getView<ImageView>(R.id.imageViewBg)
         val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
-        GlideUtil.loadImageWithBlurAndRadius(item.bgcover,imageViewBg,size)
+        GlideUtil.loadImageWithBlurAndRadius(item.bgcover, imageViewBg, size)
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)
-        GlideUtil.loadImageWithRadius(item.logo,imageViewShop,size)
+        GlideUtil.loadImageWithRadius(item.logo, imageViewShop, size)
 
-        helper.setText(R.id.textViewTitle,item.name)
-        helper.setText(R.id.textViewCount,"${item.store_products_counts}件")
+        helper.setText(R.id.textViewTitle, item.name)
+        helper.setText(R.id.textViewCount, "${item.store_products_counts}件")
 
-        if (item.is_followed){
-            helper.setText(R.id.buttonFocus,Util.getString(R.string.text_focused))
-        }else{
-            helper.setText(R.id.buttonFocus,Util.getString(R.string.text_focus))
+        val textViewFocus = helper.getView<TextView>(R.id.textViewFocus)
+
+        if (item.is_followed) {
+            textViewFocus.text = Util.getString(R.string.text_focused)
+            textViewFocus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            textViewFocus.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
+            textViewFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+        } else {
+            textViewFocus.text = Util.getString(R.string.text_focus)
+            textViewFocus.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_focus_pavilion, 0, 0, 0)
+            textViewFocus.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
+            textViewFocus.setTextColor(Util.getColor(android.R.color.white))
         }
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerViewProducts)
         recyclerView.setHasFixedSize(true)
-        val linearLayoutManager = LinearLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL,false)
+        val linearLayoutManager = LinearLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL, false)
         val adapter = BrandPavilionProductAdapter(R.layout.adapter_brand_pavilion_product)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = linearLayoutManager
         adapter.setNewData(item.products_cover)
-        helper.addOnClickListener(R.id.imageViewShop)
 
-        helper.addOnClickListener(R.id.buttonFocus)
+        helper.addOnClickListener(R.id.textViewFocus)
+        helper.addOnClickListener(R.id.recyclerViewProducts)
+
+        //跳转品牌馆主页
+        adapter.setOnItemClickListener { adapter, view, position ->
+            LogUtil.e("===================================")
+        }
+
     }
 }

@@ -1,5 +1,7 @@
 package com.thn.lexi.index.detail
+import android.text.Html
 import android.widget.ImageView
+import android.widget.TextView
 import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -30,7 +32,8 @@ class AdapterGoodsDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
 
         when (item.itemType) {
             MultipleItem.TEXT_ITEM_TYPE -> {
-                helper.setText(R.id.textView, item.content.content)
+                val textView = helper.getView<TextView>(R.id.textView)
+                textView.text = Html.fromHtml(item.content.content)
             }
 
             MultipleItem.IMAGE_ITEM_TYPE -> {
