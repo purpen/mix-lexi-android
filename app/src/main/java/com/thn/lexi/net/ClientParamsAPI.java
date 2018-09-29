@@ -1158,6 +1158,7 @@ public class ClientParamsAPI {
         params.put("view_more",String.valueOf(1));
         params.put("min_price", minePrice);
         params.put("max_price", maxPrice);
+        params.put("cids", cids);
         params.put("sort_type", sortType);
         params.put("is_free_postage", is_free_postage);
         params.put("is_preferential", is_preferential);
