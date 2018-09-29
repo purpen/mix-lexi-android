@@ -1,7 +1,5 @@
 package com.thn.lexi.index.detail
-
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.support.v7.widget.LinearLayoutManager
@@ -246,6 +244,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.recyclerViewShopGoods.adapter = designPavilionProductAdapter
         headerView.recyclerViewShopGoods.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
         designPavilionProductAdapter.setNewData(imgUrls)
+
+        //跳转品牌馆商品详情
+        designPavilionProductAdapter.setOnItemClickListener { _, view, position ->
+            val productBean = data.products[position]
+            val intent = Intent(this,GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,productBean)
+            startActivity(intent)
+        }
     }
 
     //设置品牌馆关注状态
@@ -288,6 +294,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.recyclerViewSimilar.adapter = designPavilionProductAdapter
         headerView.recyclerViewSimilar.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
         designPavilionProductAdapter.setNewData(imgUrls)
+
+        //跳转相似商品详情
+        designPavilionProductAdapter.setOnItemClickListener { _, view, position ->
+            val productBean = data[position]
+            val intent = Intent(this,GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,productBean)
+            startActivity(intent)
+        }
     }
 
     /**
