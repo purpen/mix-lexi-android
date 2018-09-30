@@ -16,6 +16,7 @@ import com.basemodule.tools.Util
 import com.thn.lexi.*
 import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.youth.banner.BannerConfig
 
 
@@ -301,6 +302,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             val intent = Intent(activity, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
             startActivity(intent)
+        }
+
+        //查看全部优选
+        textViewMoreGoodSelection.setOnClickListener {
+            startActivity(Intent(activity, AllGoodsSelectionActivity::class.java))
         }
     }
 

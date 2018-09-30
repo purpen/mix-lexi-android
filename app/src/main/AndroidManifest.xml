@@ -76,6 +76,7 @@
         <activity android:name=".index.explore.newGoods.AllNewGoodsActivity" />
         <activity android:name=".index.explore.goodDesign.AllGoodDesignActivity" />
         <activity android:name=".index.explore.goodsIn100.AllGoodsIn100Activity" />
+        <activity android:name=".index.selection.goodsSelection.AllGoodsSelectionActivity" />
     </application>
 
 </manifest>
