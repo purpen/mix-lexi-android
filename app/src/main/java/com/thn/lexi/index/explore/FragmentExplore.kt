@@ -14,9 +14,12 @@ import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.brandPavilion.BrandPavilionListActivity
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
+import com.thn.lexi.index.explore.collection.CollectionDetailActivity
 import com.thn.lexi.index.explore.collection.CollectionListActivity
 import com.thn.lexi.index.explore.editorRecommend.AllEditorRecommendActivity
 import com.thn.lexi.index.explore.editorRecommend.EditorRecommendAdapter
+import com.thn.lexi.index.explore.goodDesign.AllGoodDesignActivity
+import com.thn.lexi.index.explore.goodsIn100.AllGoodsIn100Activity
 import com.thn.lexi.index.explore.newGoods.AllNewGoodsActivity
 import com.thn.lexi.index.selection.GoodsData
 import com.youth.banner.BannerConfig
@@ -253,6 +256,16 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
             startActivity(Intent(activity,CollectionListActivity::class.java))
         }
 
+        //特惠好设计
+        textViewGoodDesign.setOnClickListener {
+            startActivity(Intent(activity,AllGoodDesignActivity::class.java))
+        }
+
+        //百元好物
+        textViewGood100.setOnClickListener {
+            startActivity(Intent(activity,AllGoodsIn100Activity::class.java))
+        }
+
         banner.setOnBannerListener {
             position ->ToastUtil.showInfo("你点击了$position")
         }
@@ -277,6 +290,14 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
             }
         }
 
+        //好货合集
+        adapterGoodsCollection.setOnItemClickListener { _, _, position ->
+            val item = adapterGoodsCollection.getItem(position)
+            val intent = Intent(activity, CollectionDetailActivity::class.java)
+            intent.putExtra(CollectionDetailActivity::class.java.simpleName, item!!.id)
+            startActivity(intent)
+
+        }
 
         adapterEditorRecommend.setOnItemClickListener { adapter, _, position ->
             jump2GoodsDetail(adapter, position)
@@ -295,15 +316,6 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
             jump2GoodsDetail(adapter,position)
         }
 
-//        swipeRefreshLayout.setOnRefreshListener {
-//            swipeRefreshLayout.isRefreshing = true
-//            adapter.setEnableLoadMore(false)
-//            loadData()
-//        }
-
-//        adapter.setOnLoadMoreListener({
-//            presenter.loadMoreData("", page)
-//        }, recyclerView)
     }
 
     private fun jump2GoodsDetail(adapter: BaseQuickAdapter<Any, BaseViewHolder>, position: Int) {
