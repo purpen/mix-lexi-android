@@ -1,4 +1,5 @@
 package com.thn.lexi.mine.like
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,10 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.selection.DiscoverLifeBean
 import com.thn.lexi.mine.*
+import com.thn.lexi.mine.like.likeGoods.AllLikeGoodsActivity
 import kotlinx.android.synthetic.main.adapter_goods_like.view.*
 import kotlinx.android.synthetic.main.adapter_item_show_window.view.*
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -116,7 +119,16 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
 
     override fun installListener() {
+        headerView.textViewMoreGoodsLike.setOnClickListener {
+            startActivity(Intent(activity,AllLikeGoodsActivity::class.java))
+        }
 
+        adapterLikeGoods.setOnItemClickListener { _, _, position ->
+            val item = adapterLikeGoods.getItem(position)
+            val intent = Intent(activity,GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item)
+            startActivity(intent)
+        }
     }
 
 
