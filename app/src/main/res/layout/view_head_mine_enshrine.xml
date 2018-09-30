@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp20">
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +19,9 @@
             android:text="@string/text_recent_look_goods"
             android:textColor="@color/color_333"
             android:textSize="@dimen/sp14"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/dp20"
+            />
 
         <TextView
             android:id="@+id/textViewMoreRecent"
@@ -30,9 +32,12 @@
             android:drawableEnd="@mipmap/icon_arrow_more"
             android:drawablePadding="@dimen/dp5"
             android:includeFontPadding="false"
+            android:paddingTop="20dp"
             android:text="@string/text_look_all"
             android:textColor="@color/color_999"
-            android:textSize="@dimen/sp13" />
+            android:textSize="@dimen/sp13"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -52,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp20">
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,7 +66,9 @@
             android:text="@string/text_wish_order"
             android:textColor="@color/color_333"
             android:textSize="@dimen/sp14"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/dp20"
+            />
 
         <TextView
             android:id="@+id/textViewMoreWishOrder"
@@ -70,7 +77,9 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:drawableEnd="@mipmap/icon_arrow_more"
+            android:visibility="gone"
             android:drawablePadding="@dimen/dp5"
+            android:paddingTop="20dp"
             android:includeFontPadding="false"
             android:text="@string/text_look_all"
             android:textColor="@color/color_999"

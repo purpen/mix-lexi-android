@@ -78,6 +78,7 @@
         <activity android:name=".index.explore.goodsIn100.AllGoodsIn100Activity" />
         <activity android:name=".index.selection.goodsSelection.AllGoodsSelectionActivity" />
         <activity android:name=".mine.like.likeGoods.AllLikeGoodsActivity" />
+        <activity android:name=".mine.enshrine.recentLook.AllRecentLookGoodsActivity" />
     </application>
 
 </manifest>
