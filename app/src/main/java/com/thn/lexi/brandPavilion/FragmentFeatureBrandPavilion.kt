@@ -47,13 +47,6 @@ class FragmentFeatureBrandPavilion : BaseFragment(), FeatrueBrandPavilionContrac
         }, recyclerView)
 
 
-        adapter.setOnItemChildClickListener { adapter, view, position ->
-//            val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
-            when (view.id) {
-
-            }
-        }
-
         adapter.setOnItemClickListener { adapter, view, position ->
             //
             ToastUtil.showInfo("品牌馆主页")

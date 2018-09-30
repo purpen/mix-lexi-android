@@ -537,4 +537,12 @@ object URL {
      * 用户浏览记录
      */
     const val USER_BROWSE_RECORDS = "${BASE_URL}column/browse_records"
+
+    /**
+     * 精选品牌馆
+     */
+
+    const val SELECTION_BRAND_PAVILION = "${BASE_URL}column/handpick_store"
+
+
 }
