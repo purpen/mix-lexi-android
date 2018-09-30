@@ -71,6 +71,8 @@
         <activity android:name=".search.SearchResultActivity" android:launchMode="singleTask"/>
         <activity android:name=".search.SearchActivity" android:launchMode="singleTask"/>
         <activity android:name=".index.explore.editorRecommend.AllEditorRecommendActivity" />
+        <activity android:name=".index.explore.collection.CollectionListActivity" />
+        <activity android:name=".index.explore.collection.CollectionDetailActivity" />
     </application>
 
 </manifest>

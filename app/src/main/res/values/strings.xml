@@ -265,4 +265,5 @@
     <string name="text_hot_search">热门搜索</string>
     <string name="text_well_goods_selection">好物甄选</string>
     <string name="text_editor_recommend_des">品质与设计并存的精选好物</string>
+    <string name="title_collection">集合</string>
 </resources>

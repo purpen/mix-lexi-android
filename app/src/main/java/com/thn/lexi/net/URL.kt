@@ -544,5 +544,10 @@ object URL {
 
     const val SELECTION_BRAND_PAVILION = "${BASE_URL}column/handpick_store"
 
+    /**
+     * 集合详情
+     */
+    const val GOODS_COLLECTION_DETAIL = "${BASE_URL}column/collections/detail"
+
 
 }

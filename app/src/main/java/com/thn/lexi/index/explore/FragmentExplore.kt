@@ -14,6 +14,7 @@ import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.brandPavilion.BrandPavilionListActivity
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
+import com.thn.lexi.index.explore.collection.CollectionListActivity
 import com.thn.lexi.index.explore.editorRecommend.AllEditorRecommendActivity
 import com.thn.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.thn.lexi.index.selection.GoodsData
@@ -239,6 +240,11 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         //全部特色品牌馆
         textViewAllBrand.setOnClickListener {
             startActivity(Intent(activity,BrandPavilionListActivity::class.java))
+        }
+
+        //全部集合
+        textViewCollection.setOnClickListener {
+            startActivity(Intent(activity,CollectionListActivity::class.java))
         }
 
         banner.setOnBannerListener {
