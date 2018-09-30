@@ -106,27 +106,17 @@
                         android:scaleType="fitXY"
                         />
 
-                    <TextView
-                        android:id="@+id/textViewOpenInfo"
+                    <ViewFlipper
+                        android:id="@+id/viewFlipper"
                         android:layout_toEndOf="@+id/imageViewSeparate"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp12"
-                        android:text="设计师risky秒前开了自己的设计馆"
-                        android:textColor="@color/color_333"
-                        />
-                    <TextView
-                        android:id="@+id/textViewOrderInfo"
-                        android:layout_alignStart="@+id/textViewOpenInfo"
-                        android:layout_below="@+id/textViewOpenInfo"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp12"
-                        android:text="伟峰的设计馆1小时售出200单"
-                        android:textColor="@color/color_333"
-                        />
+                        android:flipInterval="3000"
+                        android:inAnimation="@anim/slide_in_bottom"
+                        android:outAnimation="@anim/slide_out_top"
+                        >
+
+                    </ViewFlipper>
                 </RelativeLayout>
             </LinearLayout>
 
