@@ -45,6 +45,7 @@ class AdapterFeatureBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavi
         adapter.setOnItemClickListener { _, _, position ->
             val productBean = adapter.getItem(position)
             val intent = Intent(context, GoodsDetailActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName,productBean)
             context.startActivity(intent)
         }
