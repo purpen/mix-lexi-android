@@ -73,6 +73,7 @@
         <activity android:name=".index.explore.editorRecommend.AllEditorRecommendActivity" />
         <activity android:name=".index.explore.collection.CollectionListActivity" />
         <activity android:name=".index.explore.collection.CollectionDetailActivity" />
+        <activity android:name=".index.explore.newGoods.AllNewGoodsActivity" />
     </application>
 
 </manifest>
