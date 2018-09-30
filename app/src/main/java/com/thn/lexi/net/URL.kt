@@ -550,4 +550,10 @@ object URL {
     const val GOODS_COLLECTION_DETAIL = "${BASE_URL}column/collections/detail"
 
 
+    /**
+     *  优质新品
+     */
+    const val ALL_FEATURE_NEW_GOODS = "${BASE_URL}column/explore_new"
+
+
 }

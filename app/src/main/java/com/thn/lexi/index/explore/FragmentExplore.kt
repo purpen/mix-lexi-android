@@ -17,6 +17,7 @@ import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.explore.collection.CollectionListActivity
 import com.thn.lexi.index.explore.editorRecommend.AllEditorRecommendActivity
 import com.thn.lexi.index.explore.editorRecommend.EditorRecommendAdapter
+import com.thn.lexi.index.explore.newGoods.AllNewGoodsActivity
 import com.thn.lexi.index.selection.GoodsData
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
@@ -240,6 +241,11 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         //全部特色品牌馆
         textViewAllBrand.setOnClickListener {
             startActivity(Intent(activity,BrandPavilionListActivity::class.java))
+        }
+
+        //优质新品
+        textViewAllNewGoods.setOnClickListener {
+            startActivity(Intent(activity,AllNewGoodsActivity::class.java))
         }
 
         //全部集合

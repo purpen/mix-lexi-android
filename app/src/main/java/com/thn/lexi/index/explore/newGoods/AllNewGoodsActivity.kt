@@ -39,12 +39,11 @@ class AllNewGoodsActivity : BaseActivity(), AllNewGoodsContract.View {
     }
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        customHeadView.setHeadCenterTxtShow(true,R.string.text_editor_recommend)
+        customHeadView.setHeadCenterTxtShow(true,R.string.text_feature_new_goods)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = adapter
-//        recyclerView.setPadding(DimenUtil.dp2px(15.0), 0, DimenUtil.dp2px(15.0), 0)
         val colorWhite = Util.getColor(android.R.color.white)
         recyclerView.setBackgroundColor(colorWhite)
         adapter.setSpanSizeLookup { _, position ->
@@ -61,6 +60,9 @@ class AllNewGoodsActivity : BaseActivity(), AllNewGoodsContract.View {
     private fun initHeaderView() {
         presenter.getLookPeople()
         headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
+        headerView.imageViewBg.setImageResource(R.mipmap.icon_bg_header_new_goods)
+        headerView.textViewHeadTitle.text = Util.getString(R.string.text_feature_new_goods)
+        headerView.textViewHeadTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_new_goods_head_title,0,0,0)
         adapter.setHeaderView(headerView)
     }
 

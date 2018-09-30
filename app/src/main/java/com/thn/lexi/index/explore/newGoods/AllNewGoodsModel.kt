@@ -12,7 +12,7 @@ open class AllNewGoodsModel {
 
         val params = ClientParamsAPI.getAllEditorRecommendParams(page, sortType,minePrice, maxPrice, cids,is_free_postage,is_preferential,is_custom_made,sort_newest)
 
-        HttpRequest.sendRequest(HttpRequest.GET, URL.ALL_EDITOR_RECOMMEND, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.GET, URL.ALL_FEATURE_NEW_GOODS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callBack.onStart()
             }
@@ -29,7 +29,7 @@ open class AllNewGoodsModel {
 
     fun getLookPeople(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        params["code"] = "e_recommend"
+        params["code"] = "e_new"
         HttpRequest.sendRequest(HttpRequest.GET, URL.USER_BROWSE_RECORDS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
