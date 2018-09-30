@@ -19,6 +19,7 @@ import com.thn.lexi.index.explore.collection.CollectionListActivity
 import com.thn.lexi.index.explore.editorRecommend.AllEditorRecommendActivity
 import com.thn.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.thn.lexi.index.explore.goodDesign.AllGoodDesignActivity
+import com.thn.lexi.index.explore.goodsClassify.GoodsClassifyActivity
 import com.thn.lexi.index.explore.goodsIn100.AllGoodsIn100Activity
 import com.thn.lexi.index.explore.newGoods.AllNewGoodsActivity
 import com.thn.lexi.index.selection.GoodsData
@@ -51,7 +52,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         initGoodsCollection()
         initGoodDesign()
         initGood100()
-        swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
+        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         swipeRefreshLayout.isEnabled = false
     }
@@ -268,6 +269,14 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
         banner.setOnBannerListener {
             position ->ToastUtil.showInfo("你点击了$position")
+        }
+
+        //商品分类
+        adapterGoodsClass.setOnItemClickListener { _, _, position ->
+            val item = adapterGoodsClass.getItem(position)
+            val intent = Intent(activity,GoodsClassifyActivity::class.java)
+            intent.putExtra(GoodsClassifyActivity::class.java.simpleName,item)
+            startActivity(intent)
         }
 
         //去品牌馆详情

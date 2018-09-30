@@ -555,5 +555,10 @@ object URL {
      */
     const val ALL_FEATURE_NEW_GOODS = "${BASE_URL}column/explore_new"
 
+    /**
+     * 商品分类
+     */
+    const val CLASSIFY_GOODS_URL = "${BASE_URL}category/products"
+
 
 }

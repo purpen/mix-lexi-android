@@ -79,6 +79,7 @@
         <activity android:name=".index.selection.goodsSelection.AllGoodsSelectionActivity" />
         <activity android:name=".mine.like.likeGoods.AllLikeGoodsActivity" />
         <activity android:name=".mine.enshrine.recentLook.AllRecentLookGoodsActivity" />
+        <activity android:name=".index.explore.goodsClassify.GoodsClassifyActivity" />
     </application>
 
 </manifest>
