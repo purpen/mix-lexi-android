@@ -8,7 +8,7 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.index.bean.FavoriteBean
-import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.index.explore.editorRecommend.EditorRecommendBean
 import com.thn.lexi.net.NetStatusBean
 import com.thn.lexi.user.completeinfo.UploadTokenBean
 import org.json.JSONArray

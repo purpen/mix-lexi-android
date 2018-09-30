@@ -1,4 +1,4 @@
-package com.thn.lexi.index.explore
+package com.thn.lexi.index.explore.editorRecommend
 
 import android.graphics.Paint
 import android.view.View

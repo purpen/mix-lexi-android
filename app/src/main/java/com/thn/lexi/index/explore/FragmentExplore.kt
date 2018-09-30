@@ -1,7 +1,6 @@
 package com.thn.lexi.index.explore
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -15,6 +14,8 @@ import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.brandPavilion.BrandPavilionListActivity
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
+import com.thn.lexi.index.explore.editorRecommend.AllEditorRecommendActivity
+import com.thn.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.thn.lexi.index.selection.GoodsData
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
@@ -232,7 +233,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     override fun installListener() {
         //全部编辑推荐
         textViewAllRecommend.setOnClickListener {
-            startActivity(Intent(activity,AllEditorRecommendActivity::class.java))
+            startActivity(Intent(activity, AllEditorRecommendActivity::class.java))
         }
 
         //全部特色品牌馆

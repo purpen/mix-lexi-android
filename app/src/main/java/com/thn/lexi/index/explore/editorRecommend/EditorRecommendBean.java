@@ -1,4 +1,4 @@
-package com.thn.lexi.index.explore;
+package com.thn.lexi.index.explore.editorRecommend;
 
 import android.os.Parcel;
 import android.os.Parcelable;

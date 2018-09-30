@@ -70,7 +70,7 @@
         <activity android:name=".order.SelectExpressActivity" />
         <activity android:name=".search.SearchResultActivity" android:launchMode="singleTask"/>
         <activity android:name=".search.SearchActivity" android:launchMode="singleTask"/>
-        <activity android:name=".index.explore.AllEditorRecommendActivity" />
+        <activity android:name=".index.explore.editorRecommend.AllEditorRecommendActivity" />
     </application>
 
 </manifest>

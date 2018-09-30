@@ -1,4 +1,4 @@
-package com.thn.lexi.index.explore
+package com.thn.lexi.index.explore.editorRecommend
 
 import android.support.v4.app.FragmentActivity
 import android.view.View

@@ -15,7 +15,7 @@ import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.explore.BrandPavilionListBean
-import com.thn.lexi.index.explore.EditorRecommendAdapter
+import com.thn.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 
 class AdapterFeatureBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavilionListBean.DataBean.StoresBean, BaseViewHolder>(layoutResId) {
     private val size10: Int by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp10) }

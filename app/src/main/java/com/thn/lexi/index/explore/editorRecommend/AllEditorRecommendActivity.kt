@@ -1,4 +1,4 @@
-package com.thn.lexi.index.explore
+package com.thn.lexi.index.explore.editorRecommend
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.acticity_all_editor_recommend.*
 import kotlinx.android.synthetic.main.header_all_editor_recommend.view.*
 
 
-class AllEditorRecommendActivity : BaseActivity(),AllEditorRecommendContract.View{
+class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
 
     private val presenter: AllEditorRecommendPresenter by lazy { AllEditorRecommendPresenter(this) }
@@ -108,6 +108,9 @@ class AllEditorRecommendActivity : BaseActivity(),AllEditorRecommendContract.Vie
         headImageAdapter.setNewData(urlList)
     }
 
+    override fun setGoodsCount(count: Int) {
+        if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
+    }
 
     override fun installListener() {
         linearLayoutSort.setOnClickListener { _ ->

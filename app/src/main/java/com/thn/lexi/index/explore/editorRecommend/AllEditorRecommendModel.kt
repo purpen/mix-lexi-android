@@ -1,4 +1,4 @@
-package com.thn.lexi.index.explore
+package com.thn.lexi.index.explore.editorRecommend
 
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.net.ClientParamsAPI

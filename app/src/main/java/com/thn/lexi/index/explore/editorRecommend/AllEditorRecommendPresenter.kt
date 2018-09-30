@@ -1,4 +1,4 @@
-package com.thn.lexi.index.explore
+package com.thn.lexi.index.explore.editorRecommend
 import com.thn.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -90,7 +90,7 @@ class AllEditorRecommendPresenter(view: AllEditorRecommendContract.View) : AllEd
                 view.dismissLoadingView()
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
                 if (editorRecommendBean.success) {
-//                    view.setGoodsCount(hotGoodsBean.data.count)
+                    view.setGoodsCount(editorRecommendBean.data.count)
                     view.setNewData(editorRecommendBean.data.products)
                     ++curPage
                 } else {
