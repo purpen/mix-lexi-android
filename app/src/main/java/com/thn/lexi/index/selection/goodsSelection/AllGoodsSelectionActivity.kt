@@ -49,17 +49,6 @@ class AllGoodsSelectionActivity : BaseActivity(), AllGoodsSelectionContract.View
         adapter.setHeaderView(headerView)
     }
 
-    /**
-     * 初始化头布局
-     */
-    private fun initHeaderView() {
-//        headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
-//        headerView.imageViewBg.setImageResource(R.mipmap.icon_bg_header_new_goods)
-//        headerView.textViewHeadTitle.text = Util.getString(R.string.text_feature_new_goods)
-//        headerView.textViewHeadTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_new_goods_head_title,0,0,0)
-//        adapter.setHeaderView(headerView)
-    }
-
     override fun setGoodsCount(count: Int) {
         if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
