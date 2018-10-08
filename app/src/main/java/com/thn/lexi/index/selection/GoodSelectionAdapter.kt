@@ -37,7 +37,7 @@ class GoodSelectionAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, Bas
         }
 
         val textViewLike = helper.getView<TextView>(R.id.textViewLike)
-        textViewLike.visibility = View.VISIBLE
+        textViewLike.visibility = View.GONE
         textViewLike.text = "喜欢 +${item.like_count}"
 
         helper.setText(R.id.textViewTitle,item.name)
