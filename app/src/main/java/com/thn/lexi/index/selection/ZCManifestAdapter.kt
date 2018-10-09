@@ -1,4 +1,5 @@
 package com.thn.lexi.index.selection
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.basemodule.tools.DimenUtil
@@ -13,6 +14,8 @@ class ZCManifestAdapter(layoutResId: Int) : BaseQuickAdapter<ZCManifestBean.Data
     private val size106 by lazy { DimenUtil.dp2px(106.0)}
 
     override fun convert(helper: BaseViewHolder, item: ZCManifestBean.DataBean.LifeRecordsBean) {
+
+        helper.itemView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2,ViewGroup.LayoutParams.WRAP_CONTENT)
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2,size106)
