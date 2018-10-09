@@ -14,6 +14,14 @@ import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.brandPavilion.BrandPavilionListActivity
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
+import com.thn.lexi.index.explore.collection.CollectionDetailActivity
+import com.thn.lexi.index.explore.collection.CollectionListActivity
+import com.thn.lexi.index.explore.editorRecommend.AllEditorRecommendActivity
+import com.thn.lexi.index.explore.editorRecommend.EditorRecommendAdapter
+import com.thn.lexi.index.explore.goodDesign.AllGoodDesignActivity
+import com.thn.lexi.index.explore.goodsClassify.GoodsClassifyActivity
+import com.thn.lexi.index.explore.goodsIn100.AllGoodsIn100Activity
+import com.thn.lexi.index.explore.newGoods.AllNewGoodsActivity
 import com.thn.lexi.index.selection.GoodsData
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
@@ -44,7 +52,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         initGoodsCollection()
         initGoodDesign()
         initGood100()
-        swipeRefreshLayout.setColorSchemeColors(resources.getColor(R.color.color_6ed7af))
+        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isRefreshing = false
         swipeRefreshLayout.isEnabled = false
     }
@@ -229,26 +237,59 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
 
     override fun installListener() {
+        //全部编辑推荐
+        textViewAllRecommend.setOnClickListener {
+            startActivity(Intent(activity, AllEditorRecommendActivity::class.java))
+        }
 
+        //全部特色品牌馆
         textViewAllBrand.setOnClickListener {
             startActivity(Intent(activity,BrandPavilionListActivity::class.java))
+        }
+
+        //优质新品
+        textViewAllNewGoods.setOnClickListener {
+            startActivity(Intent(activity,AllNewGoodsActivity::class.java))
+        }
+
+        //全部集合
+        textViewCollection.setOnClickListener {
+            startActivity(Intent(activity,CollectionListActivity::class.java))
+        }
+
+        //特惠好设计
+        textViewGoodDesign.setOnClickListener {
+            startActivity(Intent(activity,AllGoodDesignActivity::class.java))
+        }
+
+        //百元好物
+        textViewGood100.setOnClickListener {
+            startActivity(Intent(activity,AllGoodsIn100Activity::class.java))
         }
 
         banner.setOnBannerListener {
             position ->ToastUtil.showInfo("你点击了$position")
         }
 
-        adapterBrandPavilion.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-            val item = adapter.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
+        //商品分类
+        adapterGoodsClass.setOnItemClickListener { _, _, position ->
+            val item = adapterGoodsClass.getItem(position)
+            val intent = Intent(activity,GoodsClassifyActivity::class.java)
+            intent.putExtra(GoodsClassifyActivity::class.java.simpleName,item)
+            startActivity(intent)
+        }
+
+        //去品牌馆详情
+        adapterBrandPavilion.setOnItemClickListener { _, _, position ->
+            val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
+            ToastUtil.showInfo("去店铺")
+        }
+
+
+        adapterBrandPavilion.setOnItemChildClickListener { _, view, position ->
+            val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
             when(view.id){
-                R.id.imageViewShop->ToastUtil.showInfo("去店铺")
-
-//                R.id.imageViewGoods0,R.id.imageViewGoods1,R.id.imageViewGoods2->{
-//                    //TODO 去商品详情
-//                    startActivity(Intent(activity,GoodsDetailActivity::class.java))
-//                }
-
-                R.id.buttonFocus ->{
+                R.id.textViewFocus ->{ //关注品牌馆
                     if (item.is_followed) {
                         presenter.unFocusBrandPavilion(item.rid,position)
                     } else {
@@ -256,6 +297,14 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
                     }
                 }
             }
+        }
+
+        //好货合集
+        adapterGoodsCollection.setOnItemClickListener { _, _, position ->
+            val item = adapterGoodsCollection.getItem(position)
+            val intent = Intent(activity, CollectionDetailActivity::class.java)
+            intent.putExtra(CollectionDetailActivity::class.java.simpleName, item!!.id)
+            startActivity(intent)
 
         }
 
@@ -276,15 +325,6 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
             jump2GoodsDetail(adapter,position)
         }
 
-//        swipeRefreshLayout.setOnRefreshListener {
-//            swipeRefreshLayout.isRefreshing = true
-//            adapter.setEnableLoadMore(false)
-//            loadData()
-//        }
-
-//        adapter.setOnLoadMoreListener({
-//            presenter.loadMoreData("", page)
-//        }, recyclerView)
     }
 
     private fun jump2GoodsDetail(adapter: BaseQuickAdapter<Any, BaseViewHolder>, position: Int) {

@@ -1,4 +1,5 @@
 package com.thn.lexi.mine.enshrine
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,10 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.mine.like.AdapterLikeGoods
 import com.thn.lexi.mine.AdapterMineFavorite
+import com.thn.lexi.mine.enshrine.recentLook.AllRecentLookGoodsActivity
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.view_head_mine_enshrine.view.*
 
@@ -100,7 +103,29 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
     override fun installListener() {
 
+        //查看最近全部
+        headerView.textViewMoreRecent.setOnClickListener {
+//            startActivity(Intent(activity,AllRecentLookGoodsActivity::class.java))
+        }
+
+        //最近查看item点击
+        adapterRecent.setOnItemClickListener { _, _, position ->
+            val item = adapterRecent.getItem(position)
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item)
+            startActivity(intent)
+        }
+
+        //心愿单item点击
+        adapterWishOrder.setOnItemClickListener { _, _, position ->
+            val item = adapterRecent.getItem(position)
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item)
+            startActivity(intent)
+        }
+
     }
+
 
 
 

@@ -11,6 +11,7 @@ import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.thn.lexi.AppApplication
+import com.thn.lexi.JsonUtil
 import com.thn.lexi.R
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsAllSKUBean

@@ -31,13 +31,10 @@ open class FavoriteModel:IDataSource{
     }
 
 
-    /**
-     * FAVORITE_GOODS_URL
-     */
     fun getUserGoodsLike(callBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.EDITOR_RECOMMEND_URL,params,object : IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.GET,URL.FAVORITE_GOODS_URL,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }

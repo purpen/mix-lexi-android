@@ -55,7 +55,7 @@ public class ExpressInfoBean {
             public String express_name;
             public int first_amount;
             public int first_item;
-            public int first_weight;
+            public double first_weight;
             public boolean is_default;
             public int max_days;
             public int min_days;
@@ -80,7 +80,7 @@ public class ExpressInfoBean {
                 public double continuous_weight;
                 public int first_amount;
                 public int first_item;
-                public int first_weight;
+                public double first_weight;
                 public boolean is_default;
                 public String rid;
                 public List<PlacesBean> places;

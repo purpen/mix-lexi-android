@@ -1,5 +1,5 @@
 package com.thn.lexi.mine
-import com.basemodule.tools.JsonUtil
+import com.thn.lexi.JsonUtil
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication

@@ -1,5 +1,8 @@
 package com.thn.lexi.search
+
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
@@ -15,9 +18,22 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
     private lateinit var presenter: SearchBrandPavilionPresenter
     private val adapter: AdapterSearchBrandPavilion by lazy { AdapterSearchBrandPavilion(R.layout.adapter_design_pavilion) }
 
+    private var searchString: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        searchString = arguments?.getString(FragmentSearchBrandPavilion::class.java.simpleName)
+    }
+
     companion object {
         @JvmStatic
-        fun newInstance(): FragmentSearchBrandPavilion = FragmentSearchBrandPavilion()
+        fun newInstance(searchString: String): FragmentSearchBrandPavilion {
+            val fragment = FragmentSearchBrandPavilion()
+            val bundle = Bundle()
+            bundle.putString(FragmentSearchBrandPavilion::class.java.simpleName, searchString)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initView() {
@@ -31,7 +47,7 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
         recyclerView.adapter = adapter
 //        val view = View(activity)
 //        adapter.addHeaderView(view)
-        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(),R.color.color_f5f7f9,recyclerView))
+        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(), R.color.color_f5f7f9, recyclerView))
 //        adapter.emptyView =
     }
 
@@ -53,16 +69,16 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
         //关注品牌馆
         adapter.setOnItemChildClickListener { _, _, position ->
             val pavilionBean = adapter.getItem(position) as DesignPavilionBean
-            if (pavilionBean.is_follow_store){ //点击取消关注
-                presenter.focusBrandPavilion(pavilionBean.rid,false,position)
-            }else{
-                presenter.focusBrandPavilion(pavilionBean.rid,true,position)
+            if (pavilionBean.is_follow_store) { //点击取消关注
+                presenter.focusBrandPavilion(pavilionBean.rid, false, position)
+            } else {
+                presenter.focusBrandPavilion(pavilionBean.rid, true, position)
             }
         }
 
         adapter.setOnLoadMoreListener({
             presenter.loadMoreData()
-        },recyclerView)
+        }, recyclerView)
     }
 
 
@@ -75,9 +91,9 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
 
 
     override fun loadData() {
-        presenter.loadData("乐")
+        if (TextUtils.isEmpty(searchString)) return
+        presenter.loadData(searchString!!)
     }
-
 
 
     override fun setNewData(data: MutableList<DesignPavilionBean>) {

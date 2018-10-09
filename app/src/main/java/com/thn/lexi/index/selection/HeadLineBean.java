@@ -4,8 +4,9 @@ import java.util.List;
 
 public class HeadLineBean {
 
+
     /**
-     * data : {"headlines":[{"hour":1,"line_text":"马赫的设计馆1小时售出45单","quantity":45,"username":"马赫","time":44},{"hour":1,"line_text":"冷洁的设计馆1小时售出15单","quantity":15,"username":"冷洁"},{"hour":1,"line_text":"马云的设计馆1小时售出50单","quantity":50,"username":"马云"},{"hour":1,"line_text":"东东的设计馆1小时售出6单","quantity":6,"username":"东东"},{"hour":3,"line_text":"豆豆的设计馆3小时售出11单","quantity":11,"username":"豆豆"},{"hour":3,"line_text":"高尚的设计馆3小时售出10单","quantity":10,"username":"高尚"},{"line_text":"小溪44小时前开通了自己的设计馆","time":44,"username":"小溪"},{"line_text":"乐喜七号45小时前开通了自己的设计馆","time":45,"username":"乐喜七号"}]}
+     * data : {"headlines":[{"event":3,"quantity":1,"time":1596757,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":1605684,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":1686454,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":1780437,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":1854020,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":2004246,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":2035432,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":2073776,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":2118273,"time_info":"","username":"13716171550"},{"event":3,"quantity":1,"time":2118725,"time_info":"","username":"13260180689"}]}
      * status : {"code":200,"message":"Ok all right."}
      * success : true
      */
@@ -19,18 +20,18 @@ public class HeadLineBean {
 
         public static class HeadlinesBean {
             /**
-             * hour : 1
-             * line_text : 马赫的设计馆1小时售出45单
-             * quantity : 45
-             * username : 马赫
-             * time : 44
+             * event : 3
+             * quantity : 1
+             * time : 1596757
+             * time_info :
+             * username : 13260180689
              */
 
-            public int hour;
-            public String line_text;
+            public int event;
             public int quantity;
-            public String username;
             public int time;
+            public String time_info;
+            public String username;
         }
     }
 

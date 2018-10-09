@@ -1,16 +1,13 @@
 package com.thn.lexi.address;
 
 import android.graphics.Bitmap;
-import android.util.Log;
-import android.view.View;
 
-import com.basemodule.tools.JsonUtil;
+import com.thn.lexi.JsonUtil;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.AppApplication;
 import com.thn.lexi.R;
-import com.thn.lexi.net.ClientParamsAPI;
 import com.thn.lexi.user.areacode.CountryAreaCodeBean;
 import com.thn.lexi.user.completeinfo.UploadTokenBean;
 
@@ -21,8 +18,6 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class AddressPresenter implements AddressContract.Presenter {
     private AddressContract.View view;

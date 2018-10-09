@@ -3,6 +3,7 @@ import android.text.TextUtils
 import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
+import com.thn.lexi.JsonUtil
 import com.thn.lexi.R
 import java.io.IOException
 

@@ -1,6 +1,6 @@
 package com.thn.lexi.index.detail
 import android.view.View
-import com.basemodule.tools.JsonUtil
+import com.thn.lexi.JsonUtil
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource

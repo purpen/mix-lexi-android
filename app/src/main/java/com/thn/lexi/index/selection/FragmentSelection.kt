@@ -4,19 +4,21 @@ import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.view.View
+import android.widget.TextView
+import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.thn.lexi.*
+import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.explore.ExploreBannerBean
-import kotlinx.android.synthetic.main.fragment_selection.*
-import android.view.View
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.thn.lexi.*
-import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
-import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.youth.banner.BannerConfig
+import kotlinx.android.synthetic.main.fragment_selection.*
 
 
 class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickListener {
@@ -33,7 +35,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private lateinit var adapterGoodSelection: GoodSelectionAdapter
 
     private lateinit var adapterZCManifest: ZCManifestAdapter
-
 
 
     companion object {
@@ -229,11 +230,40 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      * 设置头条数据
      */
     override fun setHeadLineData(data: MutableList<HeadLineBean.DataBean.HeadlinesBean>) {
-        val contentPavilion = data[0].line_text
-        val pavilionTime = data[0].time
 
-        val contentOrders = data[1].line_text
-        val orderCount = data[1].time
+        var size = data.size
+
+        if (size==0) return
+
+        if (size % 2 != 0) { //奇数补全
+            val lastNotice = HeadLineBean.DataBean.HeadlinesBean()
+            data.add(lastNotice)
+        }
+
+        if (size == 2) { //最少4条轮播
+            data.addAll(data)
+        }
+
+        size = data.size-2
+
+        //TODO 测试代码
+        for (i in 0..size){
+            data[i].event = i%4+1
+        }
+
+        for (i in 0..size step 2) {
+            val view = View.inflate(activity, R.layout.view_scroll_notice, null)
+            val tv1 = view.findViewById<TextView>(R.id.textView0)
+
+            setNoticeTextViewData(data[i],tv1)
+
+            val tv2 = view.findViewById<TextView>(R.id.textView1)
+            setNoticeTextViewData(data[i+1],tv2)
+            viewFlipper.addView(view)
+        }
+        viewFlipper.isAutoStart = true
+        viewFlipper.startFlipping()
+
 
 //        if (!TextUtils.isEmpty(name1)){
 //            val openInfo = SpannableString("设计师${contentPavilion}10秒前开了自己的设计馆")
@@ -251,6 +281,27 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 //            textViewOrderInfo.text = orderInfo
 //        }
 
+    }
+
+    /**
+     * 设置通知
+     */
+    private fun setNoticeTextViewData(bean:HeadLineBean.DataBean.HeadlinesBean,textView: TextView){
+        when (bean.event) {
+            1->{ //开通生活馆
+                textView.text = "${bean.username} 开通了自己的生活馆"
+            }
+
+            2->{//售出3单成为馆主
+                textView.text = "${bean.username} 售出3单成为正式馆主"
+            }
+            3->{//售出3单成为馆主
+                textView.text = "${bean.username} 售出${bean.quantity}单"
+            }
+            4->{//售出3单成为馆主
+                textView.text = "「${bean.username}」的生活馆 3小时 售出${bean.quantity}单"
+            }
+        }
     }
 
     /**
@@ -302,6 +353,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
             startActivity(intent)
         }
+
+        //查看全部优选
+        textViewMoreGoodSelection.setOnClickListener {
+            startActivity(Intent(activity, AllGoodsSelectionActivity::class.java))
+        }
     }
 
     override fun onClick(v: View) {
@@ -318,8 +374,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     override fun loadData() {
 
     }
-
-
 
 
     override fun showLoadingView() {

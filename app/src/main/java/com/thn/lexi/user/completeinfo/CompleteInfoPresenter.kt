@@ -1,7 +1,7 @@
 package com.thn.lexi.user.completeinfo
 
 import android.text.TextUtils
-import com.basemodule.tools.JsonUtil
+import com.thn.lexi.JsonUtil
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource

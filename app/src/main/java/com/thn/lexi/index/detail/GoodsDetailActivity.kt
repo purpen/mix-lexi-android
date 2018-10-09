@@ -50,7 +50,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var couponList: ArrayList<CouponBean>
 
-    private lateinit var productId:String
+    private lateinit var productId: String
+
+    private var lookGoodsAllDetailDialog: LookGoodsAllDetailDialog? = null
 
     //商品详情数据
     private var goodsData: GoodsAllDetailBean.DataBean? = null
@@ -242,6 +244,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.recyclerViewShopGoods.adapter = designPavilionProductAdapter
         headerView.recyclerViewShopGoods.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
         designPavilionProductAdapter.setNewData(imgUrls)
+
+        //跳转品牌馆商品详情
+        designPavilionProductAdapter.setOnItemClickListener { _, view, position ->
+            val productBean = data.products[position]
+            val intent = Intent(this,GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,productBean)
+            startActivity(intent)
+        }
     }
 
     //设置品牌馆关注状态
@@ -284,6 +294,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.recyclerViewSimilar.adapter = designPavilionProductAdapter
         headerView.recyclerViewSimilar.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
         designPavilionProductAdapter.setNewData(imgUrls)
+
+        //跳转相似商品详情
+        designPavilionProductAdapter.setOnItemClickListener { _, view, position ->
+            val productBean = data[position]
+            val intent = Intent(this,GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,productBean)
+            startActivity(intent)
+        }
     }
 
     /**
@@ -318,7 +336,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             return
         }
         val expressItem: ExpressInfoBean.DataBean.ItemsBean? = items[0]
-        headerView.textViewExpressTime.text = "预计${expressItem?.min_days}~${expressItem?.max_days}到达"
+        val expressTime = "预计${expressItem?.min_days}~${expressItem?.max_days}到达"
+        headerView.textViewExpressTime.text = expressTime
+        goodsData?.expressTime = expressTime
+        lookGoodsAllDetailDialog?.setExpressTime(expressTime)
     }
 
 
@@ -326,11 +347,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      * 设置商品信息
      */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
-
-        goodsData = data
-
         // 获取交货时间
         presenter.getExpressTime(data.fid, product.store_rid, productId)
+
+        goodsData = data
 
         for (item in data.deal_content) {
             if (TextUtils.equals("text", item.type)) {
@@ -434,7 +454,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         headerView.textViewSendAddress.text = data.delivery_country
 
-        headerView.textViewReturnPolicy.text = data.return_policy_title
+        if (TextUtils.isEmpty(data.return_policy_title)) {
+            headerView.textViewReturnPolicy.visibility = View.GONE
+        } else {
+            headerView.textViewReturnPolicy.text = data.return_policy_title
+        }
+
 
         headerView.textViewProductReturnPolicy.text = data.product_return_policy
     }
@@ -536,6 +561,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
     override fun installListener() {
+        //查看全部
+        headerView.buttonLookAll.setOnClickListener(this)
 
         buttonGoOrderConfirm.setOnClickListener(this)
 
@@ -576,12 +603,37 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         //分销商品->点击购买
         buttonPurchase.setOnClickListener(this)
+
+
+        recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            var dySum=0
+            var dp150 = DimenUtil.dp2px(150.0)
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                dySum += dy
+                if (dySum <= 0) {
+                    textViewTitle.text = ""
+                    imageViewBack.setImageResource(R.mipmap.icon_return_white)
+                    imageViewShare.setImageResource(R.mipmap.icon_share_white)
+                    relativeLayoutHeader.setBackgroundResource(R.mipmap.icon_bg_goods_detail_head)
+                } else if (dySum > dp150) {
+                    textViewTitle.text = goodsData?.name
+                    imageViewBack.setImageResource(R.mipmap.icon_nav_back)
+                    imageViewShare.setImageResource(R.mipmap.icon_click_share)
+                    relativeLayoutHeader.setBackgroundColor(Util.getColor(android.R.color.white))
+                }
+            }
+        })
     }
 
     override fun onClick(v: View) {
         val id = v.id
         when (id) {
-
+            R.id.buttonLookAll -> { //查看全部详情
+                if (goodsData == null) return
+                lookGoodsAllDetailDialog = LookGoodsAllDetailDialog(this, goodsData!!)
+                lookGoodsAllDetailDialog?.show()
+            }
             R.id.buttonGoOrderConfirm -> {
                 //TODO 跳转确认订单
                 ToastUtil.showInfo("确认订单")

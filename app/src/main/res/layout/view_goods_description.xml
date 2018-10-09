@@ -204,6 +204,7 @@
         android:textColor="@color/color_333"
         android:textSize="@dimen/sp14" />
     <Button
+        android:id="@+id/buttonLookAll"
         android:layout_width="@dimen/dp100"
         android:layout_height="@dimen/dp40"
         android:layout_gravity="center_horizontal"

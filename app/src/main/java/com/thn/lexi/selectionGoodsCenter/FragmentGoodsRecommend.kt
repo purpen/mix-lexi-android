@@ -1,15 +1,14 @@
 package com.thn.lexi.selectionGoodsCenter
 
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
+import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.R
 import com.thn.lexi.index.explore.ExploreBannerBean
-import android.view.View
-import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.index.selection.CardScaleHelper
 import com.thn.lexi.index.selection.HeadLineBean
-
 import kotlinx.android.synthetic.main.fragment_goods_recommend.*
 import kotlinx.android.synthetic.main.view_selection_goods_center_recommend.*
 
@@ -64,11 +63,11 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
      * 设置头条数据
      */
     override fun setHeadLineData(data: MutableList<HeadLineBean.DataBean.HeadlinesBean>) {
-        val contentPavilion = data[0].line_text
-        val pavilionTime = data[0].time
-
-        val contentOrders = data[1].line_text
-        val orderCount= data[1].time
+//        val contentPavilion = data[0].line_text
+//        val pavilionTime = data[0].time
+//
+//        val contentOrders = data[1].line_text
+//        val orderCount= data[1].time
 
 //        if (!TextUtils.isEmpty(name1)){
 //            val openInfo = SpannableString("设计师${contentPavilion}10秒前开了自己的设计馆")

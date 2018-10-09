@@ -1,11 +1,9 @@
 package com.thn.lexi.selectionGoodsCenter
 
-import com.basemodule.tools.JsonUtil
+import com.thn.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.index.explore.ExploreBannerBean
-import com.thn.lexi.index.selection.HeadLineBean
 import java.io.IOException
 
 class OfficialRecommendPresenter(view: OfficialRecommendContract.View) : OfficialRecommendContract.Presenter {

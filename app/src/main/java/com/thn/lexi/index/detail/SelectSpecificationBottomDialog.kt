@@ -1,7 +1,6 @@
 package com.thn.lexi.index.detail
 
 import android.content.Context
-import android.os.Bundle
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
@@ -12,6 +11,7 @@ import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.thn.lexi.AppApplication
+import com.thn.lexi.JsonUtil
 import com.thn.lexi.R
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
@@ -141,17 +141,20 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
     override fun setUiBeforShow() {
 
+
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
         view.textViewPrice.text = "${goods?.min_sale_price}"
 
         view.textViewName.text = goods?.name
 
-        val marginRight = DimenUtil.getDimensionPixelSize(R.dimen.dp15)
-        val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DimenUtil.getDimensionPixelSize(R.dimen.dp24))
+        val marginRight = DimenUtil.dp2px(15.0)
+        val marginBottom = DimenUtil.dp2px(10.0)
+        val dp6 = DimenUtil.dp2px(6.0)
+        val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DimenUtil.dp2px(24.0))
         layoutParams.rightMargin = marginRight
+        layoutParams.bottomMargin = marginBottom
 
-        val dp6 = DimenUtil.getDimensionPixelSize(R.dimen.dp6)
 
         adapterColor = object : TagAdapter<GoodsAllSKUBean.DataBean.ColorsBean>(colors) {
             override fun getView(parent: FlowLayout, position: Int, t: GoodsAllSKUBean.DataBean.ColorsBean): View {

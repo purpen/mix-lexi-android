@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="157dp"
+        android:background="@color/color_6ed7af"
+        >
+        <ImageView
+            android:id="@+id/imageViewPayResult"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/icon_pay_success"
+            />
+        <TextView
+            android:id="@+id/textViewPayResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
+            android:layout_below="@+id/imageViewPayResult"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_pay_success"
+            android:textSize="16sp"
+            android:includeFontPadding="false"
+            />
+
+        <TextView
+            android:id="@+id/textViewLookAllOrder"
+            android:layout_width="105dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bg_5fe4b1_border_white"
+            android:layout_below="@+id/textViewPayResult"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_look_all_order"
+            android:textSize="14sp"
+            android:includeFontPadding="false"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/color_999"
+            android:text="寄送地"
+            android:textSize="12sp"
+            android:includeFontPadding="false"
+            />
+        <TextView
+            android:id="@+id/textViewUserInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/color_333"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_loading"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            />
+    </LinearLayout>
+    <include layout="@layout/line_color_eee" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="15dp"
+        >
+        <TextView
+            android:id="@+id/textViewPayWay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/color_999"
+            android:text="支付方式"
+            android:textSize="12sp"
+            android:includeFontPadding="false"
+            />
+
+        <TextView
+            android:id="@+id/textViewPayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewPayWay"
+            android:gravity="center"
+            android:textColor="@color/color_333"
+            android:layout_marginTop="10dp"
+            android:text="微信支付"
+            android:textSize="14sp"
+            android:includeFontPadding="false"
+            />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutAliPay"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/border_radius4_ddd"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/imageViewPayWay"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/icon_wechat_pay" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        layout="@layout/line_color_eee"
+        android:layout_marginStart="15dp"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="15dp"
+        >
+        <TextView
+            android:id="@+id/textViewSubtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/text_subtotal"
+            android:textColor="@color/color_999"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewSubtotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:includeFontPadding="false"
+            android:drawablePadding="5dp"
+            android:drawableStart="@mipmap/icon_price_unit"
+            android:layout_alignBottom="@+id/textViewSubtotal"
+            android:text="0"
+            android:textColor="@color/color_333"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewDelivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_below="@+id/textViewSubtotal"
+            android:includeFontPadding="false"
+            android:text="@string/text_delivery"
+            android:textColor="@color/color_999"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewDeliveryPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:includeFontPadding="false"
+            android:text="0"
+            android:drawablePadding="5dp"
+            android:layout_alignBottom="@+id/textViewDelivery"
+            android:textColor="@color/color_333"
+            android:textSize="17sp" />
+
+
+        <!--订单总计-->
+        <TextView
+            android:id="@+id/textViewTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewDelivery"
+            android:layout_marginTop="13dp"
+            android:includeFontPadding="false"
+            android:text="@string/text_order_total"
+            android:textStyle="bold"
+            android:textColor="@color/color_333"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:includeFontPadding="false"
+            android:drawableStart="@mipmap/icon_price_unit_ff6666"
+            android:drawablePadding="5dp"
+            android:layout_alignBottom="@+id/textViewTotal"
+            android:text="0"
+            android:textColor="@color/color_ff6666"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+</LinearLayout>

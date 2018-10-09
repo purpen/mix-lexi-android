@@ -132,6 +132,11 @@ object URL {
     const val FOCUS_BRAND_PAVILION = "${BASE_URL}follow/store"
 
     /**
+     * 探索->全部特色品牌馆
+     */
+    const val ALL_FEATURE_BRAND_PAVILION = "${BASE_URL}column/feature_store_all"
+
+    /**
      * 精选->Banner
      */
     const val SELECTION_BANNER_URL = "${BASE_URL}banners/handpick"
@@ -455,20 +460,20 @@ object URL {
     /**
      * 全部省市区列表
      */
-    const val PROVINCES_CITY_COUNTRY= "${BASE_URL}places/provinces_cities"
+    const val PROVINCES_CITY_COUNTRY = "${BASE_URL}places/provinces_cities"
 
     /**
      * 订单全部列表
      */
-    const val GET_ORDER="${BASE_URL}orders"
+    const val GET_ORDER = "${BASE_URL}orders"
     /**
      * 删除订单
      */
-    const val DELETE_ORDER="${BASE_URL}orders/delete"
+    const val DELETE_ORDER = "${BASE_URL}orders/delete"
     /**
      * 获取商品物流信息
      */
-    const val GET_LOGISTICS="${BASE_URL}logistics/information"
+    const val GET_LOGISTICS = "${BASE_URL}logistics/information"
 
     /**
      * 获取用身份信息
@@ -494,17 +499,68 @@ object URL {
     /**
      * 搜索用户
      */
-   const val SEARCH_USERS_URL = "${BASE_URL}core_platforms/search/users"
+    const val SEARCH_USERS_URL = "${BASE_URL}core_platforms/search/users"
 
 
     /**
      * 订单确认收货
      */
-    const val ORDER_FINISH="${BASE_URL}orders/signed"
+    const val ORDER_FINISH = "${BASE_URL}orders/signed"
 
     /**
      *添加商品评价
      */
+    const val ORDER_EVALUATE = "${BASE_URL}orders/user_comment/create"
+
+    /**
+     * 搜索->热门推荐品牌馆
+     */
+    const val SEARCH_HOT_RECOMMEND_PAVILION = "${BASE_URL}core_platforms/search/hot_recommend"
+
+    /**
+     * 搜索->热门搜索
+     */
+    const val SEARCH_HOT_URL = "${BASE_URL}core_platforms/search/week_hot"
+
+    /**
+     * 搜索 ->模糊匹配
+     */
+    const val FUZZY_WORD_SEARCH_URL = "${BASE_URL}core_platforms/search"
+
+    /**
+     * 查看全部编辑推荐
+     */
+    const val ALL_EDITOR_RECOMMEND = "${BASE_URL}column/explore_recommend"
+
+    /**
+     * 栏目编码: 编辑推荐=e_recommend, 优质精品=e_new, 特惠好设计=preferential_design, 百元好物=affordable_goods
+     * 用户浏览记录
+     */
+    const val USER_BROWSE_RECORDS = "${BASE_URL}column/browse_records"
+
+    /**
+     * 精选品牌馆
+     */
+
+    const val SELECTION_BRAND_PAVILION = "${BASE_URL}column/handpick_store"
+
+    /**
+     * 集合详情
+     */
+    const val GOODS_COLLECTION_DETAIL = "${BASE_URL}column/collections/detail"
+
+
+    /**
+     *  优质新品
+     */
+    const val ALL_FEATURE_NEW_GOODS = "${BASE_URL}column/explore_new"
+
+    /**
+     * 商品分类
+     */
+    const val CLASSIFY_GOODS_URL = "${BASE_URL}category/products"
+
+
     const val ORDER_EVALUATE="${BASE_URL}orders/user_comment/create"
     /**
      * 生活馆订单统计

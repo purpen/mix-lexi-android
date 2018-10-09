@@ -18,6 +18,12 @@ public class CreateOrderBean implements Parcelable {
     //购物车总价
     public double orderTotalPrice;
 
+    //总的配送费
+    public double expressTotalPrice;
+
+    //用户应付总金额
+    public double userPayTotalPrice;
+
     //收货地址ID
     public String address_rid;
 
@@ -59,6 +65,8 @@ public class CreateOrderBean implements Parcelable {
         dest.writeInt(this.officialCouponPrice);
         dest.writeString(this.officialCouponCode);
         dest.writeDouble(this.orderTotalPrice);
+        dest.writeDouble(this.expressTotalPrice);
+        dest.writeDouble(this.userPayTotalPrice);
         dest.writeString(this.address_rid);
         dest.writeString(this.outside_target_id);
         dest.writeString(this.invoice_type);
@@ -75,6 +83,8 @@ public class CreateOrderBean implements Parcelable {
         this.officialCouponPrice = in.readInt();
         this.officialCouponCode = in.readString();
         this.orderTotalPrice = in.readDouble();
+        this.expressTotalPrice = in.readDouble();
+        this.userPayTotalPrice = in.readDouble();
         this.address_rid = in.readString();
         this.outside_target_id = in.readString();
         this.invoice_type = in.readString();

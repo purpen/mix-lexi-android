@@ -74,14 +74,14 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
 
         val textViewOldPrice =helper.getView<TextView>(R.id.textViewOldPrice)
 
-        if (itemProduct.real_sale_price ==0.0){ //折扣价为0,显示真实价格
-            helper.setText(R.id.textViewPrice, "${itemProduct.real_price}")
+        if (itemProduct.min_sale_price ==0.0){ //折扣价为0,显示真实价格
+            helper.setText(R.id.textViewPrice, "${itemProduct.min_price}")
             textViewOldPrice.visibility = View.GONE
         }else{ //折扣价不为0显示折扣价格和带划线的真实价格
             textViewOldPrice.visibility = View.VISIBLE
-            helper.setText(R.id.textViewPrice, "${itemProduct.real_sale_price}")
+            helper.setText(R.id.textViewPrice, "${itemProduct.min_sale_price}")
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥" + itemProduct.real_price
+            textViewOldPrice.text = "￥" + itemProduct.min_price
         }
     }
 }

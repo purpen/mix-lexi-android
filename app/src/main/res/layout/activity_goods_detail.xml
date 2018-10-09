@@ -12,9 +12,11 @@
         android:overScrollMode="never" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayoutHeader"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50">
-
+        android:layout_height="@dimen/dp50"
+        android:background="@mipmap/icon_bg_goods_detail_head"
+        >
         <ImageView
             android:id="@+id/imageViewBack"
             android:layout_width="@dimen/dp50"
@@ -22,7 +24,20 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/dp15"
             android:src="@mipmap/icon_return_white" />
-
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginStart="65dp"
+            android:layout_marginEnd="65dp"
+            android:textColor="@color/color_333"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text=""
+            android:textSize="19sp"
+            android:textStyle="bold"
+            />
         <ImageView
             android:id="@+id/imageViewShare"
             android:layout_width="@dimen/dp50"
@@ -33,6 +48,7 @@
             android:paddingStart="@dimen/dp15"
             android:src="@mipmap/icon_share_white" />
     </RelativeLayout>
+
     <include layout="@layout/line_color_eee"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"

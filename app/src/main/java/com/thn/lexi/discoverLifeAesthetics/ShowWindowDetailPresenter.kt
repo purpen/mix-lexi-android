@@ -1,11 +1,11 @@
 package com.thn.lexi.discoverLifeAesthetics
 
 import android.view.View
-import com.basemodule.tools.JsonUtil
+import com.thn.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
-import com.thn.lexi.index.explore.EditorRecommendBean
+import com.thn.lexi.index.explore.editorRecommend.EditorRecommendBean
 import com.thn.lexi.index.selection.DiscoverLifeBean
 import com.thn.lexi.net.NetStatusBean
 import java.io.IOException

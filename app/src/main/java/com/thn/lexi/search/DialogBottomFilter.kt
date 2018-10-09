@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.Constants
-import com.basemodule.tools.JsonUtil
+import com.thn.lexi.JsonUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog

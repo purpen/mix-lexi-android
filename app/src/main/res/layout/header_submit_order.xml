@@ -212,8 +212,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:includeFontPadding="false"
+            android:drawableStart="@mipmap/icon_price_unit_ff6666"
             android:layout_alignBottom="@+id/textViewTotal"
-            android:text="￥ 0"
+            android:text="0"
             android:textColor="@color/color_ff6666"
             android:textSize="17sp" />
     </RelativeLayout>

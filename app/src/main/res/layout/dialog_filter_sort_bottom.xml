@@ -75,6 +75,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:layout_below="@+id/rangeSeekBarView"
+        android:includeFontPadding="false"
         android:text="@string/text_classify"
         android:paddingStart="@dimen/dp20"
         android:textColor="@color/color_333"
@@ -86,6 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp60"
+        android:includeFontPadding="false"
         android:layout_alignBottom="@+id/textViewClassify"
         android:background="@android:color/white"
         android:text="@string/text_multi_select"
@@ -98,18 +100,68 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dp20"
+        android:paddingEnd="0dp"
         android:background="@android:color/white"
         android:layout_below="@+id/textViewClassify"
+        android:overScrollMode="never"
         android:paddingBottom="@dimen/dp30"
         android:paddingTop="@dimen/dp30"
         />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutRecommend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyclerView"
+        android:visibility="gone"
+        >
+        <TextView
+            android:id="@+id/textViewRecommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:text="推荐"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/dp20"
+            android:paddingEnd="0dp"
+            android:textColor="@color/color_333"
+            android:textSize="@dimen/sp17"
+            />
+        <TextView
+            android:id="@+id/textViewMulti1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp60"
+            android:includeFontPadding="false"
+            android:layout_alignBottom="@+id/textViewRecommend"
+            android:background="@android:color/white"
+            android:text="@string/text_multi_select"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp11"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewRecommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp20"
+            android:paddingEnd="0dp"
+            android:background="@android:color/white"
+            android:layout_below="@+id/textViewRecommend"
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/dp30"
+            android:paddingTop="@dimen/dp30"
+            />
+
+    </RelativeLayout>
+
 
     <Button
         android:id="@+id/button"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp40"
-        android:layout_below="@+id/recyclerView"
+        android:layout_below="@+id/relativeLayoutRecommend"
         android:layout_margin="@dimen/dp20"
         android:background="@drawable/bg_color5fe4b1_radius4"
         android:text="查看商品(0件)"
