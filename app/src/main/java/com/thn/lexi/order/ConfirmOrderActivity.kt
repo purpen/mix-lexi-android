@@ -1,5 +1,6 @@
 package com.thn.lexi.order
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
@@ -7,6 +8,7 @@ import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.*
 import com.thn.lexi.beans.CouponBean
+import com.thn.lexi.pay.SelectPayWayActivity
 import kotlinx.android.synthetic.main.acticity_submit_order.*
 import kotlinx.android.synthetic.main.footer_comfirm_order.view.*
 import kotlinx.android.synthetic.main.header_submit_order.view.*
@@ -140,7 +142,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      * 选完官方优惠券，将店铺优惠券清空
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onOfficialCouponSelected(couponBean:CouponBean) {
+    fun onOfficialCouponSelected(couponBean: CouponBean) {
 
         //将店铺优惠券总面值清零
         shopCouponTotalPrice = 0
@@ -209,23 +211,23 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             }
         }
 
-        footerView.setOnClickListener { //领官方券总价计算
+        footerView.setOnClickListener {
+            //领官方券总价计算
             //获取满足订单条件官方优惠券
             val sumPrice = createOrderBean.orderTotalPrice - shopCouponTotalPrice - fullReductionTotalPrice
-            val officialCouponBottomDialog = OfficialCouponBottomDialog(this, presenter,sumPrice,createOrderBean)
+            val officialCouponBottomDialog = OfficialCouponBottomDialog(this, presenter, sumPrice, createOrderBean)
             officialCouponBottomDialog.show()
         }
 
 //        adapter.setOnItemClickListener { _, _, position ->
-            //            val data = adapter.data
+        //            val data = adapter.data
 //            val item = adapter.getItem(position) as UserAddressListBean.DataBean
 //            item.is_default = true
 //
 //            adapter.notifyDataSetChanged()
 //        }
 
-        buttonSubmitOrder.setOnClickListener {
-            //TODO 提交订单
+        buttonSubmitOrder.setOnClickListener { //提交订单
             presenter.submitOrder(createOrderBean)
         }
     }
@@ -235,13 +237,13 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      */
     override fun setSubmitOrderSuccess() {
 //        清空购物车
-        ToastUtil.showInfo("订单提交成功，等待支付....")
         EventBus.getDefault().post(MessageOrderSuccess())
+
+//         跳转支付界面
+        val intent = Intent(this, SelectPayWayActivity::class.java)
+        intent.putExtra(SelectPayWayActivity::class.java.simpleName,createOrderBean)
+        startActivity(intent)
         finish()
-        // 跳转支付界面
-        // val intent = Intent(this,ConfirmOrderActivity::class.java)
-//            startActivity(intent)
-        LogUtil.e("订单提交成功，跳转支付界面")
     }
 
     /**
@@ -251,7 +253,6 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         newUserDiscountBean = data
         calculateUserPayTotalPrice()
     }
-
 
 
     override fun requestNet() {
@@ -363,6 +364,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             headerView.textViewDeliveryPrice.text = "￥$expressTotalPrice"
             headerView.textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_9099a6))
         }
+
+        createOrderBean.expressTotalPrice = expressTotalPrice
 
         calculateUserPayTotalPrice()
     }
@@ -491,7 +494,10 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
         headerView.textViewFirstOrderDiscountPrice.text = "-￥$firstOrderDiscountPrice"
 
-        headerView.textViewTotalPrice.text = "￥$userPayPrice"
+        //设置用户应付总金额
+        createOrderBean.userPayTotalPrice = userPayPrice
+
+        headerView.textViewTotalPrice.text = "$userPayPrice"
     }
 
     override fun showLoadingView() {

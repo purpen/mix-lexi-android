@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    >
+
+    <!--设计馆名和发货地-->
+    <TextView
+        android:id="@+id/textViewPavilionName"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingEnd="0dp"
+        android:paddingStart="15dp"
+        android:text="@string/text_loading"
+        android:textColor="@color/color_333"
+        android:textSize="14sp" />
+
+
+    <include
+        android:id="@+id/line0"
+        layout="@layout/line_color_eee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/textViewPavilionName" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewGoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line0" />
+
+    <!--运费-->
+    <TextView
+        android:id="@+id/textViewFreightTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/recyclerViewGoods"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingEnd="0dp"
+        android:paddingStart="15dp"
+        android:text="配送"
+        android:textColor="@color/color_333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textViewFreight"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/textViewFreightTitle"
+        android:drawableStart="@mipmap/icon_price_unit"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:drawablePadding="5dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="0dp"
+        android:text="0"
+        android:textColor="@color/color_333"
+        android:textSize="14sp" />
+    <include
+        android:id="@+id/line_freight_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="15dp"
+        android:layout_below="@id/textViewFreightTitle"
+        layout="@layout/line_color_eee" />
+
+</RelativeLayout>

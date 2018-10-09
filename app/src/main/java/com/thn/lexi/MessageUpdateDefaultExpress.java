@@ -8,6 +8,11 @@ public class MessageUpdateDefaultExpress implements Parcelable {
     public String product_rid;
     public String express_id;
     public String fid;
+    public int max_days;
+    public int min_days;
+
+    public MessageUpdateDefaultExpress() {
+    }
 
     @Override
     public int describeContents() {
@@ -20,9 +25,8 @@ public class MessageUpdateDefaultExpress implements Parcelable {
         dest.writeString(this.product_rid);
         dest.writeString(this.express_id);
         dest.writeString(this.fid);
-    }
-
-    public MessageUpdateDefaultExpress() {
+        dest.writeInt(this.max_days);
+        dest.writeInt(this.min_days);
     }
 
     protected MessageUpdateDefaultExpress(Parcel in) {
@@ -30,9 +34,11 @@ public class MessageUpdateDefaultExpress implements Parcelable {
         this.product_rid = in.readString();
         this.express_id = in.readString();
         this.fid = in.readString();
+        this.max_days = in.readInt();
+        this.min_days = in.readInt();
     }
 
-    public static final Parcelable.Creator<MessageUpdateDefaultExpress> CREATOR = new Parcelable.Creator<MessageUpdateDefaultExpress>() {
+    public static final Creator<MessageUpdateDefaultExpress> CREATOR = new Creator<MessageUpdateDefaultExpress>() {
         @Override
         public MessageUpdateDefaultExpress createFromParcel(Parcel source) {
             return new MessageUpdateDefaultExpress(source);

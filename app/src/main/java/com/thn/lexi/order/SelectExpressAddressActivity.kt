@@ -12,9 +12,13 @@ import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
+import com.thn.lexi.MessageOrderSuccess
 import com.thn.lexi.R
 import com.thn.lexi.address.AddressActivity
 import kotlinx.android.synthetic.main.acticity_select_express_address.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 
 
@@ -40,6 +44,8 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
     }
 
     override fun initView() {
+        EventBus.getDefault().register(this)
+
         customHeadView.setHeadCenterTxtShow(true, R.string.title_select_express_address)
         swipeRefreshLayout.isEnabled = false
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
@@ -132,6 +138,14 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
     }
 
     /**
+     * //订单提交成功关闭本界面
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onOrderCommitSuccess(message: MessageOrderSuccess) {
+        finish()
+    }
+
+    /**
      * 去确认订单界面
      */
     private fun jump2ConfirmOrder(){
@@ -213,4 +227,8 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     }
 
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
 }

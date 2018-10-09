@@ -150,6 +150,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         adapterOrder.notifyDataSetChanged()
+        adapterEditShopCartGoods.notifyDataSetChanged()
     }
 
 
@@ -506,6 +507,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     //订单提交成功清空购物车
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onOrderSubmitSuccess(message: MessageOrderSuccess) {
+        presenter.getShopCartGoods()
         adapterOrder.data.clear()
         adapterOrder.notifyDataSetChanged()
     }

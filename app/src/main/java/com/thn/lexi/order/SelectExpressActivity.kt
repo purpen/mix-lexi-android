@@ -132,6 +132,8 @@ class SelectExpressActivity : BaseActivity(), SelectExpressContract.View {
             express.store_rid = selectExpressRequestBean.productBean.store_rid
             express.fid = selectExpressRequestBean.productBean.fid
             express.express_id = clickedExpress!!.express_id
+            express.min_days = clickedExpress!!.min_days
+            express.max_days = clickedExpress!!.max_days
             EventBus.getDefault().post(express)
         }
     }
