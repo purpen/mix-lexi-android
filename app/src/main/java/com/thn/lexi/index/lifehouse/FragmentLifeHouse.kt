@@ -1,6 +1,7 @@
 package com.thn.lexi.index.lifehouse
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
@@ -35,6 +36,9 @@ import com.thn.lexi.beans.UserBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.selection.HeadImageAdapter
 import com.thn.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
+import com.yanyusong.y_divideritemdecoration.Y_Divider
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
+import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
@@ -212,19 +216,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         recyclerViewWelcome.layoutManager = gridLayoutManager
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
 
-        recyclerViewWelcome.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
-                super.getItemOffsets(outRect, view, parent, state)
-                val position = parent.getChildAdapterPosition(view)
-                outRect.bottom = DimenUtil.getDimensionPixelSize(R.dimen.dp20)
-                if (position % 2 == 0) {
-                    outRect.right = DimenUtil.getDimensionPixelSize(R.dimen.dp10)
-                } else {
-                    outRect.right = 0
-                }
-                LogUtil.e(outRect.toString())
-            }
-        })
+        recyclerViewWelcome.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
         adapter.setFooterView(footerWelcome)
 
     }
@@ -552,4 +544,22 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         super.onDestroy()
     }
 
+    private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
+        private val color: Int = Util.getColor(android.R.color.white)
+        private val height = 20f
+        override fun getDivider(itemPosition: Int): Y_Divider? {
+            var divider: Y_Divider? = null
+            if (itemPosition % 2 != 0) {
+                divider = Y_DividerBuilder()
+                        .setBottomSideLine(true, color, height, 0f, 0f)
+                        .setLeftSideLine(true, color, 10f, 0f, 0f)
+                        .create()
+            } else {
+                divider = Y_DividerBuilder()
+                        .setBottomSideLine(true, color, height, 0f, 0f)
+                        .create()
+            }
+            return divider
+        }
+    }
 }

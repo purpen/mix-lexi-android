@@ -8,17 +8,18 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.ScreenUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
 import com.thn.lexi.beans.ProductBean
 
 class GoodSelectionAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(layoutResId) {
+    private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))/2 }
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
 
         val relativeLayout = helper.getView<View>(R.id.relativeLayout)
-        val pixelSize = DimenUtil.getDimensionPixelSize(R.dimen.dp155)
-        var layoutParams = ViewGroup.LayoutParams(pixelSize,ViewGroup.LayoutParams.WRAP_CONTENT)
+        var layoutParams = ViewGroup.LayoutParams(sizeSpan2,ViewGroup.LayoutParams.WRAP_CONTENT)
         relativeLayout.layoutParams = layoutParams
 
         val imageViewStatus = helper.getView<View>(R.id.imageViewStatus)
@@ -55,7 +56,7 @@ class GoodSelectionAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, Bas
         }
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        imageView.layoutParams = RelativeLayout.LayoutParams(pixelSize,pixelSize)
+        imageView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2,sizeSpan2)
         GlideUtil.loadImageWithRadius(item.cover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4))
     }
 }
