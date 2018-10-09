@@ -69,6 +69,11 @@
         <activity android:name=".orderList.OrderDetailActivity"/>
         <activity android:name=".order.SelectExpressActivity" />
         <activity android:name=".search.SearchResultActivity" />
+        <activity android:name=".lifeShop.AccountDetailActivity" />
+        <activity android:name=".lifeShop.AccountStatementActivity" />
+        <activity android:name=".lifeShop.PutForwardActivity" />
+        <activity android:name=".lifeShop.TransactionOrderActivity" />
+        <activity android:name=".lifeShop.TransactionRecordActivity" />
     </application>
 
 </manifest>

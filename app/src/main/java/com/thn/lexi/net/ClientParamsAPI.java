@@ -1111,7 +1111,12 @@ public class ClientParamsAPI {
         return  params;
     }
 
-    public static HashMap<String,Object> getAddressIdParams(@NotNull String rid){
+    /**
+     * 通用获取rid
+     * @param rid
+     * @return
+     */
+    public static HashMap<String,Object> getRidParams(@NotNull String rid){
         HashMap<String,Object> params=generateCommonParams();
         params.put("rid",rid);
         return  params;
@@ -1127,6 +1132,80 @@ public class ClientParamsAPI {
         HashMap<String,Object> params=generateCommonParams();
         params.put("order_rid",order_rid);
         params.put("items",items);
+        return params;
+    }
+
+    /**
+     * 生活馆交易记录
+     * @param date_range
+     * @param rid
+     * @param status
+     * @param page
+     * @return
+     */
+    public static HashMap<String,Object> getTransactionRecordParams(String date_range, String rid, String status, String page){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("date_range",date_range);
+        params.put("store_rid",rid);
+        params.put("status",status);
+        params.put("page",page);
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
+
+    /**
+     * 生活馆订单列表
+     * @param store_rid
+     * @param status
+     * @param page
+     * @return
+     */
+    public static HashMap<String,Object> getTransactionOrderParams(String store_rid, String status, String page){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("store_rid",store_rid);
+        params.put("status",status);
+        params.put("page",page);
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
+
+    /**
+     * 对账单列表
+     * @param rid
+     * @param page
+     * @return
+     */
+    public static HashMap<String,Object> getAccountStatementParams(String rid,String page){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("store_rid",rid);
+        params.put("page",page);
+        params.put("per_page",Constants.PAGE_SIZE);
+        return params;
+    }
+
+    /**
+     * 对账单详情
+     * @param rid
+     * @param record_id
+     * @return
+     */
+    public static HashMap<String,Object> getAccountDetailParams(String rid, String record_id){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("store_rid",rid);
+        params.put("record_id",record_id);
+        return params;
+    }
+
+    /**
+     *对账单收益详情
+     * @param rid
+     * @param orderId
+     * @return
+     */
+    public static HashMap<String,Object> getAccountDetailOrderParams(String rid,String orderId){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("rid",orderId);
+        params.put("store_rid",rid);
         return params;
     }
 }
