@@ -278,4 +278,7 @@
     <string name="hint_please_select_payway">请选择支付方式</string>
     <string name="text_pay_success">支付成功</string>
     <string name="text_look_all_order">查看我的订单</string>
+    <string name="text_pay_wechat">微信支付</string>
+    <string name="text_pay_ali">支付宝支付</string>
+    <string name="text_pay_ant">蚂蚁花呗支付</string>
 </resources>

@@ -44,6 +44,22 @@ class PayResultActivity : BaseActivity() {
         //设置收货人信息
         headerView.textViewUserInfo.text = "${createOrderBean?.consigneeInfo?.first_name}，${createOrderBean?.consigneeInfo?.full_address}，${createOrderBean?.consigneeInfo?.zipcode}"
 
+
+        when(createOrderBean?.payWay){
+            1 ->{
+                headerView.textViewPayName.text = getString(R.string.text_pay_wechat)
+                headerView.imageViewPayWay.setImageResource(R.mipmap.icon_wechat_pay)
+            }
+            2 ->{
+                headerView.textViewPayName.text = getString(R.string.text_pay_ali)
+                headerView.imageViewPayWay.setImageResource(R.mipmap.icon_alipay)
+            }
+            3 ->{
+                headerView.textViewPayName.text = getString(R.string.text_pay_ant)
+                headerView.imageViewPayWay.setImageResource(R.mipmap.icon_ant_pay)
+            }
+        }
+
         if (createOrderBean?.expressTotalPrice == 0.0) {
             headerView.textViewDeliveryPrice.text = "包邮"
             headerView.textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_c2a67d))

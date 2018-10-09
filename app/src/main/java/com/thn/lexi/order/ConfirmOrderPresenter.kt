@@ -137,7 +137,11 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
      */
     override fun submitOrder(createOrderBean: CreateOrderBean) {
         dataSource.submitOrder(createOrderBean,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
             override fun onSuccess(json: String) {
+                view.dismissLoadingView()
                 val submitOrderBean = JsonUtil.fromJson(json, SubmitOrderBean::class.java)
                 if (submitOrderBean.success) {
                     view.setSubmitOrderSuccess()
@@ -147,6 +151,7 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
             }
 
             override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

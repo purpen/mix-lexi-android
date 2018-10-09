@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class CreateOrderBean implements Parcelable {
 
+    public int payWay;
+
     public UserAddressListBean.DataBean consigneeInfo;
 
     //官方券
@@ -61,6 +63,7 @@ public class CreateOrderBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.payWay);
         dest.writeParcelable(this.consigneeInfo, flags);
         dest.writeInt(this.officialCouponPrice);
         dest.writeString(this.officialCouponCode);
@@ -79,6 +82,7 @@ public class CreateOrderBean implements Parcelable {
     }
 
     protected CreateOrderBean(Parcel in) {
+        this.payWay = in.readInt();
         this.consigneeInfo = in.readParcelable(UserAddressListBean.DataBean.class.getClassLoader());
         this.officialCouponPrice = in.readInt();
         this.officialCouponCode = in.readString();
