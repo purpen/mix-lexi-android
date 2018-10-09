@@ -157,7 +157,7 @@
             android:layout_height="@dimen/dp40"
             android:layout_weight="1"
             android:background="@drawable/bg_colore5fe4b1_right_radius4"
-            android:text="@string/text_purchase"
+            android:text="@string/text_has_selected_goods"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp16"
             android:visibility="gone" />

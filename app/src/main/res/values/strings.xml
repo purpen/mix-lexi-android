@@ -281,4 +281,5 @@
     <string name="text_pay_wechat">微信支付</string>
     <string name="text_pay_ali">支付宝支付</string>
     <string name="text_pay_ant">蚂蚁花呗支付</string>
+    <string name="text_has_selected_goods">选好了</string>
 </resources>

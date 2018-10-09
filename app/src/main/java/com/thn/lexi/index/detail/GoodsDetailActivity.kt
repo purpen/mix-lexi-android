@@ -579,6 +579,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         buttonGoOrderConfirm.setOnClickListener(this)
 
+        //点击接单订制按钮
+        buttonOrderMake.setOnClickListener(this)
+
         buttonAddShopCart.setOnClickListener(this)
 
         relativeLayoutShopCart.setOnClickListener {
@@ -647,14 +650,22 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 lookGoodsAllDetailDialog = LookGoodsAllDetailDialog(this, goodsData!!)
                 lookGoodsAllDetailDialog?.show()
             }
-            R.id.buttonGoOrderConfirm -> {
-                //TODO 跳转确认订单
-                ToastUtil.showInfo("确认订单")
+
+            R.id.buttonGoOrderConfirm -> { //点击购买
+                if (goodsData == null || skuData == null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonGoOrderConfirm, skuData!!)
+                selectSpecificationBottomDialog.show()
+            }
+
+            R.id.buttonOrderMake -> {
+                if (goodsData == null || skuData == null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonOrderMake, skuData!!)
+                selectSpecificationBottomDialog.show()
             }
 
             R.id.buttonAddShopCart -> {
-                if (goodsData == null || skuData==null) return
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData, R.id.buttonAddShopCart,skuData!!)
+                if (goodsData == null || skuData == null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonAddShopCart, skuData!!)
                 selectSpecificationBottomDialog.show()
             }
 
@@ -669,13 +680,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonFocus -> { //关注大B/品牌馆/店铺
-                if (brandPavilionData == null) return
+                if (brandPavilionData == null || goodsData == null) return
                 presenter.focusBrandPavilion(goodsData!!.store_rid, !brandPavilionData!!.is_followed)
             }
 
             R.id.buttonLike -> {
                 if (goodsData == null) return
-
 
                 if (goodsData!!.is_like) {
                     presenter.favoriteGoods(goodsData!!.rid, v, false)
@@ -700,8 +710,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonPurchase, R.id.textViewSelectSpec -> { //请选择规格
-                if (skuData == null) return
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData, R.id.textViewSelectSpec, skuData!!)
+                if (skuData == null || goodsData==null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.textViewSelectSpec, skuData!!)
                 selectSpecificationBottomDialog.show()
             }
         }
