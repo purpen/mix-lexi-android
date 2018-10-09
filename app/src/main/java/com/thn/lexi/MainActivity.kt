@@ -2,6 +2,8 @@ package com.thn.lexi
 
 import android.content.Intent
 import android.text.TextUtils
+import android.view.KeyEvent
+import android.widget.Toast
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
@@ -10,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 class MainActivity : BaseActivity() {
 
@@ -128,4 +131,33 @@ class MainActivity : BaseActivity() {
         super.onDestroy()
     }
 
+    /**
+     * 菜单、返回键响应
+     */
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exitBy2Click() //调用双击退出函数
+        }
+        return false
+    }
+
+    private var isExit: Boolean = false
+
+    private fun exitBy2Click() {
+        val tExit: Timer
+        if (!isExit) {
+            isExit = true
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show()
+            tExit = Timer()
+            tExit.schedule(object : TimerTask() {
+                override fun run() {
+                    isExit = false
+                }
+            }, 2000)
+
+        } else {
+            finish()
+            System.exit(0)
+        }
+    }
 }
