@@ -8,20 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.basemodule.tools.*
-import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
-import com.thn.lexi.AppApplication
 import com.thn.lexi.JsonUtil
 import com.thn.lexi.R
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.dialog_select_specification_bottom.view.*
-import java.io.IOException
 import java.util.HashMap
 
 
-class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean?, ClickedId: Int) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
+class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean?, ClickedId: Int, skuData: GoodsAllSKUBean) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
     private val present: GoodsDetailPresenter by lazy { presenter }
+    private val allSKUBean: GoodsAllSKUBean by lazy { skuData }
     private val whichClicked: Int by lazy { ClickedId }
     private val goods: GoodsAllDetailBean.DataBean? = goodsData
     private val items: ArrayList<GoodsAllSKUBean.DataBean.ItemsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ItemsBean>() }
@@ -38,13 +36,12 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
-        loadData()
         if (goods!!.is_distributed) {
             view.buttonAddShopCart.visibility = View.VISIBLE
             view.buttonGoOrderConfirm.visibility = View.VISIBLE
-            if (goods.is_custom_made){ //接单订制和购买都跳转订单确认
+            if (goods.is_custom_made) { //接单订制和购买都跳转订单确认
                 view.buttonGoOrderConfirm.text = Util.getString(R.string.text_order_make)
-            }else{
+            } else {
                 view.buttonGoOrderConfirm.text = Util.getString(R.string.text_purchase)
 
             }
@@ -85,28 +82,6 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
         }
     }
 
-    private fun loadData() {
-        present.getGoodsSKUs(goods!!.rid, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                view.progressBar.visibility = View.VISIBLE
-            }
-            override fun onSuccess(json: String) {
-                view.progressBar.visibility = View.GONE
-                val goodsAllSKUBean = JsonUtil.fromJson(json, GoodsAllSKUBean::class.java)
-                if (goodsAllSKUBean.success) {
-                    setData(goodsAllSKUBean)
-                    SPUtil.write(GoodsAllSKUBean::class.java.simpleName, json)
-                } else {
-                    ToastUtil.showError(goodsAllSKUBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.progressBar.visibility = View.GONE
-                ToastUtil.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
 
     /**
      * 设置数据
@@ -213,6 +188,8 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
         view.flowLayoutSize.adapter = adapterSize
 
+        //设置SKU数据
+        setData(allSKUBean)
 
         view.flowLayoutColor.setOnTagClickListener { _, position, _ ->
             if (colors[position].valid) {
@@ -278,7 +255,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 }
 
                 R.id.buttonAddShopCart -> {
-                    present.addShopCart(selectedSKU!!.rid,1)
+                    present.addShopCart(selectedSKU!!.rid, 1)
                 }
             }
 //            val intent = Intent()
@@ -298,7 +275,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 return@setOnClickListener
             }
             dismiss()
-            present.addShopCart(selectedSKU!!.rid,1)
+            present.addShopCart(selectedSKU!!.rid, 1)
         }
 
         //购买->跳转确认订单
