@@ -560,8 +560,6 @@ object URL {
      */
     const val CLASSIFY_GOODS_URL = "${BASE_URL}category/products"
 
-
-    const val ORDER_EVALUATE="${BASE_URL}orders/user_comment/create"
     /**
      * 生活馆订单统计
      */
