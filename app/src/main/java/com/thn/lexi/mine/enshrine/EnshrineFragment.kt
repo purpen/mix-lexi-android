@@ -14,7 +14,6 @@ import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.mine.like.AdapterLikeGoods
 import com.thn.lexi.mine.AdapterMineFavorite
-import com.thn.lexi.mine.enshrine.recentLook.AllRecentLookGoodsActivity
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.view_head_mine_enshrine.view.*
 
