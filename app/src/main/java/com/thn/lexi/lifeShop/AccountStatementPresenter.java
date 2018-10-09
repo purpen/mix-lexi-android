@@ -37,7 +37,12 @@ public class AccountStatementPresenter implements AccountStatementContract.Prese
                 view.dismissLoadingView();
                 AccountStatementBean bean=JsonUtil.fromJson(json,AccountStatementBean.class);
                 if (bean.success){
-                    view.setData(bean);
+                    if (bean.data.statements.isEmpty()){
+                        view.loadMoreEnd();
+                    }else {
+                        view.loadMoreComplete();
+                        view.setData(bean);
+                    }
                 }else{
                     view.showError(Util.getString(R.string.text_net_error));
                 }

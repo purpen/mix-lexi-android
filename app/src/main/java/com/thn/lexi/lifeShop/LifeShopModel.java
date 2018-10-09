@@ -13,23 +13,30 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class LifeShopModel {
+
+    private HashMap<String, Object> params;
+
     public void loadData(String rid, int type, final IDataSource.HttpRequestCallBack callBack){
         String url = null;
         switch (type){
             case 0:
                 url= URL.SMALL_LIFE_STORE;
+                params = ClientParamsAPI.getRidParams(rid);
                 break;
             case 1:
                 url=URL.LIFE_ORDER_INCOME_COLLECT;
+                params = ClientParamsAPI.getStoreRidParams(rid);
                 break;
             case 2:
                 url=URL.LIFE_ORDER_COLLECT;
+                params = ClientParamsAPI.getStoreRidParams(rid);
                 break;
             case 3:
                 url=URL.LIFE_CASH_COLLECT;
+                params = ClientParamsAPI.getStoreRidParams(rid);
                 break;
         }
-        HashMap<String,Object> params= ClientParamsAPI.getRidParams(rid);
+
         HttpRequest.sendRequest(HttpRequest.GET, url, params, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {

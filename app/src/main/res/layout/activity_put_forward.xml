@@ -66,6 +66,7 @@
             android:background="@drawable/select_5fe4b1_ccc"
             android:layout_marginBottom="@dimen/dp15"
             android:textSize="@dimen/sp16"
+            android:enabled="false"
             android:textColor="@android:color/white"
             android:text="@string/text_put_money"/>
         <TextView

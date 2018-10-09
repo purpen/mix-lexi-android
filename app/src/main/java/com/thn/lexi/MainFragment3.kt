@@ -1,6 +1,7 @@
 package com.thn.lexi
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.view.View
@@ -17,15 +18,17 @@ import com.thn.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
 
-class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
-    private lateinit var presenter: MinePresenter
+class MainFragment3 : BaseFragment(),  View.OnClickListener {
     private lateinit var adapter0: MineFavoritesAdapter
     private lateinit var fragments: ArrayList<BaseFragment>
 
     companion object {
-        fun newInstance(): MainFragment3 {
-            return MainFragment3()
+        fun newInstance(bean:UserCenterBean.DataBean): MainFragment3 {
+            val mainFragment3 =MainFragment3()
+            val bundle = Bundle()
+            bundle.putParcelable("key",bean)
+            mainFragment3.arguments=bundle
+            return mainFragment3
         }
     }
 
@@ -49,13 +52,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
     override fun initView() {
         setUpViewPager()
-        this.presenter = MinePresenter(this)
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
-    }
-
-
-    override fun setPresenter(presenter: MineContract.Presenter?) {
-        setPresenter(presenter)
     }
 
 
@@ -139,44 +136,27 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     }
 
     override fun loadData() {
-        presenter.loadData()
+        val bundle = arguments
+        setUserData(bundle!!.getParcelable("key"))
     }
 
     /**
      * 设置用户数据
      */
-    override fun setUserData(data: UserCenterBean.DataBean) {
-        GlideUtil.loadCircleImageWidthDimen(data.avatar,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp70))
+    fun setUserData(data: UserCenterBean.DataBean) {
+        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70))
         textViewLikeNum.text = data.user_like_counts
         textViewEnshrineNum.text = data.wish_list_counts
         textViewDesignNum.text = data.followed_stores_counts
         textViewFocusNum.text = data.followed_users_counts
         textViewFansNum.text = data.fans_counts
         textViewName.text = data.username
-        if (TextUtils.isEmpty(data.about_me)){
+        if (TextUtils.isEmpty(data.about_me)) {
             textViewSignature.visibility = View.GONE
-        }else{
+        } else {
             textViewSignature.visibility = View.VISIBLE
             textViewSignature.text = data.about_me
         }
 
     }
-
-
-    override fun showLoadingView() {
-        dialog.show()
-    }
-
-    override fun dismissLoadingView() {
-        dialog.dismiss()
-    }
-
-    override fun showError(string: String) {
-        ToastUtil.showError(string)
-    }
-
-    override fun goPage() {
-
-    }
-
 }

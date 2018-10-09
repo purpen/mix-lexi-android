@@ -135,7 +135,8 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
 
     @Override
     public void setDetailData(AccountDetailOrderBean bean) {
-
+        AccountDetailDialog detailDialog=new AccountDetailDialog(this,bean,commission_price);
+        detailDialog.show();
     }
 
     @Override

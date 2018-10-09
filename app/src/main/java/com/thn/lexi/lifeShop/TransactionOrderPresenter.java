@@ -68,7 +68,12 @@ public class TransactionOrderPresenter implements TransactionOrderContract.Prese
                 view.dismissLoadingView();
                 TransactionOrderBean bean=JsonUtil.fromJson(json,TransactionOrderBean.class);
                 if (bean.success){
-                    view.setFragmentData(bean);
+                    if (bean.data.orders.isEmpty()){
+                        view.loadMoreEnd();
+                    }else {
+                        view.loadMoreComplete();
+                        view.setFragmentData(bean);
+                    }
                 }else {
                     view.showError(Util.getString(R.string.text_net_error));
                 }

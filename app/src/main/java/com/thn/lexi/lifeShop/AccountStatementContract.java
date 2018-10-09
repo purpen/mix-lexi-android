@@ -9,6 +9,8 @@ public class AccountStatementContract {
         void dismissLoadingView();
         void showError(String error);
         void setData(AccountStatementBean bean);
+        void loadMoreEnd();
+        void loadMoreComplete();
     }
     interface Presenter extends BasePresenter{
         void loadData(String rid,String page);

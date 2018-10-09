@@ -1,5 +1,8 @@
 package com.thn.lexi.mine;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class UserCenterBean {
 
     /**
@@ -12,7 +15,7 @@ public class UserCenterBean {
     public StatusBean status;
     public boolean success;
 
-    public static class DataBean {
+    public static class DataBean implements Parcelable {
         /**
          * ID : 17048395612
          * about_me : 肚子好饿
@@ -36,6 +39,50 @@ public class UserCenterBean {
         public String user_like_counts;
         public String username;
         public String wish_list_counts;
+
+        protected DataBean(Parcel in) {
+            ID = in.readString();
+            about_me = in.readString();
+            avatar = in.readString();
+            followed_stores_counts = in.readString();
+            followed_users_counts = in.readString();
+            fans_counts = in.readString();
+            store_phases = in.readString();
+            user_like_counts = in.readString();
+            username = in.readString();
+            wish_list_counts = in.readString();
+        }
+
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel in) {
+                return new DataBean(in);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(ID);
+            dest.writeString(about_me);
+            dest.writeString(avatar);
+            dest.writeString(followed_stores_counts);
+            dest.writeString(followed_users_counts);
+            dest.writeString(fans_counts);
+            dest.writeString(store_phases);
+            dest.writeString(user_like_counts);
+            dest.writeString(username);
+            dest.writeString(wish_list_counts);
+        }
     }
 
     public static class StatusBean {

@@ -2,6 +2,7 @@ package com.thn.lexi.lifeShop;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.JsonUtil;
@@ -46,6 +47,7 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
                         break;
                     case 1:
                         LifeShopSaleBean saleBean=JsonUtil.fromJson(json,LifeShopSaleBean.class);
+                        LogUtil.e(json);
                         if (saleBean.success){
                             view.setSaleData(saleBean);
                         }else {
@@ -54,6 +56,7 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
                         break;
                     case 2:
                         LifeShopOrderBean orderBean=JsonUtil.fromJson(json,LifeShopOrderBean.class);
+                        LogUtil.e(json);
                         if (orderBean.success){
                             view.setOrderData(orderBean);
                         }else {
@@ -62,6 +65,7 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
                         break;
                     case 3:
                         LifeShopCashBean cashBean=JsonUtil.fromJson(json,LifeShopCashBean.class);
+                        LogUtil.e(json);
                         if (cashBean.success){
                             view.setCashData(cashBean);
                         }else {

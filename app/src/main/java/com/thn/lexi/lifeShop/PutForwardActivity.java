@@ -2,6 +2,7 @@ package com.thn.lexi.lifeShop;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class PutForwardActivity extends BaseActivity implements View.OnClickList
     private TextView tv_put;
     private TextView tv_put_record;
     private PutForwardPresenter presenter;
+    private Button button;
 
     @Override
     protected int getLayout() {
@@ -41,19 +43,27 @@ public class PutForwardActivity extends BaseActivity implements View.OnClickList
         customHeadView.setHeadCenterTxtShow(true,Util.getString(R.string.text_put_money));
         tv_put_money = findViewById(R.id.tv_put_money);
         tv_put = findViewById(R.id.tv_put);
+        button = findViewById(R.id.button);
         LinearLayout ll_statements=findViewById(R.id.ll_statements);
         tv_put_record = findViewById(R.id.tv_put_record);
         ll_statements.setOnClickListener(this);
         presenter = new PutForwardPresenter(this);
         presenter.loadData(rid);
         presenter.loadRecentData(rid);
+        button.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent(this,AccountStatementActivity.class);
-        intent.putExtra("rid",rid);
-        startActivity(intent);
+        switch (v.getId()){
+            case R.id.button:
+                break;
+            case R.id.ll_statements:
+                Intent intent=new Intent(this,AccountStatementActivity.class);
+                intent.putExtra("rid",rid);
+                startActivity(intent);
+                break;
+        }
     }
 
     @Override
@@ -76,6 +86,11 @@ public class PutForwardActivity extends BaseActivity implements View.OnClickList
     public void setData(LifeShopCashBean bean) {
         tv_put_money.setText(bean.data.cash_price);
         tv_put.setText(bean.data.total_cash_price);
+        if (0==Double.valueOf(bean.data.cash_price)){
+            button.setEnabled(false);
+        }else {
+            button.setEnabled(true);
+        }
     }
 
     @Override

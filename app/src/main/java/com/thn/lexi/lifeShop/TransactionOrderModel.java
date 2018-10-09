@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class TransactionOrderModel {
     public void loadData(String rid, final IDataSource.HttpRequestCallBack callBack){
-        HashMap<String,Object> params= ClientParamsAPI.getRidParams(rid);
+        HashMap<String,Object> params= ClientParamsAPI.getStoreRidParams(rid);
         HttpRequest.sendRequest(HttpRequest.GET, URL.LIFE_ORDER_COLLECT, params, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {

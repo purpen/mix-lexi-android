@@ -113,9 +113,9 @@ public class DiscoverLifeBean {
                 public int material_id;
                 public String material_name;
                 public double max_price;
-                public int max_sale_price;
+                public double max_sale_price;
                 public double min_price;
-                public int min_sale_price;
+                public double min_sale_price;
                 public String name;
                 public int published_at;
                 public double real_price;

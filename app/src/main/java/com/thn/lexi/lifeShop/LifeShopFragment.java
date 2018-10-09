@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.basemodule.tools.Constants;
 import com.basemodule.tools.DateUtil;
 import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
+import com.basemodule.tools.SPUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
@@ -23,6 +25,7 @@ import com.basemodule.ui.BaseFragment;
 import com.thn.lexi.R;
 import com.thn.lexi.index.lifehouse.LifeHouseBean;
 import com.thn.lexi.orderList.InquiryDialog;
+import com.thn.lexi.user.login.UserProfileUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -73,24 +76,27 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
             curDate = new Date(System.currentTimeMillis());
             time = endTime - (curDate.getTime() / 1000);
             if (time > 0) {
-                DateUtil.getDateByTimestamp(time);
-                calendar.setTime(new Date(time));
-                String[] times = (simpleDateFormat.format(calendar)).split("-");
+                LogUtil.e("当前时间："+DateUtil.getDateByTimestamp(time,"dd-HH-mm-ss"));
+                String[] times = (DateUtil.getDateByTimestamp(time,"dd-HH-mm-ss")).split("-");
                 tv_day.setText(times[0]);
                 tv_hour.setText(times[1]);
                 tv_minute.setText(times[2]);
                 tv_second.setText(times[3]);
             }
+            handler.sendEmptyMessageDelayed(0,1000);
         }
     };
     private long time;
-    private Calendar calendar;
-    private SimpleDateFormat simpleDateFormat;
     private Intent intent;
     private LinearLayout ll_gross_earnings;
     private LifeShopCashBean cashBean;
     private LifeShopSaleBean saleBean;
     private LifeShopOrderBean orderBean;
+
+    public static LifeShopFragment newInstance(){
+        LifeShopFragment lifeShopFragment=new LifeShopFragment();
+        return lifeShopFragment;
+    }
 
     @Override
     protected int getLayout() {
@@ -102,6 +108,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
         super.initView();
         dialog = new WaitingDialog(getActivity());
         presenter = new LifeShopPresenter(this);
+        rid=UserProfileUtil.storeId();
         logo = getView().findViewById(R.id.iv_logo);
         name = getView().findViewById(R.id.tv_live_name);
         tv_live_id = getView().findViewById(R.id.tv_live_ID);
@@ -187,10 +194,12 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.tv_order_num:
                 intent = new Intent(getContext(), TransactionOrderActivity.class);
+                intent.putExtra("rid",rid);
                 getActivity().startActivity(intent);
                 break;
             case R.id.tv_put_money:
                 intent = new Intent(getContext(), PutForwardActivity.class);
+                intent.putExtra("rid",rid);
                 getActivity().startActivity(intent);
                 break;
             case R.id.button:
@@ -222,7 +231,6 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     private void saveImage() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(getActivity(), perms)) {
-            LogUtil.e("有权限");
             PreserveImageDialog imageDialog = new PreserveImageDialog(getActivity(), getActivity());
             imageDialog.show();
         } else {
@@ -254,8 +262,8 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
         }
         tv_live_id.setText("ID：" + bean.data.ID);
         endTime = bean.data.created_at + 2592000;
-        calendar = Calendar.getInstance();
-        simpleDateFormat = new SimpleDateFormat("dd-HH-mm-ss");
+        //calendar = Calendar.getInstance();
+        //simpleDateFormat = new SimpleDateFormat("dd-HH-mm-ss");
         handler.sendEmptyMessage(0);
     }
 

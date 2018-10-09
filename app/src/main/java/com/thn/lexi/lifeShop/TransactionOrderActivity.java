@@ -87,7 +87,7 @@ public class TransactionOrderActivity extends BaseActivity implements View.OnCli
         fragments.add(fragment1);
         fragments.add(fragment2);
         fragments.add(fragment3);
-        customViewPager.setAdapter(new CustomFragmentPagerAdapter(this.getSupportFragmentManager(), fragments, null));
+        customViewPager.setAdapter(new MyFragmentPageAdapter(this.getSupportFragmentManager(), fragments));
         presenter.loadData(rid);
     }
 
@@ -105,19 +105,19 @@ public class TransactionOrderActivity extends BaseActivity implements View.OnCli
                 setSelect();
                 switch (position) {
                     case 0:
-                        tv_all.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                        tv_all.setTextColor(Util.getColor(R.color.color_6ed7af));
                         break;
                     case 1:
                         tv_unread_delivery.setVisibility(View.GONE);
-                        tv_delivery.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                        tv_delivery.setTextColor(Util.getColor(R.color.color_6ed7af));
                         break;
                     case 2:
                         tv_unread_take_delivery.setVisibility(View.GONE);
-                        tv_take_delivery.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                        tv_take_delivery.setTextColor(Util.getColor(R.color.color_6ed7af));
                         break;
                     case 3:
                         tv_unread_complete.setVisibility(View.GONE);
-                        tv_complete.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                        tv_complete.setTextColor(Util.getColor(R.color.color_6ed7af));
                         break;
                 }
             }
@@ -134,21 +134,21 @@ public class TransactionOrderActivity extends BaseActivity implements View.OnCli
         setSelect();
         switch (v.getId()){
             case R.id.tv_all:
-                tv_all.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                tv_all.setTextColor(Util.getColor(R.color.color_6ed7af));
                 customViewPager.setCurrentItem(0);
                 break;
             case R.id.tv_delivery:
-                tv_delivery.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                tv_delivery.setTextColor(Util.getColor(R.color.color_6ed7af));
                 tv_unread_delivery.setVisibility(View.GONE);
                 customViewPager.setCurrentItem(1);
                 break;
             case R.id.tv_take_delivery:
-                tv_take_delivery.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                tv_take_delivery.setTextColor(Util.getColor(R.color.color_6ed7af));
                 tv_unread_take_delivery.setVisibility(View.GONE);
                 customViewPager.setCurrentItem(2);
                 break;
             case R.id.tv_complete:
-                tv_complete.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                tv_complete.setTextColor(Util.getColor(R.color.color_6ed7af));
                 tv_unread_complete.setVisibility(View.GONE);
                 customViewPager.setCurrentItem(3);
                 break;
@@ -156,10 +156,10 @@ public class TransactionOrderActivity extends BaseActivity implements View.OnCli
     }
 
     private void setSelect(){
-        tv_all.setBackgroundColor(Util.getColor(R.color.color_555));
-        tv_delivery.setBackgroundColor(Util.getColor(R.color.color_555));
-        tv_take_delivery.setBackgroundColor(Util.getColor(R.color.color_555));
-        tv_complete.setBackgroundColor(Util.getColor(R.color.color_555));
+        tv_all.setTextColor(Util.getColor(R.color.color_555));
+        tv_delivery.setTextColor(Util.getColor(R.color.color_555));
+        tv_take_delivery.setTextColor(Util.getColor(R.color.color_555));
+        tv_complete.setTextColor(Util.getColor(R.color.color_555));
     }
 
     @Override
@@ -207,8 +207,9 @@ public class TransactionOrderActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void setData(LifeShopOrderBean bean) {
-        tv_all_deal.setText(bean.data.all_count);
-        tv_day_deal.setText(bean.data.today_count);
+        tv_all_deal.setText(String.valueOf(bean.data.all_count));
+        tv_day_deal.setText(String.valueOf(bean.data.today_count
+        ));
     }
 
     @Override

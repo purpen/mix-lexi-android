@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class PutForwardModel {
     public void loadData(String rid, final IDataSource.HttpRequestCallBack callBack) {
-        HashMap<String, Object> params = ClientParamsAPI.getRidParams(rid);
+        HashMap<String, Object> params = ClientParamsAPI.getStoreRidParams(rid);
         HttpRequest.sendRequest(HttpRequest.GET, URL.LIFE_CASH_COLLECT, params, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
@@ -39,7 +39,7 @@ public class PutForwardModel {
     }
 
     public void loadRecentData(String rid, final IDataSource.HttpRequestCallBack callBack) {
-        HashMap<String, Object> params = ClientParamsAPI.getRidParams(rid);
+        HashMap<String, Object> params = ClientParamsAPI.getStoreRidParams(rid);
         HttpRequest.sendRequest(HttpRequest.GET, URL.LIFE_CASH_RECENT, params, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {

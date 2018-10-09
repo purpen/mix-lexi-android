@@ -61,6 +61,12 @@ public class TransactionOrderFragment extends BaseFragment implements Transactio
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         isVisible=isVisibleToUser;
+        if (isVisibleToUser) {
+            if (isInit) {
+                page=1;
+                presenter.loadFragmentData(rid,String.valueOf(status),String.valueOf(page));
+            }
+        }
     }
 
     @Override

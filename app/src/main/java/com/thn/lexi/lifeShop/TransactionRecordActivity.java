@@ -60,7 +60,7 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
     private Date selectTime;
     private boolean isShowSale=true;
     private WaitingDialog dialog;
-    private String saleMoney;
+    private String saleMoney=null;
     private String rId;
     private TransactionRecordPresenter presenter=new TransactionRecordPresenter(this);
 
@@ -118,7 +118,7 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
         fragments.add(fragment1);
         fragments.add(fragment2);
         fragments.add(fragment3);
-        customViewPager.setAdapter(new CustomFragmentPagerAdapter(this.getSupportFragmentManager(), fragments, null));
+        customViewPager.setAdapter(new MyFragmentPageAdapter(this.getSupportFragmentManager(), fragments));
         presenter.loadData(rId);
     }
 
@@ -136,19 +136,19 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
                 setSelect();
                 switch (position) {
                     case 0:
-                        tv_all.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                        tv_all.setTextColor(Util.getColor(R.color.color_6ed7af));
                         break;
                     case 1:
                         tv_unread_loading.setVisibility(View.GONE);
-                        tv_loading.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                        tv_loading.setTextColor(Util.getColor(R.color.color_6ed7af));
                         break;
                     case 2:
                         tv_unread_success.setVisibility(View.GONE);
-                        tv_success.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                        tv_success.setTextColor(Util.getColor(R.color.color_6ed7af));
                         break;
                     case 3:
                         tv_unread_refund.setVisibility(View.GONE);
-                        tv_refund.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                        tv_refund.setTextColor(Util.getColor(R.color.color_6ed7af));
                         break;
                 }
             }
@@ -177,11 +177,11 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
                     @Override
                     public void onTimeSelect(Date date, View v) {
                         selectTime = date;
-                        tv_time.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                        tv_time.setTextColor(Util.getColor(R.color.color_6ed7af));
                         String dateString=DateUtil.getDateString(date);
                         tv_time.setText(dateString);
-                        tv_seven_day.setBackgroundColor(Util.getColor(R.color.color_959fa7));
-                        tv_thirty_day.setBackgroundColor(Util.getColor(R.color.color_959fa7));
+                        tv_seven_day.setTextColor(Util.getColor(R.color.color_959fa7));
+                        tv_thirty_day.setTextColor(Util.getColor(R.color.color_959fa7));
                         fragment0.setRange(dateString);
                         fragment1.setRange(dateString);
                         fragment2.setRange(dateString);
@@ -191,12 +191,13 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
                         .setRangDate(startDate, endDate)
                         .setDate(selectData)
                         .build();
+                pvTime.show();
                 break;
             case R.id.tv_seven_day:
                 tv_time.setText(Util.getString(R.string.text_select_time));
-                tv_time.setBackgroundColor(Util.getColor(R.color.color_959fa7));
-                tv_seven_day.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
-                tv_thirty_day.setBackgroundColor(Util.getColor(R.color.color_959fa7));
+                tv_time.setTextColor(Util.getColor(R.color.color_959fa7));
+                tv_seven_day.setTextColor(Util.getColor(R.color.color_6ed7af));
+                tv_thirty_day.setTextColor(Util.getColor(R.color.color_959fa7));
                 fragment0.setRange("week");
                 fragment1.setRange("week");
                 fragment2.setRange("week");
@@ -204,9 +205,9 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.tv_thirty_day:
                 tv_time.setText(Util.getString(R.string.text_select_time));
-                tv_time.setBackgroundColor(Util.getColor(R.color.color_959fa7));
-                tv_seven_day.setBackgroundColor(Util.getColor(R.color.color_959fa7));
-                tv_thirty_day.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                tv_time.setTextColor(Util.getColor(R.color.color_959fa7));
+                tv_seven_day.setTextColor(Util.getColor(R.color.color_959fa7));
+                tv_thirty_day.setTextColor(Util.getColor(R.color.color_6ed7af));
                 fragment0.setRange("month");
                 fragment1.setRange("month");
                 fragment2.setRange("month");
@@ -214,24 +215,24 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.tv_all:
                 setSelect();
-                tv_all.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                tv_all.setTextColor(Util.getColor(R.color.color_6ed7af));
                 customViewPager.setCurrentItem(0);
                 break;
             case R.id.tv_loading:
                 setSelect();
-                tv_loading.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                tv_loading.setTextColor(Util.getColor(R.color.color_6ed7af));
                 customViewPager.setCurrentItem(1);
                 tv_unread_loading.setVisibility(View.GONE);
                 break;
             case R.id.tv_success:
                 setSelect();
-                tv_success.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                tv_success.setTextColor(Util.getColor(R.color.color_6ed7af));
                 customViewPager.setCurrentItem(2);
                 tv_unread_success.setVisibility(View.GONE);
                 break;
             case R.id.tv_refund:
                 setSelect();
-                tv_refund.setBackgroundColor(Util.getColor(R.color.color_6ed7af));
+                tv_refund.setTextColor(Util.getColor(R.color.color_6ed7af));
                 customViewPager.setCurrentItem(3);
                 tv_unread_refund.setVisibility(View.GONE);
                 break;
@@ -287,10 +288,10 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
     }
 
     private void setSelect() {
-        tv_all.setBackgroundColor(Util.getColor(R.color.color_555));
-        tv_loading.setBackgroundColor(Util.getColor(R.color.color_555));
-        tv_success.setBackgroundColor(Util.getColor(R.color.color_555));
-        tv_refund.setBackgroundColor(Util.getColor(R.color.color_555));
+        tv_all.setTextColor(Util.getColor(R.color.color_555));
+        tv_loading.setTextColor(Util.getColor(R.color.color_555));
+        tv_success.setTextColor(Util.getColor(R.color.color_555));
+        tv_refund.setTextColor(Util.getColor(R.color.color_555));
     }
 
     @Override

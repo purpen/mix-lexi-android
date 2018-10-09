@@ -91,6 +91,16 @@ public class AccountStatementActivity extends BaseActivity implements AccountSta
     }
 
     @Override
+    public void loadMoreEnd() {
+        adapter.loadMoreEnd();
+    }
+
+    @Override
+    public void loadMoreComplete() {
+        adapter.loadMoreComplete();
+    }
+
+    @Override
     public void setPresenter(AccountStatementContract.Presenter presenter) {
         setPresenter(presenter);
     }
