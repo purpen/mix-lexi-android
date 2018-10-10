@@ -1,10 +1,12 @@
 package com.thn.lexi.selectionGoodsCenter
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.BaseFragment
 import com.thn.lexi.R
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.detail.GoodsDetailActivity
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
@@ -51,6 +53,13 @@ class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
                 R.id.textView4 -> ToastUtil.showInfo("卖")
                 R.id.textView5 -> ToastUtil.showInfo("上架")
             }
+        }
+
+        adapter.setOnItemClickListener { _, _, position ->
+            val productsBean = adapter.getItem(position)
+            val intent = Intent(context,GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName,productsBean)
+            startActivity(intent)
         }
 
         adapter.setOnLoadMoreListener({

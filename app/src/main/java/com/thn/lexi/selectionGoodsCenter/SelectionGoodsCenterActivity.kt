@@ -1,9 +1,11 @@
 package com.thn.lexi.selectionGoodsCenter
+import android.content.Intent
 import android.support.v4.view.ViewPager
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.thn.lexi.R
+import com.thn.lexi.search.SearchActivity
 import kotlinx.android.synthetic.main.activity_selection_goods_center.*
 
 
@@ -33,10 +35,15 @@ class SelectionGoodsCenterActivity : BaseActivity() {
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(true)
         slidingTabLayout.setViewPager(customViewPager)
-
+        slidingTabLayout.getTitleView(0).textSize = 20f
     }
 
     override fun installListener() {
+
+        includeSearchBox.setOnClickListener {
+            startActivity(Intent(this,SearchActivity::class.java))
+        }
+
         customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 val count = customViewPager.childCount
