@@ -83,6 +83,11 @@
         <activity android:name=".index.explore.goodsClassify.GoodsClassifyActivity" />
         <activity android:name=".pay.SelectPayWayActivity" />
         <activity android:name=".pay.PayResultActivity" />
+        <activity android:name=".lifeShop.AccountDetailActivity" />
+        <activity android:name=".lifeShop.AccountStatementActivity" />
+        <activity android:name=".lifeShop.PutForwardActivity" />
+        <activity android:name=".lifeShop.TransactionOrderActivity" />
+        <activity android:name=".lifeShop.TransactionRecordActivity" />
     </application>
 
 </manifest>

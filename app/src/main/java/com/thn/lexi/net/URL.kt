@@ -1,7 +1,10 @@
 package com.thn.lexi.net
 
 object URL {
-    const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
+    //测试服务器
+    //const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
+    //正式服务器
+    const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
 
     /**
      * 注册
@@ -566,4 +569,40 @@ object URL {
     const val MARKET_WXA_POSTER = "${BASE_URL}market/wxa_poster"
 
 
+    /**
+     * 生活馆订单统计
+     */
+    const val LIFE_ORDER_COLLECT="${BASE_URL}stats/life_orders_collect"
+    /**
+     * 生活馆收益汇总
+     */
+    const val LIFE_ORDER_INCOME_COLLECT="${BASE_URL}stats/life_orders_sale_collect"
+    /**
+     *生活馆提现汇总
+     */
+    const val LIFE_CASH_COLLECT="${BASE_URL}stats/life_cash_collect"
+    /**
+     * 生活馆订单列表
+     */
+    const val LIFE_ORDER="${BASE_URL}orders/life_orders"
+    /**
+     * 生活馆订单交易记录
+     */
+    const val LIFE_TRANSACTION="${BASE_URL}stats/life_orders/transactions"
+    /**
+     * 最近一笔提现
+     */
+    const val LIFE_CASH_RECENT="${BASE_URL}stats/life_cash_recent"
+    /**
+     * 对账单列表
+     */
+    const val LIFE_ACCOUNT_STATEMENT="${BASE_URL}stats/life_orders/statements"
+    /**
+     * 对账单详情
+     */
+    const val LIFE_ACCOUNT_DETAIL="${BASE_URL}stats/life_orders/statement_items"
+    /**
+     * 对账单收益详情
+     */
+    const val LIFE_ACCOUNT_ORDER="${BASE_URL}stats/life_orders"
 }

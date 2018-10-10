@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp140"
+    android:background="@drawable/bg_color2785fa_radiu4"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_live_cumulative_income"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_live_yuan"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_money_show"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp17"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@mipmap/icon_live_show_money" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_gross_earnings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp10"
+        android:text="0.00"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp24"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/color_33fff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_live_day"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp12"/>
+            <TextView
+                android:id="@+id/tv_day_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="@dimen/dp1"
+            android:layout_height="@dimen/dp12"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_live_loading_money"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp12"/>
+            <TextView
+                android:id="@+id/tv_loading_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp12"
+                android:text="0.00"/>
+            <ImageView
+                android:id="@+id/iv_problem"
+                android:layout_width="@dimen/dp17"
+                android:layout_height="@dimen/dp17"
+                android:layout_marginLeft="@dimen/dp5"
+                android:background="@mipmap/icon_live_problem"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

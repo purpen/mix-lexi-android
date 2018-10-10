@@ -40,13 +40,11 @@ public class AddressDialog extends Dialog {
         lp.x = 0;
         lp.y = 0;
         lp.height=800;
-        dialogWindow.setAttributes(lp);
     }
     public void setDialogCallback(DialogCallback mDialogCallback){
         this.mDialogCallback=mDialogCallback;
     }
     private void initView(View view) {
-        LogUtil.e("日历苟老师的");
         final CityPicker picker= (CityPicker) view.findViewById(R.id.area_city_picker);
         picker.setData(map);
         TextView txt_cancel = (TextView) view.findViewById(R.id.sex_cancle);

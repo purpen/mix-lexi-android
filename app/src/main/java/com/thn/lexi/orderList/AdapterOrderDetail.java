@@ -24,6 +24,7 @@ public class AdapterOrderDetail extends BaseQuickAdapter<MyOrderListBean.DataBea
         if (!item.isShow||1==status||4==status){
             helper.setGone(R.id.relativeLayout,false);
         }else{
+
             helper.setVisible(R.id.relativeLayout,true);
             helper.setText(R.id.tv_logistics_name,item.getExpress_name());
         }

@@ -19,6 +19,9 @@ public class Constants {
     //拍照获取图片
     public static final int REQUEST_CODE_CAPTURE_CAMERA = 0x000010;
 
+    //保存图片到本地的所需的权限
+    public static final int REQUEST_CODE_SAVE_IMAGE = 0x000100;
+
     public static final int SUCCESS = 200;
 
 

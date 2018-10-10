@@ -23,6 +23,8 @@ public class LifeHouseBean {
         public String phases_description;
         public String name;
         public int phases;
+        public long created_at;
+        public String ID;
     }
 
     public static class StatusBean {

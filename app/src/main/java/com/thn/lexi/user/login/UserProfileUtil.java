@@ -3,6 +3,7 @@ package com.thn.lexi.user.login;
 import android.text.TextUtils;
 
 import com.basemodule.tools.Constants;
+import com.basemodule.tools.LogUtil;
 import com.thn.lexi.JsonUtil;
 import com.basemodule.tools.SPUtil;
 

@@ -200,7 +200,7 @@ public class MyOrderListBean implements Parcelable{
             private double freight;
             private boolean is_many_express;
             private Object official_order_id;
-            private int order_total_commission_price;
+            private String order_total_commission_price;
             private String outside_target_id;
             private double pay_amount;
             private int payed_at;
@@ -239,7 +239,7 @@ public class MyOrderListBean implements Parcelable{
                 first_discount = in.readDouble();
                 freight = in.readDouble();
                 is_many_express = in.readByte() != 0;
-                order_total_commission_price = in.readInt();
+                order_total_commission_price = in.readString();
                 outside_target_id = in.readString();
                 pay_amount = in.readDouble();
                 payed_at = in.readInt();
@@ -429,11 +429,11 @@ public class MyOrderListBean implements Parcelable{
                 this.is_many_express = is_many_express;
             }
 
-            public int getOrder_total_commission_price() {
+            public String getOrder_total_commission_price() {
                 return order_total_commission_price;
             }
 
-            public void setOrder_total_commission_price(int order_total_commission_price) {
+            public void setOrder_total_commission_price(String order_total_commission_price) {
                 this.order_total_commission_price = order_total_commission_price;
             }
 
@@ -615,7 +615,7 @@ public class MyOrderListBean implements Parcelable{
                 dest.writeDouble(first_discount);
                 dest.writeDouble(freight);
                 dest.writeByte((byte) (is_many_express ? 1 : 0));
-                dest.writeInt(order_total_commission_price);
+                dest.writeString(order_total_commission_price);
                 dest.writeString(outside_target_id);
                 dest.writeDouble(pay_amount);
                 dest.writeInt(payed_at);
@@ -767,8 +767,8 @@ public class MyOrderListBean implements Parcelable{
                 private double freight;
                 private String freight_name;
                 private String mode;
-                private int order_sku_commission_price;
-                private int order_sku_commission_rate;
+                private double order_sku_commission_price;
+                private String order_sku_commission_rate;
                 private double price;
                 private String product_name;
                 private String product_rid;
@@ -815,8 +815,8 @@ public class MyOrderListBean implements Parcelable{
                     freight = in.readDouble();
                     freight_name = in.readString();
                     mode = in.readString();
-                    order_sku_commission_price = in.readInt();
-                    order_sku_commission_rate = in.readInt();
+                    order_sku_commission_price = in.readDouble();
+                    order_sku_commission_rate = in.readString();
                     price = in.readDouble();
                     product_name = in.readString();
                     product_rid = in.readString();
@@ -1028,19 +1028,19 @@ public class MyOrderListBean implements Parcelable{
                     this.mode = mode;
                 }
 
-                public int getOrder_sku_commission_price() {
+                public double getOrder_sku_commission_price() {
                     return order_sku_commission_price;
                 }
 
-                public void setOrder_sku_commission_price(int order_sku_commission_price) {
+                public void setOrder_sku_commission_price(double order_sku_commission_price) {
                     this.order_sku_commission_price = order_sku_commission_price;
                 }
 
-                public int getOrder_sku_commission_rate() {
+                public String getOrder_sku_commission_rate() {
                     return order_sku_commission_rate;
                 }
 
-                public void setOrder_sku_commission_rate(int order_sku_commission_rate) {
+                public void setOrder_sku_commission_rate(String order_sku_commission_rate) {
                     this.order_sku_commission_rate = order_sku_commission_rate;
                 }
 
@@ -1209,8 +1209,8 @@ public class MyOrderListBean implements Parcelable{
                     dest.writeDouble(freight);
                     dest.writeString(freight_name);
                     dest.writeString(mode);
-                    dest.writeInt(order_sku_commission_price);
-                    dest.writeInt(order_sku_commission_rate);
+                    dest.writeDouble(order_sku_commission_price);
+                    dest.writeString(order_sku_commission_rate);
                     dest.writeDouble(price);
                     dest.writeString(product_name);
                     dest.writeString(product_rid);

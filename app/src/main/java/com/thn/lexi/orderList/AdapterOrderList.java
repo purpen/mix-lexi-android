@@ -27,10 +27,7 @@ import java.util.List;
 
 public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.OrdersBean,BaseViewHolder> {
     Calendar c= Calendar.getInstance();
-    private Button button;
-    private long between;
     private Activity activity;
-    private Handler handler;
     private Date date;
     private Intent intent;
 
@@ -42,19 +39,6 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
 
     @Override
     protected void convert(BaseViewHolder helper, final MyOrderListBean.DataBean.OrdersBean item) {
-        handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if (between>0) {
-                    LogUtil.e("当前剩余时间："+between);
-                    button.setText("付款 " + (between % (60 * 60) / 60) + ":" + (between % (60 * 60) % 60));
-                    between--;
-                    handler.sendEmptyMessageDelayed(0, 1000);
-                }else{
-                }
-            }
-        };
         helper.setText(R.id.tv_shop_name,item.getStore().getStore_name());
         GlideUtil.loadImageWithFading(item.getStore().getStore_logo(),(ImageView)helper.getView(R.id.iv_shop));
         helper.setText(R.id.tv_order_money, String.valueOf(item.getPay_amount()));
@@ -129,11 +113,6 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                     helper.setGone(R.id.bt_evaluate,false);
                     helper.setGone(R.id.bt_money, false);
                 }
-                /*between=Long.valueOf(600-((item.getCurrent_time()-)/1000));
-                LogUtil.e("创建时间"+item.getCurrent_time());
-                LogUtil.e("系统当前时间"+item.getCurrent_time());
-                button=helper.getView(R.id.bt_money);
-                handler.sendEmptyMessage(0);*/
                 break;
             case 5:
                 helper.setText(R.id.tv_order_status,"交易成功");

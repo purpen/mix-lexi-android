@@ -1,5 +1,6 @@
 package com.thn.lexi.index.explore
 import com.basemodule.tools.Constants
+import com.basemodule.tools.LogUtil
 import com.thn.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication

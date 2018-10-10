@@ -38,4 +38,8 @@
     <dimen name="dp18">18dp</dimen>
     <dimen name="dp17">17dp</dimen>
     <dimen name="dp67">67dp</dimen>
+    <dimen name="sp24">24sp</dimen>
+    <dimen name="dp7">7dp</dimen>
+    <dimen name="dp78">78dp</dimen>
+    <dimen name="dp240">240dp</dimen>
 </resources>
