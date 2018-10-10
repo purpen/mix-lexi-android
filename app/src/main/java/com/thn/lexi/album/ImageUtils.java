@@ -45,7 +45,6 @@ import java.util.Locale;
 
 
 public class ImageUtils {
-    public static double[] location = null;//图片经纬度
     private static final File PHOTO_DIR = new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera");
 
     public static void saveImageToGallery(Bitmap bmp) {

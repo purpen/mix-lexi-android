@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken
 import com.thn.lexi.*
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
+import com.thn.lexi.user.login.UserProfileUtil
 
 
 class SearchActivity : BaseActivity(), SearchContract.View {
@@ -46,7 +47,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     override fun initView() {
         editTextSearch.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         initSearchHistory()
-        initRecentLookGoods()
+        if (UserProfileUtil.isLogin()) initRecentLookGoods()
         initHotRecommendPavilion()
         initHotSearch()
         initFuzzyWordSearch()
