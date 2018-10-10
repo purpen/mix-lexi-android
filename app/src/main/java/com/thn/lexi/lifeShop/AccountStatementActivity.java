@@ -2,7 +2,9 @@ package com.thn.lexi.lifeShop;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
@@ -37,7 +39,7 @@ public class AccountStatementActivity extends BaseActivity implements AccountSta
     @Override
     public void initView() {
         super.initView();
-        Intent intent=getIntent();
+        final Intent intent=getIntent();
         rid = intent.getStringExtra("rid");
         dialog = new WaitingDialog(this);
         presenter = new AccountStatementPresenter(this);
@@ -75,13 +77,23 @@ public class AccountStatementActivity extends BaseActivity implements AccountSta
     @Override
     public void setData(AccountStatementBean bean) {
         list=new ArrayList<>();
-        Set<HashMap.Entry<String, AccountStatementBean.DataBean.StatementsBeanX>> eSet  =  bean.data.statements.entrySet();
+
+        for(Iterator iter = bean.data.statements.entrySet().iterator();iter.hasNext();){
+            Map.Entry element = (Map.Entry)iter.next();
+            AccountStatementBean.DataBean.StatementsBeanX strValue = (AccountStatementBean.DataBean.StatementsBeanX)element.getValue();
+            strValue.name = (String) element.getKey();
+            list.add(strValue);
+        }
+
+
+        /*Set<HashMap.Entry<String, AccountStatementBean.DataBean.StatementsBeanX>> eSet  =  bean.data.statements.entrySet();
         Iterator<HashMap.Entry<String, AccountStatementBean.DataBean.StatementsBeanX>> it = eSet.iterator();
         while (it.hasNext()){
             AccountStatementBean.DataBean.StatementsBeanX beanX=it.next().getValue();
-            beanX.name=it.next().getKey();
+            //LogUtil.e(it.next().toString());
+            beanX.name=(String) it.next().getKey().toString();
             list.add(beanX);
-        }
+        }*/
         if (page==1){
             adapter.setNewData(list);
         }else {

@@ -2,6 +2,7 @@ package com.thn.lexi.lifeShop;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.JsonUtil;
@@ -34,6 +35,7 @@ public class AccountStatementPresenter implements AccountStatementContract.Prese
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("dui账单："+json);
                 view.dismissLoadingView();
                 AccountStatementBean bean=JsonUtil.fromJson(json,AccountStatementBean.class);
                 if (bean.success){

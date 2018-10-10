@@ -31,10 +31,12 @@ public class AdapterOrderListTow extends BaseQuickAdapter<MyOrderListBean.DataBe
                     helper.setVisible(R.id.bt_logistics, true);
                 }
             }else{
-                if (item.getExpress_no().equals(getData().get(helper.getAdapterPosition()-1).getExpress_no())){
-                    helper.setVisible(R.id.bt_logistics, true);
-                }else {
-                    helper.setGone(R.id.bt_logistics, false);
+                if (helper.getAdapterPosition()!=0) {
+                    if (item.getExpress_no().equals(getData().get(helper.getAdapterPosition() - 1).getExpress_no())) {
+                        helper.setVisible(R.id.bt_logistics, true);
+                    } else {
+                        helper.setGone(R.id.bt_logistics, false);
+                    }
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.thn.lexi.lifeShop;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.net.ClientParamsAPI;
 import com.thn.lexi.net.HttpRequest;
@@ -50,6 +51,7 @@ public class LifeShopModel {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("?????"+json);
                 callBack.onSuccess(json);
             }
 
