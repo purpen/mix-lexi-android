@@ -27,9 +27,9 @@
         </provider>
 
         <activity
-            android:name=".welcome.WelcomeActivity"
+            android:name=".UserGuideActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/NoTitleFullscreen"
             android:launchMode="singleInstance"
             >
             <intent-filter>
@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".welcome.WelcomeActivity" />
         <activity android:name=".user.login.LoginActivity" android:launchMode="singleInstance"/>
         <activity android:name=".index.detail.GoodsDetailActivity" />
         <activity android:name=".user.register.RegisterActivity" android:launchMode="singleInstance"/>

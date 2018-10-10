@@ -2,6 +2,7 @@ package com.thn.lexi.index.detail
 import android.view.View
 import com.thn.lexi.JsonUtil
 import com.basemodule.tools.LogUtil
+import com.basemodule.tools.SPUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
@@ -150,17 +151,21 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
     /**
      * 获取商品所有SKU
      */
-    override fun getGoodsSKUs(id: String, callBack: IDataSource.HttpRequestCallBack) {
+    override fun getGoodsSKUs(id: String) {
         dataSource.getGoodsSKUs(id, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                callBack.onStart()
-            }
+
             override fun onSuccess(json: String) {
-                callBack.onSuccess(json)
+                val goodsAllSKUBean = JsonUtil.fromJson(json, GoodsAllSKUBean::class.java)
+                if (goodsAllSKUBean.success) {
+                    view.setSKUData(goodsAllSKUBean)
+                    SPUtil.write(GoodsAllSKUBean::class.java.simpleName, json)
+                } else {
+                    ToastUtil.showError(goodsAllSKUBean.status.message)
+                }
             }
 
             override fun onFailure(e: IOException) {
-                callBack.onFailure(e)
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
     }

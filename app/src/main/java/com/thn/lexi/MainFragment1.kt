@@ -130,6 +130,11 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
             val itemsBean = iterator.next()
             if (list.contains(itemsBean.product.product_rid)) iterator.remove()
         }
+
+        if (adapterEditShopCartGoods.data.isEmpty()){
+            linearLayoutNum.visibility = View.GONE
+        }
+
         adapterEditShopCartGoods.notifyDataSetChanged()
         adapterOrder.notifyDataSetChanged()
         setShopCartTotalPrice()
@@ -140,17 +145,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
      * 商品SKU移除购物车成功
      */
     override fun removeShopCartSuccess() {
-        val data = adapterOrder.data
-
-        val iterator = data.iterator()
-
-        while (iterator.hasNext()) {
-            val item = iterator.next()
-            if (item.isChecked) iterator.remove()
-        }
-
-        adapterOrder.notifyDataSetChanged()
-        adapterEditShopCartGoods.notifyDataSetChanged()
+        presenter.getShopCartGoods()
     }
 
 

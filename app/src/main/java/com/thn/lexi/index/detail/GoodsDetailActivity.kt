@@ -1,4 +1,5 @@
 package com.thn.lexi.index.detail
+
 import android.content.Intent
 import android.graphics.Paint
 import android.graphics.Rect
@@ -139,6 +140,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         //获取购物车商品数量
         presenter.getShopCartProductsNum()
 
+
+        //获取商品SKU
+        presenter.getGoodsSKUs(productId)
     }
 
     /**
@@ -248,8 +252,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         //跳转品牌馆商品详情
         designPavilionProductAdapter.setOnItemClickListener { _, view, position ->
             val productBean = data.products[position]
-            val intent = Intent(this,GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName,productBean)
+            val intent = Intent(this, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
             startActivity(intent)
         }
     }
@@ -298,8 +302,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         //跳转相似商品详情
         designPavilionProductAdapter.setOnItemClickListener { _, view, position ->
             val productBean = data[position]
-            val intent = Intent(this,GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName,productBean)
+            val intent = Intent(this, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
             startActivity(intent)
         }
     }
@@ -559,12 +563,24 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         }
     }
 
+    private var skuData: GoodsAllSKUBean? = null
+
+    /**
+     * 设置SKU数据
+     */
+    override fun setSKUData(goodsAllSKUBean: GoodsAllSKUBean) {
+        skuData = goodsAllSKUBean
+    }
+
 
     override fun installListener() {
         //查看全部
         headerView.buttonLookAll.setOnClickListener(this)
 
         buttonGoOrderConfirm.setOnClickListener(this)
+
+        //点击接单订制按钮
+        buttonOrderMake.setOnClickListener(this)
 
         buttonAddShopCart.setOnClickListener(this)
 
@@ -605,8 +621,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         buttonPurchase.setOnClickListener(this)
 
 
-        recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
-            var dySum=0
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            var dySum = 0
             var dp150 = DimenUtil.dp2px(150.0)
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -634,14 +650,22 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 lookGoodsAllDetailDialog = LookGoodsAllDetailDialog(this, goodsData!!)
                 lookGoodsAllDetailDialog?.show()
             }
-            R.id.buttonGoOrderConfirm -> {
-                //TODO 跳转确认订单
-                ToastUtil.showInfo("确认订单")
+
+            R.id.buttonGoOrderConfirm -> { //点击购买
+                if (goodsData == null || skuData == null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonGoOrderConfirm, skuData!!)
+                selectSpecificationBottomDialog.show()
+            }
+
+            R.id.buttonOrderMake -> {
+                if (goodsData == null || skuData == null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonOrderMake, skuData!!)
+                selectSpecificationBottomDialog.show()
             }
 
             R.id.buttonAddShopCart -> {
-                if (goodsData == null) return
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData, R.id.buttonAddShopCart)
+                if (goodsData == null || skuData == null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonAddShopCart, skuData!!)
                 selectSpecificationBottomDialog.show()
             }
 
@@ -656,13 +680,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonFocus -> { //关注大B/品牌馆/店铺
-                if (brandPavilionData == null) return
+                if (brandPavilionData == null || goodsData == null) return
                 presenter.focusBrandPavilion(goodsData!!.store_rid, !brandPavilionData!!.is_followed)
             }
 
             R.id.buttonLike -> {
                 if (goodsData == null) return
-
 
                 if (goodsData!!.is_like) {
                     presenter.favoriteGoods(goodsData!!.rid, v, false)
@@ -687,7 +710,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonPurchase, R.id.textViewSelectSpec -> { //请选择规格
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData, R.id.textViewSelectSpec)
+                if (skuData == null || goodsData==null) return
+                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.textViewSelectSpec, skuData!!)
                 selectSpecificationBottomDialog.show()
             }
         }

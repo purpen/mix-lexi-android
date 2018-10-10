@@ -126,6 +126,8 @@ public class GoodsAllDetailBean {
         public List<AssetsBean> assets;
         public List<DealContentBean> deal_content;
         public List<LabelsBean> labels;
+        public String delivery_province;
+        public String delivery_city;
         public List<String> modes;
         public List<SkusBean> skus;
 

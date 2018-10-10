@@ -1,5 +1,6 @@
 package com.thn.lexi.index.selection
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -17,6 +18,9 @@ import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.explore.ExploreBannerBean
 import com.thn.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
+import com.yanyusong.y_divideritemdecoration.Y_Divider
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
+import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 
@@ -66,7 +70,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         staggeredGridLayoutManager.setScrollEnabled(false)
         recyclerViewZCManifest.layoutManager = staggeredGridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
-        recyclerViewZCManifest.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
+        recyclerViewZCManifest.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
     }
 
     /**
@@ -88,7 +92,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewGoodSelection.setHasFixedSize(true)
         recyclerViewGoodSelection.layoutManager = gridLayoutManager
         recyclerViewGoodSelection.adapter = adapterGoodSelection
-        recyclerViewGoodSelection.addItemDecoration(GridSpaceDecoration(resources.getDimensionPixelSize(R.dimen.dp10), resources.getDimensionPixelSize(R.dimen.dp20)))
+        recyclerViewGoodSelection.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
     }
 
     /**
@@ -233,7 +237,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
         var size = data.size
 
-        if (size==0) return
+        if (size == 0) return
 
         if (size % 2 != 0) { //奇数补全
             val lastNotice = HeadLineBean.DataBean.HeadlinesBean()
@@ -244,21 +248,21 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             data.addAll(data)
         }
 
-        size = data.size-2
+        size = data.size - 2
 
         //TODO 测试代码
-        for (i in 0..size){
-            data[i].event = i%4+1
+        for (i in 0..size) {
+            data[i].event = i % 4 + 1
         }
 
         for (i in 0..size step 2) {
             val view = View.inflate(activity, R.layout.view_scroll_notice, null)
             val tv1 = view.findViewById<TextView>(R.id.textView0)
 
-            setNoticeTextViewData(data[i],tv1)
+            setNoticeTextViewData(data[i], tv1)
 
             val tv2 = view.findViewById<TextView>(R.id.textView1)
-            setNoticeTextViewData(data[i+1],tv2)
+            setNoticeTextViewData(data[i + 1], tv2)
             viewFlipper.addView(view)
         }
         viewFlipper.isAutoStart = true
@@ -286,19 +290,19 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 设置通知
      */
-    private fun setNoticeTextViewData(bean:HeadLineBean.DataBean.HeadlinesBean,textView: TextView){
+    private fun setNoticeTextViewData(bean: HeadLineBean.DataBean.HeadlinesBean, textView: TextView) {
         when (bean.event) {
-            1->{ //开通生活馆
+            1 -> { //开通生活馆
                 textView.text = "${bean.username} 开通了自己的生活馆"
             }
 
-            2->{//售出3单成为馆主
+            2 -> {//售出3单成为馆主
                 textView.text = "${bean.username} 售出3单成为正式馆主"
             }
-            3->{//售出3单成为馆主
+            3 -> {//售出3单成为馆主
                 textView.text = "${bean.username} 售出${bean.quantity}单"
             }
-            4->{//售出3单成为馆主
+            4 -> {//售出3单成为馆主
                 textView.text = "「${bean.username}」的生活馆 3小时 售出${bean.quantity}单"
             }
         }
@@ -400,5 +404,24 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     override fun onStop() {
         super.onStop()
         hotBanner.stopAutoPlay()
+    }
+
+    private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
+        private val color: Int = Util.getColor(android.R.color.white)
+        private val height = 20f
+        override fun getDivider(itemPosition: Int): Y_Divider? {
+            var divider: Y_Divider? = null
+            if (itemPosition % 2 != 0) {
+                divider = Y_DividerBuilder()
+                        .setBottomSideLine(true, color, height, 0f, 0f)
+                        .setLeftSideLine(true, color, 10f, 0f, 0f)
+                        .create()
+            } else {
+                divider = Y_DividerBuilder()
+                        .setBottomSideLine(true, color, height, 0f, 0f)
+                        .create()
+            }
+            return divider
+        }
     }
 }

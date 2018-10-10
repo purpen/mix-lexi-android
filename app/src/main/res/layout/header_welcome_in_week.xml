@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom_shadow"
+        android:background="@drawable/shape_bg_radius4_shadow_left_right_bottom"
         android:orientation="vertical"
         android:paddingEnd="@dimen/dp15"
         android:paddingStart="@dimen/dp15"
@@ -135,7 +135,7 @@
         android:id="@+id/relativeLayoutOpenTips"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="-2dp"
         android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
         android:layout_marginBottom="@dimen/dp15"

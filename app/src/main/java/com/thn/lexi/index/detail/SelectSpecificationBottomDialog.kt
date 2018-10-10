@@ -1,6 +1,7 @@
 package com.thn.lexi.index.detail
 
 import android.content.Context
+import android.content.Intent
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
@@ -8,22 +9,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.basemodule.tools.*
-import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.thn.lexi.AppApplication
 import com.thn.lexi.JsonUtil
 import com.thn.lexi.R
+import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.order.CreateOrderBean
+import com.thn.lexi.order.SelectExpressAddressActivity
+import com.thn.lexi.order.StoreItemBean
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.dialog_select_specification_bottom.view.*
-import java.io.IOException
 import java.util.HashMap
 
 
-class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean?, ClickedId: Int) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
+class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean, ClickedId: Int, skuData: GoodsAllSKUBean) : BottomBaseDialog<SelectSpecificationBottomDialog>(context) {
     private val present: GoodsDetailPresenter by lazy { presenter }
+    private val allSKUBean: GoodsAllSKUBean by lazy { skuData }
     private val whichClicked: Int by lazy { ClickedId }
-    private val goods: GoodsAllDetailBean.DataBean? = goodsData
+    private val product: GoodsAllDetailBean.DataBean by lazy { goodsData }
     private val items: ArrayList<GoodsAllSKUBean.DataBean.ItemsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ItemsBean>() }
     private val colors: ArrayList<GoodsAllSKUBean.DataBean.ColorsBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ColorsBean>() }
     private val modes: ArrayList<GoodsAllSKUBean.DataBean.ModesBean> by lazy { ArrayList<GoodsAllSKUBean.DataBean.ModesBean>() }
@@ -38,19 +42,20 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
-        loadData()
-        if (goods!!.is_distributed) {
+        if (product.is_distributed) {
             view.buttonAddShopCart.visibility = View.VISIBLE
             view.buttonGoOrderConfirm.visibility = View.VISIBLE
-            if (goods.is_custom_made){ //接单订制和购买都跳转订单确认
+            if (product.is_custom_made) { //接单订制和购买都跳转订单确认
                 view.buttonGoOrderConfirm.text = Util.getString(R.string.text_order_make)
-            }else{
+            } else {
                 view.buttonGoOrderConfirm.text = Util.getString(R.string.text_purchase)
 
             }
 
-        } else {
-            view.buttonConfirm.visibility = View.VISIBLE
+        } else { //非分发商品接单订制和普通购买相同
+            view.buttonAddShopCart.visibility = View.VISIBLE
+            view.buttonGoOrderConfirm.visibility = View.VISIBLE
+            view.buttonGoOrderConfirm.text = Util.getString(R.string.text_has_selected_goods)
         }
         return view
     }
@@ -85,39 +90,27 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
         }
     }
 
-    private fun loadData() {
-        present.getGoodsSKUs(goods!!.rid, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                view.progressBar.visibility = View.VISIBLE
-            }
-            override fun onSuccess(json: String) {
-                view.progressBar.visibility = View.GONE
-                val goodsAllSKUBean = JsonUtil.fromJson(json, GoodsAllSKUBean::class.java)
-                if (goodsAllSKUBean.success) {
-                    setData(goodsAllSKUBean)
-                    SPUtil.write(GoodsAllSKUBean::class.java.simpleName, json)
-                } else {
-                    ToastUtil.showError(goodsAllSKUBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.progressBar.visibility = View.GONE
-                ToastUtil.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
 
     /**
-     * 设置数据
+     * 初始化数据
      */
     private fun setData(goodsAllSKUBean: GoodsAllSKUBean) {
         items.clear()
         colors.clear()
         modes.clear()
+        val colorsList = goodsAllSKUBean.data.colors
+        for (item in colorsList){
+            item.selected = false
+        }
+
+        val modesList = goodsAllSKUBean.data.modes
+        for (item in modesList){
+            item.selected = false
+        }
+
         items.addAll(goodsAllSKUBean.data.items)
-        colors.addAll(goodsAllSKUBean.data.colors)
-        modes.addAll(goodsAllSKUBean.data.modes)
+        modes.addAll(modesList)
+        colors.addAll(colorsList)
 
         initColorListState()
         initSpecListState()
@@ -141,12 +134,11 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
     override fun setUiBeforShow() {
 
-
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
-        view.textViewPrice.text = "${goods?.min_sale_price}"
+        view.textViewPrice.text = "${product.min_sale_price}"
 
-        view.textViewName.text = goods?.name
+        view.textViewName.text = product.name
 
         val marginRight = DimenUtil.dp2px(15.0)
         val marginBottom = DimenUtil.dp2px(10.0)
@@ -213,6 +205,8 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
         view.flowLayoutSize.adapter = adapterSize
 
+        //设置SKU数据
+        setData(allSKUBean)
 
         view.flowLayoutColor.setOnTagClickListener { _, position, _ ->
             if (colors[position].valid) {
@@ -278,7 +272,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 }
 
                 R.id.buttonAddShopCart -> {
-                    present.addShopCart(selectedSKU!!.rid,1)
+                    present.addShopCart(selectedSKU!!.rid, 1)
                 }
             }
 //            val intent = Intent()
@@ -298,13 +292,105 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 return@setOnClickListener
             }
             dismiss()
-            present.addShopCart(selectedSKU!!.rid,1)
+            present.addShopCart(selectedSKU!!.rid, 1)
         }
 
         //购买->跳转确认订单
         view.buttonGoOrderConfirm.setOnClickListener {
-            ToastUtil.showInfo("跳转确认订单...")
+            if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
+                ToastUtil.showInfo("请选择颜色分类")
+                return@setOnClickListener
+            }
+
+            if (modes.size > 0 && TextUtils.isEmpty(selectedSize)) {
+                ToastUtil.showInfo("请选择规格")
+                return@setOnClickListener
+            }
+            dismiss()
+            prepareOrderData(selectedSKU!!)
         }
+    }
+
+    /**
+     * 准备单个商品购买数据
+     */
+    private fun prepareOrderData(selectedSKU: GoodsAllSKUBean.DataBean.ItemsBean) {
+        val createOrderBean = CreateOrderBean()
+
+        val storeIds = ArrayList<String>()
+        storeIds.add(product.store_rid)
+
+        //店铺列表
+        val storeList = ArrayList<StoreItemBean>()
+
+        //当前店铺
+        var storeItemBean: StoreItemBean
+
+        //商品列表
+        var goodsList: ArrayList<ProductBean>
+
+        //商品
+        var goods: ProductBean
+
+        for (storeId in storeIds) {
+
+            //创建店铺
+            storeItemBean = StoreItemBean()
+
+            storeItemBean.store_rid = storeId
+
+            //创建商品列表
+            goodsList = ArrayList()
+
+            //添加店铺
+            storeList.add(storeItemBean)
+
+            goods = ProductBean()
+
+            goods.quantity = 1
+            goods.delivery_country = product.delivery_country
+            goods.delivery_province = product.delivery_province
+            goods.delivery_city = product.delivery_city
+            goods.cover = selectedSKU.cover
+            goods.product_name = selectedSKU.product_name
+            goods.s_color  = selectedSKU.s_color
+            goods.s_model = selectedSKU.s_model
+            goods.rid = selectedSKU.rid
+            goods.sku = selectedSKU.rid
+            if (selectedSKU.sale_price==0.0){
+                goods.price = selectedSKU.price
+            }else{
+                goods.sale_price = selectedSKU.sale_price
+            }
+
+            goods.fid = product.fid
+            goods.delivery_country_id = product.delivery_country_id
+            goodsList.add(goods)
+
+            if (product.is_distributed) { //分销1，不是分销0
+                storeItemBean.is_distribute = "1"
+            } else {
+                storeItemBean.is_distribute = "0"
+            }
+
+            //添加商品列表
+            storeItemBean.items = goodsList
+        }
+
+        // 添加有所店铺
+        createOrderBean.store_items = storeList
+
+        if (product.min_sale_price==0.0){
+            createOrderBean.orderTotalPrice = product.min_price
+        }else{
+            createOrderBean.orderTotalPrice = product.min_sale_price
+        }
+
+        //结算
+        val intent = Intent(AppApplication.getContext(), SelectExpressAddressActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.putExtra(SelectExpressAddressActivity::class.java.simpleName, createOrderBean)
+        AppApplication.getContext().startActivity(intent)
     }
 
     /**

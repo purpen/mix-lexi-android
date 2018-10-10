@@ -1,7 +1,6 @@
 package com.thn.lexi.pay
 
 import android.content.Intent
-import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.ui.BaseActivity
 import com.thn.lexi.R
@@ -16,77 +15,75 @@ class SelectPayWayActivity : BaseActivity() {
         createOrderBean = intent.getParcelableExtra(TAG)
     }
 
+    companion object {
+        //微信支付
+        const val WECHAT_PAY: Int = 1
+        //支付宝
+        const val ALI_PAY: Int = 2
+        //蚂蚁支付
+        const val ANT_PAY: Int = 3
+    }
+
     override fun initView() {
 
         customHeadView.setHeadCenterTxtShow(true, R.string.title_select_pay_way)
 
         textViewSubtotalPrice.text = "${createOrderBean?.orderTotalPrice}"
-        textViewSubtotalPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp11,R.dimen.dp14),null,null,null)
+        textViewSubtotalPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp11, R.dimen.dp14), null, null, null)
 
         if (createOrderBean?.expressTotalPrice == 0.0) {
             textViewTextDeliveryPrice.text = "包邮"
             textViewTextDeliveryPrice.setTextColor(Util.getColor(R.color.color_c2a67d))
-            textViewTextDeliveryPrice.setCompoundDrawables(null,null,null,null)
+            textViewTextDeliveryPrice.setCompoundDrawables(null, null, null, null)
         } else {
             textViewTextDeliveryPrice.text = "${createOrderBean?.expressTotalPrice}"
-            textViewTextDeliveryPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp6,R.dimen.dp8),null,null,null)
+            textViewTextDeliveryPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp6, R.dimen.dp8), null, null, null)
             textViewTextDeliveryPrice.setTextColor(Util.getColor(R.color.color_333))
         }
 
         textViewTotalPrice.text = "${createOrderBean?.userPayTotalPrice}"
+
+        createOrderBean?.payWay = WECHAT_PAY
     }
 
     /**
      * 重置选中状态
      */
-    private fun resetSelectState(){
+    private fun resetSelectState() {
         checkBoxWechat.isChecked = false
         checkBoxAli.isChecked = false
         checkBoxAnt.isChecked = false
     }
 
-    /**
-     * 检查是否选择过支付方式
-     */
-    private fun hasSelectPayWay():Boolean{
-        var hasSelect = false
-        if (checkBoxWechat.isChecked) hasSelect = true
-
-        if (checkBoxAli.isChecked) hasSelect = true
-
-        if (checkBoxAnt.isChecked) hasSelect = true
-
-        return hasSelect
-    }
 
     override fun installListener() {
 
         relativeLayoutWeChatPay.setOnClickListener {
             resetSelectState()
             checkBoxWechat.isChecked = true
+            createOrderBean?.payWay = WECHAT_PAY
         }
 
         relativeLayoutAliPay.setOnClickListener {
             resetSelectState()
             checkBoxAli.isChecked = true
+            createOrderBean?.payWay = ALI_PAY
         }
 
         relativeLayoutAntPay.setOnClickListener {
             resetSelectState()
             checkBoxAnt.isChecked = true
+            createOrderBean?.payWay = ANT_PAY
         }
 
         //点击开启支付窗口
         buttonPayNow.setOnClickListener {
-            if (hasSelectPayWay()){
-                //TODO 支付成功跳转支付结果页
-                val intent = Intent(this,PayResultActivity::class.java)
-                intent.putExtra(PayResultActivity::class.java.simpleName,createOrderBean)
-                startActivity(intent)
-                finish()
-            }else{
-                ToastUtil.showInfo(getString(R.string.hint_please_select_payway))
-            }
+            //TODO 支付成功跳转支付结果页
+            val intent = Intent(this, PayResultActivity::class.java)
+            intent.putExtra(PayResultActivity::class.java.simpleName, createOrderBean)
+            startActivity(intent)
+            finish()
+
         }
     }
 }

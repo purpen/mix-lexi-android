@@ -101,7 +101,7 @@
             android:gravity="center"
             android:textColor="@color/color_333"
             android:layout_marginTop="10dp"
-            android:text="微信支付"
+            android:text="@string/text_pay_wechat"
             android:textSize="14sp"
             android:includeFontPadding="false"
             />

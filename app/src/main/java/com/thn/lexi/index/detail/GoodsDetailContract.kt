@@ -62,6 +62,10 @@ class GoodsDetailContract {
         fun setShopCartNum(item_count: Int) {
 
         }
+
+        fun setSKUData(goodsAllSKUBean: GoodsAllSKUBean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -75,7 +79,7 @@ class GoodsDetailContract {
 
         fun getSimilarGoods(goodsId: String)
 
-        fun getGoodsSKUs(id: String, param: IDataSource.HttpRequestCallBack)
+        fun getGoodsSKUs(id: String)
 
         fun addWishOrder(goodsId: String, isAddWish: Boolean)
 

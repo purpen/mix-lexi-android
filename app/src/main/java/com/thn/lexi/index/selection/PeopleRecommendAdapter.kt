@@ -4,7 +4,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.ScreenUtil
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
@@ -12,6 +14,10 @@ import com.thn.lexi.R
 import com.thn.lexi.beans.ProductBean
 
 class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<PeopleRecommendAdapter.MultipleItem, BaseViewHolder>(list) {
+
+    private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))/2 }
+
+    private val sizeSpan1 by lazy { (ScreenUtil.getScreenWidth()-DimenUtil.dp2px(48.0))/3 }
 
     init {
         addItemType(MultipleItem.ITEM_TYPE_SPAN2, R.layout.adapter_editor_recommend)
@@ -44,11 +50,10 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
         val resources = imageView.resources
 
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
-            layoutParams = RelativeLayout.LayoutParams(resources.getDimensionPixelSize(R.dimen.dp160), resources.getDimensionPixelSize(R.dimen.dp128))
+            layoutParams = RelativeLayout.LayoutParams(sizeSpan2, resources.getDimensionPixelSize(R.dimen.dp128))
             imageView.layoutParams = layoutParams
         } else {
-            val pixelSize = resources.getDimensionPixelSize(R.dimen.dp104)
-            layoutParams = RelativeLayout.LayoutParams(pixelSize, pixelSize)
+            layoutParams = RelativeLayout.LayoutParams(sizeSpan1, sizeSpan1)
             imageView.layoutParams = layoutParams
         }
 
