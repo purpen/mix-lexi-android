@@ -40,6 +40,6 @@ class HotGoodsContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(page: Int)
+        fun loadData()
     }
 }

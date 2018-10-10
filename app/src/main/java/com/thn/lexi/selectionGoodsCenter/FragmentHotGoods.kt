@@ -11,7 +11,6 @@ class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
     override val layout: Int = R.layout.fragment_recyclerview
     private lateinit var presenter: HotGoodsPresenter
 
-    private var page: Int = 1
     private lateinit var adapter: AdapterHotGoods
     companion object {
         @JvmStatic
@@ -33,18 +32,16 @@ class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
     }
 
     override fun loadData() {
-        presenter.loadData(page)
+        presenter.loadData()
     }
 
     override fun setNewData(products: MutableList<ProductBean>) {
         adapter.setNewData(products)
-        ++page
     }
 
     override fun addData(products: List<ProductBean>) {
         adapter.addData(products)
         adapter.notifyDataSetChanged()
-        ++page
     }
 
     override fun installListener() {
@@ -53,9 +50,12 @@ class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
             when (view.id) {
                 R.id.textView4 -> ToastUtil.showInfo("卖")
                 R.id.textView5 -> ToastUtil.showInfo("上架")
-                R.id.linearLayoutLoadMore -> presenter.loadMoreData(page)
             }
         }
+
+        adapter.setOnLoadMoreListener({
+            presenter.loadMoreData()
+        }, recyclerView)
     }
 
     override fun showLoadingView() {
@@ -71,11 +71,11 @@ class FragmentHotGoods:BaseFragment(),HotGoodsContract.View {
     }
 
     override fun loadMoreComplete() {
-        super.loadMoreComplete()
+        adapter.loadMoreComplete()
     }
 
     override fun loadMoreEnd() {
-        super.loadMoreEnd()
+        adapter.loadMoreEnd()
     }
 
     override fun goPage() {
