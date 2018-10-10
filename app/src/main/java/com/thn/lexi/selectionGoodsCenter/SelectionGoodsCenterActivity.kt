@@ -33,7 +33,7 @@ class SelectionGoodsCenterActivity : BaseActivity() {
         val adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles.asList())
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
-        customViewPager.setPagingEnabled(true)
+        customViewPager.setPagingEnabled(false)
         slidingTabLayout.setViewPager(customViewPager)
         slidingTabLayout.getTitleView(0).textSize = 20f
     }
