@@ -1,12 +1,7 @@
 package com.basemodule.tools;
-
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.view.Gravity;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.thn.basemodule.R;
@@ -16,12 +11,11 @@ import com.thn.basemodule.R;
  * Created by taihuoniao on 2016/1/21.
  */
 public class WaitingDialog extends Dialog {
-    private int resBigLoading           = R.drawable.img_thn_default_loading;
+    private int resBigLoading           = R.drawable.loading_image;
     private int resInfo                 = R.drawable.img_thn_default_info;
     private int resSuccess              = R.drawable.img_thn_default_success;
     private int resError                = R.drawable.img_thn_default_error;
     private ImageView ivBigLoading;
-    private RotateAnimation mRotateAnimation;
 
     public WaitingDialog(Activity activity) {
         this(activity, R.style.THN_custom_progress_dialog);
@@ -34,31 +28,22 @@ public class WaitingDialog extends Dialog {
 //        this.setCancelable(true);
         this.setCanceledOnTouchOutside(false);
         initViews();
-        init();
     }
     private void initViews() {
         ivBigLoading = (ImageView) findViewById(R.id.ivBigLoading);
+        GlideUtil.loadImage(resBigLoading, ivBigLoading);
     }
 
-    private void init() {
-        mRotateAnimation = new RotateAnimation(0f, 359f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        mRotateAnimation.setDuration(1000L);
-        mRotateAnimation.setInterpolator(new LinearInterpolator());
-        mRotateAnimation.setRepeatCount(-1);
-        mRotateAnimation.setRepeatMode(Animation.RESTART);
-    }
+
 
     @Override
     public void show() {
-        clearAnimations();
         super.show();
-        ivBigLoading.startAnimation(mRotateAnimation);
     }
 
     @Override
     public void dismiss() {
         super.dismiss();
-        clearAnimations();
     }
 
     @Override
@@ -66,9 +51,5 @@ public class WaitingDialog extends Dialog {
         if (!hasFocus) {
             dismiss();
         }
-    }
-
-    private void clearAnimations() {
-        ivBigLoading.clearAnimation();
     }
 }

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_f5f7f9"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp20">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/textViewMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="赚"
+            android:textColor="@color/color_ff6666"
+            android:textSize="@dimen/sp12" />
+
+
+        <TextView
+            android:id="@+id/textViewPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:drawablePadding="@dimen/dp3"
+            android:drawableStart="@mipmap/icon_price_unit_ff6666"
+            android:text="0"
+            android:textColor="@color/color_ff6666"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="228dp"
+        android:layout_height="wrap_content"
+        android:text="朋友通过你分享的此链接和图片购买商品， 你即可赚取相应收益! 收益仅自己可见"
+        android:textColor="@color/color_999"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:includeFontPadding="false"
+        android:textSize="12sp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        >
+        <LinearLayout
+            android:id="@+id/linearLayoutWeChatShare"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:background="@drawable/border_e9e9e9"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="145dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_height="124dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/default_load"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:textColor="@color/color_666"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:textSize="11sp"
+                android:text="点击直接分享好友样式"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutSave"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:background="@drawable/border_e9e9e9"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="74dp"
+                android:layout_height="131dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/default_load"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:includeFontPadding="false"
+                android:text="保存分享朋友圈海报"
+                android:textColor="@color/color_666"
+                android:layout_marginTop="13dp"
+                android:textSize="11sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="28dp"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableTop="@mipmap/icon_goods_share_wechat"
+            android:drawablePadding="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="微信好友"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:drawableTop="@mipmap/icon_goods_image_save"
+            android:drawablePadding="10dp"
+            android:includeFontPadding="false"
+            android:text="保存分享"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewCancel"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/color_666"
+        android:orientation="horizontal"
+        android:text="@string/cancel"
+        />
+
+</LinearLayout>

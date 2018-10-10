@@ -1,5 +1,4 @@
 package com.thn.lexi.index.detail
-
 import android.content.Intent
 import android.graphics.Paint
 import android.graphics.Rect
@@ -30,6 +29,7 @@ import kotlinx.android.synthetic.main.view_goods_description.view.*
 import kotlinx.android.synthetic.main.view_goods_shop.view.*
 import kotlinx.android.synthetic.main.view_similar_goods.view.*
 import org.greenrobot.eventbus.EventBus
+
 
 class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener {
     private val showTagCount: Int = 5
@@ -466,6 +466,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
         headerView.textViewProductReturnPolicy.text = data.product_return_policy
+
+        textViewEarn.text = "赚￥${goodsData?.commission_price}"
     }
 
     /**
@@ -577,11 +579,15 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         //查看全部
         headerView.buttonLookAll.setOnClickListener(this)
 
+        //立即购买
         buttonGoOrderConfirm.setOnClickListener(this)
+
+        buttonSaleDistribution.setOnClickListener(this)
 
         //点击接单订制按钮
         buttonOrderMake.setOnClickListener(this)
 
+        //添加购物车
         buttonAddShopCart.setOnClickListener(this)
 
         relativeLayoutShopCart.setOnClickListener {
@@ -656,8 +662,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonGoOrderConfirm, skuData!!)
                 selectSpecificationBottomDialog.show()
             }
-
-            R.id.buttonOrderMake -> {
+            R.id.buttonSaleDistribution -> { //卖
+                if (goodsData == null) return
+                val dialog = GoodsDetailSaleBottomDialog(this, presenter, goodsData!!)
+                dialog.show()
+            }
+            R.id.buttonOrderMake -> { //接单订制
                 if (goodsData == null || skuData == null) return
                 val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonOrderMake, skuData!!)
                 selectSpecificationBottomDialog.show()
@@ -710,7 +720,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonPurchase, R.id.textViewSelectSpec -> { //请选择规格
-                if (skuData == null || goodsData==null) return
+                if (skuData == null || goodsData == null) return
                 val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.textViewSelectSpec, skuData!!)
                 selectSpecificationBottomDialog.show()
             }
