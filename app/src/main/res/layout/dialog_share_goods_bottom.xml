@@ -39,6 +39,7 @@
         android:id="@+id/textViewDescription"
         android:layout_width="228dp"
         android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.2"
         android:text="朋友通过你分享的此链接和图片购买商品， 你即可赚取相应收益! 收益仅自己可见"
         android:textColor="@color/color_999"
         android:layout_gravity="center_horizontal"
@@ -98,7 +99,7 @@
                 android:layout_height="131dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/default_load"
                 />
             <TextView

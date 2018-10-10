@@ -560,5 +560,10 @@ object URL {
      */
     const val CLASSIFY_GOODS_URL = "${BASE_URL}category/products"
 
+    /**
+     * 获取小程序海报
+     */
+    const val MARKET_WXA_POSTER = "${BASE_URL}market/wxa_poster"
+
 
 }

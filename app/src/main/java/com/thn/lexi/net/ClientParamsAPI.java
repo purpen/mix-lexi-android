@@ -1198,4 +1198,24 @@ public class ClientParamsAPI {
         params.put("id", id);
         return params;
     }
+
+    /**
+     * 商品详情海报
+     * @param auth_app_id
+     * @param path
+     * @param type
+     * @param scene
+     * @param goodId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,Object> getLoadPosterParams(@NotNull String auth_app_id, @NotNull String path, @NotNull String type, @NotNull String scene, String goodId) {
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("auth_app_id", auth_app_id);
+        params.put("path", path);
+        params.put("type", type);
+        params.put("rid", goodId);
+        params.put("scene", scene);
+        return params;
+    }
 }

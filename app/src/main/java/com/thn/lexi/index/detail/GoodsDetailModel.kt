@@ -280,4 +280,25 @@ class GoodsDetailModel : IDataSource {
         })
     }
 
+
+    fun loadPoster(goodId:String,scene:String,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val auth_app_id = "wx60ed17bfd850985d"
+        val path = "pages/product/product"
+        val type = "4"
+        val params = ClientParamsAPI.getLoadPosterParams(auth_app_id,path,type,scene,goodId)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.MARKET_WXA_POSTER, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 }
