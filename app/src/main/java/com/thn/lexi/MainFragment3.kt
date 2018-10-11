@@ -30,6 +30,10 @@ class MainFragment3 : BaseFragment(),  View.OnClickListener {
             mainFragment3.arguments=bundle
             return mainFragment3
         }
+        fun newInstance(): MainFragment3 {
+            val mainFragment3 =MainFragment3()
+            return mainFragment3
+        }
     }
 
     override val layout: Int = R.layout.fragment_main3
@@ -137,25 +141,35 @@ class MainFragment3 : BaseFragment(),  View.OnClickListener {
 
     override fun loadData() {
         val bundle = arguments
-        setUserData(bundle!!.getParcelable("key"))
+        setUserData(bundle?.getParcelable("key"))
     }
 
     /**
      * 设置用户数据
      */
-    fun setUserData(data: UserCenterBean.DataBean) {
-        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70))
-        textViewLikeNum.text = data.user_like_counts
-        textViewEnshrineNum.text = data.wish_list_counts
-        textViewDesignNum.text = data.followed_stores_counts
-        textViewFocusNum.text = data.followed_users_counts
-        textViewFansNum.text = data.fans_counts
-        textViewName.text = data.username
-        if (TextUtils.isEmpty(data.about_me)) {
-            textViewSignature.visibility = View.GONE
-        } else {
-            textViewSignature.visibility = View.VISIBLE
-            textViewSignature.text = data.about_me
+    fun setUserData(data: UserCenterBean.DataBean?) {
+        if (data==null){
+            textViewLikeNum.text = "0"
+            textViewEnshrineNum.text = "0"
+            textViewDesignNum.text = "0"
+            textViewFocusNum.text = "0"
+            textViewFansNum.text = "0"
+            textViewName.text = ""
+            GlideUtil.loadCircleImageWidthDimen("", imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70))
+        }else{
+            textViewLikeNum.text = data.user_like_counts
+            textViewEnshrineNum.text = data.wish_list_counts
+            textViewDesignNum.text = data.followed_stores_counts
+            textViewFocusNum.text = data.followed_users_counts
+            textViewFansNum.text = data.fans_counts
+            textViewName.text = data.username
+            if (TextUtils.isEmpty(data.about_me)) {
+                textViewSignature.visibility = View.GONE
+            } else {
+                textViewSignature.visibility = View.VISIBLE
+                textViewSignature.text = data.about_me
+            }
+            GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70))
         }
 
     }

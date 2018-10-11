@@ -1,5 +1,4 @@
 package com.thn.lexi
-
 import android.content.Intent
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -7,7 +6,7 @@ import android.widget.Toast
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
-
+import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -25,11 +24,12 @@ class MainActivity : BaseActivity() {
     private val fragment0: BaseFragment by lazy { MainFragment0.newInstance() }
     private val fragment1: BaseFragment by lazy { MainFragment2.newInstance() }
     private val fragment2: BaseFragment by lazy { MainFragment1.newInstance() }
-    private val fragment3: BaseFragment by lazy { MainFragmentUser.newInstance() }
+    private val fragment3: BaseFragment by lazy { if (UserProfileUtil.isLogin()) MainFragmentUser.newInstance() else MainFragment3.newInstance()}
 
     private var lastClickedId: Int = -1
 
     override fun initView() {
+
         EventBus.getDefault().register(this)
         switchFragment(R.id.button0)
     }

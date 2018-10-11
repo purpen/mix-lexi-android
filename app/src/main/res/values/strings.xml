@@ -341,4 +341,7 @@
     <string name="text_account_detail">账单详情</string>
     <string name="text_life">乐喜生活馆</string>
     <string name="text_wx_change">微信零钱包</string>
+    <string name="text_no_focus_life_house">你当前还未关注任何原创品牌设计馆</string>
+    <string name="text_no_favorite_goods">你当前还没有浏览和添加心愿单商品</string>
+    <string name="text_no_favorite_things">您还未喜欢过任何东西</string>
 </resources>

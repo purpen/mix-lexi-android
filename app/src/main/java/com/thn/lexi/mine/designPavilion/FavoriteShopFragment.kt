@@ -1,5 +1,6 @@
 package com.thn.lexi.mine.designPavilion
 import android.support.v7.widget.LinearLayoutManager
+import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
@@ -7,6 +8,8 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
+import com.thn.lexi.user.login.UserProfileUtil
+import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
 
 class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
@@ -14,7 +17,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
     override val layout: Int = R.layout.fragment_recyclerview
     private lateinit var presenter: FavoriteDesignPresenter
     private val adapter: AdapterDesignPavilion by lazy { AdapterDesignPavilion(R.layout.adapter_design_pavilion) }
-
+    private lateinit var emptyHeaderView:View
     companion object {
         @JvmStatic
         fun newInstance(): FavoriteShopFragment = FavoriteShopFragment()
@@ -30,9 +33,17 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
         val view = View(activity)
-        adapter.addHeaderView(view)
+        emptyHeaderView = LayoutInflater.from(context).inflate(R.layout.empty_user_center, null)
+        if (UserProfileUtil.isLogin()){
+            adapter.addHeaderView(view)
+        }else{
+            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_life_house)
+            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_focus_life_house)
+            adapter.addHeaderView(emptyHeaderView)
+        }
+
+
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(),R.color.color_f5f7f9,recyclerView))
-//        adapter.emptyView =
     }
 
     override fun setPresenter(presenter: FavoriteDesignContract.Presenter?) {
@@ -77,7 +88,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
     }
 
     override fun loadData() {
-        presenter.loadData()
+        if (UserProfileUtil.isLogin()) presenter.loadData()
     }
 
 
@@ -85,6 +96,9 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
     override fun setNewData(data: MutableList<DesignPavilionBean>) {
         adapter.setNewData(data)
         adapter.setEnableLoadMore(true)
+        if (adapter.data.isEmpty()){
+            adapter.setHeaderView(emptyHeaderView)
+        }
     }
 
 
