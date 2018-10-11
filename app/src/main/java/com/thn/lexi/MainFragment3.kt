@@ -35,6 +35,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
             return mainFragment3
         }
 
+
         fun newInstance(): MainFragment3 {
             val mainFragment3 = MainFragment3()
             return mainFragment3
