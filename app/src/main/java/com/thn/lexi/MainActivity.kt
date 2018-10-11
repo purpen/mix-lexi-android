@@ -1,6 +1,7 @@
 package com.thn.lexi
 
 import android.content.Intent
+import android.text.TextUtils
 import android.view.KeyEvent
 import android.widget.Toast
 import com.basemodule.tools.LogUtil
@@ -22,16 +23,56 @@ class MainActivity : BaseActivity() {
         if (!isFinishing) super.onBackPressed()
     }
 
-    private val fragment0: BaseFragment by lazy { MainFragment0.newInstance() }
-    private val fragment1: BaseFragment by lazy { MainFragment2.newInstance() }
-    private val fragment2: BaseFragment by lazy { MainFragment1.newInstance() }
-    private val fragment3: BaseFragment by lazy { if (UserProfileUtil.isSmallB()) MainFragmentUser.newInstance() else MainFragment3.newInstance() }
+    private lateinit var fragment0: BaseFragment
+    private lateinit var fragment1: BaseFragment
+    private lateinit var fragment2: BaseFragment
+    private lateinit var fragment3: BaseFragment
 
     private var lastClickedId: Int = -1
 
     override fun initView() {
-        EventBus.getDefault().register(this)
+        initFragments()
         switchFragment(R.id.button0)
+        EventBus.getDefault().register(this)
+    }
+
+    private fun initFragments(){
+        initIndexPage()
+        initDiscoverPage()
+        initShopCart()
+        initUserCenter()
+    }
+
+    /**
+     * 初始化购物车
+     */
+    private fun initShopCart() {
+        fragment2 = MainFragment1.newInstance()
+    }
+
+    /**
+     * 初始化发现
+     */
+    private fun initDiscoverPage() {
+        fragment1 = MainFragment2.newInstance()
+    }
+
+    /**
+     * 初始化首页
+     */
+    private fun initIndexPage() {
+        fragment0 = MainFragment0.newInstance()
+    }
+
+    /**
+     * 初始化个人中心
+     */
+    private fun initUserCenter() {
+        if (UserProfileUtil.isSmallB()) {
+            fragment3 = MainFragmentUser.newInstance()
+        } else {
+            fragment3 = MainFragment3.newInstance()
+        }
     }
 
     override fun installListener() {
@@ -55,22 +96,35 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onNewIntent(intent: Intent?) {
+
+        hideFragments()
+
+        initFragments()
+
         if (intent == null) return
         var str = ""
         if (intent.hasExtra(TAG)) {
             str = intent.getStringExtra(TAG)
         }
 
-        when(str){
-            MainFragment1::class.java.simpleName ->{ //购物车
+        if (TextUtils.isEmpty(str)){
+            lastClickedId = -1
+            switchFragment(R.id.button0)
+            customBottomBar.getButton(R.id.button0).performClick()
+            return
+        }
+
+        when (str) {
+            MainFragment1::class.java.simpleName -> { //购物车
                 switchFragment(R.id.button2)
                 customBottomBar.getButton(R.id.button2).performClick()
             }
-            MainFragment0::class.java.simpleName ->{ //首页
+            MainFragment0::class.java.simpleName -> { //其它界面跳转到首页
                 switchFragment(R.id.button0)
                 customBottomBar.getButton(R.id.button0).performClick()
             }
         }
+
 
     }
 
