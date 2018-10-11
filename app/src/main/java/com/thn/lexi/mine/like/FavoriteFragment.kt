@@ -1,4 +1,5 @@
 package com.thn.lexi.mine.like
+
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -30,9 +31,9 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
     private val adapterLikeShowWindow: AdapterLikeShowWindow by lazy { AdapterLikeShowWindow(R.layout.adapter_show_window_like) }
 
-    private lateinit var headerView:View
+    private lateinit var headerView: View
 
-    private lateinit var emptyHeaderView:View
+    private lateinit var emptyHeaderView: View
 
     override val layout: Int = R.layout.fragment_recyclerview
     private lateinit var presenter: FavoritePresenter
@@ -57,14 +58,8 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
         initGoodsLike()
         initShowWindowLike()
 
-        if (UserProfileUtil.isLogin()){
-            adapterMineFavorite.addHeaderView(headerView)
-        }else{
-            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
-            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_things)
-            emptyHeaderView.textViewDesc1.visibility = View.VISIBLE
-            adapterMineFavorite.addHeaderView(emptyHeaderView)
-        }
+        adapterMineFavorite.addHeaderView(headerView)
+
         adapterMineFavorite.setHeaderAndEmpty(true)
 
 
@@ -129,28 +124,34 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
      */
     override fun setGoodsLikeData(products: List<ProductBean>) {
         adapterLikeGoods.setNewData(products)
-       if (products.isEmpty()) headerView.linearLayoutGoodsLike.visibility = View.GONE
+        if (products.isEmpty()) {
+            headerView.linearLayoutGoodsLike.visibility = View.GONE
+            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
+            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_things)
+            emptyHeaderView.textViewDesc1.visibility = View.VISIBLE
+            adapterMineFavorite.setHeaderView(emptyHeaderView)
+        }else{
+            headerView.linearLayoutGoodsLike.visibility = View.VISIBLE
+        }
     }
-
 
 
     override fun installListener() {
         headerView.textViewMoreGoodsLike.setOnClickListener {
-            startActivity(Intent(activity,AllLikeGoodsActivity::class.java))
+            startActivity(Intent(activity, AllLikeGoodsActivity::class.java))
         }
 
         adapterLikeGoods.setOnItemClickListener { _, _, position ->
             val item = adapterLikeGoods.getItem(position)
-            val intent = Intent(activity,GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item)
+            val intent = Intent(activity, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
             startActivity(intent)
         }
     }
 
 
-
     override fun loadData() {
-        if (UserProfileUtil.isLogin()){
+        if (UserProfileUtil.isLogin()) {
             presenter.getUserGoodsLike()
 
             presenter.getShowWindowLike()
@@ -159,7 +160,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
 
     override fun showLoadingView() {
-       dialog.show()
+        dialog.show()
     }
 
     override fun dismissLoadingView() {

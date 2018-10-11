@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:visibility="gone"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--喜欢的商品-->
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp20">
+        android:layout_marginTop="@dimen/dp20"
+        >
 
         <TextView
             android:layout_width="wrap_content"

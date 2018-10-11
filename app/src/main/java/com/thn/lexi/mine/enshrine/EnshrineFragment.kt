@@ -1,4 +1,5 @@
 package com.thn.lexi.mine.enshrine
+
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -28,13 +29,14 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
     private val adapterWishOrder: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
 
-    private lateinit var headerView:View
+    private lateinit var headerView: View
 
     override val layout: Int = R.layout.fragment_recyclerview
     private lateinit var presenter: EnshrinePresenter
 
-    private lateinit var emptyHeaderView:View
-
+    private lateinit var emptyHeaderView: View
+    private var isWishOrderLoaded: Boolean = false
+    private var isRecentLookLoaded: Boolean = false
     companion object {
         @JvmStatic
         fun newInstance(): EnshrineFragment = EnshrineFragment()
@@ -50,17 +52,10 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
         headerView = LayoutInflater.from(context).inflate(R.layout.view_head_mine_enshrine, null)
         emptyHeaderView = LayoutInflater.from(context).inflate(R.layout.empty_user_center, null)
-
         initRecentLook()
         initWishOrder()
+        adapterMineFavorite.addHeaderView(headerView)
 
-        if (UserProfileUtil.isLogin()){
-            adapterMineFavorite.addHeaderView(headerView)
-        }else{
-            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
-            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_goods)
-            adapterMineFavorite.addHeaderView(emptyHeaderView)
-        }
         adapterMineFavorite.setHeaderAndEmpty(true)
 
     }
@@ -81,8 +76,10 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
      * 设置最近查看数据
      */
     override fun setRecentLookData(products: List<ProductBean>) {
+        isRecentLookLoaded = true
         adapterRecent.setNewData(products)
         if (products.isEmpty()) headerView.relativeLayoutRecentLook.visibility = View.GONE
+        setEmptyView()
     }
 
 
@@ -103,26 +100,45 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     }
 
 
+
+
     /**
      * 设置心愿单
      */
     override fun setWishOrderData(products: List<ProductBean>) {
+        isWishOrderLoaded = true
         adapterWishOrder.setNewData(products)
         if (products.isEmpty()) headerView.relativeLayoutWishOrder.visibility = View.GONE
+
+        setEmptyView()
+    }
+
+    /**
+     * 都加载完毕都无数据
+     */
+    private fun setEmptyView() {
+        if (isRecentLookLoaded && isWishOrderLoaded){
+
+            if (adapterRecent.data.isEmpty() && adapterWishOrder.data.isEmpty()){
+                emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
+                emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_goods)
+                adapterMineFavorite.setHeaderView(emptyHeaderView)
+            }
+        }
     }
 
     override fun installListener() {
 
         //查看最近全部
         headerView.textViewMoreRecent.setOnClickListener {
-//            startActivity(Intent(activity,AllRecentLookGoodsActivity::class.java))
+            //            startActivity(Intent(activity,AllRecentLookGoodsActivity::class.java))
         }
 
         //最近查看item点击
         adapterRecent.setOnItemClickListener { _, _, position ->
             val item = adapterRecent.getItem(position)
             val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
             startActivity(intent)
         }
 
@@ -130,28 +146,22 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
         adapterWishOrder.setOnItemClickListener { _, _, position ->
             val item = adapterRecent.getItem(position)
             val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
             startActivity(intent)
         }
 
     }
 
 
-
-
     override fun loadData() {
-        if (UserProfileUtil.isLogin()){
-            presenter.getUserRecentLook()
+        presenter.getUserRecentLook()
 
-            presenter.getWishOrder()
-        }
+        presenter.getWishOrder()
     }
 
 
-
-
     override fun showLoadingView() {
-       dialog.show()
+        dialog.show()
     }
 
     override fun dismissLoadingView() {
