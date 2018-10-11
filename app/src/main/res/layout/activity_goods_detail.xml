@@ -163,6 +163,7 @@
             android:background="@drawable/bg_coloreff6666_right_radius4"
             android:layout_marginEnd="@dimen/dp15"
             android:gravity="center"
+            android:visibility="gone"
             >
             <TextView
                 android:layout_width="wrap_content"

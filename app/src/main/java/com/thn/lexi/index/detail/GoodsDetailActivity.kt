@@ -1,4 +1,5 @@
 package com.thn.lexi.index.detail
+
 import android.content.Intent
 import android.graphics.Paint
 import android.graphics.Rect
@@ -22,6 +23,8 @@ import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.beans.UserBean
 import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
+import com.thn.lexi.user.login.LoginActivity
+import com.thn.lexi.user.login.UserProfileUtil
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.header_goods_detail.view.*
@@ -76,18 +79,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     override fun initView() {
 
-        if (product.is_distributed) { //分销商品
-            buttonPurchase.visibility = View.VISIBLE
-            buttonSaleDistribution.visibility = View.VISIBLE
-        } else {  //非分销商品
-            buttonAddShopCart.visibility = View.VISIBLE
-            if (product.is_custom_made) { //支持接单订制
-                buttonOrderMake.visibility = View.VISIBLE
-            } else {  //不支持接单订制
-                buttonGoOrderConfirm.visibility = View.VISIBLE
-            }
-        }
-
         listDescription = ArrayList()
 
         couponList = ArrayList()
@@ -138,8 +129,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         presenter.loadBrandPavilionInfo(product.store_rid)
 
         //获取购物车商品数量
-        presenter.getShopCartProductsNum()
-
+        if (UserProfileUtil.isLogin()) presenter.getShopCartProductsNum()
 
         //获取商品SKU
         presenter.getGoodsSKUs(productId)
@@ -355,6 +345,18 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         presenter.getExpressTime(data.fid, product.store_rid, productId)
 
         goodsData = data
+
+        if (data.is_distributed) { //分销商品
+            buttonPurchase.visibility = View.VISIBLE
+            buttonSaleDistribution.visibility = View.VISIBLE
+        } else {  //非分销商品
+            buttonAddShopCart.visibility = View.VISIBLE
+            if (data.is_custom_made) { //支持接单订制
+                buttonOrderMake.visibility = View.VISIBLE
+            } else {  //不支持接单订制
+                buttonGoOrderConfirm.visibility = View.VISIBLE
+            }
+        }
 
         for (item in data.deal_content) {
             if (TextUtils.equals("text", item.type)) {
@@ -657,10 +659,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 lookGoodsAllDetailDialog?.show()
             }
 
-            R.id.buttonGoOrderConfirm -> { //点击购买
-                if (goodsData == null || skuData == null) return
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonGoOrderConfirm, skuData!!)
-                selectSpecificationBottomDialog.show()
+            R.id.buttonGoOrderConfirm -> {//点击购买
+                if (UserProfileUtil.isLogin()) {
+                    if (goodsData == null || skuData == null) return
+                    val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonGoOrderConfirm, skuData!!)
+                    selectSpecificationBottomDialog.show()
+                } else {//跳转注册
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
             }
             R.id.buttonSaleDistribution -> { //卖
                 if (goodsData == null) return
@@ -668,15 +674,23 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 dialog.show()
             }
             R.id.buttonOrderMake -> { //接单订制
-                if (goodsData == null || skuData == null) return
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonOrderMake, skuData!!)
-                selectSpecificationBottomDialog.show()
+                if (UserProfileUtil.isLogin()) {
+                    if (goodsData == null || skuData == null) return
+                    val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonOrderMake, skuData!!)
+                    selectSpecificationBottomDialog.show()
+                } else {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
             }
 
             R.id.buttonAddShopCart -> {
-                if (goodsData == null || skuData == null) return
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonAddShopCart, skuData!!)
-                selectSpecificationBottomDialog.show()
+                if (UserProfileUtil.isLogin()) {
+                    if (goodsData == null || skuData == null) return
+                    val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonAddShopCart, skuData!!)
+                    selectSpecificationBottomDialog.show()
+                }else{
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
             }
 
             R.id.imageViewShare -> {
@@ -690,39 +704,58 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.buttonFocus -> { //关注大B/品牌馆/店铺
-                if (brandPavilionData == null || goodsData == null) return
-                presenter.focusBrandPavilion(goodsData!!.store_rid, !brandPavilionData!!.is_followed)
+                if (UserProfileUtil.isLogin()) {
+                    if (brandPavilionData == null || goodsData == null) return
+                    presenter.focusBrandPavilion(goodsData!!.store_rid, !brandPavilionData!!.is_followed)
+                }else{
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
             }
 
             R.id.buttonLike -> {
-                if (goodsData == null) return
+                if (UserProfileUtil.isLogin()) {
+                    if (goodsData == null) return
 
-                if (goodsData!!.is_like) {
-                    presenter.favoriteGoods(goodsData!!.rid, v, false)
-                } else {
-                    presenter.favoriteGoods(goodsData!!.rid, v, true)
+                    if (goodsData!!.is_like) {
+                        presenter.favoriteGoods(goodsData!!.rid, v, false)
+                    } else {
+                        presenter.favoriteGoods(goodsData!!.rid, v, true)
+                    }
+                }else{
+                    startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
 
             R.id.buttonAddWish -> {
-                if (goodsData == null) return
+                if (UserProfileUtil.isLogin()) {
+                    if (goodsData == null) return
 
-                if (goodsData!!.is_wish) { //取消
-                    presenter.addWishOrder(goodsData!!.rid, false)
-                } else {
-                    presenter.addWishOrder(goodsData!!.rid, true)
+                    if (goodsData!!.is_wish) { //取消
+                        presenter.addWishOrder(goodsData!!.rid, false)
+                    } else {
+                        presenter.addWishOrder(goodsData!!.rid, true)
+                    }
+                }else{
+                    startActivity(Intent(this, LoginActivity::class.java))
                 }
-
             }
             R.id.buttonGetDiscount -> { //获取优惠券
-                val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, product.store_rid)
-                couponBottomDialog.show()
+                if (UserProfileUtil.isLogin()) {
+                    val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, product.store_rid)
+                    couponBottomDialog.show()
+                }else{
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
             }
 
             R.id.buttonPurchase, R.id.textViewSelectSpec -> { //请选择规格
-                if (skuData == null || goodsData == null) return
-                val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.textViewSelectSpec, skuData!!)
-                selectSpecificationBottomDialog.show()
+                if (UserProfileUtil.isLogin()) {
+                    if (skuData == null || goodsData == null) return
+                    val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.textViewSelectSpec, skuData!!)
+                    selectSpecificationBottomDialog.show()
+                }else{
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
             }
         }
     }
