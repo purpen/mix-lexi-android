@@ -124,6 +124,7 @@
         android:layout_marginBottom="28dp"
         >
         <TextView
+            android:id="@+id/textViewWechatShare"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawableTop="@mipmap/icon_goods_share_wechat"
@@ -136,6 +137,7 @@
             />
 
         <TextView
+            android:id="@+id/textViewSavePoster"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

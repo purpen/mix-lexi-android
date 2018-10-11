@@ -657,6 +657,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 if (goodsData == null) return
                 lookGoodsAllDetailDialog = LookGoodsAllDetailDialog(this, goodsData!!)
                 lookGoodsAllDetailDialog?.show()
+                lookGoodsAllDetailDialog?.setExpressTime(headerView.textViewExpressTime.text.toString())
             }
 
             R.id.buttonGoOrderConfirm -> {//点击购买
