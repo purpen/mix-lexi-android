@@ -13,6 +13,7 @@ import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.brandPavilion.BrandPavilionListActivity
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.brandHouse.BrandHouseActivity
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.explore.collection.CollectionDetailActivity
 import com.thn.lexi.index.explore.collection.CollectionListActivity
@@ -282,7 +283,9 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         //去品牌馆详情
         adapterBrandPavilion.setOnItemClickListener { _, _, position ->
             val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
-            ToastUtil.showInfo("去店铺")
+            val intent = Intent(activity, BrandHouseActivity::class.java)
+            intent.putExtra("rid",item.rid)
+            startActivity(intent)
         }
 
 

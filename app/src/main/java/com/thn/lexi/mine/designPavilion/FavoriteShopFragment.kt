@@ -1,5 +1,6 @@
 package com.thn.lexi.mine.designPavilion
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
+import com.thn.lexi.brandHouse.BrandHouseActivity
 import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
@@ -60,6 +62,14 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
             } else {
                 presenter.focusBrandPavilion(pavilionBean.rid, true, position)
             }
+        }
+
+        //品牌馆点击
+        adapter.setOnItemClickListener { _, _, position ->
+            val pavilionBean = adapter.getItem(position) as DesignPavilionBean
+            val intent = Intent(activity, BrandHouseActivity::class.java)
+            intent.putExtra("rid",pavilionBean.rid)
+            startActivity(intent)
         }
 
         adapter.setOnLoadMoreListener({

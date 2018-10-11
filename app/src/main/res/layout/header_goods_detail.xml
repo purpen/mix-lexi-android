@@ -223,7 +223,9 @@
         android:includeFontPadding="false"
         android:text="“接单订制”在付款后开始制作，需5个制作天(不含节假日)"
         android:textColor="@color/color_555"
-        android:textSize="@dimen/sp11" />
+        android:textSize="@dimen/sp11"
+        android:visibility="gone"
+        />
 
     <include
         android:id="@+id/line"

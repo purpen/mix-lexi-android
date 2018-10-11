@@ -22,6 +22,7 @@ import com.thn.lexi.beans.BrandPavilionBean
 import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.beans.UserBean
+import com.thn.lexi.brandHouse.BrandHouseActivity
 import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
 import com.thn.lexi.user.login.LoginActivity
 import com.thn.lexi.user.login.UserProfileUtil
@@ -352,8 +353,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         } else {  //非分销商品
             buttonAddShopCart.visibility = View.VISIBLE
             if (data.is_custom_made) { //支持接单订制
+                headerView.textViewCustomDesc.visibility = View.VISIBLE
                 buttonOrderMake.visibility = View.VISIBLE
             } else {  //不支持接单订制
+                headerView.textViewCustomDesc.visibility = View.GONE
                 buttonGoOrderConfirm.visibility = View.VISIBLE
             }
         }
@@ -578,6 +581,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
     override fun installListener() {
+
+        headerView.linearLayoutPavilion.setOnClickListener {
+            if (goodsData==null) return@setOnClickListener
+            val intent = Intent(this, BrandHouseActivity::class.java)
+            intent.putExtra("rid", goodsData!!.store_rid)
+            startActivity(intent)
+        }
         //查看全部
         headerView.buttonLookAll.setOnClickListener(this)
 
