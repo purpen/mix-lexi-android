@@ -564,6 +564,12 @@ object URL {
     const val CLASSIFY_GOODS_URL = "${BASE_URL}category/products"
 
     /**
+     * 获取小程序海报
+     */
+    const val MARKET_WXA_POSTER = "${BASE_URL}market/wxa_poster"
+
+
+    /**
      * 生活馆订单统计
      */
     const val LIFE_ORDER_COLLECT="${BASE_URL}stats/life_orders_collect"
@@ -599,6 +605,11 @@ object URL {
      * 对账单收益详情
      */
     const val LIFE_ACCOUNT_ORDER="${BASE_URL}stats/life_orders"
+
+    /**
+     *  接单订制
+     */
+    const val PRODUCTS_CUSTOM_MADE = "${BASE_URL}products/custom_made"
     /**
      * 获取品牌馆信息
      */

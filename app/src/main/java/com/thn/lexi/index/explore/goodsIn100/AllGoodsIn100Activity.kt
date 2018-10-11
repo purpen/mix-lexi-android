@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.header_all_editor_recommend.view.*
 
 class AllGoodsIn100Activity : BaseActivity(), AllGoodIn100Contract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
-
+    private var goodsCount=0
     private val presenter: AllGoodsIn100Presenter by lazy { AllGoodsIn100Presenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
@@ -111,6 +111,7 @@ class AllGoodsIn100Activity : BaseActivity(), AllGoodIn100Contract.View {
     }
 
     override fun setGoodsCount(count: Int) {
+        goodsCount = count
         if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
 
@@ -136,6 +137,7 @@ class AllGoodsIn100Activity : BaseActivity(), AllGoodIn100Contract.View {
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
             }
+            dialogBottomFilter?.setGoodsCount(goodsCount)
         }
 
         swipeRefreshLayout.setOnRefreshListener {

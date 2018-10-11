@@ -15,8 +15,10 @@ import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.selection.DiscoverLifeBean
 import com.thn.lexi.mine.*
 import com.thn.lexi.mine.like.likeGoods.AllLikeGoodsActivity
+import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.adapter_goods_like.view.*
 import kotlinx.android.synthetic.main.adapter_item_show_window.view.*
+import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class FavoriteFragment : BaseFragment(), FavoriteContract.View {
@@ -30,6 +32,8 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
     private lateinit var headerView:View
 
+    private lateinit var emptyHeaderView:View
+
     override val layout: Int = R.layout.fragment_recyclerview
     private lateinit var presenter: FavoritePresenter
 
@@ -39,6 +43,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
     }
 
     override fun initView() {
+
         presenter = FavoritePresenter(this)
 
         val linearLayoutManager = LinearLayoutManager(activity)
@@ -47,11 +52,22 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
         recyclerView.adapter = adapterMineFavorite
 
         headerView = LayoutInflater.from(context).inflate(R.layout.view_head_mine_favorite, null)
-        adapterMineFavorite.addHeaderView(headerView)
-        adapterMineFavorite.setHeaderAndEmpty(true)
-        initGoodsLike()
+        emptyHeaderView = LayoutInflater.from(context).inflate(R.layout.empty_user_center, null)
 
+        initGoodsLike()
         initShowWindowLike()
+
+        if (UserProfileUtil.isLogin()){
+            adapterMineFavorite.addHeaderView(headerView)
+        }else{
+            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
+            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_things)
+            emptyHeaderView.textViewDesc1.visibility = View.VISIBLE
+            adapterMineFavorite.addHeaderView(emptyHeaderView)
+        }
+        adapterMineFavorite.setHeaderAndEmpty(true)
+
+
     }
 
     private fun initShowWindowLike() {
@@ -134,9 +150,11 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
 
     override fun loadData() {
-        presenter.getUserGoodsLike()
+        if (UserProfileUtil.isLogin()){
+            presenter.getUserGoodsLike()
 
-        presenter.getShowWindowLike()
+            presenter.getShowWindowLike()
+        }
     }
 
 

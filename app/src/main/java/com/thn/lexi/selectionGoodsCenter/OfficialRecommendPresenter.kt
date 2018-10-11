@@ -8,10 +8,10 @@ import java.io.IOException
 
 class OfficialRecommendPresenter(view: OfficialRecommendContract.View) : OfficialRecommendContract.Presenter {
     private var view: OfficialRecommendContract.View = checkNotNull(view)
-
+    private var page = 1
     private val dataSource: OfficialRecommendModel by lazy { OfficialRecommendModel() }
 
-    override fun loadData(page: Int) {
+    override fun loadData() {
         dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -22,6 +22,7 @@ class OfficialRecommendPresenter(view: OfficialRecommendContract.View) : Officia
                 val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
                 if (hotGoodsBean.success) {
                     view.setNewData(hotGoodsBean.data.products)
+                    page++
                 } else {
                     view.showError(hotGoodsBean.status.message)
                 }
@@ -34,7 +35,7 @@ class OfficialRecommendPresenter(view: OfficialRecommendContract.View) : Officia
         })
     }
 
-    fun loadMoreData(page: Int) {
+    fun loadMoreData() {
         dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -50,6 +51,7 @@ class OfficialRecommendPresenter(view: OfficialRecommendContract.View) : Officia
                     } else {
                         view.loadMoreComplete()
                         view.addData(products)
+                        page++
                     }
                 } else {
                     view.showError(hotGoodsBean.status.message)

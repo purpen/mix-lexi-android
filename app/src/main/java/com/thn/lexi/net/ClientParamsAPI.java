@@ -26,11 +26,11 @@ import java.util.TreeMap;
 
 public class ClientParamsAPI {
     //测试
-    //public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
-    //public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
+    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
+    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
     //正式
-    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
-    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
+//    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
+//    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
 
     /**
      * 获取登录后的authorization
@@ -1285,6 +1285,26 @@ public class ClientParamsAPI {
         HashMap<String,Object> params=generateCommonParams();
         params.put("rid",orderId);
         params.put("store_rid",rid);
+        return params;
+    }
+
+    /**
+     * 商品详情海报
+     * @param auth_app_id
+     * @param path
+     * @param type
+     * @param scene
+     * @param goodId
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,Object> getLoadPosterParams(@NotNull String auth_app_id, @NotNull String path, @NotNull String type, @NotNull String scene, String goodId) {
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("auth_app_id", auth_app_id);
+        params.put("path", path);
+        params.put("type", type);
+        params.put("rid", goodId);
+        params.put("scene", scene);
         return params;
     }
 }

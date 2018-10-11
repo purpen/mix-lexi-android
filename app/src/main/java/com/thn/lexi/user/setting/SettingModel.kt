@@ -8,11 +8,11 @@ import java.io.IOException
 
 open class SettingModel {
 
-    fun loadData(userId:String,callback: IDataSource.HttpRequestCallBack) {
+    fun loadData(callback: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getSettingParams(userId)
+        val params = ClientParamsAPI.getDefaultParams()
 
-        HttpRequest.sendRequest(HttpRequest.POST,URL.USER_INFO_URL,params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.GET,URL.USER_CENTER,params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callback.onStart()
             }

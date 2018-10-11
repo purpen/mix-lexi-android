@@ -14,6 +14,8 @@ import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.mine.like.AdapterLikeGoods
 import com.thn.lexi.mine.AdapterMineFavorite
+import com.thn.lexi.user.login.UserProfileUtil
+import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.view_head_mine_enshrine.view.*
 
@@ -31,6 +33,8 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     override val layout: Int = R.layout.fragment_recyclerview
     private lateinit var presenter: EnshrinePresenter
 
+    private lateinit var emptyHeaderView:View
+
     companion object {
         @JvmStatic
         fun newInstance(): EnshrineFragment = EnshrineFragment()
@@ -45,12 +49,19 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
         recyclerView.adapter = adapterMineFavorite
 
         headerView = LayoutInflater.from(context).inflate(R.layout.view_head_mine_enshrine, null)
-        adapterMineFavorite.addHeaderView(headerView)
-        adapterMineFavorite.setHeaderAndEmpty(true)
+        emptyHeaderView = LayoutInflater.from(context).inflate(R.layout.empty_user_center, null)
 
         initRecentLook()
-
         initWishOrder()
+
+        if (UserProfileUtil.isLogin()){
+            adapterMineFavorite.addHeaderView(headerView)
+        }else{
+            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
+            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_goods)
+            adapterMineFavorite.addHeaderView(emptyHeaderView)
+        }
+        adapterMineFavorite.setHeaderAndEmpty(true)
 
     }
 
@@ -129,9 +140,11 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
 
     override fun loadData() {
-        presenter.getUserRecentLook()
+        if (UserProfileUtil.isLogin()){
+            presenter.getUserRecentLook()
 
-        presenter.getWishOrder()
+            presenter.getWishOrder()
+        }
     }
 
 

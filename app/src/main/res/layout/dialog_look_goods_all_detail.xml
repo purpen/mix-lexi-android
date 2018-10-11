@@ -5,7 +5,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:layout_marginBottom="80dp"
+        >
 
         <include
             android:id="@+id/include_content"

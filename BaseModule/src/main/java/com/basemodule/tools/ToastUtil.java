@@ -45,7 +45,8 @@ public class ToastUtil {
     }
 
     public static void showSuccess(String message) {
-        showSuccess(message, Toast.LENGTH_SHORT);
+            Toast.makeText(BaseModuleContext.getContext(), message, Toast.LENGTH_SHORT).show();
+//        showSuccess(message, Toast.LENGTH_SHORT);
     }
 
     public static void showSuccess(int resid) {
@@ -69,11 +70,13 @@ public class ToastUtil {
     }
 
     public static void showError(String message) {
-        showError(message, Toast.LENGTH_SHORT);
+        Toast.makeText(BaseModuleContext.getContext(), message, Toast.LENGTH_SHORT).show();
+//        showError(message, Toast.LENGTH_SHORT);
     }
 
     public static void showError(int resid) {
-        showError(resid, Toast.LENGTH_SHORT);
+        Toast.makeText(BaseModuleContext.getContext(), Util.getString(resid), Toast.LENGTH_SHORT).show();
+//        showError(resid, Toast.LENGTH_SHORT);
     }
 
     public static void showError(String message, int duration) {
@@ -93,11 +96,13 @@ public class ToastUtil {
     }
 
     public static void showInfo(String message) {
-        showInfo(message, Toast.LENGTH_SHORT);
+        Toast.makeText(BaseModuleContext.getContext(), message, Toast.LENGTH_SHORT).show();
+//        showInfo(message, Toast.LENGTH_SHORT);
     }
 
     public static void showInfo(int resid) {
-        showInfo(resid, Toast.LENGTH_SHORT);
+        Toast.makeText(BaseModuleContext.getContext(), Util.getString(resid), Toast.LENGTH_SHORT).show();
+//        showInfo(resid, Toast.LENGTH_SHORT);
     }
 
     public static void showInfo(String message, int duration) {

@@ -51,7 +51,7 @@ public class MainFragmentUser extends BaseFragment implements MineContract.View 
         presenter.loadData();
     }
 
-    public static MainFragmentUser newInstance(){
+    public static BaseFragment newInstance(){
         MainFragmentUser mainFragmentUser=new MainFragmentUser();
         return mainFragmentUser;
     }

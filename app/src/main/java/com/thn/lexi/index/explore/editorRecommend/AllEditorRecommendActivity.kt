@@ -33,7 +33,7 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
     override val layout: Int = R.layout.acticity_all_editor_recommend
 
     private lateinit var  headerView: View
-
+    private var goodsCount=0
     override fun setPresenter(presenter: AllEditorRecommendContract.Presenter?) {
         setPresenter(presenter)
     }
@@ -109,6 +109,7 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
     }
 
     override fun setGoodsCount(count: Int) {
+        goodsCount = count
         if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
 
@@ -134,6 +135,7 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
             }
+            dialogBottomFilter?.setGoodsCount(goodsCount)
         }
 
         swipeRefreshLayout.setOnRefreshListener {

@@ -18,7 +18,7 @@ import com.thn.basemodule.R;
  * 默认的SVProgress效果
  */
 public class SVProgressDefaultView extends LinearLayout {
-    private int resBigLoading = R.drawable.ic_sv_loading;
+    private int resBigLoading = R.drawable.loading_image;
     private ImageView ivBigLoading, ivSmallLoading;
     private SVCircleProgressBar circleProgressBar;
     private TextView tvMsg;
@@ -56,7 +56,7 @@ public class SVProgressDefaultView extends LinearLayout {
         circleProgressBar.setVisibility(View.GONE);
         tvMsg.setVisibility(View.GONE);
         //开启旋转动画
-        ivBigLoading.startAnimation(mRotateAnimation);
+//        ivBigLoading.startAnimation(mRotateAnimation);
     }
 
     public void showWithStatus(String string) {
@@ -119,7 +119,7 @@ public class SVProgressDefaultView extends LinearLayout {
     }
 
     private void clearAnimations() {
-        ivBigLoading.clearAnimation();
+//        ivBigLoading.clearAnimation();
         ivSmallLoading.clearAnimation();
     }
 

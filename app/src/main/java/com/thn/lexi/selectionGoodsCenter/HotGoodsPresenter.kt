@@ -9,9 +9,10 @@ import java.io.IOException
 class HotGoodsPresenter(view: HotGoodsContract.View) : HotGoodsContract.Presenter {
     private var view: HotGoodsContract.View = checkNotNull(view)
 
+    private var page = 1
     private val dataSource: HotGoodsModel by lazy { HotGoodsModel() }
 
-    override fun loadData(page: Int) {
+    override fun loadData() {
         dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -22,6 +23,7 @@ class HotGoodsPresenter(view: HotGoodsContract.View) : HotGoodsContract.Presente
                 val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
                 if (hotGoodsBean.success) {
                     view.setNewData(hotGoodsBean.data.products)
+                    page++
                 } else {
                     view.showError(hotGoodsBean.status.message)
                 }
@@ -34,7 +36,7 @@ class HotGoodsPresenter(view: HotGoodsContract.View) : HotGoodsContract.Presente
         })
     }
 
-    fun loadMoreData(page: Int) {
+    fun loadMoreData() {
         dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -50,6 +52,7 @@ class HotGoodsPresenter(view: HotGoodsContract.View) : HotGoodsContract.Presente
                     }else{
                         view.loadMoreComplete()
                         view.addData(products)
+                        page++
                     }
                 } else {
                     view.showError(hotGoodsBean.status.message)

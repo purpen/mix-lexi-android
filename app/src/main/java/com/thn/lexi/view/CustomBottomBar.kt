@@ -15,9 +15,9 @@ import kotlinx.android.synthetic.main.view_custom_bottom_bar.view.*
  * 底部导航栏
  */
 class CustomBottomBar : LinearLayout, View.OnClickListener {
-    private var onTabClickListener: ((Int) -> Unit)? = null
+    private var onTabClickListener: ((View) -> Unit)? = null
 
-    fun setOnTabClickListener(listener:(Int)->Unit){
+    fun setOnTabClickListener(listener:(View)->Unit){
         this.onTabClickListener = listener
     }
     constructor(context: Context) : super(context) {
@@ -56,15 +56,22 @@ class CustomBottomBar : LinearLayout, View.OnClickListener {
     override fun onClick(v: View?) {
         val button: Button? = v as? Button
         val id = button?.id
-        resetEnableState()
-        button?.isSelected = true
-        button?.setTextColor(Util.getColor(R.color.color_6ed7af))
+//        resetEnableState()
+//        button?.isSelected = true
+//        button?.setTextColor(Util.getColor(R.color.color_6ed7af))
         when (id) {
-            R.id.button0 -> onTabClickListener?.invoke(id)
-            R.id.button1 -> onTabClickListener?.invoke(id)
-            R.id.button2 -> onTabClickListener?.invoke(id)
-            R.id.button3 -> onTabClickListener?.invoke(id)
+            R.id.button0 -> onTabClickListener?.invoke(v)
+            R.id.button1 -> onTabClickListener?.invoke(v)
+            R.id.button2 -> onTabClickListener?.invoke(v)
+            R.id.button3 -> onTabClickListener?.invoke(v)
         }
+    }
+
+    fun setTabChecked(v: View?){
+        resetEnableState()
+        val button = v as Button
+        button.isSelected = true
+        button.setTextColor(Util.getColor(R.color.color_6ed7af))
     }
 
     private fun resetEnableState() {

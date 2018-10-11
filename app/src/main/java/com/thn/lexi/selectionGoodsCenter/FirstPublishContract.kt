@@ -32,6 +32,6 @@ class FirstPublishContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(page: Int)
+        fun loadData()
     }
 }

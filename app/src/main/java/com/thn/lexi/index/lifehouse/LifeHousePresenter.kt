@@ -18,9 +18,11 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
     private var view: LifeHouseContract.View = checkNotNull(view)
 
+    private var page = 1
+
     private val dataSource: LifeHouseModel by lazy { LifeHouseModel() }
 
-    override fun loadData(cid: String, page: Int) {
+    override fun loadData(cid: String) {
         dataSource.loadData(cid, page,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
@@ -31,6 +33,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                 val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
                 if (distributionGoodsBean.success) {
                     view.setNewData(distributionGoodsBean.data.products)
+                    page++
                 } else {
                     view.showError(distributionGoodsBean.status.message)
                 }
@@ -43,7 +46,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
         })
     }
 
-    override fun loadMoreData(cid: String, page: Int) {
+    override fun loadMoreData(cid: String) {
         dataSource.loadData(cid, page, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
@@ -55,6 +58,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                     }else{
                         view.loadMoreComplete()
                         view.addData(products)
+                        page++
                     }
                 } else {
                     view.showError(distributionGoodsBean.status.message)

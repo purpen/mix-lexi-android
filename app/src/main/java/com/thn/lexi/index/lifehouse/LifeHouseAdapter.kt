@@ -98,16 +98,16 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
             })
         }
 
-        val linearLayoutLoadMore = helper.getView<View>(R.id.linearLayoutLoadMore)
+//        val linearLayoutLoadMore = helper.getView<View>(R.id.linearLayoutLoadMore)
 
         //点击加载更多
-        helper.addOnClickListener(R.id.linearLayoutLoadMore)
+//        helper.addOnClickListener(R.id.linearLayoutLoadMore)
 
 //        LogUtil.e("layoutpositon==="+helper.layoutPosition+";;data.size==="+data.size)
-        if (helper.layoutPosition==data.size){
-            linearLayoutLoadMore.visibility = View.VISIBLE
-        }else{
-            linearLayoutLoadMore.visibility = View.GONE
-        }
+//        if (helper.layoutPosition==data.size){
+//            linearLayoutLoadMore.visibility = View.VISIBLE
+//        }else{
+//            linearLayoutLoadMore.visibility = View.GONE
+//        }
     }
 }

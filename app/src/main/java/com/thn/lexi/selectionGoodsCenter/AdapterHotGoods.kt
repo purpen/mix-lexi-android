@@ -41,8 +41,6 @@ class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
             imageViewFreeExpress.visibility = View.VISIBLE
         }
 
-//        val textView4 = helper.getView<TextView>(R.id.textView4)
-
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
         GlideUtil.loadImageWithRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
@@ -53,21 +51,6 @@ class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
 
         //上架
         helper.addOnClickListener(R.id.textView5)
-
-
-        val linearLayoutLoadMore = helper.getView<View>(R.id.linearLayoutLoadMore)
-
-        helper.setText(R.id.textViewLoadMoreTips, R.string.text_look_more_goods)
-
-
-//        LogUtil.e("layoutpositon==="+helper.layoutPosition+";;data.size==="+data.size)
-        if (helper.layoutPosition == data.size - 1) {
-            linearLayoutLoadMore.visibility = View.VISIBLE
-            helper.addOnClickListener(R.id.linearLayoutLoadMore)
-        } else {
-            linearLayoutLoadMore.visibility = View.GONE
-        }
-
 
     }
 }

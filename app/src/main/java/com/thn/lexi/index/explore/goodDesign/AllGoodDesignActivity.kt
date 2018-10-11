@@ -1,4 +1,5 @@
 package com.thn.lexi.index.explore.goodDesign
+
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -32,14 +33,16 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
     private var dialogBottomFilter: DialogBottomFilter? = null
     override val layout: Int = R.layout.acticity_all_editor_recommend
 
-    private lateinit var  headerView: View
+    private lateinit var headerView: View
+    private var goodsCount = 0
 
     override fun setPresenter(presenter: AllGoodDesignContract.Presenter?) {
         setPresenter(presenter)
     }
+
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        customHeadView.setHeadCenterTxtShow(true,R.string.text_good_design)
+        customHeadView.setHeadCenterTxtShow(true, R.string.text_good_design)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
@@ -62,7 +65,7 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
         headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
         headerView.imageViewBg.setImageResource(R.mipmap.icon_bg_head_good_design)
         headerView.textViewHeadTitle.text = Util.getString(R.string.text_good_design)
-        headerView.textViewHeadTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_good_design_head_title,0,0,0)
+        headerView.textViewHeadTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_good_design_head_title, 0, 0, 0)
         adapter.setHeaderView(headerView)
     }
 
@@ -111,8 +114,10 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
     }
 
     override fun setGoodsCount(count: Int) {
-        if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
+        goodsCount = count
+        if (dialogBottomFilter != null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
+
 
     override fun installListener() {
         linearLayoutSort.setOnClickListener { _ ->
@@ -136,6 +141,7 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
             }
+            dialogBottomFilter?.setGoodsCount(goodsCount)
         }
 
         swipeRefreshLayout.setOnRefreshListener {
