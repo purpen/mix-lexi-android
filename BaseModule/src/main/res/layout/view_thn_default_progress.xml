@@ -8,19 +8,14 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_thn_default_progress"
         android:gravity="center"
-        android:minWidth="@dimen/size_minwidth_svprogresshuddefault"
         android:orientation="vertical"
-        android:padding="@dimen/padding_svprogresshuddefault">
+        >
 
         <ImageView
             android:id="@+id/ivBigLoading"
-            android:layout_width="@dimen/size_image_bigloading"
-            android:layout_height="@dimen/size_image_bigloading"
-            android:padding="15dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/img_thn_default_loading"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:visibility="visible" />
 
         <ImageView

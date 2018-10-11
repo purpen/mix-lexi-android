@@ -12,7 +12,11 @@
         android:src="@drawable/default_load"
         android:scaleType="fitXY"
         />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_color4d000000_radiu4"
+        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

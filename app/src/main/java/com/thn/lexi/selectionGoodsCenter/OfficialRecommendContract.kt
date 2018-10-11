@@ -30,6 +30,6 @@ class OfficialRecommendContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(page: Int)
+        fun loadData()
     }
 }

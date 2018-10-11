@@ -2,6 +2,7 @@ package com.thn.lexi.lifeShop;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.JsonUtil;
@@ -35,6 +36,7 @@ public class AccountDetailPresenter implements AccountDetailContract.Presenter {
             @Override
             public void onSuccess(@NotNull String json) {
                 view.dismissLoadingView();
+                LogUtil.e(json);
                 AccountDetailBean bean=JsonUtil.fromJson(json,AccountDetailBean.class);
                 if (bean.success){
                     view.setData(bean);

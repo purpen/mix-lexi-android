@@ -312,6 +312,7 @@
                 android:layout_marginStart="@dimen/dp15"
                 android:layout_marginTop="@dimen/dp20"
                 android:layout_marginBottom="@dimen/dp15"
+                android:visibility="gone"
                 >
 
                 <TextView
@@ -341,6 +342,7 @@
                 android:layout_marginBottom="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp15"
                 android:overScrollMode="never"
+                android:visibility="gone"
                 />
 
             <include layout="@layout/line_color_eee"

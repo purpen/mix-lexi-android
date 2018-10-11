@@ -34,7 +34,7 @@
     <string name="text_preview_and_edit_info">查看并编辑个人资料</string>
     <string name="text_link">连接</string>
     <string name="text_please_input">请输入</string>
-    <string name="text_invite_freinds">邀请朋友</string>
+    <string name="text_band_mobile">手机绑定</string>
     <string name="text_find_freinds">找朋友</string>
     <string name="text_setting_acount">账户</string>
     <string name="text_my_orders">我的订单</string>
@@ -341,4 +341,19 @@
     <string name="text_account_detail">账单详情</string>
     <string name="text_life">乐喜生活馆</string>
     <string name="text_wx_change">微信零钱包</string>
+    <string name="text_no_focus_life_house">你当前还未关注任何原创品牌设计馆</string>
+    <string name="text_no_favorite_goods">你当前还没有浏览和添加心愿单商品</string>
+    <string name="text_no_favorite_things">您还未喜欢过任何东西</string>
+    <string name="text_open_life_house">申请开馆</string>
+    <string name="text_about_us">关于乐喜</string>
+    <string name="text_kf_phone">客服电话&#160;&#160;&#160;400-2345-0000</string>
+    <string name="text_goods">商品</string>
+    <string name="text_article">文章</string>
+    <string name="text_design">关于设计馆</string>
+    <string name="text_voucher">领取设计馆优惠红包</string>
+    <string name="text_receive">领取</string>
+    <string name="text_brand_notice">设计馆公告</string>
+    <string name="text_brand_close_time">休馆时间：</string>
+    <string name="text_recovery_time">恢复发货时间：</string>
+    <string name="text_look_more">阅读更多</string>
 </resources>

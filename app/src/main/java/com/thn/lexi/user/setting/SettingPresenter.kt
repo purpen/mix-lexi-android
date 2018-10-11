@@ -4,6 +4,7 @@ import com.thn.lexi.JsonUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.thn.lexi.R
+import com.thn.lexi.mine.UserCenterBean
 import java.io.IOException
 
 class SettingPresenter(view: SettingContract.View) : SettingContract.Presenter {
@@ -11,19 +12,19 @@ class SettingPresenter(view: SettingContract.View) : SettingContract.Presenter {
 
     private val dataSource: SettingModel by lazy { SettingModel() }
 
-    override fun loadData(userId: String) {
-        dataSource.loadData(userId, object : IDataSource.HttpRequestCallBack {
+    override fun loadData() {
+        dataSource.loadData(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val userInfoBean = JsonUtil.fromJson(json, UserInfoBean::class.java)
-                if (userInfoBean.success) {
-                    view.setUserInfo(userInfoBean.data)
+                val userCenterBean = JsonUtil.fromJson(json, UserCenterBean::class.java)
+                if (userCenterBean.success) {
+                    view.setUserInfo(userCenterBean.data)
                 } else {
-                    view.showError(userInfoBean.status.message)
+                    view.showError(userCenterBean.status.message)
                 }
             }
 

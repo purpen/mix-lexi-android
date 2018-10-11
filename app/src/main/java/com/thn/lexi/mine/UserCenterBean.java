@@ -40,7 +40,7 @@ public class UserCenterBean {
         public String username;
         public String wish_list_counts;
 
-        protected DataBean(Parcel in) {
+        public DataBean(Parcel in) {
             ID = in.readString();
             about_me = in.readString();
             avatar = in.readString();

@@ -39,7 +39,7 @@ public class AccountDetailModel {
     }
     public void loadDetailOrder(String rid, String orderId, final IDataSource.HttpRequestCallBack callBack){
         HashMap<String,Object> params=ClientParamsAPI.getAccountDetailOrderParams(rid,orderId);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.LIFE_ACCOUNT_ORDER, params, new IDataSource.HttpRequestCallBack() {
+        HttpRequest.sendRequest(HttpRequest.GET, URL.LIFE_ACCOUNT_ORDER+"/"+orderId, params, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 

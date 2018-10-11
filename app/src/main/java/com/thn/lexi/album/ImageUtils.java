@@ -27,8 +27,10 @@ import android.view.View;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
+import com.basemodule.tools.Util;
 import com.thn.basemodule.BuildConfig;
 import com.thn.imagealbum.album.ImageLoaderEngine;
+import com.thn.lexi.AppApplication;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -43,8 +45,37 @@ import java.util.Locale;
 
 
 public class ImageUtils {
-    public static double[] location = null;//图片经纬度
     private static final File PHOTO_DIR = new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera");
+
+    public static void saveImageToGallery(Bitmap bmp) {
+        if (null==bmp) return;
+
+        File appDir = new File(Environment.getExternalStorageDirectory(), Util.getAppName());
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            MediaStore.Images.Media.insertImage(AppApplication.getContext().getContentResolver(),
+                    file.getAbsolutePath(), fileName, null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        AppApplication.getContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+        ToastUtil.showSuccess("图片已保存到相册");
+    }
 
     //保存图片文件
     public static String saveToFile(String fileFolderStr, boolean isDir, Bitmap croppedImage) throws IOException {

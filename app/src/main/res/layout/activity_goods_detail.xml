@@ -155,18 +155,34 @@
             />
 
         <!--卖按钮-->
-        <Button
+        <LinearLayout
             android:id="@+id/buttonSaleDistribution"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/dp15"
             android:layout_width="133dp"
             android:layout_height="@dimen/dp40"
+            android:layout_gravity="center_vertical|end"
             android:background="@drawable/bg_coloreff6666_right_radius4"
-            android:text="卖 赚￥12.00"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp16"
+            android:layout_marginEnd="@dimen/dp15"
+            android:gravity="center"
             android:visibility="gone"
-            />
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="卖"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                />
+            <TextView
+                android:id="@+id/textViewEarn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text=""
+                android:textColor="@android:color/white"
+                android:textSize="11sp"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

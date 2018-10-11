@@ -14,20 +14,30 @@ import com.thn.lexi.mine.dynamic.DynamicActivity
 import com.thn.lexi.mine.enshrine.EnshrineFragment
 import com.thn.lexi.mine.like.FavoriteFragment
 import com.thn.lexi.orderList.OrderListActivity
+import com.thn.lexi.user.login.UserProfileUtil
 import com.thn.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
 
-class MainFragment3 : BaseFragment(),  View.OnClickListener {
+class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
+
+    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
+    private val presenter: MinePresenter by lazy { MinePresenter(this) }
     private lateinit var adapter0: MineFavoritesAdapter
     private lateinit var fragments: ArrayList<BaseFragment>
 
     companion object {
-        fun newInstance(bean:UserCenterBean.DataBean): MainFragment3 {
-            val mainFragment3 =MainFragment3()
+        fun newInstance(bean: UserCenterBean.DataBean): MainFragment3 {
+            val mainFragment3 = MainFragment3()
             val bundle = Bundle()
-            bundle.putParcelable("key",bean)
-            mainFragment3.arguments=bundle
+            bundle.putParcelable("key", bean)
+            mainFragment3.arguments = bundle
+            return mainFragment3
+        }
+
+
+        fun newInstance(): MainFragment3 {
+            val mainFragment3 = MainFragment3()
             return mainFragment3
         }
     }
@@ -53,13 +63,18 @@ class MainFragment3 : BaseFragment(),  View.OnClickListener {
     override fun initView() {
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
+
+        if (UserProfileUtil.isSmallB()){
+            val bundle = arguments
+            setUserData(bundle!!.getParcelable("key"))
+        }
     }
 
 
     /**
      * 重置文字颜色
      */
-    private fun resetTextColor(){
+    private fun resetTextColor() {
         val color = Util.getColor(R.color.color_999)
         textViewLikeNum.setTextColor(color)
         textViewLike.setTextColor(color)
@@ -70,9 +85,9 @@ class MainFragment3 : BaseFragment(),  View.OnClickListener {
     }
 
     override fun installListener() {
-        customViewPager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener{
+        customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
-                when(position){
+                when (position) {
                     0 -> {
                         val color = Util.getColor(R.color.color_6ed7af)
                         resetTextColor()
@@ -109,16 +124,16 @@ class MainFragment3 : BaseFragment(),  View.OnClickListener {
         imageViewSetting.setOnClickListener(this)
         buttonOrder.setOnClickListener(this)
 
-        linearLayoutLike.setOnClickListener{
-            customViewPager.setCurrentItem(0,true)
+        linearLayoutLike.setOnClickListener {
+            customViewPager.setCurrentItem(0, true)
         }
 
         linearLayoutEnshrine.setOnClickListener {
-            customViewPager.setCurrentItem(1,true)
+            customViewPager.setCurrentItem(1, true)
         }
 
         linearLayoutDesign.setOnClickListener {
-            customViewPager.setCurrentItem(2,true)
+            customViewPager.setCurrentItem(2, true)
         }
 
         buttonActivity.setOnClickListener {
@@ -136,15 +151,13 @@ class MainFragment3 : BaseFragment(),  View.OnClickListener {
     }
 
     override fun loadData() {
-        val bundle = arguments
-        setUserData(bundle!!.getParcelable("key"))
+        if (UserProfileUtil.isLogin() && !UserProfileUtil.isSmallB()) presenter.loadData()
     }
 
     /**
      * 设置用户数据
      */
-    fun setUserData(data: UserCenterBean.DataBean) {
-        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70))
+    override fun setUserData(data: UserCenterBean.DataBean) {
         textViewLikeNum.text = data.user_like_counts
         textViewEnshrineNum.text = data.wish_list_counts
         textViewDesignNum.text = data.followed_stores_counts
@@ -157,6 +170,26 @@ class MainFragment3 : BaseFragment(),  View.OnClickListener {
             textViewSignature.visibility = View.VISIBLE
             textViewSignature.text = data.about_me
         }
+        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70))
+    }
 
+    override fun showLoadingView() {
+        dialog.show()
+    }
+
+    override fun dismissLoadingView() {
+        dialog.dismiss()
+    }
+
+    override fun showError(string: String) {
+        ToastUtil.showError(string)
+    }
+
+    override fun goPage() {
+
+    }
+
+    override fun setPresenter(presenter: MineContract.Presenter?) {
+        setPresenter(presenter)
     }
 }

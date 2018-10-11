@@ -1,4 +1,5 @@
 package com.thn.lexi
+
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -14,6 +15,7 @@ import com.thn.lexi.index.detail.AddShopCartBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.order.*
 import com.thn.lexi.shopCart.*
+import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
 import kotlinx.android.synthetic.main.fragment_main1.*
 import kotlinx.android.synthetic.main.header_empty_shop_cart.view.*
@@ -126,12 +128,12 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     override fun setAddWishOrderStatus(list: ArrayList<String>) {
         //从产品列表删除加入心愿单产品
         val iterator = adapterEditShopCartGoods.data.iterator()
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             val itemsBean = iterator.next()
             if (list.contains(itemsBean.product.product_rid)) iterator.remove()
         }
 
-        if (adapterEditShopCartGoods.data.isEmpty()){
+        if (adapterEditShopCartGoods.data.isEmpty()) {
             linearLayoutNum.visibility = View.GONE
         }
 
@@ -215,7 +217,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
             val itemBean = adapter.getItem(position) as ShopCartBean.DataBean.ItemsBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, itemBean.product)
-            intent.putExtra(MainFragment1::class.java.simpleName,MainFragment1::class.java.simpleName)
+            intent.putExtra(MainFragment1::class.java.simpleName, MainFragment1::class.java.simpleName)
             startActivity(intent)
         }
 
@@ -238,7 +240,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
             val data = adapterEditShopCartGoods.data
 
-            if (!data.isEmpty()){
+            if (!data.isEmpty()) {
                 for (item in data) {
                     item.isEdit = !item.isEdit
                 }
@@ -430,11 +432,13 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
 
     override fun loadData() {
-//        加载心愿单
-        presenter.loadData(false)
+        if (UserProfileUtil.isLogin()) {
+            //        加载心愿单
+            presenter.loadData(false)
 
 //        获取购物车商品
-        presenter.getShopCartGoods()
+            presenter.getShopCartGoods()
+        }
     }
 
     /**

@@ -7,7 +7,8 @@ import android.widget.Toast
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
-
+import com.thn.lexi.user.login.LoginActivity
+import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -22,42 +23,116 @@ class MainActivity : BaseActivity() {
         if (!isFinishing) super.onBackPressed()
     }
 
-    private val fragment0: BaseFragment by lazy { MainFragment0.newInstance() }
-    private val fragment1: BaseFragment by lazy { MainFragment2.newInstance() }
-    private val fragment2: BaseFragment by lazy { MainFragment1.newInstance() }
-    private val fragment3: BaseFragment by lazy { MainFragmentUser.newInstance() }
+    private lateinit var fragment0: BaseFragment
+    private lateinit var fragment1: BaseFragment
+    private lateinit var fragment2: BaseFragment
+    private lateinit var fragment3: BaseFragment
 
     private var lastClickedId: Int = -1
 
     override fun initView() {
-        EventBus.getDefault().register(this)
+        initFragments()
         switchFragment(R.id.button0)
+        EventBus.getDefault().register(this)
+    }
+
+    private fun initFragments(){
+        initIndexPage()
+        initDiscoverPage()
+        initShopCart()
+        initUserCenter()
+    }
+
+    /**
+     * 初始化购物车
+     */
+    private fun initShopCart() {
+        fragment2 = MainFragment1.newInstance()
+    }
+
+    /**
+     * 初始化发现
+     */
+    private fun initDiscoverPage() {
+        fragment1 = MainFragment2.newInstance()
+    }
+
+    /**
+     * 初始化首页
+     */
+    private fun initIndexPage() {
+        fragment0 = MainFragment0.newInstance()
+    }
+
+    /**
+     * 初始化个人中心
+     */
+    private fun initUserCenter() {
+        if (UserProfileUtil.isSmallB()) {
+            fragment3 = MainFragmentUser.newInstance()
+        } else {
+            fragment3 = MainFragment3.newInstance()
+        }
     }
 
     override fun installListener() {
-        customBottomBar.setOnTabClickListener { id ->
-            switchFragment(id)
+        customBottomBar.setOnTabClickListener { v ->
+            when (v.id) {
+                R.id.button3 -> {
+                    if (UserProfileUtil.isLogin()) {
+                        switchFragment(v.id)
+                        customBottomBar.setTabChecked(v)
+                    } else {
+                        startActivity(Intent(applicationContext, LoginActivity::class.java))
+                    }
+                }
+                else -> {
+                    switchFragment(v.id)
+                    customBottomBar.setTabChecked(v)
+                }
+            }
+
         }
     }
 
     override fun onNewIntent(intent: Intent?) {
-        if (intent==null) return
+
+        hideFragments()
+
+        initFragments()
+
+        if (intent == null) return
         var str = ""
-        if (intent.hasExtra(TAG)){
-           str = intent.getStringExtra(TAG)
+        if (intent.hasExtra(TAG)) {
+            str = intent.getStringExtra(TAG)
         }
 
-        if (TextUtils.equals(MainFragment1::class.java.simpleName,str)){
-            switchFragment(R.id.button2)
-            customBottomBar.getButton(R.id.button2).performClick()
+        if (TextUtils.isEmpty(str)){
+            lastClickedId = -1
+            switchFragment(R.id.button0)
+            customBottomBar.getButton(R.id.button0).performClick()
+            return
         }
+
+        when (str) {
+            MainFragment1::class.java.simpleName -> { //购物车
+                switchFragment(R.id.button2)
+                customBottomBar.getButton(R.id.button2).performClick()
+            }
+            MainFragment0::class.java.simpleName -> { //其它界面跳转到首页
+                switchFragment(R.id.button0)
+                customBottomBar.getButton(R.id.button0).performClick()
+            }
+        }
+
+
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeFragment(messageChangePage: MessageChangePage) {
-        when(messageChangePage.page){
-            MainFragment0::class.java.simpleName ->{
+        when (messageChangePage.page) {
+            MainFragment0::class.java.simpleName -> {
                 switchFragment(R.id.button0)
                 customBottomBar.getButton(R.id.button0).performClick()
             }
@@ -105,6 +180,7 @@ class MainActivity : BaseActivity() {
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment3).commitAllowingStateLoss()
                 }
+
             }
         }
     }
@@ -161,3 +237,4 @@ class MainActivity : BaseActivity() {
         }
     }
 }
+

@@ -296,4 +296,22 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
             }
         })
     }
+
+    /**
+     * 加载海报
+     */
+    fun loadPoster(goodsId: String,scene:String,callBack: IDataSource.HttpRequestCallBack) {
+        dataSource.loadPoster(goodsId,scene,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callBack.onStart()
+            }
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
 }

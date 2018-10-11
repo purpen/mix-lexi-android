@@ -34,7 +34,9 @@
         android:paddingStart="@dimen/dp20"
         android:text="@string/text_reset"
         android:textColor="@color/color_6ed7af"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/sp16"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/textViewRangePrice"

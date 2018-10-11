@@ -3,6 +3,7 @@ package com.thn.lexi.lifeShop;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
+import com.basemodule.tools.GlideUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.thn.lexi.R;
@@ -17,6 +18,7 @@ public class AdapterAccountDetailDialog extends BaseQuickAdapter<AccountDetailOr
     @Override
     protected void convert(BaseViewHolder helper, AccountDetailOrderBean.DataBean.ItemsBean item) {
         ImageView imageView=helper.getView(R.id.iv_shop);
+        GlideUtil.loadImageWithFading(item.cover,imageView);
         helper.setText(R.id.tv_goods_name,item.product_name);
         helper.setText(R.id.tv_goods_num,"x"+item.quantity);
         helper.setText(R.id.tv_goods,"¥"+item.deal_price);

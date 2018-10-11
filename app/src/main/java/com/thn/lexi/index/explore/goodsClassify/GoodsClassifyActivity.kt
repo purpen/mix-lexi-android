@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.header_classify_goods.view.*
 
 class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
-
+    private var goodsCount=0
     private val presenter: GoodsClassifyPresenter by lazy { GoodsClassifyPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
@@ -70,6 +70,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
 
 
     override fun setGoodsCount(count: Int) {
+        goodsCount = count
         if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
 
@@ -102,6 +103,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
             }
+            dialogBottomFilter?.setGoodsCount(goodsCount)
         }
 
         swipeRefreshLayout.setOnRefreshListener {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        />
+    <TextView
+        android:id="@+id/textViewDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_loading"
+        android:includeFontPadding="false"
+        android:layout_marginTop="15dp"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/textViewDesc1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击商品和橱窗上的喜欢即可添加到您的喜欢列表中"
+        android:includeFontPadding="false"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/color_999"
+        android:textSize="12sp"
+        android:visibility="gone"
+        />
+</LinearLayout>
