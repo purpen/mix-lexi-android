@@ -4,8 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.thn.lexi.order.ExpressInfoBean;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
