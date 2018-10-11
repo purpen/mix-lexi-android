@@ -1,4 +1,4 @@
-package com.thn.lexi.mine.like.likeGoods
+package com.thn.lexi.search
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
@@ -9,28 +9,27 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
-import com.thn.lexi.search.AdapterSearchGoods
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.acticity_all_editor_recommend.*
 
 
-class AllLikeGoodsActivity : BaseActivity(), AllLikeGoodsContract.View {
+class OrderCustomMadeGoodsActivity : BaseActivity(), OrderCustomMadeGoodsContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
-    private var goodsCount=0
-    private val presenter: AllLikeGoodsPresenter by lazy { AllLikeGoodsPresenter(this) }
+
+    private val presenter: OrderCustomMadeGoodsPresenter by lazy { OrderCustomMadeGoodsPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
-    private var dialogBottomFilter: DialogBottomFilter? = null
-    override val layout: Int = R.layout.acticity_all_editor_recommend
-    override fun setPresenter(presenter: AllLikeGoodsContract.Presenter?) {
+    override val layout: Int = R.layout.acticity_header_recyclerview
+
+    override fun setPresenter(presenter: OrderCustomMadeGoodsContract.Presenter?) {
         setPresenter(presenter)
     }
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        customHeadView.setHeadCenterTxtShow(true,R.string.text_goods_like)
+        customHeadView.setHeadCenterTxtShow(true,R.string.text_order_make)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
@@ -41,40 +40,11 @@ class AllLikeGoodsActivity : BaseActivity(), AllLikeGoodsContract.View {
             adapter.data[position].spanSize
         }
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-
         val headerView = View(this)
         adapter.setHeaderView(headerView)
     }
 
-    override fun setGoodsCount(count: Int) {
-        goodsCount = count
-        if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
-    }
-
     override fun installListener() {
-        linearLayoutSort.setOnClickListener { _ ->
-            Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
-            val dialog = DialogBottomSynthesiseSort(this, presenter)
-            dialog.setOnDismissListener {
-                Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
-                when (presenter.getSortType()) {
-                    AllLikeGoodsPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
-                    AllLikeGoodsPresenter.SORT_TYPE_LOW_UP -> textViewSort.text = Util.getString(R.string.text_price_low_up)
-                    AllLikeGoodsPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
-                }
-            }
-            dialog.show()
-        }
-
-        linearLayoutFilter.setOnClickListener { _ ->
-            Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(this, presenter)
-            dialogBottomFilter?.show()
-            dialogBottomFilter?.setOnDismissListener {
-                Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
-            }
-            dialogBottomFilter?.setGoodsCount(goodsCount)
-        }
 
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true

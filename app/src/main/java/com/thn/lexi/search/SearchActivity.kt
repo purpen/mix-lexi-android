@@ -306,7 +306,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         adapterHotRecommendPavilion.setOnItemClickListener { _, _, position ->
 
             if (position==0){ //可定制商品列表
-                ToastUtil.showInfo("跳转接单订制")
+                startActivity(Intent(this,OrderCustomMadeGoodsActivity::class.java))
                 return@setOnItemClickListener
             }
 

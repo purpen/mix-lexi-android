@@ -605,4 +605,9 @@ object URL {
      * 对账单收益详情
      */
     const val LIFE_ACCOUNT_ORDER="${BASE_URL}stats/life_orders"
+
+    /**
+     *  接单订制
+     */
+    const val PRODUCTS_CUSTOM_MADE = "${BASE_URL}products/custom_made"
 }
