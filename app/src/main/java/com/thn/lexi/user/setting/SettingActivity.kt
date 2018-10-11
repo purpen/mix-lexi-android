@@ -2,10 +2,10 @@ package com.thn.lexi.user.setting
 
 import android.content.Intent
 import android.view.View
-import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
+import com.thn.lexi.MainActivity
+import com.thn.lexi.MainFragment0
 import com.thn.lexi.R
 import kotlinx.android.synthetic.main.activity_setting.*
 
@@ -56,7 +56,14 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
             R.id.customItemLayout3 -> ToastUtil.showInfo("收货地址")
             R.id.customItemLayout4 -> ToastUtil.showInfo("服务条款")
             R.id.customItemLayout5 -> ToastUtil.showInfo("隐私条款")
-            R.id.button -> ToastUtil.showInfo("退出登录")
+            R.id.button -> {
+                SPUtil.clear(Constants.USER_PROFILE)
+                SPUtil.clear(Constants.AUTHORIZATION)
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra(MainActivity::class.java.simpleName,MainFragment0::class.java.simpleName)
+                startActivity(intent)
+                finish()
+            }
 
         }
     }

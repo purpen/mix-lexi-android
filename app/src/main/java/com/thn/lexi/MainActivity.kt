@@ -1,7 +1,6 @@
 package com.thn.lexi
 
 import android.content.Intent
-import android.text.TextUtils
 import android.view.KeyEvent
 import android.widget.Toast
 import com.basemodule.tools.LogUtil
@@ -62,10 +61,17 @@ class MainActivity : BaseActivity() {
             str = intent.getStringExtra(TAG)
         }
 
-        if (TextUtils.equals(MainFragment1::class.java.simpleName, str)) {
-            switchFragment(R.id.button2)
-            customBottomBar.getButton(R.id.button2).performClick()
+        when(str){
+            MainFragment1::class.java.simpleName ->{ //购物车
+                switchFragment(R.id.button2)
+                customBottomBar.getButton(R.id.button2).performClick()
+            }
+            MainFragment0::class.java.simpleName ->{ //首页
+                switchFragment(R.id.button0)
+                customBottomBar.getButton(R.id.button0).performClick()
+            }
         }
+
     }
 
 
