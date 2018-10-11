@@ -2,6 +2,8 @@ package com.thn.lexi.lifeShop;
 
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,39 +39,22 @@ public class AccountDetailBean {
 
             public String actual_amount;
             public long created_at;
-            public OrderInfoBean order_info;
+            public HashMap<String, HashMap<String, OrderBean>> order_info;
             public int receive_target;
             public int record_id;
             public String service_fee;
             public int status;
             public String store_rid;
 
-            public static class OrderInfoBean {
+            public static class OrderBean {
                 /**
-                 * 8月 : {"D18082013567290":{"commission_price":6,"created_at":1534763366}}
+                 * commission_price : 6.0
+                 * created_at : 1534763366
                  */
 
-                public HashMap<String,Bean> bean;
-
-                public static class Bean {
-                    /**
-                     * D18082013567290 : {"commission_price":6,"created_at":1534763366}
-                     */
-                    public String name;
-                    public HashMap<String,OrderBean> orderBean;
-                    public ArrayList<OrderBean> orderBeans;
-
-                    public static class OrderBean {
-                        /**
-                         * commission_price : 6.0
-                         * created_at : 1534763366
-                         */
-
-                        public double commission_price;
-                        public long created_at;
-                        public String orderName;
-                    }
-                }
+                public double commission_price;
+                public long created_at;
+                public String orderName;
             }
         }
     }

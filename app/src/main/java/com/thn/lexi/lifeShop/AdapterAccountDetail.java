@@ -14,19 +14,19 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-public class AdapterAccountDetail extends BaseQuickAdapter<AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean,BaseViewHolder> {
+public class AdapterAccountDetail extends BaseQuickAdapter<AccountDetailMonthBean,BaseViewHolder> {
     private Activity activity;
-    public AdapterAccountDetail(int layoutResId, @Nullable List<AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean> data) {
+    public AdapterAccountDetail(int layoutResId, @Nullable List<AccountDetailMonthBean> data,Activity activity) {
         super(layoutResId, data);
         this.activity = activity;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean item) {
+    protected void convert(BaseViewHolder helper, AccountDetailMonthBean item) {
         helper.setText(R.id.tv_month,item.name);
         RecyclerView recyclerView=helper.getView(R.id.recyclerView);
         recyclerView.setLayoutManager(new CustomLinearLayoutManager(activity));
-        final AdapterAccountDetailOrder adapters=new AdapterAccountDetailOrder(R.layout.adapter_account_detail_two,item.orderBeans);
+        final AdapterAccountDetailOrder adapters=new AdapterAccountDetailOrder(R.layout.adapter_account_detail_two,item.ids);
         recyclerView.setAdapter(adapters);
         helper.addOnClickListener(R.id.recyclerView);
         adapters.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {

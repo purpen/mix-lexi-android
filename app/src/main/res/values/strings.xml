@@ -341,4 +341,13 @@
     <string name="text_account_detail">账单详情</string>
     <string name="text_life">乐喜生活馆</string>
     <string name="text_wx_change">微信零钱包</string>
+    <string name="text_goods">商品</string>
+    <string name="text_article">文章</string>
+    <string name="text_design">关于设计馆</string>
+    <string name="text_voucher">领取设计馆优惠红包</string>
+    <string name="text_receive">领取</string>
+    <string name="text_brand_notice">设计馆公告</string>
+    <string name="text_brand_close_time">休馆时间：</string>
+    <string name="text_recovery_time">恢复发货时间：</string>
+    <string name="text_look_more">阅读更多</string>
 </resources>

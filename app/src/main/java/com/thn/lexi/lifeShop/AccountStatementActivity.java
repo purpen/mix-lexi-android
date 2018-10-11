@@ -55,6 +55,12 @@ public class AccountStatementActivity extends BaseActivity implements AccountSta
                 presenter.loadData(rid,String.valueOf(page));
             }
         },recyclerView);
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
         presenter.loadData(rid,String.valueOf(page));
     }
 
@@ -84,16 +90,6 @@ public class AccountStatementActivity extends BaseActivity implements AccountSta
             strValue.name = (String) element.getKey();
             list.add(strValue);
         }
-
-
-        /*Set<HashMap.Entry<String, AccountStatementBean.DataBean.StatementsBeanX>> eSet  =  bean.data.statements.entrySet();
-        Iterator<HashMap.Entry<String, AccountStatementBean.DataBean.StatementsBeanX>> it = eSet.iterator();
-        while (it.hasNext()){
-            AccountStatementBean.DataBean.StatementsBeanX beanX=it.next().getValue();
-            //LogUtil.e(it.next().toString());
-            beanX.name=(String) it.next().getKey().toString();
-            list.add(beanX);
-        }*/
         if (page==1){
             adapter.setNewData(list);
         }else {

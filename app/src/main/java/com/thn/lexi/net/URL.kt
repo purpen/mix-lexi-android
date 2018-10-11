@@ -599,4 +599,24 @@ object URL {
      * 对账单收益详情
      */
     const val LIFE_ACCOUNT_ORDER="${BASE_URL}stats/life_orders"
+    /**
+     * 获取品牌馆信息
+     */
+    const val BRAND_HOUSE="${BASE_URL}official_store/info"
+    /**
+     * 获取品牌馆公告
+     */
+    const val BRAND_HOUSE_NOTICE="${BASE_URL}official_store/announcement"
+    /**
+     * 关注品牌馆
+     */
+    const val BRAND_FOLLOW="${BASE_URL}follow/store"
+    /**
+     * 取消关注品牌馆
+     */
+    const val BRAND_UNFOLLOW="${BASE_URL}unfollow/store"
+    /**
+     * 店铺分类列表
+     */
+    const val BRAND_CATEGORIES="${BASE_URL}store/categories"
 }

@@ -51,6 +51,7 @@ class MainFragment3 : BaseFragment(),  View.OnClickListener {
 
 
     override fun initView() {
+        LogUtil.e("加载页面")
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
     }
@@ -137,6 +138,7 @@ class MainFragment3 : BaseFragment(),  View.OnClickListener {
 
     override fun loadData() {
         val bundle = arguments
+        LogUtil.e("设置数据")
         setUserData(bundle!!.getParcelable("key"))
     }
 

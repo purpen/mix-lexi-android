@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.basemodule.tools.DateUtil;
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
@@ -42,7 +43,7 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
     private TextView tv_skill_service;
     private TextView tv_put_place;
     private TextView tv_put_time;
-    private ArrayList<AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean> list;
+    private ArrayList<AccountDetailMonthBean> list;
     private String orderIds;
     private double commission_price;
 
@@ -64,7 +65,8 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
         customHeadView.setHeadCenterTxtShow(true, Util.getString(R.string.text_account_detail));
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new CustomLinearLayoutManager(this));
-        adapter = new AdapterAccountDetail(R.layout.adapter_account_detail, null);
+        adapter = new AdapterAccountDetail(R.layout.adapter_account_detail, null,this);
+        recyclerView.setAdapter(adapter);
 
         header = View.inflate(this, R.layout.adapter_account_detail_header, null);
         tv_put_money = header.findViewById(R.id.tv_put_money);
@@ -112,24 +114,30 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
         tv_skill_service.setText(bean.data.life_cash_record_dict.service_fee);
         tv_put_time.setText(DateUtil.getDateByTimestamp(bean.data.life_cash_record_dict.created_at,"yyyy-MM-dd HH:mm"));
         adapter.addHeaderView(header);
-        Set<HashMap.Entry<String, AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean>>
+        /*Set<HashMap.Entry<String, AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean>>
                 sets = bean.data.life_cash_record_dict.order_info.bean.entrySet();
-        Iterator<HashMap.Entry<String, AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean>> its = sets.iterator();
+        Iterator<HashMap.Entry<String, AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean>> its = sets.iterator();*/
         list = new ArrayList<>();
-        while (its.hasNext()){
-            AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean bean1=its.next().getValue();
-            bean1.name=its.next().getKey();
-            Set<HashMap.Entry<String, AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean.OrderBean>>
-                    set = bean.data.life_cash_record_dict.order_info.bean.get(its.next().getKey()).orderBean.entrySet();
-            Iterator<HashMap.Entry<String, AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean.OrderBean>> it = set.iterator();
-            bean.data.life_cash_record_dict.order_info.bean.get(its.next().getKey()).orderBeans=new ArrayList<>();
-            while (it.hasNext()){
-                AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderInfoBean.Bean.OrderBean bean2=it.next().getValue();
-                bean2.orderName=it.next().getKey();
-                bean.data.life_cash_record_dict.order_info.bean.get(its.next().getKey()).orderBeans.add(bean2);
+        for (Iterator iter =bean.data.life_cash_record_dict.order_info.entrySet().iterator();iter.hasNext();){
+            Map.Entry element = (Map.Entry)iter.next();
+            AccountDetailMonthBean monthBean=new AccountDetailMonthBean();
+            monthBean.name=(String) element.getKey();
+            LogUtil.e("月份："+monthBean.name);
+            monthBean.ids=new ArrayList<>();
+            HashMap<String,AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderBean> bean1=
+                    (HashMap<String,AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderBean>)element.getValue();
+
+            for (Iterator iter1 =bean1.entrySet().iterator();iter1.hasNext();){
+                Map.Entry element1 = (Map.Entry)iter1.next();
+                AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderBean bean2=
+                        (AccountDetailBean.DataBean.LifeCashRecordDictBean.OrderBean)element1.getValue();
+                bean2.orderName=(String)element1.getKey();
+                LogUtil.e("id:"+bean2.orderName);
+                monthBean.ids.add(bean2);
             }
-            list.add(bean1);
+            list.add(monthBean);
         }
+        LogUtil.e("详情的长度："+list.size());
         adapter.setNewData(list);
     }
 
@@ -152,6 +160,7 @@ public class AccountDetailActivity extends BaseActivity implements AccountDetail
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void setOrderId(AdapterAccountDetail.MessageOrderId orderId){
+        LogUtil.e("rid:"+rid+"           storeId:"+orderId.getRecordId());
         orderIds = orderId.getRecordId();
         commission_price = orderId.getCommission_price();
         presenter.loadDetailData(rid,orderIds);
