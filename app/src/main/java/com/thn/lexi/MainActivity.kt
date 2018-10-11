@@ -29,7 +29,6 @@ class MainActivity : BaseActivity() {
     private var lastClickedId: Int = -1
 
     override fun initView() {
-
         EventBus.getDefault().register(this)
         switchFragment(R.id.button0)
     }
@@ -161,3 +160,4 @@ class MainActivity : BaseActivity() {
         }
     }
 }
+

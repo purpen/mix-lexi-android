@@ -12,7 +12,7 @@
         android:layout_width="@dimen/dp70"
         android:layout_height="@dimen/dp70"
         android:layout_marginEnd="49dp"
-        android:src="@drawable/default_load" />
+        android:src="@mipmap/icon_default_user_head" />
 
     <RelativeLayout
         android:layout_width="205dp"
