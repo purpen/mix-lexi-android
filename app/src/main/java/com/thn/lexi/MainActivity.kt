@@ -1,4 +1,5 @@
 package com.thn.lexi
+
 import android.content.Intent
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -6,6 +7,7 @@ import android.widget.Toast
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
+import com.thn.lexi.user.login.LoginActivity
 import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
@@ -24,7 +26,7 @@ class MainActivity : BaseActivity() {
     private val fragment0: BaseFragment by lazy { MainFragment0.newInstance() }
     private val fragment1: BaseFragment by lazy { MainFragment2.newInstance() }
     private val fragment2: BaseFragment by lazy { MainFragment1.newInstance() }
-    private val fragment3: BaseFragment by lazy { if (UserProfileUtil.isSmallB()) MainFragmentUser.newInstance() else MainFragment3.newInstance()}
+    private val fragment3: BaseFragment by lazy { if (UserProfileUtil.isSmallB()) MainFragmentUser.newInstance() else MainFragment3.newInstance() }
 
     private var lastClickedId: Int = -1
 
@@ -34,19 +36,33 @@ class MainActivity : BaseActivity() {
     }
 
     override fun installListener() {
-        customBottomBar.setOnTabClickListener { id ->
-            switchFragment(id)
+        customBottomBar.setOnTabClickListener { v ->
+            when (v.id) {
+                R.id.button3 -> {
+                    if (UserProfileUtil.isLogin()) {
+                        switchFragment(v.id)
+                        customBottomBar.setTabChecked(v)
+                    } else {
+                        startActivity(Intent(applicationContext, LoginActivity::class.java))
+                    }
+                }
+                else -> {
+                    switchFragment(v.id)
+                    customBottomBar.setTabChecked(v)
+                }
+            }
+
         }
     }
 
     override fun onNewIntent(intent: Intent?) {
-        if (intent==null) return
+        if (intent == null) return
         var str = ""
-        if (intent.hasExtra(TAG)){
-           str = intent.getStringExtra(TAG)
+        if (intent.hasExtra(TAG)) {
+            str = intent.getStringExtra(TAG)
         }
 
-        if (TextUtils.equals(MainFragment1::class.java.simpleName,str)){
+        if (TextUtils.equals(MainFragment1::class.java.simpleName, str)) {
             switchFragment(R.id.button2)
             customBottomBar.getButton(R.id.button2).performClick()
         }
@@ -55,8 +71,8 @@ class MainActivity : BaseActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeFragment(messageChangePage: MessageChangePage) {
-        when(messageChangePage.page){
-            MainFragment0::class.java.simpleName ->{
+        when (messageChangePage.page) {
+            MainFragment0::class.java.simpleName -> {
                 switchFragment(R.id.button0)
                 customBottomBar.getButton(R.id.button0).performClick()
             }
@@ -104,6 +120,7 @@ class MainActivity : BaseActivity() {
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment3).commitAllowingStateLoss()
                 }
+
             }
         }
     }
