@@ -37,10 +37,10 @@ public class AdapterAccountStatement extends BaseQuickAdapter<AccountStatementBe
         recyclerView.setAdapter(adapters);
         intent.putExtra("rid",rid);
         helper.addOnClickListener(R.id.recyclerView);
-        adapters.setOnItemChildClickListener(new OnItemChildClickListener() {
+        adapters.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                LogUtil.e("点击成功");
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                LogUtil.e("对账单详情啊啊啊啊 啊");
                 intent.putExtra("record_id",adapters.getData().get(position).record_id);
                 activity.startActivity(intent);
             }

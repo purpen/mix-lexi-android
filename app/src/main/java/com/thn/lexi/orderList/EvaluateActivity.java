@@ -285,10 +285,12 @@ public class EvaluateActivity extends BaseActivity implements EasyPermissions.Pe
             adapterEvaluate.getData().get(position).asset_image.add(itemPosition-1, imageData);
             adapterEvaluate.getData().get(position).asset_ids.add(itemPosition-1,ids.getString(0));
         }else{
-            adapterEvaluate.getData().get(position).asset_image.remove(itemPosition-1);
-            adapterEvaluate.getData().get(position).asset_image.add(itemPosition-1, imageData);
-            adapterEvaluate.getData().get(position).asset_ids.remove(itemPosition-1);
-            adapterEvaluate.getData().get(position).asset_ids.add(itemPosition-1,ids.getString(0));
+            if(itemPosition!=0) {
+                adapterEvaluate.getData().get(position).asset_image.remove(itemPosition - 1);
+                adapterEvaluate.getData().get(position).asset_image.add(itemPosition - 1, imageData);
+                adapterEvaluate.getData().get(position).asset_ids.remove(itemPosition - 1);
+                adapterEvaluate.getData().get(position).asset_ids.add(itemPosition - 1, ids.getString(0));
+            }
         }
     }
 

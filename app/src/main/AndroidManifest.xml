@@ -89,6 +89,7 @@
         <activity android:name=".lifeShop.TransactionOrderActivity" />
         <activity android:name=".lifeShop.TransactionRecordActivity" />
         <activity android:name=".search.OrderCustomMadeGoodsActivity" />
+        <activity android:name=".brandHouse.BrandHouseActivity" />
         <activity android:name=".selectionGoodsCenter.PutAwayActivity" />
     </application>
 

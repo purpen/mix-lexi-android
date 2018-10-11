@@ -146,7 +146,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         when (id) {
             R.id.imageViewShare -> ToastUtil.showInfo("分享")
             R.id.imageViewSetting -> startActivity(Intent(activity, SettingActivity::class.java))
-            R.id.buttonOrder -> startActivity(Intent(activity, OrderListActivity::class.java))
+            R.id.buttonOrder->startActivity(Intent(activity,OrderListActivity::class.java))
         }
     }
 

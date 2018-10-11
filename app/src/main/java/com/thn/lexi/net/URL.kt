@@ -2,7 +2,7 @@ package com.thn.lexi.net
 
 object URL {
     //测试服务器
-//    const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
+    //const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
     //正式服务器
     const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
 
@@ -615,4 +615,24 @@ object URL {
      * 上架商品
      */
     const val PUT_AWAY_GOODS = "${BASE_URL}core_platforms/fx_distribute/publish"
+    /**
+     * 获取品牌馆信息
+     */
+    const val BRAND_HOUSE="${BASE_URL}official_store/info"
+    /**
+     * 获取品牌馆公告
+     */
+    const val BRAND_HOUSE_NOTICE="${BASE_URL}official_store/announcement"
+    /**
+     * 关注品牌馆
+     */
+    const val BRAND_FOLLOW="${BASE_URL}follow/store"
+    /**
+     * 取消关注品牌馆
+     */
+    const val BRAND_UNFOLLOW="${BASE_URL}unfollow/store"
+    /**
+     * 店铺分类列表
+     */
+    const val BRAND_CATEGORIES="${BASE_URL}store/categories"
 }
