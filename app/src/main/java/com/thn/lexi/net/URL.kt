@@ -2,9 +2,9 @@ package com.thn.lexi.net
 
 object URL {
     //测试服务器
-    //const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
+    const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
     //正式服务器
-    const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
+    //const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
 
     /**
      * 注册
