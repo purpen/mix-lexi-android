@@ -217,7 +217,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
 
         recyclerViewWelcome.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-        adapter.setFooterView(footerWelcome)
+        adapter.addFooterView(footerWelcome)
 
     }
 
@@ -327,12 +327,13 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                     val dialog = DistributeShareDialog(activity)
                     dialog.show()
                 }
-
-                R.id.linearLayoutLoadMore -> { //加载更多
-                    presenter.loadMoreData("", page)
-                }
             }
         }
+
+        //加载更多生活馆分销商品
+        adapter.setOnLoadMoreListener({
+            presenter.loadMoreData("")
+        },recyclerView)
 
 
         adapterWelcomeInWeek.setOnItemClickListener { adapter, _, position ->
@@ -384,7 +385,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         //店铺编号
         val sid = ""
         page = 1
-        presenter.loadData(sid, page)
+        presenter.loadData(sid)
     }
 
 
