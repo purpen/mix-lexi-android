@@ -63,13 +63,13 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
             item.isChecked = isChecked
         }
 
-        if (item.isEdit) {//编辑状态
-            checkBox.visibility = View.VISIBLE
-            addSubView.visibility = View.GONE
-        } else {
-            checkBox.visibility = View.GONE
-            addSubView.visibility = View.VISIBLE
-        }
+//        if (item.isEdit) {//编辑状态
+//            checkBox.visibility = View.VISIBLE
+//            addSubView.visibility = View.GONE
+//        } else {
+//            checkBox.visibility = View.GONE
+//            addSubView.visibility = View.VISIBLE
+//        }
 
         val textViewSoldOut = helper.getView<TextView>(R.id.textViewSoldOut)
         val textViewReselectSpec = helper.getView<TextView>(R.id.textViewReselectSpec)

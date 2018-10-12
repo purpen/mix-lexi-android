@@ -70,6 +70,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
         customHeadView.head_goback.visibility = View.GONE
         customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
+        customHeadView.headRightTV.visibility = View.GONE
         customHeadView.setHeadCenterTxtShow(true, R.string.title_shopcart)
         adapterWish.setHeaderAndEmpty(true)
         iniShopCart()
@@ -146,8 +147,20 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     /**
      * 商品SKU移除购物车成功
      */
-    override fun removeShopCartSuccess() {
-        presenter.getShopCartGoods()
+    override fun removeShopCartSuccess() { //移除已选中数据
+        val data = adapterOrder.data
+
+        val iterator = data.iterator()
+
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item.isChecked) iterator.remove()
+        }
+        adapterEditShopCartGoods.notifyDataSetChanged()
+        adapterOrder.notifyDataSetChanged()
+
+        //移除后如果购物车无数据隐藏数量
+        if (data.isEmpty()) linearLayoutNum.visibility = View.GONE
     }
 
 
@@ -255,7 +268,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 buttonSettleAccount.visibility = View.GONE
                 buttonDelete.visibility = View.VISIBLE
                 buttonAddWish.visibility = View.VISIBLE
-            } else {
+            } else { //点击完成
                 swipeRefreshLayout.visibility = View.VISIBLE
                 recyclerViewEditShopCart.visibility = View.GONE
                 customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
@@ -264,6 +277,11 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 textViewTotal.visibility = View.VISIBLE
                 textViewTotalPrice.visibility = View.VISIBLE
                 buttonSettleAccount.visibility = View.VISIBLE
+                if (adapterOrder.data.size==0) { //如果购物车为空 隐藏编辑/结算/礼品数量
+                    customHeadView.headRightTV.visibility = View.GONE
+                    relativeLayoutBottom.visibility = View.GONE
+                    linearLayoutNum.visibility = View.GONE
+                }
             }
 
         }
@@ -447,8 +465,11 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     override fun setShopCartGoodsData(data: ShopCartBean.DataBean) {
         if (data.items.isEmpty()) {
             linearLayoutNum.visibility = View.GONE
+            relativeLayoutBottom.visibility = View.GONE
         } else {
             linearLayoutNum.visibility = View.VISIBLE
+            relativeLayoutBottom.visibility = View.VISIBLE
+            customHeadView.headRightTV.visibility = View.VISIBLE
         }
         adapterOrder.setNewData(data.items)
         adapterEditShopCartGoods.setNewData(data.items)

@@ -69,6 +69,7 @@
         android:layout_height="@dimen/dp50"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
+        android:visibility="gone"
         >
         <include layout="@layout/line_color_eee" />
         <!--非编辑状态-->
