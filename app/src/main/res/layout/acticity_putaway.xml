@@ -44,7 +44,6 @@
         android:background="@android:color/white"
         android:layout_marginTop="10dp"
         >
-
         <ImageView
             android:id="@+id/imageViewGoods"
             android:layout_width="@dimen/dp100"
@@ -146,11 +145,7 @@
             />
 
     </RelativeLayout>
-    <include layout="@layout/line_color_eee"
-        android:layout_marginStart="@dimen/dp10"
-        android:layout_marginEnd="@dimen/dp10"
-        android:layout_height="@dimen/dp1"
-        android:layout_width="match_parent"/>
+    <include layout="@layout/line_color_eee" />
     <Button
         android:id="@+id/buttonConfirmOrder"
         android:layout_width="match_parent"

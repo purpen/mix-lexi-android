@@ -87,7 +87,6 @@
                         android:id="@+id/textViewIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:drawableTop="@mipmap/icon_tou_tiao"
                         android:drawablePadding="@dimen/dp4"
                         android:text="@string/text_tou_tiao"
