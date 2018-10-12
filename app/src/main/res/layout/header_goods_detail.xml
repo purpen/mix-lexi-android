@@ -15,7 +15,11 @@
         app:image_scale_type="fit_xy"
         app:indicator_height="7dp"
         app:indicator_margin="5dp"
-        app:indicator_width="7dp" />
+        app:indicator_width="7dp"
+        app:title_background="#00000000"
+        app:title_textcolor = "#fcfcfc"
+        app:title_textsize="14sp"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -117,7 +121,6 @@
             android:layout_marginTop="@dimen/dp20"
             android:background="@drawable/border_round_ededed"
             android:drawablePadding="5dp"
-            android:drawableStart="@mipmap/icon_click_favorite_normal"
             android:includeFontPadding="false"
             android:text="喜欢"
             android:textAlignment="center"

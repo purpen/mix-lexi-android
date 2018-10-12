@@ -102,7 +102,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         adapter.setHeaderAndEmpty(true)
 
         headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0))
-        headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR)
+        headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
         headerView.banner.isAutoPlay(false)
         this.presenter = GoodsDetailPresenter(this)
         headerView.textViewCoupon.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_get_coupon, R.dimen.dp29, R.dimen.dp15), null, null, null)
@@ -403,12 +403,23 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         //设置banner
         val urlList = ArrayList<String>()
+        val titleList = ArrayList<String>()
         for (item in data.assets) {
             urlList.add(item.view_url)
+            titleList.add("")
         }
 
-        headerView.banner.setImages(urlList)
+        headerView.banner.update(urlList,titleList)
         headerView.banner.start()
+
+        headerView.banner.setOnBannerListener { position ->
+            if (goodsData==null || skuData==null) return@setOnBannerListener
+            val intent = Intent(this,GoodsImageViewActivity::class.java)
+            goodsData!!.clickPosition = position
+            goodsData!!.allSKUData = skuData
+            intent.putExtra(GoodsImageViewActivity::class.java.simpleName,goodsData)
+            startActivity(intent)
+        }
 
         labels = ArrayList()
         for (label in data.labels) {

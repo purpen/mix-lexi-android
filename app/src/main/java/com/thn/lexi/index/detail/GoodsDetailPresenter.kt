@@ -263,6 +263,7 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
             override fun onSuccess(json: String) {
                 val addShopCartBean = JsonUtil.fromJson(json, AddShopCartBean::class.java)
                 if (addShopCartBean.success) {
+                    ToastUtil.showInfo("已加入购物车")
                     view.setAddShopCartSuccess()
                 } else {
                     view.showError(addShopCartBean.status.message)

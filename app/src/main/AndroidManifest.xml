@@ -91,6 +91,7 @@
         <activity android:name=".search.OrderCustomMadeGoodsActivity" />
         <activity android:name=".brandHouse.BrandHouseActivity" />
         <activity android:name=".selectionGoodsCenter.PutAwayActivity" />
+        <activity android:name=".index.detail.GoodsImageViewActivity" />
     </application>
 
 </manifest>
