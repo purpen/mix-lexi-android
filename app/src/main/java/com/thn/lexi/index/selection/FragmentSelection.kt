@@ -5,6 +5,9 @@ import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import com.basemodule.tools.ToastUtil
@@ -23,6 +26,7 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
+import kotlinx.android.synthetic.main.view_notice_item_view.view.*
 
 
 class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickListener {
@@ -39,7 +43,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private lateinit var adapterGoodSelection: GoodSelectionAdapter
 
     private lateinit var adapterZCManifest: ZCManifestAdapter
-
+    private var views: ArrayList<View> = ArrayList()
 
     companion object {
         @JvmStatic
@@ -230,6 +234,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         presenter.getHeadLine()
     }
 
+
     /**
      * 设置头条数据
      */
@@ -237,54 +242,21 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
         var size = data.size
 
-        if (size == 0) return
+        var i = 0
+        while (i < size) {
+            //设置滚动的单个布局
+            val noticeView = View.inflate(activity,R.layout.view_notice_item_view,null)
+            setNoticeTextViewData(data[i],noticeView.tv1)
+            if (size > i + 1) {
+                setNoticeTextViewData(data[i+1],noticeView.tv2)
+            } else {
+                noticeView.tv2.visibility = View.GONE
+            }
 
-        if (size % 2 != 0) { //奇数补全
-            val lastNotice = HeadLineBean.DataBean.HeadlinesBean()
-            data.add(lastNotice)
+            views.add(noticeView)
+            i += 2
         }
-
-        if (size == 2) { //最少4条轮播
-            data.addAll(data)
-        }
-
-        size = data.size - 2
-
-        //TODO 测试代码
-        for (i in 0..size) {
-            data[i].event = i % 4 + 1
-        }
-
-        for (i in 0..size step 2) {
-            val view = View.inflate(activity, R.layout.view_scroll_notice, null)
-            val tv1 = view.findViewById<TextView>(R.id.textView0)
-
-            setNoticeTextViewData(data[i], tv1)
-
-            val tv2 = view.findViewById<TextView>(R.id.textView1)
-            setNoticeTextViewData(data[i + 1], tv2)
-            viewFlipper.addView(view)
-        }
-        viewFlipper.isAutoStart = true
-        viewFlipper.startFlipping()
-
-
-//        if (!TextUtils.isEmpty(name1)){
-//            val openInfo = SpannableString("设计师${contentPavilion}10秒前开了自己的设计馆")
-//            val start = 3
-//            val end = start + name1.length
-//            openInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)),start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//            textViewOpenInfo.text = openInfo
-//        }
-//
-//        if (!TextUtils.isEmpty(name2) && !TextUtils.isEmpty(orderCount)){
-//            val orderInfo = SpannableString("${name2}设计馆1小时售出${orderCount}单")
-//            val start = name2.length + 8
-//            val end = start + orderCount.length
-//            orderInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f4b329)),start , end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//            textViewOrderInfo.text = orderInfo
-//        }
-
+        upMarqueeView.setViews(views)
     }
 
     /**
@@ -292,18 +264,27 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun setNoticeTextViewData(bean: HeadLineBean.DataBean.HeadlinesBean, textView: TextView) {
         when (bean.event) {
-            1 -> { //开通生活馆
-                textView.text = "${bean.username} 开通了自己的生活馆"
+            1 -> { //开通生活馆 人名蓝色
+                val content = "${bean.username} ${bean.time}${bean.time_info}开通了自己的生活馆"
+                val string = SpannableString(content)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)),0, bean.username.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                textView.text = string
             }
 
-            2 -> {//售出3单成为馆主
-                textView.text = "${bean.username} 售出3单成为正式馆主"
+            2 -> {//售出3单成为正式馆主
+                textView.text = "${bean.username} 售出${bean.quantity}单成为正式馆主"
             }
-            3 -> {//售出3单成为馆主
-                textView.text = "${bean.username} 售出${bean.quantity}单"
+            3 -> {//刚刚售出1单
+                val content = "「${bean.username}」的生活馆 ${bean.time}${bean.time_info} 售出${bean.quantity}单"
+                val string = SpannableString(content)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)),content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                textView.text = string
             }
-            4 -> {//售出3单成为馆主
-                textView.text = "「${bean.username}」的生活馆 3小时 售出${bean.quantity}单"
+            4 -> {//售出单数
+                val content = "「${bean.username}」的生活馆 ${bean.time}${bean.time_info} 售出${bean.quantity}单"
+                val string = SpannableString(content)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)),content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                textView.text = string
             }
         }
     }

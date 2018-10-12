@@ -6,7 +6,7 @@ public class HeadLineBean {
 
 
     /**
-     * data : {"headlines":[{"event":3,"quantity":1,"time":1596757,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":1605684,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":1686454,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":1780437,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":1854020,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":2004246,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":2035432,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":2073776,"time_info":"","username":"13260180689"},{"event":3,"quantity":1,"time":2118273,"time_info":"","username":"13716171550"},{"event":3,"quantity":1,"time":2118725,"time_info":"","username":"13260180689"}]}
+     * data : {"headlines":[{"event":3,"quantity":1,"time":19,"time_info":"小时前","username":"蘑菇蘑菇"},{"event":3,"quantity":1,"time":19,"time_info":"小时前","username":"蘑菇蘑菇"},{"event":3,"quantity":1,"time":19,"time_info":"小时前","username":"蘑菇蘑菇"},{"event":3,"quantity":1,"time":19,"time_info":"小时前","username":"蘑菇蘑菇"},{"event":3,"quantity":1,"time":23,"time_info":"小时前","username":"蘑菇蘑菇"},{"event":3,"quantity":1,"time":2,"time_info":"天前","username":"时尚小三郎"},{"event":3,"quantity":1,"time":2,"time_info":"天前","username":"时尚小三郎"},{"event":1,"time":2,"time_info":"天前","username":"时尚小三郎"},{"event":3,"quantity":1,"time":2,"time_info":"天前","username":"乱七八糟"},{"event":1,"time":2,"time_info":"天前","username":"乱七八糟"}]}
      * status : {"code":200,"message":"Ok all right."}
      * success : true
      */
@@ -22,9 +22,9 @@ public class HeadLineBean {
             /**
              * event : 3
              * quantity : 1
-             * time : 1596757
-             * time_info :
-             * username : 13260180689
+             * time : 19
+             * time_info : 小时前
+             * username : 蘑菇蘑菇
              */
 
             public int event;

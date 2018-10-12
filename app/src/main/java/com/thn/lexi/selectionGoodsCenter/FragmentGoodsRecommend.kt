@@ -1,7 +1,12 @@
 package com.thn.lexi.selectionGoodsCenter
 
 import android.support.v7.widget.LinearLayoutManager
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.widget.TextView
+import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
@@ -10,13 +15,14 @@ import com.thn.lexi.index.explore.ExploreBannerBean
 import com.thn.lexi.index.selection.CardScaleHelper
 import com.thn.lexi.index.selection.HeadLineBean
 import kotlinx.android.synthetic.main.fragment_goods_recommend.*
+import kotlinx.android.synthetic.main.view_notice_item_view.view.*
 import kotlinx.android.synthetic.main.view_selection_goods_center_recommend.*
 
 class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View.OnClickListener {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_goods_recommend
     private val presenter: GoodsRecommendPresenter by lazy { GoodsRecommendPresenter(this) }
-
+    private var views: ArrayList<View> = ArrayList()
     private val fragment0: BaseFragment by lazy { FragmentHotGoods.newInstance() }
     private val fragment1: BaseFragment by lazy { FragmentOfficialRecommend.newInstance() }
     private val fragment2: BaseFragment by lazy { FragmentFirstPublish.newInstance() }
@@ -63,28 +69,53 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
      * 设置头条数据
      */
     override fun setHeadLineData(data: MutableList<HeadLineBean.DataBean.HeadlinesBean>) {
-//        val contentPavilion = data[0].line_text
-//        val pavilionTime = data[0].time
-//
-//        val contentOrders = data[1].line_text
-//        val orderCount= data[1].time
+        var size = data.size
 
-//        if (!TextUtils.isEmpty(name1)){
-//            val openInfo = SpannableString("设计师${contentPavilion}10秒前开了自己的设计馆")
-//            val start = 3
-//            val end = start + name1.length
-//            openInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)),start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//            textViewOpenInfo.text = openInfo
-//        }
-//
-//        if (!TextUtils.isEmpty(name2) && !TextUtils.isEmpty(orderCount)){
-//            val orderInfo = SpannableString("${name2}设计馆1小时售出${orderCount}单")
-//            val start = name2.length + 8
-//            val end = start + orderCount.length
-//            orderInfo.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f4b329)),start , end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-//            textViewOrderInfo.text = orderInfo
-//        }
+        var i = 0
+        while (i < size) {
+            //设置滚动的单个布局
+            val noticeView = View.inflate(activity,R.layout.view_notice_item_view,null)
+            setNoticeTextViewData(data[i],noticeView.tv1)
+            if (size > i + 1) {
+                setNoticeTextViewData(data[i+1],noticeView.tv2)
+            } else {
+                noticeView.tv2.visibility = View.GONE
+            }
 
+            views.add(noticeView)
+            i += 2
+        }
+        upMarqueeView.setViews(views)
+
+    }
+    /**
+     * 设置通知
+     */
+    private fun setNoticeTextViewData(bean: HeadLineBean.DataBean.HeadlinesBean, textView: TextView) {
+        when (bean.event) {
+            1 -> { //开通生活馆 人名蓝色
+                val content = "${bean.username} ${bean.time}${bean.time_info}开通了自己的生活馆"
+                val string = SpannableString(content)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)),0, bean.username.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                textView.text = string
+            }
+
+            2 -> {//售出3单成为正式馆主
+                textView.text = "${bean.username} 售出${bean.quantity}单成为正式馆主"
+            }
+            3 -> {//刚刚售出1单
+                val content = "「${bean.username}」的生活馆 ${bean.time}${bean.time_info} 售出${bean.quantity}单"
+                val string = SpannableString(content)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)),content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                textView.text = string
+            }
+            4 -> {//售出单数
+                val content = "「${bean.username}」的生活馆 ${bean.time}${bean.time_info} 售出${bean.quantity}单"
+                val string = SpannableString(content)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)),content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                textView.text = string
+            }
+        }
     }
 
     /**
