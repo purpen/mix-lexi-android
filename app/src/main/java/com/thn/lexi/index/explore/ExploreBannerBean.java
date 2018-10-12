@@ -1,5 +1,7 @@
 package com.thn.lexi.index.explore;
 
+import com.thn.lexi.index.bean.BannerImageBean;
+
 import java.util.List;
 
 public class ExploreBannerBean {
@@ -15,28 +17,9 @@ public class ExploreBannerBean {
     public boolean success;
 
     public static class DataBean {
-        public List<BannerImagesBean> banner_images;
+        public List<BannerImageBean> banner_images;
 
-        public static class BannerImagesBean {
-            /**
-             * description : 广告图描述
-             * image : http://127.0.0.1:9000/_uploads/photos/180530/72de0b9ca1ae5a3.jpg
-             * link : 链接地址
-             * rid : 4
-             * sort_order : 排序
-             * status : true
-             * title : 标题
-             * type : 0=全部, 1=链接地址, 2=商品, 3=分类, 4=品牌, 5=专题
-             */
 
-            public String description;
-            public String image;
-            public int rid;
-            public String sort_order;
-            public boolean status;
-            public String title;
-            public String type;
-        }
     }
 
     public static class StatusBean {

@@ -216,8 +216,8 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         adapterOrder.setOnItemClickListener { adapter, view, position ->
             val itemBean = adapter.getItem(position) as ShopCartBean.DataBean.ItemsBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
+            itemBean.product.rid = itemBean.product.product_rid
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, itemBean.product)
-            intent.putExtra(MainFragment1::class.java.simpleName, MainFragment1::class.java.simpleName)
             startActivity(intent)
         }
 

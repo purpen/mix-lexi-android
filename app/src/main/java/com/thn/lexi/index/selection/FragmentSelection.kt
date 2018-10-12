@@ -17,7 +17,9 @@ import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.thn.lexi.*
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.brandHouse.BrandHouseActivity
 import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
+import com.thn.lexi.index.bean.BannerImageBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.explore.ExploreBannerBean
 import com.thn.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
@@ -159,13 +161,19 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         hotBanner.setBannerStyle(BannerConfig.NOT_INDICATOR)
     }
 
-    override fun setHotRecommendBannerData(banner_images: List<SelectionHotRecommendBannerBean.DataBean.BannerImagesBean>) {
+    /**
+     * 设置推荐数据
+     */
+    override fun setHotRecommendBannerData(banner_images: List<BannerImageBean>) {
         val list = ArrayList<String>()
         for (item in banner_images) {
             list.add(item.image)
         }
         hotBanner.setImages(list)
         hotBanner.start()
+        hotBanner.setOnBannerListener { position ->
+            PageUtil.banner2Page(banner_images[position])
+        }
     }
 
     /**
@@ -245,10 +253,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         var i = 0
         while (i < size) {
             //设置滚动的单个布局
-            val noticeView = View.inflate(activity,R.layout.view_notice_item_view,null)
-            setNoticeTextViewData(data[i],noticeView.tv1)
+            val noticeView = View.inflate(activity, R.layout.view_notice_item_view, null)
+            setNoticeTextViewData(data[i], noticeView.tv1)
             if (size > i + 1) {
-                setNoticeTextViewData(data[i+1],noticeView.tv2)
+                setNoticeTextViewData(data[i + 1], noticeView.tv2)
             } else {
                 noticeView.tv2.visibility = View.GONE
             }
@@ -267,7 +275,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             1 -> { //开通生活馆 人名蓝色
                 val content = "${bean.username} ${bean.time}${bean.time_info}开通了自己的生活馆"
                 val string = SpannableString(content)
-                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)),0, bean.username.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)), 0, bean.username.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
                 textView.text = string
             }
 
@@ -277,13 +285,13 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             3 -> {//刚刚售出1单
                 val content = "「${bean.username}」的生活馆 ${bean.time}${bean.time_info} 售出${bean.quantity}单"
                 val string = SpannableString(content)
-                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)),content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)), content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
                 textView.text = string
             }
             4 -> {//售出单数
                 val content = "「${bean.username}」的生活馆 ${bean.time}${bean.time_info} 售出${bean.quantity}单"
                 val string = SpannableString(content)
-                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)),content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)), content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
                 textView.text = string
             }
         }
@@ -304,7 +312,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 设置Banner数据
      */
-    override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
+    override fun setBannerData(banner_images: List<BannerImageBean>) {
         val list = ArrayList<String>()
         for (item in banner_images) {
             list.add(item.image)
@@ -313,7 +321,14 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         val mCardScaleHelper = CardScaleHelper()
         mCardScaleHelper.currentItemPos = 0
         mCardScaleHelper.attachToRecyclerView(recyclerViewBanner)
+
+        //banner点击
+        adapterSelectionBanner.setOnItemClickListener { _, _, position ->
+            PageUtil.banner2Page(banner_images[position])
+        }
     }
+
+
 
     override fun setPresenter(presenter: SelectionContract.Presenter?) {
         setPresenter(presenter)

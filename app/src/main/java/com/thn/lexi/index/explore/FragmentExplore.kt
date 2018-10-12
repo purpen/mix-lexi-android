@@ -7,13 +7,11 @@ import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.thn.lexi.AppApplication
-import com.thn.lexi.GlideImageLoader
-import com.thn.lexi.R
-import com.thn.lexi.RecyclerViewDivider
+import com.thn.lexi.*
 import com.thn.lexi.brandPavilion.BrandPavilionListActivity
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.brandHouse.BrandHouseActivity
+import com.thn.lexi.index.bean.BannerImageBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
 import com.thn.lexi.index.explore.collection.CollectionDetailActivity
 import com.thn.lexi.index.explore.collection.CollectionListActivity
@@ -214,13 +212,17 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     /**
      * 设置Banner数据
      */
-    override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
+    override fun setBannerData(banner_images: List<BannerImageBean>) {
         val list = ArrayList<String>()
         for (item in banner_images){
             list.add(item.image)
         }
         banner.setImages(list)
         banner.start()
+
+        banner.setOnBannerListener { position ->
+            PageUtil.banner2Page(banner_images[position])
+        }
     }
 
     override fun setPresenter(presenter: ExploreContract.Presenter?) {
@@ -268,9 +270,6 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
             startActivity(Intent(activity,AllGoodsIn100Activity::class.java))
         }
 
-        banner.setOnBannerListener {
-            position ->ToastUtil.showInfo("你点击了$position")
-        }
 
         //商品分类
         adapterGoodsClass.setOnItemClickListener { _, _, position ->

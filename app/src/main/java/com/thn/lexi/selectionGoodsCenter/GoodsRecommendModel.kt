@@ -32,11 +32,12 @@ open class GoodsRecommendModel{
 
 
     /**
-     * 获取Banner
+     * 获取选品中心Banner
      */
     fun getBanners(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.SELECTION_BANNER_URL, params, object : IDataSource.HttpRequestCallBack {
+        val url = URL.BASE_URL+"banners/center_ad"
+        HttpRequest.sendRequest(HttpRequest.GET, url, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

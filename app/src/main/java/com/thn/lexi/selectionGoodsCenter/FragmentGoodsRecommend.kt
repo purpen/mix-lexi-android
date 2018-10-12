@@ -10,8 +10,9 @@ import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
+import com.thn.lexi.PageUtil
 import com.thn.lexi.R
-import com.thn.lexi.index.explore.ExploreBannerBean
+import com.thn.lexi.index.bean.BannerImageBean
 import com.thn.lexi.index.selection.CardScaleHelper
 import com.thn.lexi.index.selection.HeadLineBean
 import kotlinx.android.synthetic.main.fragment_goods_recommend.*
@@ -133,7 +134,7 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
     /**
      * 设置Banner数据
      */
-    override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
+    override fun setBannerData(banner_images: List<BannerImageBean>) {
         val list = ArrayList<String>()
         for (item in banner_images) {
             list.add(item.image)
@@ -142,6 +143,10 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
         val mCardScaleHelper = CardScaleHelper()
         mCardScaleHelper.currentItemPos = 0
         mCardScaleHelper.attachToRecyclerView(recyclerViewBanner)
+        //banner点击
+        adapterGoodsRecommendBanner.setOnItemClickListener { _, _, position ->
+            PageUtil.banner2Page(banner_images[position])
+        }
     }
 
     override fun setPresenter(presenter: GoodsRecommendContract.Presenter?) {

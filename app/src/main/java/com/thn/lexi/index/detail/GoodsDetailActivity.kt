@@ -23,6 +23,7 @@ import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.beans.UserBean
 import com.thn.lexi.brandHouse.BrandHouseActivity
+import com.thn.lexi.index.selection.FragmentSelection
 import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
 import com.thn.lexi.user.login.LoginActivity
 import com.thn.lexi.user.login.UserProfileUtil
@@ -66,16 +67,24 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     private var brandPavilionData: BrandPavilionBean.DataBean? = null
 
     override fun getIntentData() {
-        product = intent.extras.getParcelable(GoodsDetailActivity::class.java.simpleName)
-        val pageName = intent.extras.getString(MainFragment1::class.java.simpleName)
+        product = intent.extras.getParcelable(TAG)
 
-        if (!TextUtils.isEmpty(pageName)) {
-            if (TextUtils.equals(pageName, MainFragment1::class.java.simpleName)) { //购物车界面为product_rid
-                productId = product.product_rid
-            }
-        } else {
+//        val pageName = intent.extras.getString(TAG)
+
+//        if (!TextUtils.isEmpty(pageName)) {
+//            when(pageName){
+//                MainFragment1::class.java.simpleName ->{ //购物车界面为product_rid
+//                    productId = product.product_rid
+//                }
+//
+//                FragmentSelection::class.java.simpleName ->{ //精选界面
+//                    productId = product.rid
+//                }
+//            }
+//
+//        } else {
             productId = product.rid
-        }
+//        }
     }
 
     override fun initView() {
@@ -123,11 +132,11 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         //获取喜欢商品用户
         presenter.getFavoriteUsers(productId)
 
-        //获取优惠券
-        presenter.getCouponsByStoreId(product.store_rid)
-
-        //获取商品所在品牌馆信息
-        presenter.loadBrandPavilionInfo(product.store_rid)
+//        //获取优惠券
+//        presenter.getCouponsByStoreId(product.store_rid)
+//
+//        //获取商品所在品牌馆信息
+//        presenter.loadBrandPavilionInfo(product.store_rid)
 
         //获取购物车商品数量
         if (UserProfileUtil.isLogin()) presenter.getShopCartProductsNum()
@@ -342,10 +351,19 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      * 设置商品信息
      */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
-        // 获取交货时间
-        presenter.getExpressTime(data.fid, product.store_rid, productId)
 
         goodsData = data
+
+        // 获取交货时间
+        presenter.getExpressTime(data.fid, data.store_rid, productId)
+
+        //获取优惠券
+        presenter.getCouponsByStoreId(data.store_rid)
+
+        //获取商品所在品牌馆信息
+        presenter.loadBrandPavilionInfo(data.store_rid)
+
+
 
         if (data.is_distributed) { //分销商品
             buttonPurchase.visibility = View.VISIBLE

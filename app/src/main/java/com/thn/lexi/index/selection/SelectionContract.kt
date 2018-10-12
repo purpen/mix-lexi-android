@@ -4,6 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.bean.BannerImageBean
 import com.thn.lexi.index.explore.ExploreBannerBean
 
 class SelectionContract {
@@ -16,10 +17,10 @@ class SelectionContract {
 
         }
 
-        fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>){}
+        fun setBannerData(banner_images: List<BannerImageBean>){}
         fun setTodayRecommendData(products: List<ProductBean>){}
         fun setHotRecommendData(products: List<ProductBean>) {}
-        fun setHotRecommendBannerData(banner_images: List<SelectionHotRecommendBannerBean.DataBean.BannerImagesBean>) {
+        fun setHotRecommendBannerData(banner_images: List<BannerImageBean>) {
 
         }
 
