@@ -15,8 +15,8 @@
         android:id="@+id/relativeLayoutHeader"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp50"
-        android:background="@mipmap/icon_bg_goods_detail_head"
-        >
+        android:background="@mipmap/icon_bg_goods_detail_head">
+
         <ImageView
             android:id="@+id/imageViewBack"
             android:layout_width="@dimen/dp50"
@@ -24,20 +24,21 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/dp15"
             android:src="@mipmap/icon_return_white" />
+
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginStart="65dp"
             android:layout_marginEnd="65dp"
-            android:textColor="@color/color_333"
-            android:maxLines="1"
+            android:layout_marginStart="65dp"
             android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
             android:text=""
+            android:textColor="@color/color_333"
             android:textSize="19sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
+
         <ImageView
             android:id="@+id/imageViewShare"
             android:layout_width="@dimen/dp50"
@@ -49,11 +50,12 @@
             android:src="@mipmap/icon_share_white" />
     </RelativeLayout>
 
-    <include layout="@layout/line_color_eee"
+    <include
+        layout="@layout/line_color_eee"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"
-        android:layout_above="@+id/relativeLayoutBar"
-        />
+        android:layout_above="@+id/relativeLayoutBar" />
+
     <LinearLayout
         android:id="@+id/relativeLayoutBar"
         android:layout_width="match_parent"
@@ -63,19 +65,17 @@
 
         <RelativeLayout
             android:id="@+id/relativeLayoutShopCart"
-            android:layout_width="79dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:paddingBottom="6dp"
             android:paddingTop="6dp">
 
             <TextView
-                android:layout_width="79dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:drawableTop="@mipmap/icon_add_shopcart"
                 android:gravity="center"
-                android:paddingEnd="@dimen/dp22"
-                android:paddingStart="@dimen/dp24"
                 android:text="@string/title_shopcart"
                 android:textColor="@color/color_949ea6"
                 android:textSize="@dimen/sp11" />
@@ -91,98 +91,99 @@
                 android:minHeight="@dimen/dp12"
                 android:minWidth="@dimen/dp12"
                 android:text="0"
-                android:visibility="gone"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/sp8" />
+                android:textSize="@dimen/sp8"
+                android:visibility="gone" />
         </RelativeLayout>
 
-        <!--添加购物车-->
-        <Button
-            android:id="@+id/buttonAddShopCart"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="133dp"
-            android:layout_height="@dimen/dp40"
-            android:layout_gravity="center_vertical|end"
-            android:background="@drawable/bg_colore2d343a_left_radius4"
-            android:text="@string/text_add_shopcart"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp16"
-            android:visibility="gone"
-            />
-
-        <!--非分销购买按钮-->
-        <Button
-            android:id="@+id/buttonGoOrderConfirm"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="133dp"
-            android:layout_height="@dimen/dp40"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/dp15"
-            android:background="@drawable/bg_colore5fe4b1_right_radius4"
-            android:text="@string/text_purchase"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp16"
-            android:visibility="gone" />
-
-
-        <!--接单订制按钮-->
-        <Button
-            android:id="@+id/buttonOrderMake"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="133dp"
-            android:layout_height="@dimen/dp40"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="@dimen/dp15"
-            android:background="@drawable/bg_colore5fe4b1_right_radius4"
-            android:text="@string/text_order_make"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp16"
-            android:visibility="gone"
-            />
-
-        <!--分销购买按钮-->
-        <Button
-            android:id="@+id/buttonPurchase"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="133dp"
-            android:layout_height="@dimen/dp40"
-            android:layout_gravity="center_vertical|end"
-            android:background="@drawable/bg_colore5fe4b1_left_radius4"
-            android:text="@string/text_purchase"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/sp16"
-            android:visibility="gone"
-            />
-
-        <!--卖按钮-->
+        <!--按钮-->
         <LinearLayout
-            android:id="@+id/buttonSaleDistribution"
-            android:layout_width="133dp"
-            android:layout_height="@dimen/dp40"
-            android:layout_gravity="center_vertical|end"
-            android:background="@drawable/bg_coloreff6666_right_radius4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_marginEnd="@dimen/dp15"
-            android:gravity="center"
-            android:visibility="gone"
+            android:layout_gravity="center_vertical"
             >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="卖"
+            <!--添加购物车-->
+            <Button
+                android:id="@+id/buttonAddShopCart"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp40"
+                android:layout_weight="1"
+                android:background="@drawable/bg_colore2d343a_left_radius4"
+                android:text="@string/text_add_shopcart"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"
-                />
-            <TextView
-                android:id="@+id/textViewEarn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text=""
-                android:textColor="@android:color/white"
-                android:textSize="11sp"
-                />
-        </LinearLayout>
+                android:textSize="@dimen/sp16"
+                android:visibility="gone" />
 
+            <!--非分销购买按钮-->
+            <Button
+                android:id="@+id/buttonGoOrderConfirm"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp40"
+                android:layout_weight="1"
+                android:background="@drawable/bg_colore5fe4b1_right_radius4"
+                android:text="@string/text_purchase"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp16"
+                android:visibility="gone" />
+
+
+            <!--接单订制按钮-->
+            <Button
+                android:id="@+id/buttonOrderMake"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp40"
+                android:background="@drawable/bg_colore5fe4b1_right_radius4"
+                android:text="@string/text_order_make"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp16"
+                android:visibility="gone" />
+
+            <!--分销购买按钮-->
+            <Button
+                android:id="@+id/buttonPurchase"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp40"
+                android:layout_weight="1"
+                android:background="@drawable/bg_colore5fe4b1_left_radius4"
+                android:text="@string/text_purchase"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp16"
+                android:visibility="gone" />
+
+            <!--卖按钮-->
+            <LinearLayout
+                android:id="@+id/buttonSaleDistribution"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp40"
+                android:layout_weight="1"
+                android:background="@drawable/bg_coloreff6666_right_radius4"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="卖"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textViewEarn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text=""
+                    android:textColor="@android:color/white"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -9,7 +9,9 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:elevation="0dp"
+        android:background="@android:color/white">
 
         <include layout="@layout/view_selection_goods_center_recommend"
             android:layout_height="wrap_content"
@@ -21,12 +23,10 @@
             android:id="@+id/slidingTabLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp40"
-            android:background="@android:color/white"
             tl:tl_indicator_color="@color/color_6ed7af"
             tl:tl_indicator_height="2dp"
             app:tl_indicator_width="14dp"
             tl:tl_tab_padding="@dimen/dp15"
-            tl:tl_textAllCaps="true"
             tl:tl_textSelectColor="@color/color_6ed7af"
             tl:tl_textUnselectColor="@color/color_2d343a"
             tl:tl_textsize="@dimen/sp15" />
