@@ -50,7 +50,7 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
         val resources = imageView.resources
 
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
-            layoutParams = RelativeLayout.LayoutParams(sizeSpan2, resources.getDimensionPixelSize(R.dimen.dp128))
+            layoutParams = RelativeLayout.LayoutParams(sizeSpan2, sizeSpan2)
             imageView.layoutParams = layoutParams
         } else {
             layoutParams = RelativeLayout.LayoutParams(sizeSpan1, sizeSpan1)

@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
     android:orientation="vertical">
     <TextView
-        android:id="@+id/textView0"
-        android:layout_marginTop="@dimen/dp5"
+        android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp12"
-        android:text="设计师risky秒前开了自己的设计馆"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_marginTop="@dimen/dp5"
         android:textColor="@color/color_333"
-        />
+        android:textSize="@dimen/sp12" />
+
     <TextView
-        android:id="@+id/textView1"
-        android:layout_marginTop="@dimen/dp5"
+        android:id="@+id/tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp12"
-        android:text="伟峰的设计馆1小时售出200单"
+        android:layout_marginTop="@dimen/dp5"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/color_333"
-        />
+        android:textSize="@dimen/sp12" />
 </LinearLayout>

@@ -59,11 +59,11 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
         view.textViewCancel.setOnClickListener {
             dismiss()
         }
-        view.linearLayoutWeChatShare.setOnClickListener {
+        view.textViewWechatShare.setOnClickListener {
             ToastUtil.showInfo("微信分享")
         }
 
-        view.linearLayoutSave.setOnClickListener { //保存海报到相册
+        view.textViewSavePoster.setOnClickListener { //保存海报到相册
             if (TextUtils.isEmpty(posterUrl)) return@setOnClickListener
             //保存相册
             GetImageCacheAsyncTask( view.linearLayoutSave).execute(posterUrl)

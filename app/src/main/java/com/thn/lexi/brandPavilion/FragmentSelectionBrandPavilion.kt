@@ -11,11 +11,9 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
-import com.thn.lexi.discoverLifeAesthetics.ShowWindowBean
-import com.thn.lexi.discoverLifeAesthetics.ShowWindowDetailActivity
+import com.thn.lexi.brandHouse.BrandHouseActivity
 import com.thn.lexi.index.explore.ExploreBannerBean
 import com.youth.banner.BannerConfig
-import com.youth.banner.listener.OnBannerListener
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 import kotlinx.android.synthetic.main.header_selection_brand_pavilion.view.*
 
@@ -26,7 +24,10 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
     private val presenter: SelectionBrandPavilionPresenter by lazy { SelectionBrandPavilionPresenter(this) }
     private val adapter: AdapterFeatureBrandPavilion by lazy { AdapterFeatureBrandPavilion(R.layout.adapter_show_window) }
     private val adapterSelectionBrandPavilion: AdapterSelectionBrandPavilion by lazy { AdapterSelectionBrandPavilion(R.layout.adapter_header_selection_brand_pavilion) }
-    private lateinit var headerView:View
+    private lateinit var headerView: View
+
+    private var pavilionBannerList: List<ExploreBannerBean.DataBean.BannerImagesBean>? = null
+
     companion object {
         @JvmStatic
         fun newInstance(): FragmentSelectionBrandPavilion = FragmentSelectionBrandPavilion()
@@ -69,8 +70,9 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
      * 设置Banner图
      */
     override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
+        pavilionBannerList = banner_images
         val list = ArrayList<String>()
-        for (item in banner_images){
+        for (item in banner_images) {
             list.add(item.image)
         }
         headerView.banner.setImages(list)
@@ -86,16 +88,18 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
 
     override fun installListener() {
 
-        headerView.banner.setOnBannerListener { position->
-            ToastUtil.showInfo("跳转品牌馆详情$position")
-//                startActivity(Intent())
+        headerView.banner.setOnBannerListener { position ->
+            val item = pavilionBannerList?.get(position) ?: return@setOnBannerListener
+            val intent = Intent(activity, BrandHouseActivity::class.java)
+            intent.putExtra("rid", item.rid)
+            startActivity(intent)
         }
-        adapterSelectionBrandPavilion.setOnItemClickListener { adapter, view, position ->
-            ToastUtil.showInfo("跳转品牌馆详情$position")
-//            val item = adapter.getItem(position)
-//            val intent = Intent(context, ShowWindowDetailActivity::class.java)
-//            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName,showWindowBean)
-//            startActivity(intent)
+
+        adapterSelectionBrandPavilion.setOnItemClickListener { _, _, position ->
+            val item = adapterSelectionBrandPavilion.getItem(position) ?: return@setOnItemClickListener
+            val intent = Intent(activity, BrandHouseActivity::class.java)
+            intent.putExtra("rid", item.rid)
+            startActivity(intent)
         }
     }
 

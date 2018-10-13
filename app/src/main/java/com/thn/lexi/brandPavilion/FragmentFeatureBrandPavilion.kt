@@ -1,5 +1,6 @@
 package com.thn.lexi.brandPavilion
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -8,6 +9,7 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
+import com.thn.lexi.brandHouse.BrandHouseActivity
 import com.thn.lexi.index.explore.BrandPavilionListBean
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 
@@ -47,13 +49,11 @@ class FragmentFeatureBrandPavilion : BaseFragment(), FeatrueBrandPavilionContrac
         }, recyclerView)
 
 
-        adapter.setOnItemClickListener { adapter, view, position ->
-            //
-            ToastUtil.showInfo("品牌馆主页")
-//            val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
-//            val intent = Intent(context, ShowWindowDetailActivity::class.java)
-//            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName, showWindowBean)
-//            startActivity(intent)
+        adapter.setOnItemClickListener { _, _, position ->
+            val item = adapter.getItem(position) ?: return@setOnItemClickListener
+            val intent = Intent(activity, BrandHouseActivity::class.java)
+            intent.putExtra("rid",item.rid)
+            startActivity(intent)
         }
     }
 

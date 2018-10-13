@@ -1,5 +1,6 @@
 package com.thn.lexi.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -9,6 +10,7 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
+import com.thn.lexi.brandHouse.BrandHouseActivity
 import com.thn.lexi.mine.designPavilion.DesignPavilionBean
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
 
@@ -63,7 +65,10 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
 //            loadData()
 //        }
         adapter.setOnItemClickListener { _, _, position ->
-            ToastUtil.showInfo("跳转品牌馆详情$position")
+            val item = adapter.getItem(position)?:return@setOnItemClickListener
+            val intent = Intent(activity, BrandHouseActivity::class.java)
+            intent.putExtra("rid", item.rid)
+            startActivity(intent)
         }
 
         //关注品牌馆

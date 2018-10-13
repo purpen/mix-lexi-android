@@ -47,7 +47,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     override fun initView() {
         editTextSearch.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         initSearchHistory()
-        if (UserProfileUtil.isLogin()) initRecentLookGoods()
+        initRecentLookGoods()
         initHotRecommendPavilion()
         initHotSearch()
         initFuzzyWordSearch()
@@ -119,18 +119,6 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     /**
-     * 最近查看商品
-     */
-    override fun setRecentLookData(products: List<ProductBean>) {
-        if (products.isEmpty()) {
-            linearLayoutRecentGoods.visibility = View.GONE
-        } else {
-            linearLayoutRecentGoods.visibility = View.VISIBLE
-            adapterRecent.setNewData(products)
-        }
-    }
-
-    /**
      * 初始化热门品牌馆
      */
     private fun initHotRecommendPavilion() {
@@ -181,7 +169,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     override fun requestNet() {
-        presenter.getUserRecentLook()
+        if (UserProfileUtil.isLogin()) presenter.getUserRecentLook()
         presenter.getHotRecommendPavilion()
         presenter.getHotSearch()
     }

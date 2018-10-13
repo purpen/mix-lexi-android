@@ -2,9 +2,9 @@ package com.thn.lexi.net
 
 object URL {
     //测试服务器
-    const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
+    //const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
     //正式服务器
-    //const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
+    const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
 
     /**
      * 注册
@@ -610,6 +610,11 @@ object URL {
      *  接单订制
      */
     const val PRODUCTS_CUSTOM_MADE = "${BASE_URL}products/custom_made"
+
+    /**
+     * 上架商品
+     */
+    const val PUT_AWAY_GOODS = "${BASE_URL}core_platforms/fx_distribute/publish"
     /**
      * 获取品牌馆信息
      */

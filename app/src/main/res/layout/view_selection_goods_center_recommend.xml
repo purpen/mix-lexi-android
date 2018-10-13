@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@android:color/white"
     >
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewBanner"
@@ -25,6 +24,7 @@
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/dp4"
             android:drawableTop="@mipmap/icon_tou_tiao"
+            android:layout_marginTop="3dp"
             android:text="@string/text_tou_tiao"
             android:textColor="@color/color_333"
             android:textSize="@dimen/sp12" />
@@ -35,31 +35,18 @@
             android:layout_height="38dp"
             android:layout_marginEnd="@dimen/dp10"
             android:layout_marginStart="@dimen/dp15"
-            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/textViewIcon"
             android:scaleType="fitXY"
             android:src="@mipmap/icon_seprate_tt" />
 
-        <TextView
-            android:id="@+id/textViewOpenInfo"
-            android:layout_width="wrap_content"
+        <com.thn.lexi.view.UPMarqueeView
+            android:id="@+id/upMarqueeView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginTop="3dp"
             android:layout_toEndOf="@+id/imageViewSeparate"
-            android:text="设计师risky秒前开了自己的设计馆"
-            android:textColor="@color/color_333"
-            android:textSize="@dimen/sp12" />
-
-        <TextView
-            android:id="@+id/textViewOrderInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textViewOpenInfo"
-            android:layout_below="@+id/textViewOpenInfo"
-            android:layout_marginTop="@dimen/dp5"
-            android:text="伟峰的设计馆1小时售出200单"
-            android:textColor="@color/color_333"
-            android:textSize="@dimen/sp12" />
+            />
     </RelativeLayout>
 
 </LinearLayout>

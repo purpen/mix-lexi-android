@@ -35,6 +35,7 @@ class LookGoodsAllDetailDialog(context: FragmentActivity?, goodsData: GoodsAllDe
             view.textViewLightSpot.text = "亮点：${data.features}"
         }
 
+        if (!TextUtils.isEmpty(data.expressTime)) view.textViewExpressTime.text = data.expressTime
 
         if (data.is_custom_service) { //可定制
             view.textViewCharacter.visibility = View.VISIBLE

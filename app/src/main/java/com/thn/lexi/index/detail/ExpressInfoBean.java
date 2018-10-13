@@ -47,7 +47,7 @@ public class ExpressInfoBean {
              * rid : Fi618937502
              */
 
-            public int continuous_amount;
+            public double continuous_amount;
             public int continuous_item;
             public double continuous_weight;
             public String express_code;
@@ -75,7 +75,7 @@ public class ExpressInfoBean {
                  * rid : Fi153042768
                  */
 
-                public int continuous_amount;
+                public double continuous_amount;
                 public int continuous_item;
                 public double continuous_weight;
                 public int first_amount;

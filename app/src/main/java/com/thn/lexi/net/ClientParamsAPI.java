@@ -1309,6 +1309,22 @@ public class ClientParamsAPI {
     }
 
     /**
+     * 上架商品
+     * @param rid
+     * @param store_rid
+     * @param content
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,Object> getPutAwayGoodsParams(@NotNull String rid, @NotNull String store_rid, @NotNull String content) {
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("rid", rid);
+        params.put("sid", store_rid);
+        params.put("stick_text", content);
+        return params;
+    }
+
+    /**
      * 获取品牌馆商品
      * @param rid
      * @param page

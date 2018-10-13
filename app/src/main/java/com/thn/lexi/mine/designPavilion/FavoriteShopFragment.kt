@@ -1,4 +1,6 @@
 package com.thn.lexi.mine.designPavilion
+
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import com.basemodule.ui.BaseFragment
 import com.thn.lexi.AppApplication
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
+import com.thn.lexi.brandHouse.BrandHouseActivity
 import com.thn.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
@@ -17,7 +20,8 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
     override val layout: Int = R.layout.fragment_recyclerview
     private lateinit var presenter: FavoriteDesignPresenter
     private val adapter: AdapterDesignPavilion by lazy { AdapterDesignPavilion(R.layout.adapter_design_pavilion) }
-    private lateinit var emptyHeaderView:View
+    private lateinit var emptyHeaderView: View
+
     companion object {
         @JvmStatic
         fun newInstance(): FavoriteShopFragment = FavoriteShopFragment()
@@ -34,16 +38,8 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         recyclerView.adapter = adapter
         val view = View(activity)
         emptyHeaderView = LayoutInflater.from(context).inflate(R.layout.empty_user_center, null)
-        if (UserProfileUtil.isLogin()){
-            adapter.addHeaderView(view)
-        }else{
-            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_life_house)
-            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_focus_life_house)
-            adapter.addHeaderView(emptyHeaderView)
-        }
-
-
-        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(),R.color.color_f5f7f9,recyclerView))
+        adapter.addHeaderView(view)
+        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(), R.color.color_f5f7f9, recyclerView))
     }
 
     override fun setPresenter(presenter: FavoriteDesignContract.Presenter?) {
@@ -61,16 +57,24 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         //关注品牌馆
         adapter.setOnItemChildClickListener { _, _, position ->
             val pavilionBean = adapter.getItem(position) as DesignPavilionBean
-            if (pavilionBean.followed_status==1){ //点击取消关注
-                presenter.focusBrandPavilion(pavilionBean.rid,false,position)
-            }else{
-                presenter.focusBrandPavilion(pavilionBean.rid,true,position)
+            if (pavilionBean.followed_status == 1) { //点击取消关注
+                presenter.focusBrandPavilion(pavilionBean.rid, false, position)
+            } else {
+                presenter.focusBrandPavilion(pavilionBean.rid, true, position)
             }
+        }
+
+        //品牌馆点击
+        adapter.setOnItemClickListener { _, _, position ->
+            val pavilionBean = adapter.getItem(position) as DesignPavilionBean
+            val intent = Intent(activity, BrandHouseActivity::class.java)
+            intent.putExtra("rid",pavilionBean.rid)
+            startActivity(intent)
         }
 
         adapter.setOnLoadMoreListener({
             presenter.loadMoreData()
-        },recyclerView)
+        }, recyclerView)
     }
 
     /**
@@ -78,9 +82,9 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
      */
     override fun setBrandPavilionFocusState(favorite: Boolean, position: Int) {
         val pavilionBean = adapter.getItem(position) as DesignPavilionBean
-        if (favorite){
+        if (favorite) {
             pavilionBean.followed_status = 1
-        }else{
+        } else {
             pavilionBean.followed_status = 0
         }
 
@@ -88,15 +92,16 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
     }
 
     override fun loadData() {
-        if (UserProfileUtil.isLogin()) presenter.loadData()
+        presenter.loadData()
     }
-
 
 
     override fun setNewData(data: MutableList<DesignPavilionBean>) {
         adapter.setNewData(data)
         adapter.setEnableLoadMore(true)
-        if (adapter.data.isEmpty()){
+        if (adapter.data.isEmpty()) {
+            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_life_house)
+            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_focus_life_house)
             adapter.setHeaderView(emptyHeaderView)
         }
     }

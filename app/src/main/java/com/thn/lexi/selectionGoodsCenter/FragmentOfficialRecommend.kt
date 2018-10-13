@@ -47,11 +47,15 @@ class FragmentOfficialRecommend:BaseFragment(),OfficialRecommendContract.View {
     }
 
     override fun installListener() {
-        adapter.setOnItemChildClickListener { adapter, view, position ->
+        adapter.setOnItemChildClickListener { _, view, position ->
             val productsBean = adapter.getItem(position) as ProductBean
             when (view.id) {
                 R.id.textView4 -> ToastUtil.showInfo("卖")
-                R.id.textView5 -> ToastUtil.showInfo("上架")
+                R.id.textView5 -> {
+                    val intent = Intent(activity,PutAwayActivity::class.java)
+                    intent.putExtra(PutAwayActivity::class.java.simpleName,productsBean)
+                    startActivity(intent)
+                }
             }
         }
 

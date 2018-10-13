@@ -27,7 +27,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
     private val presenter: AllGoodsPresenter by lazy { AllGoodsPresenter(this) }
 
     private var firstLoadData: Boolean = true
-
+    private var goodsCount=0
     private val adapter: AdapterAllGoods by lazy { AdapterAllGoods(R.layout.adapter_all_goods) }
 
     companion object {
@@ -83,6 +83,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
     }
 
     override fun setGoodsCount(count: Int) {
+        goodsCount = count
         if (dialogBottomFilter.isShowing) dialogBottomFilter.setGoodsCount(count)
     }
 
@@ -124,6 +125,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
             dialogBottomFilter.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
             }
+            dialogBottomFilter.setGoodsCount(goodsCount)
         }
 
         swipeRefreshLayout.setOnRefreshListener {
@@ -144,12 +146,15 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
             startActivity(intent)
         }
 
-        adapter.setOnItemChildClickListener { adapter, view, position ->
+        adapter.setOnItemChildClickListener { _, view, position ->
             val productsBean = adapter.getItem(position) as ProductBean
             when (view.id) {
                 R.id.textView4 -> ToastUtil.showInfo("卖")
-                R.id.textView5 -> ToastUtil.showInfo("上架")
-//                R.id.linearLayoutLoadMore -> presenter.loadMoreData(page)
+                R.id.textView5 -> {
+                    val intent = Intent(activity,PutAwayActivity::class.java)
+                    intent.putExtra(PutAwayActivity::class.java.simpleName,productsBean)
+                    startActivity(intent)
+                }
             }
         }
     }

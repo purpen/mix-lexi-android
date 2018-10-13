@@ -1,5 +1,6 @@
 package com.thn.lexi.selectionGoodsCenter
 
+import android.graphics.Paint
 import android.support.annotation.LayoutRes
 import android.view.View
 import android.widget.ImageView
@@ -12,15 +13,20 @@ import com.thn.lexi.R
 import com.thn.lexi.beans.ProductBean
 
 class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
+
+    private val size4 = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
         helper.setText(R.id.textView0, item.name)
 
-//        val textView2 = helper.getView<TextView>(R.id.textView2)
+        val textView2 = helper.getView<TextView>(R.id.textView2)
 
         if (item.real_sale_price == 0.0) { //折扣价为0,显示真实价格
             helper.setText(R.id.textView1, "￥${item.real_price}")
         } else { //折扣价不为0显示折扣价格和带划线的真实价格
             helper.setText(R.id.textView1, "￥${item.real_sale_price}")
+            textView2.visibility = View.VISIBLE
+            textView2.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+            textView2.text = "￥${item.real_price}"
         }
 
         helper.setText(R.id.textView3, "喜欢 +${item.like_count}")
@@ -43,7 +49,7 @@ class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
 
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
-        GlideUtil.loadImageWithRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+        GlideUtil.loadImageWithRadius(item.cover, imageView, size4)
 
 
         //卖
