@@ -17,11 +17,9 @@ import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.thn.lexi.*
 import com.thn.lexi.beans.ProductBean
-import com.thn.lexi.brandHouse.BrandHouseActivity
 import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.thn.lexi.index.bean.BannerImageBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
-import com.thn.lexi.index.explore.ExploreBannerBean
 import com.thn.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
@@ -336,7 +334,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
 
     override fun installListener() {
-
+        buttonOpenShop.setOnClickListener(this)
         textViewGuessPic.setOnClickListener(this)
         textViewCouponCenter.setOnClickListener(this)
         textViewExemptionMail.setOnClickListener(this)
@@ -362,6 +360,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     override fun onClick(v: View) {
         when (v.id) {
+            R.id.buttonOpenShop ->{ //开馆指引 https://h5.lexivip.com/shop/guide
+                startActivity(Intent(activity,OpenLifeHouseActivity::class.java))
+            }
             R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
             R.id.textViewCouponCenter -> ToastUtil.showInfo("领券中心")
             R.id.textViewExemptionMail -> ToastUtil.showInfo("包邮专区")
