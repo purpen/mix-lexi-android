@@ -293,6 +293,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun installListener() {
+        textViewShare.setOnClickListener {
+            //
+            ToastUtil.showInfo("分享生活馆")
+        }
+
         headerLifeHouse.imageViewEdit.setOnClickListener(this)
 
         headerLifeHouse.imageViewCover.setOnClickListener(this)
