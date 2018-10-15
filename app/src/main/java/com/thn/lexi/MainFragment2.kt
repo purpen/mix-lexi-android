@@ -7,6 +7,9 @@ import com.thn.lexi.message.MessagePresenter
 import kotlinx.android.synthetic.main.fragment_main2.*
 import kotlinx.android.synthetic.main.view_custom_headview.view.*
 
+/**
+ * 发现
+ */
 class MainFragment2 : BaseFragment(), MessageContract.View {
     private var page: Int = 1
     private lateinit var presenter: MessageContract.Presenter
