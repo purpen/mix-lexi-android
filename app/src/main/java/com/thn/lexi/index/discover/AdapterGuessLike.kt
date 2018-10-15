@@ -48,9 +48,11 @@ class AdapterGuessLike(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseVi
         }
 
         helper.setText(R.id.textViewTitle1, item.title)
+        helper.setText(R.id.textViewName, item.user_name)
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.cover, imageViewAvatar, size20)
+
 
 
     }

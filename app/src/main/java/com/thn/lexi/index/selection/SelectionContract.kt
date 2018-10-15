@@ -3,9 +3,9 @@ package com.thn.lexi.index.selection
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.beans.LifeWillBean
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.index.bean.BannerImageBean
-import com.thn.lexi.index.explore.ExploreBannerBean
 
 class SelectionContract {
     interface View : BaseView<Presenter> {
@@ -32,7 +32,7 @@ class SelectionContract {
 
         }
 
-        fun setZCManifestData(products: List<ZCManifestBean.DataBean.LifeRecordsBean>) {
+        fun setZCManifestData(products: List<LifeWillBean>) {
 
         }
 

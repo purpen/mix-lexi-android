@@ -16,6 +16,7 @@ import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.thn.lexi.*
+import com.thn.lexi.beans.LifeWillBean
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.thn.lexi.index.bean.BannerImageBean
@@ -80,7 +81,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 设置种草清单数据
      */
-    override fun setZCManifestData(products: List<ZCManifestBean.DataBean.LifeRecordsBean>) {
+    override fun setZCManifestData(products: List<LifeWillBean>) {
         adapterZCManifest.setNewData(products)
     }
 
@@ -407,7 +408,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         private val color: Int = Util.getColor(android.R.color.white)
         private val height = 20f
         override fun getDivider(itemPosition: Int): Y_Divider? {
-            var divider: Y_Divider? = null
+            val divider: Y_Divider?
             if (itemPosition % 2 != 0) {
                 divider = Y_DividerBuilder()
                         .setBottomSideLine(true, color, height, 0f, 0f)

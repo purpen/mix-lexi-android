@@ -8,12 +8,13 @@ import com.basemodule.tools.ScreenUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.thn.lexi.R
+import com.thn.lexi.beans.LifeWillBean
 
-class ZCManifestAdapter(layoutResId: Int) : BaseQuickAdapter<ZCManifestBean.DataBean.LifeRecordsBean, BaseViewHolder>(layoutResId) {
+class ZCManifestAdapter(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseViewHolder>(layoutResId) {
     private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))/2 }
     private val size106 by lazy { DimenUtil.dp2px(106.0)}
 
-    override fun convert(helper: BaseViewHolder, item: ZCManifestBean.DataBean.LifeRecordsBean) {
+    override fun convert(helper: BaseViewHolder, item: LifeWillBean) {
 
         helper.itemView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2,ViewGroup.LayoutParams.WRAP_CONTENT)
 
@@ -23,6 +24,7 @@ class ZCManifestAdapter(layoutResId: Int) : BaseQuickAdapter<ZCManifestBean.Data
 
         helper.setText(R.id.textViewTitle0, item.title)
         helper.setText(R.id.textViewTitle1, item.description)
+        helper.setText(R.id.textViewName, item.user_name)
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.cover, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp20))
