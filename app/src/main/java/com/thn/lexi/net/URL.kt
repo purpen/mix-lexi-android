@@ -640,4 +640,19 @@ object URL {
      * 新发布商品
      */
     const val NEW_PUBLISH_PRODUCTS = "${BASE_URL}core_platforms/fx_distribute/latest"
+
+    /**
+     * 生活志列表
+     */
+    const val LIFE_WILL = "${BASE_URL}life_records"
+
+    /**
+     * 发现 ->猜你喜欢
+     */
+    const val DISCOVER_GUESS_LIKE = "${BASE_URL}life_records/guess_likes"
+
+    /**
+     * 发现 ->精彩故事
+     */
+    const val DISCOVER_WONDERFUL_STORY = "${BASE_URL}life_records/wonderful_stories"
 }
