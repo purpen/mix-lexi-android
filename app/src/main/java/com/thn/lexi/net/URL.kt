@@ -635,4 +635,9 @@ object URL {
      * 店铺分类列表
      */
     const val BRAND_CATEGORIES="${BASE_URL}store/categories"
+
+    /**
+     * 新发布商品
+     */
+    const val NEW_PUBLISH_PRODUCTS = "${BASE_URL}core_platforms/fx_distribute/latest"
 }

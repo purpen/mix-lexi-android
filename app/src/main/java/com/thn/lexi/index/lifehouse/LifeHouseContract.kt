@@ -58,6 +58,10 @@ class LifeHouseContract {
 
         }
 
+        fun setNewPublishProductsData(products: List<ProductBean>) {
+
+        }
+
 
     }
 
@@ -65,5 +69,7 @@ class LifeHouseContract {
         fun loadData(cid: String)
 
         fun loadMoreData(cid: String)
+
+        fun getNewPublishProducts()
     }
 }
