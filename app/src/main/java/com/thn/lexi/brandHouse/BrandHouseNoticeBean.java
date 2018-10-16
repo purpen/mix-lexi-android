@@ -21,9 +21,9 @@ public class BrandHouseNoticeBean {
          */
 
         public String announcement;
-        public long begin_date;
-        public int delivery_date;
-        public long end_date;
+        public String begin_date;
+        public String delivery_date;
+        public String end_date;
         public boolean is_closed;
     }
 

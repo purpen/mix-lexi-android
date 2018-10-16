@@ -47,6 +47,7 @@ import java.util.List;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+import top.zibin.luban.Luban;
 
 /**
  * 评价页面
@@ -216,11 +217,14 @@ public class EvaluateActivity extends BaseActivity implements EasyPermissions.Pe
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onClipComplete(ImageCropActivity.MessageCropComplete cropComplete){
         LogUtil.e("订阅者");
-        imageData = ImageUtils.bitmap2ByteArray(cropComplete.getBitmap());
-        if (!isToken){
-            presenter.getToken();
-        }else {
-            presenter.loadImage(tokenBean, imageData);
+        if (EvaluateActivity.class.getSimpleName().equals(cropComplete.getSimpleName())) {
+            LogUtil.e("返回成功");
+            imageData = ImageUtils.bitmap2ByteArray(cropComplete.getBitmap());
+            if (!isToken) {
+                presenter.getToken();
+            } else {
+                presenter.loadImage(tokenBean, imageData);
+            }
         }
     }
 
@@ -282,14 +286,25 @@ public class EvaluateActivity extends BaseActivity implements EasyPermissions.Pe
     @Override
     public void setImageId(JSONArray ids) throws JSONException {
         if (isLast) {
+            LogUtil.e("是否是最后一个");
             adapterEvaluate.getData().get(position).asset_image.add(itemPosition-1, imageData);
             adapterEvaluate.getData().get(position).asset_ids.add(itemPosition-1,ids.getString(0));
+            adapterEvaluate.notifyDataSetChanged();
         }else{
             if(itemPosition!=0) {
+                LogUtil.e("是否是中间的一个");
                 adapterEvaluate.getData().get(position).asset_image.remove(itemPosition - 1);
                 adapterEvaluate.getData().get(position).asset_image.add(itemPosition - 1, imageData);
                 adapterEvaluate.getData().get(position).asset_ids.remove(itemPosition - 1);
                 adapterEvaluate.getData().get(position).asset_ids.add(itemPosition - 1, ids.getString(0));
+                adapterEvaluate.notifyDataSetChanged();
+            }else {
+                LogUtil.e("是否是第一个");
+                adapterEvaluate.getData().get(position).asset_image=new ArrayList<>();
+                adapterEvaluate.getData().get(position).asset_image.add(imageData);
+                adapterEvaluate.getData().get(position).asset_ids=new ArrayList<>();
+                adapterEvaluate.getData().get(position).asset_ids.add(ids.getString(0));
+                adapterEvaluate.notifyDataSetChanged();
             }
         }
     }

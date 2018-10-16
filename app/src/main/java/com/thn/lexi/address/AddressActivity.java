@@ -485,9 +485,11 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onClipComplete(ImageCropActivity.MessageCropComplete cropComplete){
-        byte[] data=ImageUtils.bitmap2ByteArray(cropComplete.getBitmap());
-        presenter.loadPhoto(bean,data);
-        setImageUri(data);
+        if (AddressActivity.class.getSimpleName().equals(cropComplete.getSimpleName())) {
+            byte[] data = ImageUtils.bitmap2ByteArray(cropComplete.getBitmap());
+            presenter.loadPhoto(bean, data);
+            setImageUri(data);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -497,9 +499,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         //反注册eventBus
         EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     private void setImageUri(byte[] bytes){

@@ -48,15 +48,17 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
         String dateString = sdf.format(c.getTime());
         helper.setText(R.id.tv_order_time,dateString);
         // 1、待发货 2、待收货 3、待评价 4、待付款 5、已完成 6、已取消
+        LogUtil.e("status:"+item.getUser_order_status()+"position:"+helper.getLayoutPosition());
         switch (item.getUser_order_status()){
             case 1:
                 helper.setText(R.id.tv_order_status,"待发货");
                 helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_6ed7af));
-                helper.setGone(R.id.bt_delete1, true);
-                helper.setGone(R.id.bt_confirm,true);
-                helper.setGone(R.id.bt_delete, true);
-                helper.setGone(R.id.bt_evaluate,true);
-                helper.setGone(R.id.bt_money, true);
+                helper.setGone(R.id.bt_delete1, false);
+                helper.setGone(R.id.bt_confirm,false);
+                helper.setGone(R.id.bt_delete, false);
+                //todo 待测试评价
+                helper.setGone(R.id.bt_evaluate,false);
+                helper.setGone(R.id.bt_money, false);
                 break;
             case 2:
                 helper.setText(R.id.tv_order_status,"待收货");

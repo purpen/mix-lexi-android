@@ -2,6 +2,7 @@ package com.thn.lexi.brandHouse;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.ui.IDataSource;
 import com.qiniu.android.utils.Json;
@@ -19,7 +20,7 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
     private BrandHouseModel model=new BrandHouseModel();
     private BrandHouseContract.View view;
     private String sortType="1";
-    private int page=1;
+    private int pages=1;
 
     public BrandHousePresenter(BrandHouseContract.View view) {
         this.view = view;
@@ -75,6 +76,7 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("公告："+json);
                 BrandHouseNoticeBean bean=JsonUtil.fromJson(json,BrandHouseNoticeBean.class);
                 if (bean.success){
                     view.setNoticeData(bean);
@@ -106,6 +108,7 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("优惠劵"+json);
                 ShopCouponListBean bean=JsonUtil.fromJson(json,ShopCouponListBean.class);
                 if (bean.success){
                     view.setCouponsData(bean);
@@ -123,14 +126,14 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
     }
 
     @Override
-    public void loadGoodsData(String rid, int page, String cid, String min_price, String max_price, String sort_type, String sort_newest) {
-        if (!sort_type.isEmpty()) {
+    public void loadGoodsData(String rid, final int page, String cid, String min_price, String max_price, String sort_type, String sort_newest) {
+        if (sort_type!=null) {
             sortType=sort_type;
         }
         if (page!=0){
-            this.page=page;
+            this.pages=page;
         }
-        model.loadGoodsData(rid, String.valueOf(this.page), cid, min_price, max_price, sortType, sort_newest, new IDataSource.HttpRequestCallBack() {
+        model.loadGoodsData(rid, String.valueOf(this.pages), cid, min_price, max_price, sortType, sort_newest, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
@@ -143,11 +146,25 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("商品："+json);
                 view.dismissLoadingView();
                 BrandHouseGoodsBean bean=JsonUtil.fromJson(json,BrandHouseGoodsBean.class);
                 if (bean.success) {
-                    view.setGoodsData(bean);
+                    view.setGoodsData(bean.data.count);
+                    if (page==1){
+                        view.setNewData(bean.data.products);
+                        view.loadMoreComplete();
+                    }else{
+                        if(bean.data.products.isEmpty()){
+                            view.loadMoreEnd();
+                        }else {
+                            view.addData(bean.data.products);
+                            view.loadMoreComplete();
+                        }
+                    }
+                    pages++;
                 }else {
+                    view.loadMoreFail();
                     view.showError(bean.status.message);
                 }
             }

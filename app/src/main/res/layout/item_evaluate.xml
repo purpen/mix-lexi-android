@@ -30,7 +30,7 @@
             android:layout_alignTop="@+id/iv_goods"
             android:layout_marginRight="@dimen/dp15"
             android:layout_marginTop="@dimen/dp5"
-            android:text="80"
+            android:text="0.00"
             android:textColor="@color/color_333" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_sale_price"
             android:layout_marginRight="@dimen/dp15"
-            android:text="¥345"
+            android:text="¥0.00"
             android:textColor="@color/color_b2b2b2"
             android:textSize="@dimen/sp12" />
 
@@ -54,7 +54,6 @@
             android:layout_toRightOf="@+id/iv_goods"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="ssssssssssssssssssssssssssssss"
             android:textColor="@color/color_333" />
 
         <TextView
@@ -64,7 +63,6 @@
             android:layout_below="@+id/tv_goods_name"
             android:layout_marginTop="@dimen/dp5"
             android:layout_toRightOf="@+id/iv_goods"
-            android:text="黑色／M"
             android:textColor="@color/color_999"
             android:textSize="@dimen/sp12" />
 
@@ -76,7 +74,6 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="@dimen/dp5"
             android:layout_toRightOf="@+id/iv_goods"
-            android:text="黑色／M"
             android:textColor="@color/color_b2b2b2"
             android:textSize="@dimen/sp11" />
     </RelativeLayout>

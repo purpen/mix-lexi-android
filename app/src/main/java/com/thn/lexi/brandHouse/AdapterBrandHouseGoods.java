@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 
 import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ScreenUtil;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -25,10 +26,13 @@ public class AdapterBrandHouseGoods extends BaseMultiItemQuickAdapter<AdapterSea
      */
     public AdapterBrandHouseGoods(List<AdapterSearchGoods.MultipleItem> data) {
         super(data);
+        addItemType(AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN2, R.layout.adapter_editor_recommend);
+        addItemType(AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN1, R.layout.adapter_editor_recommend);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, AdapterSearchGoods.MultipleItem item) {
+        LogUtil.e("item的"+helper.getLayoutPosition());
         ProductBean bean=item.getProduct();
         RelativeLayout relativeLayout=helper.getView(R.id.relativeLayout);
         ImageView imageView=helper.getView(R.id.imageView);

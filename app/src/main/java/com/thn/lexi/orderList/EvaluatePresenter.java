@@ -2,6 +2,8 @@ package com.thn.lexi.orderList;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
+import com.qiniu.android.storage.UpProgressHandler;
 import com.thn.lexi.JsonUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
@@ -35,6 +37,11 @@ public class EvaluatePresenter implements EvaluateContract.Presenter {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        }, new UpProgressHandler() {
+            @Override
+            public void progress(String key, double percent) {
+                LogUtil.e("key："+key+"   percent："+percent);
             }
         });
     }

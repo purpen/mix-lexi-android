@@ -7,6 +7,7 @@ import com.basemodule.tools.ToastUtil;
 import com.basemodule.ui.IDataSource;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadOptions;
 import com.thn.lexi.AppApplication;
 import com.thn.lexi.net.ClientParamsAPI;
@@ -49,12 +50,18 @@ public class EvaluateModel {
         });
     }
 
-    public void uploadImage(byte[] data, UploadTokenBean bean, final IDataSource.UpLoadCallBack callBack){
+    public void uploadImage(byte[] data, UploadTokenBean bean, final IDataSource.UpLoadCallBack callBack, final UpProgressHandler heandler){
         String token = bean.data.up_token;
         HashMap<String, String> map = new HashMap<>();
         map.put("x:user_id", bean.data.user_id);
         map.put("x:directory_id", bean.data.directory_id);
-        UploadOptions uploadOptions = new UploadOptions(map, "image/jpeg", false, null, null);
+        UploadOptions uploadOptions = new UploadOptions(map, "image/jpeg", false, new UpProgressHandler() {
+            @Override
+            public void progress(String key, double percent) {
+                heandler.progress(key,percent);
+            }
+        }, null);
+        LogUtil.e("开始上传图片   图片大小："+data.length);
         AppApplication.getUploadManager().put(data, null, token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject response) {

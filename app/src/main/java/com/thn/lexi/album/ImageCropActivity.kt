@@ -14,25 +14,30 @@ import com.thn.lexi.user.completeinfo.CompleteInfoActivity
 import kotlinx.android.synthetic.main.activity_image_crop.*
 import org.greenrobot.eventbus.EventBus
 
-class ImageCropActivity:BaseActivity(), View.OnClickListener {
+class ImageCropActivity : BaseActivity(), View.OnClickListener {
     /**
      * 消息
      */
-    class MessageCropComplete(val bitmap: Bitmap)
+    class MessageCropComplete(val bitmap: Bitmap,val simpleName:String)
 
     private var uri: Uri? = null
+    private var key: String = ""
 
     override val layout: Int = R.layout.activity_image_crop
 
     override fun getIntentData() {
-        if (intent.hasExtra(CompleteInfoActivity::class.java.simpleName)){
+        if (intent.hasExtra(CompleteInfoActivity::class.java.simpleName)) {
             uri = intent.getParcelableExtra(CompleteInfoActivity::class.java.simpleName)
-        }else if (intent.hasExtra(FragmentLifeHouse::class.java.simpleName)){
+            key=CompleteInfoActivity::class.java.simpleName
+        } else if (intent.hasExtra(FragmentLifeHouse::class.java.simpleName)) {
             uri = intent.getParcelableExtra(FragmentLifeHouse::class.java.simpleName)
-        }else if(intent.hasExtra(AddressActivity::class.java.simpleName)){
+            key=FragmentLifeHouse::class.java.simpleName
+        } else if (intent.hasExtra(AddressActivity::class.java.simpleName)) {
             uri = intent.getParcelableExtra(AddressActivity::class.java.simpleName)
-        }else if(intent.hasExtra(EvaluateActivity::class.java.simpleName)){
+            key=AddressActivity::class.java.simpleName
+        } else if (intent.hasExtra(EvaluateActivity::class.java.simpleName)) {
             uri = intent.getParcelableExtra(EvaluateActivity::class.java.simpleName)
+            key=EvaluateActivity::class.java.simpleName
         }
     }
 
@@ -46,12 +51,12 @@ class ImageCropActivity:BaseActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when(v.id){
-            R.id.buttonCancel-> finish()
+        when (v.id) {
+            R.id.buttonCancel -> finish()
 
-            R.id.buttonComfirm ->{
+            R.id.buttonComfirm -> {
                 val bitmap = csiv.clip()
-                EventBus.getDefault().post(MessageCropComplete(bitmap))
+                EventBus.getDefault().post(MessageCropComplete(bitmap,key))
                 finish()
             }
         }

@@ -9,6 +9,7 @@ import com.thn.lexi.beans.ProductBean;
 import com.thn.lexi.index.detail.ShopCouponListBean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BrandHouseContract {
     interface View extends BaseView<Presenter>{
@@ -18,12 +19,12 @@ public class BrandHouseContract {
         void setData(BrandHouseBean bean);
         void setNoticeData(BrandHouseNoticeBean bean);
         void setCouponsData(ShopCouponListBean bean);
-        void setGoodsData(BrandHouseGoodsBean bean);
+        void setGoodsData(int count);
         void loadMoreFail();
         void loadMoreEnd();
         void loadMoreComplete();
-        void addData(ArrayList<ProductBean> products);
-        void setNewData(ArrayList<ProductBean> data);
+        void addData(List<ProductBean> data);
+        void setNewData(List<ProductBean> data);
         void setIsFollow(BrandHouseFollowBean bean);
         void setArticle(BrandHouseArticelBean bean);
     }

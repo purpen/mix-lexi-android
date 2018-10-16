@@ -56,7 +56,7 @@ public class PutForwardActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button:
+            case R.id.button://todo 提现待完成
                 break;
             case R.id.ll_statements:
                 Intent intent=new Intent(this,AccountStatementActivity.class);
