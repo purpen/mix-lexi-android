@@ -1,6 +1,7 @@
 package com.thn.lexi.index.discover
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.basemodule.tools.DimenUtil
@@ -87,11 +88,12 @@ class ComposerStoryActivity : BaseActivity(), ComposerStoryContract.View {
             presenter.loadMoreData()
         }, recyclerView)
 
+        //条目点击
         adapter.setOnItemClickListener { _, _, position ->
-            val item = adapter.getItem(position)
-//            val intent = Intent(this, GoodsDetailActivity::class.java)
-//            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.product)
-//            startActivity(intent)
+            val item = adapter.getItem(position) ?: return@setOnItemClickListener
+            val intent = Intent(this, ArticleDetailActivity::class.java)
+            intent.putExtra(ArticleDetailActivity::class.java.simpleName, item.rid)
+            startActivity(intent)
         }
     }
 

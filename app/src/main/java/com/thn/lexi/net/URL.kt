@@ -679,4 +679,9 @@ object URL {
      * 手作教学频道
      */
     const val HAND_MADE_LIST = "${BASE_URL}life_records/hand_teach"
+
+    /**
+     * 生活志详情
+     */
+    const val LIFE_RECORDS_ARTICLE_DETAIL = "${BASE_URL}life_records/detail"
 }

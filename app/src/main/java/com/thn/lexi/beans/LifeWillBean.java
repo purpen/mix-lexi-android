@@ -47,7 +47,7 @@ public class LifeWillBean {
     public int praise_count;
     public int published_at;
     public String refuse_reason;
-    public int rid;
+    public String rid;
     public int status;
     public String store_logo;
     public String store_name;
