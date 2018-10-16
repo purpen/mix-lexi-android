@@ -684,4 +684,14 @@ object URL {
      * 生活志详情
      */
     const val LIFE_RECORDS_ARTICLE_DETAIL = "${BASE_URL}life_records/detail"
+
+    /**
+     * 相关故事推荐
+     */
+    const val LIFE_RECORDS_SIMILAR = "${BASE_URL}life_records/similar"
+
+    /**
+     * 文章详情推荐商品
+     */
+    const val LIFE_RECORDS_RECOMMEND_PRODUCTS = "${BASE_URL}life_records/recommend_products"
 }

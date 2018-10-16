@@ -140,6 +140,7 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
     }
 
     override fun installListener() {
+        //生活主题
         adapterLifeWillSubject.setOnItemClickListener { _, _, position ->
             val item = adapterLifeWillSubject.getItem(position) ?: return@setOnItemClickListener
             val intent = Intent(activity,ComposerStoryActivity::class.java)
@@ -147,13 +148,20 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
             startActivity(intent)
         }
 
+        //猜你喜欢
         adapterGuessLike.setOnItemClickListener { _, _, position ->
-            val item = adapterGuessLike.getItem(position)
-            ToastUtil.showInfo(item?.title)
+            val item = adapterGuessLike.getItem(position) ?: return@setOnItemClickListener
+            val intent = Intent(activity, ArticleDetailActivity::class.java)
+            intent.putExtra(ArticleDetailActivity::class.java.simpleName,item.rid)
+            startActivity(intent)
         }
+
+        //精彩故事
         adapterWonderfulStory.setOnItemClickListener { _, _, position ->
-            val item = adapterWonderfulStory.getItem(position)
-            ToastUtil.showInfo(item?.title)
+            val item = adapterWonderfulStory.getItem(position)?:return@setOnItemClickListener
+            val intent = Intent(activity, ArticleDetailActivity::class.java)
+            intent.putExtra(ArticleDetailActivity::class.java.simpleName,item.rid)
+            startActivity(intent)
         }
     }
 

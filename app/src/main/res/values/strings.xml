@@ -365,4 +365,6 @@
     <string name="text_seeding_note">种草笔记</string>
     <string name="text_life_records">生活记事</string>
     <string name="text_hand_make_teach">手作教学</string>
+    <string name="text_recommend_product">推荐商品</string>
+    <string name="text_relate_goods_recommend">相关故事推荐</string>
 </resources>

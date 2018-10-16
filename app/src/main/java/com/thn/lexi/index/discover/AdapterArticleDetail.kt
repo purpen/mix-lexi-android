@@ -26,7 +26,6 @@ class AdapterArticleDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter
             const val TEXT_ITEM_TYPE = 0x0010
             const val IMAGE_ITEM_TYPE = 0x0011
             const val PRODUCT_ITEM_TYPE = 0x0012
-//            const val PRODUCT_ITEM_TYPE = 0x0012
         }
     }
 

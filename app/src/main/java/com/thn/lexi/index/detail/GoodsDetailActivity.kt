@@ -23,7 +23,6 @@ import com.thn.lexi.beans.CouponBean
 import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.beans.UserBean
 import com.thn.lexi.brandHouse.BrandHouseActivity
-import com.thn.lexi.index.selection.FragmentSelection
 import com.thn.lexi.mine.designPavilion.DesignPavilionProductAdapter
 import com.thn.lexi.user.login.LoginActivity
 import com.thn.lexi.user.login.UserProfileUtil

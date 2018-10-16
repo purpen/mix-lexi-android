@@ -50,4 +50,41 @@ class ArticleDetailModel : IDataSource {
             }
         })
     }
+
+    fun getRelateStories(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["rid"] = rid
+        params["per_page"] = "4"
+        HttpRequest.sendRequest(HttpRequest.GET, URL.LIFE_RECORDS_SIMILAR, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun getRecommendProducts(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["rid"] = rid
+        HttpRequest.sendRequest(HttpRequest.GET, URL.LIFE_RECORDS_RECOMMEND_PRODUCTS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
 }

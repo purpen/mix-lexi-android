@@ -6,6 +6,7 @@ import com.basemodule.ui.IDataSource
 import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.discoverLifeAesthetics.UserFocusState
+import com.thn.lexi.index.explore.editorRecommend.EditorRecommendBean
 import java.io.IOException
 
 class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailContract.Presenter {
@@ -61,6 +62,58 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
 
             override fun onFailure(e: IOException) {
                 v.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 加载相关故事
+     */
+    override fun getRelateStories(rid: String) {
+        dataSource.getRelateStories(rid,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val storyListBean = JsonUtil.fromJson(json, StoryListBean::class.java)
+                if (storyListBean.success) {
+                    view.setRelateStoriesData(storyListBean.data.life_records)
+                } else {
+                    view.showError(storyListBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取推荐商品
+     */
+    override fun getRecommendProducts(rid: String) {
+        dataSource.getRecommendProducts(rid,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setRecommendProductsData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
