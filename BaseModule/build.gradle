@@ -42,7 +42,6 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
     implementation 'com.google.zxing:core:3.3.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

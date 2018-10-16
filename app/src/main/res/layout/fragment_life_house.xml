@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipeRefreshLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_f5f7f9"
-    android:descendantFocusability="blocksDescendants"
-    >
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        />
+        android:layout_height="match_parent"
+        android:background="@color/color_f5f7f9"
+        android:descendantFocusability="blocksDescendants">
 
-</android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:overScrollMode="never" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/textViewShare"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:drawableStart="@mipmap/icon_share_life_house"
+        android:text="@string/text_share"
+        android:textColor="@color/color_333"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:background="@mipmap/icon_bg_share_life_house"
+        android:includeFontPadding="false"
+        android:gravity="center_vertical"
+        android:paddingBottom="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="91dp"
+        android:drawablePadding="5dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="4dp"
+        />
+</RelativeLayout>

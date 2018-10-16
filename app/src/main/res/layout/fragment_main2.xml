@@ -2,21 +2,125 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <com.thn.lexi.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:overScrollMode="never"
         >
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <!--banner图-->
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="178dp"
+                android:layout_marginBottom="@dimen/dp30"
+                android:layout_marginEnd="@dimen/dp15"
+                android:layout_marginStart="@dimen/dp15"
+                android:layout_marginTop="10dp"
+                app:image_scale_type="fit_xy"
+                app:indicator_drawable_selected="@drawable/banner_indicator_selected"
+                app:indicator_drawable_unselected="@drawable/banner_indicator_normal"
+                app:indicator_height="7dp"
+                app:indicator_margin="5dp"
+                app:indicator_width="7dp" />
+
+            <!--生活志主题-->
+            <TextView
+                android:id="@+id/textViewLifeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_marginStart="15dp"
+                android:text="@string/text_life_will_subject"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_333"
+                />
+            <TextView
+                android:id="@+id/textViewLifeSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:text="我们用贴近生活的文字带你观察与体验平凡日子里"
+                android:textSize="12sp"
+                android:textColor="@color/color_555"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewLifeStory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="15dp"
+                android:overScrollMode="never"
+                />
+            <include layout="@layout/line_color_eee" />
+            <!--猜你喜欢-->
+            <TextView
+                android:id="@+id/textViewGuessLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="35dp"
+                android:text="@string/text_guess_like"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_333"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewGuess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/dp15"
+                android:layout_marginStart="@dimen/dp15"
+                android:overScrollMode="never"
+                />
+
+            <include layout="@layout/line_color_eee" />
+
+            <!--精彩故事-->
+            <TextView
+                android:id="@+id/textViewWonderfulStory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="35dp"
+                android:text="@string/text_wonderful_story"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/color_333"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewWonderfulStory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/dp15"
+                android:layout_marginStart="@dimen/dp15"
+                android:overScrollMode="never"
+                />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

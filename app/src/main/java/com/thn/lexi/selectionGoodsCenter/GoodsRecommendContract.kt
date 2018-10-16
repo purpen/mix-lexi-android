@@ -3,6 +3,7 @@ package com.thn.lexi.selectionGoodsCenter
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.index.bean.BannerImageBean
 import com.thn.lexi.index.explore.ExploreBannerBean
 import com.thn.lexi.index.selection.HeadLineBean
 
@@ -14,7 +15,7 @@ class GoodsRecommendContract {
         fun goPage()
 
 
-        fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>){}
+        fun setBannerData(banner_images: List<BannerImageBean>){}
 
 
         fun setHeadLineData(data: MutableList<HeadLineBean.DataBean.HeadlinesBean>) {

@@ -66,6 +66,7 @@
                         android:layout_marginBottom="@dimen/dp15"
                         />
                     <Button
+                        android:id="@+id/buttonOpenShop"
                         android:layout_width="@dimen/dp75"
                         android:layout_height="@dimen/dp30"
                         style="@style/Base.Widget.AppCompat.Button.Borderless"

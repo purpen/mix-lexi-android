@@ -92,6 +92,8 @@
         <activity android:name=".brandHouse.BrandHouseActivity" />
         <activity android:name=".selectionGoodsCenter.PutAwayActivity" />
         <activity android:name=".brandHouse.AboutBrandHouseActivity"/>
+        <activity android:name=".index.detail.GoodsImageViewActivity" />
+        <activity android:name=".index.selection.OpenLifeHouseActivity" />
     </application>
 
 </manifest>

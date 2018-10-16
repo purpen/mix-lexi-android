@@ -241,6 +241,23 @@ open class LifeHouseModel {
         })
     }
 
+    fun getNewPublishProducts(callback: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET,URL.NEW_PUBLISH_PRODUCTS,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callback.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callback.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callback.onFailure(e)
+            }
+        })
+    }
+
 
 }
 

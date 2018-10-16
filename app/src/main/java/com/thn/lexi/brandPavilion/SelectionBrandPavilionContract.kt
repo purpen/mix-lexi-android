@@ -3,7 +3,7 @@ package com.thn.lexi.brandPavilion
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.thn.lexi.index.explore.ExploreBannerBean
+import com.thn.lexi.index.bean.BannerImageBean
 
 class SelectionBrandPavilionContract {
     interface View : BaseView<Presenter> {
@@ -17,7 +17,7 @@ class SelectionBrandPavilionContract {
 
         }
 
-        fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
+        fun setBannerData(banner_images: List<BannerImageBean>) {
 
         }
     }

@@ -300,4 +300,31 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     }
 
 
+    /**
+     * 获取新发布的产品
+     */
+    override fun getNewPublishProducts() {
+        dataSource.getNewPublishProducts(object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val newPublishProductsBean = JsonUtil.fromJson(json, NewPublishProductsBean::class.java)
+                if (newPublishProductsBean.success) {
+                    view.setNewPublishProductsData(newPublishProductsBean.data.products)
+                } else {
+                    view.showInfo(newPublishProductsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+
 }

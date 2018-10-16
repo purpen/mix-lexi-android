@@ -4,6 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.thn.lexi.beans.ProductBean
+import com.thn.lexi.index.bean.BannerImageBean
 import com.thn.lexi.index.selection.GoodsData
 
 class ExploreContract {
@@ -30,7 +31,7 @@ class ExploreContract {
         }
 
         fun setGoodsClassData(categories: List<GoodsClassBean.DataBean.CategoriesBean>)
-        fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>)
+        fun setBannerData(banner_images: List<BannerImageBean>)
         fun setEditorRecommendData(products: List<ProductBean>)
         fun setFeatureNewGoodsData(products: List<ProductBean>)
         fun setBrandPavilionData(stores: List<BrandPavilionListBean.DataBean.StoresBean>)

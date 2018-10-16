@@ -48,7 +48,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             if (product.is_custom_made) { //接单订制和购买都跳转订单确认
                 view.buttonGoOrderConfirm.text = Util.getString(R.string.text_order_make)
             } else {
-                view.buttonGoOrderConfirm.text = Util.getString(R.string.text_purchase)
+                view.buttonGoOrderConfirm.text = Util.getString(R.string.text_has_selected_goods)
 
             }
 

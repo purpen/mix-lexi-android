@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/black"
+    >
+
+    <ImageView
+        android:id="@+id/imageViewBack"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"
+        android:padding="@dimen/dp15"
+        android:src="@mipmap/icon_return_white" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_below="@id/imageViewBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        />
+
+    <TextView
+        android:id="@+id/textViewNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewBack"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="0"
+        android:textSize="17sp"
+        android:textColor="#dadada"
+        android:includeFontPadding="false"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        >
+        <com.thn.lexi.view.ButtonDrawableCenter
+            android:id="@+id/buttonLike"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="66dp"
+            android:layout_height="29dp"
+            android:background="@drawable/border_round_2d343a"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/text_like"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp13" />
+
+        <com.thn.lexi.view.ButtonDrawableCenter
+            android:id="@+id/buttonPurchase"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@id/buttonLike"
+            android:layout_width="66dp"
+            android:layout_height="29dp"
+            android:background="@drawable/border_round_2d343a"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/text_purchase"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp13" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutShare"
+            android:layout_width="@dimen/dp29"
+            android:layout_height="@dimen/dp29"
+            android:background="@drawable/border_round_2d343a"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@mipmap/icon_share_white"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

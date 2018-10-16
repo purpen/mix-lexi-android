@@ -3,8 +3,9 @@ package com.thn.lexi.index.selection
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.thn.lexi.beans.LifeWillBean
 import com.thn.lexi.beans.ProductBean
-import com.thn.lexi.index.explore.ExploreBannerBean
+import com.thn.lexi.index.bean.BannerImageBean
 
 class SelectionContract {
     interface View : BaseView<Presenter> {
@@ -16,10 +17,10 @@ class SelectionContract {
 
         }
 
-        fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>){}
+        fun setBannerData(banner_images: List<BannerImageBean>){}
         fun setTodayRecommendData(products: List<ProductBean>){}
         fun setHotRecommendData(products: List<ProductBean>) {}
-        fun setHotRecommendBannerData(banner_images: List<SelectionHotRecommendBannerBean.DataBean.BannerImagesBean>) {
+        fun setHotRecommendBannerData(banner_images: List<BannerImageBean>) {
 
         }
 
@@ -31,7 +32,7 @@ class SelectionContract {
 
         }
 
-        fun setZCManifestData(products: List<ZCManifestBean.DataBean.LifeRecordsBean>) {
+        fun setZCManifestData(products: List<LifeWillBean>) {
 
         }
 

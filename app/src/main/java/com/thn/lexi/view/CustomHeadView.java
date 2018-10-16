@@ -183,6 +183,7 @@ public class CustomHeadView extends RelativeLayout {
             head_center_tv.setText(resId);
         } else {
             head_center_tv.setVisibility(View.GONE);
+            head_center_tv.setText(resId);
         }
 
     }

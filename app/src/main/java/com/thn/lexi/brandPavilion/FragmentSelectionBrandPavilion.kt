@@ -12,7 +12,7 @@ import com.thn.lexi.GlideImageLoader
 import com.thn.lexi.R
 import com.thn.lexi.RecyclerViewDivider
 import com.thn.lexi.brandHouse.BrandHouseActivity
-import com.thn.lexi.index.explore.ExploreBannerBean
+import com.thn.lexi.index.bean.BannerImageBean
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 import kotlinx.android.synthetic.main.header_selection_brand_pavilion.view.*
@@ -26,7 +26,7 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
     private val adapterSelectionBrandPavilion: AdapterSelectionBrandPavilion by lazy { AdapterSelectionBrandPavilion(R.layout.adapter_header_selection_brand_pavilion) }
     private lateinit var headerView: View
 
-    private var pavilionBannerList: List<ExploreBannerBean.DataBean.BannerImagesBean>? = null
+    private var pavilionBannerList: List<BannerImageBean>? = null
 
     companion object {
         @JvmStatic
@@ -69,7 +69,7 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
     /**
      * 设置Banner图
      */
-    override fun setBannerData(banner_images: List<ExploreBannerBean.DataBean.BannerImagesBean>) {
+    override fun setBannerData(banner_images: List<BannerImageBean>) {
         pavilionBannerList = banner_images
         val list = ArrayList<String>()
         for (item in banner_images) {

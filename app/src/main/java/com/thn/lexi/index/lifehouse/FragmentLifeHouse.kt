@@ -1,4 +1,5 @@
 package com.thn.lexi.index.lifehouse
+
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -93,6 +94,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         presenter.getLookPeople()
 
+        presenter.getNewPublishProducts()
+
         headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week, null)
 
 
@@ -100,18 +103,17 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
         }
 
-        val str1 = "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
-        val str2 = "http://tx.haiqq.com/uploads/allimg/170504/0641415410-1.jpg"
-        val str3 = "http://up.qqjia.com/z/18/tu20457_2.jpg"
-
-        val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
-        GlideUtil.loadImageWithRadius(str1, headerLifeHouse.imageView0, size)
-        GlideUtil.loadImageWithRadius(str2, headerLifeHouse.imageView1, size)
-        GlideUtil.loadImageWithRadius(str3, headerLifeHouse.imageView2, size)
-
         adapter.setHeaderView(headerLifeHouse)
     }
 
+    override fun setNewPublishProductsData(products: List<ProductBean>) {
+        if (products.isEmpty()) return
+        val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
+        GlideUtil.loadImageWithRadius(products[0].cover, headerLifeHouse.imageView0, size)
+        if (products.size > 1) GlideUtil.loadImageWithRadius(products[1].cover, headerLifeHouse.imageView1, size)
+        if (products.size > 2) GlideUtil.loadImageWithRadius(products[2], headerLifeHouse.imageView2, size)
+
+    }
 
     /**
      * 设置编辑生活馆数据
@@ -293,6 +295,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun installListener() {
+        textViewShare.setOnClickListener {
+            //
+            ToastUtil.showInfo("分享生活馆")
+        }
+
         headerLifeHouse.imageViewEdit.setOnClickListener(this)
 
         headerLifeHouse.imageViewCover.setOnClickListener(this)
@@ -333,7 +340,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         //加载更多生活馆分销商品
         adapter.setOnLoadMoreListener({
             presenter.loadMoreData("")
-        },recyclerView)
+        }, recyclerView)
 
 
         adapterWelcomeInWeek.setOnItemClickListener { adapter, _, position ->
