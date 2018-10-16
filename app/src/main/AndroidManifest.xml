@@ -95,6 +95,7 @@
         <activity android:name=".index.detail.GoodsImageViewActivity" />
         <activity android:name=".index.selection.OpenLifeHouseActivity" />
         <activity android:name=".index.discover.ComposerStoryActivity" />
+        <activity android:name=".user.setting.userData.EditUserDataActivity"/>
     </application>
 
 </manifest>

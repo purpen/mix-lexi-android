@@ -47,7 +47,6 @@
                     android:text="@string/text_preview_and_edit_info"
                     android:textColor="@color/color_333"
                     android:textSize="@dimen/sp14"
-                    android:visibility="gone"
                     />
 
                 <ImageView
@@ -67,21 +66,18 @@
                 android:text="@string/text_link"
                 android:textColor="@color/color_999"
                 android:textSize="@dimen/sp13"
-                android:visibility="gone"
                 />
 
             <com.thn.lexi.view.CustomItemLayout
                 android:id="@+id/customItemLayout0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 />
 
             <com.thn.lexi.view.CustomItemLayout
                 android:id="@+id/customItemLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 />
 
 
@@ -106,7 +102,6 @@
                 android:id="@+id/customItemLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 />
 
             <TextView
@@ -118,21 +113,18 @@
                 android:text="@string/text_setting_more"
                 android:textColor="@color/color_999"
                 android:textSize="@dimen/sp13"
-                android:visibility="gone"
                 />
 
             <com.thn.lexi.view.CustomItemLayout
                 android:id="@+id/customItemLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 />
 
             <com.thn.lexi.view.CustomItemLayout
                 android:id="@+id/customItemLayout5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 />
 
             <Button
