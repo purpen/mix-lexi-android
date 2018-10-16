@@ -24,7 +24,7 @@
 
     <include layout="@layout/line_color_eee" />
 
-    <com.basemodule.ui.CustomViewPager
+    <com.basemodule.ui.RefreshableViewPager
         android:id="@+id/customViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

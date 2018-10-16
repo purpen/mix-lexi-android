@@ -2,6 +2,7 @@ package com.thn.lexi
 
 import android.content.Intent
 import android.support.v4.view.ViewPager
+import android.text.TextUtils
 import com.basemodule.tools.Util
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
@@ -62,11 +63,15 @@ class MainFragment0 : BaseFragment() {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun removeLifeHouseFragment(message:String) {
-        fragments.remove(fragmentLifeHouse)
-        listTitle.remove(Util.getString(R.string.text_life_pavilion))
+        if (TextUtils.equals(FragmentLifeHouse::class.java.simpleName,message)){
+            //移除fragment
+            childFragmentManager.beginTransaction().remove(fragmentLifeHouse).commit()
+            fragments.remove(fragmentLifeHouse)
+            listTitle.remove(Util.getString(R.string.text_life_pavilion))
+            adapter.notifyDataSetChanged()
+            slidingTabLayout.notifyDataSetChanged()
+        }
 
-        adapter.notifyDataSetChanged()
-        slidingTabLayout.notifyDataSetChanged()
     }
 
     override fun installListener() {

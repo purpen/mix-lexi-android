@@ -4,8 +4,11 @@ import android.content.Context
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.support.v4.view.PagerAdapter.POSITION_NONE
 
-class CustomViewPager:ViewPager{
+
+
+class RefreshableViewPager:ViewPager{
     private var isPagingEnabled = true
 
     constructor(context: Context): super(context)
@@ -24,4 +27,7 @@ class CustomViewPager:ViewPager{
         this.isPagingEnabled = b
     }
 
+    fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
+    }
 }

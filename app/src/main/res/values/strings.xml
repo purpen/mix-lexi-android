@@ -360,4 +360,9 @@
     <string name="title_open_life_house">开馆指引</string>
     <string name="text_life_will_subject">生活志主题</string>
     <string name="text_wonderful_story">精彩故事</string>
+    <string name="title_composer_story">创作人故事</string>
+    <string name="text_composer_story">创作人故事</string>
+    <string name="text_seeding_note">种草笔记</string>
+    <string name="text_life_records">生活记事</string>
+    <string name="text_hand_make_teach">手作教学</string>
 </resources>

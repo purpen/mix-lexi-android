@@ -124,6 +124,7 @@ class AllLikeGoodsPresenter(view: AllLikeGoodsContract.View) : AllLikeGoodsContr
                         ++curPage
                     }
                 } else {
+                    view.loadMoreFail()
                     view.showError(editorRecommendBean.status.message)
                 }
             }
