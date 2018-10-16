@@ -13,7 +13,8 @@ class AdapterArticleDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter
     init {
         addItemType(MultipleItem.TEXT_ITEM_TYPE, R.layout.adapter_goods_detail_text)
         addItemType(MultipleItem.IMAGE_ITEM_TYPE, R.layout.adapter_article_detail_image)
-        addItemType(MultipleItem.PRODUCT_ITEM_TYPE, R.layout.adapter_goods_detail_image)
+        addItemType(MultipleItem.LARGE_PRODUCT_ITEM_TYPE, R.layout.adapter_item_large_product)
+        addItemType(MultipleItem.SMALL_PRODUCT_ITEM_TYPE, R.layout.adapter_goods_detail_image)
     }
 
     class MultipleItem(var content: ArticleDetailBean.DataBean.DealContentBean, private var itemType: Int) : MultiItemEntity {
@@ -25,7 +26,8 @@ class AdapterArticleDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter
         companion object {
             const val TEXT_ITEM_TYPE = 0x0010
             const val IMAGE_ITEM_TYPE = 0x0011
-            const val PRODUCT_ITEM_TYPE = 0x0012
+            const val LARGE_PRODUCT_ITEM_TYPE = 0x0012
+            const val SMALL_PRODUCT_ITEM_TYPE = 0x0013
         }
     }
 

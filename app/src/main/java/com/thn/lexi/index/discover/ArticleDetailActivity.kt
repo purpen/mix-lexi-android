@@ -181,7 +181,12 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
                     listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.IMAGE_ITEM_TYPE))
                 }
                 "product" ->{
-                    listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.PRODUCT_ITEM_TYPE))
+                    if (item.big_picture){
+                        listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.LARGE_PRODUCT_ITEM_TYPE))
+                    }else{
+                        listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.SMALL_PRODUCT_ITEM_TYPE))
+                    }
+
                 }
 
                 "blockquote" ->{
