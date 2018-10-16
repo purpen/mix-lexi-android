@@ -50,6 +50,7 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
             @Override
             public void onFailure(@NotNull IOException e) {
+                view.loadMoreFail();
                 view.dismissLoadingView();
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error));
             }

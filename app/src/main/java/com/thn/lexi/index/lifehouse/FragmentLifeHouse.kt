@@ -541,9 +541,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onClipComplete(message: ImageCropActivity.MessageCropComplete) {
-        val byteArray = ImageUtils.bitmap2ByteArray(message.bitmap)
-        presenter.getUploadToken(byteArray)
-        setLifeHouseLogo(byteArray)
+        if(FragmentLifeHouse::class.java.simpleName.equals(message.simpleName)) {
+            val byteArray = ImageUtils.bitmap2ByteArray(message.bitmap)
+            presenter.getUploadToken(byteArray)
+            setLifeHouseLogo(byteArray)
+        }
     }
 
 

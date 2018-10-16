@@ -50,16 +50,19 @@ public class AdapterEvaluate extends BaseQuickAdapter<MyOrderListBean.DataBean.O
         if(!item.getS_color().isEmpty()) {
             LogUtil.e("颜色：" + item.getS_color());
             stringBuilder.append(item.getS_color()+"/");
+            LogUtil.e(stringBuilder.toString());
         }
         if (!item.getS_model().isEmpty()) {
             LogUtil.e("样式：" + item.getS_model());
-            stringBuilder.append(stringBuilder + item.getS_model()+ "/" );
+            stringBuilder.append(item.getS_model()+ "/" );
+            LogUtil.e(stringBuilder.toString());
         }
         if (0!=item.getS_weight()) {
             LogUtil.e("尺码：" + item.getS_weight());
-            stringBuilder.append(stringBuilder+ String.valueOf(item.getS_weight()));
+            stringBuilder.append(String.valueOf(item.getS_weight()));
+            LogUtil.e(stringBuilder.toString());
         }
-        helper.setText(R.id.tv_goods_parm,stringBuilder);
+        helper.setText(R.id.tv_goods_parm,stringBuilder.toString());
         helper.setText(R.id.tv_shop_name,shopName);
         MyRatingBar ratingBar=helper.getView(R.id.ratingBar);
         ratingBar.setStar(item.score);
@@ -80,13 +83,16 @@ public class AdapterEvaluate extends BaseQuickAdapter<MyOrderListBean.DataBean.O
         }
         final AdapterEvaluateImage adapterEvaluateImage=new AdapterEvaluateImage(R.layout.item_evaluate_image,item.asset_image);
         recyclerView.setAdapter(adapterEvaluateImage);
+        LogUtil.e("图片的数量："+item.asset_image.size());
         adapterEvaluateImage.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.iv_delete:
                         adapterEvaluateImage.remove(position);
+                        item.asset_image.remove(position);
                         adapter.notifyDataSetChanged();
+                        notifyDataSetChanged();
                         break;
                     case R.id.iv_evaluate:
                         if (position==item.asset_image.size()){
@@ -99,6 +105,12 @@ public class AdapterEvaluate extends BaseQuickAdapter<MyOrderListBean.DataBean.O
             }
         });
 
+    }
+
+    @Override
+    public void notifyLoadMoreToLoading() {
+        super.notifyLoadMoreToLoading();
+        LogUtil.e("itmeimage:"+this.getData().get(0).asset_image.size());
     }
 
     private TextWatcher textWatcher=new TextWatcher() {

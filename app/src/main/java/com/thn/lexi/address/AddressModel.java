@@ -96,9 +96,11 @@ public class AddressModel implements IDataSource {
         map.put("x:user_id", bean.data.user_id);
         map.put("x:directory_id", bean.data.directory_id);
         UploadOptions uploadOptions = new UploadOptions(map, "image/jpeg", false, null, null);
+        LogUtil.e("文件大小："+data.length);
         AppApplication.getUploadManager().put(data, null, token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject response) {
+                LogUtil.i("CompleteInfoModel", "$key,\r\n $info,\r\n $res");
                 //res包含hash、key等信息，具体字段取决于上传策略的设置
                 if (info.isOK()) {
                     try {
@@ -112,7 +114,7 @@ public class AddressModel implements IDataSource {
                     //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                 }
 
-                LogUtil.i("CompleteInfoModel", "$key,\r\n $info,\r\n $res");
+
             }
         }, uploadOptions);
     }

@@ -39,9 +39,9 @@ public class AdapterOrderDetail extends BaseQuickAdapter<MyOrderListBean.DataBea
         if(!item.getS_color().isEmpty())
             stringBuilder.append(item.getS_color()+"/");
         if (!item.getS_model().isEmpty())
-            stringBuilder.append(stringBuilder+item.getS_model()+"/");
+            stringBuilder.append(item.getS_model()+"/");
         if (0!=item.getS_weight())
-            stringBuilder.append(stringBuilder+String.valueOf(item.getS_weight()));
+            stringBuilder.append(String.valueOf(item.getS_weight()));
         helper.setText(R.id.tv_goods_parm,stringBuilder);
         helper.addOnClickListener(R.id.bt_logistics);
     }

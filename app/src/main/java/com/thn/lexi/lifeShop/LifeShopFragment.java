@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.DateUtil;
+import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.SPUtil;
@@ -255,7 +256,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void setShopData(LifeHouseBean bean) {
-        GlideUtil.loadImageWithBlurAndRadius(bean.data.logo, logo, 4);
+        GlideUtil.loadImageWithRadius(bean.data.logo, logo, DimenUtil.dp2px(4.0));
         name.setText(bean.data.name);
         if (1 != bean.data.phases) {
             tv_status.setText(Util.getString(R.string.text_formal_shop));

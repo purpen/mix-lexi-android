@@ -110,9 +110,11 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
 
                         break;
                     case R.id.bt_money:
+                        //todo 订单支付待完成
                         LogUtil.e("支付订单啊啊啊啊啊啊啊");
                         break;
                     case R.id.bt_logistics:
+                        //todo 物流跟踪
                         LogUtil.e("物流订单啊啊啊啊啊啊啊");
                         break;
                 }
@@ -169,6 +171,11 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     @Override
     public void loadMoreComplete() {
         adapterOrderList.loadMoreComplete();
+    }
+
+    @Override
+    public void loadMoreFail() {
+        adapterOrderList.loadMoreFail();
     }
 
     @Override

@@ -26,9 +26,9 @@ public class AdapterAccountDetailDialog extends BaseQuickAdapter<AccountDetailOr
         if(!item.s_color.isEmpty())
             stringBuilder.append(item.s_color+"/");
         if (!item.s_model.isEmpty())
-            stringBuilder.append(stringBuilder+item.s_model+"/");
+            stringBuilder.append(item.s_model+"/");
         if (0!=item.s_weight)
-            stringBuilder.append(stringBuilder+String.valueOf(item.s_weight));
+            stringBuilder.append(String.valueOf(item.s_weight));
         helper.setText(R.id.tv_goods_parm,stringBuilder);
         helper.setText(R.id.tv_order_income,String.valueOf(item.order_sku_commission_price*item.quantity));
     }

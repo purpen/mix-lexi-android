@@ -13,19 +13,32 @@ import com.thn.lexi.CustomLinearLayoutManager
 import com.thn.lexi.DividerItemDecoration
 import com.thn.lexi.R
 import com.thn.lexi.beans.CouponBean
+import com.thn.lexi.brandHouse.BrandHousePresenter
 import kotlinx.android.synthetic.main.dialog_coupon_bottom.view.*
 import kotlinx.android.synthetic.main.header_coupon_bottom_dialog.view.*
 import java.io.IOException
 
 
-class CouponBottomDialog(context: Context, coupons: List<CouponBean>, presenter: GoodsDetailPresenter, storeRid: String) : BottomBaseDialog<CouponBottomDialog>(context) {
-    private val couponsList: List<CouponBean> by lazy { coupons }
-    private val present: GoodsDetailPresenter by lazy { presenter }
-    private val storeId: String by lazy { storeRid }
+class CouponBottomDialog(context: Context?) : BottomBaseDialog<CouponBottomDialog>(context) {
+    private lateinit var couponsList: List<CouponBean>
+    private lateinit var present: GoodsDetailPresenter
+    private lateinit var presenter: BrandHousePresenter
+    private lateinit var storeId: String
     private val list: ArrayList<CouponBean> by lazy { ArrayList<CouponBean>() }
     private val adapterDialogCoupon: AdapterDialogCoupon by lazy { AdapterDialogCoupon(R.layout.adapter_dialog_coupon) }
     private lateinit var view: View
     private lateinit var headerView: View
+
+    constructor(context: Context, coupons: List<CouponBean>, present: GoodsDetailPresenter, storeRid: String) : this(context){
+        couponsList=coupons
+        this.present=present
+        storeId=storeRid
+    }
+    constructor(context: Context, coupons: List<CouponBean>, presenter: BrandHousePresenter, storeRid: String) : this(context){
+        couponsList=coupons
+        this.presenter=presenter
+        storeId=storeRid
+    }
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_coupon_bottom, null)
         return view
@@ -91,15 +104,28 @@ class CouponBottomDialog(context: Context, coupons: List<CouponBean>, presenter:
 
         adapterDialogCoupon.setOnItemClickListener { adapter, _, position ->
             val couponBean = adapter.getItem(position) as CouponBean
-            present.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
-                override fun onSuccess(json: String) {
-                    couponBean.status = 1
-                    adapter.notifyDataSetChanged()
-                }
+            if (present==null) {
+                present.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
+                    override fun onSuccess(json: String) {
+                        couponBean.status = 1
+                        adapter.notifyDataSetChanged()
+                    }
 
-                override fun onFailure(e: IOException) {
-                }
-            })
+                    override fun onFailure(e: IOException) {
+                    }
+                })
+            }else{
+                presenter.clickGetCoupon(storeId,couponBean.code,object :IDataSource.HttpRequestCallBack{
+                    override fun onFailure(e: IOException) {
+
+                    }
+
+                    override fun onSuccess(json: String) {
+                        couponBean.status = 1
+                        adapter.notifyDataSetChanged()
+                    }
+                })
+            }
         }
     }
 }

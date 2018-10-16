@@ -1323,4 +1323,45 @@ public class ClientParamsAPI {
         params.put("stick_text", content);
         return params;
     }
+
+    /**
+     * 获取品牌馆商品
+     * @param rid
+     * @param page
+     * @param cid
+     * @param min_price
+     * @param max_price
+     * @param sort_type
+     * @param sort_newest
+     * @return
+     */
+    public static HashMap<String,Object> getBrandHouseGoodsParams(String rid, String page, String cid, String min_price, String max_price, String sort_type, String sort_newest){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("page", page);
+        params.put("sid", rid);
+        params.put("cid", cid);
+        params.put("status", "1");
+        params.put("min_price", min_price);
+        params.put("max_price", max_price);
+        params.put("sort_type", sort_type);
+        params.put("sort_newest", sort_newest);
+        return params;
+    }
+
+    /**
+     *获取sid
+     * @param sid
+     * @return
+     */
+    public static HashMap<String,Object> getBrandHouseGoodsClassifyParams(String sid){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("sid",sid);
+        return params;
+    }
+    public static HashMap<String,Object> getBrandHouseArticelParams(String rid,String page){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("page",page);
+        params.put("sid",rid);
+        return params;
+    }
 }

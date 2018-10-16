@@ -202,9 +202,11 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onClipComplete(message: ImageCropActivity.MessageCropComplete) {
-        val byteArray = ImageUtils.bitmap2ByteArray(message.bitmap)
-        setUserAvatar(byteArray)
-        presenter.uploadAvatar(uploadTokenBean, byteArray)
+        if(CompleteInfoActivity::class.java.simpleName.equals(message.simpleName)) {
+            val byteArray = ImageUtils.bitmap2ByteArray(message.bitmap)
+            setUserAvatar(byteArray)
+            presenter.uploadAvatar(uploadTokenBean, byteArray)
+        }
     }
 
     /**

@@ -13,6 +13,7 @@ public class OrderListContract {
         void showError(String error);
         void loadMoreEnd();
         void loadMoreComplete();
+        void loadMoreFail();
         void addData(List<MyOrderListBean.DataBean.OrdersBean> bean);
         void getDelete();
         void getFinish();

@@ -624,17 +624,21 @@ object URL {
      */
     const val BRAND_HOUSE_NOTICE="${BASE_URL}official_store/announcement"
     /**
-     * 关注品牌馆
-     */
-    const val BRAND_FOLLOW="${BASE_URL}follow/store"
-    /**
-     * 取消关注品牌馆
-     */
-    const val BRAND_UNFOLLOW="${BASE_URL}unfollow/store"
-    /**
      * 店铺分类列表
      */
     const val BRAND_CATEGORIES="${BASE_URL}store/categories"
+    /**
+     * 品牌馆生活志列表
+     */
+    const val BRAND_RECORD="${BASE_URL}core_platforms/life_records"
+    /**
+     * 品牌馆主人信息
+     */
+    const val BRAND_OWNER="${BASE_URL}official_store/master_info"
+    /**
+     * 品牌馆故事详情
+     */
+    const val BRAND_DETAIL="${BASE_URL}official_store/detail"
 
     /**
      * 新发布商品
