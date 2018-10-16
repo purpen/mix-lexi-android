@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.basemodule.tools.DateUtil;
 import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
+import com.basemodule.tools.ScreenUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseActivity;
@@ -166,6 +168,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         ll_article.setOnClickListener(this);
         ll_goods.setOnClickListener(this);
         head_goback.setOnClickListener(this);
+        tv_look.setOnClickListener(this);
 
         presenter.loadData(rid);
         presenter.loadNoticeData(rid);
@@ -189,6 +192,8 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_look://todo 查看更多
+                break;
             case R.id.head_goback:
                 finish();
                 break;
@@ -229,6 +234,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
             case R.id.tv_design:
                 Intent intent=new Intent(this,AboutBrandHouseActivity.class);
                 intent.putExtra("data", dataBean);
+                intent.putExtra("rid",rid);
                 startActivity(intent);
                 break;
             case R.id.linearLayoutFilter:
@@ -318,18 +324,97 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
             rl_close.setVisibility(View.VISIBLE);
             tv_close_time.setText(DateUtil.getDateByTimestamp(Long.valueOf(bean.data.begin_date), DateUtil.PATTERN_DOT) + "—" + DateUtil.getDateByTimestamp(Long.valueOf(bean.data.end_date), DateUtil.PATTERN_DOT));
             tv_recovery.setText(DateUtil.getDateByTimestamp(Long.valueOf(bean.data.delivery_date), DateUtil.PATTERN_DOT));
+
+            int textWidth=ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp60);
+            int sumWidth = 0;
+            int sumText=0;
+            for (int index=0;index<bean.data.announcement.length();index++){
+                char c=bean.data.announcement.charAt(index);
+                float charWidth=getCharWidth(tv_notice0,c);
+                sumWidth += charWidth;
+                if (sumWidth>textWidth){
+                    sumText=index;
+                    break;
+                }
+            }
             tv_notice0.setText(bean.data.announcement);
+            String string=bean.data.announcement.substring(sumText);
+            tv_notice1.setText(string);
+            LogUtil.e("第二句："+tv_notice1.getText().toString());
+            tv_notice1.post(new Runnable() {
+                @Override
+                public void run() {
+                    Layout l = tv_notice1.getLayout();
+                    if (l != null) {
+                        int lines = l.getLineCount();
+                        if (lines > 0) {
+                            if (l.getEllipsisCount(lines - 1) > 0) {
+                                LogUtil.e("显示更多");
+                                tv_look.setVisibility(View.VISIBLE);
+                            }else {
+                                LogUtil.e("么有显示更多");
+                                tv_look.setVisibility(View.GONE);
+                            }
+                        }
+                    } else {
+                        LogUtil.e("获取不到TextView");
+                    }
+                }
+            });
 
         } else {
             rl_close.setVisibility(View.GONE);
             if (bean.data.announcement.isEmpty()) {
                 rl_notice.setVisibility(View.GONE);
             }else {
-                tv_notice0.setText(bean.data.announcement);
                 rl_notice.setVisibility(View.VISIBLE);
+
+                int textWidth=ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp60);
+                int sumWidth = 0;
+                int sumText=0;
+                for (int index=0;index<bean.data.announcement.length();index++){
+                    char c=bean.data.announcement.charAt(index);
+                    float charWidth=getCharWidth(tv_notice0,c);
+                    sumWidth += charWidth;
+                    if (sumWidth>textWidth){
+                        sumText=index;
+                        break;
+                    }
+                }
+                tv_notice0.setText(bean.data.announcement);
+                String string=bean.data.announcement.substring(sumText);
+                tv_notice1.setText(string);
+                LogUtil.e("第二句："+tv_notice1.getText().toString());
+                tv_notice1.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Layout l = tv_notice1.getLayout();
+                        if (l != null) {
+                            int lines = l.getLineCount();
+                            if (lines > 0) {
+                                if (l.getEllipsisCount(lines - 1) > 0) {
+                                    LogUtil.e("显示更多");
+                                    tv_look.setVisibility(View.VISIBLE);
+                                }else {
+                                    LogUtil.e("么有显示更多");
+                                    tv_look.setVisibility(View.GONE);
+                                }
+                            }
+                        } else {
+                            LogUtil.e("获取不到TextView");
+                        }
+                    }
+                });
             }
         }
-        LogUtil.e("数据啊：" + tv_notice0.getText().toString());
+
+    }
+
+    // 计算每一个字符的宽度
+    public float getCharWidth(TextView textView, char c) {
+        textView.setText(String.valueOf(c));
+        textView.measure(0, 0);
+        return textView.getMeasuredWidth();
     }
 
     @Override

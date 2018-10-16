@@ -2,6 +2,7 @@ package com.thn.lexi.brandHouse;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.ui.IDataSource;
 import com.thn.lexi.JsonUtil;
@@ -34,6 +35,8 @@ public class AboutBrandHousePresenter implements AboutBrandHouseContract.present
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("作者的："+json);
+                view.dismissLoadingView();
                 AboutBrandHouseOwnerBean bean=JsonUtil.fromJson(json,AboutBrandHouseOwnerBean.class);
                 if (bean.success){
                     view.setOwnerData(bean);
@@ -64,6 +67,8 @@ public class AboutBrandHousePresenter implements AboutBrandHouseContract.present
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("文章的："+json);
+                view.dismissLoadingView();
                 AboutBrandHouseDetailBean bean=JsonUtil.fromJson(json,AboutBrandHouseDetailBean.class);
                 if (bean.success){
                     view.setDetailData(bean);

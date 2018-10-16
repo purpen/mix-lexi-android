@@ -183,14 +183,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp20"
                 android:layout_marginLeft="@dimen/dp15"
-                android:layout_marginRight="@dimen/dp15"></android.support.v7.widget.RecyclerView>
+                android:layout_marginRight="@dimen/dp15"
+                android:visibility="gone"></android.support.v7.widget.RecyclerView>
             <LinearLayout
                 android:id="@+id/ll_null"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:visibility="gone">
+                android:gravity="center_horizontal">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

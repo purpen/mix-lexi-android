@@ -292,7 +292,7 @@
                     android:paddingLeft="@dimen/dp15"
                     android:paddingTop="@dimen/dp15"
                     android:paddingRight="@dimen/dp15"
-                    >
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -375,7 +375,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
-                                android:text="速度爱上对方即可拉伸的方式打死了阿斯利康接电话法律会计师的发货撒开了多久没从我阿勒如八点 "
+                                android:text="asdfghjklkjhgfsazxcvbnmwqeqweqweqweafasdfgzxcvewdas"
                                 android:textColor="@color/color_666"
                                 android:textSize="@dimen/sp13" />
 
@@ -386,6 +386,7 @@
                                 android:layout_below="@+id/tv_notice0"
                                 android:layout_alignParentRight="true"
                                 android:text="@string/text_look_more"
+                                android:visibility="gone"
                                 android:textColor="@color/color_6ed7af" />
 
                             <TextView
@@ -398,7 +399,7 @@
                                 android:layout_toLeftOf="@+id/tv_look"
                                 android:ellipsize="end"
                                 android:maxLines="1"
-                                android:text="a案件来看时间的发的阿斯加德李开复 大山里的即可拉伸大代理客服阿"
+                                android:text="案件来看时间的发的阿斯加德李开复大山里的即可拉伸大代理客服阿"
                                 android:textColor="@color/color_666"
                                 android:textSize="@dimen/sp13" />
                         </RelativeLayout>

@@ -33,6 +33,8 @@ public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandH
     private RecyclerView recyclerView;
     private LinearLayout ll_null;
     private BrandHouseBean houseBean;
+    private AboutBrandHousePresenter presenter;
+    private String rid;
 
     @Override
     protected int getLayout() {
@@ -44,7 +46,9 @@ public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandH
         super.initView();
         Intent intent=getIntent();
         houseBean = intent.getParcelableExtra("data");
+        rid = intent.getStringExtra("rid");
         dialog = new WaitingDialog(this);
+        presenter = new AboutBrandHousePresenter(this);
         CustomHeadView customHeadView=findViewById(R.id.customHeadView);
         customHeadView.setHeadCenterTxtShow(true,Util.getString(R.string.text_design));
         tv_user_name = findViewById(R.id.tv_user_name);
@@ -67,6 +71,8 @@ public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandH
         tv_name.setText(houseBean.data.name);
         tv_time.setText("开馆时间："+DateUtil.getDateByTimestamp(houseBean.data.created_at,DateUtil.PATTERN_DOT));
         tv_description.setText(houseBean.data.delivery_province + "." + houseBean.data.city);
+        presenter.loadOwnerData(rid);
+        presenter.loadDetailData(rid);
     }
 
     @Override
@@ -110,12 +116,12 @@ public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandH
 
     @Override
     public void setDetailData(AboutBrandHouseDetailBean bean) {
-        tv_summary.setText(bean.data.summary);
-        if (bean.data.split_content.isEmpty()){
+        if (bean.data.content.isEmpty()){
             ll_null.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }else {
             ll_null.setVisibility(View.GONE);
+            tv_summary.setText(bean.data.summary);
             recyclerView.setVisibility(View.VISIBLE);
             AdapterBrandHouseAbout adapterBrandHouseAbout=new AdapterBrandHouseAbout(R.layout.adapter_brand_house_about,bean.data.split_content);
             recyclerView.setAdapter(adapterBrandHouseAbout);
