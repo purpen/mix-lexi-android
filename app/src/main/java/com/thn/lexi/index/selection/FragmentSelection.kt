@@ -270,11 +270,12 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      * 设置通知
      */
     private fun setNoticeTextViewData(bean: HeadLineBean.DataBean.HeadlinesBean, textView: TextView) {
+        if (bean.username==null) bean.username=""
         when (bean.event) {
             1 -> { //开通生活馆 人名蓝色
                 val content = "${bean.username} ${bean.time}${bean.time_info}开通了自己的生活馆"
                 val string = SpannableString(content)
-                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)), 0, bean.username.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)), 0, bean.username.toString().length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
                 textView.text = string
             }
 

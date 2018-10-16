@@ -659,4 +659,24 @@ object URL {
      * 发现 ->精彩故事
      */
     const val DISCOVER_WONDERFUL_STORY = "${BASE_URL}life_records/wonderful_stories"
+
+    /**
+     * 创作人故事频道
+     */
+    const val COMPOSER_STORY_LIST = "${BASE_URL}life_records/creator_story"
+
+    /**
+     * 种草清单频道
+     */
+    const val SEEDING_MANIFEST_LIST = "${BASE_URL}life_records/grass_note"
+
+    /**
+     * 生活记事频道
+     */
+    const val LIFE_RECORDS_LIST = "${BASE_URL}life_records/life_remember"
+
+    /**
+     * 手作教学频道
+     */
+    const val HAND_MADE_LIST = "${BASE_URL}life_records/hand_teach"
 }

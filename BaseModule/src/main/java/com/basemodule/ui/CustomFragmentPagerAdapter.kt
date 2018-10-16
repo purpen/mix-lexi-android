@@ -3,6 +3,8 @@ package com.basemodule.ui
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.view.View
+import android.view.ViewGroup
 
 /**
  * @author lilin
@@ -22,4 +24,8 @@ class CustomFragmentPagerAdapter(fm: FragmentManager, private var classes: Array
         return titles[position]
     }
 
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        container.removeView(`object` as View)
+        super.destroyItem(container, position, `object`)
+    }
 }

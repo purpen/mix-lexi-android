@@ -1,6 +1,7 @@
 package com.thn.lexi
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
@@ -77,7 +78,7 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
      */
     private fun initLifeWill() {
         val imageIds = listOf(R.mipmap.icon_image_composer, R.mipmap.icon_image_seeding, R.mipmap.icon_image_life_record, R.mipmap.icon_image_hand_make)
-        val titles = listOf("创作人故事", "种草笔记", "生活记事", "手作教学")
+        val titles = listOf(getString(R.string.text_composer_story), getString(R.string.text_seeding_note), getString(R.string.text_life_records), getString(R.string.text_hand_make_teach))
         val list = ArrayList<LifeWillSubjectBean>()
         var lifeWillSubjectBean: LifeWillSubjectBean
         for (i in imageIds.indices) {
@@ -140,8 +141,10 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
 
     override fun installListener() {
         adapterLifeWillSubject.setOnItemClickListener { _, _, position ->
-            val item = adapterLifeWillSubject.getItem(position)
-            ToastUtil.showInfo(item?.title)
+            val item = adapterLifeWillSubject.getItem(position) ?: return@setOnItemClickListener
+            val intent = Intent(activity,ComposerStoryActivity::class.java)
+            intent.putExtra(ComposerStoryActivity::class.java.simpleName,item.imageId)
+            startActivity(intent)
         }
 
         adapterGuessLike.setOnItemClickListener { _, _, position ->

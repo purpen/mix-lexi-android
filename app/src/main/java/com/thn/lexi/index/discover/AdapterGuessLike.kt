@@ -28,6 +28,7 @@ class AdapterGuessLike(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseVi
 
         val textViewTitle0 = helper.getView<TextView>(R.id.textViewTitle0)
 
+
         textViewTitle0.text = item.channel_name
 
         when(item.channel_name){
@@ -47,7 +48,9 @@ class AdapterGuessLike(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseVi
             }
         }
 
-        helper.setText(R.id.textViewTitle1, item.title)
+        val textViewTitle1 = helper.getView<TextView>(R.id.textViewTitle1)
+        textViewTitle1.text = item.title
+        textViewTitle1.setTextColor(Util.getColor(R.color.color_333))
         helper.setText(R.id.textViewName, item.user_name)
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
