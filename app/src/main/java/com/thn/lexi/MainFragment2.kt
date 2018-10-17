@@ -153,6 +153,7 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
             val item = adapterGuessLike.getItem(position) ?: return@setOnItemClickListener
             val intent = Intent(activity, ArticleDetailActivity::class.java)
             intent.putExtra(ArticleDetailActivity::class.java.simpleName,item.rid)
+            intent.putExtra(ArticleDetailActivity::class.java.name,item.channel_name)
             startActivity(intent)
         }
 
@@ -161,6 +162,7 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
             val item = adapterWonderfulStory.getItem(position)?:return@setOnItemClickListener
             val intent = Intent(activity, ArticleDetailActivity::class.java)
             intent.putExtra(ArticleDetailActivity::class.java.simpleName,item.rid)
+            intent.putExtra(ArticleDetailActivity::class.java.name,item.channel_name)
             startActivity(intent)
         }
     }

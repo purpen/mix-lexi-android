@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.acticity_artical_detail.*
 import kotlinx.android.synthetic.main.footer_view_article_detail.view.*
 import kotlinx.android.synthetic.main.footer_view_stagger_recyclerview.view.*
 import kotlinx.android.synthetic.main.header_view_article_detail.view.*
+import org.json.JSONObject
 
 class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
@@ -35,11 +36,13 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private lateinit var adapter: AdapterArticleDetail
     private var data:ArticleDetailBean.DataBean?=null
     private var rid: String? = null
+    private lateinit var channelName: String
     private lateinit var headerView: View
     private lateinit var footerView: View
     private lateinit var footerView1: View
     override fun getIntentData() {
         rid = intent.getStringExtra(TAG)
+        channelName = intent.getStringExtra(ArticleDetailActivity::class.java.name)
     }
 
 
@@ -55,7 +58,8 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.setHasFixedSize(false)
         recyclerView.layoutManager = linearLayoutManager
-        adapter = AdapterArticleDetail(listDescription)
+
+        adapter = AdapterArticleDetail(listDescription,channelName)
         recyclerView.adapter = adapter
         adapter.setHeaderView(headerView)
         adapter.addFooterView(footerView)
@@ -141,39 +145,38 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     /**
      * 设置文章详情数据
      */
-    override fun setData(data: ArticleDetailBean.DataBean) {
-        this.data = data
-        GlideUtil.loadImageWithFading(data.cover,headerView.imageViewCover)
-        headerView.textViewArticleType.text = data.channel_name
+    override fun setData(data: JSONObject) {
+        val bean = ArticleDetailBean.DataBean()
+        bean.is_follow = data.optBoolean("is_follow")
+        bean.uid = data.optString("uid")
+        bean.title = data.optString("title")
+        this.data = bean
 
-        when(data.channel_name){
-            getString(R.string.text_life_records)->{
-                headerView.textViewArticleType.setTextColor(Util.getColor(R.color.color_8C7A6E))
-            }
-            getString(R.string.text_composer_story)->{
-                headerView.textViewArticleType.setTextColor(Util.getColor(R.color.color_829d7a))
-            }
-            getString(R.string.text_hand_make_teach)->{
-                headerView.textViewArticleType.setTextColor(Util.getColor(R.color.color_e3b395))
-            }
+        val cover = data.optString("cover")
+        val channelName = data.optString("channel_name")
+        val title = data.optString("title")
+        val publishedAt = data.optLong("published_at")
+        val browseCount = data.optInt("browse_count")
+        val userAvatar = data.optString("user_avator")
+        val userName = data.optString("user_name")
+        val dealContent = data.optJSONArray("deal_content")
 
-            getString(R.string.text_seeding_note)->{
-                headerView.textViewArticleType.setTextColor(Util.getColor(R.color.color_75ab9a))
-            }
-        }
+        GlideUtil.loadImageWithFading(cover,headerView.imageViewCover)
+        headerView.textViewArticleType.text = channelName
 
-        headerView.textViewArticleTitle.text = data.title
-        headerView.textViewDate.text = DateUtil.getDateByTimestamp(data.published_at,"yyyy.MM.dd")
-        headerView.textViewBrowserNum.text = "${data.browse_count}"
-        GlideUtil.loadCircleImageWidthDimen(data.user_avator,headerView.imageViewHeader,DimenUtil.dp2px(25.0))
-        headerView.textViewName.text = data.user_name
+        headerView.textViewArticleTitle.text = title
+        headerView.textViewDate.text = DateUtil.getDateByTimestamp(publishedAt,"yyyy.MM.dd")
+        headerView.textViewBrowserNum.text = "$browseCount"
+        GlideUtil.loadCircleImageWidthDimen(userAvatar,headerView.imageViewHeader,DimenUtil.dp2px(25.0))
+        headerView.textViewName.text = userName
         setUserFocusState()
 
-        if (data.deal_content==null) return
-
-        for (item in data.deal_content) {
-
-            when(item.type){
+        val maxIndex = dealContent.length() - 1
+        for (i in 0..maxIndex) {
+            val item = dealContent[i] as JSONObject
+            val type = item.optString("type")
+            val isBigProduct = item.optBoolean("big_picture")
+            when(type){
                 "text" ->{
                     listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.TEXT_ITEM_TYPE))
                 }
@@ -181,7 +184,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
                     listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.IMAGE_ITEM_TYPE))
                 }
                 "product" ->{
-                    if (item.big_picture){
+                    if (isBigProduct){
                         listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.LARGE_PRODUCT_ITEM_TYPE))
                     }else{
                         listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.SMALL_PRODUCT_ITEM_TYPE))
@@ -248,6 +251,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             val item = adapterRelateStories.getItem(position) ?: return@setOnItemClickListener
             val intent = Intent(this, ArticleDetailActivity::class.java)
             intent.putExtra(ArticleDetailActivity::class.java.simpleName,item.rid)
+            intent.putExtra(ArticleDetailActivity::class.java.name,item.channel_name)
             startActivity(intent)
         }
     }

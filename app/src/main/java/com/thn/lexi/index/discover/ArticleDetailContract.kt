@@ -5,6 +5,7 @@ import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.thn.lexi.beans.LifeWillBean
 import com.thn.lexi.beans.ProductBean
+import org.json.JSONObject
 
 
 class ArticleDetailContract {
@@ -12,7 +13,7 @@ class ArticleDetailContract {
         fun showLoadingView()
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
-        fun setData(data: ArticleDetailBean.DataBean) {
+        fun setData(data: JSONObject) {
 
         }
 

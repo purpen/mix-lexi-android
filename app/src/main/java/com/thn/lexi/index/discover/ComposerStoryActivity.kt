@@ -93,6 +93,7 @@ class ComposerStoryActivity : BaseActivity(), ComposerStoryContract.View {
             val item = adapter.getItem(position) ?: return@setOnItemClickListener
             val intent = Intent(this, ArticleDetailActivity::class.java)
             intent.putExtra(ArticleDetailActivity::class.java.simpleName, item.rid)
+            intent.putExtra(ArticleDetailActivity::class.java.name,item.channel_name)
             startActivity(intent)
         }
     }

@@ -22,12 +22,7 @@ public class PageUtil {
                 ToastUtil.showInfo("链接");
                 break;
             case "2": //商品详情
-                intent = new Intent(context, GoodsDetailActivity.class);
-                ProductBean productBean = new ProductBean();
-                productBean.rid = bean.link;
-                intent.putExtra(GoodsDetailActivity.class.getSimpleName(), productBean);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                AppApplication.getContext().startActivity(intent);
+                jump2GoodsDetailActivity(bean.link);
                 break;
             case "3": //分类
                 ToastUtil.showInfo("分类");
@@ -50,5 +45,18 @@ public class PageUtil {
                 ToastUtil.showInfo("种草清单");
                 break;
         }
+    }
+
+    /**
+     * 商品rid
+     * @param rid
+     */
+    public static void jump2GoodsDetailActivity(String rid){
+        Intent intent = new Intent(AppApplication.getContext(), GoodsDetailActivity.class);
+        ProductBean productBean = new ProductBean();
+        productBean.rid = rid;
+        intent.putExtra(GoodsDetailActivity.class.getSimpleName(), productBean);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        AppApplication.getContext().startActivity(intent);
     }
 }

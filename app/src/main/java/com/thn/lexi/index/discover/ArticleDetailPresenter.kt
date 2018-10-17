@@ -7,6 +7,7 @@ import com.thn.lexi.AppApplication
 import com.thn.lexi.R
 import com.thn.lexi.discoverLifeAesthetics.UserFocusState
 import com.thn.lexi.index.explore.editorRecommend.EditorRecommendBean
+import org.json.JSONObject
 import java.io.IOException
 
 class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailContract.Presenter {
@@ -26,11 +27,15 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val articleDetailBean = JsonUtil.fromJson(json, ArticleDetailBean::class.java)
-                if (articleDetailBean.success) {
-                    view.setData(articleDetailBean.data)
+                val response = JSONObject(json)
+                val isSuccess = response.getBoolean("success")
+                val status = response.getJSONObject("status")
+                val data = response.getJSONObject("data")
+//                val articleDetailBean = JsonUtil.fromJson(json, ArticleDetailBean::class.java)
+                if (isSuccess) {
+                    view.setData(data)
                 } else {
-                    view.showError(articleDetailBean.status.message)
+                    view.showError(status.getString("message"))
                 }
             }
 
