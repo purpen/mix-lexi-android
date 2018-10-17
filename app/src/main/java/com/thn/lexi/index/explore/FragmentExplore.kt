@@ -1,7 +1,6 @@
 package com.thn.lexi.index.explore
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment

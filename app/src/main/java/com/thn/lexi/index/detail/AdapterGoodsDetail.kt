@@ -24,6 +24,7 @@ class AdapterGoodsDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
         companion object {
             const val TEXT_ITEM_TYPE = 0x0010
             const val IMAGE_ITEM_TYPE = 0x0011
+
         }
     }
 
@@ -38,7 +39,7 @@ class AdapterGoodsDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
 
             MultipleItem.IMAGE_ITEM_TYPE -> {
                 val imageView = helper.getView<ImageView>(R.id.imageView)
-                GlideUtil.loadImageWithFading(item.content, imageView)
+                GlideUtil.loadImageWithFading(item.content.content, imageView)
             }
         }
     }

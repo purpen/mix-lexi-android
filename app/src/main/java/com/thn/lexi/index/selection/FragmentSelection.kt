@@ -21,6 +21,7 @@ import com.thn.lexi.beans.ProductBean
 import com.thn.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.thn.lexi.index.bean.BannerImageBean
 import com.thn.lexi.index.detail.GoodsDetailActivity
+import com.thn.lexi.index.discover.ComposerStoryActivity
 import com.thn.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
@@ -341,7 +342,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         textViewCouponCenter.setOnClickListener(this)
         textViewExemptionMail.setOnClickListener(this)
         textViewMoreDiscoverLife.setOnClickListener(this)
-
+        textViewMoreZCManifest.setOnClickListener(this)
         adapterDiscoverLife.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as ProductBean
             ToastUtil.showInfo(item.name)
@@ -354,6 +355,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             startActivity(intent)
         }
 
+        adapterZCManifest.setOnItemClickListener { _, _, position ->
+            val item = adapterZCManifest.getItem(position)
+            PageUtil.jump2ArticleDetailActivity(item)
+        }
+
         //查看全部优选
         textViewMoreGoodSelection.setOnClickListener {
             startActivity(Intent(activity, AllGoodsSelectionActivity::class.java))
@@ -364,6 +370,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         when (v.id) {
             R.id.buttonOpenShop ->{ //开馆指引 https://h5.lexivip.com/shop/guide
                 startActivity(Intent(activity,OpenLifeHouseActivity::class.java))
+            }
+            R.id.textViewMoreZCManifest->{ //全部种草清单
+                val intent = Intent(activity, ComposerStoryActivity::class.java)
+                intent.putExtra(ComposerStoryActivity::class.java.simpleName,R.mipmap.icon_image_seeding)
+                startActivity(intent)
             }
             R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
             R.id.textViewCouponCenter -> ToastUtil.showInfo("领券中心")
