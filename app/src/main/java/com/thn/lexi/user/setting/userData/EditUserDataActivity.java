@@ -5,15 +5,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
+import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseActivity;
 import com.thn.lexi.R;
+import com.thn.lexi.user.login.UserProfileBean;
 import com.thn.lexi.view.CustomHeadView;
 
 /**
  * 编辑个人资料
  */
-public class EditUserDataActivity extends BaseActivity {
+public class EditUserDataActivity extends BaseActivity implements EditUserDataContract.View{
 
     private ImageView iv_logo;
     private TextView tv_time;
@@ -25,6 +28,7 @@ public class EditUserDataActivity extends BaseActivity {
     private EditText et_position;
     private TextView tv_date;
     private TextView tv_sex;
+    private WaitingDialog dialog;
 
     @Override
     protected int getLayout() {
@@ -34,6 +38,7 @@ public class EditUserDataActivity extends BaseActivity {
     @Override
     public void initView() {
         super.initView();
+        dialog = new WaitingDialog(this);
         CustomHeadView customHeadView=findViewById(R.id.customHeadView);
         customHeadView.setHeadCenterTxtShow(true,Util.getString(R.string.text_edit_user_data));
         iv_logo = findViewById(R.id.iv_logo);
@@ -46,5 +51,36 @@ public class EditUserDataActivity extends BaseActivity {
         et_position = findViewById(R.id.et_position);
         tv_date = findViewById(R.id.tv_date);
         tv_sex = findViewById(R.id.tv_sex);
+    }
+
+    @Override
+    public void showLoadingView() {
+        dialog.show();
+    }
+
+    @Override
+    public void dismissLoadingView() {
+        dialog.dismiss();
+    }
+
+    @Override
+    public void showError(String error) {
+        dialog.dismiss();
+        ToastUtil.showError(error);
+    }
+
+    @Override
+    public void getData(UserProfileBean bean) {
+
+    }
+
+    @Override
+    public void getUpdate() {
+        finish();
+    }
+
+    @Override
+    public void setPresenter(EditUserDataContract.Presenter presenter) {
+        setPresenter(presenter);
     }
 }

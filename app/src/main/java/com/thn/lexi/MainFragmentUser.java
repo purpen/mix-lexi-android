@@ -24,14 +24,12 @@ import java.util.List;
 /**
  * 个人中心
  */
-public class MainFragmentUser extends BaseFragment implements MineContract.View {
+public class MainFragmentUser extends BaseFragment {
 
     private ArrayList<BaseFragment> fragments;
     private List<String> listTitle;
     private CustomViewPager viewPager;
     private SlidingTabLayout slidingTabLayout;
-    private WaitingDialog dialog;
-    private MinePresenter presenter;
 
     @Override
     protected int getLayout() {
@@ -46,44 +44,7 @@ public class MainFragmentUser extends BaseFragment implements MineContract.View 
         fragments = new ArrayList<>();
         String[] titles=getResources().getStringArray(R.array.strings_main_user_titles);
         listTitle = Arrays.asList(titles);
-        dialog = new WaitingDialog(getActivity());
-        presenter=new MinePresenter(this);
-        presenter.loadData();
-    }
-
-    public static BaseFragment newInstance(){
-        MainFragmentUser mainFragmentUser=new MainFragmentUser();
-        return mainFragmentUser;
-    }
-
-    @Override
-    public void showLoadingView() {
-        dialog.show();
-    }
-
-    @Override
-    public void dismissLoadingView() {
-        dialog.dismiss();
-    }
-
-    @Override
-    public void showError(@NonNull @NotNull String string) {
-        ToastUtil.showError(string);
-    }
-
-    @Override
-    public void goPage() {
-
-    }
-
-    @Override
-    public void setPresenter(MineContract.Presenter presenter) {
-        setPresenter(presenter);
-    }
-
-    @Override
-    public void setUserData(@NotNull UserCenterBean.DataBean data) {
-        fragments.add(MainFragment3.Companion.newInstance(data));
+        fragments.add(MainFragment3.Companion.newInstance());
         if (UserProfileUtil.isLogin()){
             if (UserProfileUtil.isSmallB()) {
                 fragments.add(LifeShopFragment.newInstance());
@@ -93,9 +54,13 @@ public class MainFragmentUser extends BaseFragment implements MineContract.View 
         }else{
             slidingTabLayout.setVisibility(View.GONE);
         }
-
         CustomFragmentPagerAdapter adapter=new CustomFragmentPagerAdapter(getChildFragmentManager(),fragments,listTitle);
         viewPager.setAdapter(adapter);
         slidingTabLayout.setViewPager(viewPager);
+    }
+
+    public static BaseFragment newInstance(){
+        MainFragmentUser mainFragmentUser=new MainFragmentUser();
+        return mainFragmentUser;
     }
 }

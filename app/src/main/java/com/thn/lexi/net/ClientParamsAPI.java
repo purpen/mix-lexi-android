@@ -26,11 +26,11 @@ import java.util.TreeMap;
 
 public class ClientParamsAPI {
     //测试
-    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
-    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
+//    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
+//    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
     //正式
-//    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
-//    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
+    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
+    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
 
     /**
      * 获取登录后的authorization
@@ -1358,10 +1358,31 @@ public class ClientParamsAPI {
         params.put("sid",sid);
         return params;
     }
+
+    /**
+     * 获取品牌馆文章
+     * @param rid
+     * @param page
+     * @return
+     */
     public static HashMap<String,Object> getBrandHouseArticelParams(String rid,String page){
         HashMap<String,Object> params=generateCommonParams();
         params.put("page",page);
         params.put("sid",rid);
+        return params;
+    }
+    public static HashMap<String,Object> getUserParams(String username,String avatar_id,String about_me,String gender,
+                                                       String area_id,String province_id,String city_id,String mail,String date){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("username",username);
+        params.put("avatar_id",avatar_id);
+        params.put("about_me",about_me);
+        params.put("gender",gender);
+        params.put("area_id",area_id);
+        params.put("province_id",province_id);
+        params.put("city_id",city_id);
+        params.put("mail",mail);
+        params.put("date",date);
         return params;
     }
 }

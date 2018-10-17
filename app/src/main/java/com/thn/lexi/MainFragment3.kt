@@ -63,11 +63,6 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     override fun initView() {
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
-
-        if (UserProfileUtil.isSmallB()){
-            val bundle = arguments
-            setUserData(bundle!!.getParcelable("key"))
-        }
     }
 
 
@@ -151,7 +146,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     }
 
     override fun loadData() {
-        if (UserProfileUtil.isLogin() && !UserProfileUtil.isSmallB()) presenter.loadData()
+        presenter.loadData()
     }
 
     /**
