@@ -20,6 +20,10 @@ import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
+import kotlinx.android.synthetic.main.acticity_artical_detail.*
+import kotlinx.android.synthetic.main.footer_view_article_detail.view.*
+import kotlinx.android.synthetic.main.footer_view_stagger_recyclerview.view.*
+import kotlinx.android.synthetic.main.header_view_article_detail.view.*
 import org.json.JSONObject
 
 class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
