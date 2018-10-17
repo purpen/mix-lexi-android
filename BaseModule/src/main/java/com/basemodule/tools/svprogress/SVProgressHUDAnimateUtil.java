@@ -2,7 +2,7 @@ package com.basemodule.tools.svprogress;
 
 import android.view.Gravity;
 
-import com.thn.basemodule.R;
+import com.lexivip.basemodule.R;
 
 
 /**

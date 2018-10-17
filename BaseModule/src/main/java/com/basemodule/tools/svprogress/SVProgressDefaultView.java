@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.thn.basemodule.R;
+import com.lexivip.basemodule.R;
 
 
 /**

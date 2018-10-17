@@ -2,7 +2,7 @@ package com.basemodule.tools;
 
 import android.util.Log;
 
-import com.thn.basemodule.BuildConfig;
+import com.lexivip.basemodule.BuildConfig;
 
 
 /**

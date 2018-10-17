@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.thn.lexi.view.CustomHeadView
+    <com.lexivip.lexi.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.thn.lexi.view.CustomHeadView>
+        android:layout_height="wrap_content"></com.lexivip.lexi.view.CustomHeadView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,0 +1,90 @@
+package com.lexivip.lexi
+
+import android.content.Intent
+import android.media.MediaPlayer
+import android.os.Bundle
+import android.os.Handler
+import android.text.TextUtils
+import android.view.View
+import com.basemodule.tools.Constants
+import com.basemodule.tools.SPUtil
+
+import com.basemodule.ui.BaseActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
+import com.lexivip.lexi.welcome.WelcomeActivity
+import kotlinx.android.synthetic.main.activity_user_guide.*
+
+/**
+ * @author lilin
+ * created at 2016/4/18 16:10
+ */
+class UserGuideActivity : BaseActivity() {
+    private var list: MutableList<Int>? = null
+    private val flag = false
+    private val currentPosition: Int = 0
+    private val mediaPlayer: MediaPlayer? = null
+    private var empty: Boolean = false
+    private val readBool: Boolean = false
+    private val fromPage:String = ""
+    override val layout: Int = R.layout.activity_user_guide
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (!isTaskRoot) {
+            if (intent!!.hasCategory(Intent.CATEGORY_LAUNCHER) && TextUtils.equals(Intent.ACTION_MAIN, intent!!.action)) {
+                finish()
+            }
+        }
+    }
+
+    override fun getIntentData() {
+        super.getIntentData()
+
+//        if (intent!!.hasExtra(MineFragment::class.java!!.getSimpleName())) {
+//            fromPage = intent!!.getStringExtra(MineFragment::class.java!!.getSimpleName())
+//        }
+        empty = TextUtils.isEmpty(SPUtil.read(Constants.GUIDE_TAG))
+    }
+
+    override fun initView() {
+//        if (TextUtils.isEmpty(fromPage)) {
+        imageView.setImageResource(R.mipmap.welcome)
+        imageView.visibility = View.VISIBLE
+            Handler().postDelayed({
+                imageView.visibility = View.GONE
+//                if (empty) {
+//                    initGuide()
+//                } else {
+                    if (isTaskRoot) {
+                        goMainPage()
+//                    }
+                }
+            }, Constants.GUIDE_INTERVAL)
+//        } else {
+//            initGuide()
+//        }
+    }
+
+    private fun initGuide() {
+//        scrollableView!!.visibility = View.VISIBLE
+//        list = ArrayList()
+//        list!!.add(R.mipmap.guide0)
+//        list!!.add(R.mipmap.guide1)
+//        list!!.add(R.mipmap.guide2)
+//        list!!.add(R.mipmap.guide3)
+//        scrollableView!!.setAdapter(ViewPagerAdapter(this, list))
+        SPUtil.write(Constants.GUIDE_TAG, Constants.GUIDE_TAG)
+    }
+
+    private fun goMainPage() {
+        if (UserProfileUtil.isLogin()) {
+            startActivity(Intent(this, MainActivity::class.java))
+        } else {
+            startActivity(Intent(this, WelcomeActivity::class.java))
+        }
+        finish()
+    }
+
+}

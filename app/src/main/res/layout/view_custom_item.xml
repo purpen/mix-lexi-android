@@ -91,7 +91,7 @@
         android:textSize="@dimen/sp14"
         android:visibility="gone"
         />
-    <com.thn.lexi.view.BadgeView
+    <com.lexivip.lexi.view.BadgeView
         android:id="@+id/tv_tip_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

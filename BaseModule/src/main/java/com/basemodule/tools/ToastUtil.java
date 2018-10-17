@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.thn.basemodule.R;
+import com.lexivip.basemodule.R;
 
 /**
  * Toast工具类

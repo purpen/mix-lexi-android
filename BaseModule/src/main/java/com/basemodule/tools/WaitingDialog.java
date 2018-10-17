@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.view.Gravity;
 import android.widget.ImageView;
 
-import com.thn.basemodule.R;
+import com.lexivip.basemodule.R;
 
 
 /**

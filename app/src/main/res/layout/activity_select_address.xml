@@ -5,7 +5,7 @@
     android:background="@color/color_f7f9fb"
     android:orientation="vertical">
 
-    <com.thn.lexi.view.CustomHeadView
+    <com.lexivip.lexi.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp50" />

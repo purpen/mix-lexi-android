@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.thn.lexi.view.autoScrollViewpager.CustomAutoScrollViewPager
+    <com.lexivip.lexi.view.autoScrollViewpager.CustomAutoScrollViewPager
         android:id="@+id/customAutoScrollViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

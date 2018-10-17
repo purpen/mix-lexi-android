@@ -40,7 +40,7 @@
             android:scaleType="fitXY"
             android:src="@mipmap/icon_seprate_tt" />
 
-        <com.thn.lexi.view.UPMarqueeView
+        <com.lexivip.lexi.view.UPMarqueeView
             android:id="@+id/upMarqueeView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

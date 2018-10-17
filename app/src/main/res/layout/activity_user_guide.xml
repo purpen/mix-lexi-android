@@ -12,7 +12,7 @@
         android:scaleType="fitXY"
         android:visibility="gone" />
 
-    <com.thn.lexi.view.autoScrollViewpager.ScrollableView
+    <com.lexivip.lexi.view.autoScrollViewpager.ScrollableView
         android:id="@+id/scrollableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

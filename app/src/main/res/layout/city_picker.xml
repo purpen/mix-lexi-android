@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:background="@color/color_white">
 
-    <com.thn.lexi.address.ScrollerNumberPicker
+    <com.lexivip.lexi.address.ScrollerNumberPicker
         android:id="@+id/province"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         su:selecredTextSize="12sp"
         su:unitHight="50dp" />
 
-    <com.thn.lexi.address.ScrollerNumberPicker
+    <com.lexivip.lexi.address.ScrollerNumberPicker
         android:id="@+id/city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         su:selecredTextSize="12sp"
         su:unitHight="50dp" />
 
-    <com.thn.lexi.address.ScrollerNumberPicker
+    <com.lexivip.lexi.address.ScrollerNumberPicker
         android:id="@+id/couny"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

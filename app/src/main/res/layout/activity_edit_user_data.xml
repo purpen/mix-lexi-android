@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.thn.lexi.view.CustomHeadView
+    <com.lexivip.lexi.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.thn.lexi.view.CustomHeadView>
+        android:layout_height="wrap_content"></com.lexivip.lexi.view.CustomHeadView>
 
     <ScrollView
         android:layout_width="match_parent"

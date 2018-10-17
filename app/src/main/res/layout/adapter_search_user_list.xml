@@ -52,7 +52,7 @@
         android:textSize="@dimen/sp11" />
 
 
-    <com.thn.lexi.view.ButtonDrawableCenter
+    <com.lexivip.lexi.view.ButtonDrawableCenter
         android:id="@+id/buttonFocus"
         android:layout_width="63dp"
         android:layout_height="29dp"

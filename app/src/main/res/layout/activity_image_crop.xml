@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.thn.lexi.album.ClipSquareImageView
+    <com.lexivip.lexi.album.ClipSquareImageView
         android:id="@+id/csiv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

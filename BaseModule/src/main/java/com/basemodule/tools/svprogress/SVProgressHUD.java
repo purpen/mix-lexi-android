@@ -14,7 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 
-import com.thn.basemodule.R;
+import com.lexivip.basemodule.R;
 
 import java.lang.ref.WeakReference;
 

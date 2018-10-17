@@ -140,7 +140,7 @@
         />
 
     <!--编辑数量-->
-    <com.thn.lexi.view.AddSubView
+    <com.lexivip.lexi.view.AddSubView
         android:id="@+id/addSubView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

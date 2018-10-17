@@ -55,7 +55,7 @@
         android:textStyle="bold" />
 
 
-    <com.thn.lexi.view.RangeSeekBarView
+    <com.lexivip.lexi.view.RangeSeekBarView
         android:id="@+id/rangeSeekBarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

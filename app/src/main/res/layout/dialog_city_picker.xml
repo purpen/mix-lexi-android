@@ -33,7 +33,7 @@
             android:layout_gravity="center_vertical"
             android:text="确定"/>
     </LinearLayout>
-    <com.thn.lexi.address.CityPicker
+    <com.lexivip.lexi.address.CityPicker
         android:id="@+id/area_city_picker"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
