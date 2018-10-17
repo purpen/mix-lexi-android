@@ -206,9 +206,9 @@ object URL {
     const val EDIT_SMALL_LIFE_STORE = "${BASE_URL}store/edit_store"
 
     /**
-     * 删除分销商品
+     * 核心删除分销商品
      */
-    const val DELETE_DISTRIBUTE_GOODS = "${BASE_URL}fx_distribute/remove"
+    const val DELETE_DISTRIBUTE_GOODS = "${BASE_URL}core_platforms/fx_distribute/remove"
 
 
     /**

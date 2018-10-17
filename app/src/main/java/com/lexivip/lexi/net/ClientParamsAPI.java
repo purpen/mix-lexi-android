@@ -560,6 +560,7 @@ public class ClientParamsAPI {
     public static HashMap<String, Object> getDeleteDistributeGoodsParams(@NotNull String rid) {
         HashMap<String, Object> params = generateCommonParams();
         params.put("rid",rid);
+        params.put("sid",UserProfileUtil.storeId());
         return params;
     }
 
