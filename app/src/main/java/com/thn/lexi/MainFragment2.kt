@@ -151,19 +151,13 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
         //猜你喜欢
         adapterGuessLike.setOnItemClickListener { _, _, position ->
             val item = adapterGuessLike.getItem(position) ?: return@setOnItemClickListener
-            val intent = Intent(activity, ArticleDetailActivity::class.java)
-            intent.putExtra(ArticleDetailActivity::class.java.simpleName,item.rid)
-            intent.putExtra(ArticleDetailActivity::class.java.name,item.channel_name)
-            startActivity(intent)
+            PageUtil.jump2ArticleDetailActivity(item)
         }
 
         //精彩故事
         adapterWonderfulStory.setOnItemClickListener { _, _, position ->
             val item = adapterWonderfulStory.getItem(position)?:return@setOnItemClickListener
-            val intent = Intent(activity, ArticleDetailActivity::class.java)
-            intent.putExtra(ArticleDetailActivity::class.java.simpleName,item.rid)
-            intent.putExtra(ArticleDetailActivity::class.java.name,item.channel_name)
-            startActivity(intent)
+            PageUtil.jump2ArticleDetailActivity(item)
         }
     }
 

@@ -4,10 +4,12 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.basemodule.tools.ToastUtil;
+import com.thn.lexi.beans.LifeWillBean;
 import com.thn.lexi.beans.ProductBean;
 import com.thn.lexi.brandHouse.BrandHouseActivity;
 import com.thn.lexi.index.bean.BannerImageBean;
 import com.thn.lexi.index.detail.GoodsDetailActivity;
+import com.thn.lexi.index.discover.ArticleDetailActivity;
 
 /**
  * 界面跳转工具类
@@ -56,6 +58,18 @@ public class PageUtil {
         ProductBean productBean = new ProductBean();
         productBean.rid = rid;
         intent.putExtra(GoodsDetailActivity.class.getSimpleName(), productBean);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        AppApplication.getContext().startActivity(intent);
+    }
+
+    /**
+     * 商品rid
+     * @param item
+     */
+    public static void jump2ArticleDetailActivity(LifeWillBean item){
+        Intent intent = new Intent(AppApplication.getContext(), ArticleDetailActivity.class);
+        intent.putExtra(ArticleDetailActivity.class.getSimpleName(),item.rid);
+        intent.putExtra(ArticleDetailActivity.class.getName(),item.channel_name);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         AppApplication.getContext().startActivity(intent);
     }

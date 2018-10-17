@@ -61,13 +61,12 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
 
         adapter = AdapterArticleDetail(listDescription,channelName)
         recyclerView.adapter = adapter
+        initRecommendGoods()
+        initRelateStories()
         adapter.setHeaderView(headerView)
         adapter.addFooterView(footerView)
         adapter.addFooterView(footerView1)
         adapter.setHeaderFooterEmpty(true,true)
-
-        initRecommendGoods()
-        initRelateStories()
     }
 
     /**
@@ -112,6 +111,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     /**
      * 设置相关故事数据
      */
+
     override fun setRelateStoriesData(data: MutableList<LifeWillBean>) {
         if (data.isEmpty()) headerView.linearLayoutRelateStory.visibility = View.GONE
         adapterRelateStories.setNewData(data)
