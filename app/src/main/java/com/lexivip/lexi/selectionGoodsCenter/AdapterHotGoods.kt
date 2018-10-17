@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.R
@@ -52,9 +53,20 @@ class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
         GlideUtil.loadImageWithRadius(item.cover, imageView, size4)
 
 
+
         //卖
         helper.addOnClickListener(R.id.textView4)
 
+        val textView5 = helper.getView<TextView>(R.id.textView5)
+        if (item.have_distributed){
+            textView5.isEnabled = false
+            textView5.text = Util.getString(R.string.text_already_putaway)
+            textView5.setBackgroundResource(R.drawable.bg_radius_round_eaedf0)
+        }else{
+            textView5.isEnabled = true
+            textView5.text = Util.getString(R.string.text_putaway)
+            textView5.setBackgroundResource(R.drawable.bg_radius_round_2d343a)
+        }
         //上架
         helper.addOnClickListener(R.id.textView5)
 

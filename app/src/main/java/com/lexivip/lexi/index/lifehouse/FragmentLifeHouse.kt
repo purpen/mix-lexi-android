@@ -37,6 +37,7 @@ import com.lexivip.lexi.beans.UserBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -56,7 +57,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
-    private var page: Int = 1
     private lateinit var adapter: LifeHouseAdapter
     private lateinit var adapterWelcomeInWeek: WelcomeInWeekAdapter
 
@@ -291,7 +291,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     override fun setFavorite(b: Boolean, position: Int) {
         val item = adapter.getItem(position) as ProductBean
         item.is_like = b
-        adapter.notifyItemChanged(position)
+        adapter.notifyDataSetChanged()
     }
 
     override fun installListener() {
@@ -339,7 +339,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         //加载更多生活馆分销商品
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData("")
+            presenter.loadMoreData()
         }, recyclerView)
 
 
@@ -389,10 +389,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun loadData() {
-        //店铺编号
-        val sid = ""
-        page = 1
-        presenter.loadData(sid)
+        presenter.loadData()
     }
 
 
@@ -400,14 +397,12 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(data)
         adapter.setEnableLoadMore(true)
-        ++page
     }
 
 
     override fun addData(products: List<ProductBean>) {
         adapter.addData(products)
         adapter.notifyDataSetChanged()
-        ++page
     }
 
     override fun loadMoreComplete() {

@@ -66,9 +66,9 @@ class LifeHouseContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(cid: String)
+        fun loadData()
 
-        fun loadMoreData(cid: String)
+        fun loadMoreData()
 
         fun getNewPublishProducts()
     }
