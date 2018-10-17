@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.basemodule.tools.ToastUtil;
+import com.basemodule.tools.Util;
 import com.lexivip.lexi.beans.LifeWillBean;
 import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.brandHouse.BrandHouseActivity;
@@ -40,11 +41,17 @@ public class PageUtil {
                 break;
 
             case "6"://生活志
-                ToastUtil.showInfo("生活志");
+                LifeWillBean willBean = new LifeWillBean();
+                willBean.rid = bean.link;
+                willBean.channel_name = Util.getString(R.string.text_life_records);
+                jump2ArticleDetailActivity(willBean);
                 break;
 
             case "7": //生活志种草清单
-                ToastUtil.showInfo("种草清单");
+                LifeWillBean seedingBean = new LifeWillBean();
+                seedingBean.rid = bean.link;
+                seedingBean.channel_name = Util.getString(R.string.text_seeding_note);
+                jump2ArticleDetailActivity(seedingBean);
                 break;
         }
     }
