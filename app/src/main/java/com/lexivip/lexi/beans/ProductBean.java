@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.lexivip.lexi.order.ExpressInfoBean;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ProductBean implements Parcelable {
     //商品默认快递id
     public String express_id;
     public boolean isRight;
-    public HashMap<String,String> map;
+    public HashMap<String, String> map;
     public List<ExpressInfoBean> express;
     public String category_id;
     public String commission_price;

@@ -13,6 +13,6 @@ class PutAwayActivityContract {
     }
 
     interface Presenter : BasePresenter {
-        fun putAwayGoods(rid: String, store_rid: String, content: String)
+        fun putAwayGoods(rid: String,content: String)
     }
 }

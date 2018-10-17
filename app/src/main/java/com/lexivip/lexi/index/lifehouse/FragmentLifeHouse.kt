@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -389,7 +390,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun loadData() {
-        presenter.loadData()
+        presenter.loadData(false)
     }
 
 
@@ -543,6 +544,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
     }
 
+    //上架成功刷新生活馆数据
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun putAwaySuccess(productBean: ProductBean) {
+        presenter.loadData(true)
+    }
 
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)

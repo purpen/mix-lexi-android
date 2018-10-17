@@ -11,6 +11,7 @@ import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import kotlinx.android.synthetic.main.acticity_putaway.*
+import org.greenrobot.eventbus.EventBus
 
 class PutAwayActivity : BaseActivity(), PutAwayActivityContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
@@ -62,7 +63,7 @@ class PutAwayActivity : BaseActivity(), PutAwayActivityContract.View {
     override fun installListener() {
         buttonConfirmOrder.setOnClickListener {
 
-            var content:String
+            val content:String
 
             if (TextUtils.isEmpty(goods.features)) { //产品无亮点推荐语必填
                 if (editText.text.trim().isEmpty() || editText.text.trim().length < 10) {
@@ -74,7 +75,7 @@ class PutAwayActivity : BaseActivity(), PutAwayActivityContract.View {
                 content = goods.features
             }
 
-            presenter.putAwayGoods(goods.rid,goods.store_rid,content)
+            presenter.putAwayGoods(goods.rid,content)
         }
     }
 
@@ -95,6 +96,7 @@ class PutAwayActivity : BaseActivity(), PutAwayActivityContract.View {
     }
 
     override fun goPage() { //提交成功关闭上架商品页
+        EventBus.getDefault().post(goods)
         finish()
     }
 }

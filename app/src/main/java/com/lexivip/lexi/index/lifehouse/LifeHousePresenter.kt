@@ -24,7 +24,8 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
     private val dataSource: LifeHouseModel by lazy { LifeHouseModel() }
 
-    override fun loadData() {
+    override fun loadData(isRefresh:Boolean) {
+        if (isRefresh) page = 1
         dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()

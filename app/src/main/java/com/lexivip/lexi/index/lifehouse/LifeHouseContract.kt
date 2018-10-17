@@ -66,7 +66,7 @@ class LifeHouseContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData()
+        fun loadData(isRefresh:Boolean)
 
         fun loadMoreData()
 

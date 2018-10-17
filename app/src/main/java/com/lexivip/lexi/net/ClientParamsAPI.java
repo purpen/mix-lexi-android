@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 
 import com.basemodule.tools.Constants;
+import com.basemodule.tools.SPUtil;
 import com.lexivip.lexi.address.AddressBean;
 import com.lexivip.lexi.order.CreateOrderBean;
 import com.lexivip.lexi.order.FullReductionRequestBean;
@@ -588,6 +589,7 @@ public class ClientParamsAPI {
         HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
         params.put("per_page", Constants.PAGE_SIZE);
+        params.put("sid", UserProfileUtil.storeId());
         return params;
     }
 
@@ -1312,15 +1314,14 @@ public class ClientParamsAPI {
     /**
      * 上架商品
      * @param rid
-     * @param store_rid
      * @param content
      * @return
      */
     @Nullable
-    public static HashMap<String,Object> getPutAwayGoodsParams(@NotNull String rid, @NotNull String store_rid, @NotNull String content) {
+    public static HashMap<String,Object> getPutAwayGoodsParams(@NotNull String rid, @NotNull String content) {
         HashMap<String,Object> params=generateCommonParams();
         params.put("rid", rid);
-        params.put("sid", store_rid);
+        params.put("sid", UserProfileUtil.storeId());
         params.put("stick_text", content);
         return params;
     }

@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tl="http://schemas.android.com/apk/res-auto"
-    >
+    android:layout_height="match_parent">
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
         android:fitsSystemWindows="true"
-        app:elevation="0dp"
-        android:background="@android:color/white">
+        app:elevation="0dp">
 
-        <include layout="@layout/view_selection_goods_center_recommend"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            app:layout_scrollFlags="scroll"
-            />
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+            >
+            <include
+                layout="@layout/view_selection_goods_center_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
 
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/slidingTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
-            tl:tl_indicator_color="@color/color_6ed7af"
-            tl:tl_indicator_height="2dp"
-            app:tl_indicator_width="14dp"
-            tl:tl_tab_padding="@dimen/dp15"
-            tl:tl_textSelectColor="@color/color_6ed7af"
-            tl:tl_textUnselectColor="@color/color_2d343a"
-            tl:tl_textsize="@dimen/sp15" />
-        <include
-            layout="@layout/line_color_eee"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1"
-            />
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/slidingTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                app:tl_indicator_width="14dp"
+                tl:tl_indicator_color="@color/color_6ed7af"
+                tl:tl_indicator_height="2dp"
+                tl:tl_tab_padding="@dimen/dp15"
+                tl:tl_textSelectColor="@color/color_6ed7af"
+                tl:tl_textUnselectColor="@color/color_2d343a"
+                tl:tl_textsize="@dimen/sp15" />
+
+            <include
+                layout="@layout/line_color_eee"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1" />
+        </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout

@@ -2,12 +2,16 @@ package com.lexivip.lexi.selectionGoodsCenter
 
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class FragmentOfficialRecommend:BaseFragment(),OfficialRecommendContract.View {
     override val layout: Int = R.layout.fragment_recyclerview
@@ -47,6 +51,7 @@ class FragmentOfficialRecommend:BaseFragment(),OfficialRecommendContract.View {
     }
 
     override fun installListener() {
+        EventBus.getDefault().register(this)
         adapter.setOnItemChildClickListener { _, view, position ->
             val productsBean = adapter.getItem(position) as ProductBean
             when (view.id) {
@@ -91,7 +96,24 @@ class FragmentOfficialRecommend:BaseFragment(),OfficialRecommendContract.View {
         adapter.loadMoreEnd()
     }
 
+    //上架成功刷新adapter
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun putAwaySuccess(productBean: ProductBean) {
+        for (item in adapter.data){
+            if (TextUtils.equals(item.rid,productBean.rid)){
+                item.have_distributed = true
+                adapter.notifyDataSetChanged()
+                break
+            }
+        }
+    }
+
     override fun goPage() {
 
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 }

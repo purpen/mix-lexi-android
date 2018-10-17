@@ -4,6 +4,7 @@ import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.net.ClientParamsAPI
 import com.lexivip.lexi.net.HttpRequest
 import com.lexivip.lexi.net.URL
+import com.lexivip.lexi.user.login.UserProfileUtil
 import java.io.IOException
 
 open class AllGoodsModel{
@@ -15,7 +16,7 @@ open class AllGoodsModel{
     fun loadData(page: Int,sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids: String, callBack: IDataSource.HttpRequestCallBack) {
 
         val params = ClientParamsAPI.getAllGoodsParams(page,sortType,profitType,filterCondition,STATUS,minePrice,maxPrice,cids)
-
+        params?.set("sid", UserProfileUtil.storeId())
         HttpRequest.sendRequest(HttpRequest.GET,URL.ALL_GOODS_URL,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
