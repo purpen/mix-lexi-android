@@ -1,35 +1,23 @@
 package com.basemodule.tools;
-
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.ImageViewTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.lexivip.basemodule.R;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 /**
@@ -143,7 +131,7 @@ public class GlideUtil {
                 int vh = Math.round(resource.getIntrinsicHeight() * scale);
                 params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
                 imageView.setLayoutParams(params);
-                LogUtil.e("resource.getIntrinsicWidth()="+resource.getIntrinsicWidth()+";;;resource.getIntrinsicHeight()="+resource.getIntrinsicHeight());
+//                LogUtil.e("resource.getIntrinsicWidth()="+resource.getIntrinsicWidth()+";;;resource.getIntrinsicHeight()="+resource.getIntrinsicHeight());
                 return false;
             }
         }).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
