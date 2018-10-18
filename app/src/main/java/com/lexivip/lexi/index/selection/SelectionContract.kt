@@ -18,7 +18,7 @@ class SelectionContract {
         }
 
         fun setBannerData(banner_images: List<BannerImageBean>){}
-        fun setTodayRecommendData(products: List<ProductBean>){}
+        fun setTodayRecommendData(products: MutableList<TodayRecommendBean.DataBean.DailyRecommendsBean>){}
         fun setHotRecommendData(products: List<ProductBean>) {}
         fun setHotRecommendBannerData(banner_images: List<BannerImageBean>) {
 

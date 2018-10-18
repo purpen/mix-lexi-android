@@ -43,9 +43,11 @@ public class GlideUtil {
 
 
     public static <T> void loadImage(T t, ImageView imageView) {
+        Context context = imageView.getContext();
+        if (context==null) return;
         RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.NONE);
-        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+        Glide.with(context).load(t).apply(requestOptions).into(imageView);
     }
 
 
@@ -58,11 +60,13 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageWithTopRadius(T t, ImageView imageView, int radius) {
+        Context context = imageView.getContext();
+        if (context==null) return;
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.TOP))
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Glide.with(context).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -74,12 +78,14 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageWithRadius(T t, ImageView imageView, int radius) {
+        Context context = imageView.getContext();
+        if (context==null) return;
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
 
-        Glide.with(imageView.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Glide.with(context).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -91,13 +97,15 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageWithDimenAndRadius(T t, final ImageView imageView, int radius, final int width, final int height) {
+        Context context = imageView.getContext();
+        if (context==null) return;
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
                 .override(width, height)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .dontAnimate()
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Glide.with(context).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -108,7 +116,8 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageAdjustImageViewDimen(T t, final ImageView imageView, int radius, final int width, final int height) {
-        if (imageView==null) throw new IllegalArgumentException("imageView must not null");
+        Context context = imageView.getContext();
+        if (context==null) return;
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
                 .override(width, height)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -117,7 +126,7 @@ public class GlideUtil {
                 .dontAnimate()
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).listener(new RequestListener<Drawable>() {
+        Glide.with(context).load(t).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@android.support.annotation.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 return false;
@@ -160,7 +169,9 @@ public class GlideUtil {
      */
     public static <T> void loadImageWithFading(T t, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Context context = imageView.getContext();
+        if (context==null) return;
+        Glide.with(context).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
 
@@ -173,11 +184,13 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageAsBitmap(T t, ImageView imageView) {
+        Context context = imageView.getContext();
+        if (context==null) return;
         RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).asBitmap().apply(requestOptions).load(t).into(imageView);
+        Glide.with(context).asBitmap().apply(requestOptions).load(t).into(imageView);
     }
 
 
@@ -200,12 +213,14 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageWithDimen(T t, ImageView imageView, int width, int height) {
+        Context context = imageView.getContext();
+        if (context==null) return;
         RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .override(width, height)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+        Glide.with(context).load(t).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -217,19 +232,23 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageWithDimen(T t, ImageView imageView, int size) {
+        Context context = imageView.getContext();
+        if (context==null) return;
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .override(size)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+        Glide.with(context).load(t).apply(requestOptions).into(imageView);
     }
 
     public static <T> void loadCircleImageWidthDimen(@NotNull T t, @Nullable ImageView imageView, int size) {
+        Context context = imageView.getContext();
+        if (context==null) return;
         RequestOptions requestOptions = bitmapTransform(new CircleCrop()).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .override(size)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+        Glide.with(context).load(t).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -240,6 +259,8 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageWithBlurAndRadius(T t, @Nullable ImageView imageView, int radius) {
+        Context context = imageView.getContext();
+        if (context==null) return;
         MultiTransformation multi = new MultiTransformation(
                 new BlurTransformation(65, 3),
                 new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
@@ -248,6 +269,6 @@ public class GlideUtil {
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(imageView.getContext()).load(t).apply(requestOptions).into(imageView);
+        Glide.with(context).load(t).apply(requestOptions).into(imageView);
     }
 }

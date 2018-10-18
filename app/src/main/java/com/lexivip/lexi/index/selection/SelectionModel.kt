@@ -54,7 +54,7 @@ open class SelectionModel{
 
     fun getTodayRecommend(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.EDITOR_RECOMMEND_URL, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.GET, URL.TODAY_RECOMMEND_URL, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

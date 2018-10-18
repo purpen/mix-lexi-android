@@ -41,11 +41,11 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
             }
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
-                if (editorRecommendBean.success) {
-                    view.setTodayRecommendData(editorRecommendBean.data.products)
+                val todayRecommendBean = JsonUtil.fromJson(json, TodayRecommendBean::class.java)
+                if (todayRecommendBean.success) {
+                    view.setTodayRecommendData(todayRecommendBean.data.daily_recommends)
                 } else {
-                    view.showError(editorRecommendBean.status.message)
+                    view.showError(todayRecommendBean.status.message)
                 }
             }
 

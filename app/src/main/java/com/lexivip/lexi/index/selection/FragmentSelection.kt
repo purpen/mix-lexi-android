@@ -243,7 +243,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
-    override fun setTodayRecommendData(products: List<ProductBean>) {
+    override fun setTodayRecommendData(products: MutableList<TodayRecommendBean.DataBean.DailyRecommendsBean>) {
         adapterTodayRecommend.setNewData(products)
     }
 
@@ -369,6 +369,15 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         adapterZCManifest.setOnItemClickListener { _, _, position ->
             val item = adapterZCManifest.getItem(position)
             PageUtil.jump2ArticleDetailActivity(item)
+        }
+
+        //今日推荐
+        adapterTodayRecommend.setOnItemClickListener { _, _, position ->
+            val item = adapterTodayRecommend.getItem(position) ?: return@setOnItemClickListener
+            val bean = LifeWillBean()
+            bean.rid = item.recommend_id
+            bean.channel_name = item.channel_name
+            PageUtil.jump2ArticleDetailActivity(bean)
         }
 
         //查看全部优选
