@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 
 class AdapterGoodsDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<AdapterGoodsDetail.MultipleItem, BaseViewHolder>(list) {
     private val imgW:Int by lazy { ScreenUtil.getScreenWidth()-DimenUtil.dp2px(30.0) }
+    private val dp15:Int by lazy { DimenUtil.dp2px(15.0) }
     private val imgH:Int by lazy { DimenUtil.dp2px(220.0) }
     init {
         addItemType(MultipleItem.TEXT_ITEM_TYPE, R.layout.adapter_goods_detail_text)
@@ -45,6 +46,7 @@ class AdapterGoodsDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
 
             MultipleItem.IMAGE_ITEM_TYPE -> {
                 val imageView = helper.getView<ImageView>(R.id.imageView)
+                imageView.setPadding(dp15,0,dp15,0)
                 GlideUtil.loadImageAdjustImageViewDimen(item.content.content, imageView,0,imgW,imgH)
             }
         }
@@ -53,7 +55,7 @@ class AdapterGoodsDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
     override fun onViewRecycled(holder: BaseViewHolder) {
         val imageView = holder.getView<ImageView>(R.id.imageView)
         if (imageView != null) {
-            Glide.with(mContext).clear(imageView!!)
+            Glide.with(mContext).clear(imageView)
         }
         super.onViewRecycled(holder)
     }

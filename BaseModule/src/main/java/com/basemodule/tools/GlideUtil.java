@@ -18,6 +18,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
@@ -121,12 +122,13 @@ public class GlideUtil {
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
                 .override(width, height)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                .format(DecodeFormat.PREFER_RGB_565)
-                .disallowHardwareConfig()
+                .fitCenter()
                 .dontAnimate()
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Glide.with(context).load(t).listener(new RequestListener<Drawable>() {
+
+
+        Glide.with(context).asDrawable().load(t).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@android.support.annotation.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 return false;
@@ -134,10 +136,6 @@ public class GlideUtil {
 
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-
-                if (imageView.getScaleType() != ImageView.ScaleType.FIT_XY) {
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                }
                 ViewGroup.LayoutParams params = imageView.getLayoutParams();
                 if (params==null) params =new ViewGroup.LayoutParams(width,height);
                 int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();
@@ -145,9 +143,11 @@ public class GlideUtil {
                 int vh = Math.round(resource.getIntrinsicHeight() * scale);
                 params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
                 imageView.setLayoutParams(params);
+                LogUtil.e("resource.getIntrinsicWidth()="+resource.getIntrinsicWidth()+";;;resource.getIntrinsicHeight()="+resource.getIntrinsicHeight());
                 return false;
             }
         }).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+
     }
 
     /**
@@ -271,4 +271,5 @@ public class GlideUtil {
                 .placeholder(DEFAULT_PLACE_HOLDER);
         Glide.with(context).load(t).apply(requestOptions).into(imageView);
     }
+
 }
