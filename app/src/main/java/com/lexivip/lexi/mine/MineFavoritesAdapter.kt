@@ -17,6 +17,6 @@ class MineFavoritesAdapter(@LayoutRes res: Int) : BaseQuickAdapter<GoodsData.Dat
         val imageView = helper.getView<ImageView>(R.id.imageView)
         val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, imageView.context.resources.getDimensionPixelSize(R.dimen.dp385))
         imageView.layoutParams = params
-        GlideUtil.loadImage(item.cover,imageView)
+        GlideUtil.loadImageWithFading(item.cover,imageView)
     }
 }

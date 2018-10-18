@@ -10,9 +10,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.lexivip.lexi.*
@@ -64,6 +62,19 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         swipeRefreshLayout.isEnabled = false
 //        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
 //        swipeRefreshLayout.isRefreshing = false
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            if (upMarqueeView != null) {
+                upMarqueeView.startFlipping()
+            }
+        } else {
+            if (upMarqueeView != null) {
+                upMarqueeView.stopFlipping()
+            }
+        }
     }
 
     /**
@@ -157,7 +168,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun initHotRecommendBanner() {
         presenter.getHotRecommendBanner()
-        hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4))
+        val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
+        hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4, contentW, DimenUtil.dp2px(135.0)))
         hotBanner.setBannerStyle(BannerConfig.NOT_INDICATOR)
     }
 
@@ -271,7 +283,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      * 设置通知
      */
     private fun setNoticeTextViewData(bean: HeadLineBean.DataBean.HeadlinesBean, textView: TextView) {
-        if (bean.username==null) bean.username=""
+        if (bean.username == null) bean.username = ""
         when (bean.event) {
             1 -> { //开通生活馆 人名蓝色
                 val content = "${bean.username} ${bean.time}${bean.time_info}开通了自己的生活馆"
@@ -330,7 +342,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     }
 
 
-
     override fun setPresenter(presenter: SelectionContract.Presenter?) {
         setPresenter(presenter)
     }
@@ -368,12 +379,12 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.buttonOpenShop ->{ //开馆指引 https://h5.lexivip.com/shop/guide
-                startActivity(Intent(activity,OpenLifeHouseActivity::class.java))
+            R.id.buttonOpenShop -> { //开馆指引 https://h5.lexivip.com/shop/guide
+                startActivity(Intent(activity, OpenLifeHouseActivity::class.java))
             }
-            R.id.textViewMoreZCManifest->{ //全部种草清单
+            R.id.textViewMoreZCManifest -> { //全部种草清单
                 val intent = Intent(activity, ComposerStoryActivity::class.java)
-                intent.putExtra(ComposerStoryActivity::class.java.simpleName,R.mipmap.icon_image_seeding)
+                intent.putExtra(ComposerStoryActivity::class.java.simpleName, R.mipmap.icon_image_seeding)
                 startActivity(intent)
             }
             R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")

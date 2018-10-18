@@ -8,14 +8,42 @@ import android.content.Context;
 //import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import com.basemodule.tools.BaseModuleContext;
+import com.basemodule.tools.LogUtil;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
+import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
+import com.bumptech.glide.load.engine.cache.LruResourceCache;
+import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.example.myapp.MyEventBusIndex;
 import com.qiniu.android.common.AutoZone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
+import com.squareup.leakcanary.LeakCanary;
+
 
 import org.greenrobot.eventbus.EventBus;
 
 public class AppApplication extends Application {
+    @GlideModule
+    public final class MyAppGlideModule extends AppGlideModule {
+        @Override
+        public void applyOptions(Context context, GlideBuilder builder) {
+            MemorySizeCalculator calculator = new MemorySizeCalculator.Builder(context)
+                    .setMemoryCacheScreens(2)
+                    .build();
+            builder.setMemoryCache(new LruResourceCache(calculator.getMemoryCacheSize()));
+
+            int bitmapPoolSizeBytes = 1024 * 1024 * 30; // 30mb
+            builder.setBitmapPool(new LruBitmapPool(bitmapPoolSizeBytes));
+
+            int diskCacheSizeBytes = 1024*1024*100; // 100 MB
+
+            builder.setDiskCache(new InternalCacheDiskCacheFactory(context, diskCacheSizeBytes));
+        }
+    }
+
     private static Application instance;
 
     public static Application getContext() {
@@ -28,12 +56,12 @@ public class AppApplication extends Application {
         super.onCreate();
         instance = this;
 //        initPush();
-//        if (BuildConfig.LOG_DEBUG) {
-//            if (LeakCanary.isInAnalyzerProcess(this)) {
-//                return;
-//            }
-//            LeakCanary.install(this);
-//        }
+        if (BuildConfig.LOG_DEBUG) {
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                return;
+            }
+            LeakCanary.install(this);
+        }
 
         BaseModuleContext.init(this);
         //使用时才自动生成MyEventBusIndex

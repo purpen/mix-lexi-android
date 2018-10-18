@@ -12,9 +12,10 @@ import com.lexivip.lexi.beans.ProductBean
 
 class CollectionProductAdapter(@LayoutRes res: Int): BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
     private val size:Int = DimenUtil.dp2px(75.0)
+    private val dp4:Int = DimenUtil.dp2px(4.0)
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = ViewGroup.LayoutParams(size,size)
-        GlideUtil.loadImageWithRadius(item.cover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,dp4,size)
     }
 }

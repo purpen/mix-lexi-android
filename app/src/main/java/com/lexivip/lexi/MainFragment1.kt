@@ -277,7 +277,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 textViewTotal.visibility = View.VISIBLE
                 textViewTotalPrice.visibility = View.VISIBLE
                 buttonSettleAccount.visibility = View.VISIBLE
-                if (adapterOrder.data.size==0) { //如果购物车为空 隐藏编辑/结算/礼品数量
+                if (adapterOrder.data.size == 0) { //如果购物车为空 隐藏编辑/结算/礼品数量
                     customHeadView.headRightTV.visibility = View.GONE
                     relativeLayoutBottom.visibility = View.GONE
                     linearLayoutNum.visibility = View.GONE
@@ -448,15 +448,24 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         adapterWish.setEnableLoadMore(true)
     }
 
+    /**
+     * 可见状态发生变化时
+     */
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (!hidden){
+            if (UserProfileUtil.isLogin()) {
+                //        加载心愿单
+                presenter.loadData(true)
+
+                //        获取购物车商品
+                presenter.getShopCartGoods()
+            }
+        }
+        super.onHiddenChanged(hidden)
+    }
 
     override fun loadData() {
-        if (UserProfileUtil.isLogin()) {
-            //        加载心愿单
-            presenter.loadData(false)
 
-//        获取购物车商品
-            presenter.getShopCartGoods()
-        }
     }
 
     /**

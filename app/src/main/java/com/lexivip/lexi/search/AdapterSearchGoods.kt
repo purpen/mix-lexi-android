@@ -16,14 +16,16 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
 class AdapterSearchGoods(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<AdapterSearchGoods.MultipleItem, BaseViewHolder>(list) {
-
+    private val sizeScreen:Int by lazy { ScreenUtil.getScreenWidth()-DimenUtil.dp2px(30.0) }
+    private val sizeSmall:Int by lazy { ((ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp40))*0.5).toInt() }
+    private val dp4:Int by lazy { DimenUtil.dp2px(4.0) }
     init {
         addItemType(MultipleItem.ITEM_TYPE_SPAN2, R.layout.adapter_editor_recommend)
         addItemType(MultipleItem.ITEM_TYPE_SPAN1, R.layout.adapter_editor_recommend)
     }
 
     class MultipleItem(var product: ProductBean, private var itemType: Int,spanSize:Int) : MultiItemEntity {
-        public var spanSize:Int =spanSize
+        var spanSize:Int =spanSize
         override fun getItemType(): Int {
             return itemType
         }
@@ -42,19 +44,17 @@ class AdapterSearchGoods(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
         val layoutParams: ViewGroup.LayoutParams
         val relativeLayout = helper.getView<RelativeLayout>(R.id.relativeLayout)
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        val sizeScreen = ScreenUtil.getScreenWidth()-DimenUtil.dp2px(30.0)
-        val sizeSmall = ((ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp40))*0.5).toInt()
 
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
             layoutParams = RelativeLayout.LayoutParams(sizeScreen,sizeScreen)
             relativeLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+            GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,dp4,sizeScreen)
         } else {
             layoutParams = RelativeLayout.LayoutParams(sizeSmall, sizeSmall)
             relativeLayout.layoutParams = ViewGroup.LayoutParams(sizeSmall,ViewGroup.LayoutParams.WRAP_CONTENT)
+            GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,dp4,sizeSmall)
         }
         imageView.layoutParams = layoutParams
-
-        GlideUtil.loadImageWithRadius(product.cover, imageView,DimenUtil.dp2px(4.0))
 
         helper.setText(R.id.textViewTitle,product.name)
 

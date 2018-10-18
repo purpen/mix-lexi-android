@@ -59,6 +59,19 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
         slidingTabLayout.setViewPager(customViewPager)
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            if (upMarqueeView != null) {
+                upMarqueeView.startFlipping()
+            }
+        } else {
+            if (upMarqueeView != null) {
+                upMarqueeView.stopFlipping()
+            }
+        }
+    }
+
     /**
      * 初始化头条
      */

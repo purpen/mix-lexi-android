@@ -6,6 +6,10 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -15,16 +19,38 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "boolean", "LOG_DEBUG", "true"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [ eventBusIndex : 'com.example.myapp.MyEventBusIndex' ]
             }
         }
     }
+
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\lilin\\Desktop\\lexi.jks')
+            storePassword 'lexi456'
+            keyAlias 'lexi'
+            keyPassword 'lexi456'
+        }
+    }
+
     buildTypes {
         release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    if (variant.buildType.name == "release") {
+                        def fileName = "erp_v${defaultConfig.versionName}_${releaseTime()}.apk"
+//                        output.outputFile = new File(output.outputFile.parent, fileName)
+                        outputFileName = fileName
+                    }
+                }
+            }
         }
     }
 }
@@ -62,6 +88,10 @@ dependencies {
     implementation project(':ImageAlbum')
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
 }
 
 kapt {

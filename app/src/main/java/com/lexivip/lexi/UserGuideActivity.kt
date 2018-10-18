@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.view.View
-import com.basemodule.tools.Constants
-import com.basemodule.tools.SPUtil
+import com.basemodule.tools.*
 
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.user.login.UserProfileUtil

@@ -3,10 +3,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
-import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
@@ -105,7 +102,7 @@ class CollectionDetailActivity : BaseActivity(), CollectionDetailContract.View {
     override fun setNewData(data: CollectionDetailBean.DataBean) {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(formatData(data.products))
-        GlideUtil.loadImageWithFading(data.cover,headerView.imageViewBg)
+        GlideUtil.loadImageWithDimenAndRadius(data.cover,headerView.imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(192.0))
         headerView.textViewHeadTitle.text = data.name
         headerView.textViewNum.text = "${data.products.size}件商品"
     }

@@ -95,7 +95,8 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
 
 
     private fun initBanner() {
-        banner.setImageLoader(GlideImageLoader(R.dimen.dp4))
+        val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
+        banner.setImageLoader(GlideImageLoader(R.dimen.dp4,contentW,DimenUtil.dp2px(178.0)))
         banner.setIndicatorGravity(BannerConfig.RIGHT)
     }
 
@@ -104,6 +105,18 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
         presenter.getLifeWill()
         presenter.getGuessLike()
         presenter.getWonderfulStory()
+    }
+
+    /**
+     * 界面不可见停止滚动
+     */
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (hidden){
+            if (banner!=null) banner.stopAutoPlay()
+        }else{
+            if (banner!=null) banner.startAutoPlay()
+        }
+        super.onHiddenChanged(hidden)
     }
 
     /**

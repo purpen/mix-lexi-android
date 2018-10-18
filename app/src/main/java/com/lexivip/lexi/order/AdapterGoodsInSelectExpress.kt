@@ -12,7 +12,7 @@ class AdapterGoodsInSelectExpress(@LayoutRes res: Int) : BaseQuickAdapter<Produc
 
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImage(item.cover,imageView)
+        GlideUtil.loadImageWithFading(item.cover,imageView)
         helper.setText(R.id.textViewName,item.product_name)
     }
 }

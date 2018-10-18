@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -38,7 +37,6 @@ import com.lexivip.lexi.beans.UserBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
-import com.lexivip.lexi.user.login.UserProfileUtil
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration

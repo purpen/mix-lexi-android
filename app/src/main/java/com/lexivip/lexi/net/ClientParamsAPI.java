@@ -627,7 +627,7 @@ public class ClientParamsAPI {
     public static HashMap<String, Object> getShowWindowParams(int page) {
         HashMap<String, Object> params = generateCommonParams();
         params.put("page", String.valueOf(page));
-        params.put("per_page",Constants.PAGE_SIZE);
+        params.put("per_page","5");
         return params;
     }
 

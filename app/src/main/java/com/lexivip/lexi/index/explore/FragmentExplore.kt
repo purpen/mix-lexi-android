@@ -1,6 +1,8 @@
 package com.lexivip.lexi.index.explore
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import com.basemodule.tools.DimenUtil
+import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
@@ -203,10 +205,21 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      */
     private fun initBanner() {
         presenter.getBanners()
-        banner.setImageLoader(GlideImageLoader(R.dimen.dp4))
+        val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
+        banner.setImageLoader(GlideImageLoader(R.dimen.dp4,contentW,DimenUtil.dp2px(112.0)))
         banner.setIndicatorGravity(BannerConfig.RIGHT)
 
     }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (isVisibleToUser){
+            if (banner!=null) banner.startAutoPlay()
+        }else{
+            if (banner!=null) banner.stopAutoPlay()
+        }
+        super.setUserVisibleHint(isVisibleToUser)
+    }
+
 
     /**
      * 设置Banner数据
