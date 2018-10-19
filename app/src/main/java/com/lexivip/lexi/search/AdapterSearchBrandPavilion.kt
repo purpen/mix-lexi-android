@@ -18,12 +18,13 @@ import com.lexivip.lexi.mine.designPavilion.DesignPavilionBean
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
 
 class AdapterSearchBrandPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionBean, BaseViewHolder>(layoutResId) {
-
+    private val dp4: Int by lazy { DimenUtil.dp2px(4.0) }
+    private val dp45: Int by lazy { DimenUtil.dp2px(45.0) }
     override fun convert(helper: BaseViewHolder, item: DesignPavilionBean) {
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)
 
-        GlideUtil.loadImageWithRadius(item.logo, imageViewShop, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewShop, dp4,dp45)
 
         helper.setText(R.id.textViewTitle, item.name)
 

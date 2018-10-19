@@ -19,13 +19,14 @@ import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 
 class AdapterFeatureBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavilionListBean.DataBean.StoresBean, BaseViewHolder>(layoutResId) {
     private val size10: Int by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp10) }
+    private val size60: Int by lazy { DimenUtil.dp2px(60.0) }
     private val size4: Int by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp4) }
     private val color: Int by lazy { Util.getColor(android.R.color.transparent) }
     private val context: Context by lazy { AppApplication.getContext() }
 
     override fun convert(helper: BaseViewHolder, item: BrandPavilionListBean.DataBean.StoresBean) {
         val imageViewLogo = helper.getView<ImageView>(R.id.imageViewLogo)
-        GlideUtil.loadImageWithRadius(item.logo, imageViewLogo, size4)
+        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewLogo, size4,size60)
         helper.setText(R.id.textViewName, item.name)
         helper.setText(R.id.textViewAddress, item.country + item.province + item.city)
         helper.setText(R.id.textViewDesc, item.tag_line)
@@ -37,9 +38,9 @@ class AdapterFeatureBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavi
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
+        adapter.setNewData(item.products)
         if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(RecyclerViewDivider(context, LinearLayoutManager.HORIZONTAL, size10, color))
         //设置产品数据
-        adapter.setNewData(item.products)
 
         //跳转商品详情
         adapter.setOnItemClickListener { _, _, position ->

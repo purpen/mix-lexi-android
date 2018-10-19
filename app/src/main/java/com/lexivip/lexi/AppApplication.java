@@ -8,6 +8,8 @@ import android.content.Context;
 //import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import com.basemodule.tools.BaseModuleContext;
+import com.basemodule.tools.LogUtil;
+
 import com.example.myapp.MyEventBusIndex;
 import com.qiniu.android.common.AutoZone;
 import com.qiniu.android.storage.Configuration;
@@ -15,9 +17,14 @@ import com.qiniu.android.storage.UploadManager;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
+import com.squareup.leakcanary.LeakCanary;
+
+
 import org.greenrobot.eventbus.EventBus;
 
 public class AppApplication extends Application {
+
+
     private static Application instance;
 
     public static Application getContext() {
@@ -30,12 +37,12 @@ public class AppApplication extends Application {
         super.onCreate();
         instance = this;
 //        initPush();
-//        if (BuildConfig.LOG_DEBUG) {
-//            if (LeakCanary.isInAnalyzerProcess(this)) {
-//                return;
-//            }
-//            LeakCanary.install(this);
-//        }
+        if (BuildConfig.LOG_DEBUG) {
+            if (LeakCanary.isInAnalyzerProcess(this)) {
+                return;
+            }
+            LeakCanary.install(this);
+        }
 
         BaseModuleContext.init(this);
         //使用时才自动生成MyEventBusIndex

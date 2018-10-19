@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import com.basemodule.tools.DimenUtil
@@ -15,6 +16,9 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import kotlinx.android.synthetic.main.fragment_all_goods.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
@@ -36,6 +40,7 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
     }
 
     override fun initView() {
+        EventBus.getDefault().register(this)
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val headerView = View(context)
         headerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp10))
@@ -184,5 +189,22 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
 
     override fun goPage() {
 
+    }
+
+    //上架成功刷新adapter
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun putAwaySuccess(productBean: ProductBean) {
+        for (item in adapter.data){
+            if (TextUtils.equals(item.rid,productBean.rid)){
+                item.have_distributed = true
+                adapter.notifyDataSetChanged()
+                break
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 }

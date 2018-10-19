@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.LogUtil
 
 /**
@@ -39,6 +40,16 @@ abstract class BaseActivity : AppCompatActivity() {
 
     open fun requestNet() {
 
+    }
+
+    override fun onRestart() {
+        GlideUtil.resumeRequests(this)
+        super.onRestart()
+    }
+
+    override fun onPause() {
+        GlideUtil.pauseRequests(this)
+        super.onPause()
     }
 
     override fun onResume() {

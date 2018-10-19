@@ -10,9 +10,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.lexivip.lexi.*
@@ -66,17 +64,30 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 //        swipeRefreshLayout.isRefreshing = false
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            if (upMarqueeView != null) {
+                upMarqueeView.startFlipping()
+            }
+        } else {
+            if (upMarqueeView != null) {
+                upMarqueeView.stopFlipping()
+            }
+        }
+    }
+
     /**
      * 初始化种草清单
      */
     private fun initZCManifest() {
         presenter.getZCManifest()
         adapterZCManifest = ZCManifestAdapter(R.layout.adapter_zc_manifest)
-        val staggeredGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        staggeredGridLayoutManager.setScrollEnabled(false)
-        recyclerViewZCManifest.layoutManager = staggeredGridLayoutManager
+        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(),2)
+        gridLayoutManager.setScrollEnabled(false)
+        recyclerViewZCManifest.layoutManager = gridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
-        recyclerViewZCManifest.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        recyclerViewZCManifest.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
     }
 
     /**
@@ -98,7 +109,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewGoodSelection.setHasFixedSize(true)
         recyclerViewGoodSelection.layoutManager = gridLayoutManager
         recyclerViewGoodSelection.adapter = adapterGoodSelection
-        recyclerViewGoodSelection.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        recyclerViewGoodSelection.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
     }
 
     /**
@@ -157,7 +168,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun initHotRecommendBanner() {
         presenter.getHotRecommendBanner()
-        hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4))
+        val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
+        hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4, contentW, DimenUtil.dp2px(135.0)))
         hotBanner.setBannerStyle(BannerConfig.NOT_INDICATOR)
     }
 
@@ -231,7 +243,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
-    override fun setTodayRecommendData(products: List<ProductBean>) {
+    override fun setTodayRecommendData(products: MutableList<TodayRecommendBean.DataBean.DailyRecommendsBean>) {
         adapterTodayRecommend.setNewData(products)
     }
 
@@ -271,7 +283,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      * 设置通知
      */
     private fun setNoticeTextViewData(bean: HeadLineBean.DataBean.HeadlinesBean, textView: TextView) {
-        if (bean.username==null) bean.username=""
+        if (bean.username == null) bean.username = ""
         when (bean.event) {
             1 -> { //开通生活馆 人名蓝色
                 val content = "${bean.username} ${bean.time}${bean.time_info}开通了自己的生活馆"
@@ -330,7 +342,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     }
 
 
-
     override fun setPresenter(presenter: SelectionContract.Presenter?) {
         setPresenter(presenter)
     }
@@ -360,6 +371,15 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             PageUtil.jump2ArticleDetailActivity(item)
         }
 
+        //今日推荐
+        adapterTodayRecommend.setOnItemClickListener { _, _, position ->
+            val item = adapterTodayRecommend.getItem(position) ?: return@setOnItemClickListener
+            val bean = LifeWillBean()
+            bean.rid = item.recommend_id
+            bean.channel_name = item.channel_name
+            PageUtil.jump2ArticleDetailActivity(bean)
+        }
+
         //查看全部优选
         textViewMoreGoodSelection.setOnClickListener {
             startActivity(Intent(activity, AllGoodsSelectionActivity::class.java))
@@ -368,12 +388,12 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.buttonOpenShop ->{ //开馆指引 https://h5.lexivip.com/shop/guide
-                startActivity(Intent(activity,OpenLifeHouseActivity::class.java))
+            R.id.buttonOpenShop -> { //开馆指引 https://h5.lexivip.com/shop/guide
+                startActivity(Intent(activity, OpenLifeHouseActivity::class.java))
             }
-            R.id.textViewMoreZCManifest->{ //全部种草清单
+            R.id.textViewMoreZCManifest -> { //全部种草清单
                 val intent = Intent(activity, ComposerStoryActivity::class.java)
-                intent.putExtra(ComposerStoryActivity::class.java.simpleName,R.mipmap.icon_image_seeding)
+                intent.putExtra(ComposerStoryActivity::class.java.simpleName, R.mipmap.icon_image_seeding)
                 startActivity(intent)
             }
             R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
@@ -414,24 +434,5 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     override fun onStop() {
         super.onStop()
         hotBanner.stopAutoPlay()
-    }
-
-    private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
-        private val color: Int = Util.getColor(android.R.color.white)
-        private val height = 20f
-        override fun getDivider(itemPosition: Int): Y_Divider? {
-            val divider: Y_Divider?
-            if (itemPosition % 2 != 0) {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .setLeftSideLine(true, color, 10f, 0f, 0f)
-                        .create()
-            } else {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .create()
-            }
-            return divider
-        }
     }
 }

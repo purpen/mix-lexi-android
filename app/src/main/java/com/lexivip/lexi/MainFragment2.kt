@@ -3,19 +3,12 @@ package com.lexivip.lexi
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.discover.*
-import com.yanyusong.y_divideritemdecoration.Y_Divider
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
-import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_main2.*
 import kotlinx.android.synthetic.main.view_custom_headview.view.*
@@ -55,22 +48,22 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
      * 初始化精彩故事
      */
     private fun initWonderfulStory() {
-        val staggeredGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        staggeredGridLayoutManager.setScrollEnabled(false)
-        recyclerViewWonderfulStory.layoutManager = staggeredGridLayoutManager
+        val customGridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(),2)
+        customGridLayoutManager.setScrollEnabled(false)
+        recyclerViewWonderfulStory.layoutManager = customGridLayoutManager
         recyclerViewWonderfulStory.adapter = adapterWonderfulStory
-        recyclerViewWonderfulStory.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        recyclerViewWonderfulStory.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
     }
 
     /**
      * 初始化猜你喜欢
      */
     private fun initGuessLike() {
-        val staggeredGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        staggeredGridLayoutManager.setScrollEnabled(false)
-        recyclerViewGuess.layoutManager = staggeredGridLayoutManager
+        val customGridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(),2)
+        customGridLayoutManager.setScrollEnabled(false)
+        recyclerViewGuess.layoutManager = customGridLayoutManager
         recyclerViewGuess.adapter = adapterGuessLike
-        recyclerViewGuess.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        recyclerViewGuess.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
     }
 
     /**
@@ -98,7 +91,8 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
 
 
     private fun initBanner() {
-        banner.setImageLoader(GlideImageLoader(R.dimen.dp4))
+        val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
+        banner.setImageLoader(GlideImageLoader(R.dimen.dp4,contentW,DimenUtil.dp2px(178.0)))
         banner.setIndicatorGravity(BannerConfig.RIGHT)
     }
 
@@ -107,6 +101,18 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
         presenter.getLifeWill()
         presenter.getGuessLike()
         presenter.getWonderfulStory()
+    }
+
+    /**
+     * 界面不可见停止滚动
+     */
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (hidden){
+            if (banner!=null) banner.stopAutoPlay()
+        }else{
+            if (banner!=null) banner.startAutoPlay()
+        }
+        super.onHiddenChanged(hidden)
     }
 
     /**
@@ -176,24 +182,4 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
     override fun goPage() {
 
     }
-
-    private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
-        private val color: Int = Util.getColor(android.R.color.white)
-        private val height = 20f
-        override fun getDivider(itemPosition: Int): Y_Divider? {
-            var divider: Y_Divider? = null
-            if (itemPosition % 2 != 0) {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .setLeftSideLine(true, color, 10f, 0f, 0f)
-                        .create()
-            } else {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .create()
-            }
-            return divider
-        }
-    }
-
 }

@@ -13,8 +13,8 @@ class PutAwayActivityPresenter(view: PutAwayActivityContract.View) : PutAwayActi
 
 
 
-    override fun putAwayGoods(rid: String, store_rid: String, content: String) {
-        dataSource.putAwayGoods(rid,store_rid,content, object : IDataSource.HttpRequestCallBack {
+    override fun putAwayGoods(rid: String, content: String) {
+        dataSource.putAwayGoods(rid,content, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }

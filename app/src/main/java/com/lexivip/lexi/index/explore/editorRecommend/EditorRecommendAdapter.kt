@@ -13,10 +13,12 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
 class EditorRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(layoutResId) {
-    override fun convert(helper: BaseViewHolder, item: ProductBean) {
+    private val pixelSize:Int by lazy { DimenUtil.dp2px(135.0) }
+    private val dp4:Int by lazy { DimenUtil.dp2px(4.0) }
+    private val layoutParams:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(pixelSize,RelativeLayout.LayoutParams.WRAP_CONTENT) }
 
-        val pixelSize = DimenUtil.getDimensionPixelSize(R.dimen.dp135)
-        helper.itemView.layoutParams = RelativeLayout.LayoutParams(pixelSize,RelativeLayout.LayoutParams.WRAP_CONTENT)
+    override fun convert(helper: BaseViewHolder, item: ProductBean) {
+        helper.itemView.layoutParams = layoutParams
 
         val imageViewStatus = helper.getView<View>(R.id.imageViewStatus)
         if (item.is_sold_out){
@@ -34,7 +36,7 @@ class EditorRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, B
         }
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithRadius(item.cover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,dp4,pixelSize)
 
         helper.setText(R.id.textViewTitle,item.name)
 

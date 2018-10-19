@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="244dp"
     android:layout_height="219dp"
-    android:background="@drawable/border_image_radius4"
     >
 
     <ImageView

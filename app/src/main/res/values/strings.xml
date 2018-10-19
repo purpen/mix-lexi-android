@@ -124,6 +124,7 @@
     <string name="title_selection_goods_center">选品中心</string>
     <string name="text_sell">卖</string>
     <string name="text_putaway">上架</string>
+    <string name="text_already_putaway">已上架</string>
     <string name="text_look_more_goods">展开查看更多好物</string>
     <string name="text_sort_synthesize">综合排序</string>
     <string name="text_sort_profit">利润</string>

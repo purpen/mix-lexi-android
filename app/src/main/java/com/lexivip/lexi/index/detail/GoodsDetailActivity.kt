@@ -109,7 +109,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         adapter.setHeaderAndEmpty(true)
 
-        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0))
+        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(336.0)))
         headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
         headerView.banner.isAutoPlay(false)
         this.presenter = GoodsDetailPresenter(this)
@@ -171,6 +171,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      */
     override fun updateFavoriteState(favorite: Boolean) {
         if (goodsData == null) return
+        presenter.getFavoriteUsers(productId)
         goodsData?.is_like = favorite
         if (favorite) {
             goodsData!!.like_count++
@@ -220,7 +221,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             imgUrls.add(product.cover)
         }
 
-        GlideUtil.loadImage(data.logo, headerView.imageViewLogo)
+        GlideUtil.loadImageWithFading(data.logo, headerView.imageViewLogo)
 
         headerView.textViewShopName.text = data.name
 
@@ -353,6 +354,11 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         goodsData = data
 
+        if(TextUtils.isEmpty(data.store_rid)){
+            LogUtil.e("店铺store_id不存在goodsId=$productId")
+            return
+        }
+
         // 获取交货时间
         presenter.getExpressTime(data.fid, data.store_rid, productId)
 
@@ -428,7 +434,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         headerView.banner.update(urlList,titleList)
         headerView.banner.start()
-
         headerView.banner.setOnBannerListener { position ->
             if (goodsData==null || skuData==null) return@setOnBannerListener
             val intent = Intent(this,GoodsImageViewActivity::class.java)

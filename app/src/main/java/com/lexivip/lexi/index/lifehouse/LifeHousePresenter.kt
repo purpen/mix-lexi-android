@@ -3,6 +3,7 @@ import android.text.TextUtils
 import android.view.View
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.tools.LogUtil
+import com.basemodule.tools.SPUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -11,6 +12,7 @@ import com.lexivip.lexi.index.bean.FavoriteBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendBean
 import com.lexivip.lexi.net.NetStatusBean
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean
+import com.lexivip.lexi.user.login.UserProfileUtil
 import org.json.JSONArray
 import java.io.IOException
 
@@ -22,8 +24,9 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
     private val dataSource: LifeHouseModel by lazy { LifeHouseModel() }
 
-    override fun loadData(cid: String) {
-        dataSource.loadData(cid, page,object : IDataSource.HttpRequestCallBack {
+    override fun loadData(isRefresh:Boolean) {
+        if (isRefresh) page = 1
+        dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -46,8 +49,8 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
         })
     }
 
-    override fun loadMoreData(cid: String) {
-        dataSource.loadData(cid, page, object : IDataSource.HttpRequestCallBack {
+    override fun loadMoreData() {
+        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
                 val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
@@ -115,7 +118,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
      * 获取小b生活馆信息
      */
     fun getLifeHouse() {
-        dataSource.getLifeHouse( object : IDataSource.HttpRequestCallBack {
+        dataSource.getLifeHouse(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val lifeHouseBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
                 if (lifeHouseBean.success) {

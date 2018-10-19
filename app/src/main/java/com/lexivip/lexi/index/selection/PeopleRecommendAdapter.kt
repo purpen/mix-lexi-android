@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.selection
+
 import android.graphics.Paint
 import android.view.View
 import android.widget.ImageView
@@ -14,10 +15,10 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
 class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<PeopleRecommendAdapter.MultipleItem, BaseViewHolder>(list) {
+    private val dp4: Int by lazy { DimenUtil.dp2px(4.0) }
+    private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth() - DimenUtil.dp2px(40.0)) / 2 }
 
-    private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))/2 }
-
-    private val sizeSpan1 by lazy { (ScreenUtil.getScreenWidth()-DimenUtil.dp2px(48.0))/3 }
+    private val sizeSpan1 by lazy { (ScreenUtil.getScreenWidth() - DimenUtil.dp2px(48.0)) / 3 }
 
     init {
         addItemType(MultipleItem.ITEM_TYPE_SPAN2, R.layout.adapter_editor_recommend)
@@ -47,17 +48,16 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
 
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        val resources = imageView.resources
 
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
             layoutParams = RelativeLayout.LayoutParams(sizeSpan2, sizeSpan2)
             imageView.layoutParams = layoutParams
+            GlideUtil.loadImageWithDimenAndRadius(itemProduct.cover, imageView, dp4, sizeSpan2)
         } else {
             layoutParams = RelativeLayout.LayoutParams(sizeSpan1, sizeSpan1)
             imageView.layoutParams = layoutParams
+            GlideUtil.loadImageWithDimenAndRadius(itemProduct.cover, imageView, dp4, sizeSpan1)
         }
-
-        GlideUtil.loadImageWithRadius(itemProduct.cover, imageView, resources.getDimensionPixelSize(R.dimen.dp5))
 
 
         val imageViewStatus = helper.getView<View>(R.id.imageViewStatus)
@@ -77,12 +77,12 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
 
         helper.setText(R.id.textViewTitle, itemProduct.name)
 
-        val textViewOldPrice =helper.getView<TextView>(R.id.textViewOldPrice)
+        val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)
 
-        if (itemProduct.min_sale_price ==0.0){ //折扣价为0,显示真实价格
+        if (itemProduct.min_sale_price == 0.0) { //折扣价为0,显示真实价格
             helper.setText(R.id.textViewPrice, "${itemProduct.min_price}")
             textViewOldPrice.visibility = View.GONE
-        }else{ //折扣价不为0显示折扣价格和带划线的真实价格
+        } else { //折扣价不为0显示折扣价格和带划线的真实价格
             textViewOldPrice.visibility = View.VISIBLE
             helper.setText(R.id.textViewPrice, "${itemProduct.min_sale_price}")
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.lexivip.lexi.order.ExpressInfoBean;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ProductBean implements Parcelable {
     //商品默认快递id
     public String express_id;
     public boolean isRight;
-    public HashMap<String,String> map;
+    public HashMap<String, String> map;
     public List<ExpressInfoBean> express;
     public String category_id;
     public String commission_price;
@@ -67,7 +68,7 @@ public class ProductBean implements Parcelable {
     public String delivery_city;
     public int delivery_country_id;
     public String features;
-    public String have_distributed;
+    public boolean have_distributed;
     public String id_code;
     public String s_color;
     public String s_model;
@@ -138,7 +139,7 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.delivery_city);
         dest.writeInt(this.delivery_country_id);
         dest.writeString(this.features);
-        dest.writeString(this.have_distributed);
+        dest.writeByte(this.have_distributed ? (byte) 1 : (byte) 0);
         dest.writeString(this.id_code);
         dest.writeString(this.s_color);
         dest.writeString(this.s_model);
@@ -199,7 +200,7 @@ public class ProductBean implements Parcelable {
         this.delivery_city = in.readString();
         this.delivery_country_id = in.readInt();
         this.features = in.readString();
-        this.have_distributed = in.readString();
+        this.have_distributed = in.readByte() != 0;
         this.id_code = in.readString();
         this.s_color = in.readString();
         this.s_model = in.readString();

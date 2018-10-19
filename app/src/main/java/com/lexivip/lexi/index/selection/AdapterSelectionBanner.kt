@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.R
 
 class AdapterSelectionBanner(@LayoutRes res: Int) : BaseQuickAdapter<String, BaseViewHolder>(res){
+    private val dp4: Int by lazy { DimenUtil.dp2px(4.0) }
     private lateinit var parent:ViewGroup
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         this.parent = parent
@@ -27,12 +28,9 @@ class AdapterSelectionBanner(@LayoutRes res: Int) : BaseQuickAdapter<String, Bas
         val padding = DimenUtil.dp2px(mPagePadding.toDouble())
 
         helper.itemView.setPadding(padding, 0, padding, 0)
-        val leftMarin = if (helper.adapterPosition == 0) padding + DimenUtil.dp2px(mShowLeftCardWidth.toDouble()) else 0
-        val rightMarin = if (helper.adapterPosition == itemCount - 1) padding + DimenUtil.dp2px(mShowLeftCardWidth.toDouble()) else 0
         setViewMargin(helper.itemView, 0, 0, 0, 0)
-
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithRadius(item,imageView,imageView.resources.getDimensionPixelSize(R.dimen.dp5))
+        GlideUtil.loadImageWithRadius(item,imageView,dp4)
     }
 
     private fun setViewMargin(view: View, left: Int, top: Int, right: Int, bottom: Int) {

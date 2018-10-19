@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lexivip.lexi">
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAG"/>
@@ -29,7 +30,7 @@
         </provider>
 
         <activity
-            android:name="com.lexivip.lexi.UserGuideActivity"
+            android:name=".UserGuideActivity"
             android:label="@string/app_name"
             android:theme="@style/NoTitleFullscreen"
             android:launchMode="singleInstance"
@@ -41,34 +42,64 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.lexivip.lexi.welcome.WelcomeActivity" />
-        <activity android:name="com.lexivip.lexi.user.login.LoginActivity" android:launchMode="singleTask"/>
-        <activity android:name="com.lexivip.lexi.index.detail.GoodsDetailActivity" />
-        <activity android:name="com.lexivip.lexi.user.register.RegisterActivity" android:launchMode="singleTask"/>
-        <activity android:name="com.lexivip.lexi.user.password.ForgetPasswordActivity"/>
-        <activity android:name="com.lexivip.lexi.user.setting.SettingActivity"/>
-        <activity android:name="com.lexivip.lexi.MainActivity" android:launchMode="singleTask"/>
-        <activity android:name="com.lexivip.lexi.user.password.SetNewPasswordActivity" />
-        <activity android:name="com.lexivip.lexi.user.areacode.SelectCountryOrAreaActivity" />
-        <activity android:name="com.lexivip.lexi.user.register.SetPasswordActivity" />
-        <activity android:name="com.lexivip.lexi.user.completeinfo.CompleteInfoActivity" />
-        <activity android:name="com.lexivip.lexi.album.ImageCropActivity" />
-        <activity android:name="com.lexivip.lexi.album.ImageSelectActivity" />
-        <activity android:name="com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity" />
-        <activity android:name="com.lexivip.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity" />
-        <activity android:name="com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailActivity" />
-        <activity android:name="com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListActivity" />
-        <activity android:name="com.lexivip.lexi.brandPavilion.BrandPavilionListActivity" />
-        <activity android:name="com.lexivip.lexi.mine.dynamic.DynamicActivity" />
-        <activity android:name="com.lexivip.lexi.index.detail.FavoriteUserListActivity" />
-        <activity android:name="com.lexivip.lexi.order.SelectExpressAddressActivity" />
-        <activity android:name="com.lexivip.lexi.order.ConfirmOrderActivity" />
-        <activity android:name="com.lexivip.lexi.address.AddressActivity"
+        <activity android:name=".welcome.WelcomeActivity" />
+        <activity android:name=".user.login.LoginActivity" android:launchMode="singleTask"/>
+        <activity android:name=".index.detail.GoodsDetailActivity" />
+        <activity android:name=".user.register.RegisterActivity" android:launchMode="singleTask"/>
+        <activity android:name=".user.password.ForgetPasswordActivity"/>
+        <activity android:name=".user.setting.SettingActivity"/>
+        <activity android:name=".MainActivity" android:launchMode="singleTask"/>
+        <activity android:name=".user.password.SetNewPasswordActivity" />
+        <activity android:name=".user.areacode.SelectCountryOrAreaActivity" />
+        <activity android:name=".user.register.SetPasswordActivity" />
+        <activity android:name=".user.completeinfo.CompleteInfoActivity" />
+        <activity android:name=".album.ImageCropActivity" />
+        <activity android:name=".album.ImageSelectActivity" />
+        <activity android:name=".selectionGoodsCenter.SelectionGoodsCenterActivity" />
+        <activity android:name=".discoverLifeAesthetics.DiscoverLifeAestheticsActivity" />
+        <activity android:name=".discoverLifeAesthetics.ShowWindowDetailActivity" />
+        <activity android:name=".discoverLifeAesthetics.ShowWindowCommentListActivity" />
+        <activity android:name=".brandPavilion.BrandPavilionListActivity" />
+        <activity android:name=".mine.dynamic.DynamicActivity" />
+        <activity android:name=".index.detail.FavoriteUserListActivity" />
+        <activity android:name=".order.SelectExpressAddressActivity" />
+        <activity android:name=".order.ConfirmOrderActivity" />
+        <activity android:name=".address.AddressActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name="com.lexivip.lexi.orderList.OrderListActivity" />
-        <activity android:name="com.lexivip.lexi.orderList.LogisticsActivity"/>
-        <activity android:name="com.lexivip.lexi.orderList.EvaluateActivity"
+        <activity android:name=".orderList.OrderListActivity" />
+        <activity android:name=".orderList.LogisticsActivity"/>
+        <activity android:name=".orderList.EvaluateActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <activity android:name=".orderList.OrderDetailActivity"/>
+        <activity android:name=".order.SelectExpressActivity" />
+        <activity android:name=".search.SearchResultActivity" android:launchMode="singleTask"/>
+        <activity android:name=".search.SearchActivity" android:launchMode="singleTask"/>
+        <activity android:name=".index.explore.editorRecommend.AllEditorRecommendActivity" />
+        <activity android:name=".index.explore.collection.CollectionListActivity" />
+        <activity android:name=".index.explore.collection.CollectionDetailActivity" />
+        <activity android:name=".index.explore.newGoods.AllNewGoodsActivity" />
+        <activity android:name=".index.explore.goodDesign.AllGoodDesignActivity" />
+        <activity android:name=".index.explore.goodsIn100.AllGoodsIn100Activity" />
+        <activity android:name=".index.selection.goodsSelection.AllGoodsSelectionActivity" />
+        <activity android:name=".mine.like.likeGoods.AllLikeGoodsActivity" />
+        <activity android:name=".mine.enshrine.recentLook.AllRecentLookGoodsActivity" />
+        <activity android:name=".index.explore.goodsClassify.GoodsClassifyActivity" />
+        <activity android:name=".pay.SelectPayWayActivity" />
+        <activity android:name=".pay.PayResultActivity" />
+        <activity android:name=".lifeShop.AccountDetailActivity" />
+        <activity android:name=".lifeShop.AccountStatementActivity" />
+        <activity android:name=".lifeShop.PutForwardActivity" />
+        <activity android:name=".lifeShop.TransactionOrderActivity" />
+        <activity android:name=".lifeShop.TransactionRecordActivity" />
+        <activity android:name=".search.OrderCustomMadeGoodsActivity" />
+        <activity android:name=".brandHouse.BrandHouseActivity" />
+        <activity android:name=".selectionGoodsCenter.PutAwayActivity" />
+        <activity android:name=".brandHouse.AboutBrandHouseActivity"/>
+        <activity android:name=".index.detail.GoodsImageViewActivity" />
+        <activity android:name=".index.selection.OpenLifeHouseActivity" />
+        <activity android:name=".index.discover.ComposerStoryActivity" />
+        <activity android:name=".user.setting.userData.EditUserDataActivity"/>
+        <activity android:name=".index.discover.ArticleDetailActivity" />
         <activity android:name="com.lexivip.lexi.orderList.OrderDetailActivity"/>
         <activity android:name="com.lexivip.lexi.order.SelectExpressActivity" />
         <activity android:name="com.lexivip.lexi.search.SearchResultActivity" android:launchMode="singleTask"/>

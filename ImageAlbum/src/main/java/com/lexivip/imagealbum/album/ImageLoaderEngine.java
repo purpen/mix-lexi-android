@@ -33,12 +33,12 @@ public class ImageLoaderEngine implements LoadEngine {
 
     @Override
     public void displayImage(String path, ImageView imageView) {
-        GlideUtil.loadImage(path, imageView);
+        GlideUtil.loadImageWithFading(path, imageView);
     }
 
     @Override
     public void displayCameraItem(ImageView imageView) {
-        GlideUtil.loadImage(img_camera, imageView);
+        GlideUtil.loadImageWithFading(img_camera, imageView);
     }
 
     @Override

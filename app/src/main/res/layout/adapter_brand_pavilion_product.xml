@@ -8,5 +8,6 @@
     android:layout_marginStart="@dimen/dp5"
     android:scaleType="fitXY"
     android:background="@android:color/white"
+    android:adjustViewBounds="true"
     android:padding="@dimen/dp1"
     xmlns:android="http://schemas.android.com/apk/res/android" />

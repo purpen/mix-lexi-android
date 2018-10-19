@@ -14,15 +14,19 @@ import com.lexivip.lexi.beans.LifeWillBean
 
 class ZCManifestAdapter(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseViewHolder>(layoutResId) {
     private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))/2 }
-    private val size106 by lazy { DimenUtil.dp2px(106.0)}
+    private val dp106 by lazy { DimenUtil.dp2px(106.0)}
+    private val dp20 by lazy { DimenUtil.dp2px(20.0)}
+    private val dp4 by lazy { DimenUtil.dp2px(4.0)}
+    private val layoutParams by lazy { RelativeLayout.LayoutParams(sizeSpan2,dp106)}
+    private val itemLayoutParams by lazy { RelativeLayout.LayoutParams(sizeSpan2,ViewGroup.LayoutParams.WRAP_CONTENT)}
 
     override fun convert(helper: BaseViewHolder, item: LifeWillBean) {
 
-        helper.itemView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2,ViewGroup.LayoutParams.WRAP_CONTENT)
+        helper.itemView.layoutParams = itemLayoutParams
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        imageView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2,size106)
-        GlideUtil.loadImageWithRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+        imageView.layoutParams = layoutParams
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView,dp4,sizeSpan2,dp106)
 
         helper.setText(R.id.textViewTitle0, item.title)
         helper.setText(R.id.textViewTitle1, item.description)
@@ -31,7 +35,7 @@ class ZCManifestAdapter(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseV
         textViewName.text = item.user_name
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.cover, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp20))
+        GlideUtil.loadCircleImageWidthDimen(item.cover, imageViewAvatar, dp20)
 
 
     }

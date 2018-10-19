@@ -51,7 +51,7 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
 
     override fun setNewData(data: DynamicBean.DataBean) {
         swipeRefreshLayout.isRefreshing = false
-        GlideUtil.loadImage(data.bg_cover,headerView.imageViewHeader)
+        GlideUtil.loadImageWithFading(data.bg_cover,headerView.imageViewHeader)
         GlideUtil.loadCircleImageWidthDimen(data.user_avatar,headerView.imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp60))
         headerView.textViewName.text = data.username
     }

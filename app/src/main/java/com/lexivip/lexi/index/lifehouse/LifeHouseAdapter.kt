@@ -20,6 +20,7 @@ import com.lexivip.lexi.beans.ProductBean
 
 
 class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res){
+    private val dp87:Int by lazy { DimenUtil.dp2px(87.0) }
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
         helper.setText(R.id.textView0, item.name)
 
@@ -61,7 +62,7 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
         GlideUtil.loadCircleImageWidthDimen(item.cover,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp28))
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
-        GlideUtil.loadImageWithFading(item.cover, imageView)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView,0,dp87)
 
         //删除分销商品
         helper.addOnClickListener(R.id.imageViewDelete)

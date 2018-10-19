@@ -49,9 +49,9 @@ open class PutAwayActivityModel {
     }
 
 
-    fun putAwayGoods(rid: String, store_rid: String, content: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+    fun putAwayGoods(rid: String, content: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getPutAwayGoodsParams(rid, store_rid, content)
+        val params = ClientParamsAPI.getPutAwayGoodsParams(rid,content)
 
         HttpRequest.sendRequest(HttpRequest.POST, URL.PUT_AWAY_GOODS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {

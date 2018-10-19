@@ -104,6 +104,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/dp20"
             android:paddingEnd="@dimen/dp20"
+            android:overScrollMode="never"
             android:background="@color/color_f6f5f5"
             />
 

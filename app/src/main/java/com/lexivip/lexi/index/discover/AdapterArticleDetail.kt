@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -19,6 +20,9 @@ import org.json.JSONObject
 class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMultiItemQuickAdapter<AdapterArticleDetail.MultipleItem, BaseViewHolder>(list) {
     private val channelName:String by lazy { channelName }
     private val dp15:Int by lazy { DimenUtil.dp2px(15.0) }
+    private val dp87:Int by lazy { DimenUtil.dp2px(87.0) }
+    private val dp246:Int by lazy { DimenUtil.dp2px(246.0) }
+    private val screenW:Int by lazy { ScreenUtil.getScreenWidth() }
     init {
         addItemType(MultipleItem.TEXT_ITEM_TYPE, R.layout.adapter_goods_detail_text)
         addItemType(MultipleItem.IMAGE_ITEM_TYPE, R.layout.adapter_article_detail_image)
@@ -58,7 +62,7 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 }else{
                     imageView.setPadding(0,0,0,0)
                 }
-                GlideUtil.loadImageWithFading(content, imageView)
+                GlideUtil.loadImageAdjustImageViewDimen(content, imageView,0,screenW,dp246)
             }
 
             MultipleItem.LARGE_PRODUCT_ITEM_TYPE -> {
@@ -71,7 +75,7 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 val is_free_postage = content.optBoolean("is_free_postage")
                 val rid = content.optString("rid")
                 val imageView = helper.getView<ImageView>(R.id.imageView)
-                GlideUtil.loadImageWithFading(cover, imageView)
+                GlideUtil.loadImageAdjustImageViewDimen(cover, imageView,0,screenW,dp246)
 
                 helper.setText(R.id.textViewName, name)
 
@@ -118,7 +122,7 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 val rid = content.optString("rid")
 
                 val imageView = helper.getView<ImageView>(R.id.imageView)
-                GlideUtil.loadImageWithFading(cover, imageView)
+                GlideUtil.loadImageAdjustImageViewDimen(cover, imageView,0,dp87,dp87)
                 helper.setText(R.id.textViewName, name)
 
                 val imageViewFreeExpress = helper.getView<ImageView>(R.id.imageViewFreeExpress)

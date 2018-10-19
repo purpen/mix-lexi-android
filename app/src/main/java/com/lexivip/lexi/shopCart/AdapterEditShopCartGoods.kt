@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -15,11 +16,11 @@ import com.lexivip.lexi.view.AddSubView
 import org.greenrobot.eventbus.EventBus
 
 class AdapterEditShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.DataBean.ItemsBean, BaseViewHolder>(res) {
-
+    private val dp70: Int by lazy { DimenUtil.dp2px(70.0) }
     override fun convert(helper: BaseViewHolder, item: ShopCartBean.DataBean.ItemsBean) {
         val product = item.product
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithFading(product.cover, imageView)
+        GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,0,dp70)
         helper.setText(R.id.textViewName, product.product_name)
         val textViewPrice = helper.getView<TextView>(R.id.textViewPrice)
         val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)

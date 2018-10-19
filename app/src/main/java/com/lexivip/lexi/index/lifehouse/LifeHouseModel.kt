@@ -14,16 +14,22 @@ import java.util.HashMap
 
 open class LifeHouseModel {
     companion object {
-        //出售中
+        //默认出售中
         const val STATUS: String = "1"
 
         //是否获取用户喜欢，心愿单操作记录
         const val USER_RECORD = "1"
     }
 
-    fun loadData(cid: String, page: Int, callBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getGoodListParams(cid, page, STATUS, USER_RECORD)
-
+    /**
+     * 获取小B分销商品
+     */
+    fun loadData(page: Int, callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["sid"] = UserProfileUtil.storeId()
+        params["is_distributed"] = "2"
+        params["user_record"] = USER_RECORD
+        params["page"] = "$page"
         HttpRequest.sendRequest(HttpRequest.GET, URL.DISTRIBUTION_GOODS_LIST, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callBack.onStart()

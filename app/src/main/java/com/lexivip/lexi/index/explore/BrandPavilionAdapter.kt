@@ -6,20 +6,23 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 
 class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionListBean.DataBean.StoresBean, BaseViewHolder>(layoutResId) {
+    private val dp4: Int by lazy { DimenUtil.dp2px(4.0) }
+    private val dp249: Int by lazy { DimenUtil.dp2px(249.0) }
+    private val dp219: Int by lazy { DimenUtil.dp2px(219.0) }
+    private val dp44: Int by lazy { DimenUtil.dp2px(44.0) }
     override fun convert(helper: BaseViewHolder, item: BrandPavilionListBean.DataBean.StoresBean) {
         val imageViewBg = helper.getView<ImageView>(R.id.imageViewBg)
-        val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
-        GlideUtil.loadImageWithBlurAndRadius(item.bgcover, imageViewBg, size)
+        GlideUtil.loadImageWithBlurAndRadius(item.bgcover, imageViewBg, dp4, dp249, dp219)
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)
-        GlideUtil.loadImageWithRadius(item.logo, imageViewShop, size)
+        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewShop, dp4, dp44)
 
         helper.setText(R.id.textViewTitle, item.name)
         helper.setText(R.id.textViewCount, "${item.store_products_counts}件")
@@ -44,14 +47,24 @@ class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionLis
         val adapter = BrandPavilionProductAdapter(R.layout.adapter_brand_pavilion_product)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = linearLayoutManager
+
+//        val list = ArrayList<String>()
+//
+//        if (item.products==null) return
+//        for (product in item.products) {
+//            list.add(product.cover)
+//        }
+//        adapter.setNewData(list)
         adapter.setNewData(item.products_cover)
 
         helper.addOnClickListener(R.id.textViewFocus)
         helper.addOnClickListener(R.id.recyclerViewProducts)
 
         //跳转品牌馆主页
-        adapter.setOnItemClickListener { adapter, view, position ->
-            LogUtil.e("===================================")
+        adapter.setOnItemClickListener { _, _, _ ->
+//            if (item.products == null || item.products.isEmpty()) return@setOnItemClickListener
+//            PageUtil.jump2GoodsDetailActivity(item.products[position].rid)
+            PageUtil.jump2BrandPavilionActivity(item.rid)
         }
 
     }

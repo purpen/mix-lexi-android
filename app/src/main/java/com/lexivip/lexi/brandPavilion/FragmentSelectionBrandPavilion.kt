@@ -2,10 +2,7 @@ package com.lexivip.lexi.brandPavilion
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.GlideImageLoader
@@ -52,7 +49,7 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
         headerView = View.inflate(activity, R.layout.header_selection_brand_pavilion, null)
 
         adapter.setHeaderView(headerView)
-        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0))
+        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(360.0)))
         headerView.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
         headerView.banner.setIndicatorGravity(BannerConfig.CENTER)
 

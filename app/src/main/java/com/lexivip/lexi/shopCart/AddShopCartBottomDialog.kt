@@ -38,6 +38,7 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
+        if (goods.is_free_postage) view.imageView.visibility = View.VISIBLE
         loadData()
         if (goods.is_distributed) {
             view.buttonAddShopCart.visibility = View.VISIBLE
@@ -143,17 +144,19 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
 
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
-        if (goods?.real_sale_price == 0.0) {
-            view.textViewPrice.text = "${goods.real_price}"
+        if (goods.min_sale_price == 0.0) {
+            view.textViewPrice.text = "${goods.min_price}"
         } else {
-            view.textViewPrice.text = "${goods?.real_sale_price}"
+            view.textViewPrice.text = "${goods.min_sale_price}"
         }
 
-        view.textViewName.text = goods?.name
+        view.textViewName.text = goods.name
 
         val marginRight = DimenUtil.getDimensionPixelSize(R.dimen.dp15)
+        val dp10 = DimenUtil.dp2px(10.0)
         val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DimenUtil.getDimensionPixelSize(R.dimen.dp24))
         layoutParams.rightMargin = marginRight
+        layoutParams.bottomMargin = dp10
 
         val dp6 = DimenUtil.getDimensionPixelSize(R.dimen.dp6)
 

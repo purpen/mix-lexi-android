@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="255dp"
     android:orientation="vertical"
     >
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewBanner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp190"
+        android:layout_height="@dimen/dp140"
         android:overScrollMode="never"
-        android:paddingBottom="@dimen/dp20"
-        android:paddingTop="@dimen/dp15" />
+        android:layout_marginTop="5dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:background="@drawable/bg_search_box">
+        android:background="@drawable/bg_search_box"
+        android:layout_marginTop="12dp"
+        >
 
         <TextView
             android:id="@+id/textViewIcon"

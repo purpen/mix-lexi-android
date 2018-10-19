@@ -12,7 +12,9 @@
         android:layout_height="@dimen/dp40"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/dp20"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        />
 
 
     <TextView

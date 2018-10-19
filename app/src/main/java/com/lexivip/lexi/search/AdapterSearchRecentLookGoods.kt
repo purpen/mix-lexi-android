@@ -36,7 +36,7 @@ class AdapterSearchRecentLookGoods(layoutResId: Int) : BaseQuickAdapter<ProductB
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = RelativeLayout.LayoutParams(dp100, dp100)
-        GlideUtil.loadImageWithRadius(item.cover, imageView, dp4)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, dp4,dp100)
 
         helper.setText(R.id.textViewTitle, item.name)
 

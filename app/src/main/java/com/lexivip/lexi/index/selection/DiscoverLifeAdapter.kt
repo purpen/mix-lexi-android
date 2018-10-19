@@ -1,5 +1,4 @@
 package com.lexivip.lexi.index.selection
-
 import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -15,10 +14,12 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 
 class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.DataBean.ShopWindowsBean, BaseViewHolder>(layoutResId) {
+    private val dp25 by lazy { DimenUtil.dp2px(25.0) }
+    private val dp2 by lazy { DimenUtil.dp2px(2.0) }
     override fun convert(helper: BaseViewHolder, item: DiscoverLifeBean.DataBean.ShopWindowsBean) {
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.avatar,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp25))
+        GlideUtil.loadCircleImageWidthDimen(item.avatar,imageViewAvatar,dp25)
 
         helper.setText(R.id.textViewName,item.title)
         helper.setText(R.id.textViewTitle1,item.title)
@@ -67,17 +68,17 @@ class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.
         }
 
         if (recyclerView.itemDecorationCount>0) return
-        val size = DimenUtil.getDimensionPixelSize(R.dimen.dp2)
+
         recyclerView.addItemDecoration(object:RecyclerView.ItemDecoration(){
             override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
                 super.getItemOffsets(outRect, view, parent, state)
                 val position = parent.getChildAdapterPosition(view)
                 if (position == 0){
-                    outRect.right = size
+                    outRect.right = dp2
                 }
 
                 if (position==1){
-                    outRect.bottom = size
+                    outRect.bottom = dp2
                 }
             }
         })

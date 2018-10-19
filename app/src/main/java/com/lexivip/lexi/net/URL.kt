@@ -4,7 +4,7 @@ object URL {
     //测试服务器
 //    const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
     //正式服务器
-     const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
+    const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
 
     /**
      * 注册
@@ -178,7 +178,7 @@ object URL {
     /**
      * 小b分销商品列表
      */
-    const val DISTRIBUTION_GOODS_LIST = "${BASE_URL}fx_distribute/agency"
+    const val DISTRIBUTION_GOODS_LIST = "${BASE_URL}core_platforms/products/by_store"
 
     /**
      * 探索->集合
@@ -206,9 +206,9 @@ object URL {
     const val EDIT_SMALL_LIFE_STORE = "${BASE_URL}store/edit_store"
 
     /**
-     * 删除分销商品
+     * 核心删除分销商品
      */
-    const val DELETE_DISTRIBUTE_GOODS = "${BASE_URL}fx_distribute/remove"
+    const val DELETE_DISTRIBUTE_GOODS = "${BASE_URL}core_platforms/fx_distribute/remove"
 
 
     /**
@@ -572,39 +572,39 @@ object URL {
     /**
      * 生活馆订单统计
      */
-    const val LIFE_ORDER_COLLECT="${BASE_URL}stats/life_orders_collect"
+    const val LIFE_ORDER_COLLECT = "${BASE_URL}stats/life_orders_collect"
     /**
      * 生活馆收益汇总
      */
-    const val LIFE_ORDER_INCOME_COLLECT="${BASE_URL}stats/life_orders_sale_collect"
+    const val LIFE_ORDER_INCOME_COLLECT = "${BASE_URL}stats/life_orders_sale_collect"
     /**
      *生活馆提现汇总
      */
-    const val LIFE_CASH_COLLECT="${BASE_URL}stats/life_cash_collect"
+    const val LIFE_CASH_COLLECT = "${BASE_URL}stats/life_cash_collect"
     /**
      * 生活馆订单列表
      */
-    const val LIFE_ORDER="${BASE_URL}orders/life_orders"
+    const val LIFE_ORDER = "${BASE_URL}orders/life_orders"
     /**
      * 生活馆订单交易记录
      */
-    const val LIFE_TRANSACTION="${BASE_URL}stats/life_orders/transactions"
+    const val LIFE_TRANSACTION = "${BASE_URL}stats/life_orders/transactions"
     /**
      * 最近一笔提现
      */
-    const val LIFE_CASH_RECENT="${BASE_URL}stats/life_cash_recent"
+    const val LIFE_CASH_RECENT = "${BASE_URL}stats/life_cash_recent"
     /**
      * 对账单列表
      */
-    const val LIFE_ACCOUNT_STATEMENT="${BASE_URL}stats/life_orders/statements"
+    const val LIFE_ACCOUNT_STATEMENT = "${BASE_URL}stats/life_orders/statements"
     /**
      * 对账单详情
      */
-    const val LIFE_ACCOUNT_DETAIL="${BASE_URL}stats/life_orders/statement_items"
+    const val LIFE_ACCOUNT_DETAIL = "${BASE_URL}stats/life_orders/statement_items"
     /**
      * 对账单收益详情
      */
-    const val LIFE_ACCOUNT_ORDER="${BASE_URL}stats/life_orders"
+    const val LIFE_ACCOUNT_ORDER = "${BASE_URL}stats/life_orders"
 
     /**
      *  接单订制
@@ -618,27 +618,27 @@ object URL {
     /**
      * 获取品牌馆信息
      */
-    const val BRAND_HOUSE="${BASE_URL}official_store/info"
+    const val BRAND_HOUSE = "${BASE_URL}official_store/info"
     /**
      * 获取品牌馆公告
      */
-    const val BRAND_HOUSE_NOTICE="${BASE_URL}official_store/announcement"
+    const val BRAND_HOUSE_NOTICE = "${BASE_URL}official_store/announcement"
     /**
      * 店铺分类列表
      */
-    const val BRAND_CATEGORIES="${BASE_URL}store/categories"
+    const val BRAND_CATEGORIES = "${BASE_URL}store/categories"
     /**
      * 品牌馆生活志列表
      */
-    const val BRAND_RECORD="${BASE_URL}core_platforms/life_records"
+    const val BRAND_RECORD = "${BASE_URL}core_platforms/life_records"
     /**
      * 品牌馆主人信息
      */
-    const val BRAND_OWNER="${BASE_URL}official_store/master_info"
+    const val BRAND_OWNER = "${BASE_URL}official_store/master_info"
     /**
      * 品牌馆故事详情
      */
-    const val BRAND_DETAIL="${BASE_URL}official_store/detail"
+    const val BRAND_DETAIL = "${BASE_URL}official_store/detail"
 
     /**
      * 新发布商品
@@ -694,4 +694,9 @@ object URL {
      * 文章详情推荐商品
      */
     const val LIFE_RECORDS_RECOMMEND_PRODUCTS = "${BASE_URL}life_records/recommend_products"
+
+    /**
+     * 精选->今日推荐
+     */
+    const val TODAY_RECOMMEND_URL = "${BASE_URL}column/daily_recommends"
 }

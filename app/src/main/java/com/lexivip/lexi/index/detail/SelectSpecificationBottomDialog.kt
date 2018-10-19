@@ -42,6 +42,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
+        if (product.is_free_postage) view.imageView.visibility = View.VISIBLE
         if (product.is_distributed) {
             view.buttonAddShopCart.visibility = View.VISIBLE
             view.buttonGoOrderConfirm.visibility = View.VISIBLE
@@ -136,7 +137,11 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
-        view.textViewPrice.text = "${product.min_sale_price}"
+        if (product.min_sale_price==0.0){
+            view.textViewPrice.text = "${product.min_price}"
+        }else{
+            view.textViewPrice.text = "${product.min_sale_price}"
+        }
 
         view.textViewName.text = product.name
 
@@ -153,7 +158,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 val item = getItem(position)
                 val textView = TextView(context)
                 textView.layoutParams = layoutParams
-                textView.setPadding(dp6, dp6, dp6, dp6)
+                textView.setPadding(dp6, 0, dp6, 0)
                 textView.includeFontPadding = false
                 textView.gravity = Gravity.CENTER
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)

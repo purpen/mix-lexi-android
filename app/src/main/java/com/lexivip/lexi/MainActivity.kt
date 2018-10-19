@@ -173,7 +173,7 @@ class MainActivity : BaseActivity() {
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment2).commitAllowingStateLoss()
                     //购物车每次点击都加载
-                    EventBus.getDefault().post(MainFragment1::class.java.simpleName)
+//                    EventBus.getDefault().post(MainFragment1::class.java.simpleName)
                 }
             }
             R.id.button3 -> {

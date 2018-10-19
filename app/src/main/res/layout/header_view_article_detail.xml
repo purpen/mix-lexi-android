@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    >
     <ImageView
         android:id="@+id/imageViewCover"
         android:layout_width="match_parent"
@@ -13,7 +15,7 @@
         android:layout_below="@id/imageViewCover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="生活记事.街区"
+        android:text=""
         android:includeFontPadding="false"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
@@ -38,7 +40,7 @@
         android:layout_below="@id/textViewArticleTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2017.08.12"
+        android:text=""
         android:layout_marginTop="13dp"
         android:layout_marginStart="15dp"
         android:includeFontPadding="false"
@@ -51,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/textViewDate"
         android:layout_toEndOf="@id/textViewDate"
-        android:text="1234"
+        android:text=""
         android:drawableStart="@mipmap/icon_browser_num"
         android:gravity="center_vertical"
         android:layout_marginStart="15dp"
@@ -79,7 +81,7 @@
         android:layout_toEndOf="@id/imageViewHeader"
         android:includeFontPadding="false"
         android:layout_marginTop="15dp"
-        android:text="一个手作"
+        android:text=""
         android:textColor="#ff444444"
         android:textSize="12sp"
         />

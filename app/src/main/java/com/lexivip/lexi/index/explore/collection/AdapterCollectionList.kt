@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.widget.ImageView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
 
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -21,12 +22,14 @@ class AdapterCollectionList(@LayoutRes res: Int) : BaseQuickAdapter<GoodsCollect
 
     private val context:Context by lazy { AppApplication.getContext() }
     private val dp10:Int by lazy { DimenUtil.dp2px(10.0) }
+    private val dp192:Int by lazy { DimenUtil.dp2px(192.0) }
+    private val screenWidth:Int by lazy { ScreenUtil.getScreenWidth() }
     private val color: Int by lazy { Util.getColor(android.R.color.transparent) }
 
     override fun convert(helper: BaseViewHolder, item: GoodsCollectionBean.DataBean.CollectionsBean) {
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithFading(item.cover,imageView)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,0,screenWidth,dp192)
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerViewGoods)
         recyclerView.setHasFixedSize(true)
