@@ -294,7 +294,7 @@ public class GlideUtil {
     public static <T> void loadImageWithBlurAndRadius(T t, @Nullable ImageView imageView, int radius, int width, int height) {
         MultiTransformation multi = new MultiTransformation(
                 new CenterCrop(),
-                new BlurTransformation(65, 3),
+                new BlurTransformation(65),
                 new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
 
         RequestOptions requestOptions = bitmapTransform(multi)

@@ -18,7 +18,9 @@
             android:layout_width="@dimen/dp20"
             android:layout_height="14dp"
             android:layout_marginEnd="@dimen/dp5"
-            android:src="@mipmap/icon_free_express" />
+            android:src="@mipmap/icon_free_express"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/textViewName"
