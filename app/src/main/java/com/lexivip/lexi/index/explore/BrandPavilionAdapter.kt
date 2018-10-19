@@ -13,13 +13,16 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.R
 
 class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionListBean.DataBean.StoresBean, BaseViewHolder>(layoutResId) {
+    private val dp4: Int by lazy { DimenUtil.dp2px(4.0) }
+    private val dp249: Int by lazy { DimenUtil.dp2px(249.0) }
+    private val dp219: Int by lazy { DimenUtil.dp2px(219.0) }
+    private val dp44: Int by lazy { DimenUtil.dp2px(44.0) }
     override fun convert(helper: BaseViewHolder, item: BrandPavilionListBean.DataBean.StoresBean) {
         val imageViewBg = helper.getView<ImageView>(R.id.imageViewBg)
-        val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
-        GlideUtil.loadImageWithBlurAndRadius(item.bgcover, imageViewBg, size)
+        GlideUtil.loadImageWithBlurAndRadius(item.bgcover, imageViewBg, dp4, dp249, dp219)
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)
-        GlideUtil.loadImageWithRadius(item.logo, imageViewShop, size)
+        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewShop, dp4,dp44)
 
         helper.setText(R.id.textViewTitle, item.name)
         helper.setText(R.id.textViewCount, "${item.store_products_counts}件")

@@ -270,18 +270,31 @@ public class GlideUtil {
     }
 
     /**
+     *
+     * @param t
+     * @param imageView
+     * @param radius
+     * @param dimen
+     * @param <T>
+     */
+    public static <T> void loadImageWithBlurAndRadius(T t, @Nullable ImageView imageView, int radius, int dimen){
+        loadImageWithBlurAndRadius(t,imageView,radius,dimen,dimen);
+    }
+
+    /**
      * 毛玻璃效果
      *
      * @param t
      * @param imageView
      * @param <T>
      */
-    public static <T> void loadImageWithBlurAndRadius(T t, @Nullable ImageView imageView, int radius) {
+    public static <T> void loadImageWithBlurAndRadius(T t, @Nullable ImageView imageView, int radius, int width, int height) {
         MultiTransformation multi = new MultiTransformation(
                 new BlurTransformation(65, 3),
                 new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
 
         RequestOptions requestOptions = bitmapTransform(multi)
+                .override(width, height)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)
@@ -297,7 +310,7 @@ public class GlideUtil {
      *
      * @param imgUrl
      */
-    public static File downLoadOriginalImage(String imgUrl,Context context) throws ExecutionException, InterruptedException {
-       return Glide.with(context).asFile().load(imgUrl).submit().get();
+    public static File downLoadOriginalImage(String imgUrl, Context context) throws ExecutionException, InterruptedException {
+        return Glide.with(context).asFile().load(imgUrl).submit().get();
     }
 }

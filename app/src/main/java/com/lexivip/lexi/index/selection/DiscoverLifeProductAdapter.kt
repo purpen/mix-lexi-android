@@ -11,7 +11,8 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.lexivip.lexi.R
 
 class DiscoverLifeProductAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<DiscoverLifeProductAdapter.MultipleItem, BaseViewHolder>(list) {
-
+    private val size162:Int by lazy { DimenUtil.dp2px(162.0) }
+    private val size80:Int by lazy { DimenUtil.dp2px(80.0) }
     init {
         addItemType(MultipleItem.ITEM_TYPE_SPAN2, R.layout.adapter_discover_life_product)
         addItemType(MultipleItem.ITEM_TYPE_SPAN1, R.layout.adapter_discover_life_product)
@@ -37,14 +38,14 @@ class DiscoverLifeProductAdapter(list: List<MultipleItem>) : BaseMultiItemQuickA
         var layoutParams: ViewGroup.LayoutParams
         val imageView = helper.getView<ImageView>(R.id.imageView)
         val relativeLayout = helper.getView<RelativeLayout>(R.id.relativeLayout)
-        val size162 = DimenUtil.getDimensionPixelSize(R.dimen.dp162)
-        val size80 = DimenUtil.getDimensionPixelSize(R.dimen.dp80)
+
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
             layoutParams = ViewGroup.LayoutParams(size162,size162)
+            GlideUtil.loadImageWithDimenAndRadius(item.str,imageView,0,size162)
         } else {
             layoutParams = ViewGroup.LayoutParams(size80, size80)
+            GlideUtil.loadImageWithDimenAndRadius(item.str,imageView,0,size80)
         }
         relativeLayout.layoutParams = layoutParams
-        GlideUtil.loadImageWithFading(item.str,imageView)
     }
 }

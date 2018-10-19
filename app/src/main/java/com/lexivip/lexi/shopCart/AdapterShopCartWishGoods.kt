@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -13,11 +14,11 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
 class AdapterShopCartWishGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
-
+    private val dp70: Int by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp70) }
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithFading(item.cover, imageView)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView,0,dp70)
         helper.setText(R.id.textViewName, item.name)
         val textViewPrice = helper.getView<TextView>(R.id.textViewPrice)
         val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)

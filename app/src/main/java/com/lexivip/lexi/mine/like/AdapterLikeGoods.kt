@@ -8,8 +8,10 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
 class AdapterLikeGoods(layoutResId: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(layoutResId) {
+    private val dp100:Int by lazy { DimenUtil.dp2px(100.0) }
+    private val dp4:Int by lazy { DimenUtil.dp2px(4.0) }
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithRadius(item.cover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp5))
+        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,dp4,dp100)
     }
 }
