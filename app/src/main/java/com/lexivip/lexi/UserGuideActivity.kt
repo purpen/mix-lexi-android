@@ -49,7 +49,6 @@ class UserGuideActivity : BaseActivity() {
 
     override fun initView() {
 //        if (TextUtils.isEmpty(fromPage)) {
-        imageView.setImageResource(R.mipmap.welcome)
         imageView.visibility = View.VISIBLE
             Handler().postDelayed({
                 imageView.visibility = View.GONE

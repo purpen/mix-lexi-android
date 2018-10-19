@@ -9,45 +9,19 @@ import android.content.Context;
 
 import com.basemodule.tools.BaseModuleContext;
 import com.basemodule.tools.LogUtil;
-import com.bumptech.glide.GlideBuilder;
-import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
-import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
-import com.bumptech.glide.load.engine.cache.LruResourceCache;
-import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
-import com.bumptech.glide.request.RequestOptions;
+
 import com.example.myapp.MyEventBusIndex;
 import com.qiniu.android.common.AutoZone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
+
 import com.squareup.leakcanary.LeakCanary;
 
 
 import org.greenrobot.eventbus.EventBus;
 
 public class AppApplication extends Application {
-    @GlideModule
-    public final class MyAppGlideModule extends AppGlideModule {
-        @Override
-        public void applyOptions(Context context, GlideBuilder builder) {
-            RequestOptions options = new RequestOptions()
-                    .format(DecodeFormat.PREFER_RGB_565);
-            builder.setDefaultRequestOptions(options);
-//            MemorySizeCalculator calculator = new MemorySizeCalculator.Builder(context)
-//                    .setMemoryCacheScreens(2)
-//                    .build();
-//            builder.setMemoryCache(new LruResourceCache(calculator.getMemoryCacheSize()));
-//
-//            int bitmapPoolSizeBytes = 1024 * 1024 * 30; // 30mb
-//            builder.setBitmapPool(new LruBitmapPool(bitmapPoolSizeBytes));
-//
-//            int diskCacheSizeBytes = 1024*1024*100; // 100 MB
-//
-//            builder.setDiskCache(new InternalCacheDiskCacheFactory(context, diskCacheSizeBytes));
-        }
-    }
+
 
     private static Application instance;
 

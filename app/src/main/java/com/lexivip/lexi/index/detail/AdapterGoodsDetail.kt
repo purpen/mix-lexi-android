@@ -9,9 +9,6 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.lexivip.lexi.R
-import com.bumptech.glide.Glide
-
-
 
 class AdapterGoodsDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<AdapterGoodsDetail.MultipleItem, BaseViewHolder>(list) {
     private val imgW:Int by lazy { ScreenUtil.getScreenWidth()-DimenUtil.dp2px(30.0) }
@@ -50,13 +47,5 @@ class AdapterGoodsDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
                 GlideUtil.loadImageAdjustImageViewDimen(item.content.content, imageView,0,imgW,imgH)
             }
         }
-    }
-
-    override fun onViewRecycled(holder: BaseViewHolder) {
-        val imageView = holder.getView<ImageView>(R.id.imageView)
-        if (imageView != null) {
-            Glide.with(mContext).clear(imageView)
-        }
-        super.onViewRecycled(holder)
     }
 }

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.basemodule.tools.GlideUtil
 
 import com.basemodule.tools.LogUtil
 
@@ -48,11 +49,31 @@ abstract class BaseFragment : Fragment() {
         super.onStart()
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (isVisibleToUser){
+            GlideUtil.resumeRequests(activity)
+        }else{
+            GlideUtil.pauseRequests(activity)
+        }
+        super.setUserVisibleHint(isVisibleToUser)
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        if (hidden){
+            GlideUtil.pauseRequests(activity)
+        }else{
+            GlideUtil.resumeRequests(activity)
+        }
+        super.onHiddenChanged(hidden)
+    }
+
     override fun onResume() {
+        GlideUtil.resumeRequests(activity)
         super.onResume()
     }
 
     override fun onPause() {
+        GlideUtil.pauseRequests(activity)
         super.onPause()
     }
 
@@ -71,18 +92,5 @@ abstract class BaseFragment : Fragment() {
 
     open fun loadData() {
 
-    }
-
-
-    //    protected void refreshUI() {
-    //
-    //    }
-    //
-    //    protected void refreshUI(List<T> list) {
-    //
-    //    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
     }
 }

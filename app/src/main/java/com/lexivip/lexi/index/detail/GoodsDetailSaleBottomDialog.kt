@@ -1,13 +1,13 @@
 package com.lexivip.lexi.index.detail
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.AsyncTask
 import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.JsonUtil
@@ -79,10 +79,7 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
         override fun doInBackground(vararg params: String): File? {
             val imgUrl = params[0]
             try {
-                return Glide.with(AppApplication.getContext())
-                        .load(imgUrl)
-                        .downloadOnly(Target.SIZE_ORIGINAL,Target.SIZE_ORIGINAL)
-                        .get()
+                return GlideUtil.downLoadOriginalImage(imgUrl,v.context)
             } catch (ex: Exception) {
                 return null
             }
