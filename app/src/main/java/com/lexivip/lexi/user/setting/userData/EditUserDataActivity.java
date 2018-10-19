@@ -225,7 +225,7 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
     @Override
     public void getData(UserProfileBean bean) {
         userBean = bean;
-        GlideUtil.loadImage(bean.data.profile.avatar,iv_logo);
+        GlideUtil.loadImageWithFading(bean.data.profile.avatar,iv_logo);
         tv_time.setText(Util.getString(R.string.text_register_time)+DateUtil.getDateByTimestamp(bean.data.profile.created_at,"yyyy年MM月dd日"));
         et_name.setText(bean.data.profile.username);
         if (bean.data.profile.about_me!=null&&!bean.data.profile.about_me.isEmpty()){
@@ -255,7 +255,7 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
 
     @Override
     public void getImage(JSONArray ids) {
-        GlideUtil.loadImage(data,iv_logo);
+        GlideUtil.loadImageWithFading(data,iv_logo);
         try {
             userBean.data.profile.avatar_id=ids.getInt(0);
         } catch (JSONException e) {

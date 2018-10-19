@@ -98,39 +98,9 @@
         <activity android:name=".index.detail.GoodsImageViewActivity" />
         <activity android:name=".index.selection.OpenLifeHouseActivity" />
         <activity android:name=".index.discover.ComposerStoryActivity" />
-        <activity android:name=".user.setting.userData.EditUserDataActivity"/>
         <activity android:name=".index.discover.ArticleDetailActivity" />
-        <activity android:name="com.lexivip.lexi.orderList.OrderDetailActivity"/>
-        <activity android:name="com.lexivip.lexi.order.SelectExpressActivity" />
-        <activity android:name="com.lexivip.lexi.search.SearchResultActivity" android:launchMode="singleTask"/>
-        <activity android:name="com.lexivip.lexi.search.SearchActivity" android:launchMode="singleTask"/>
-        <activity android:name="com.lexivip.lexi.index.explore.editorRecommend.AllEditorRecommendActivity" />
-        <activity android:name="com.lexivip.lexi.index.explore.collection.CollectionListActivity" />
-        <activity android:name="com.lexivip.lexi.index.explore.collection.CollectionDetailActivity" />
-        <activity android:name="com.lexivip.lexi.index.explore.newGoods.AllNewGoodsActivity" />
-        <activity android:name="com.lexivip.lexi.index.explore.goodDesign.AllGoodDesignActivity" />
-        <activity android:name="com.lexivip.lexi.index.explore.goodsIn100.AllGoodsIn100Activity" />
-        <activity android:name="com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity" />
-        <activity android:name="com.lexivip.lexi.mine.like.likeGoods.AllLikeGoodsActivity" />
-        <activity android:name="com.lexivip.lexi.mine.enshrine.recentLook.AllRecentLookGoodsActivity" />
-        <activity android:name="com.lexivip.lexi.index.explore.goodsClassify.GoodsClassifyActivity" />
-        <activity android:name="com.lexivip.lexi.pay.SelectPayWayActivity" />
-        <activity android:name="com.lexivip.lexi.pay.PayResultActivity" />
-        <activity android:name="com.lexivip.lexi.lifeShop.AccountDetailActivity" />
-        <activity android:name="com.lexivip.lexi.lifeShop.AccountStatementActivity" />
-        <activity android:name="com.lexivip.lexi.lifeShop.PutForwardActivity" />
-        <activity android:name="com.lexivip.lexi.lifeShop.TransactionOrderActivity" />
-        <activity android:name="com.lexivip.lexi.lifeShop.TransactionRecordActivity" />
-        <activity android:name="com.lexivip.lexi.search.OrderCustomMadeGoodsActivity" />
-        <activity android:name="com.lexivip.lexi.brandHouse.BrandHouseActivity" />
-        <activity android:name="com.lexivip.lexi.selectionGoodsCenter.PutAwayActivity" />
-        <activity android:name="com.lexivip.lexi.brandHouse.AboutBrandHouseActivity"/>
-        <activity android:name="com.lexivip.lexi.index.detail.GoodsImageViewActivity" />
-        <activity android:name="com.lexivip.lexi.index.selection.OpenLifeHouseActivity" />
-        <activity android:name="com.lexivip.lexi.index.discover.ComposerStoryActivity" />
-        <activity android:name="com.lexivip.lexi.user.setting.userData.EditUserDataActivity"
+        <activity android:name=".user.setting.userData.EditUserDataActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <activity android:name="com.lexivip.lexi.index.discover.ArticleDetailActivity" />
         <activity android:name=".brandHouse.CloseHouseActivity"/>
 
         <!--微博-->
