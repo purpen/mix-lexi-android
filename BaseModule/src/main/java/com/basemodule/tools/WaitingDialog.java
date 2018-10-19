@@ -31,7 +31,7 @@ public class WaitingDialog extends Dialog {
     }
     private void initViews() {
         ivBigLoading = (ImageView) findViewById(R.id.ivBigLoading);
-        GlideUtil.loadImage(resBigLoading, ivBigLoading);
+        GlideUtil.loadingImage(resBigLoading, ivBigLoading);
     }
 
 
