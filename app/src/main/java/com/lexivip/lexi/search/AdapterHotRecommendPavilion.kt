@@ -12,7 +12,7 @@ class AdapterHotRecommendPavilion(layoutResId: Int) : BaseQuickAdapter<SearchHot
         helper.setText(R.id.textViewTitle, item.recommend_title)
         val imageView = helper.getView<ImageView>(R.id.imageView)
         if (helper.adapterPosition == 0) {
-            GlideUtil.loadImageWithDimen(item.coverId, imageView, DimenUtil.dp2px(45.0))
+            GlideUtil.loadCircleImageWidthDimen(item.coverId, imageView, DimenUtil.dp2px(45.0))
         } else {
             GlideUtil.loadCircleImageWidthDimen(item.recommend_cover, imageView, DimenUtil.dp2px(45.0))
         }

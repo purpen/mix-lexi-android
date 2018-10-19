@@ -80,4 +80,15 @@ public class PageUtil {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         AppApplication.getContext().startActivity(intent);
     }
+
+    /**
+     * 跳转品牌馆主页
+     * @param rid 品牌馆id
+     */
+    public static void jump2BrandPavilionActivity(String rid){
+        Intent intent = new Intent(AppApplication.getContext(), BrandHouseActivity.class);
+        intent.putExtra("rid",rid);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        AppApplication.getContext().startActivity(intent);
+    }
 }

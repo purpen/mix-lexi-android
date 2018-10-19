@@ -175,6 +175,14 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     /**
+     * 设置最近查看数据
+     */
+    override fun setRecentLookData(products: List<ProductBean>) {
+        if (!products.isEmpty()) linearLayoutRecentGoods.visibility = View.VISIBLE
+        adapterRecent.setNewData(products)
+    }
+
+    /**
      * 设置模糊匹配数据
      */
     override fun setFuzzyWordListData(search_items: List<FuzzyWordMatchListBean.DataBean.SearchItemsBean>) {

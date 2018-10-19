@@ -1,5 +1,6 @@
 package com.lexivip.lexi.search
 
+import com.basemodule.tools.LogUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -22,6 +23,7 @@ class SearchPresenter(view: SearchContract.View) : SearchContract.Presenter {
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e("===="+json)
                 view.dismissLoadingView()
                 val recentLookGoodsBean = JsonUtil.fromJson(json, RecentLookGoodsBean::class.java)
                 if (recentLookGoodsBean.success) {

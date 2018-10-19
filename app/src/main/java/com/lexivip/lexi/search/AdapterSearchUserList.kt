@@ -13,11 +13,11 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.UserBean
 
 class AdapterSearchUserList(@LayoutRes res: Int) : BaseQuickAdapter<UserBean, BaseViewHolder>(res) {
-
+    private val dp40: Int by lazy { DimenUtil.dp2px(40.0) }
     override fun convert(helper: BaseViewHolder, item: UserBean) {
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadCircleImageWidthDimen(item.avatar,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp40))
+        GlideUtil.loadCircleImageWidthDimen(item.avatar,imageView,dp40)
 
         helper.setText(R.id.textViewName,item.username)
 

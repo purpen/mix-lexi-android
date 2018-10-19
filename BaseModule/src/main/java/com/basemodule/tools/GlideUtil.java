@@ -178,6 +178,7 @@ public class GlideUtil {
     public static <T> void loadImageWithFading(T t, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions()
                 .format(DecodeFormat.PREFER_RGB_565)
+                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
@@ -232,6 +233,7 @@ public class GlideUtil {
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .override(width, height)
+                .centerCrop()
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
@@ -250,6 +252,7 @@ public class GlideUtil {
     public static <T> void loadImageWithDimen(T t, ImageView imageView, int size) {
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .override(size)
+                .centerCrop()
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
@@ -290,6 +293,7 @@ public class GlideUtil {
      */
     public static <T> void loadImageWithBlurAndRadius(T t, @Nullable ImageView imageView, int radius, int width, int height) {
         MultiTransformation multi = new MultiTransformation(
+                new CenterCrop(),
                 new BlurTransformation(65, 3),
                 new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
 

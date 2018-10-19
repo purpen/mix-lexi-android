@@ -171,6 +171,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      */
     override fun updateFavoriteState(favorite: Boolean) {
         if (goodsData == null) return
+        presenter.getFavoriteUsers(productId)
         goodsData?.is_like = favorite
         if (favorite) {
             goodsData!!.like_count++
