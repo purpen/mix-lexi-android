@@ -16,6 +16,7 @@ import com.lexivip.lexi.beans.ProductBean
 class WelcomeInWeekAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(layoutResId) {
 
     private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth() - DimenUtil.dp2px(40.0)) / 2 }
+    private val dp4 by lazy { DimenUtil.dp2px(4.0)}
 
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
 
@@ -24,7 +25,7 @@ class WelcomeInWeekAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, Bas
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2, sizeSpan2)
 
-        GlideUtil.loadImageWithRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, dp4,sizeSpan2,sizeSpan2)
 
 
         val imageViewStatus = helper.getView<View>(R.id.imageViewStatus)

@@ -10,7 +10,9 @@
         android:layout_height="match_parent"
         app:ClipSquareIV_BorderColor="@android:color/transparent"
         app:ClipSquareIV_BorderWidth="0dp"
-        app:ClipSquareIV_OutsideColor="#ea000000" />
+        app:ClipSquareIV_OutsideColor="#ea000000"
+        android:scaleType="fitXY"
+        />
 
     <RelativeLayout
         android:id="@+id/rl"

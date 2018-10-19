@@ -28,6 +28,7 @@ import com.flyco.dialog.widget.ActionSheetDialog
 import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.CustomGridLayoutManager
+import com.lexivip.lexi.GridSpacingItemDecoration
 import com.lexivip.lexi.R
 import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
@@ -37,9 +38,6 @@ import com.lexivip.lexi.beans.UserBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
-import com.yanyusong.y_divideritemdecoration.Y_Divider
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
-import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
@@ -217,7 +215,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         recyclerViewWelcome.layoutManager = gridLayoutManager
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
 
-        recyclerViewWelcome.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        recyclerViewWelcome.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
         adapter.addFooterView(footerWelcome)
 
     }
@@ -551,24 +549,5 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
         super.onDestroy()
-    }
-
-    private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
-        private val color: Int = Util.getColor(android.R.color.white)
-        private val height = 20f
-        override fun getDivider(itemPosition: Int): Y_Divider? {
-            var divider: Y_Divider? = null
-            if (itemPosition % 2 != 0) {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .setLeftSideLine(true, color, 10f, 0f, 0f)
-                        .create()
-            } else {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .create()
-            }
-            return divider
-        }
     }
 }

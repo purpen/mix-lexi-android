@@ -13,7 +13,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.LifeWillBean
 
 class AdapterGuessLike(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseViewHolder>(layoutResId) {
-    private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))/2 }
+    private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))/2}
     private val size106 by lazy { DimenUtil.dp2px(106.0)}
     private val size20 by lazy { DimenUtil.dp2px(20.0)}
     private val size4 by lazy { DimenUtil.dp2px(4.0)}
@@ -24,7 +24,7 @@ class AdapterGuessLike(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseVi
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2,size106)
-        GlideUtil.loadImageWithRadius(item.cover, imageView, size4)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, size4,sizeSpan2,size106)
 
         val textViewTitle0 = helper.getView<TextView>(R.id.textViewTitle0)
 

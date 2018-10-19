@@ -15,6 +15,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
 class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
+    private val dp100:Int by lazy { DimenUtil.dp2px(100.0) }
     private val dp80:Int by lazy { DimenUtil.dp2px(80.0) }
     private val dp60:Int by lazy { DimenUtil.dp2px(60.0) }
     private val dp25:Int by lazy { DimenUtil.dp2px(25.0) }
@@ -59,7 +60,7 @@ class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
 
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
-        GlideUtil.loadImageWithRadius(item.cover, imageView, size4)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, size4,dp100,dp100)
 
 
 

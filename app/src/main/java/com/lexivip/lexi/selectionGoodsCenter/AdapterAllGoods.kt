@@ -55,7 +55,7 @@ class AdapterAllGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
 
         imageView.layoutParams = RelativeLayout.LayoutParams(imageViewWidth, imageViewWidth)
 
-        GlideUtil.loadImageWithRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4),imageViewWidth,imageViewWidth)
 
 
         //卖

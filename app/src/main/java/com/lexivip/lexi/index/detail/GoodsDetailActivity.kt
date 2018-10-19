@@ -433,7 +433,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         headerView.banner.update(urlList,titleList)
         headerView.banner.start()
-
         headerView.banner.setOnBannerListener { position ->
             if (goodsData==null || skuData==null) return@setOnBannerListener
             val intent = Intent(this,GoodsImageViewActivity::class.java)

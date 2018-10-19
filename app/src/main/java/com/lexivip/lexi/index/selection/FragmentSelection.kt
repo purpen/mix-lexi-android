@@ -83,11 +83,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initZCManifest() {
         presenter.getZCManifest()
         adapterZCManifest = ZCManifestAdapter(R.layout.adapter_zc_manifest)
-        val staggeredGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        staggeredGridLayoutManager.setScrollEnabled(false)
-        recyclerViewZCManifest.layoutManager = staggeredGridLayoutManager
+        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(),2)
+        gridLayoutManager.setScrollEnabled(false)
+        recyclerViewZCManifest.layoutManager = gridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
-        recyclerViewZCManifest.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        recyclerViewZCManifest.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
     }
 
     /**
@@ -109,7 +109,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewGoodSelection.setHasFixedSize(true)
         recyclerViewGoodSelection.layoutManager = gridLayoutManager
         recyclerViewGoodSelection.adapter = adapterGoodSelection
-        recyclerViewGoodSelection.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        recyclerViewGoodSelection.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
     }
 
     /**
@@ -434,24 +434,5 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     override fun onStop() {
         super.onStop()
         hotBanner.stopAutoPlay()
-    }
-
-    private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
-        private val color: Int = Util.getColor(android.R.color.white)
-        private val height = 20f
-        override fun getDivider(itemPosition: Int): Y_Divider? {
-            val divider: Y_Divider?
-            if (itemPosition % 2 != 0) {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .setLeftSideLine(true, color, 10f, 0f, 0f)
-                        .create()
-            } else {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .create()
-            }
-            return divider
-        }
     }
 }

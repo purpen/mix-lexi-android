@@ -161,7 +161,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         val userName = data.optString("user_name")
         val dealContent = data.optJSONArray("deal_content")
 
-        GlideUtil.loadImageWithFading(cover,headerView.imageViewCover)
+        GlideUtil.loadImageWithDimenAndRadius(cover,headerView.imageViewCover,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(250.0))
         headerView.textViewArticleType.text = channelName
 
         headerView.textViewArticleTitle.text = title
