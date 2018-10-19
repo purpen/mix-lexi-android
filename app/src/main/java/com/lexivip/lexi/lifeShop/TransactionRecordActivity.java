@@ -165,7 +165,7 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
             case R.id.tv_time:
                 Calendar startDate = Calendar.getInstance();
                 Calendar endDate = Calendar.getInstance();
-                startDate.set(2017, 0, 1);
+                startDate.set(2017, 1, 1);
                 selectData = Calendar.getInstance();
                 if (selectTime != null) {
                     selectData.setTime(selectTime);

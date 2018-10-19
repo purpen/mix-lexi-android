@@ -368,4 +368,5 @@
     <string name="text_edit_user_data">编辑个人资料</string>
     <string name="text_recommend_product">推荐商品</string>
     <string name="text_relate_goods_recommend">相关故事推荐</string>
+    <string name="text_register_time">注册时间：</string>
 </resources>

@@ -27,6 +27,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    /*lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }*/
 }
 
 dependencies {
@@ -62,6 +66,12 @@ dependencies {
     implementation project(':ImageAlbum')
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation files('libs/umeng-common-1.5.4.jar')
+    implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
+    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
+    implementation files('libs/umeng-share-core-6.9.3.jar')
+    implementation files('libs/umeng-share-QQ-simplify-6.9.3.jar')
+    implementation files('libs/umeng-shareboard-widget-6.9.3.jar')
 }
 
 kapt {

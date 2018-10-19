@@ -1,5 +1,6 @@
 package com.lexivip.lexi
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
@@ -15,8 +16,24 @@ import com.lexivip.lexi.mine.enshrine.EnshrineFragment
 import com.lexivip.lexi.mine.like.FavoriteFragment
 import com.lexivip.lexi.orderList.OrderListActivity
 import com.lexivip.lexi.user.setting.SettingActivity
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
+import android.Manifest.permission
+import android.Manifest.permission.WRITE_APN_SETTINGS
+import android.Manifest.permission.GET_ACCOUNTS
+import android.Manifest.permission.SYSTEM_ALERT_WINDOW
+import android.Manifest.permission.SET_DEBUG_APP
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.READ_PHONE_STATE
+import android.Manifest.permission.READ_LOGS
+import android.Manifest.permission.CALL_PHONE
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+
 
 class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
@@ -138,7 +155,34 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     override fun onClick(v: View) {
         val id = v.id
         when (id) {
-            R.id.imageViewShare -> ToastUtil.showInfo("分享")
+            R.id.imageViewShare -> {
+                val mPermissionList = arrayOf<String>(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE,
+                        Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP,
+                        Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS,
+                        Manifest.permission.WRITE_APN_SETTINGS)
+                ShareAction(activity).withText("hello")
+                        .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                        .setCallback(object :UMShareListener{
+                            override fun onResult(p0: SHARE_MEDIA?) {
+
+                            }
+
+                            override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+
+                            }
+
+                            override fun onStart(p0: SHARE_MEDIA?) {
+
+                            }
+
+                            override fun onCancel(p0: SHARE_MEDIA?) {
+
+                            }
+
+                        }).open()
+            }
             R.id.imageViewSetting -> startActivity(Intent(activity, SettingActivity::class.java))
             R.id.buttonOrder->startActivity(Intent(activity,OrderListActivity::class.java))
         }

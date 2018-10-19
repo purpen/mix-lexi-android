@@ -12,6 +12,8 @@ import com.example.myapp.MyEventBusIndex;
 import com.qiniu.android.common.AutoZone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -38,6 +40,15 @@ public class AppApplication extends Application {
         BaseModuleContext.init(this);
         //使用时才自动生成MyEventBusIndex
         EventBus.builder().addIndex(new MyEventBusIndex()).throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
+
+        //umeng分享
+        UMConfigure.init(this,"5a12384aa40fa3551f0001d1"
+                ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
+        PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
+        //豆瓣RENREN平台目前只能在服务器端配置
+        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        PlatformConfig.setAlipay("2015111700822536");
     }
 
 

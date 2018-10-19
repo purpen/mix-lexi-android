@@ -69,7 +69,6 @@ public class AddressPresenter implements AddressContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
-                //
                 // LogUtil.e("数据形式："+json);
                 view.dismissLoadingView();
                 HashMap<String,ArrayList<CityBean.CityNameBean>> map=JsonUtil.fromJson(json,CityBean.class).getData();
@@ -177,7 +176,7 @@ public class AddressPresenter implements AddressContract.Presenter {
             @Override
             public void onSuccess(@NotNull String json) {
                 AddressBean bean= JsonUtil.fromJson(json,AddressBean.class);
-                if ("200".equals(bean.getStatus().getCode())||"201".equals(bean.getStatus().getCode())){
+                if (bean.isSuccess()){
                     view.finishActivity();
                 }
                 view.dismissLoadingView();
@@ -209,7 +208,7 @@ public class AddressPresenter implements AddressContract.Presenter {
                 if (bean.success){
                     view.setToken(bean);
                 }else{
-                    view.showError(AppApplication.getContext().getString(R.string.text_net_error));
+                    view.showError(bean.status.message);
                 }
                 view.dismissLoadingView();
             }

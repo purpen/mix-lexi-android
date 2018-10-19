@@ -89,6 +89,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     private LifeShopCashBean cashBean;
     private LifeShopSaleBean saleBean;
     private LifeShopOrderBean orderBean;
+    private LinearLayout linearLayout1;
 
     public static LifeShopFragment newInstance(){
         LifeShopFragment lifeShopFragment=new LifeShopFragment();
@@ -128,6 +129,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
         ll_invite = getView().findViewById(R.id.ll_invite);
         button = getView().findViewById(R.id.button);
         tv_status = getView().findViewById(R.id.tv_status);
+        linearLayout1 = getView().findViewById(R.id.linearLayout1);
         iv_money_show.setOnClickListener(this);
         iv_problem.setOnClickListener(this);
         iv_show_put.setOnClickListener(this);
@@ -252,16 +254,21 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void setShopData(LifeHouseBean bean) {
-        GlideUtil.loadImageWithRadius(bean.data.logo, logo, DimenUtil.dp2px(4.0));
+        GlideUtil.loadImageWithRadiusNotPlace(bean.data.logo, logo, DimenUtil.dp2px(4.0));
         name.setText(bean.data.name);
         if (1 != bean.data.phases) {
             tv_status.setText(Util.getString(R.string.text_formal_shop));
+            linearLayout1.setVisibility(View.INVISIBLE);
+        }else{
+            tv_status.setText(Util.getString(R.string.text_internship_shop));
+            linearLayout1.setVisibility(View.VISIBLE);
+            endTime = bean.data.created_at + 2592000;
+            handler.sendEmptyMessage(0);
         }
         tv_live_id.setText("ID：" + bean.data.ID);
-        endTime = bean.data.created_at + 2592000;
+
         //calendar = Calendar.getInstance();
         //simpleDateFormat = new SimpleDateFormat("dd-HH-mm-ss");
-        handler.sendEmptyMessage(0);
     }
 
     @Override

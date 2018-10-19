@@ -220,14 +220,14 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
                 isPosition=true;
                 String[] result= Util.getStringArray(R.array.strings_photo_titles);
-                final ActionSheetDialog dialog=new ActionSheetDialog(context,result,null);
-                dialog.itemTextColor(Util.getColor(R.color.color_333));
+                final ActionSheetDialog dialog0=new ActionSheetDialog(context,result,null);
+                dialog0.itemTextColor(Util.getColor(R.color.color_333));
                 TranslateAnimation animation=new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF,
                         0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f);
                 animation.setInterpolator(new DecelerateInterpolator());
-                dialog.layoutAnimation(new LayoutAnimationController(animation));
-                dialog.isTitleShow(false).show();
-                dialog.setOnOperItemClickL(new OnOperItemClickL() {
+                dialog0.layoutAnimation(new LayoutAnimationController(animation));
+                dialog0.isTitleShow(false).show();
+                dialog0.setOnOperItemClickL(new OnOperItemClickL() {
                     @Override
                     public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
                         LogUtil.e("点击了第几个："+position);
@@ -239,21 +239,21 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                                 albumTask();
                                 break;
                         }
-                        dialog.dismiss();
+                        dialog0.dismiss();
                     }
                 });
                 break;
             case R.id.iv_photo_opposite:
                 isPosition=false;
                 String[] results= Util.getStringArray(R.array.strings_photo_titles);
-                final ActionSheetDialog dialogs=new ActionSheetDialog(context,results,null);
-                dialogs.itemTextColor(Util.getColor(R.color.color_333));
+                final ActionSheetDialog dialog1=new ActionSheetDialog(context,results,null);
+                dialog1.itemTextColor(Util.getColor(R.color.color_333));
                 TranslateAnimation animations=new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF,
                         0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f);
                 animations.setInterpolator(new DecelerateInterpolator());
-                dialogs.layoutAnimation(new LayoutAnimationController(animations));
-                dialogs.isTitleShow(false).show();
-                dialogs.setOnOperItemClickL(new OnOperItemClickL() {
+                dialog1.layoutAnimation(new LayoutAnimationController(animations));
+                dialog1.isTitleShow(false).show();
+                dialog1.setOnOperItemClickL(new OnOperItemClickL() {
                     @Override
                     public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
                         switch (position){
@@ -264,7 +264,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                                 albumTask();
                                 break;
                         }
-                        dialogs.dismiss();
+                        dialog1.dismiss();
                     }
                 });
                 break;

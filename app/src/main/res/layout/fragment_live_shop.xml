@@ -20,7 +20,7 @@
             android:layout_marginLeft="@dimen/dp15"
             android:layout_marginRight="@dimen/dp10"
             android:layout_marginTop="@dimen/dp20"
-            android:scaleType="fitXY" />
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:id="@+id/linearLayout0"
@@ -79,7 +79,8 @@
             android:layout_marginLeft="@dimen/dp15"
             android:layout_marginTop="@dimen/dp15"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"

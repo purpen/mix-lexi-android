@@ -47,6 +47,7 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
                 BrandHouseBean bean=JsonUtil.fromJson(json,BrandHouseBean.class);
                 if (bean.success){
                     view.setData(bean);
+                    view.dismissLoadingView();
                 }else{
                     view.showError(bean.status.message);
                 }
@@ -54,7 +55,6 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onFailure(@NotNull IOException e) {
-                view.dismissLoadingView();
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error));
             }
         });
@@ -79,6 +79,7 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
                 BrandHouseNoticeBean bean=JsonUtil.fromJson(json,BrandHouseNoticeBean.class);
                 if (bean.success){
                     view.setNoticeData(bean);
+                    view.dismissLoadingView();
                 }else{
                     view.showError(bean.status.message);
                 }
@@ -86,7 +87,6 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onFailure(@NotNull IOException e) {
-                view.dismissLoadingView();
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error));
             }
         });
@@ -111,6 +111,7 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
                 ShopCouponListBean bean=JsonUtil.fromJson(json,ShopCouponListBean.class);
                 if (bean.success){
                     view.setCouponsData(bean);
+                    view.dismissLoadingView();
                 }else{
                     view.showError(bean.status.message);
                 }
@@ -118,7 +119,6 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onFailure(@NotNull IOException e) {
-                view.dismissLoadingView();
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error));
             }
         });

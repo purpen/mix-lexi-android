@@ -1,5 +1,6 @@
 package com.lexivip.lexi.user.setting
 
+import android.app.Activity
 import android.content.Intent
 import android.view.View
 import com.basemodule.tools.*
@@ -11,6 +12,7 @@ import com.lexivip.lexi.mine.UserCenterBean
 import kotlinx.android.synthetic.main.activity_setting.*
 import android.net.Uri
 import com.lexivip.lexi.orderList.OrderListActivity
+import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
 
 
 class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListener {
@@ -55,7 +57,10 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
     override fun onClick(v: View) {
         val id = v.id
         when (id) {
-            R.id.relativeLayout -> ToastUtil.showInfo("编辑个人资料")
+            R.id.relativeLayout -> {
+                var intent=Intent(this, EditUserDataActivity::class.java)
+                startActivityForResult(intent,1)
+            }
             R.id.customItemLayout0 -> ToastUtil.showInfo("邀请朋友")
             R.id.customItemLayout1 -> ToastUtil.showInfo("找朋友")
             R.id.customItemLayout2 -> startActivity(Intent(this, OrderListActivity::class.java))
@@ -77,6 +82,18 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
                 finish()
             }
 
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode==RESULT_OK){
+            if (requestCode==1){
+                if(data!!.getBooleanExtra("isRefresh",false)){
+                    presenter.loadData()
+                }
+
+            }
         }
     }
 

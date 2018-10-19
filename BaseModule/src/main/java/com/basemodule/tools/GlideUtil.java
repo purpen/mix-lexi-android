@@ -60,6 +60,19 @@ public class GlideUtil {
         Glide.with(BaseModuleContext.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
+    /**
+     * 使加载图片带有圆角，不设置占位图
+     * @param t
+     * @param imageView
+     * @param radius
+     * @param <T>
+     */
+    public static <T> void loadImageWithRadiusNotPlace(T t, ImageView imageView, int radius) {
+        RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER);
+        Glide.with(BaseModuleContext.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+    }
+
 
 
     /**
