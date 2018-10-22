@@ -17,7 +17,13 @@ class CustomViewPager:ViewPager{
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        return this.isPagingEnabled && super.onInterceptTouchEvent(event)
+        try {
+            return return this.isPagingEnabled && super.onInterceptTouchEvent(event)
+        } catch (e: IllegalArgumentException) {
+            //uncomment if you really want to see these errors
+            //e.printStackTrace();
+            return false
+        }
     }
 
     fun setPagingEnabled(b: Boolean) {

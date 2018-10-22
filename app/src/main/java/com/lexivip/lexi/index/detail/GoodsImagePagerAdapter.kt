@@ -3,6 +3,7 @@ package com.lexivip.lexi.index.detail
 import android.support.v4.view.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.basemodule.tools.GlideUtil
 import com.github.chrisbanes.photoview.PhotoView
 import com.lexivip.lexi.AppApplication
@@ -18,6 +19,7 @@ class GoodsImagePagerAdapter(data: GoodsAllDetailBean.DataBean,presenter: GoodsD
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val photoView = PhotoView(AppApplication.getContext())
+        photoView.scaleType = ImageView.ScaleType.FIT_START
         GlideUtil.loadImageWithFading(assets[position].view_url,photoView)
         container.addView(photoView)
         return photoView

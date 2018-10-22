@@ -221,7 +221,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             imgUrls.add(product.cover)
         }
 
-        GlideUtil.loadImageWithFading(data.logo, headerView.imageViewLogo)
+        GlideUtil.loadImageWithDimenAndRadius(data.logo, headerView.imageViewLogo,0,DimenUtil.dp2px(45.0))
 
         headerView.textViewShopName.text = data.name
 
@@ -674,16 +674,16 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var dySum = 0
-            var dp150 = DimenUtil.dp2px(150.0)
+            var dp336 = DimenUtil.dp2px(336.0)
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 dySum += dy
-                if (dySum < dp150) {
+                if (dySum < dp336) {
                     textViewTitle.text = ""
                     imageViewBack.setImageResource(R.mipmap.icon_return_white)
                     imageViewShare.setImageResource(R.mipmap.icon_share_white)
                     relativeLayoutHeader.setBackgroundResource(R.drawable.bg_gradient_color000)
-                } else if (dySum > dp150) {
+                } else if (dySum > dp336) {
                     textViewTitle.text = goodsData?.name
                     imageViewBack.setImageResource(R.mipmap.icon_nav_back)
                     imageViewShare.setImageResource(R.mipmap.icon_click_share)

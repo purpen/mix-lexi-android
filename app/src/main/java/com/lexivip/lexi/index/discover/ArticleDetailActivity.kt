@@ -222,16 +222,16 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var dySum = 0
-            var dp150 = DimenUtil.dp2px(150.0)
+            var dp250 = DimenUtil.dp2px(250.0)
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 dySum += dy
-                if (dySum <= dp150) {
+                if (dySum < dp250) {
                     textViewTitle.text = ""
                     imageViewBack.setImageResource(R.mipmap.icon_return_white)
                     imageViewShare.setImageResource(R.mipmap.icon_share_white)
                     relativeLayoutHeader.setBackgroundResource(R.drawable.bg_gradient_color000)
-                } else if (dySum > dp150) {
+                } else if (dySum > dp250) {
                   textViewTitle.text = data?.title
                     imageViewBack.setImageResource(R.mipmap.icon_nav_back)
                     imageViewShare.setImageResource(R.mipmap.icon_click_share)

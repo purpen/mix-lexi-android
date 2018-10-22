@@ -1,5 +1,4 @@
 package com.lexivip.lexi.index.lifehouse
-
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
