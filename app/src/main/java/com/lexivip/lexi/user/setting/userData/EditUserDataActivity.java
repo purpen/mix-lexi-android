@@ -3,6 +3,7 @@ package com.lexivip.lexi.user.setting.userData;
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -31,6 +32,7 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.address.AddressActivity;
 import com.lexivip.lexi.address.AddressDialog;
 import com.lexivip.lexi.address.CityBean;
 import com.lexivip.lexi.album.ImageCropActivity;
@@ -57,12 +59,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * 编辑个人资料
  */
-public class EditUserDataActivity extends BaseActivity implements EditUserDataContract.View, View.OnClickListener {
+//TODO 上传图片dialog
+public class EditUserDataActivity extends BaseActivity implements EditUserDataContract.View, View.OnClickListener,EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     private ImageView iv_logo;
     private TextView tv_time;
@@ -378,5 +382,39 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
                 pvOptions1.show();
                 break;
         }
+    }
+
+    /**
+     * 授权结束后会继续执行
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
+
+    @Override
+    public void onRationaleAccepted(int requestCode) {
+
+    }
+
+    @Override
+    public void onRationaleDenied(int requestCode) {
+
     }
 }

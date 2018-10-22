@@ -102,6 +102,7 @@
         <activity android:name=".user.setting.userData.EditUserDataActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".brandHouse.CloseHouseActivity"/>
+        <activity android:name=".user.setting.address.AddressListActivity"/>
 
         <!--微博-->
         <activity

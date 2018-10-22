@@ -1,141 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
     android:layout_marginBottom="@dimen/dp10"
+    android:background="@android:color/white"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/dp15"
-    android:paddingRight="@dimen/dp15"
     android:paddingTop="@dimen/dp20"
+    android:paddingRight="@dimen/dp15"
     android:paddingBottom="@dimen/dp10">
+
     <ImageView
         android:id="@+id/iv_logo"
         android:layout_width="@dimen/dp23"
         android:layout_height="@dimen/dp23"
         android:layout_marginTop="@dimen/dp2"
-        android:layout_marginRight="@dimen/dp5" />
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@color/color_999"
+        android:scaleType="centerCrop" />
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp13"
+        android:layout_toRightOf="@+id/iv_logo"
+        android:includeFontPadding="false"
+        android:text="阿斯顿发送到"
         android:textColor="@color/color_333"
-        android:layout_toRightOf="@+id/iv_logo"/>
+        android:textSize="@dimen/sp13" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:text="@string/text_order_total"
-        android:textSize="@dimen/sp12"
         android:textColor="@color/color_999"
-        android:layout_alignParentRight="true"/>
+        android:textSize="@dimen/sp12" />
+
     <TextView
         android:id="@+id/tv_order_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/color_333"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/textView"
-        android:layout_marginTop="@dimen/dp5"/>
-    <LinearLayout
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp5"
+        android:textColor="@color/color_333" />
+
+    <TextView
+        android:id="@+id/tv_order_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/iv_logo"
         android:layout_below="@+id/tv_name"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-        <ImageView
-            android:layout_width="@dimen/dp10"
-            android:layout_height="@dimen/dp9"
-            android:background="@mipmap/icon_sign_shop"
-            />
-        <TextView
-            android:id="@+id/tv_shop_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp11"
-            android:layout_marginLeft="@dimen/dp5"
-            android:textColor="@color/color_949ea6"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp11"
-            android:textColor="@color/color_b2b2b2"
-            android:text="@string/order_status"
-            android:layout_marginLeft="@dimen/dp5"/>
-        <TextView
-            android:id="@+id/tv_order_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp11"
-            android:textColor="@color/color_6ed7af"/>
-    </LinearLayout>
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_toRightOf="@+id/iv_logo"
+        android:includeFontPadding="false"
+        android:text="2016年10月26日 12:59:89"
+        android:textColor="@color/color_b2b2b2"
+        android:textSize="@dimen/sp11" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_order_total"></android.support.v7.widget.RecyclerView>
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/recyclerView"
+        android:text="@string/text_order_code"
         android:textColor="@color/color_333"
-        android:textSize="@dimen/sp11"
-        android:text="@string/text_order_code"/>
+        android:textSize="@dimen/sp11" />
+
     <TextView
         android:id="@+id/tv_order_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/recyclerView"
+        android:layout_toRightOf="@+id/textView1"
         android:textColor="@color/color_333"
-        android:textSize="@dimen/sp11"
-        android:layout_toRightOf="@+id/textView1"/>
-    <TextView
-        android:id="@+id/tv_order_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sp11"
-        android:textColor="@color/color_b2b2b2"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="@dimen/dp5" />
+        android:textSize="@dimen/sp11" />
+
     <TextView
         android:id="@+id/tv_order_income"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/color_ff6666"
+        android:layout_below="@id/recyclerView"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView1"
-        android:textSize="@dimen/sp12"
-        android:layout_marginTop="@dimen/dp5"
         android:text="0.00"
-        android:textStyle="bold"/>
+        android:textColor="@color/color_ff6666"
+        android:textSize="@dimen/sp12"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp12"
-        android:textColor="@color/color_999"
-        android:layout_marginTop="@dimen/dp5"
+        android:layout_below="@id/recyclerView"
         android:layout_toLeftOf="@+id/tv_order_income"
-        android:layout_below="@id/textView1"
-        android:text="@string/text_order_income"/>
-    <ImageView
-        android:id="@+id/image"
+        android:text="@string/text_order_income"
+        android:textColor="@color/color_999"
+        android:textSize="@dimen/sp12" />
+
+    <RelativeLayout
+        android:id="@+id/recyclerView0"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        android:background="@color/color_e9e9e9"
-        android:layout_below="@+id/tv_order_income"
-        android:layout_marginTop="@dimen/dp15"/>
-    <Button
-        android:id="@+id/bt_logistics"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp29"
-        android:background="@drawable/shape_radiu4_bgcolor_5fe4b1"
-        android:layout_alignParentRight="true"
-        android:textSize="@dimen/sp12"
-        android:text="@string/order_logistics"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="@dimen/dp10"
-        android:layout_below="@+id/image" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="@dimen/dp20">
+
+        <View
+            android:id="@+id/line0"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp2"
+            android:layout_centerVertical="true"
+            android:background="@color/color_6ed7af" />
+
+        <View
+            android:id="@+id/dot0"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/bg__oval_colorfff_stroke_6ed7af" />
+
+        <View
+            android:id="@+id/dot1"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bg__oval_colorfff_stroke_e9e9e9" />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp2"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/dot1"
+            android:layout_toRightOf="@+id/dot0"
+            android:background="@color/color_e9e9e9" />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp2"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/dot3"
+            android:layout_toRightOf="@+id/dot1"
+            android:background="@color/color_e9e9e9" />
+
+        <View
+            android:id="@+id/dot3"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/dp22"
+            android:background="@drawable/bg__oval_colorfff_stroke_e9e9e9" />
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="@dimen/dp22"
+            android:layout_height="@dimen/dp2"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/color_e9e9e9" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyclerView0"
+        android:layout_marginTop="@dimen/dp5">
+
+        <TextView
+            android:id="@+id/tv_pending_delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp4"
+            android:text="@string/text_pending_delivery"
+            android:textColor="@color/color_6ed7af"
+            android:textSize="@dimen/sp13" />
+
+        <TextView
+            android:id="@+id/tv_already_delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/text_already_delivery"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp13" />
+
+        <TextView
+            android:id="@+id/tv_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/logistics_finish"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp13" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -55,7 +55,6 @@ public class AppApplication extends Application {
         //豆瓣RENREN平台目前只能在服务器端配置
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
-        PlatformConfig.setAlipay("2015111700822536");
     }
 
 

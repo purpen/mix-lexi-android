@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -89,6 +91,8 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     private LinearLayout ll_discount;
     private RelativeLayout rl_notice;
     private BrandHouseBean dataBean;
+    private TextView head_center_tv;
+    private Intent intent;
 
     @Override
     protected int getLayout() {
@@ -104,6 +108,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         dialog = new WaitingDialog(this);
         head_goback = findViewById(R.id.head_goback);
         imageViewShare = findViewById(R.id.imageViewShare);
+        head_center_tv = findViewById(R.id.head_center_tv);
 
         iv_logo = findViewById(R.id.iv_logo);
         ll_goods = findViewById(R.id.ll_goods);
@@ -153,6 +158,21 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         recyclerView.setAdapter(adapterBranHouseGoods);
         recyclerViewArticle.setAdapter(adapterBrandHouseArticle);
 
+        AppBarLayout appBarLayout=findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (-300>verticalOffset) {
+                    head_center_tv.setVisibility(View.VISIBLE);
+                    if (dataBean.data.name!=null&&!dataBean.data.name.isEmpty()) {
+                        head_center_tv.setText(dataBean.data.name);
+                    }
+                }else {
+                    head_center_tv.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -190,7 +210,10 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_look://todo 查看更多
+            case R.id.tv_look://todo 查看更多待测试
+                intent=new Intent(this,CloseHouseActivity.class);
+                intent.putExtra("rid",rid);
+                startActivity(intent);
                 break;
             case R.id.head_goback:
                 finish();
@@ -230,7 +253,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
                 }
                 break;
             case R.id.tv_design:
-                Intent intent=new Intent(this,AboutBrandHouseActivity.class);
+                intent = new Intent(this,AboutBrandHouseActivity.class);
                 intent.putExtra("data", dataBean);
                 intent.putExtra("rid",rid);
                 startActivity(intent);

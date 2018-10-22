@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.explore.editorRecommend
+import com.basemodule.tools.LogUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication

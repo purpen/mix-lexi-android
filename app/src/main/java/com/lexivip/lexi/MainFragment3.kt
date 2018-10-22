@@ -32,7 +32,7 @@ import android.Manifest.permission.READ_LOGS
 import android.Manifest.permission.CALL_PHONE
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-
+import com.umeng.commonsdk.UMConfigure
 
 
 class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
@@ -156,6 +156,8 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         val id = v.id
         when (id) {
             R.id.imageViewShare -> {
+                UMConfigure.setLogEnabled(true)
+                //分享
                 val mPermissionList = arrayOf<String>(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE,
                         Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE,
@@ -170,7 +172,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
                             }
 
                             override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
-
+                                LogUtil.e("回调出错")
                             }
 
                             override fun onStart(p0: SHARE_MEDIA?) {

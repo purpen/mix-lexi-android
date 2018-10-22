@@ -12,6 +12,7 @@ import com.lexivip.lexi.mine.UserCenterBean
 import kotlinx.android.synthetic.main.activity_setting.*
 import android.net.Uri
 import com.lexivip.lexi.orderList.OrderListActivity
+import com.lexivip.lexi.user.setting.address.AddressListActivity
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
 
 
@@ -64,7 +65,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
             R.id.customItemLayout0 -> ToastUtil.showInfo("邀请朋友")
             R.id.customItemLayout1 -> ToastUtil.showInfo("找朋友")
             R.id.customItemLayout2 -> startActivity(Intent(this, OrderListActivity::class.java))
-            R.id.customItemLayout3 -> ToastUtil.showInfo("收货地址")
+            R.id.customItemLayout3 -> startActivity(Intent(this,AddressListActivity::class.java))
             R.id.customItemLayout4 -> ToastUtil.showInfo("服务条款")
             R.id.customItemLayout5 -> ToastUtil.showInfo("隐私条款")
             R.id.buttonKF -> { //拨打客服电话
