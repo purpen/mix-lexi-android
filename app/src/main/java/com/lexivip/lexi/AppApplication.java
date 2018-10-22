@@ -2,6 +2,7 @@ package com.lexivip.lexi;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 //import com.qiniu.android.storage.UploadManager;
 //import com.squareup.leakcanary.LeakCanary;
 //import com.thn.erp.common.constant.THNZone;
@@ -76,7 +77,7 @@ public class AppApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-//        MultiDex.install(base);
+        MultiDex.install(base);
     }
 
     private static class SingletonInstance {
