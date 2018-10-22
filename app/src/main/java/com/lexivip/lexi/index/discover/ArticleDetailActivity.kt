@@ -24,7 +24,6 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.acticity_artical_detail.*
 import kotlinx.android.synthetic.main.footer_view_article_detail.view.*
-import kotlinx.android.synthetic.main.footer_view_stagger_recyclerview.view.*
 import kotlinx.android.synthetic.main.header_view_article_detail.view.*
 import org.json.JSONObject
 
@@ -41,7 +40,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private lateinit var channelName: String
     private lateinit var headerView: View
     private lateinit var footerView: View
-    private lateinit var footerView1: View
     override fun getIntentData() {
         rid = intent.getStringExtra(TAG)
         channelName = intent.getStringExtra(ArticleDetailActivity::class.java.name)
@@ -53,7 +51,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         headerView.textViewBrowserNum.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_show_password,R.dimen.dp14,R.dimen.dp14),null,null,null)
 
         footerView = View.inflate(this,R.layout.footer_view_article_detail,null)
-        footerView1 = View.inflate(this,R.layout.footer_view_stagger_recyclerview,null)
 
         listDescription = ArrayList()
         val linearLayoutManager = LinearLayoutManager(this)
@@ -67,7 +64,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         initRelateStories()
         adapter.setHeaderView(headerView)
         adapter.addFooterView(footerView)
-        adapter.addFooterView(footerView1)
         adapter.setHeaderFooterEmpty(true,true)
     }
 
@@ -90,9 +86,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private fun initRelateStories() {
         val staggeredGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         staggeredGridLayoutManager.setScrollEnabled(false)
-        footerView1.recyclerViewRelateStory.layoutManager = staggeredGridLayoutManager
-        footerView1.recyclerViewRelateStory.adapter = adapterRelateStories
-        footerView1.recyclerViewRelateStory.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        footerView.recyclerViewRelateStory.layoutManager = staggeredGridLayoutManager
+        footerView.recyclerViewRelateStory.adapter = adapterRelateStories
+        footerView.recyclerViewRelateStory.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
     }
 
     override fun requestNet() {
@@ -106,7 +102,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
      * 设置推荐商品
      */
     override fun setRecommendProductsData(products: List<ProductBean>) {
-        if (products.isEmpty()) headerView.linearLayoutRecommendProduct.visibility = View.GONE
+        if (products.isEmpty()) footerView.linearLayoutRecommendProduct.visibility = View.GONE
         adapterRecommend.setNewData(products)
     }
 
@@ -115,7 +111,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
      */
 
     override fun setRelateStoriesData(data: MutableList<LifeWillBean>) {
-        if (data.isEmpty()) headerView.linearLayoutRelateStory.visibility = View.GONE
+        if (data.isEmpty()) footerView.linearLayoutRelateStory.visibility = View.GONE
         adapterRelateStories.setNewData(data)
     }
 
