@@ -2,6 +2,7 @@ package com.lexivip.lexi;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 //import com.qiniu.android.storage.UploadManager;
 //import com.squareup.leakcanary.LeakCanary;
 //import com.thn.erp.common.constant.THNZone;
@@ -22,7 +23,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import org.greenrobot.eventbus.EventBus;
 
-public class AppApplication extends Application {
+public class AppApplication extends MultiDexApplication {
 
 
     private static Application instance;
@@ -73,12 +74,6 @@ public class AppApplication extends Application {
 //        tempSharedPreference = getSharedPreferences(DataConstants.PUSH_STATUS, Context.MODE_PRIVATE);
 //    }
 
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-//        MultiDex.install(base);
-    }
 
     private static class SingletonInstance {
         static Configuration config = new Configuration.Builder()

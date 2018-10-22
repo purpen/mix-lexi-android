@@ -678,11 +678,11 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 dySum += dy
-                if (dySum <= 0) {
+                if (dySum < dp150) {
                     textViewTitle.text = ""
                     imageViewBack.setImageResource(R.mipmap.icon_return_white)
                     imageViewShare.setImageResource(R.mipmap.icon_share_white)
-                    relativeLayoutHeader.setBackgroundResource(R.mipmap.icon_bg_goods_detail_head)
+                    relativeLayoutHeader.setBackgroundResource(R.drawable.bg_gradient_color000)
                 } else if (dySum > dp150) {
                     textViewTitle.text = goodsData?.name
                     imageViewBack.setImageResource(R.mipmap.icon_nav_back)
@@ -708,7 +708,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                     if (goodsData == null || skuData == null) return
                     val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonGoOrderConfirm, skuData!!)
                     selectSpecificationBottomDialog.show()
-                } else {//跳转注册
+                } else {//跳转登录
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }

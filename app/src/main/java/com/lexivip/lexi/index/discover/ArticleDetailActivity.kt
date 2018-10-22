@@ -17,6 +17,8 @@ import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
+import com.lexivip.lexi.user.login.LoginActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -214,8 +216,12 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
 
         //关注用户
         headerView.textViewFocus.setOnClickListener {
-            if (data==null) return@setOnClickListener
-            presenter.focusUser(data!!.uid,headerView.textViewFocus, data!!.is_follow)
+            if (UserProfileUtil.isLogin()){
+                if (data == null) return@setOnClickListener
+                presenter.focusUser(data!!.uid, headerView.textViewFocus, data!!.is_follow)
+            }else{ //跳转登录
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -224,11 +230,11 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 dySum += dy
-                if (dySum <= 0) {
+                if (dySum <= dp150) {
                     textViewTitle.text = ""
                     imageViewBack.setImageResource(R.mipmap.icon_return_white)
                     imageViewShare.setImageResource(R.mipmap.icon_share_white)
-                    relativeLayoutHeader.setBackgroundResource(R.mipmap.icon_bg_goods_detail_head)
+                    relativeLayoutHeader.setBackgroundResource(R.drawable.bg_gradient_color000)
                 } else if (dySum > dp150) {
                   textViewTitle.text = data?.title
                     imageViewBack.setImageResource(R.mipmap.icon_nav_back)
