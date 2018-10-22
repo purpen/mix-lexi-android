@@ -18,11 +18,11 @@ import com.lexivip.lexi.index.explore.BrandPavilionListBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 
 class AdapterFeatureBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavilionListBean.DataBean.StoresBean, BaseViewHolder>(layoutResId) {
-    private val size10: Int by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp10) }
     private val size60: Int by lazy { DimenUtil.dp2px(60.0) }
-    private val size4: Int by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp4) }
+    private val size4: Int by lazy { DimenUtil.dp2px(4.0) }
     private val color: Int by lazy { Util.getColor(android.R.color.transparent) }
     private val context: Context by lazy { AppApplication.getContext() }
+    private val divider: RecyclerViewDivider by lazy { RecyclerViewDivider(context, LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(10.0), color) }
 
     override fun convert(helper: BaseViewHolder, item: BrandPavilionListBean.DataBean.StoresBean) {
         val imageViewLogo = helper.getView<ImageView>(R.id.imageViewLogo)
@@ -39,7 +39,7 @@ class AdapterFeatureBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavi
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
         adapter.setNewData(item.products)
-        if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(RecyclerViewDivider(context, LinearLayoutManager.HORIZONTAL, size10, color))
+        if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(divider)
         //设置产品数据
 
         //跳转商品详情
