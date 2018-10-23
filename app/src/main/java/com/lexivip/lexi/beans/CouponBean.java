@@ -30,14 +30,23 @@ public class CouponBean {
     public int min_amount;
     public int reach_amount;
     public int status;
+    public int source; //优惠券来源// 1、分享领红包 2、猜图赢现金 3、赠送 4、新人奖励 11、领券中心 12、店铺
     public int type;
     public String type_text;
+    public String store_logo;
+    public String store_name;
+    public String store_rid;
     public long end_date;
     public long start_date;
     public long expired_at;
     public long start_at;
+    public long get_at;
+    public long end_at;
     public List<ProductBean> products;
     public boolean selected;
     public boolean is_expired;
     public boolean is_used;
+    public String category_name;
+    public int category_id;
+    public CouponBean coupon;
 }

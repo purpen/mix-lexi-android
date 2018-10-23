@@ -89,6 +89,11 @@
         <item>待收货</item>
         <item>待评价</item>
     </string-array>
+    <string-array name="strings_user_coupon_titles">
+        <item>品牌券</item>
+        <item>乐喜券</item>
+        <item>失效券</item>
+    </string-array>
 
     <!--自定义ratingbar-->
     <declare-styleable name="RatingBar">

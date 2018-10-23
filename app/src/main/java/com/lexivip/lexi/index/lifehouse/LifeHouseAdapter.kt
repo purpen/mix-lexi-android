@@ -21,19 +21,20 @@ import com.lexivip.lexi.beans.ProductBean
 
 class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res){
     private val dp87:Int by lazy { DimenUtil.dp2px(87.0) }
+    private val dp28:Int by lazy { DimenUtil.dp2px(28.0) }
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
         helper.setText(R.id.textView0, item.name)
 
         val textView2 = helper.getView<TextView>(R.id.textView2)
 
-        if (item.real_sale_price ==0.0){ //折扣价为0,显示真实价格
-            helper.setText(R.id.textView1, "￥${item.real_price}")
+        if (item.min_sale_price ==0.0){ //折扣价为0,显示真实价格
+            helper.setText(R.id.textView1, "￥${item.min_price}")
             textView2.visibility = View.GONE
         }else{ //折扣价不为0显示折扣价格和带划线的真实价格
             textView2.visibility = View.VISIBLE
-            helper.setText(R.id.textView1, "￥${item.real_sale_price}")
+            helper.setText(R.id.textView1, "￥${item.min_sale_price}")
             textView2.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textView2.text = "￥" + item.real_price
+            textView2.text = "￥" + item.min_price
         }
 
         helper.setText(R.id.textView3, "喜欢 +${item.like_count}")
@@ -59,7 +60,7 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
 
-        GlideUtil.loadCircleImageWidthDimen(item.cover,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp28))
+        GlideUtil.loadCircleImageWidthDimen(item.cover,imageViewAvatar,dp28)
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
         GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView,0,dp87)
@@ -90,10 +91,11 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
 
         if (recyclerView.itemDecorationCount == 0) {
             recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
+                private val dp5=DimenUtil.dp2px(5.0)
                 override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
                     super.getItemOffsets(outRect, view, parent, state)
                     if (parent.getChildAdapterPosition(view) >= 0) {
-                        outRect.left = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
+                        outRect.left = dp5
                     }
                 }
             })

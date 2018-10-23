@@ -370,4 +370,8 @@
     <string name="text_recommend_product">推荐商品</string>
     <string name="text_relate_goods_recommend">相关故事推荐</string>
     <string name="text_register_time">注册时间：</string>
+    <string name="title_user_coupon">优惠券</string>
+    <string name="text_can_user_for_all_goods">全场通用</string>
+    <string name="text_to_use">去\n使\n用</string>
+    <string name="text_lx_coupon">乐喜券</string>
 </resources>

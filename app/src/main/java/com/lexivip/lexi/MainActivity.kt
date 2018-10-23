@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.KeyEvent
 import android.widget.Toast
 import com.basemodule.tools.LogUtil
+import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.user.login.LoginActivity
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity() {
     private var lastClickedId: Int = -1
 
     override fun initView() {
+        LogUtil.e("screenW=${ScreenUtil.getScreenWidth()};;screenHeight=${ScreenUtil.getScreenHeight()};;density=${ScreenUtil.getDensity()}")
         initFragments()
         switchFragment(R.id.button0)
         EventBus.getDefault().register(this)
@@ -107,7 +109,7 @@ class MainActivity : BaseActivity() {
             str = intent.getStringExtra(TAG)
         }
 
-        if (TextUtils.isEmpty(str)){
+        if (TextUtils.isEmpty(str)){ //跳转首页
             lastClickedId = -1
             switchFragment(R.id.button0)
             customBottomBar.getButton(R.id.button0).performClick()

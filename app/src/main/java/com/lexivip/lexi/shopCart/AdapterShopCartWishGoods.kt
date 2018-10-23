@@ -23,14 +23,14 @@ class AdapterShopCartWishGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBe
         val textViewPrice = helper.getView<TextView>(R.id.textViewPrice)
         val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)
         textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp8,R.dimen.dp10),null,null,null)
-        if (item.real_sale_price == 0.0) {
-            textViewPrice.text = "${item.real_price}"
+        if (item.min_sale_price == 0.0) {
+            textViewPrice.text = "${item.min_price}"
             textViewOldPrice.visibility = View.GONE
         } else {
             textViewOldPrice.visibility = View.VISIBLE
-            textViewPrice.text = "${item.real_sale_price}"
+            textViewPrice.text = "${item.min_sale_price}"
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥${item.real_price}"
+            textViewOldPrice.text = "￥${item.min_price}"
         }
 
         val textViewSoldOut = helper.getView<TextView>(R.id.textViewSoldOut)

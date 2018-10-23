@@ -19,7 +19,7 @@ class GoodsImagePagerAdapter(data: GoodsAllDetailBean.DataBean,presenter: GoodsD
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val photoView = PhotoView(AppApplication.getContext())
-        photoView.scaleType = ImageView.ScaleType.FIT_START
+        photoView.scaleType = ImageView.ScaleType.FIT_CENTER
         GlideUtil.loadImageWithFading(assets[position].view_url,photoView)
         container.addView(photoView)
         return photoView

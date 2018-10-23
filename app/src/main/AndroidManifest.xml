@@ -148,6 +148,7 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".coupon.UserCouponActivity" />
     </application>
 
 </manifest>
