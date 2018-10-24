@@ -40,6 +40,7 @@ public class GlideUtil {
 
     public static <T> void loadingImage(T t, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions()
+                .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE);
         Context context = imageView.getContext();
         if (context == null) return;
@@ -58,6 +59,7 @@ public class GlideUtil {
     public static <T> void loadImageWithTopRadius(T t, ImageView imageView, int radius) {
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.TOP))
                 .format(DecodeFormat.PREFER_RGB_565)
+                .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
@@ -77,6 +79,7 @@ public class GlideUtil {
     public static <T> void loadImageWithRadius(T t, ImageView imageView, int radius) {
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
                 .format(DecodeFormat.PREFER_RGB_565)
+                .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
@@ -95,7 +98,7 @@ public class GlideUtil {
      */
     public static <T> void loadImageWithRadiusNotPlace(T t, ImageView imageView, int radius) {
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER);
+        requestOptions.skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER);
         Context context = imageView.getContext();
         if (context==null) return;
         Glide.with(context).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
@@ -116,6 +119,7 @@ public class GlideUtil {
         RequestOptions requestOptions = bitmapTransform(multi)
                 .override(width, height)
                 .dontAnimate()
+                .skipMemoryCache(true)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER)
@@ -139,6 +143,7 @@ public class GlideUtil {
                 .override(width, height)
                 .fitCenter()
                 .format(DecodeFormat.PREFER_RGB_565)
+                .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .dontAnimate()
                 .error(DEFAULT_ERROR_HOLDER)
@@ -190,6 +195,7 @@ public class GlideUtil {
     public static <T> void loadImageWithFading(T t, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions()
                 .format(DecodeFormat.PREFER_RGB_565)
+                .skipMemoryCache(true)
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
@@ -210,6 +216,7 @@ public class GlideUtil {
     public static <T> void loadImageAsBitmap(T t, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(true)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .centerCrop()
                 .error(DEFAULT_ERROR_HOLDER)
@@ -243,6 +250,7 @@ public class GlideUtil {
     public static <T> void loadImageWithDimen(T t, ImageView imageView, int width, int height) {
         RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(true)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .override(width, height)
                 .centerCrop()
@@ -264,6 +272,7 @@ public class GlideUtil {
     public static <T> void loadImageWithDimen(T t, ImageView imageView, int size) {
         RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
                 .override(size)
+                .skipMemoryCache(true)
                 .centerCrop()
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)
@@ -276,6 +285,7 @@ public class GlideUtil {
     public static <T> void loadCircleImageWidthDimen(@NotNull T t, @Nullable ImageView imageView, int size) {
         RequestOptions requestOptions = bitmapTransform(new CircleCrop()).diskCacheStrategy(DiskCacheStrategy.ALL)
                 .override(size)
+                .skipMemoryCache(true)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
@@ -311,6 +321,7 @@ public class GlideUtil {
 
         RequestOptions requestOptions = bitmapTransform(multi)
                 .override(width, height)
+                .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)
