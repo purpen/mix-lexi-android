@@ -11,6 +11,9 @@ import com.lexivip.lexi.brandHouse.BrandHouseActivity;
 import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.index.detail.GoodsDetailActivity;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
+import com.lexivip.lexi.index.explore.collection.CollectionDetailActivity;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 界面跳转工具类
@@ -88,6 +91,17 @@ public class PageUtil {
     public static void jump2BrandPavilionActivity(String rid){
         Intent intent = new Intent(AppApplication.getContext(), BrandHouseActivity.class);
         intent.putExtra("rid",rid);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        AppApplication.getContext().startActivity(intent);
+    }
+
+    /**
+     * 跳转集合详情
+     * @param recommend_id
+     */
+    public static void jump2CollectionDetailActivity(@Nullable String recommend_id) {
+        Intent intent = new Intent(AppApplication.getContext(), CollectionDetailActivity.class);
+        intent.putExtra(CollectionDetailActivity.class.getSimpleName(),recommend_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         AppApplication.getContext().startActivity(intent);
     }

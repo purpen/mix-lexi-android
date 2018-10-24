@@ -61,6 +61,7 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
     private fun initHeaderView() {
         presenter.getLookPeople()
         headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
+        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_editor_recommend,headerView.imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(153.0))
         adapter.setHeaderView(headerView)
     }
 

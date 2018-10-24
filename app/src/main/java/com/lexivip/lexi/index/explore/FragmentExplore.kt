@@ -315,11 +315,8 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
         //好货合集
         adapterGoodsCollection.setOnItemClickListener { _, _, position ->
-            val item = adapterGoodsCollection.getItem(position)
-            val intent = Intent(activity, CollectionDetailActivity::class.java)
-            intent.putExtra(CollectionDetailActivity::class.java.simpleName, item!!.id)
-            startActivity(intent)
-
+            val item = adapterGoodsCollection.getItem(position)?:return@setOnItemClickListener
+            PageUtil.jump2CollectionDetailActivity(item.id)
         }
 
         adapterEditorRecommend.setOnItemClickListener { adapter, _, position ->

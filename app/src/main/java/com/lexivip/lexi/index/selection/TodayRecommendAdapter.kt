@@ -15,7 +15,7 @@ class TodayRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<TodayRecommendB
 
     override fun convert(helper: BaseViewHolder, item: TodayRecommendBean.DataBean.DailyRecommendsBean) {
 
-        helper.setText(R.id.textViewTitle, item.channel_name)
+        helper.setText(R.id.textViewTitle, item.recommend_label)
         helper.setText(R.id.textViewTitle1, item.recommend_title)
         helper.setText(R.id.textViewTitle2, item.recommend_description)
 

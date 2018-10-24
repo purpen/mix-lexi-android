@@ -1,7 +1,4 @@
 package com.lexivip.lexi.coupon
-
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -13,11 +10,10 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CouponBean
 
 class AdapterUserCoupon(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<AdapterUserCoupon.MultipleItem, BaseViewHolder>(list) {
-//    private val sizeScreen: Int by lazy { ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0) }
     private val pattern: String by lazy { "yyyy.MM.dd" }
-    private val layoutParams: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT) }
     private val dp4: Int by lazy { DimenUtil.dp2px(4.0) }
     private val dp20: Int by lazy { DimenUtil.dp2px(20.0) }
+    private val dp85: Int by lazy { DimenUtil.dp2px(85.0) }
 
     init {
         addItemType(MultipleItem.ITEM_TYPE_BRAND, R.layout.adapter_user_brand_coupon)
@@ -51,7 +47,6 @@ class AdapterUserCoupon(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<Ad
                 relativeLayout.setBackgroundResource(R.mipmap.icon_user_brand_valid_coupon)
                 textViewUse.setTextColor(Util.getColor(R.color.color_ff733b))
             }
-            relativeLayout.setPadding(0,0,0,0)
             helper.setText(R.id.textViewValue, "${couponBean.amount}")
             helper.setText(R.id.textViewUseCondition, "满${couponBean.min_amount}使用")
             val startDate = DateUtil.getDateByTimestamp(couponBean.start_at, pattern)
@@ -79,7 +74,6 @@ class AdapterUserCoupon(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<Ad
                 textViewDesc.setTextColor(Util.getColor(R.color.color_dab867))
                 textViewOfficial.setBackgroundResource(R.drawable.bg_colordab867_radius2)
             }
-            relativeLayout.setPadding(0,0,0,0)
             helper.setText(R.id.textViewUseCondition, "满${couponBean.min_amount}使用")
             helper.setText(R.id.textViewValue, "${couponBean.amount}")
             val startDate = DateUtil.getDateByTimestamp(couponBean.start_at, pattern)

@@ -367,17 +367,26 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         }
 
         adapterZCManifest.setOnItemClickListener { _, _, position ->
-            val item = adapterZCManifest.getItem(position)
+            val item = adapterZCManifest.getItem(position)?:return@setOnItemClickListener
+            item.channel_name = getString(R.string.text_zc_manifest)
             PageUtil.jump2ArticleDetailActivity(item)
         }
 
         //今日推荐
         adapterTodayRecommend.setOnItemClickListener { _, _, position ->
             val item = adapterTodayRecommend.getItem(position) ?: return@setOnItemClickListener
-            val bean = LifeWillBean()
-            bean.rid = item.recommend_id
-            bean.channel_name = item.channel_name
-            PageUtil.jump2ArticleDetailActivity(bean)
+            when(item.target_type){
+                1,2->{ //1=生活志文章, 2=种草清单 3=主题
+                    val bean = LifeWillBean()
+                    bean.rid = item.recommend_id
+                    bean.channel_name = item.recommend_label
+                    PageUtil.jump2ArticleDetailActivity(bean)
+                }
+                3->{ //集合详情
+                    PageUtil.jump2CollectionDetailActivity(item.recommend_id)
+                }
+            }
+
         }
 
         //查看全部优选
