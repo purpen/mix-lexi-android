@@ -4,6 +4,7 @@ import android.content.Intent
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.widget.Toast
+import com.basemodule.tools.AppManager
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseActivity
@@ -236,8 +237,7 @@ class MainActivity : BaseActivity() {
             }, 2000)
 
         } else {
-            finish()
-            System.exit(0)
+            AppManager.getAppManager().appExit()
         }
     }
 }

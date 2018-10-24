@@ -1,10 +1,7 @@
 package com.lexivip.lexi.index.selection
-
-import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -21,9 +18,6 @@ import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
 import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
-import com.yanyusong.y_divideritemdecoration.Y_Divider
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
-import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*

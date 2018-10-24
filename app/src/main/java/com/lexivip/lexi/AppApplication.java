@@ -2,12 +2,14 @@ package com.lexivip.lexi;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.support.multidex.MultiDexApplication;
 //import com.qiniu.android.storage.UploadManager;
 //import com.squareup.leakcanary.LeakCanary;
 //import com.thn.erp.common.constant.THNZone;
 //import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
+import com.basemodule.tools.AppManager;
 import com.basemodule.tools.BaseModuleContext;
 import com.basemodule.tools.LogUtil;
 
@@ -36,6 +38,7 @@ public class AppApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Thread.setDefaultUncaughtExceptionHandler(restartHandler);
         instance = this;
 //        initPush();
         if (BuildConfig.LOG_DEBUG) {
@@ -87,4 +90,17 @@ public class AppApplication extends MultiDexApplication {
         return SingletonInstance.INSTANCE;
     }
 
+
+    private Thread.UncaughtExceptionHandler restartHandler = new Thread.UncaughtExceptionHandler() {
+        public void uncaughtException(Thread thread, Throwable ex) {
+            restartApp();
+        }
+    };
+
+    public void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), UserGuideActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        AppManager.getAppManager().appExit();
+    }
 }
