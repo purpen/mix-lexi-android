@@ -77,7 +77,9 @@ public final class AppManager {
      * 从栈内移除
      */
     public void stackRemoveActivity(Activity activity) {
-        if (activityStack != null && activityStack.contains(activity)) activityStack.remove(activity);
+        if (activityStack != null && activityStack.contains(activity)) {
+            activityStack.remove(activity);
+        }
     }
 
     /**

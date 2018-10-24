@@ -80,6 +80,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         initWelcomeInWeek()
     }
 
+
     /**
      * 初始化生活馆Header
      */

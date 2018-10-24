@@ -49,23 +49,23 @@ abstract class BaseFragment : Fragment() {
         super.onStart()
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        if (isVisibleToUser){
-            GlideUtil.resumeRequests()
-        }else{
-            GlideUtil.pauseRequests()
-        }
-        super.setUserVisibleHint(isVisibleToUser)
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        if (hidden){
-            GlideUtil.pauseRequests()
-        }else{
-            GlideUtil.resumeRequests()
-        }
-        super.onHiddenChanged(hidden)
-    }
+//    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+//        if (isVisibleToUser){
+//            GlideUtil.resumeRequests()
+//        }else{
+//            GlideUtil.pauseRequests()
+//        }
+//        super.setUserVisibleHint(isVisibleToUser)
+//    }
+//
+//    override fun onHiddenChanged(hidden: Boolean) {
+//        if (hidden){
+//            GlideUtil.pauseRequests()
+//        }else{
+//            GlideUtil.resumeRequests()
+//        }
+//        super.onHiddenChanged(hidden)
+//    }
 
     override fun onStop() {
         super.onStop()

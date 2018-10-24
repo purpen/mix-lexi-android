@@ -27,7 +27,7 @@ class GoodsImageViewActivity : BaseActivity(), GoodsDetailContract.View {
     }
 
     override fun initView() {
-        viewPager.adapter = GoodsImagePagerAdapter(goodsData, presenter)
+        viewPager.adapter = GoodsImagePagerAdapter(goodsData)
         viewPager.setCurrentItem(goodsData.clickPosition, true)
         textViewNum.text = ("${goodsData.clickPosition + 1} / ${goodsData.assets.size}")
 

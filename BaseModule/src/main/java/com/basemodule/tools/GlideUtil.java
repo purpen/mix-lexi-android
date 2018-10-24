@@ -1,11 +1,8 @@
 package com.basemodule.tools;
-
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.DecodeFormat;
@@ -15,12 +12,10 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.lexivip.basemodule.R;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -101,7 +96,9 @@ public class GlideUtil {
     public static <T> void loadImageWithRadiusNotPlace(T t, ImageView imageView, int radius) {
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER);
-        Glide.with(BaseModuleContext.getContext()).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Context context = imageView.getContext();
+        if (context==null) return;
+        Glide.with(context).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -118,17 +115,15 @@ public class GlideUtil {
                 new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
         RequestOptions requestOptions = bitmapTransform(multi)
                 .override(width, height)
+                .dontAnimate()
                 .format(DecodeFormat.PREFER_RGB_565)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .dontAnimate()
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Context context = imageView.getContext();
+        if (context==null) return;
+        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
-
 
     /**
      * 根据网络图大小设置ImageView大小
@@ -139,6 +134,7 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageAdjustImageViewDimen(T t, final ImageView imageView, int radius, final int width, final int height) {
+
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
                 .override(width, height)
                 .fitCenter()
@@ -148,9 +144,9 @@ public class GlideUtil {
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
 
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).asDrawable().load(t).listener(new RequestListener<Drawable>() {
+        Context context = imageView.getContext();
+        if (context==null) return;
+        Glide.with(context).asDrawable().load(t).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@android.support.annotation.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 return false;
@@ -197,9 +193,9 @@ public class GlideUtil {
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Context context = imageView.getContext();
+        if (context==null) return;
+        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
     }
 
 
@@ -219,22 +215,19 @@ public class GlideUtil {
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).asBitmap().apply(requestOptions).load(t).into(imageView);
+        if (context==null) return;
+        Glide.with(context).asBitmap().apply(requestOptions).load(t).into(imageView);
     }
 
 
-    public static void resumeRequests() {
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).resumeRequests();
+    public static void resumeRequests(Context context) {
+        if (context == null) return;
+        Glide.with(context).resumeRequests();
     }
 
-    public static void pauseRequests() {
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).pauseRequests();
+    public static void pauseRequests(Context context) {
+        if (context == null) return;
+        Glide.with(context).pauseRequests();
     }
 
 
@@ -255,9 +248,9 @@ public class GlideUtil {
                 .centerCrop()
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).asDrawable().load(t).apply(requestOptions).into(imageView);
+        Context context = imageView.getContext();
+        if (context == null) return;
+        Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -275,9 +268,9 @@ public class GlideUtil {
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).asDrawable().load(t).apply(requestOptions).into(imageView);
+        Context context = imageView.getContext();
+        if (context == null) return;
+        Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
     }
 
     public static <T> void loadCircleImageWidthDimen(@NotNull T t, @Nullable ImageView imageView, int size) {
@@ -286,9 +279,9 @@ public class GlideUtil {
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).asDrawable().load(t).apply(requestOptions).into(imageView);
+        Context context = imageView.getContext();
+        if (context == null) return;
+        Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -322,9 +315,9 @@ public class GlideUtil {
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return;
-        Glide.with(activity).asDrawable().load(t).apply(requestOptions).into(imageView);
+        Context context = imageView.getContext();
+        if (context == null) return;
+        Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
     }
 
 
@@ -333,9 +326,7 @@ public class GlideUtil {
      *
      * @param imgUrl
      */
-    public static File downLoadOriginalImage(String imgUrl) throws ExecutionException, InterruptedException {
-        Activity activity = AppManager.getAppManager().currentActivity();
-        if (activity==null || activity.isFinishing()) return null;
-        return Glide.with(activity).asFile().load(imgUrl).submit().get();
+    public static File downLoadOriginalImage(String imgUrl, Context context) throws ExecutionException, InterruptedException {
+        return Glide.with(context).asFile().load(imgUrl).submit().get();
     }
 }

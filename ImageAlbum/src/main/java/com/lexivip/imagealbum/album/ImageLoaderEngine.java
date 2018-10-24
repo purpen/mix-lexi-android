@@ -47,11 +47,11 @@ public class ImageLoaderEngine implements LoadEngine {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 if (scrollState==SCROLL_STATE_IDLE){
-                    GlideUtil.resumeRequests();
+                    GlideUtil.resumeRequests(view.getContext());
                 }
 
                 if (scrollState ==SCROLL_STATE_FLING) {
-                    GlideUtil.pauseRequests();
+                    GlideUtil.pauseRequests(view.getContext());
                 }
             }
 

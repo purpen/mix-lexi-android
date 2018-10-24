@@ -76,7 +76,7 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
         override fun doInBackground(vararg params: String): File? {
             val imgUrl = params[0]
             try {
-                return GlideUtil.downLoadOriginalImage(imgUrl)
+                return GlideUtil.downLoadOriginalImage(imgUrl,v.context)
             } catch (ex: Exception) {
                 return null
             }

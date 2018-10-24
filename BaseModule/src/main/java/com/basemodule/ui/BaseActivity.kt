@@ -46,12 +46,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     override fun onRestart() {
-        GlideUtil.resumeRequests()
         super.onRestart()
     }
 
     override fun onPause() {
-        GlideUtil.pauseRequests()
         super.onPause()
     }
 
