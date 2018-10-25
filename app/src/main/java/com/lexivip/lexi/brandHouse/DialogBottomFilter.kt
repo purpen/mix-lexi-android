@@ -16,9 +16,9 @@ import com.lexivip.lexi.selectionGoodsCenter.GoodsClassifyBean
 import kotlinx.android.synthetic.main.dialog_filter_sort_bottom.view.*
 import java.io.IOException
 
-class DialogBottomFilter(context: Activity, presenter: BrandHousePresenter, rid:String) : BottomBaseDialog<DialogBottomFilter>(context) {
+class DialogBottomFilter(context: Activity, presenter: BrandHouseGoodsPresenter, rid:String) : BottomBaseDialog<DialogBottomFilter>(context) {
     private lateinit var view: View
-    private val present: BrandHousePresenter = presenter
+    private val present: BrandHouseGoodsPresenter = presenter
     private val rid:String=rid
     private val adapter: AdapterGoodsClassify by lazy { AdapterGoodsClassify(R.layout.adapter_text_border) }
 

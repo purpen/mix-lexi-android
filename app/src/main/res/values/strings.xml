@@ -370,4 +370,5 @@
     <string name="text_recommend_product">推荐商品</string>
     <string name="text_relate_goods_recommend">相关故事推荐</string>
     <string name="text_register_time">注册时间：</string>
+    <string name="text_bind_wx">绑定微信</string>
 </resources>

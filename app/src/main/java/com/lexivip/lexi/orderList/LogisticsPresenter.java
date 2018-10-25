@@ -2,6 +2,7 @@ package com.lexivip.lexi.orderList;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.lexivip.lexi.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.AppApplication;
@@ -36,9 +37,14 @@ public class LogisticsPresenter implements LogisticsContract.Presenter {
             public void onSuccess(@NotNull String json) {
                 view.dismissLoadingView();
                 LogisticsBean bean= JsonUtil.fromJson(json,LogisticsBean.class);
-                if (bean.isSuccess()||!bean.getData().getTraces().isEmpty()){
-                    view.showList(bean.getData());
+                if (bean.isSuccess()){
+                    if (bean.getData().getTraces()!=null&&!bean.getData().getTraces().isEmpty()) {
+                        view.showList(bean.getData());
+                    }else {
+                        view.shoeNull();
+                    }
                 }else{
+                    view.showError(bean.getStatus().getMessage());
                     view.shoeNull();
                 }
             }

@@ -25,6 +25,8 @@ import com.basemodule.tools.ScreenUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseActivity;
+import com.basemodule.ui.BaseFragment;
+import com.basemodule.ui.CustomViewPager;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.AppApplication;
 import com.lexivip.lexi.R;
@@ -32,6 +34,7 @@ import com.lexivip.lexi.beans.CouponBean;
 import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.index.detail.CouponBottomDialog;
 import com.lexivip.lexi.index.detail.ShopCouponListBean;
+import com.lexivip.lexi.lifeShop.MyFragmentPageAdapter;
 import com.lexivip.lexi.search.AdapterSearchGoods;
 import com.lexivip.lexi.user.login.LoginActivity;
 import com.lexivip.lexi.user.login.UserProfileUtil;
@@ -69,30 +72,18 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     private TextView tv_notice0;
     private TextView tv_notice1;
     private TextView tv_look;
-    private LinearLayout linearLayoutSort;
-    private TextView textViewSort;
-    private ImageView imageViewSortArrow0;
-    private LinearLayout linearLayoutFilter;
-    private ImageView imageViewSortArrow2;
-    private LinearLayout ll_goods_list;
     private BrandHousePresenter presenter;
     private List<CouponBean> couponList;
-    private int count;
-    private DialogBottomFilter dialogBottomFilter;
-    private ArrayList<AdapterSearchGoods.MultipleItem> adaperList = new ArrayList<>();
-    private AdapterBrandHouseGoods adapterBranHouseGoods;
     private ImageView head_goback;
     private boolean isFollow;
     private boolean isArtcle;
-    private AdapterBrandHouseArticle adapterBrandHouseArticle;
-    private int articlePage = 1;
-    private RecyclerView recyclerView;
-    private RecyclerView recyclerViewArticle;
     private LinearLayout ll_discount;
     private RelativeLayout rl_notice;
     private BrandHouseBean dataBean;
     private TextView head_center_tv;
     private Intent intent;
+    private CustomViewPager viewPager;
+    private ArrayList<BaseFragment> fragments;
 
     @Override
     protected int getLayout() {
@@ -135,28 +126,15 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         tv_receive = findViewById(R.id.tv_receive);
         tv_minus = findViewById(R.id.tv_minus);
 
-        linearLayoutSort = findViewById(R.id.linearLayoutSort);
-        textViewSort = findViewById(R.id.textViewSort);
-        imageViewSortArrow0 = findViewById(R.id.imageViewSortArrow0);
-        linearLayoutFilter = findViewById(R.id.linearLayoutFilter);
-        imageViewSortArrow2 = findViewById(R.id.imageViewSortArrow2);
-        ll_goods_list = findViewById(R.id.ll_goods_list);
-
         ll_discount = findViewById(R.id.ll_discount);
         rl_notice = findViewById(R.id.rl_notice);
 
-        recyclerViewArticle = findViewById(R.id.recyclerViewArticle);
-        recyclerViewArticle.setLayoutManager(new GridLayoutManager(this,2));
-
-        recyclerView = findViewById(R.id.recyclerView);
-        adapterBrandHouseArticle = new AdapterBrandHouseArticle(R.layout.adapter_brand_article, null);
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        adapterBranHouseGoods = new AdapterBrandHouseGoods(adaperList);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(adapterBranHouseGoods);
-        recyclerViewArticle.setAdapter(adapterBrandHouseArticle);
+        viewPager = findViewById(R.id.viewPager);
+        fragments = new ArrayList<>();
+        fragments.add(BrandHouseGoodsFragment.newInstance(rid));
+        fragments.add(BrandHouseArticleFragment.newInstance(rid));
+        viewPager.setAdapter(new MyFragmentPageAdapter(getSupportFragmentManager(),fragments));
+        viewPager.setPagingEnabled(false);
 
         AppBarLayout appBarLayout=findViewById(R.id.appBarLayout);
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -179,38 +157,23 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     public void installListener() {
         super.installListener();
         tv_receive.setOnClickListener(this);
-        linearLayoutSort.setOnClickListener(this);
-        linearLayoutFilter.setOnClickListener(this);
         tv_design.setOnClickListener(this);
         ll_follow.setOnClickListener(this);
         ll_article.setOnClickListener(this);
         ll_goods.setOnClickListener(this);
         head_goback.setOnClickListener(this);
         tv_look.setOnClickListener(this);
+        imageViewShare.setOnClickListener(this);
 
         presenter.loadData(rid);
         presenter.loadNoticeData(rid);
         presenter.loadCouponsData(rid);
-        presenter.loadGoodsData(rid, 0, "", "", "", "", "");
-        adapterBranHouseGoods.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-                return adapterBranHouseGoods.getData().get(position).getSpanSize();
-            }
-        });
-        recyclerView.addItemDecoration(new DividerItemDecoration(AppApplication.getContext()));
-        adapterBranHouseGoods.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                presenter.loadGoodsData(rid, 0, "", "", "", "", "");
-            }
-        }, recyclerView);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_look://todo 查看更多待测试
+            case R.id.tv_look:
                 intent=new Intent(this,CloseHouseActivity.class);
                 intent.putExtra("rid",rid);
                 startActivity(intent);
@@ -221,28 +184,21 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
             case R.id.ll_goods:
                 if (isArtcle) {
                     isArtcle = false;
-                    articlePage = 1;
-                    ll_goods_list.setVisibility(View.VISIBLE);
-                    presenter.loadGoodsData(rid, 1, "", "", "", "", "");
+                    viewPager.setCurrentItem(0);
                     tv_goods_num.setTextColor(Util.getColor(R.color.color_6ed7af));
                     tv_goods.setTextColor(Util.getColor(R.color.color_6ed7af));
                     tv_article_num.setTextColor(Util.getColor(R.color.color_949ea6));
                     tv_article.setTextColor(Util.getColor(R.color.color_949ea6));
-                    recyclerView.setVisibility(View.VISIBLE);
-                    recyclerViewArticle.setVisibility(View.GONE);
                 }
                 break;
             case R.id.ll_article:
                 if (!isArtcle) {
                     isArtcle = true;
-                    ll_goods_list.setVisibility(View.GONE);
-                    presenter.loadArticle(rid, String.valueOf(articlePage));
+                    viewPager.setCurrentItem(1);
                     tv_goods_num.setTextColor(Util.getColor(R.color.color_949ea6));
                     tv_goods.setTextColor(Util.getColor(R.color.color_949ea6));
                     tv_article_num.setTextColor(Util.getColor(R.color.color_6ed7af));
                     tv_article.setTextColor(Util.getColor(R.color.color_6ed7af));
-                    recyclerView.setVisibility(View.GONE);
-                    recyclerViewArticle.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.ll_follow:
@@ -258,40 +214,6 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
                 intent.putExtra("rid",rid);
                 startActivity(intent);
                 break;
-            case R.id.linearLayoutFilter:
-                Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f);
-                dialogBottomFilter = new DialogBottomFilter(this, presenter, rid);
-                dialogBottomFilter.show();
-                dialogBottomFilter.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f);
-                        switch (presenter.getSortType()) {
-                            case "1":
-                                textViewSort.setText(Util.getString(R.string.text_sort_synthesize));
-                                break;
-                            case "2":
-                                textViewSort.setText(Util.getString(R.string.text_price_low_up));
-                                break;
-                            case "3":
-                                textViewSort.setText(Util.getString(R.string.text_price_up_low));
-                                break;
-                        }
-                    }
-                });
-                dialogBottomFilter.setGoodsCount(count);
-                break;
-            case R.id.linearLayoutSort:
-                Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f);
-                DialogBottomSynthesiseSort dialogBottomSynthesiseSort = new DialogBottomSynthesiseSort(this, presenter, rid);
-                dialogBottomSynthesiseSort.show();
-                dialogBottomSynthesiseSort.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f);
-                    }
-                });
-                break;
             case R.id.tv_receive:
                 if (UserProfileUtil.isLogin()) {
                     CouponBottomDialog couponBottomDialog = new CouponBottomDialog(this, couponList, presenter, rid);
@@ -299,6 +221,8 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
                 } else {
                     startActivity(new Intent(this, LoginActivity.class));
                 }
+                break;
+            case R.id.imageViewShare://todo 分享待完成
                 break;
         }
     }
@@ -315,6 +239,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void showError(@NonNull String error) {
+        if (dialog!=null)
         dialog.dismiss();
         showError(error);
     }
@@ -344,7 +269,9 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
             rl_notice.setVisibility(View.VISIBLE);
             rl_close.setVisibility(View.VISIBLE);
             tv_close_time.setText(DateUtil.getDateByTimestamp(Long.valueOf(bean.data.begin_date), DateUtil.PATTERN_DOT) + "—" + DateUtil.getDateByTimestamp(Long.valueOf(bean.data.end_date), DateUtil.PATTERN_DOT));
-            tv_recovery.setText(DateUtil.getDateByTimestamp(Long.valueOf(bean.data.delivery_date), DateUtil.PATTERN_DOT));
+            if (Long.valueOf(bean.data.delivery_date)!=0) {
+                tv_recovery.setText(DateUtil.getDateByTimestamp(Long.valueOf(bean.data.delivery_date), DateUtil.PATTERN_DOT));
+            }
 
             int textWidth=ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp60);
             int sumWidth = 0;
@@ -459,51 +386,6 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
-    public void setGoodsData(int count) {
-        this.count = count;
-        if (dialogBottomFilter != null && dialogBottomFilter.isShowing()) {
-            dialogBottomFilter.setGoodsCount(count);
-        }
-    }
-
-    @Override
-    public void loadMoreFail() {
-        if (isArtcle) {
-            adapterBrandHouseArticle.loadMoreFail();
-        } else {
-            adapterBranHouseGoods.loadMoreFail();
-        }
-    }
-
-    @Override
-    public void loadMoreEnd() {
-        if (isArtcle) {
-            adapterBrandHouseArticle.loadMoreEnd();
-        } else {
-            adapterBranHouseGoods.loadMoreEnd();
-        }
-    }
-
-    @Override
-    public void loadMoreComplete() {
-        if (isArtcle) {
-            adapterBrandHouseArticle.loadMoreComplete();
-        } else {
-            adapterBranHouseGoods.loadMoreComplete();
-        }
-    }
-
-    @Override
-    public void addData(List<ProductBean> data) {
-        adapterBranHouseGoods.addData(formatData(data));
-    }
-
-    @Override
-    public void setNewData(List<ProductBean> data) {
-        adapterBranHouseGoods.setNewData(formatData(data));
-    }
-
-    @Override
     public void setIsFollow(BrandHouseFollowBean bean) {
         tv_fans.setText(String.valueOf(bean.data.fans_count));
         isFollow = !isFollow;
@@ -521,81 +403,8 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
-    public void setArticle(BrandHouseArticelBean bean) {
-        if (articlePage == 1) {
-            adapterBrandHouseArticle.setNewData(bean.data.life_records);
-        } else {
-            adapterBrandHouseArticle.addData(bean.data.life_records);
-        }
-        if (bean.data.count == adapterBrandHouseArticle.getData().size()) {
-            loadMoreEnd();
-        } else {
-            loadMoreComplete();
-        }
-    }
-
-    @Override
     public void setPresenter(BrandHouseContract.Presenter presenter) {
         setPresenter(presenter);
     }
 
-    private ArrayList<AdapterSearchGoods.MultipleItem> formatData(List<ProductBean> list) {
-        ArrayList<AdapterSearchGoods.MultipleItem> arrayList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (i == 4 || i == 9) {
-                arrayList.add(new AdapterSearchGoods.MultipleItem(list.get(i), AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN2, AdapterSearchGoods.MultipleItem.ITEM_SPAN2_SIZE));
-            } else {
-                if ((1 < 4 && i % 2 == 1) || (4 < i && i < 8 && i % 2 == 0)) {
-                    LogUtil.e("第几个：" + i);
-                    list.get(i).isRight = true;
-                }
-                arrayList.add(new AdapterSearchGoods.MultipleItem(list.get(i), AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN1, AdapterSearchGoods.MultipleItem.ITEM_SPAN1_SIZE));
-            }
-        }
-        return arrayList;
-    }
-
-    private class DividerItemDecoration extends Y_DividerItemDecoration {
-        private int color = Util.getColor(android.R.color.white);
-        public DividerItemDecoration(Context context) {
-            super(context);
-        }
-
-        @Override
-        public Y_Divider getDivider(int itemPosition) {
-            LogUtil.e("position："+itemPosition);
-            Y_Divider divider;
-
-            int count = adapterBranHouseGoods.getItemCount();
-            LogUtil.e("总行数："+count);
-            if (itemPosition==count-1){
-                divider = new Y_DividerBuilder()
-                        .create();
-                return divider;
-            }else {
-                AdapterSearchGoods.MultipleItem item = adapterBranHouseGoods.getItem(itemPosition);
-                if (item==null){
-                    divider = new Y_DividerBuilder()
-                            .create();
-                    return divider;
-                }else {
-                    if (item.getProduct().isRight) {
-                        LogUtil.e("是否是右边：" + item.getProduct().isRight);
-                        LogUtil.e("itemPosition：" + itemPosition);
-                        divider = new Y_DividerBuilder()
-                                .setBottomSideLine(true, color, 20f, 0f, 0f)
-                                .setLeftSideLine(true, color, 5f, 0f, 0f)
-                                .create();
-                        return divider;
-                    } else {
-                        divider = new Y_DividerBuilder()
-                                .setBottomSideLine(true, color, 20f, 0f, 0f)
-                                .setLeftSideLine(true, color, 15f, 0f, 0f)
-                                .create();
-                        return divider;
-                    }
-                }
-            }
-        }
-    }
 }

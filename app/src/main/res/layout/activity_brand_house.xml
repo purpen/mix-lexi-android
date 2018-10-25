@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:fitsSystemWindows="true">
-
+<!--app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -146,6 +146,7 @@
                             android:layout_marginLeft="@dimen/dp15"
                             android:ellipsize="end"
                             android:lines="1"
+                            android:layout_weight="1"
                             android:textColor="@color/color_333"
                             android:textSize="@dimen/sp17" />
 
@@ -425,90 +426,17 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_goods_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp40"
-                    android:background="@android:color/white"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/linearLayoutSort"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/textViewSort"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/dp5"
-                            android:gravity="center"
-                            android:text="@string/text_sort_synthesize"
-                            android:textColor="@color/color_555"
-                            android:textSize="@dimen/sp14" />
-
-                        <ImageView
-                            android:id="@+id/imageViewSortArrow0"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:src="@mipmap/icon_sort_arrow_down" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayoutFilter"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="@dimen/dp5"
-                            android:gravity="center"
-                            android:text="@string/text_sort_filter"
-                            android:textColor="@color/color_555"
-                            android:textSize="@dimen/sp14" />
-
-                        <ImageView
-                            android:id="@+id/imageViewSortArrow2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:src="@mipmap/icon_sort_arrow_down" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp1"
-                    android:background="@color/color_eee" />
-            </LinearLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp10"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewArticle"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <com.basemodule.ui.CustomViewPager
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp15"
-            android:paddingRight="@dimen/dp15"
-            android:visibility="gone"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"
+            ></com.basemodule.ui.CustomViewPager>
+        </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>
