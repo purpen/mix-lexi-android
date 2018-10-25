@@ -4,7 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.ProductBean
-import com.lexivip.lexi.index.selection.DiscoverLifeBean
+import com.lexivip.lexi.beans.ShopWindowBean
 
 class ShowWindowDetailContract {
     interface View : BaseView<Presenter> {
@@ -22,7 +22,7 @@ class ShowWindowDetailContract {
 
         }
 
-        fun setRelateShowWindowData(shop_windows: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
+        fun setRelateShowWindowData(windows: List<ShopWindowBean>) {
 
         }
 
@@ -40,8 +40,8 @@ class ShowWindowDetailContract {
     }
 
     interface Presenter : BasePresenter {
-        fun focusUser(uid:String,view1: android.view.View)
-        fun unfocusUser(uid:String,view1: android.view.View)
+        fun focusUser(uid: String, view1: android.view.View)
+        fun unfocusUser(uid: String, view1: android.view.View)
         fun loadData(rid:String,isRefresh:Boolean)
         fun getGuessLike(rid: String)
         fun sendComment(rid: String, pid: String, content: String)

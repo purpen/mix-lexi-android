@@ -8,6 +8,7 @@ import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.R
+import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.view.emotionkeyboardview.EmotionKeyboard
 import com.lexivip.lexi.view.emotionkeyboardview.fragment.EmotionMainFragment
 

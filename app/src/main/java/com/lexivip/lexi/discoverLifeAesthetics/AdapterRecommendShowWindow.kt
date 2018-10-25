@@ -1,6 +1,7 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -16,6 +17,8 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
     private val dp13: Int by lazy { DimenUtil.dp2px(13.0) }
     private val dp25: Int by lazy { DimenUtil.dp2px(25.0) }
     private val dp20: Int by lazy { DimenUtil.dp2px(20.0) }
+    private val layoutParams250:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp250,dp250) }
+    private val layoutParams124:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124,dp124) }
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
@@ -95,13 +98,17 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
             }
         }
 
-        val imageView0 = helper.getView<ImageView>(R.id.imageView30)
-        val imageView1 = helper.getView<ImageView>(R.id.imageView31)
-        val imageView2 = helper.getView<ImageView>(R.id.imageView32)
+        val imageView30 = helper.getView<ImageView>(R.id.imageView30)
+        val imageView31 = helper.getView<ImageView>(R.id.imageView31)
+        val imageView32 = helper.getView<ImageView>(R.id.imageView32)
+        val relativeLayoutImage32 = helper.getView<RelativeLayout>(R.id.relativeLayoutImage32)
+        imageView30.layoutParams = layoutParams250
+        imageView31.layoutParams = layoutParams124
+        relativeLayoutImage32.layoutParams = layoutParams124
 
-        GlideUtil.loadImageWithDimenAndRadius(list[0], imageView0, 0, dp250, dp250)
-        GlideUtil.loadImageWithDimenAndRadius(list[1], imageView1, 0, dp124)
-        GlideUtil.loadImageWithDimenAndRadius(list[2], imageView2, 0, dp124)
+        GlideUtil.loadImageWithDimenAndRadius(list[0], imageView30, 0, dp250, dp250)
+        GlideUtil.loadImageWithDimenAndRadius(list[1], imageView31, 0, dp124)
+        GlideUtil.loadImageWithDimenAndRadius(list[2], imageView32, 0, dp124)
 
         helper.addOnClickListener(R.id.imageView30)
         helper.addOnClickListener(R.id.imageView31)

@@ -5,6 +5,7 @@ import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.bean.BannerImageBean
 
 class SelectionContract {
@@ -24,7 +25,7 @@ class SelectionContract {
 
         }
 
-        fun setDiscoverLifeData(products: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
+        fun setDiscoverLifeData(products: List<ShopWindowBean>) {
 
         }
 

@@ -5,6 +5,7 @@ import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
+import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.net.NetStatusBean
 import java.io.IOException
 

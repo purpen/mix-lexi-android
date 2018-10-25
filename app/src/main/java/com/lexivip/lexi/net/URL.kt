@@ -335,11 +335,6 @@ object URL {
     const val WISH_ORDER = "${BASE_URL}wishlist"
 
     /**
-     * 用户关注的设计馆
-     */
-    const val FOLLOWED_STORES = "${BASE_URL}users/followed_stores"
-
-    /**
      * 用户生活馆动态
      */
     const val USER_DYNAMIC_URL = "${BASE_URL}users/user_dynamic"

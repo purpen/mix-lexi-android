@@ -9,12 +9,13 @@ import com.basemodule.tools.ToastUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
-import com.lexivip.lexi.index.selection.DiscoverLifeBean
+import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.selection.DiscoverLifeProductAdapter
 
-class AdapterLikeShowWindow(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.DataBean.ShopWindowsBean, BaseViewHolder>(layoutResId) {
-    override fun convert(helper: BaseViewHolder, item: DiscoverLifeBean.DataBean.ShopWindowsBean) {
+class AdapterLikeShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean, BaseViewHolder>(layoutResId) {
+    override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
         helper.setText(R.id.textView,item.description)
 
@@ -50,9 +51,9 @@ class AdapterLikeShowWindow(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBea
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = adapter
 
-        adapter.setOnItemClickListener { adapter, view, position ->
-            val multipleItem = adapter.getItem(position) as DiscoverLifeProductAdapter.MultipleItem
-            ToastUtil.showInfo("商品详情"+position+multipleItem.str)
+        adapter.setOnItemClickListener { _, _, _ ->
+            PageUtil.jump2ShopWindowDetailActivity(item.rid)
+//            val item1 = adapter.getItem(position)
         }
 
         adapter.setSpanSizeLookup { _, position ->

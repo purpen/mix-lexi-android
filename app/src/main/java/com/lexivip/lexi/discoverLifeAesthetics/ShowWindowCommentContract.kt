@@ -3,6 +3,7 @@ package com.lexivip.lexi.discoverLifeAesthetics
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.lexivip.lexi.beans.CommentBean
 
 class ShowWindowCommentContract {
     interface View : BaseView<Presenter> {
