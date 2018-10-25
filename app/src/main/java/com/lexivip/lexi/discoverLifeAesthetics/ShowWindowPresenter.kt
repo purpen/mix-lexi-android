@@ -27,7 +27,7 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val showWindowBean = JsonUtil.fromJson(json, ShowWindowBean::class.java)
+                val showWindowBean = JsonUtil.fromJson(json, ShowWindowListBean::class.java)
                 if (showWindowBean.success) {
                     view.setNewData(showWindowBean.data.shop_windows)
                     ++page
@@ -50,7 +50,7 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
         dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
-                val showWindowBean = JsonUtil.fromJson(json, ShowWindowBean::class.java)
+                val showWindowBean = JsonUtil.fromJson(json, ShowWindowListBean::class.java)
                 if (showWindowBean.success) {
                     val shopWindows = showWindowBean.data.shop_windows
                     if (shopWindows.isEmpty()) {
@@ -61,6 +61,7 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
                         ++page
                     }
                 } else {
+                    view.loadMoreFail()
                     view.showError(showWindowBean.status.message)
                 }
             }
@@ -74,8 +75,8 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
     /**
      * 喜欢橱窗
      */
-    fun favoriteShowWindow(rid: String?, position: Int, view1: View) {
-        dataSource.favoriteShowWindow(rid, object : IDataSource.HttpRequestCallBack {
+    override fun favoriteShowWindow(rid: String,isFavorite:Boolean,position: Int, view1: View) {
+        dataSource.favoriteShowWindow(rid,isFavorite, object : IDataSource.HttpRequestCallBack {
 
             override fun onStart() {
                 view1.isEnabled = false
@@ -85,7 +86,7 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
                 view1.isEnabled = true
                 val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (favoriteBean.success) {
-                    view.setFavorite(true, position)
+                    view.setFavorite(!isFavorite, position)
                 } else {
                     view.showError(favoriteBean.status.message)
                 }
@@ -112,7 +113,7 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-                val showWindowBean = JsonUtil.fromJson(json, ShowWindowBean::class.java)
+                val showWindowBean = JsonUtil.fromJson(json, ShowWindowListBean::class.java)
                 if (showWindowBean.success) {
                     view.setNewData(showWindowBean.data.shop_windows)
                     ++page
@@ -135,7 +136,7 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
     fun loadMoreFocusData() {
         dataSource.loadFocusData(page, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val showWindowBean = JsonUtil.fromJson(json, ShowWindowBean::class.java)
+                val showWindowBean = JsonUtil.fromJson(json, ShowWindowListBean::class.java)
                 if (showWindowBean.success) {
                     val shopWindows = showWindowBean.data.shop_windows
                     if (shopWindows.isEmpty()) {
@@ -146,6 +147,7 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
                         ++page
                     }
                 } else {
+                    view.loadMoreFail()
                     view.showError(showWindowBean.status.message)
                 }
             }
@@ -156,4 +158,29 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
         })
     }
 
+    /**
+     * 关注用户
+     */
+    override fun focusUser(uid: String, v:View,isFollowed: Boolean, position: Int) {
+        dataSource.focusUser(uid,isFollowed, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                v.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                v.isEnabled = true
+                val userFocusState = JsonUtil.fromJson(json, UserFocusState::class.java)
+                if (userFocusState.success) {
+                    view.setFocusState(!isFollowed,position)
+                } else {
+                    view.showError(userFocusState.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                v.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
 }

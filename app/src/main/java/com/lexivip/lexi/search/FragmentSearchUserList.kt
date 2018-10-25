@@ -68,7 +68,7 @@ class FragmentSearchUserList : BaseFragment(), SearchUserListContract.View {
 
         adapter.setOnItemClickListener { adapter, view, position ->
             //            ToastUtil.showInfo("跳转用户")
-//            val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
+//            val showWindowBean = adapter.getItem(position) as ShowWindowListBean.DataBean.ShopWindowsBean
 //            val intent = Intent(context, ShowWindowDetailActivity::class.java)
 //            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName, showWindowBean)
 //            startActivity(intent)

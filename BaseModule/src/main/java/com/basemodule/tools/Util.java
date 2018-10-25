@@ -93,4 +93,29 @@ public class Util {
         return drawable;
     }
 
+    /**
+     * 获取指定大小的Drawable
+     * @param imgId
+     * @return
+     */
+    public static Drawable getDrawableWidthPxDimen(@DrawableRes int imgId, int widthPx, int heightPx) {
+        Drawable drawable = ContextCompat.getDrawable(BaseModuleContext.getContext(), imgId);
+        if (drawable != null) {
+            drawable.setBounds(0, 0, widthPx, heightPx);
+        }
+        return drawable;
+    }
+
+    /**
+     * 获取指定大小的Drawable
+     * @param imgId
+     * @return
+     */
+    public static Drawable getDrawableWidthPxDimen(@DrawableRes int imgId, int size) {
+        Drawable drawable = ContextCompat.getDrawable(BaseModuleContext.getContext(), imgId);
+        if (drawable != null) {
+            drawable.setBounds(0, 0, size, size);
+        }
+        return drawable;
+    }
 }

@@ -32,7 +32,6 @@ public class ClientParamsAPI {
     //正式
     public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
     public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
-
     /**
      * 获取登录后的authorization
      * @param token

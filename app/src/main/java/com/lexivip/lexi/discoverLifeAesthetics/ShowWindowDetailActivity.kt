@@ -13,6 +13,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.index.selection.DiscoverLifeAdapter
@@ -28,7 +29,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     private val presenter: ShowWindowDetailPresenter by lazy { ShowWindowDetailPresenter(this) }
 
-    private lateinit var shopWindowsBean: ShowWindowBean.DataBean.ShopWindowsBean
+    private lateinit var rid: String
 
     private val adapterGuessLike: EditorRecommendAdapter by lazy { EditorRecommendAdapter(R.layout.adapter_editor_recommend) }
 
@@ -38,7 +39,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     override fun getIntentData() {
         if (intent.hasExtra(ShowWindowDetailActivity::class.java.simpleName)) {
-            shopWindowsBean = intent.getParcelableExtra(ShowWindowDetailActivity::class.java.simpleName)
+            rid = intent.getStringExtra(TAG)
         }
     }
 
@@ -56,7 +57,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     }
 
     override fun requestNet() {
-        presenter.loadData(shopWindowsBean.rid, false)
+        presenter.loadData(rid, false)
     }
 
     /**
@@ -71,45 +72,45 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      */
     @Deprecated("see setShowWindowData")
     private fun initShowWindow() {
-        GlideUtil.loadCircleImageWidthDimen(shopWindowsBean.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
-        textViewName.text = shopWindowsBean.user_name
-        if (shopWindowsBean.is_official) {
-            textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_show_window_official, 0)
-        } else {
-            textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-        }
-
-        shopWindowsBean.like_count = 1000
-        if (shopWindowsBean.like_count > 0) {
-            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
-            textViewLike.text = "${shopWindowsBean.like_count}"
-        } else {
-            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
-            textViewLike.text = ""
-        }
-
-        if (shopWindowsBean.comment_count > 0) {
-            textViewComment.text = "${shopWindowsBean.comment_count}"
-        } else {
-            textViewComment.text = ""
-        }
-
-        textViewTitle1.text = shopWindowsBean.title
-
-        textViewTitle2.text = shopWindowsBean.description
-
-
-        if (shopWindowsBean.is_follow) {
-            buttonFocus.text = Util.getString(R.string.text_focused)
-        } else {
-            buttonFocus.text = Util.getString(R.string.text_focus)
-        }
-
-        setGoodsImages()
-
-        //设置标签
-        tagGroup.setTags(listOf("#生活", "#美学", "#夏天girl", "#东东"))
-        tagGroup.setOnTagClickListener { tag: String? -> ToastUtil.showInfo(tag) }
+//        GlideUtil.loadCircleImageWidthDimen(shopWindowsBean.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
+//        textViewName.text = shopWindowsBean.user_name
+//        if (shopWindowsBean.is_official) {
+//            textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_show_window_official, 0)
+//        } else {
+//            textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+//        }
+//
+//        shopWindowsBean.like_count = 1000
+//        if (shopWindowsBean.like_count > 0) {
+//            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
+//            textViewLike.text = "${shopWindowsBean.like_count}"
+//        } else {
+//            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
+//            textViewLike.text = ""
+//        }
+//
+//        if (shopWindowsBean.comment_count > 0) {
+//            textViewComment.text = "${shopWindowsBean.comment_count}"
+//        } else {
+//            textViewComment.text = ""
+//        }
+//
+//        textViewTitle1.text = shopWindowsBean.title
+//
+//        textViewTitle2.text = shopWindowsBean.description
+//
+//
+//        if (shopWindowsBean.is_follow) {
+//            buttonFocus.text = Util.getString(R.string.text_focused)
+//        } else {
+//            buttonFocus.text = Util.getString(R.string.text_focus)
+//        }
+//
+//        setGoodsImages()
+//
+//        //设置标签
+//        tagGroup.setTags(listOf("#生活", "#美学", "#夏天girl", "#东东"))
+//        tagGroup.setOnTagClickListener { tag: String? -> ToastUtil.showInfo(tag) }
     }
 
 
@@ -117,59 +118,59 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 设置橱窗产品图片
      */
     private fun setGoodsImages() {
-        // 设置3张产品图
-        if (shopWindowsBean.products.isEmpty()) return
-
-        val list = ArrayList<String>()
-        val size = shopWindowsBean.products.size
-
-        //图片只能3,5,7张
-        if (size < 3) return
-
-        val view: View
-
-        for (product in shopWindowsBean.products) {
-            list.add(product.cover)
-        }
-
-        when (size) {
-            3 -> {
-                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image3, null)
-                linearLayoutBox.addView(view)
-                GlideUtil.loadImageWithFading(list[0], view.imageView30)
-                GlideUtil.loadImageWithFading(list[1], view.imageView31)
-                GlideUtil.loadImageWithFading(list[2], view.imageView32)
-            }
-
-            5 -> {
-                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image5, null)
-                linearLayoutBox.addView(view)
-                GlideUtil.loadImageWithFading(list[0], view.imageView50)
-                GlideUtil.loadImageWithFading(list[1], view.imageView51)
-                GlideUtil.loadImageWithFading(list[2], view.imageView52)
-                GlideUtil.loadImageWithFading(list[3], view.imageView53)
-                GlideUtil.loadImageWithFading(list[4], view.imageView54)
-            }
-
-            7 -> {
-                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image7, null)
-                linearLayoutBox.addView(view)
-                GlideUtil.loadImageWithFading(list[0], view.imageView70)
-                GlideUtil.loadImageWithFading(list[1], view.imageView71)
-                GlideUtil.loadImageWithFading(list[2], view.imageView72)
-                GlideUtil.loadImageWithFading(list[3], view.imageView73)
-                GlideUtil.loadImageWithFading(list[4], view.imageView74)
-                GlideUtil.loadImageWithFading(list[5], view.imageView75)
-                GlideUtil.loadImageWithFading(list[6], view.imageView76)
-            }
-        }
+//        // 设置3张产品图
+//        if (shopWindowsBean.products.isEmpty()) return
+//
+//        val list = ArrayList<String>()
+//        val size = shopWindowsBean.products.size
+//
+//        //图片只能3,5,7张
+//        if (size < 3) return
+//
+//        val view: View
+//
+//        for (product in shopWindowsBean.products) {
+//            list.add(product.cover)
+//        }
+//
+//        when (size) {
+//            3 -> {
+//                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image3, null)
+//                linearLayoutBox.addView(view)
+//                GlideUtil.loadImageWithFading(list[0], view.imageView30)
+//                GlideUtil.loadImageWithFading(list[1], view.imageView31)
+//                GlideUtil.loadImageWithFading(list[2], view.imageView32)
+//            }
+//
+//            5 -> {
+//                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image5, null)
+//                linearLayoutBox.addView(view)
+//                GlideUtil.loadImageWithFading(list[0], view.imageView50)
+//                GlideUtil.loadImageWithFading(list[1], view.imageView51)
+//                GlideUtil.loadImageWithFading(list[2], view.imageView52)
+//                GlideUtil.loadImageWithFading(list[3], view.imageView53)
+//                GlideUtil.loadImageWithFading(list[4], view.imageView54)
+//            }
+//
+//            7 -> {
+//                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image7, null)
+//                linearLayoutBox.addView(view)
+//                GlideUtil.loadImageWithFading(list[0], view.imageView70)
+//                GlideUtil.loadImageWithFading(list[1], view.imageView71)
+//                GlideUtil.loadImageWithFading(list[2], view.imageView72)
+//                GlideUtil.loadImageWithFading(list[3], view.imageView73)
+//                GlideUtil.loadImageWithFading(list[4], view.imageView74)
+//                GlideUtil.loadImageWithFading(list[5], view.imageView75)
+//                GlideUtil.loadImageWithFading(list[6], view.imageView76)
+//            }
+//        }
     }
 
     /**
      * 相关橱窗
      */
     private fun initRelateShowWindow() {
-        presenter.getRelateShowWindow(shopWindowsBean.rid)
+        presenter.getRelateShowWindow(rid)
         val linearLayoutManager = LinearLayoutManager(applicationContext)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewShowWindow.setHasFixedSize(true)
@@ -212,7 +213,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 初始化猜你喜欢
      */
     private fun initGuessLike() {
-        presenter.getGuessLike(shopWindowsBean.rid)
+        presenter.getGuessLike(rid)
         val linearLayoutManager = LinearLayoutManager(applicationContext)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewGuess.setHasFixedSize(true)
@@ -251,26 +252,26 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         buttonFocus.setOnClickListener { view ->
             //TODO 记得修改为真实UID
-            if (shopWindowsBean.is_follow) {
-                presenter.unfocusUser("uid", view)
-            } else {
-                presenter.focusUser("uid", view)
-            }
+//            if (shopWindowsBean.is_follow) {
+//                presenter.unfocusUser("uid", view)
+//            } else {
+//                presenter.focusUser("uid", view)
+//            }
         }
 
 
         relativeLayoutLike.setOnClickListener { view ->
-            if (shopWindowsBean.is_like) {
-                presenter.unfavoriteShowWindow(shopWindowsBean.rid, view)
-            } else {
-                presenter.favoriteShowWindow(shopWindowsBean.rid, view)
-            }
+//            if (shopWindowsBean.is_like) {
+//                presenter.unfavoriteShowWindow(shopWindowsBean.rid, view)
+//            } else {
+//                presenter.favoriteShowWindow(shopWindowsBean.rid, view)
+//            }
         }
 
         //跳转评论列表
         relativeLayoutComment.setOnClickListener { view ->
             val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
-            intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, shopWindowsBean.rid)
+            intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName,rid)
             startActivity(intent)
         }
 
@@ -302,7 +303,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 if (TextUtils.isEmpty(content)) {
                     ToastUtil.showInfo(Util.getString(R.string.hint_input_comment))
                 } else {
-                    presenter.sendComment(shopWindowsBean.rid, "", content)
+                    presenter.sendComment(rid, "", content)
                 }
                 return@setOnKeyListener true
             }
@@ -316,7 +317,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 重新设置评论数
      */
     override fun setCommentState() {
-        textViewComment.text = "" + (shopWindowsBean.comment_count + 1)
+//        textViewComment.text = "" + (shopWindowsBean.comment_count + 1)
     }
 
     /**
@@ -336,10 +337,10 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     override fun setFavorite(b: Boolean) {
         if (b) {
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
-            textViewLike.text = "" + (shopWindowsBean.like_count + 1)
+//            textViewLike.text = "" + (shopWindowsBean.like_count + 1)
         } else {
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
-            textViewLike.text = "" + (shopWindowsBean.like_count - 1)
+//            textViewLike.text = "" + (shopWindowsBean.like_count - 1)
         }
     }
 

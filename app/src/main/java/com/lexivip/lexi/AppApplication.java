@@ -98,9 +98,9 @@ public class AppApplication extends MultiDexApplication {
     };
 
     public void restartApp() {
-        Intent intent = new Intent(getApplicationContext(), UserGuideActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+//        Intent intent = new Intent(getApplicationContext(), UserGuideActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
         AppManager.getAppManager().appExit();
     }
 }

@@ -27,9 +27,15 @@ open class ShowWindowModel{
         })
     }
 
-    fun favoriteShowWindow(rid: String?, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+    fun favoriteShowWindow(rid: String,isFavorite:Boolean ,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getFavoriteShowWindowParams(rid)
-        HttpRequest.sendRequest(HttpRequest.POST, URL.FAVORITE_SHOW_WINDOW,params,object : IDataSource.HttpRequestCallBack{
+        var method =""
+        if (isFavorite){
+            method = HttpRequest.DELETE
+        }else{
+            method = HttpRequest.POST
+        }
+        HttpRequest.sendRequest(method, URL.FAVORITE_SHOW_WINDOW,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
@@ -44,7 +50,9 @@ open class ShowWindowModel{
         })
     }
 
-
+    /**
+     * 加载关注的橱窗
+     */
     fun loadFocusData(page: Int, callBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getShowWindowParams(page)
 
@@ -59,6 +67,32 @@ open class ShowWindowModel{
 
             override fun onFailure(e: IOException) {
                 callBack.onFailure(e)
+            }
+        })
+    }
+
+
+    fun focusUser(uid: String, isFollowed: Boolean, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFocusUserParams(uid)
+        val url:String
+
+        if (isFollowed){
+            url = URL.UNFOCUS_USER_URL
+        }else{
+            url = URL.FOCUS_USER_URL
+        }
+
+        HttpRequest.sendRequest(HttpRequest.POST, url, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
             }
         })
     }

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="255dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/imageViewBg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/textViewTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp20"
+                        android:layout_marginStart="@dimen/dp20"
+                        android:layout_marginTop="@dimen/dp30"
+                        android:text="@string/text_discover_life"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewTitleDes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewTitle"
+                        android:layout_marginEnd="@dimen/dp20"
+                        android:layout_marginStart="@dimen/dp20"
+                        android:layout_marginTop="@dimen/dp15"
+                        android:lineSpacingMultiplier="1.2"
+                        android:text="@string/text_discover_life_description"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/sp14" />
+
+                </RelativeLayout>
+
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/slidingTabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp40"
+                    android:background="@android:color/white"
+                    app:tl_indicator_height="0dp"
+                    app:tl_indicator_width="14dp"
+                    app:tl_textBold="SELECT"
+                    tl:tl_indicator_color="@color/color_6ed7af"
+                    tl:tl_tab_padding="@dimen/dp15"
+                    tl:tl_textAllCaps="true"
+                    tl:tl_textSelectColor="@color/color_6ed7af"
+                    tl:tl_textUnselectColor="@color/color_2d343a"
+                    tl:tl_textsize="@dimen/sp17" />
+
+                <include
+                    layout="@layout/line_color_eee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1" />
+            </LinearLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.basemodule.ui.CustomViewPager
+                android:id="@+id/customViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutPublishWindow"
+        android:layout_width="123dp"
+        android:layout_height="@dimen/dp40"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp40"
+        android:background="@drawable/bg_radius_round_white"
+        android:gravity="center"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp5"
+            android:text="@string/text_publish_show_window"
+            android:textColor="@color/color_666"
+            android:textSize="@dimen/sp12" />
+
+        <ImageView
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15"
+            android:src="@drawable/icon_pulish_add" />
+    </LinearLayout>
+</RelativeLayout>
