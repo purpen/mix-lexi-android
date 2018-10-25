@@ -33,6 +33,7 @@ import android.Manifest.permission.CALL_PHONE
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import com.umeng.commonsdk.UMConfigure
+import com.lexivip.lexi.coupon.UserCouponActivity
 
 
 class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
@@ -149,6 +150,11 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
         buttonActivity.setOnClickListener {
             startActivity(Intent(activity, DynamicActivity::class.java))
+        }
+
+        //优惠券
+        linearLayoutCoupon.setOnClickListener {
+            startActivity(Intent(activity, UserCouponActivity::class.java))
         }
     }
 

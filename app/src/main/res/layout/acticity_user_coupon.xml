@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <com.lexivip.lexi.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/slidingTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@android:color/white"
+        tl:tl_indicator_color="@color/color_6ed7af"
+        tl:tl_indicator_height="2dp"
+        tl:tl_indicator_width_equal_title="true"
+        tl:tl_tab_padding="@dimen/dp15"
+        tl:tl_tab_space_equal="true"
+        tl:tl_textSelectColor="@color/color_6ed7af"
+        tl:tl_textUnselectColor="@color/color_a9b1b8"
+        tl:tl_textsize="14sp" />
+
+    <include layout="@layout/line_color_eee" />
+
+    <com.basemodule.ui.CustomViewPager
+        android:id="@+id/customViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

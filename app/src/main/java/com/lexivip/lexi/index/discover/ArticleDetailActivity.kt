@@ -17,12 +17,13 @@ import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
+import com.lexivip.lexi.user.login.LoginActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.acticity_artical_detail.*
 import kotlinx.android.synthetic.main.footer_view_article_detail.view.*
-import kotlinx.android.synthetic.main.footer_view_stagger_recyclerview.view.*
 import kotlinx.android.synthetic.main.header_view_article_detail.view.*
 import org.json.JSONObject
 
@@ -39,7 +40,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private lateinit var channelName: String
     private lateinit var headerView: View
     private lateinit var footerView: View
-    private lateinit var footerView1: View
     override fun getIntentData() {
         rid = intent.getStringExtra(TAG)
         channelName = intent.getStringExtra(ArticleDetailActivity::class.java.name)
@@ -51,7 +51,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         headerView.textViewBrowserNum.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_show_password,R.dimen.dp14,R.dimen.dp14),null,null,null)
 
         footerView = View.inflate(this,R.layout.footer_view_article_detail,null)
-        footerView1 = View.inflate(this,R.layout.footer_view_stagger_recyclerview,null)
 
         listDescription = ArrayList()
         val linearLayoutManager = LinearLayoutManager(this)
@@ -65,7 +64,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         initRelateStories()
         adapter.setHeaderView(headerView)
         adapter.addFooterView(footerView)
-        adapter.addFooterView(footerView1)
         adapter.setHeaderFooterEmpty(true,true)
     }
 
@@ -88,9 +86,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private fun initRelateStories() {
         val staggeredGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         staggeredGridLayoutManager.setScrollEnabled(false)
-        footerView1.recyclerViewRelateStory.layoutManager = staggeredGridLayoutManager
-        footerView1.recyclerViewRelateStory.adapter = adapterRelateStories
-        footerView1.recyclerViewRelateStory.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        footerView.recyclerViewRelateStory.layoutManager = staggeredGridLayoutManager
+        footerView.recyclerViewRelateStory.adapter = adapterRelateStories
+        footerView.recyclerViewRelateStory.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
     }
 
     override fun requestNet() {
@@ -104,7 +102,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
      * 设置推荐商品
      */
     override fun setRecommendProductsData(products: List<ProductBean>) {
-        if (products.isEmpty()) headerView.linearLayoutRecommendProduct.visibility = View.GONE
+        if (products.isEmpty()) footerView.linearLayoutRecommendProduct.visibility = View.GONE
         adapterRecommend.setNewData(products)
     }
 
@@ -113,7 +111,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
      */
 
     override fun setRelateStoriesData(data: MutableList<LifeWillBean>) {
-        if (data.isEmpty()) headerView.linearLayoutRelateStory.visibility = View.GONE
+        if (data.isEmpty()) footerView.linearLayoutRelateStory.visibility = View.GONE
         adapterRelateStories.setNewData(data)
     }
 
@@ -214,22 +212,26 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
 
         //关注用户
         headerView.textViewFocus.setOnClickListener {
-            if (data==null) return@setOnClickListener
-            presenter.focusUser(data!!.uid,headerView.textViewFocus, data!!.is_follow)
+            if (UserProfileUtil.isLogin()){
+                if (data == null) return@setOnClickListener
+                presenter.focusUser(data!!.uid, headerView.textViewFocus, data!!.is_follow)
+            }else{ //跳转登录
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var dySum = 0
-            var dp150 = DimenUtil.dp2px(150.0)
+            var dp250 = DimenUtil.dp2px(250.0)
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 dySum += dy
-                if (dySum <= 0) {
+                if (dySum < dp250) {
                     textViewTitle.text = ""
                     imageViewBack.setImageResource(R.mipmap.icon_return_white)
                     imageViewShare.setImageResource(R.mipmap.icon_share_white)
-                    relativeLayoutHeader.setBackgroundResource(R.mipmap.icon_bg_goods_detail_head)
-                } else if (dySum > dp150) {
+                    relativeLayoutHeader.setBackgroundResource(R.drawable.bg_gradient_color000)
+                } else if (dySum > dp250) {
                   textViewTitle.text = data?.title
                     imageViewBack.setImageResource(R.mipmap.icon_nav_back)
                     imageViewShare.setImageResource(R.mipmap.icon_click_share)

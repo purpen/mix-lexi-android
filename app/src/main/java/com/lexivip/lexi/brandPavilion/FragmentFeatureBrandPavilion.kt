@@ -2,6 +2,8 @@ package com.lexivip.lexi.brandPavilion
 
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -55,6 +57,16 @@ class FragmentFeatureBrandPavilion : BaseFragment(), FeatrueBrandPavilionContrac
             intent.putExtra("rid",item.rid)
             startActivity(intent)
         }
+
+        recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                when(newState){
+                    RecyclerView.SCROLL_STATE_IDLE->{GlideUtil.resumeRequests(context)}
+                    RecyclerView.SCROLL_STATE_SETTLING,RecyclerView.SCROLL_STATE_DRAGGING->{GlideUtil.pauseRequests(context)}
+                }
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        })
     }
 
 

@@ -1,10 +1,7 @@
 package com.lexivip.lexi.index.explore
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.ScreenUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -14,7 +11,6 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
-import com.lexivip.lexi.index.explore.collection.CollectionDetailActivity
 import com.lexivip.lexi.index.explore.collection.CollectionListActivity
 import com.lexivip.lexi.index.explore.editorRecommend.AllEditorRecommendActivity
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
@@ -38,7 +34,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     private lateinit var adapterGoodsCollection: CollectionGoodsAdapter
     private lateinit var adapterGoodDesign: EditorRecommendAdapter
     private lateinit var adapterGood100: EditorRecommendAdapter
-
+    private var isFirstLoad = true
     companion object {
         @JvmStatic fun newInstance(): FragmentExplore = FragmentExplore()
     }
@@ -57,11 +53,31 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         swipeRefreshLayout.isEnabled = false
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (isVisibleToUser && isFirstLoad){
+            isFirstLoad = false
+            page = 1
+            presenter.loadData("", page)
+            presenter.getBanners()
+            presenter.getGoodsClass()
+            presenter.getGood100()
+            presenter.getGoodDesign()
+            presenter.getGoodsCollection()
+            presenter.getFeatureNewGoods()
+            presenter.getBrandPavilion()
+            presenter.getEditorRecommend()
+            if (banner!=null) banner.startAutoPlay()
+        }else{
+            if (banner!=null) banner.stopAutoPlay()
+        }
+        super.setUserVisibleHint(isVisibleToUser)
+    }
+
+
     /**
      * 初始化百元好物
      */
     private fun initGood100() {
-        presenter.getGood100()
         adapterGood100 = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
         val linearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         recyclerViewGood100.setHasFixedSize(true)
@@ -79,7 +95,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化特惠好设计
      */
     private fun initGoodDesign() {
-        presenter.getGoodDesign()
+
         adapterGoodDesign = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
         val linearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
         recyclerViewGoodDesign.setHasFixedSize(true)
@@ -96,7 +112,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化商品集合
      */
     private fun initGoodsCollection() {
-        presenter.getGoodsCollection()
+
         adapterGoodsCollection = CollectionGoodsAdapter(R.layout.adapter_goods_collection)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -117,7 +133,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化优质新品
      */
     private fun initFeatureNewGoods() {
-        presenter.getFeatureNewGoods()
+
         adapterFeatureNewGoods = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -141,7 +157,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化品牌馆
      */
     private fun initBrandPavilion() {
-        presenter.getBrandPavilion()
+
         adapterBrandPavilion = BrandPavilionAdapter(R.layout.adapter_brand_pavilion)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -162,7 +178,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化编辑推荐
      */
     private fun initEditorRecommend() {
-        presenter.getEditorRecommend()
+
         adapterEditorRecommend = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -183,7 +199,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化商品分类
      */
     private fun initGoodsClass() {
-        presenter.getGoodsClass()
+
         adapterGoodsClass = GoodsClassAdapter(R.layout.adapter_goods_class)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -204,21 +220,13 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化banner
      */
     private fun initBanner() {
-        presenter.getBanners()
+
         val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
         banner.setImageLoader(GlideImageLoader(R.dimen.dp4,contentW,DimenUtil.dp2px(112.0)))
         banner.setIndicatorGravity(BannerConfig.RIGHT)
 
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        if (isVisibleToUser){
-            if (banner!=null) banner.startAutoPlay()
-        }else{
-            if (banner!=null) banner.stopAutoPlay()
-        }
-        super.setUserVisibleHint(isVisibleToUser)
-    }
 
 
     /**
@@ -315,10 +323,9 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
         //好货合集
         adapterGoodsCollection.setOnItemClickListener { _, _, position ->
-            val item = adapterGoodsCollection.getItem(position)
-            val intent = Intent(activity, CollectionDetailActivity::class.java)
-            intent.putExtra(CollectionDetailActivity::class.java.simpleName, item!!.id)
-            startActivity(intent)
+            val item = adapterGoodsCollection.getItem(position)?:return@setOnItemClickListener
+            PageUtil.jump2CollectionDetailActivity(item.id)
+
 
         }
 
@@ -346,12 +353,6 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         val intent = Intent(activity, GoodsDetailActivity::class.java)
         intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
         startActivity(intent)
-    }
-
-
-    override fun loadData() {
-        page = 1
-        presenter.loadData("", page)
     }
 
     override fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
@@ -383,9 +384,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     }
 
     override fun showError(string: String) {
-//        adapter.isLoading
-//        swipeRefreshLayout.isRefreshing = false
-//        adapter.loadMoreFail()
+        ToastUtil.showError(string)
     }
     override fun goPage() {
 

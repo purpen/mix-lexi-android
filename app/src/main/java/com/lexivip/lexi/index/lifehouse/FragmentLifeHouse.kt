@@ -1,8 +1,6 @@
 package com.lexivip.lexi.index.lifehouse
-
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
@@ -81,6 +79,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         initLifeHouseHeader()
         initWelcomeInWeek()
     }
+
 
     /**
      * 初始化生活馆Header

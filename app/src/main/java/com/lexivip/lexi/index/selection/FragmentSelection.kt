@@ -1,10 +1,8 @@
 package com.lexivip.lexi.index.selection
 
-import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -21,9 +19,6 @@ import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
 import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
-import com.yanyusong.y_divideritemdecoration.Y_Divider
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
-import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
@@ -95,6 +90,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     override fun setZCManifestData(products: List<LifeWillBean>) {
         adapterZCManifest.setNewData(products)
+        adapterZCManifest.notifyDataSetChanged()
     }
 
     /**
@@ -117,6 +113,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     override fun setGoodSelectionData(products: List<ProductBean>) {
         adapterGoodSelection.setNewData(products)
+        adapterGoodSelection.notifyDataSetChanged()
     }
 
 
@@ -226,6 +223,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             startActivity(intent)
         }
 
+        adapterPeopleRecommend.notifyDataSetChanged()
     }
 
 
@@ -245,6 +243,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     override fun setTodayRecommendData(products: MutableList<TodayRecommendBean.DataBean.DailyRecommendsBean>) {
         adapterTodayRecommend.setNewData(products)
+        adapterTodayRecommend.notifyDataSetChanged()
     }
 
     /**
@@ -334,11 +333,12 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         val mCardScaleHelper = CardScaleHelper()
         mCardScaleHelper.currentItemPos = 0
         mCardScaleHelper.attachToRecyclerView(recyclerViewBanner)
-
+        adapterSelectionBanner.notifyDataSetChanged()
         //banner点击
         adapterSelectionBanner.setOnItemClickListener { _, _, position ->
             PageUtil.banner2Page(banner_images[position])
         }
+
     }
 
 
@@ -367,17 +367,26 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         }
 
         adapterZCManifest.setOnItemClickListener { _, _, position ->
-            val item = adapterZCManifest.getItem(position)
+            val item = adapterZCManifest.getItem(position) ?: return@setOnItemClickListener
+            item.channel_name = getString(R.string.text_zc_manifest)
             PageUtil.jump2ArticleDetailActivity(item)
         }
 
         //今日推荐
         adapterTodayRecommend.setOnItemClickListener { _, _, position ->
             val item = adapterTodayRecommend.getItem(position) ?: return@setOnItemClickListener
-            val bean = LifeWillBean()
-            bean.rid = item.recommend_id
-            bean.channel_name = item.channel_name
-            PageUtil.jump2ArticleDetailActivity(bean)
+            when (item.target_type) {
+                1, 2 -> { //1=生活志文章, 2=种草清单 3=主题
+                    val bean = LifeWillBean()
+                    bean.rid = item.recommend_id
+                    bean.channel_name = item.recommend_label
+                    PageUtil.jump2ArticleDetailActivity(bean)
+                }
+                3 -> { //集合详情
+                    PageUtil.jump2CollectionDetailActivity(item.recommend_id)
+                }
+            }
+
         }
 
         //查看全部优选

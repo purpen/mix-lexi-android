@@ -63,7 +63,7 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
     private fun initHeaderView() {
         presenter.getLookPeople()
         headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
-        headerView.imageViewBg.setImageResource(R.mipmap.icon_bg_head_good_design)
+        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_head_good_design,headerView.imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(153.0))
         headerView.textViewHeadTitle.text = Util.getString(R.string.text_good_design)
         headerView.textViewHeadTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_good_design_head_title, 0, 0, 0)
         adapter.setHeaderView(headerView)

@@ -60,7 +60,7 @@ class AllGoodsIn100Activity : BaseActivity(), AllGoodIn100Contract.View {
     private fun initHeaderView() {
         presenter.getLookPeople()
         headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
-        headerView.imageViewBg.setImageResource(R.mipmap.icon_bg_header_goods_in100)
+        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_goods_in100,headerView.imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(153.0))
         headerView.textViewHeadTitle.text = Util.getString(R.string.text_explore_good100)
         headerView.textViewHeadTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_good_in100_head_title,0,0,0)
         adapter.setHeaderView(headerView)

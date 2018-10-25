@@ -60,7 +60,7 @@ class AllNewGoodsActivity : BaseActivity(), AllNewGoodsContract.View {
     private fun initHeaderView() {
         presenter.getLookPeople()
         headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
-        headerView.imageViewBg.setImageResource(R.mipmap.icon_bg_header_new_goods)
+        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_new_goods,headerView.imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(153.0))
         headerView.textViewHeadTitle.text = Util.getString(R.string.text_feature_new_goods)
         headerView.textViewHeadTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_new_goods_head_title,0,0,0)
         adapter.setHeaderView(headerView)

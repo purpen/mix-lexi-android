@@ -1,15 +1,12 @@
 package com.lexivip.lexi.index.detail
 import android.content.Context
-import android.content.Intent
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.AsyncTask
 import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
-import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.JsonUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.album.ImageUtils
@@ -70,7 +67,7 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
         }
     }
 
-    internal class GetImageCacheAsyncTask(private val v: View) : AsyncTask<String, Void, File>() {
+    internal class GetImageCacheAsyncTask(val v: View) : AsyncTask<String, Void, File>() {
 
         override fun onPreExecute() {
             v.isEnabled = false

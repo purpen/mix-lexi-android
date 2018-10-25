@@ -7,7 +7,6 @@
         android:id="@+id/imageViewBg"
         android:layout_width="match_parent"
         android:layout_height="153dp"
-        android:src="@mipmap/icon_bg_header_editor_recommend"
         android:scaleType="fitXY"
         />
     <TextView
