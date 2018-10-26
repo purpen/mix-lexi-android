@@ -12,13 +12,15 @@ import com.lexivip.lexi.beans.ShopWindowBean
 import me.gujun.android.taggroup.TagGroup
 
 class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean, BaseViewHolder>(layoutResId) {
-    private val dp250: Int by lazy { ScreenUtil.getScreenWidth() * 2 / 3 }
     private val dp124: Int by lazy { ScreenUtil.getScreenWidth() / 3 }
+    private val dp250: Int by lazy { dp124*2+1 }
     private val dp13: Int by lazy { DimenUtil.dp2px(13.0) }
-    private val dp25: Int by lazy { DimenUtil.dp2px(25.0) }
     private val dp20: Int by lazy { DimenUtil.dp2px(20.0) }
+    private val dp2: Int by lazy { DimenUtil.dp2px(2.0) }
+
     private val layoutParams250:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp250,dp250) }
-    private val layoutParams124:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124,dp124) }
+    private val layoutParams31:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124,dp124) }
+    private val layoutParams32:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124,dp124) }
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
@@ -83,6 +85,7 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         // 设置3张产品图
         if (item.products.isEmpty()) return
 
+        val textView = helper.getView<TextView>(R.id.textView)
         val list = ArrayList<String>()
 
         val size = item.products.size
@@ -91,11 +94,14 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
             for (product in item.products) {
                 list.add(product.cover)
             }
+            textView.visibility = View.GONE
         } else {
             val subList = item.products.subList(0, 3)
             for (product in subList) {
                 list.add(product.cover)
             }
+            textView.visibility = View.VISIBLE
+            textView.text = "+" + (size - 3)
         }
 
         val imageView30 = helper.getView<ImageView>(R.id.imageView30)
@@ -103,8 +109,14 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         val imageView32 = helper.getView<ImageView>(R.id.imageView32)
         val relativeLayoutImage32 = helper.getView<RelativeLayout>(R.id.relativeLayoutImage32)
         imageView30.layoutParams = layoutParams250
-        imageView31.layoutParams = layoutParams124
-        relativeLayoutImage32.layoutParams = layoutParams124
+        imageView31.layoutParams = layoutParams31
+        layoutParams31.addRule(RelativeLayout.END_OF,R.id.imageView30)
+        layoutParams31.marginStart = dp2
+
+        layoutParams32.addRule(RelativeLayout.BELOW,R.id.imageView31)
+        layoutParams32.addRule(RelativeLayout.ALIGN_LEFT,R.id.imageView31)
+        layoutParams32.topMargin = dp2/2
+        relativeLayoutImage32.layoutParams = layoutParams32
 
         GlideUtil.loadImageWithDimenAndRadius(list[0], imageView30, 0, dp250, dp250)
         GlideUtil.loadImageWithDimenAndRadius(list[1], imageView31, 0, dp124)
@@ -113,17 +125,8 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         helper.addOnClickListener(R.id.imageView30)
         helper.addOnClickListener(R.id.imageView31)
         helper.addOnClickListener(R.id.imageView32)
-
-        val textView = helper.getView<TextView>(R.id.textView)
-
         helper.addOnClickListener(R.id.textView)
 
-        if (size > 3) {
-            textView.visibility = View.VISIBLE
-            textView.text = "+" + (size - 3)
-        } else {
-            textView.visibility = View.GONE
-        }
 
         if (item.keywords == null || item.keywords.isEmpty()) return
         //设置标签

@@ -40,7 +40,7 @@
             android:gravity="center"
             android:textSize="20sp"
             android:textColor="@android:color/white"
-            android:background="#28000000"
+            android:background="#4d000000"
             android:visibility="gone"
             />
     </RelativeLayout>

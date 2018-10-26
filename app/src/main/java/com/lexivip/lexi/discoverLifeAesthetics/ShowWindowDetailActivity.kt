@@ -1,4 +1,5 @@
 package com.lexivip.lexi.discoverLifeAesthetics
+
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -30,7 +31,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     private val presenter: ShowWindowDetailPresenter by lazy { ShowWindowDetailPresenter(this) }
 
     private lateinit var rid: String
-    private var shopWindow: ShowWindowDetailBean.DataBean?=null
+    private var shopWindow: ShowWindowDetailBean.DataBean? = null
 
     private val adapterGuessLike: EditorRecommendAdapter by lazy { EditorRecommendAdapter(R.layout.adapter_editor_recommend) }
 
@@ -64,7 +65,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 设置橱窗详情数据
      */
     override fun setShowWindowData(data: ShowWindowDetailBean.DataBean?) {
-        if(data==null) return
+        if (data == null) return
         shopWindow = data
         GlideUtil.loadCircleImageWidthDimen(data.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
         textViewName.text = data.user_name
@@ -102,7 +103,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         setGoodsImages(data)
 
         val arrayList = ArrayList<String>()
-        for (tag in data.keywords){
+        for (tag in data.keywords) {
             arrayList.add("#$tag")
         }
         //设置标签
@@ -116,7 +117,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      */
     private fun setGoodsImages(data: ShowWindowDetailBean.DataBean) {
         val products = data.products
-        val size = products.size
+        var size = products.size
         val list = ArrayList<String>()
 
         //图片只能3,5,7张
@@ -128,17 +129,61 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             list.add(product.cover)
         }
 
+        val screenW = ScreenUtil.getScreenWidth()
+        val dp2: Int by lazy { DimenUtil.dp2px(2.0) }
         when (size) {
             3 -> {
-                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image3, null)
+                val dp124: Int by lazy { screenW / 3 }
+                val dp250: Int by lazy { dp124 * 2 + dp2/2 }
+                val layoutParams250: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp250, dp250) }
+                val layoutParams31: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
+                val layoutParams32: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
+                view = LayoutInflater.from(this).inflate(R.layout.view_show_window_image3, null)
                 linearLayoutBox.addView(view)
                 GlideUtil.loadImageWithFading(list[0], view.imageView30)
                 GlideUtil.loadImageWithFading(list[1], view.imageView31)
                 GlideUtil.loadImageWithFading(list[2], view.imageView32)
+                view.imageView30.layoutParams = layoutParams250
+                view.imageView31.layoutParams = layoutParams31
+                layoutParams31.addRule(RelativeLayout.END_OF, R.id.imageView30)
+                layoutParams31.marginStart = dp2
+                layoutParams32.addRule(RelativeLayout.BELOW, R.id.imageView31)
+                layoutParams32.addRule(RelativeLayout.ALIGN_LEFT, R.id.imageView31)
+                layoutParams32.topMargin = dp2 / 2
+                view.relativeLayoutImage32.layoutParams = layoutParams32
             }
 
             5 -> {
-                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image5, null)
+                val dp230: Int by lazy { screenW * 230 / 375 }
+                val dp215: Int by lazy { screenW * 215 / 375 }
+                val dp161: Int by lazy { dp215*161/215 }
+                val dp114: Int by lazy { dp230 / 2 - dp2 }
+                val dp143: Int by lazy { screenW - dp230 }
+                val dp158: Int by lazy { screenW - dp215-dp2 }
+                val layoutParams230: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp230, dp230) }
+                val layoutParams114: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp143, dp114) }
+                val layoutParams52: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp143, dp114) }
+                val layoutParams53: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp215, dp161) }
+                val layoutParams54: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp158, dp161) }
+
+                view = LayoutInflater.from(this).inflate(R.layout.view_show_window_image5, null)
+                view.imageView50.layoutParams = layoutParams230
+                view.imageView51.layoutParams = layoutParams114
+                layoutParams114.addRule(RelativeLayout.END_OF, R.id.imageView50)
+                layoutParams114.marginStart = dp2
+                layoutParams52.addRule(RelativeLayout.BELOW, R.id.imageView51)
+                layoutParams52.addRule(RelativeLayout.ALIGN_LEFT, R.id.imageView51)
+                layoutParams52.topMargin = dp2
+                view.imageView52.layoutParams = layoutParams52
+
+                layoutParams53.addRule(RelativeLayout.BELOW,R.id.imageView50)
+                layoutParams53.topMargin = dp2
+                view.imageView53.layoutParams = layoutParams53
+
+                layoutParams54.addRule(RelativeLayout.ALIGN_TOP,R.id.imageView53)
+                layoutParams54.addRule(RelativeLayout.END_OF,R.id.imageView53)
+                layoutParams54.leftMargin = dp2
+                view.imageView54.layoutParams = layoutParams54
                 linearLayoutBox.addView(view)
                 GlideUtil.loadImageWithFading(list[0], view.imageView50)
                 GlideUtil.loadImageWithFading(list[1], view.imageView51)
@@ -148,7 +193,44 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             }
 
             7 -> {
-                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image7, null)
+                val dp215: Int by lazy { screenW * 215 / 375 }
+                val dp158: Int by lazy { screenW - dp215 }
+                val dp78:Int by lazy { (dp158-dp2)/2 }
+                val dp136: Int by lazy { dp215-dp78-dp2 }
+                val oneThirdScreenW:Int by lazy { (screenW-2*dp2)/3 }
+                val layoutParamsImageView70: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp78, dp78) }
+                val layoutParamsImageView71: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp78, dp78) }
+                val layoutParamsImageView72: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp215, dp215) }
+                val layoutParamsImageView73: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp158, dp136) }
+                val layoutParamsImageView74: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(oneThirdScreenW, oneThirdScreenW) }
+                val layoutParamsImageView75: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(oneThirdScreenW, oneThirdScreenW) }
+                val layoutParamsImageView76: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(oneThirdScreenW, oneThirdScreenW) }
+                view = LayoutInflater.from(this).inflate(R.layout.view_show_window_image7, null)
+                view.imageView70.layoutParams = layoutParamsImageView70
+
+                layoutParamsImageView71.leftMargin = dp2
+                layoutParamsImageView71.addRule(RelativeLayout.END_OF,R.id.imageView70)
+                view.imageView71.layoutParams = layoutParamsImageView71
+                layoutParamsImageView72.addRule(RelativeLayout.END_OF,R.id.imageView71)
+                layoutParamsImageView72.leftMargin = dp2
+                view.imageView72.layoutParams = layoutParamsImageView72
+
+                layoutParamsImageView73.addRule(RelativeLayout.BELOW,R.id.imageView70)
+                layoutParamsImageView73.topMargin = dp2
+                view.imageView73.layoutParams = layoutParamsImageView73
+
+                layoutParamsImageView74.addRule(RelativeLayout.BELOW,R.id.imageView73)
+                view.imageView74.layoutParams = layoutParamsImageView74
+
+                layoutParamsImageView75.addRule(RelativeLayout.ALIGN_TOP,R.id.imageView74)
+                layoutParamsImageView75.addRule(RelativeLayout.END_OF,R.id.imageView74)
+                layoutParamsImageView75.leftMargin = dp2
+                view.imageView75.layoutParams = layoutParamsImageView75
+
+                layoutParamsImageView76.addRule(RelativeLayout.ALIGN_TOP,R.id.imageView74)
+                layoutParamsImageView76.addRule(RelativeLayout.END_OF,R.id.imageView75)
+                layoutParamsImageView76.leftMargin = dp2
+                view.imageView75.layoutParams = layoutParamsImageView75
                 linearLayoutBox.addView(view)
                 GlideUtil.loadImageWithFading(list[0], view.imageView70)
                 GlideUtil.loadImageWithFading(list[1], view.imageView71)
@@ -210,6 +292,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
             }
+
             override fun afterTextChanged(s: Editable) { //动态设置底部栏高度
                 val lineCount = editText.lineCount
                 val height = DimenUtil.getDimensionPixelSize(R.dimen.dp50) + editText.lineHeight * (lineCount - 1)
@@ -224,7 +307,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         })
 
         buttonFocus.setOnClickListener { view ->
-            if (shopWindow==null) return@setOnClickListener
+            if (shopWindow == null) return@setOnClickListener
             if (shopWindow!!.is_follow) {
                 presenter.unfocusUser(shopWindow!!.uid, view)
             } else {
@@ -234,7 +317,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
 
         relativeLayoutLike.setOnClickListener { view ->
-            if (shopWindow==null) return@setOnClickListener
+            if (shopWindow == null) return@setOnClickListener
             if (shopWindow!!.is_like) {
                 presenter.unfavoriteShowWindow(shopWindow!!.rid, view)
             } else {
@@ -245,7 +328,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         //跳转评论列表
         relativeLayoutComment.setOnClickListener { view ->
             val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
-            intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName,rid)
+            intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
             startActivity(intent)
         }
 
@@ -257,15 +340,16 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         //猜你喜欢点击
         adapterGuessLike.setOnItemClickListener { _, _, position ->
-            val productsBean = adapterGuessLike.getItem(position)?:return@setOnItemClickListener
+            val productsBean = adapterGuessLike.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2GoodsDetailActivity(productsBean.rid)
         }
 
 
         //设置橱窗点击
         adapterRelateShowWindow.setOnItemClickListener { _, _, position ->
-            val windowsBean = adapterRelateShowWindow.getItem(position)?:return@setOnItemClickListener
-          PageUtil.jump2ShopWindowDetailActivity(windowsBean.rid)
+            val windowsBean = adapterRelateShowWindow.getItem(position)
+                    ?: return@setOnItemClickListener
+            PageUtil.jump2ShopWindowDetailActivity(windowsBean.rid)
         }
 
         // 发送评论
@@ -289,7 +373,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 重新设置评论数
      */
     override fun setCommentState() {
-        if (shopWindow==null) return
+        if (shopWindow == null) return
         textViewComment.text = "${shopWindow!!.comment_count++}"
     }
 
