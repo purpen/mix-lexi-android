@@ -42,12 +42,12 @@ public class AppApplication extends MultiDexApplication {
         Thread.setDefaultUncaughtExceptionHandler(restartHandler);
         instance = this;
 //        initPush();
-        if (BuildConfig.LOG_DEBUG) {
-            if (LeakCanary.isInAnalyzerProcess(this)) {
-                return;
-            }
-            LeakCanary.install(this);
-        }
+//        if (BuildConfig.LOG_DEBUG) {
+//            if (LeakCanary.isInAnalyzerProcess(this)) {
+//                return;
+//            }
+//            LeakCanary.install(this);
+//        }
 
         BaseModuleContext.init(this);
         //使用时才自动生成MyEventBusIndex

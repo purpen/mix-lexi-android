@@ -9,6 +9,7 @@ import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.lexivip.lexi.R
 import com.lexivip.lexi.discoverLifeAesthetics.FragmentFocusShowWindow
 import com.lexivip.lexi.discoverLifeAesthetics.FragmentRecommendShowWindow
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_shop_window.*
 
 class FragmentShopWindow : BaseFragment() {
@@ -29,13 +30,17 @@ class FragmentShopWindow : BaseFragment() {
     }
 
     private fun setUpViewPager() {
-        val titles = resources.getStringArray(R.array.strings_discover_life_titles)
-        fragments.add(fragment0)
+        val titles = ArrayList<String>()
+        if (UserProfileUtil.isLogin()){
+            fragments.add(fragment0)
+            titles.add(getString(R.string.text_focus))
+        }
+        titles.add(getString(R.string.text_recommend))
         fragments.add(fragment1)
 
         if (activity==null) return
 
-        val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles.asList())
+        val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(true)

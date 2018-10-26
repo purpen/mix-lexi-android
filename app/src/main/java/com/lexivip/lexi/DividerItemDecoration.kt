@@ -26,8 +26,8 @@ class DividerItemDecoration(context: Context, @ColorRes color: Int, recyclerView
     private val color: Int = Util.getColor(color)
     private val adapter = recyclerView.adapter
     override fun getDivider(itemPosition: Int): Y_Divider? {
-        val count = adapter.itemCount
-        var divider: Y_Divider? = null
+        val count = adapter!!.itemCount
+        var divider: Y_Divider?
         when (itemPosition) {
             count - 2 -> {
 

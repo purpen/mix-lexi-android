@@ -235,7 +235,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         // 心愿单点击进入详情
-        adapterWish.setOnItemClickListener { adapter, view, position ->
+        adapterWish.setOnItemClickListener { adapter, _, position ->
             val productBean = adapter.getItem(position) as ProductBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)

@@ -5,6 +5,7 @@ import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.lexivip.lexi.R
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.activity_discover_life_aesthetics.*
 
 
@@ -24,11 +25,15 @@ class DiscoverLifeAestheticsActivity : BaseActivity() {
     }
 
     private fun setUpViewPager() {
-        val titles = resources.getStringArray(R.array.strings_discover_life_titles)
-        fragments.add(fragment0)
+        val titles = ArrayList<String>()
+        if (UserProfileUtil.isLogin()){
+            fragments.add(fragment0)
+            titles.add(getString(R.string.text_focus))
+        }
+        titles.add(getString(R.string.text_recommend))
         fragments.add(fragment1)
 
-        val adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles.asList())
+        val adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(true)
