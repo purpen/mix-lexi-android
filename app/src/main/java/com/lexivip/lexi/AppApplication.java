@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.support.multidex.MultiDexApplication;
+import android.support.multidex.MultiDex;
 //import com.qiniu.android.storage.UploadManager;
 //import com.squareup.leakcanary.LeakCanary;
 //import com.thn.erp.common.constant.THNZone;
@@ -55,11 +56,10 @@ public class AppApplication extends MultiDexApplication {
         //umeng分享
         UMConfigure.init(this,"5a12384aa40fa3551f0001d1"
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
-        PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
+        PlatformConfig.setWeixin("wx777520ec6a61fff5", "a049e19a6f464e7d53ad28b4dbc905e2");
         //豆瓣RENREN平台目前只能在服务器端配置
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
-        PlatformConfig.setAlipay("2015111700822536");
     }
 
 
@@ -77,6 +77,12 @@ public class AppApplication extends MultiDexApplication {
 //        tempSharedPreference = getSharedPreferences(DataConstants.PUSH_STATUS, Context.MODE_PRIVATE);
 //    }
 
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
+    }
 
     private static class SingletonInstance {
         static Configuration config = new Configuration.Builder()

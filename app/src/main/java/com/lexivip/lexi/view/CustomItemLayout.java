@@ -119,6 +119,18 @@ public class CustomItemLayout extends RelativeLayout {
             tv_arrow_left.setVisibility(GONE);
         }
     }
+
+    public void setTvArrowLeftStrle(boolean isShow, String txt, int color, int size){
+        if (isShow){
+            tv_arrow_left.setVisibility(VISIBLE);
+            tv_arrow_left.setText(txt);
+            tv_arrow_left.setTextColor(getResources().getColor(color));
+            tv_arrow_left.setTextSize(size);
+        }else{
+            tv_arrow_left.setVisibility(GONE);
+        }
+    }
+
     public String getTvarrowLeftTxt(){
         return  tv_arrow_left.getText().toString();
     }

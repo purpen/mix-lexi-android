@@ -2,6 +2,7 @@ package com.lexivip.lexi.orderList;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.lexivip.lexi.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.AppApplication;
@@ -21,6 +22,7 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
     @Override
     public void getData(int status, int page) {
+        LogUtil.e("当前："+status);
         model.getData(status, page, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {

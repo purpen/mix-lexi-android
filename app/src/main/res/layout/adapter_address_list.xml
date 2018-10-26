@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp1"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dp15">
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/checkBox"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:text="@string/app_name"
+        android:textColor="@color/color_333"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewFullAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewName"
+        android:layout_alignStart="@+id/textViewName"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginEnd="@dimen/dp15"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:text="@string/app_name"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp12" />
+
+    <TextView
+        android:id="@+id/textViewProvinceCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewFullAddress"
+        android:layout_alignStart="@+id/textViewName"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginEnd="@dimen/dp10"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:text="@string/app_name"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp12" />
+
+    <TextView
+        android:id="@+id/textViewZip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewProvinceCity"
+        android:layout_marginEnd="@dimen/dp15"
+        android:layout_toEndOf="@+id/textViewProvinceCity"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:text="@string/app_name"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp12"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textViewPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewProvinceCity"
+        android:layout_alignStart="@+id/textViewName"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginEnd="@dimen/dp15"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:text="@string/app_name"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp12" />
+</LinearLayout>

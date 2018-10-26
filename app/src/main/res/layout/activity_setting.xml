@@ -74,13 +74,6 @@
                 android:layout_height="wrap_content"
                 />
 
-            <com.lexivip.lexi.view.CustomItemLayout
-                android:id="@+id/customItemLayout1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,16 +119,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
-
-            <Button
-                android:id="@+id/buttonKF"
+            <com.lexivip.lexi.view.CustomItemLayout
+                android:id="@+id/customItemLayout6"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginTop="@dimen/dp10"
-                android:background="@drawable/bg_search_box"
-                android:text="@string/text_kf_phone"
-                android:textColor="@color/color_6ed7af"
-                android:textSize="@dimen/sp15" />
+                android:layout_height="wrap_content"
+                />
 
             <Button
                 android:id="@+id/button"

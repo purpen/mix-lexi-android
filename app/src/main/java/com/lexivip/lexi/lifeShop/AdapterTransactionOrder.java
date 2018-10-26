@@ -27,9 +27,8 @@ public class AdapterTransactionOrder extends BaseQuickAdapter<TransactionOrderBe
     @Override
     protected void convert(BaseViewHolder helper, TransactionOrderBean.DataBean.OrdersBean item) {
         ImageView imageView=helper.getView(R.id.iv_logo);
-        GlideUtil.loadCircleImageWidthDimen(item.user_info.user_logo,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp23));
-        helper.setText(R.id.tv_name,item.user_info.user_name);
-        helper.setText(R.id.tv_shop_name,item.store.store_name);
+        GlideUtil.loadImageWithRadius(item.user_info.user_logo,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4));
+        helper.setText(R.id.tv_name,item.store.store_name);
         helper.setText(R.id.tv_order_total,"¥"+String.valueOf(item.pay_amount));
         helper.setText(R.id.tv_order_code,item.rid);
         helper.setText(R.id.tv_order_time,DateUtil.getDateByTimestamp(item.received_at,"yyyy年MM月dd日 HH:mm:ss"));
@@ -42,15 +41,34 @@ public class AdapterTransactionOrder extends BaseQuickAdapter<TransactionOrderBe
         recyclerView.setLayoutManager(new CustomLinearLayoutManager(activity));
         AdapterTransactionOrderTwo adapter=new AdapterTransactionOrderTwo(R.layout.adapter_transaction_order_two,item.items);
         recyclerView.setAdapter(adapter);
+        // 生活馆订单状态， 1、待发货 2、已发货 3、已完成
         switch (item.life_order_status){
             case 1:
-                helper.setText(R.id.tv_order_status,Util.getString(R.string.text_pending_delivery));
+                helper.setTextColor(R.id.tv_already_delivery,Util.getColor(R.color.color_999));
+                helper.setTextColor(R.id.tv_finish,Util.getColor(R.color.color_999));
+                helper.setBackgroundRes(R.id.dot1,R.drawable.bg__oval_colorfff_stroke_e9e9e9);
+                helper.setBackgroundRes(R.id.dot2,R.drawable.bg__oval_colorfff_stroke_e9e9e9);
+                helper.setBackgroundColor(R.id.line1,Util.getColor(R.color.color_e9e9e9));
+                helper.setBackgroundColor(R.id.line2,Util.getColor(R.color.color_e9e9e9));
+                helper.setBackgroundColor(R.id.line3,Util.getColor(R.color.color_e9e9e9));
                 break;
             case 2:
-                helper.setText(R.id.tv_order_status,Util.getString(R.string.text_already_delivery));
+                helper.setTextColor(R.id.tv_already_delivery,Util.getColor(R.color.color_6ed7af));
+                helper.setTextColor(R.id.tv_finish,Util.getColor(R.color.color_999));
+                helper.setBackgroundRes(R.id.dot1,R.drawable.bg__oval_colorfff_stroke_6ed7af);
+                helper.setBackgroundRes(R.id.dot2,R.drawable.bg__oval_colorfff_stroke_e9e9e9);
+                helper.setBackgroundColor(R.id.line1,Util.getColor(R.color.color_6ed7af));
+                helper.setBackgroundColor(R.id.line2,Util.getColor(R.color.color_e9e9e9));
+                helper.setBackgroundColor(R.id.line3,Util.getColor(R.color.color_e9e9e9));
                 break;
             case 3:
-                helper.setText(R.id.tv_order_status,Util.getString(R.string.text_already_complete));
+                helper.setTextColor(R.id.tv_already_delivery,Util.getColor(R.color.color_6ed7af));
+                helper.setTextColor(R.id.tv_finish,Util.getColor(R.color.color_6ed7af));
+                helper.setBackgroundRes(R.id.dot1,R.drawable.bg__oval_colorfff_stroke_6ed7af);
+                helper.setBackgroundRes(R.id.dot2,R.drawable.bg__oval_colorfff_stroke_6ed7af);
+                helper.setBackgroundColor(R.id.line1,Util.getColor(R.color.color_6ed7af));
+                helper.setBackgroundColor(R.id.line2,Util.getColor(R.color.color_6ed7af));
+                helper.setBackgroundColor(R.id.line3,Util.getColor(R.color.color_6ed7af));
                 break;
         }
     }

@@ -81,7 +81,6 @@
                     android:layout_marginBottom="@dimen/dp10"
                     android:background="@null"
                     android:maxLength="10"
-                    android:text="asdfasdfasdfasd"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 

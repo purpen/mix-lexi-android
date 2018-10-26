@@ -2,6 +2,7 @@ package com.lexivip.lexi.orderList;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.net.ClientParamsAPI;
 import com.lexivip.lexi.net.HttpRequest;
@@ -28,6 +29,7 @@ public class OrderListModel implements IDataSource {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("捏鸟设计："+json);
                 callBack.onSuccess(json);
             }
 

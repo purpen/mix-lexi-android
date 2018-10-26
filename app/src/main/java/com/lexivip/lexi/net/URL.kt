@@ -694,4 +694,16 @@ object URL {
      * 精选->今日推荐
      */
     const val TODAY_RECOMMEND_URL = "${BASE_URL}column/daily_recommends"
+    /**
+     * 领券中心 官方优惠券
+     */
+    const val VOUCHER_RECOMMEND="${BASE_URL}market/official_coupons/recommend"
+    /**
+     * 全部分类
+     */
+    const val ALL_CLASS="${BASE_URL}all_categories"
+    /**
+     * 领券中心头条动态
+     */
+    const val VOUCHER_LINES="${BASE_URL}market/coupon_lines"
 }

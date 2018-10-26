@@ -415,6 +415,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void finishActivity() {
+        Intent intent=new Intent();
+        intent.putExtra("isRefresh",true);
+        setResult(RESULT_OK,intent);
         finish();
     }
 

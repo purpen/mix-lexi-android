@@ -20,7 +20,7 @@ public class AdapterBrandHouseArticle extends BaseQuickAdapter<BrandHouseArticel
     @Override
     protected void convert(BaseViewHolder helper, BrandHouseArticelBean.DataBean.LifeRecordsBean item) {
         ImageView imageView = helper.getView(R.id.imageView);
-        GlideUtil.loadImageWithTopRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4));
+        GlideUtil.loadImageWithRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4));
         ImageView iv_logo = helper.getView(R.id.imageViewAvatar);
         GlideUtil.loadCircleImageWidthDimen(item.user_avator, iv_logo, DimenUtil.getDimensionPixelSize(R.dimen.dp20));
         helper.setText(R.id.textViewTitle0, item.title);

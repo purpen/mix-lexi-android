@@ -8,9 +8,9 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.search.SearchGoodsPresenter
 import kotlinx.android.synthetic.main.dialog_synthesise_sort_bottom.view.*
 
-class DialogBottomSynthesiseSort(context: Activity, presenter: BrandHousePresenter,rid: String) : BottomBaseDialog<DialogBottomSynthesiseSort>(context) {
+class DialogBottomSynthesiseSort(context: Activity, presenter: BrandHouseGoodsPresenter,rid: String) : BottomBaseDialog<DialogBottomSynthesiseSort>(context) {
     private lateinit var view: View
-    private val present: BrandHousePresenter = presenter
+    private val present: BrandHouseGoodsPresenter = presenter
     private val rid:String=rid
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_synthesise_sort_bottom, null)
