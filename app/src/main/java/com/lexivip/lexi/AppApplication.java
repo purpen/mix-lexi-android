@@ -21,7 +21,6 @@ import com.qiniu.android.storage.UploadManager;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
-import com.squareup.leakcanary.LeakCanary;
 
 
 import org.greenrobot.eventbus.EventBus;

@@ -98,7 +98,7 @@ class AllNewGoodsActivity : BaseActivity(), AllNewGoodsContract.View {
         if (recyclerView.itemDecorationCount == 0) {
             recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
                 private val dp5 = DimenUtil.dp2px(5.0)
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
                     super.getItemOffsets(outRect, view, parent, state)
                     if (parent.getChildAdapterPosition(view) >= 0 && parent.getChildAdapterPosition(view) != urlList.size - 1) {
                         outRect.left = -dp5

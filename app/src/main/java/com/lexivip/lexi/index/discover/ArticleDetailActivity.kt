@@ -223,7 +223,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var dySum = 0
             var dp250 = DimenUtil.dp2px(250.0)
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 dySum += dy
                 if (dySum < dp250) {

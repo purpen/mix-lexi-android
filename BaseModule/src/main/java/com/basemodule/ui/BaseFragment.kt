@@ -1,11 +1,10 @@
 package com.basemodule.ui
-
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.basemodule.tools.GlideUtil
+import android.widget.AdapterView
 
 import com.basemodule.tools.LogUtil
 
@@ -15,6 +14,7 @@ abstract class BaseFragment : Fragment() {
     protected var TAG: String = javaClass.simpleName
 
     protected abstract val layout: Int
+    private lateinit var contentView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         LogUtil.e("onCreate()$TAG")
@@ -22,8 +22,8 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(layout, null)
-        return view
+        contentView = inflater.inflate(layout, null)
+        return contentView
     }
 
 
@@ -74,6 +74,20 @@ abstract class BaseFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        unbindDrawables(contentView) // <---This should be the ID of this fragments (ScreenSlidePageFragment) layout
+    }
+
+
+    private fun unbindDrawables(view: View) {
+        if (view.background != null) {
+            view.background.callback = null
+        }
+        if (view is ViewGroup && view !is AdapterView<*>) {
+            for (i in 0 until view.childCount) {
+                unbindDrawables(view.getChildAt(i))
+            }
+            view.removeAllViews()
+        }
     }
 
     override fun onDetach() {

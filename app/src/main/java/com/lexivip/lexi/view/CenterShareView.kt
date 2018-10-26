@@ -52,7 +52,7 @@ class CenterShareView : LinearLayout, View.OnClickListener {
         adapter.setNewData(list)
 
         recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
                 super.getItemOffsets(outRect, view, parent, state)
                 if (parent.getChildAdapterPosition(view)!=0) outRect.left = resources.getDimensionPixelSize(R.dimen.dp12)
             }

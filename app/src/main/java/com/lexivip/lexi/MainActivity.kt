@@ -1,6 +1,7 @@
 package com.lexivip.lexi
 
 import android.content.Intent
+import android.support.v4.app.Fragment
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.widget.Toast
@@ -25,10 +26,10 @@ class MainActivity : BaseActivity() {
         if (!isFinishing) super.onBackPressed()
     }
 
-    private var fragment0: BaseFragment? = null
-    private var fragment1: BaseFragment? = null
-    private var fragment2: BaseFragment? = null
-    private var fragment3: BaseFragment? = null
+    private lateinit var fragment0: BaseFragment
+    private lateinit var fragment1: BaseFragment
+    private lateinit var fragment2: BaseFragment
+    private lateinit var fragment3: BaseFragment
 
     private var lastClickedId: Int = -1
 
@@ -50,7 +51,6 @@ class MainActivity : BaseActivity() {
      * 初始化购物车
      */
     private fun initShopCart() {
-        fragment2 =null
         fragment2 = MainFragment1.newInstance()
     }
 
@@ -58,7 +58,6 @@ class MainActivity : BaseActivity() {
      * 初始化发现
      */
     private fun initDiscoverPage() {
-        fragment1 = null
         fragment1 = MainFragment2.newInstance()
     }
 
@@ -66,7 +65,6 @@ class MainActivity : BaseActivity() {
      * 初始化首页
      */
     private fun initIndexPage() {
-        fragment0 = null
         fragment0 = MainFragment0.newInstance()
     }
 
@@ -74,7 +72,6 @@ class MainActivity : BaseActivity() {
      * 初始化个人中心
      */
     private fun initUserCenter() {
-        fragment3 = null
         if (UserProfileUtil.isSmallB()) {
             fragment3 = MainFragmentUser.newInstance()
         } else {
@@ -160,14 +157,14 @@ class MainActivity : BaseActivity() {
 
         when (id) {
             R.id.button0 -> { //首页
-                if (!fragment0!!.isAdded) {
+                if (!fragment0.isAdded) {
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment0).show(fragment0).commitAllowingStateLoss()
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment0).commitAllowingStateLoss()
                 }
             }
             R.id.button1 -> { //发现
-                if (!fragment1!!.isAdded) {
+                if (!fragment1.isAdded) {
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment1).show(fragment1).commitAllowingStateLoss()
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment1).commitAllowingStateLoss()
@@ -175,7 +172,7 @@ class MainActivity : BaseActivity() {
 
             }
             R.id.button2 -> { //购物车
-                if (!fragment2!!.isAdded) {
+                if (!fragment2.isAdded) {
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment2).show(fragment2).commitAllowingStateLoss()
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment2).commitAllowingStateLoss()
@@ -184,7 +181,7 @@ class MainActivity : BaseActivity() {
                 }
             }
             R.id.button3 -> {
-                if (!fragment3!!.isAdded) {
+                if (!fragment3.isAdded) {
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment3).show(fragment3).commitAllowingStateLoss()
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment3).commitAllowingStateLoss()
@@ -207,7 +204,7 @@ class MainActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        fragment0?.onActivityResult(requestCode, resultCode, data)
+        fragment0.onActivityResult(requestCode, resultCode, data)
         LogUtil.e("${TAG};;;requestCode=$requestCode;resultCode=$resultCode")
     }
 

@@ -537,7 +537,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         if (headerView.recyclerViewHeader.itemDecorationCount == 0) {
             headerView.recyclerViewHeader.addItemDecoration(object : RecyclerView.ItemDecoration() {
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
                     super.getItemOffsets(outRect, view, parent, state)
                     if (parent.getChildAdapterPosition(view) >= 0 && parent.getChildAdapterPosition(view) != urlList.size - 1) {
                         outRect.left = -DimenUtil.getDimensionPixelSize(R.dimen.dp5)
@@ -675,7 +675,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var dySum = 0
             var dp336 = DimenUtil.dp2px(336.0)
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 dySum += dy
                 if (dySum < dp336) {

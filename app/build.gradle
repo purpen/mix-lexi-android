@@ -39,7 +39,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             minifyEnabled false
             debuggable true
             signingConfig signingConfigs.release
@@ -47,8 +47,7 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.all { output ->
                     if (variant.buildType.name == "release") {
-                        def fileName = "erp_v${defaultConfig.versionName}_${releaseTime()}.apk"
-//                        output.outputFile = new File(output.outputFile.parent, fileName)
+                        def fileName = "lexi_v${defaultConfig.versionName}_${releaseTime()}.apk"
                         outputFileName = fileName
                     }
                 }
@@ -81,6 +80,7 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.6'
     implementation 'com.qiniu:qiniu-android-sdk:7.3.12'
     implementation 'com.youth.banner:banner:1.4.10'
+    compile 'com.android.support:support-core-utils:28.0.0'
     implementation 'com.yanyusong.y_divideritemdecoration:y_divideritemdecoration:2.0'
     implementation 'me.gujun.android.taggroup:library:1.4@aar'
     implementation 'com.hyman:flowlayout-lib:1.1.2'
