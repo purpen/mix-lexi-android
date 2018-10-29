@@ -152,6 +152,19 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 layoutParams32.addRule(RelativeLayout.ALIGN_LEFT, R.id.imageView31)
                 layoutParams32.topMargin = dp2 / 2
                 view.relativeLayoutImage32.layoutParams = layoutParams32
+                view.imageView30.setOnClickListener {
+                    if (products[0]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[0].rid)
+                }
+
+                view.imageView31.setOnClickListener {
+                    if (products[1]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[1].rid)
+                }
+                view.imageView32.setOnClickListener {
+                    if (products[2]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[2].rid)
+                }
             }
 
             5 -> {
@@ -191,6 +204,28 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 GlideUtil.loadImageWithFading(list[2], view.imageView52)
                 GlideUtil.loadImageWithFading(list[3], view.imageView53)
                 GlideUtil.loadImageWithFading(list[4], view.imageView54)
+                view.imageView50.setOnClickListener {
+                    if (products[0]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[0].rid)
+                }
+                view.imageView51.setOnClickListener {
+                    if (products[1]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[1].rid)
+                }
+
+                view.imageView52.setOnClickListener {
+                    if (products[2]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[2].rid)
+                }
+                view.imageView53.setOnClickListener {
+                    if (products[3]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[3].rid)
+                }
+
+                view.imageView54.setOnClickListener {
+                    if (products[4]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[4].rid)
+                }
             }
 
             7 -> {
@@ -241,6 +276,35 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 GlideUtil.loadImageWithFading(list[4], view.imageView74)
                 GlideUtil.loadImageWithFading(list[5], view.imageView75)
                 GlideUtil.loadImageWithFading(list[6], view.imageView76)
+
+                view.imageView70.setOnClickListener {
+                    if (products[0]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[0].rid)
+                }
+                view.imageView71.setOnClickListener {
+                    if (products[1]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[1].rid)
+                }
+                view.imageView72.setOnClickListener {
+                    if (products[2]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[2].rid)
+                }
+                view.imageView73.setOnClickListener {
+                    if (products[3]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[3].rid)
+                }
+                view.imageView74.setOnClickListener {
+                    if (products[4]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[4].rid)
+                }
+                view.imageView75.setOnClickListener {
+                    if (products[5]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[5].rid)
+                }
+                view.imageView76.setOnClickListener {
+                    if (products[6]==null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[6].rid)
+                }
             }
         }
     }
