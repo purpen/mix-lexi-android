@@ -43,8 +43,7 @@ class ShowWindowCommentContract {
     interface Presenter : BasePresenter {
         fun loadData(rid:String,isRefresh: Boolean)
         fun loadMoreData(rid: String)
-        fun praiseComment(comment_id: String, position: Int, view1: android.view.View, isSubAdapter: Boolean)
-        fun cancelPraiseComment(comment_id: String, position: Int, view1: android.view.View, isSubAdapter: Boolean)
+        fun praiseComment(comment_id: String,isPraise:Boolean,position: Int, view1: android.view.View, isSubAdapter: Boolean)
         fun loadMoreSubComments(comment_id: String,position: Int,view1: android.view.View)
     }
 }

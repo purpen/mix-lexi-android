@@ -1,5 +1,6 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -14,13 +15,18 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
+import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.index.selection.DiscoverLifeAdapter
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.yanyusong.y_divideritemdecoration.Y_Divider
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
+import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.activity_show_window_detail.*
+import kotlinx.android.synthetic.main.footer_comment_count.view.*
 import kotlinx.android.synthetic.main.view_show_window_image3.view.*
 import kotlinx.android.synthetic.main.view_show_window_image5.view.*
 import kotlinx.android.synthetic.main.view_show_window_image7.view.*
@@ -38,6 +44,8 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     private val adapterRelateShowWindow: DiscoverLifeAdapter by lazy { DiscoverLifeAdapter(R.layout.adapter_discover_life) }
 
+    private val adapter: ShopWindowDetailCommentListAdapter by lazy { ShopWindowDetailCommentListAdapter(R.layout.adapter_comment_list, presenter) }
+
     override val layout: Int = R.layout.activity_show_window_detail
 
     override fun getIntentData() {
@@ -54,6 +62,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         customHeadView.setHeadCenterTxtShow(true, R.string.title_show_case)
         editText.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         editText.setSingleLine(false)
+        editText.clearFocus()
         initGuessLike()
         initRelateShowWindow()
     }
@@ -68,6 +77,31 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     override fun setShowWindowData(data: ShowWindowDetailBean.DataBean?) {
         if (data == null) return
         shopWindow = data
+        if (data.comment_count > 0) {
+            textViewCommentTitle.visibility = View.VISIBLE
+            recyclerViewComment.visibility = View.VISIBLE
+            line15Comment.visibility = View.VISIBLE
+            val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+            recyclerViewComment.layoutManager = linearLayoutManager
+            recyclerViewComment.adapter = adapter
+            recyclerViewComment.addItemDecoration(DividerItemDecoration(applicationContext))
+            adapter.setNewData(data.comments)
+
+
+            val view = View.inflate(this, R.layout.footer_comment_count, null)
+            view.textViewCommentCount.text = "查看全部" + data.comment_count + "条评论"
+            adapter.addFooterView(view)
+            view.setOnClickListener {
+                val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
+                intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
+                startActivity(intent)
+            }
+        } else {
+            line15Comment.visibility = View.GONE
+            textViewCommentTitle.visibility = View.GONE
+            recyclerViewComment.visibility = View.GONE
+        }
+
         GlideUtil.loadCircleImageWidthDimen(data.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
         textViewName.text = data.user_name
         if (data.is_official) {
@@ -82,9 +116,9 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             textViewLikeCount.text = ""
         }
 
-        if (data.is_like){
+        if (data.is_like) {
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
-        }else{
+        } else {
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
         }
 
@@ -139,7 +173,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         when (size) {
             3 -> {
                 val dp124: Int by lazy { screenW / 3 }
-                val dp250: Int by lazy { dp124 * 2 + dp2/2 }
+                val dp250: Int by lazy { dp124 * 2 + dp2 / 2 }
                 val layoutParams250: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp250, dp250) }
                 val layoutParams31: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
                 val layoutParams32: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
@@ -157,16 +191,16 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 layoutParams32.topMargin = dp2 / 2
                 view.relativeLayoutImage32.layoutParams = layoutParams32
                 view.imageView30.setOnClickListener {
-                    if (products[0]==null) return@setOnClickListener
+                    if (products[0] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[0].rid)
                 }
 
                 view.imageView31.setOnClickListener {
-                    if (products[1]==null) return@setOnClickListener
+                    if (products[1] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[1].rid)
                 }
                 view.imageView32.setOnClickListener {
-                    if (products[2]==null) return@setOnClickListener
+                    if (products[2] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[2].rid)
                 }
             }
@@ -174,10 +208,10 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             5 -> {
                 val dp230: Int by lazy { screenW * 230 / 375 }
                 val dp215: Int by lazy { screenW * 215 / 375 }
-                val dp161: Int by lazy { dp215*161/215 }
-                val dp114: Int by lazy { (dp230 - dp2)/2 }
+                val dp161: Int by lazy { dp215 * 161 / 215 }
+                val dp114: Int by lazy { (dp230 - dp2) / 2 }
                 val dp143: Int by lazy { screenW - dp230 }
-                val dp158: Int by lazy { screenW - dp215-dp2 }
+                val dp158: Int by lazy { screenW - dp215 - dp2 }
                 val layoutParams230: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp230, dp230) }
                 val layoutParams114: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp143, dp114) }
                 val layoutParams52: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp143, dp114) }
@@ -194,12 +228,12 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 layoutParams52.topMargin = dp2
                 view.imageView52.layoutParams = layoutParams52
 
-                layoutParams53.addRule(RelativeLayout.BELOW,R.id.imageView50)
+                layoutParams53.addRule(RelativeLayout.BELOW, R.id.imageView50)
                 layoutParams53.topMargin = dp2
                 view.imageView53.layoutParams = layoutParams53
 
-                layoutParams54.addRule(RelativeLayout.ALIGN_TOP,R.id.imageView53)
-                layoutParams54.addRule(RelativeLayout.END_OF,R.id.imageView53)
+                layoutParams54.addRule(RelativeLayout.ALIGN_TOP, R.id.imageView53)
+                layoutParams54.addRule(RelativeLayout.END_OF, R.id.imageView53)
                 layoutParams54.leftMargin = dp2
                 view.imageView54.layoutParams = layoutParams54
                 linearLayoutBox.addView(view)
@@ -209,25 +243,25 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 GlideUtil.loadImageWithFading(list[3], view.imageView53)
                 GlideUtil.loadImageWithFading(list[4], view.imageView54)
                 view.imageView50.setOnClickListener {
-                    if (products[0]==null) return@setOnClickListener
+                    if (products[0] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[0].rid)
                 }
                 view.imageView51.setOnClickListener {
-                    if (products[1]==null) return@setOnClickListener
+                    if (products[1] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[1].rid)
                 }
 
                 view.imageView52.setOnClickListener {
-                    if (products[2]==null) return@setOnClickListener
+                    if (products[2] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[2].rid)
                 }
                 view.imageView53.setOnClickListener {
-                    if (products[3]==null) return@setOnClickListener
+                    if (products[3] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[3].rid)
                 }
 
                 view.imageView54.setOnClickListener {
-                    if (products[4]==null) return@setOnClickListener
+                    if (products[4] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[4].rid)
                 }
             }
@@ -235,9 +269,9 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             7 -> {
                 val dp215: Int by lazy { screenW * 215 / 375 }
                 val dp158: Int by lazy { screenW - dp215 }
-                val dp78:Int by lazy { (dp158-dp2)/2 }
-                val dp136: Int by lazy { dp215-dp78-dp2 }
-                val oneThirdScreenW:Int by lazy { (screenW-2*dp2)/3 }
+                val dp78: Int by lazy { (dp158 - dp2) / 2 }
+                val dp136: Int by lazy { dp215 - dp78 - dp2 }
+                val oneThirdScreenW: Int by lazy { (screenW - 2 * dp2) / 3 }
                 val layoutParamsImageView70: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp78, dp78) }
                 val layoutParamsImageView71: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp78, dp78) }
                 val layoutParamsImageView72: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp215, dp215) }
@@ -249,27 +283,27 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 view.imageView70.layoutParams = layoutParamsImageView70
 
                 layoutParamsImageView71.leftMargin = dp2
-                layoutParamsImageView71.addRule(RelativeLayout.END_OF,R.id.imageView70)
+                layoutParamsImageView71.addRule(RelativeLayout.END_OF, R.id.imageView70)
                 view.imageView71.layoutParams = layoutParamsImageView71
-                layoutParamsImageView72.addRule(RelativeLayout.END_OF,R.id.imageView71)
+                layoutParamsImageView72.addRule(RelativeLayout.END_OF, R.id.imageView71)
                 layoutParamsImageView72.leftMargin = dp2
                 view.imageView72.layoutParams = layoutParamsImageView72
 
-                layoutParamsImageView73.addRule(RelativeLayout.BELOW,R.id.imageView70)
+                layoutParamsImageView73.addRule(RelativeLayout.BELOW, R.id.imageView70)
                 layoutParamsImageView73.topMargin = dp2
                 view.imageView73.layoutParams = layoutParamsImageView73
 
-                layoutParamsImageView74.addRule(RelativeLayout.BELOW,R.id.imageView73)
+                layoutParamsImageView74.addRule(RelativeLayout.BELOW, R.id.imageView73)
                 layoutParamsImageView74.topMargin = dp2
                 view.imageView74.layoutParams = layoutParamsImageView74
 
-                layoutParamsImageView75.addRule(RelativeLayout.ALIGN_TOP,R.id.imageView74)
-                layoutParamsImageView75.addRule(RelativeLayout.END_OF,R.id.imageView74)
+                layoutParamsImageView75.addRule(RelativeLayout.ALIGN_TOP, R.id.imageView74)
+                layoutParamsImageView75.addRule(RelativeLayout.END_OF, R.id.imageView74)
                 layoutParamsImageView75.leftMargin = dp2
                 view.imageView75.layoutParams = layoutParamsImageView75
 
-                layoutParamsImageView76.addRule(RelativeLayout.ALIGN_TOP,R.id.imageView74)
-                layoutParamsImageView76.addRule(RelativeLayout.END_OF,R.id.imageView75)
+                layoutParamsImageView76.addRule(RelativeLayout.ALIGN_TOP, R.id.imageView74)
+                layoutParamsImageView76.addRule(RelativeLayout.END_OF, R.id.imageView75)
                 layoutParamsImageView76.leftMargin = dp2
                 view.imageView76.layoutParams = layoutParamsImageView76
                 linearLayoutBox.addView(view)
@@ -282,31 +316,31 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 GlideUtil.loadImageWithFading(list[6], view.imageView76)
 
                 view.imageView70.setOnClickListener {
-                    if (products[0]==null) return@setOnClickListener
+                    if (products[0] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[0].rid)
                 }
                 view.imageView71.setOnClickListener {
-                    if (products[1]==null) return@setOnClickListener
+                    if (products[1] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[1].rid)
                 }
                 view.imageView72.setOnClickListener {
-                    if (products[2]==null) return@setOnClickListener
+                    if (products[2] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[2].rid)
                 }
                 view.imageView73.setOnClickListener {
-                    if (products[3]==null) return@setOnClickListener
+                    if (products[3] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[3].rid)
                 }
                 view.imageView74.setOnClickListener {
-                    if (products[4]==null) return@setOnClickListener
+                    if (products[4] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[4].rid)
                 }
                 view.imageView75.setOnClickListener {
-                    if (products[5]==null) return@setOnClickListener
+                    if (products[5] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[5].rid)
                 }
                 view.imageView76.setOnClickListener {
-                    if (products[6]==null) return@setOnClickListener
+                    if (products[6] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[6].rid)
                 }
             }
@@ -334,7 +368,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             relativeLayoutRelate.visibility = View.GONE
             recyclerViewShowWindow.visibility = View.GONE
             lineRelate.visibility = View.GONE
-        }else{
+        } else {
             relativeLayoutRelate.visibility = View.VISIBLE
             recyclerViewShowWindow.visibility = View.VISIBLE
             lineRelate.visibility = View.VISIBLE
@@ -365,7 +399,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             relativeLayoutGuess.visibility = View.GONE
             recyclerViewGuess.visibility = View.GONE
             lineGuess.visibility = View.GONE
-        }else{
+        } else {
             relativeLayoutGuess.visibility = View.VISIBLE
             recyclerViewGuess.visibility = View.VISIBLE
             lineGuess.visibility = View.VISIBLE
@@ -376,6 +410,20 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     override fun installListener() {
 
+        adapter.setOnItemChildClickListener { _, view, position ->
+
+            val commentsBean = adapter.getItem(position)?:return@setOnItemChildClickListener
+
+            when (view.id) {
+                R.id.textViewReply -> {
+                    //弹出键盘，输出回复
+                }
+
+                R.id.textViewPraise -> {
+                    presenter.praiseComment(commentsBean.comment_id,commentsBean.is_praise,position,view,false)
+                }
+            }
+        }
 
         editText.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -459,6 +507,29 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     }
 
     /**
+     * 更新评论点赞状态
+     */
+    override fun setPraiseCommentState(b: Boolean, position: Int, isSubAdapter: Boolean) {
+
+        if (isSubAdapter) {
+            adapter.setPraiseCommentState(b, position)
+        } else {
+            val commentsBean = adapter.getItem(position) as CommentBean
+            if (b) {
+                commentsBean.is_praise = true
+                commentsBean.praise_count += 1
+            } else {
+                commentsBean.is_praise = false
+                if (commentsBean.praise_count > 0) {
+                    commentsBean.praise_count -= 1
+                }
+            }
+            adapter.notifyItemChanged(position)
+        }
+
+    }
+
+    /**
      * 重新设置评论数
      */
     override fun setCommentState() {
@@ -487,12 +558,12 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         if (b) {
             shopWindow!!.is_like = true
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
-            shopWindow!!.like_count = shopWindow!!.like_count+1
+            shopWindow!!.like_count = shopWindow!!.like_count + 1
             textViewLikeCount.text = "${shopWindow!!.like_count}"
         } else {
             shopWindow!!.is_like = false
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
-            shopWindow!!.like_count = shopWindow!!.like_count-1
+            shopWindow!!.like_count = shopWindow!!.like_count - 1
             textViewLikeCount.text = "${shopWindow!!.like_count}"
         }
     }
@@ -511,5 +582,33 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     override fun showError(string: String) {
         ToastUtil.showError(string)
+    }
+
+    internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
+        private val color: Int = Util.getColor(R.color.color_eee)
+        override fun getDivider(itemPosition: Int): Y_Divider? {
+            val count = adapter.itemCount
+            val divider: Y_Divider?
+            divider = when (itemPosition) {
+                count -2 -> {
+                    Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+                count - 1 -> {
+                    Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+
+                else -> {
+                    Y_DividerBuilder()
+                            .setBottomSideLine(true, color, 1f, 20f, 0f)
+                            .create()
+                }
+            }
+
+            return divider
+        }
     }
 }

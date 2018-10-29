@@ -43,7 +43,7 @@ class FragmentShopWindow : BaseFragment() {
         val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
-        customViewPager.setPagingEnabled(true)
+        customViewPager.setPagingEnabled(false)
         slidingTabLayout.setViewPager(customViewPager)
     }
 

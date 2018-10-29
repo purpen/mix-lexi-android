@@ -25,6 +25,8 @@ import com.umeng.socialize.PlatformConfig;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Arrays;
+
 public class AppApplication extends MultiDexApplication {
 
 
@@ -98,6 +100,7 @@ public class AppApplication extends MultiDexApplication {
 
     private Thread.UncaughtExceptionHandler restartHandler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
+            LogUtil.e(Arrays.toString(ex.getStackTrace()));
             restartApp();
         }
     };

@@ -215,4 +215,58 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
         })
     }
 
+    /**
+     * 对评论点赞
+     */
+    override fun praiseComment(comment_id: String,isPraise:Boolean,position: Int, view1: View, isSubAdapter: Boolean) {
+        dataSource.praiseComment(comment_id,isPraise,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view1.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                view1.isEnabled = true
+                val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (favoriteBean.success) {
+                    view.setPraiseCommentState(!isPraise, position, isSubAdapter)
+                } else {
+                    view.showError(favoriteBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view1.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 根据父评论加载子评论
+     */
+    override fun loadMoreSubComments(comment_id: String, position: Int, view1: View) {
+//        dataSource.loadMoreSubComments(subCommentPage, comment_id, object : IDataSource.HttpRequestCallBack {
+//
+//            override fun onStart() {
+//                view1.isEnabled = false
+//            }
+//
+//            override fun onSuccess(json: String) {
+//                view1.isEnabled = true
+//                val subCommentsBean = JsonUtil.fromJson(json, SubCommentsBean::class.java)
+//                if (subCommentsBean.success) {
+//                    view.addSubCommentsData(position, subCommentsBean.data.comments)
+//                    subCommentPage++
+//                } else {
+//                    view.showError(subCommentsBean.status.message)
+//                }
+//            }
+//
+//            override fun onFailure(e: IOException) {
+//                view1.isEnabled = true
+//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+//            }
+//        })
+    }
+
 }

@@ -81,21 +81,21 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
                         startActivity(Intent(activity, LoginActivity::class.java))
                     }
                 }
-                R.id.imageView30 -> {
-                    val bean = showWindowBean.products[0] ?: return@setOnItemChildClickListener
-                    PageUtil.jump2GoodsDetailActivity(bean.rid)
-                }
-                R.id.imageView31 -> {
-                    val bean = showWindowBean.products[1] ?: return@setOnItemChildClickListener
-                    PageUtil.jump2GoodsDetailActivity(bean.rid)
-                }
-                R.id.imageView32 -> {
-                    val bean = showWindowBean.products[2] ?: return@setOnItemChildClickListener
-                    PageUtil.jump2GoodsDetailActivity(bean.rid)
-                }
-                R.id.textView -> { //点+号
-                    PageUtil.jump2ShopWindowDetailActivity(showWindowBean.rid)
-                }
+//                R.id.imageView30 -> {
+//                    val bean = showWindowBean.products[0] ?: return@setOnItemChildClickListener
+//                    PageUtil.jump2GoodsDetailActivity(bean.rid)
+//                }
+//                R.id.imageView31 -> {
+//                    val bean = showWindowBean.products[1] ?: return@setOnItemChildClickListener
+//                    PageUtil.jump2GoodsDetailActivity(bean.rid)
+//                }
+//                R.id.imageView32 -> {
+//                    val bean = showWindowBean.products[2] ?: return@setOnItemChildClickListener
+//                    PageUtil.jump2GoodsDetailActivity(bean.rid)
+//                }
+//                R.id.textView -> { //点+号
+//                    PageUtil.jump2ShopWindowDetailActivity(showWindowBean.rid)
+//                }
             }
         }
 

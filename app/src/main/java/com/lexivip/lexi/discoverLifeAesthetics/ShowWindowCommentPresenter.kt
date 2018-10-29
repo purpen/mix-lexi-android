@@ -84,9 +84,8 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
     /**
      * 对评论点赞
      */
-    override fun praiseComment(comment_id: String, position: Int, view1: View, isSubAdapter: Boolean) {
-        dataSource.praiseComment(comment_id, object : IDataSource.HttpRequestCallBack {
-
+    override fun praiseComment(comment_id: String,isPraise:Boolean,position: Int, view1: View, isSubAdapter: Boolean) {
+        dataSource.praiseComment(comment_id,isPraise,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view1.isEnabled = false
             }
@@ -95,34 +94,7 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                 view1.isEnabled = true
                 val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (favoriteBean.success) {
-                    view.setPraiseCommentState(true, position, isSubAdapter)
-                } else {
-                    view.showError(favoriteBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view1.isEnabled = true
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
-
-    /**
-     * 取消对评论点赞
-     */
-    override fun cancelPraiseComment(comment_id: String, position: Int, view1: View, isSubAdapter: Boolean) {
-        dataSource.cancelPraiseComment(comment_id, object : IDataSource.HttpRequestCallBack {
-
-            override fun onStart() {
-                view1.isEnabled = false
-            }
-
-            override fun onSuccess(json: String) {
-                view1.isEnabled = true
-                val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
-                if (favoriteBean.success) {
-                    view.setPraiseCommentState(false, position, isSubAdapter)
+                    view.setPraiseCommentState(!isPraise, position, isSubAdapter)
                 } else {
                     view.showError(favoriteBean.status.message)
                 }

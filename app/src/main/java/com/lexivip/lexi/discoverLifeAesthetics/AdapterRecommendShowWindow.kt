@@ -122,10 +122,10 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         GlideUtil.loadImageWithDimenAndRadius(list[1], imageView31, 0, dp124)
         GlideUtil.loadImageWithDimenAndRadius(list[2], imageView32, 0, dp124)
 
-        helper.addOnClickListener(R.id.imageView30)
-        helper.addOnClickListener(R.id.imageView31)
-        helper.addOnClickListener(R.id.imageView32)
-        helper.addOnClickListener(R.id.textView)
+//        helper.addOnClickListener(R.id.imageView30)
+//        helper.addOnClickListener(R.id.imageView31)
+//        helper.addOnClickListener(R.id.imageView32)
+//        helper.addOnClickListener(R.id.textView)
 
 
         if (item.keywords == null || item.keywords.isEmpty()) return

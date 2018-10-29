@@ -1,6 +1,7 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.support.annotation.NonNull
+import android.view.View
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.ProductBean
@@ -37,6 +38,10 @@ class ShowWindowDetailContract {
         fun setCommentState() {
 
         }
+
+        fun setPraiseCommentState(b: Boolean, position: Int, isSubAdapter: Boolean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -45,5 +50,7 @@ class ShowWindowDetailContract {
         fun loadData(rid:String,isRefresh:Boolean)
         fun getGuessLike(rid: String)
         fun sendComment(rid: String, pid: String, content: String)
+        fun praiseComment(comment_id: String, isPraise:Boolean, position: Int, view1: android.view.View, isSubAdapter: Boolean)
+        fun loadMoreSubComments(comment_id: String, position: Int, view1: android.view.View)
     }
 }

@@ -116,13 +116,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
                 }
 
                 R.id.textViewPraise -> {
-                    commentsBean.comment_id = "110"
-                    if (commentsBean.is_praise){
-                        presenter.cancelPraiseComment(commentsBean.comment_id, position, view, false)
-                    }else{
-                        presenter.praiseComment(commentsBean.comment_id, position, view, false)
-                    }
-
+                    presenter.praiseComment(commentsBean.comment_id,commentsBean.is_praise,position,view,false)
                 }
             }
         }
@@ -155,8 +149,10 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         } else {
             val commentsBean = adapter.getItem(position) as CommentBean
             if (doPraise) {
+                commentsBean.is_praise = true
                 commentsBean.praise_count += 1
             } else {
+                commentsBean.is_praise = false
                 if (commentsBean.praise_count > 0) {
                     commentsBean.praise_count -= 1
                 }
