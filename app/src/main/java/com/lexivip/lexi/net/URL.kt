@@ -697,13 +697,18 @@ object URL {
     /**
      * 领券中心 官方优惠券
      */
-    const val VOUCHER_RECOMMEND="${BASE_URL}market/official_coupons/recommend"
+    const val VOUCHER_RECOMMEND = "${BASE_URL}market/official_coupons/recommend"
     /**
      * 全部分类
      */
-    const val ALL_CLASS="${BASE_URL}all_categories"
+    const val ALL_CLASS = "${BASE_URL}all_categories"
     /**
      * 领券中心头条动态
      */
-    const val VOUCHER_LINES="${BASE_URL}market/coupon_lines"
+    const val VOUCHER_LINES = "${BASE_URL}market/coupon_lines"
+
+    /**
+     * 评论列表
+     */
+    const val SHOW_WINDOW_COMMENTS_LIST: String = "${BASE_URL}shop_windows/comments"
 }

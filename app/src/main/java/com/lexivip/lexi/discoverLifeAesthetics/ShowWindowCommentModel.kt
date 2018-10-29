@@ -10,9 +10,9 @@ open class ShowWindowCommentModel{
 
     fun loadData(page:Int,rid: String,callBack: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getShowWindowDetailParams(rid)
+        val params = ClientParamsAPI.getShowWindowCommentParams(rid,page,"0")
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.SHOW_WINDOW_DETAIL,params,object : IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.GET,URL.SHOW_WINDOW_COMMENTS_LIST,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }

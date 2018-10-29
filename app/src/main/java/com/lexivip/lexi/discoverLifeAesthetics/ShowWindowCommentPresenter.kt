@@ -31,14 +31,8 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
                 val showWindowCommentBean = JsonUtil.fromJson(json, ShowWindowCommentListBean::class.java)
-
-                // //TODO 构造假数据
-                showWindowCommentBean.success = true
-
                 if (showWindowCommentBean.success) {
-                    //TODO 构造假数据
-                    view.setNewData(ArrayList<CommentBean>())
-//                    view.setNewData(showWindowCommentBean.data.comments)
+                    view.setNewData(showWindowCommentBean.data.comments)
                     ++page
                 } else {
                     view.showError(showWindowCommentBean.status.message)
@@ -70,6 +64,7 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                         ++page
                     }
                 } else {
+                    view.loadMoreFail()
                     view.showError(showWindowCommentBean.status.message)
                 }
             }

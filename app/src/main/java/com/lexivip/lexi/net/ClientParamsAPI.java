@@ -1386,4 +1386,21 @@ public class ClientParamsAPI {
         params.put("date",date);
         return params;
     }
+
+    /**
+     * 橱窗评论
+     * @param rid
+     * @param page
+     * @param sort_type
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,Object> getShowWindowCommentParams(@NotNull String rid, int page, @NotNull String sort_type) {
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("rid", rid);
+        params.put("sort_type", sort_type);
+        return params;
+    }
 }

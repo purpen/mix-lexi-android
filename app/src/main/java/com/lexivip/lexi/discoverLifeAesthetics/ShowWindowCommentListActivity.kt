@@ -2,6 +2,7 @@ package com.lexivip.lexi.discoverLifeAesthetics
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.basemodule.tools.LogUtil
 
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -31,6 +32,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     private val adapter: ShowWindowCommentListAdapter by lazy { ShowWindowCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
     private lateinit var rid: String
+    private var count: Int =0
     private lateinit var emotionMainFragment:EmotionMainFragment;
 
 
@@ -47,11 +49,16 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         if (intent.hasExtra(ShowWindowCommentListActivity::class.java.simpleName)) {
             rid = intent.getStringExtra(ShowWindowCommentListActivity::class.java.simpleName)
         }
+        if (intent.hasExtra(ShowWindowCommentListActivity::class.java.name)) {
+            count = intent.getIntExtra(ShowWindowCommentListActivity::class.java.name,0)
+            LogUtil.e("count="+count)
+        }
+
     }
 
     override fun initView() {
         swipeRefreshLayout.isEnabled = false
-        customHeadView.setHeadCenterTxtShow(true, "4条评论")
+        customHeadView.setHeadCenterTxtShow(true, "${count}条评论")
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = linearLayoutManager
@@ -168,37 +175,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
 
     override fun setNewData(comments: MutableList<CommentBean>) {
-        swipeRefreshLayout.isRefreshing = false
-
-        var demos = ArrayList<CommentBean>()
-
-        for (i in 0..3) {
-            val commentBean = CommentBean()
-            demos.add(commentBean)
-        }
-
-        for (item in demos) {
-            item.user_avatar = "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
-            item.user_name = "姗姗来迟"
-            item.created_at = System.currentTimeMillis() / 1000
-            item.content = "哈教科书代姐啊代姐哈空间大代姐大声疾活动空 间点,环撒打算的"
-            item.praise_count = 102
-            item.sub_comment_count = 10
-            val list = ArrayList<CommentBean>()
-            for (i in 0..4) {
-                val subItem = CommentBean()
-                subItem.user_avatar = "http://c.hiphotos.baidu.com/image/h%3D300/sign=87d6daed02f41bd5c553eef461d881a0/f9198618367adab4b025268587d4b31c8601e47b.jpg"
-                subItem.user_name = "${i}懵乖乖"
-                subItem.created_at = System.currentTimeMillis() / 1000
-                subItem.content = "${i}哈教科书代姐啊代姐哈空间大代姐大声疾"
-                subItem.praise_count = 10
-                list.add(subItem)
-            }
-            item.sub_comments = list
-        }
-
-        adapter.setNewData(demos)
-//        adapter.setNewData(comments)
+        adapter.setNewData(comments)
     }
 
     override fun addData(comments: MutableList<CommentBean>) {
@@ -209,6 +186,17 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         presenter.loadData(rid, false)
     }
 
+    override fun loadMoreComplete() {
+        adapter.loadMoreComplete()
+    }
+
+    override fun loadMoreEnd() {
+        adapter.loadMoreEnd()
+    }
+
+    override fun loadMoreFail() {
+        adapter.loadMoreFail()
+    }
 
     override fun showLoadingView() {
         dialog.show()

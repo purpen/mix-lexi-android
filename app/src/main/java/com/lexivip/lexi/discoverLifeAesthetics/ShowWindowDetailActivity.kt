@@ -94,6 +94,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             view.setOnClickListener {
                 val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
                 intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
+                intent.putExtra(ShowWindowCommentListActivity::class.java.name,shopWindow?.comment_count)
                 startActivity(intent)
             }
         } else {
@@ -466,6 +467,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         relativeLayoutComment.setOnClickListener { view ->
             val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
             intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
+            intent.putExtra(ShowWindowCommentListActivity::class.java.name,shopWindow?.comment_count)
             startActivity(intent)
         }
 
