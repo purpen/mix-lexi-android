@@ -375,4 +375,8 @@
     <string name="text_to_use">去\n使\n用</string>
     <string name="text_lx_coupon">乐喜券</string>
     <string name="text_bind_wx">绑定微信</string>
+    <string name="text_immediately_receive">立即领取</string>
+    <string name="text_go_use">去使用</string>
+    <string name="text_go_shop">进店领券</string>
+    <string name="text_voucher_amount">券后价</string>
 </resources>

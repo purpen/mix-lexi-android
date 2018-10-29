@@ -19,6 +19,7 @@ import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
 import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
+import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
@@ -406,7 +407,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
                 startActivity(intent)
             }
             R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
-            R.id.textViewCouponCenter -> ToastUtil.showInfo("领券中心")
+            R.id.textViewCouponCenter -> startActivity(Intent(activity,ReceiveVoucherActivity::class.java))
             R.id.textViewExemptionMail -> ToastUtil.showInfo("包邮专区")
             R.id.textViewMoreDiscoverLife -> startActivity(Intent(context, DiscoverLifeAestheticsActivity::class.java))
 

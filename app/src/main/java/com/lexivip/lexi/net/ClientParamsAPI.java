@@ -1373,6 +1373,20 @@ public class ClientParamsAPI {
         params.put("sid",rid);
         return params;
     }
+
+    /**
+     * 个人资料修改
+     * @param username
+     * @param avatar_id
+     * @param about_me
+     * @param gender
+     * @param area_id
+     * @param province_id
+     * @param city_id
+     * @param mail
+     * @param date
+     * @return
+     */
     public static HashMap<String,Object> getUserParams(String username,String avatar_id,String about_me,String gender,
                                                        String area_id,String province_id,String city_id,String mail,String date){
         HashMap<String,Object> params=generateCommonParams();
@@ -1385,6 +1399,32 @@ public class ClientParamsAPI {
         params.put("city_id",city_id);
         params.put("mail",mail);
         params.put("date",date);
+        return params;
+    }
+
+    /**
+     * 同享券
+     * @param store_category
+     * @param page
+     * @return
+     */
+    public static HashMap<String,Object> getVoucherParams(String store_category, String page){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("store_category",store_category);
+        params.put("page",page);
+        return params;
+    }
+
+    /**
+     * 商品券
+     * @param store_category
+     * @param open_id
+     * @return
+     */
+    public static HashMap<String,Object> getVoucherGoodsParams(String store_category,String open_id){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("store_category",store_category);
+        params.put("open_id",open_id);
         return params;
     }
 }

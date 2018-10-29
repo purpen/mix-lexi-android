@@ -40,7 +40,7 @@ public class OrderListActivity extends BaseActivity {
         fragments.add(OrderListFragment.newInstance(2));
         fragments.add(OrderListFragment.newInstance(3));
 
-        OrderPagerAdapter adapter=new OrderPagerAdapter(this.getSupportFragmentManager(),fragments,listTitle);
+        OrderPagerAdapter adapter=new OrderPagerAdapter(getSupportFragmentManager(),fragments,listTitle);
         customViewPager.setAdapter(adapter);
         //customViewPager.setOffscreenPageLimit(fragments.size());
         customViewPager.setPagingEnabled(true);
