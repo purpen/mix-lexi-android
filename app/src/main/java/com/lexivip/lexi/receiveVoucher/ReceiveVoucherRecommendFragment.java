@@ -63,8 +63,8 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
                 return voucherBrand.getData().get(position).getItemType();
             }
         });
-        presenter.loadBrand();
-        presenter.loadGoods();
+        //presenter.loadBrand();
+        //presenter.loadGoods();
     }
 
     @Override
