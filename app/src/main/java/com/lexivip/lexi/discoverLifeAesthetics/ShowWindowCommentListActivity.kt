@@ -51,7 +51,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         }
         if (intent.hasExtra(ShowWindowCommentListActivity::class.java.name)) {
             count = intent.getIntExtra(ShowWindowCommentListActivity::class.java.name,0)
-            LogUtil.e("count="+count)
         }
 
     }
