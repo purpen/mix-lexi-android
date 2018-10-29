@@ -85,7 +85,7 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
                 view1.isEnabled = true
                 val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (favoriteBean.success) {
-                    view.setFavorite(true)
+                    view.setFavorite(false)
                 } else {
                     view.showError(favoriteBean.status.message)
                 }

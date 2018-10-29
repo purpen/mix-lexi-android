@@ -124,7 +124,7 @@
                 android:layout_height="@dimen/dp15"
                 android:background="@color/color_f5f7f9" />
 
-            <!--猜你你喜欢-->
+            <!--推荐-->
             <RelativeLayout
                 android:id="@+id/relativeLayoutGuess"
                 android:layout_width="match_parent"
@@ -139,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
-                    android:text="@string/text_guess_like"
+                    android:text="@string/text_recommend_product"
                     android:textColor="@color/color_333"
                     android:textSize="@dimen/sp14"
                     android:textStyle="bold" />
@@ -295,14 +295,14 @@
                 android:src="@mipmap/icon_click_favorite_normal" />
 
             <TextView
-                android:id="@+id/textViewLike"
+                android:id="@+id/textViewLikeCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/imageViewLike"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/imageViewLike"
                 android:includeFontPadding="false"
-                android:text="111"
+                android:text=""
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/sp11" />
 
@@ -333,7 +333,7 @@
                 android:layout_toEndOf="@+id/imageViewComment"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
-                android:text="111"
+                android:text=""
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/sp11" />
         </RelativeLayout>

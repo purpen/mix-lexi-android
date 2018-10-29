@@ -77,11 +77,15 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         }
 
         if (data.like_count > 0) {
-            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
-            textViewLike.text = "${data.like_count}"
+            textViewLikeCount.text = "${data.like_count}"
         } else {
+            textViewLikeCount.text = ""
+        }
+
+        if (data.is_like){
+            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
+        }else{
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
-            textViewLike.text = ""
         }
 
         if (data.comment_count > 0) {
@@ -481,11 +485,15 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     override fun setFavorite(b: Boolean) {
         if (shopWindow == null) return
         if (b) {
+            shopWindow!!.is_like = true
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
-            textViewLike.text = "${shopWindow!!.like_count++}"
+            shopWindow!!.like_count = shopWindow!!.like_count+1
+            textViewLikeCount.text = "${shopWindow!!.like_count}"
         } else {
+            shopWindow!!.is_like = false
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
-            textViewLike.text = "${shopWindow!!.like_count--}"
+            shopWindow!!.like_count = shopWindow!!.like_count-1
+            textViewLikeCount.text = "${shopWindow!!.like_count}"
         }
     }
 
