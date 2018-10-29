@@ -10,7 +10,7 @@ import com.lexivip.lexi.user.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 import org.greenrobot.eventbus.EventBus
 import com.basemodule.tools.LogUtil
-import com.lexivip.lexi.MessageClose
+import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.Subscribe

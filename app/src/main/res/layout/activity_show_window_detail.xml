@@ -126,11 +126,14 @@
 
             <!--猜你你喜欢-->
             <RelativeLayout
+                android:id="@+id/relativeLayoutGuess"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp15">
+                android:layout_marginTop="@dimen/dp15"
+                android:visibility="gone"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -164,22 +167,32 @@
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
                 android:layout_marginTop="@dimen/dp20"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                android:visibility="gone"
+                />
 
-            <include layout="@layout/line_color_eee" />
+            <include
+                android:id="@+id/lineGuess"
+                layout="@layout/line_color_eee"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp15"
                 android:background="@color/color_f5f7f9" />
+
             <!--发现相关橱窗-->
             <RelativeLayout
+                android:id="@+id/relativeLayoutRelate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp15"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp15">
+                android:layout_marginTop="@dimen/dp15"
+                android:visibility="gone"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -212,12 +225,17 @@
                 android:layout_marginBottom="@dimen/dp10"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                android:visibility="gone"
+                />
 
             <include
+                android:id="@+id/lineRelate"
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1" />
+                android:layout_height="@dimen/dp1"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="match_parent"

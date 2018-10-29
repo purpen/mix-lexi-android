@@ -10,7 +10,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.lexivip.lexi.MessageUpdate
+import com.lexivip.lexi.eventBusMessge.MessageUpdate
 import com.lexivip.lexi.R
 import com.lexivip.lexi.view.AddSubView
 import org.greenrobot.eventbus.EventBus

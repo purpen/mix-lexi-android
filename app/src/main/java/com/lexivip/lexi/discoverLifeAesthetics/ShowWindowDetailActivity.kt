@@ -19,6 +19,7 @@ import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.index.selection.DiscoverLifeAdapter
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.activity_show_window_detail.*
 import kotlinx.android.synthetic.main.view_show_window_image3.view.*
 import kotlinx.android.synthetic.main.view_show_window_image5.view.*
@@ -157,7 +158,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 val dp230: Int by lazy { screenW * 230 / 375 }
                 val dp215: Int by lazy { screenW * 215 / 375 }
                 val dp161: Int by lazy { dp215*161/215 }
-                val dp114: Int by lazy { dp230 / 2 - dp2 }
+                val dp114: Int by lazy { (dp230 - dp2)/2 }
                 val dp143: Int by lazy { screenW - dp230 }
                 val dp158: Int by lazy { screenW - dp215-dp2 }
                 val layoutParams230: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp230, dp230) }
@@ -220,6 +221,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 view.imageView73.layoutParams = layoutParamsImageView73
 
                 layoutParamsImageView74.addRule(RelativeLayout.BELOW,R.id.imageView73)
+                layoutParamsImageView74.topMargin = dp2
                 view.imageView74.layoutParams = layoutParamsImageView74
 
                 layoutParamsImageView75.addRule(RelativeLayout.ALIGN_TOP,R.id.imageView74)
@@ -230,7 +232,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 layoutParamsImageView76.addRule(RelativeLayout.ALIGN_TOP,R.id.imageView74)
                 layoutParamsImageView76.addRule(RelativeLayout.END_OF,R.id.imageView75)
                 layoutParamsImageView76.leftMargin = dp2
-                view.imageView75.layoutParams = layoutParamsImageView75
+                view.imageView76.layoutParams = layoutParamsImageView76
                 linearLayoutBox.addView(view)
                 GlideUtil.loadImageWithFading(list[0], view.imageView70)
                 GlideUtil.loadImageWithFading(list[1], view.imageView71)
@@ -260,6 +262,15 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 设置相关橱窗数据
      */
     override fun setRelateShowWindowData(windows: List<ShopWindowBean>) {
+        if (windows.isEmpty()) {
+            relativeLayoutRelate.visibility = View.GONE
+            recyclerViewShowWindow.visibility = View.GONE
+            lineRelate.visibility = View.GONE
+        }else{
+            relativeLayoutRelate.visibility = View.VISIBLE
+            recyclerViewShowWindow.visibility = View.VISIBLE
+            lineRelate.visibility = View.VISIBLE
+        }
         adapterRelateShowWindow.setNewData(windows)
     }
 
@@ -268,6 +279,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 初始化猜你喜欢
      */
     private fun initGuessLike() {
+        if (!UserProfileUtil.isLogin()) return
         presenter.getGuessLike(rid)
         val linearLayoutManager = LinearLayoutManager(applicationContext)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -281,6 +293,15 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 设置猜你喜欢界面
      */
     override fun setGuessLikeData(products: List<ProductBean>) {
+        if (products.isEmpty()) {
+            relativeLayoutGuess.visibility = View.GONE
+            recyclerViewGuess.visibility = View.GONE
+            lineGuess.visibility = View.GONE
+        }else{
+            relativeLayoutGuess.visibility = View.VISIBLE
+            recyclerViewGuess.visibility = View.VISIBLE
+            lineGuess.visibility = View.VISIBLE
+        }
         adapterGuessLike.setNewData(products)
     }
 

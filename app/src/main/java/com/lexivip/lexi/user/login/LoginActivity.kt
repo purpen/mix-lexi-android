@@ -10,7 +10,7 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.lexivip.lexi.MainActivity
-import com.lexivip.lexi.MessageClose
+import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.R
 import com.lexivip.lexi.user.areacode.MessageAreaCode
 import com.lexivip.lexi.user.areacode.SelectCountryOrAreaActivity

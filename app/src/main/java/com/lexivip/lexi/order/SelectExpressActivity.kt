@@ -9,6 +9,7 @@ import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.*
+import com.lexivip.lexi.eventBusMessge.MessageUpdateDefaultExpress
 import kotlinx.android.synthetic.main.acticity_header_recyclerview.*
 import kotlinx.android.synthetic.main.footer_select_express.view.*
 import kotlinx.android.synthetic.main.header_express_send_address.view.*

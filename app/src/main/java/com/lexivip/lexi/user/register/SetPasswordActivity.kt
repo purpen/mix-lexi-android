@@ -8,7 +8,7 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
-import com.lexivip.lexi.MessageClose
+import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.R
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import kotlinx.android.synthetic.main.activity_set_password.*

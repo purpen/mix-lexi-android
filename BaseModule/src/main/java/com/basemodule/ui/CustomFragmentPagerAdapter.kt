@@ -25,7 +25,6 @@ class CustomFragmentPagerAdapter(fm: FragmentManager, private var classes: Array
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as View)
         super.destroyItem(container, position, `object`)
     }
 }

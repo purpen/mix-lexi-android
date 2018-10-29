@@ -12,7 +12,7 @@ import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
-import com.lexivip.lexi.MessageOrderSuccess
+import com.lexivip.lexi.eventBusMessge.MessageOrderSuccess
 import com.lexivip.lexi.R
 import com.lexivip.lexi.address.AddressActivity
 import kotlinx.android.synthetic.main.acticity_select_express_address.*

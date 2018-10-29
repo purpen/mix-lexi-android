@@ -1,7 +1,6 @@
 package com.lexivip.lexi
 
 import android.content.Intent
-import android.support.v4.app.Fragment
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.widget.Toast
@@ -10,6 +9,7 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
+import com.lexivip.lexi.eventBusMessge.MessageChangePage
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,10 +26,10 @@ class MainActivity : BaseActivity() {
         if (!isFinishing) super.onBackPressed()
     }
 
-    private lateinit var fragment0: BaseFragment
-    private lateinit var fragment1: BaseFragment
-    private lateinit var fragment2: BaseFragment
-    private lateinit var fragment3: BaseFragment
+    private var fragment0: BaseFragment? = null
+    private var fragment1: BaseFragment? = null
+    private var fragment2: BaseFragment? = null
+    private var fragment3: BaseFragment? = null
 
     private var lastClickedId: Int = -1
 
@@ -103,6 +103,7 @@ class MainActivity : BaseActivity() {
 
         hideFragments()
 
+        //TODO 退出登录/和登录
         initFragments()
 
         if (intent == null) return
@@ -157,14 +158,14 @@ class MainActivity : BaseActivity() {
 
         when (id) {
             R.id.button0 -> { //首页
-                if (!fragment0.isAdded) {
+                if (!fragment0!!.isAdded) {
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment0).show(fragment0).commitAllowingStateLoss()
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment0).commitAllowingStateLoss()
                 }
             }
             R.id.button1 -> { //发现
-                if (!fragment1.isAdded) {
+                if (!fragment1!!.isAdded) {
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment1).show(fragment1).commitAllowingStateLoss()
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment1).commitAllowingStateLoss()
@@ -172,7 +173,7 @@ class MainActivity : BaseActivity() {
 
             }
             R.id.button2 -> { //购物车
-                if (!fragment2.isAdded) {
+                if (!fragment2!!.isAdded) {
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment2).show(fragment2).commitAllowingStateLoss()
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment2).commitAllowingStateLoss()
@@ -181,7 +182,7 @@ class MainActivity : BaseActivity() {
                 }
             }
             R.id.button3 -> {
-                if (!fragment3.isAdded) {
+                if (!fragment3!!.isAdded) {
                     supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment3).show(fragment3).commitAllowingStateLoss()
                 } else {
                     supportFragmentManager.beginTransaction().show(fragment3).commitAllowingStateLoss()
@@ -204,7 +205,7 @@ class MainActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        fragment0.onActivityResult(requestCode, resultCode, data)
+        fragment0?.onActivityResult(requestCode, resultCode, data)
         LogUtil.e("${TAG};;;requestCode=$requestCode;resultCode=$resultCode")
     }
 

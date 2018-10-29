@@ -9,7 +9,7 @@ import com.basemodule.tools.Util
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.DividerItemDecoration
-import com.lexivip.lexi.MessageUpdate
+import com.lexivip.lexi.eventBusMessge.MessageUpdate
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CouponBean
 import kotlinx.android.synthetic.main.dialog_pavilion_coupon_bottom.view.*

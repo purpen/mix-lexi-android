@@ -11,6 +11,9 @@ import com.basemodule.ui.BaseFragment
 import com.flyco.dialog.listener.OnBtnClickL
 import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.eventBusMessge.MessageChangePage
+import com.lexivip.lexi.eventBusMessge.MessageOrderSuccess
+import com.lexivip.lexi.eventBusMessge.MessageUpdate
 import com.lexivip.lexi.index.detail.AddShopCartBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.order.*

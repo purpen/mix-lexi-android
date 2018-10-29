@@ -21,7 +21,7 @@ object URL {
      */
     const val LOGIN_URL = "${BASE_URL}auth/login"
 
-    /**
+    /**store//app_visitor
      * 登录发送验证码
      */
     const val LOGIN_SEND_CHECKCODE: String = "${BASE_URL}users/dynamic_login_verify_code"
