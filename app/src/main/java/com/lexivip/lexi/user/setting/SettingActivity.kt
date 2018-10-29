@@ -1,6 +1,4 @@
 package com.lexivip.lexi.user.setting
-
-import android.app.Activity
 import android.content.Intent
 import android.view.View
 import com.basemodule.tools.*
@@ -11,9 +9,11 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.mine.UserCenterBean
 import kotlinx.android.synthetic.main.activity_setting.*
 import android.net.Uri
+import com.lexivip.lexi.eventBusMessge.MessageLogout
 import com.lexivip.lexi.orderList.OrderListActivity
 import com.lexivip.lexi.user.setting.address.AddressListActivity
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
+import org.greenrobot.eventbus.EventBus
 
 
 class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListener {
@@ -79,6 +79,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
             R.id.button -> {  //退出登录
                 SPUtil.clear(Constants.USER_PROFILE)
                 SPUtil.clear(Constants.AUTHORIZATION)
+                EventBus.getDefault().post(MessageLogout())
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra(MainActivity::class.java.simpleName, MainFragment0::class.java.simpleName)
                 startActivity(intent)

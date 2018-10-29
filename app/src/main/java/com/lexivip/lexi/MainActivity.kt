@@ -9,6 +9,7 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
+import com.lexivip.lexi.eventBusMessge.MessageChangePage
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.activity_main.*
@@ -50,7 +51,6 @@ class MainActivity : BaseActivity() {
      * 初始化购物车
      */
     private fun initShopCart() {
-        fragment2 =null
         fragment2 = MainFragment1.newInstance()
     }
 
@@ -58,7 +58,6 @@ class MainActivity : BaseActivity() {
      * 初始化发现
      */
     private fun initDiscoverPage() {
-        fragment1 = null
         fragment1 = MainFragment2.newInstance()
     }
 
@@ -66,7 +65,6 @@ class MainActivity : BaseActivity() {
      * 初始化首页
      */
     private fun initIndexPage() {
-        fragment0 = null
         fragment0 = MainFragment0.newInstance()
     }
 
@@ -74,7 +72,6 @@ class MainActivity : BaseActivity() {
      * 初始化个人中心
      */
     private fun initUserCenter() {
-        fragment3 = null
         if (UserProfileUtil.isSmallB()) {
             fragment3 = MainFragmentUser.newInstance()
         } else {
@@ -106,6 +103,7 @@ class MainActivity : BaseActivity() {
 
         hideFragments()
 
+        //TODO 退出登录/和登录
         initFragments()
 
         if (intent == null) return

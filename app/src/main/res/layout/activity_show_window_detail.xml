@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
 
     <com.lexivip.lexi.view.CustomHeadView
         android:id="@+id/customHeadView"
@@ -72,13 +75,6 @@
 
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:visibility="gone" />
-
             <TextView
                 android:id="@+id/textViewTitle1"
                 android:layout_width="match_parent"
@@ -89,7 +85,7 @@
                 android:maxLines="1"
                 android:paddingEnd="@dimen/dp20"
                 android:paddingStart="@dimen/dp20"
-                android:text="@string/app_name"
+                android:text="@string/text_loading"
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/sp15"
                 android:textStyle="bold" />
@@ -106,7 +102,7 @@
                 android:maxLines="3"
                 android:paddingEnd="@dimen/dp20"
                 android:paddingStart="@dimen/dp20"
-                android:text="@string/app_name"
+                android:text="@string/text_loading"
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/sp13" />
 
@@ -131,19 +127,49 @@
                 android:layout_height="@dimen/dp15"
                 android:background="@color/color_f5f7f9" />
 
-            <!--猜你你喜欢-->
+            <TextView
+                android:id="@+id/textViewCommentTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="评论"
+                android:paddingTop="13dp"
+                android:textSize="14sp"
+                android:layout_marginStart="15dp"
+                android:textColor="@color/color_333"
+                android:includeFontPadding="false"
+                android:textStyle="bold"
+                android:visibility="gone"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:visibility="gone"
+                />
+            <View
+                android:id="@+id/line15Comment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp15"
+                android:background="@color/color_f5f7f9"
+                android:visibility="gone"
+                />
+            <!--推荐-->
             <RelativeLayout
+                android:id="@+id/relativeLayoutGuess"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp15">
+                android:layout_marginTop="@dimen/dp15"
+                android:visibility="gone"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
-                    android:text="@string/text_guess_like"
+                    android:text="@string/text_recommend_product"
                     android:textColor="@color/color_333"
                     android:textSize="@dimen/sp14"
                     android:textStyle="bold" />
@@ -171,22 +197,32 @@
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
                 android:layout_marginTop="@dimen/dp20"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                android:visibility="gone"
+                />
 
-            <include layout="@layout/line_color_eee" />
+            <include
+                android:id="@+id/lineGuess"
+                layout="@layout/line_color_eee"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp15"
                 android:background="@color/color_f5f7f9" />
+
             <!--发现相关橱窗-->
             <RelativeLayout
+                android:id="@+id/relativeLayoutRelate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp15"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp15">
+                android:layout_marginTop="@dimen/dp15"
+                android:visibility="gone"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -219,12 +255,17 @@
                 android:layout_marginBottom="@dimen/dp10"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                android:visibility="gone"
+                />
 
             <include
+                android:id="@+id/lineRelate"
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1" />
+                android:layout_height="@dimen/dp1"
+                android:visibility="gone"
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -284,14 +325,14 @@
                 android:src="@mipmap/icon_click_favorite_normal" />
 
             <TextView
-                android:id="@+id/textViewLike"
+                android:id="@+id/textViewLikeCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/imageViewLike"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/imageViewLike"
                 android:includeFontPadding="false"
-                android:text="111"
+                android:text=""
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/sp11" />
 
@@ -322,7 +363,7 @@
                 android:layout_toEndOf="@+id/imageViewComment"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
-                android:text="111"
+                android:text=""
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/sp11" />
         </RelativeLayout>

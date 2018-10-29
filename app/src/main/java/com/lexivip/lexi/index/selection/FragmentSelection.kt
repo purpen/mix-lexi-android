@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
@@ -135,30 +136,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 设置发现生活美学数据
      */
-    override fun setDiscoverLifeData(windows: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
+    override fun setDiscoverLifeData(windows: List<ShopWindowBean>) {
 
-        var demos = ArrayList<DiscoverLifeBean.DataBean.ShopWindowsBean>()
-
-        for (i in 0..3) {
-            val windowsBean = DiscoverLifeBean.DataBean.ShopWindowsBean()
-            demos.add(windowsBean)
-        }
-
-        for (item in demos) {
-            item.title = "发现生活美学"
-            item.description = "生活美学好"
-            val list = ArrayList<DiscoverLifeBean.DataBean.ShopWindowsBean.ProductsBean>()
-            for (i in 0..3) {
-                val productsBean = DiscoverLifeBean.DataBean.ShopWindowsBean.ProductsBean()
-                productsBean.cover = "http://c.hiphotos.baidu.com/image/h%3D300/sign=87d6daed02f41bd5c553eef461d881a0/f9198618367adab4b025268587d4b31c8601e47b.jpg"
-                list.add(productsBean)
-            }
-            item.products = list
-            item.avatar = "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
-        }
-
-        adapterDiscoverLife.setNewData(demos)
-//        adapterDiscoverLife.setNewData(windows)
+        adapterDiscoverLife.setNewData(windows)
     }
 
     /**

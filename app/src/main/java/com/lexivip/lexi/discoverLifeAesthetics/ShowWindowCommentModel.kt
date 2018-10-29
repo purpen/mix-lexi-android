@@ -10,9 +10,9 @@ open class ShowWindowCommentModel{
 
     fun loadData(page:Int,rid: String,callBack: IDataSource.HttpRequestCallBack) {
 
-        val params = ClientParamsAPI.getShowWindowDetailParams(rid)
+        val params = ClientParamsAPI.getShowWindowCommentParams(rid,page,"0")
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.SHOW_WINDOW_DETAIL,params,object : IDataSource.HttpRequestCallBack{
+        HttpRequest.sendRequest(HttpRequest.GET,URL.SHOW_WINDOW_COMMENTS_LIST,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }
@@ -147,9 +147,15 @@ open class ShowWindowCommentModel{
         })
     }
 
-    fun praiseComment(comment_id: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+    fun praiseComment(comment_id: String,isPraise:Boolean,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getPraiseCommentParams(comment_id)
-        HttpRequest.sendRequest(HttpRequest.POST, URL.SHOP_WINDOWS_COMMENTS_PRAISE, params, object : IDataSource.HttpRequestCallBack {
+        val method:String
+        if (isPraise){
+            method = HttpRequest.DELETE
+        }else{
+            method = HttpRequest.POST
+        }
+        HttpRequest.sendRequest(method, URL.SHOP_WINDOWS_COMMENTS_PRAISE, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
@@ -164,22 +170,6 @@ open class ShowWindowCommentModel{
         })
     }
 
-    fun cancelPraiseComment(comment_id: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getPraiseCommentParams(comment_id)
-        HttpRequest.sendRequest(HttpRequest.DELETE, URL.SHOP_WINDOWS_COMMENTS_PRAISE, params, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
 
     fun loadMoreSubComments(page: Int,comment_id: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getMoreSubCommentsParams(page,comment_id)

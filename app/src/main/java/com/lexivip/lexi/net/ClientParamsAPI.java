@@ -32,7 +32,6 @@ public class ClientParamsAPI {
     //正式
     public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
     public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
-
     /**
      * 获取登录后的authorization
      * @param token
@@ -1399,6 +1398,23 @@ public class ClientParamsAPI {
         params.put("city_id",city_id);
         params.put("mail",mail);
         params.put("date",date);
+        return params;
+    }
+
+    /**
+     * 橱窗评论
+     * @param rid
+     * @param page
+     * @param sort_type
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,Object> getShowWindowCommentParams(@NotNull String rid, int page, @NotNull String sort_type) {
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("rid", rid);
+        params.put("sort_type", sort_type);
         return params;
     }
 

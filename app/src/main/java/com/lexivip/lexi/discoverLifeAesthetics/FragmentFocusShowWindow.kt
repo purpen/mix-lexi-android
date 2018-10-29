@@ -8,8 +8,12 @@ import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
+import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
+import com.lexivip.lexi.user.login.LoginActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_Divider
@@ -21,6 +25,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
     override val layout: Int = R.layout.fragment_swipe_refresh_recyclerview
     private val presenter: ShowWindowPresenter by lazy { ShowWindowPresenter(this) }
     private val adapter: AdapterRecommendShowWindow by lazy { AdapterRecommendShowWindow(R.layout.adapter_show_window) }
+
     companion object {
         @JvmStatic
         fun newInstance(): FragmentFocusShowWindow = FragmentFocusShowWindow()
@@ -32,7 +37,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
 
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-
+        swipeRefreshLayout.isEnabled = false
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = linearLayoutManager
@@ -52,69 +57,82 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
         }, recyclerView)
 
 
-        adapter.setOnItemChildClickListener { adapter, view, position ->
-            val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
+        adapter.setOnItemChildClickListener { _, view, position ->
+            val showWindowBean = adapter.getItem(position) ?: return@setOnItemChildClickListener
             when (view.id) {
-                R.id.textViewLike -> presenter.favoriteShowWindow(showWindowBean.rid,position,view)
+                R.id.textViewLike -> {
+                    if (UserProfileUtil.isLogin()) {
+                        presenter.favoriteShowWindow(showWindowBean.rid, showWindowBean.is_like, position, view)
+                    } else {
+                        startActivity(Intent(activity, LoginActivity::class.java))
+                    }
+                }
 
                 R.id.textViewComment -> ToastUtil.showInfo("评论")
 
                 R.id.textViewShare -> {
-                    val dialog =  DistributeShareDialog(activity)
+                    val dialog = DistributeShareDialog(activity)
                     dialog.show()
                 }
+                R.id.textViewFocus -> { //关注用户
+                    if (UserProfileUtil.isLogin()) {
+                        presenter.focusUser(showWindowBean.uid, view, showWindowBean.is_follow, position)
+                    } else {
+                        startActivity(Intent(activity, LoginActivity::class.java))
+                    }
+                }
+//                R.id.imageView30 -> {
+//                    val bean = showWindowBean.products[0] ?: return@setOnItemChildClickListener
+//                    PageUtil.jump2GoodsDetailActivity(bean.rid)
+//                }
+//                R.id.imageView31 -> {
+//                    val bean = showWindowBean.products[1] ?: return@setOnItemChildClickListener
+//                    PageUtil.jump2GoodsDetailActivity(bean.rid)
+//                }
+//                R.id.imageView32 -> {
+//                    val bean = showWindowBean.products[2] ?: return@setOnItemChildClickListener
+//                    PageUtil.jump2GoodsDetailActivity(bean.rid)
+//                }
+//                R.id.textView -> { //点+号
+//                    PageUtil.jump2ShopWindowDetailActivity(showWindowBean.rid)
+//                }
             }
         }
 
-        adapter.setOnItemClickListener { adapter, view, position ->
-            val showWindowBean = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
-            val intent = Intent(context, ShowWindowDetailActivity::class.java)
-            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName,showWindowBean)
-            startActivity(intent)
+        adapter.setOnItemClickListener { _, _, position ->
+            val showWindowBean = adapter.getItem(position) ?: return@setOnItemClickListener
+            PageUtil.jump2ShopWindowDetailActivity(showWindowBean.rid)
         }
+    }
+
+    /**
+     * 设置用户关注状态
+     */
+    override fun setFocusState(isFollowed: Boolean, position: Int) {
+        val item = adapter.getItem(position) ?: return
+        item.is_follow = isFollowed
+        adapter.notifyItemChanged(position)
     }
 
     /**
      * 更新喜欢状态
      */
     override fun setFavorite(b: Boolean, position: Int) {
-        val item = adapter.getItem(position) as ShowWindowBean.DataBean.ShopWindowsBean
+        val item = adapter.getItem(position) as ShopWindowBean
         item.is_like = b
+        if (b) {
+            item.like_count++
+        } else {
+            item.like_count--
+        }
         adapter.notifyItemChanged(position)
     }
 
-    override fun setNewData(shopWindows: MutableList<ShowWindowBean.DataBean.ShopWindowsBean>) {
-        swipeRefreshLayout.isRefreshing = false
-
-        var demos = ArrayList<ShowWindowBean.DataBean.ShopWindowsBean>()
-
-        for (i in 0..3) {
-            val windowsBean = ShowWindowBean.DataBean.ShopWindowsBean()
-            demos.add(windowsBean)
-        }
-
-        for (item in demos) {
-            item.uid = "1111"
-            item.rid = "111"
-            item.title = "标题发现生活美学"
-            item.description = "生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对生活美学好哈哈哈哈丰厚的回访电话是否会对"
-            val list = ArrayList<ShowWindowBean.DataBean.ShopWindowsBean.ProductsBean>()
-            for (i in 0..6) {
-                val productsBean = ShowWindowBean.DataBean.ShopWindowsBean.ProductsBean()
-                productsBean.cover = "http://c.hiphotos.baidu.com/image/h%3D300/sign=87d6daed02f41bd5c553eef461d881a0/f9198618367adab4b025268587d4b31c8601e47b.jpg"
-                list.add(productsBean)
-            }
-            item.products = list
-            item.user_avatar = "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
-            item.user_name = "姗姗来迟"
-        }
-
-        adapter.setNewData(demos)
-
-//        adapter.setNewData(shopWindows)
+    override fun setNewData(shopWindows: MutableList<ShopWindowBean>) {
+        adapter.setNewData(shopWindows)
     }
 
-    override fun addData(shopWindows: MutableList<ShowWindowBean.DataBean.ShopWindowsBean>) {
+    override fun addData(shopWindows: MutableList<ShopWindowBean>) {
         adapter.addData(shopWindows)
         adapter.setEnableLoadMore(true)
     }
@@ -125,6 +143,18 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
 
     override fun showLoadingView() {
         dialog.show()
+    }
+
+    override fun loadMoreFail() {
+        adapter.loadMoreFail()
+    }
+
+    override fun loadMoreComplete() {
+        adapter.loadMoreComplete()
+    }
+
+    override fun loadMoreEnd() {
+        adapter.loadMoreEnd()
     }
 
     override fun dismissLoadingView() {
@@ -140,7 +170,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
     }
 
     internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
-        private val color:Int = Util.getColor(R.color.color_f5f7f9)
+        private val color: Int = Util.getColor(R.color.color_f5f7f9)
         override fun getDivider(itemPosition: Int): Y_Divider? {
             val count = adapter.itemCount
             var divider: Y_Divider? = null

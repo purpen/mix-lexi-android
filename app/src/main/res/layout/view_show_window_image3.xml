@@ -8,6 +8,7 @@
         android:layout_width="@dimen/dp250"
         android:layout_height="@dimen/dp249"
         android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         />
     <ImageView
         android:id="@+id/imageView31"
@@ -19,15 +20,17 @@
         android:scaleType="fitXY"
         />
     <RelativeLayout
+        android:id="@+id/relativeLayoutImage32"
         android:layout_below="@+id/imageView31"
         android:layout_alignStart="@+id/imageView31"
         android:layout_width="@dimen/dp124"
         android:layout_height="@dimen/dp124">
         <ImageView
             android:id="@+id/imageView32"
-            android:layout_width="@dimen/dp124"
-            android:layout_height="@dimen/dp124"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             />
         <TextView
             android:id="@+id/textView"
@@ -37,7 +40,7 @@
             android:gravity="center"
             android:textSize="20sp"
             android:textColor="@android:color/white"
-            android:background="#28000000"
+            android:background="#4d000000"
             android:visibility="gone"
             />
     </RelativeLayout>

@@ -11,6 +11,9 @@ import com.basemodule.ui.BaseFragment
 import com.flyco.dialog.listener.OnBtnClickL
 import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.eventBusMessge.MessageChangePage
+import com.lexivip.lexi.eventBusMessge.MessageOrderSuccess
+import com.lexivip.lexi.eventBusMessge.MessageUpdate
 import com.lexivip.lexi.index.detail.AddShopCartBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.order.*
@@ -235,7 +238,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         // 心愿单点击进入详情
-        adapterWish.setOnItemClickListener { adapter, view, position ->
+        adapterWish.setOnItemClickListener { adapter, _, position ->
             val productBean = adapter.getItem(position) as ProductBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)

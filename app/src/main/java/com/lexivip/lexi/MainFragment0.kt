@@ -9,6 +9,7 @@ import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.lexivip.lexi.index.explore.FragmentExplore
 import com.lexivip.lexi.index.lifehouse.FragmentLifeHouse
 import com.lexivip.lexi.index.selection.FragmentSelection
+import com.lexivip.lexi.index.shopWindow.FragmentShopWindow
 import com.lexivip.lexi.search.SearchActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_main0.*
@@ -47,6 +48,7 @@ class MainFragment0 : BaseFragment() {
 
         fragments.add(FragmentSelection.newInstance())
         fragments.add(FragmentExplore.newInstance())
+        fragments.add(FragmentShopWindow.newInstance())
 
         adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, listTitle)
         customViewPager.adapter = adapter

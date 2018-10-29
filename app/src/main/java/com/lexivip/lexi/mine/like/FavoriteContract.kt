@@ -4,6 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.selection.DiscoverLifeBean
 
 class FavoriteContract {
@@ -19,7 +20,7 @@ class FavoriteContract {
 
         }
 
-        fun setShowWindowData(shop_windows: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
+        fun setShowWindowData(shop_windows: List<ShopWindowBean>) {
 
         }
 

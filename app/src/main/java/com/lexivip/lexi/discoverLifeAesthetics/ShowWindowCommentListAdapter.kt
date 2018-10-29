@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
+import com.lexivip.lexi.beans.CommentBean
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -52,33 +53,33 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
         adapter!!.setNewData(item.sub_comments)
         if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
 
+
         adapter!!.setOnItemChildClickListener { adapter, view, position ->
             val subCommentsBean = adapter.getItem(position) as CommentBean
             when (view.id) {
                 R.id.textViewPraise -> {
-                    //TODO 待删除 id为假数据
-                    subCommentsBean.comment_id = "100"
-                    if (subCommentsBean.is_praise) {
-                        present.cancelPraiseComment(subCommentsBean.comment_id, position, view, true)
-                    } else {
-                        present.praiseComment(subCommentsBean.comment_id, position, view, true)
-                    }
+                    present.praiseComment(subCommentsBean.comment_id,subCommentsBean.is_praise,position, view, true)
                 }
             }
         }
-        footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment, null)
+        if (item.sub_comment_count>0){
+            footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment, null)
 
-        footerView?.findViewById<TextView>(R.id.textView)?.text = "查看${item.sub_comment_count}条回复"
+            footerView?.findViewById<TextView>(R.id.textView)?.text = "查看${item.sub_comment_count}条回复"
 
-        if (adapter!!.footerLayoutCount == 0) adapter!!.addFooterView(footerView)
+            if (adapter!!.footerLayoutCount == 0) adapter!!.addFooterView(footerView)
 
-        footerView?.setOnClickListener { view ->
-            //当前item.comment_id就是父评论的id
+            footerView?.setOnClickListener { view ->
+                //当前item.comment_id就是父评论的id
 
-            item.comment_id = "111"
+                item.comment_id = "111"
 
-            present.loadMoreSubComments(item.comment_id, helper.adapterPosition, view)
+                present.loadMoreSubComments(item.comment_id, helper.adapterPosition, view)
+            }
+        }else{
+            footerView = null
         }
+
     }
 
 
@@ -88,8 +89,10 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
     fun setPraiseCommentState(doPraise: Boolean, position: Int) {
         val subCommentsBean = adapter!!.getItem(position) as CommentBean
         if (doPraise) {
+            subCommentsBean.is_praise = true
             subCommentsBean.praise_count += 1
         } else {
+            subCommentsBean.is_praise = false
             if (subCommentsBean.praise_count > 0) {
                 subCommentsBean.praise_count -= 1
             }

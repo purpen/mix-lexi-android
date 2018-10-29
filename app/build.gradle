@@ -39,7 +39,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             minifyEnabled false
             debuggable true
             signingConfig signingConfigs.release
@@ -47,8 +47,7 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.all { output ->
                     if (variant.buildType.name == "release") {
-                        def fileName = "erp_v${defaultConfig.versionName}_${releaseTime()}.apk"
-//                        output.outputFile = new File(output.outputFile.parent, fileName)
+                        def fileName = "lexi_v${defaultConfig.versionName}_${releaseTime()}.apk"
                         outputFileName = fileName
                     }
                 }
@@ -89,16 +88,16 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation 'com.android.support:multidex:1.0.3'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+//    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
     implementation files('libs/umeng-common-1.5.4.jar')
     implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
     implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
     implementation files('libs/umeng-share-core-6.9.3.jar')
     implementation files('libs/umeng-share-QQ-simplify-6.9.3.jar')
     implementation files('libs/umeng-shareboard-widget-6.9.3.jar')
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
 }
 
 kapt {

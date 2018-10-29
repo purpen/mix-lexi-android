@@ -7,24 +7,24 @@ import android.view.View
 import android.widget.ImageView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.ToastUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
+import com.lexivip.lexi.beans.ShopWindowBean
 
-class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.DataBean.ShopWindowsBean, BaseViewHolder>(layoutResId) {
+class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean, BaseViewHolder>(layoutResId) {
     private val dp25 by lazy { DimenUtil.dp2px(25.0) }
     private val dp2 by lazy { DimenUtil.dp2px(2.0) }
-    override fun convert(helper: BaseViewHolder, item: DiscoverLifeBean.DataBean.ShopWindowsBean) {
+    override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.avatar,imageViewAvatar,dp25)
+        GlideUtil.loadCircleImageWidthDimen(item.user_avatar,imageViewAvatar,dp25)
 
-        helper.setText(R.id.textViewName,item.title)
+        helper.setText(R.id.textViewName,item.user_name)
         helper.setText(R.id.textViewTitle1,item.title)
         helper.setText(R.id.textViewTitle2,item.description)
-
 
         if (item.products.isEmpty()) return
 
@@ -58,9 +58,8 @@ class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = adapter
 
-        adapter.setOnItemClickListener { adapter, view, position ->
-            val multipleItem = adapter.getItem(position) as DiscoverLifeProductAdapter.MultipleItem
-            ToastUtil.showInfo("商品详情"+position+multipleItem.str)
+        adapter.setOnItemClickListener { _, _, _ ->//跳转橱窗详情
+            PageUtil.jump2ShopWindowDetailActivity(item.rid)
         }
 
         adapter.setSpanSizeLookup { _, position ->
@@ -70,7 +69,7 @@ class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<DiscoverLifeBean.
         if (recyclerView.itemDecorationCount>0) return
 
         recyclerView.addItemDecoration(object:RecyclerView.ItemDecoration(){
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
                 super.getItemOffsets(outRect, view, parent, state)
                 val position = parent.getChildAdapterPosition(view)
                 if (position == 0){

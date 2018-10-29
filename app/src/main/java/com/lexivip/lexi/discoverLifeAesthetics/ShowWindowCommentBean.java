@@ -1,5 +1,7 @@
 package com.lexivip.lexi.discoverLifeAesthetics;
 
+import com.lexivip.lexi.beans.CommentBean;
+
 public class ShowWindowCommentBean {
 
     /**

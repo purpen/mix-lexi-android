@@ -8,6 +8,7 @@ import com.basemodule.tools.Util;
 import com.lexivip.lexi.beans.LifeWillBean;
 import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.brandHouse.BrandHouseActivity;
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailActivity;
 import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.index.detail.GoodsDetailActivity;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
@@ -100,9 +101,22 @@ public class PageUtil {
      * @param recommend_id
      */
     public static void jump2CollectionDetailActivity(@Nullable String recommend_id) {
+        Application context = AppApplication.getContext();
         Intent intent = new Intent(AppApplication.getContext(), CollectionDetailActivity.class);
         intent.putExtra(CollectionDetailActivity.class.getSimpleName(),recommend_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        AppApplication.getContext().startActivity(intent);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转橱窗详情
+     * @param rid
+     */
+    public static void jump2ShopWindowDetailActivity(@Nullable String rid) {
+        Application context = AppApplication.getContext();
+        Intent intent = new Intent(AppApplication.getContext(), ShowWindowDetailActivity.class);
+        intent.putExtra(ShowWindowDetailActivity.class.getSimpleName(),rid);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

@@ -8,6 +8,9 @@ import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.CouponBean
+import com.lexivip.lexi.eventBusMessge.MessageOrderSuccess
+import com.lexivip.lexi.eventBusMessge.MessageUpdate
+import com.lexivip.lexi.eventBusMessge.MessageUpdateDefaultExpress
 import com.lexivip.lexi.pay.SelectPayWayActivity
 import kotlinx.android.synthetic.main.acticity_submit_order.*
 import kotlinx.android.synthetic.main.footer_comfirm_order.view.*

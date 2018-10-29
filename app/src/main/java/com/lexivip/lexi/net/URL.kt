@@ -21,7 +21,7 @@ object URL {
      */
     const val LOGIN_URL = "${BASE_URL}auth/login"
 
-    /**
+    /**store//app_visitor
      * 登录发送验证码
      */
     const val LOGIN_SEND_CHECKCODE: String = "${BASE_URL}users/dynamic_login_verify_code"
@@ -333,11 +333,6 @@ object URL {
      * 用户个人心愿单
      */
     const val WISH_ORDER = "${BASE_URL}wishlist"
-
-    /**
-     * 用户关注的设计馆
-     */
-    const val FOLLOWED_STORES = "${BASE_URL}users/followed_stores"
 
     /**
      * 用户生活馆动态
@@ -702,7 +697,7 @@ object URL {
     /**
      * 领券中心 官方优惠券
      */
-    const val VOUCHER_RECOMMEND="${BASE_URL}market/official_coupons/recommend"
+    const val VOUCHER_RECOMMEND = "${BASE_URL}market/official_coupons/recommend"
     /**
      * 全部分类
      */
@@ -710,7 +705,12 @@ object URL {
     /**
      * 领券中心头条动态
      */
-    const val VOUCHER_LINES="${BASE_URL}market/coupon_lines"
+    const val VOUCHER_LINES = "${BASE_URL}market/coupon_lines"
+
+    /**
+     * 评论列表
+     */
+    const val SHOW_WINDOW_COMMENTS_LIST: String = "${BASE_URL}shop_windows/comments"
     /**
      * 领券中心-同享券-精品品牌券
      */

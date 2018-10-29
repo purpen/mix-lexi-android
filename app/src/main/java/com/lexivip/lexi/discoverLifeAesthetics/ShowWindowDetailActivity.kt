@@ -1,4 +1,6 @@
 package com.lexivip.lexi.discoverLifeAesthetics
+
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -10,14 +12,21 @@ import android.widget.RelativeLayout
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
+import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.index.selection.DiscoverLifeAdapter
-import com.lexivip.lexi.index.selection.DiscoverLifeBean
+import com.lexivip.lexi.user.login.UserProfileUtil
+import com.yanyusong.y_divideritemdecoration.Y_Divider
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
+import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.activity_show_window_detail.*
+import kotlinx.android.synthetic.main.footer_comment_count.view.*
 import kotlinx.android.synthetic.main.view_show_window_image3.view.*
 import kotlinx.android.synthetic.main.view_show_window_image5.view.*
 import kotlinx.android.synthetic.main.view_show_window_image7.view.*
@@ -28,17 +37,20 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     private val presenter: ShowWindowDetailPresenter by lazy { ShowWindowDetailPresenter(this) }
 
-    private lateinit var shopWindowsBean: ShowWindowBean.DataBean.ShopWindowsBean
+    private lateinit var rid: String
+    private var shopWindow: ShowWindowDetailBean.DataBean? = null
 
     private val adapterGuessLike: EditorRecommendAdapter by lazy { EditorRecommendAdapter(R.layout.adapter_editor_recommend) }
 
     private val adapterRelateShowWindow: DiscoverLifeAdapter by lazy { DiscoverLifeAdapter(R.layout.adapter_discover_life) }
 
+    private val adapter: ShopWindowDetailCommentListAdapter by lazy { ShopWindowDetailCommentListAdapter(R.layout.adapter_comment_list, presenter) }
+
     override val layout: Int = R.layout.activity_show_window_detail
 
     override fun getIntentData() {
         if (intent.hasExtra(ShowWindowDetailActivity::class.java.simpleName)) {
-            shopWindowsBean = intent.getParcelableExtra(ShowWindowDetailActivity::class.java.simpleName)
+            rid = intent.getStringExtra(TAG)
         }
     }
 
@@ -50,109 +62,251 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         customHeadView.setHeadCenterTxtShow(true, R.string.title_show_case)
         editText.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
         editText.setSingleLine(false)
-        initShowWindow()
+        editText.clearFocus()
         initGuessLike()
         initRelateShowWindow()
     }
 
     override fun requestNet() {
-        presenter.loadData(shopWindowsBean.rid, false)
+        presenter.loadData(rid, false)
     }
 
     /**
      * 设置橱窗详情数据
      */
     override fun setShowWindowData(data: ShowWindowDetailBean.DataBean?) {
-        //TODO  代替initShowWindow()设置数据
-    }
+        if (data == null) return
+        shopWindow = data
+        if (data.comment_count > 0) {
+            textViewCommentTitle.visibility = View.VISIBLE
+            recyclerViewComment.visibility = View.VISIBLE
+            line15Comment.visibility = View.VISIBLE
+            val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+            recyclerViewComment.layoutManager = linearLayoutManager
+            recyclerViewComment.adapter = adapter
+            recyclerViewComment.addItemDecoration(DividerItemDecoration(applicationContext))
+            adapter.setNewData(data.comments)
 
-    /**
-     * 初始化橱窗
-     */
-    @Deprecated("see setShowWindowData")
-    private fun initShowWindow() {
-        GlideUtil.loadCircleImageWidthDimen(shopWindowsBean.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
-        textViewName.text = shopWindowsBean.user_name
-        if (shopWindowsBean.is_official) {
+
+            val view = View.inflate(this, R.layout.footer_comment_count, null)
+            view.textViewCommentCount.text = "查看全部" + data.comment_count + "条评论"
+            adapter.addFooterView(view)
+            view.setOnClickListener {
+                val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
+                intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
+                intent.putExtra(ShowWindowCommentListActivity::class.java.name,shopWindow?.comment_count)
+                startActivity(intent)
+            }
+        } else {
+            line15Comment.visibility = View.GONE
+            textViewCommentTitle.visibility = View.GONE
+            recyclerViewComment.visibility = View.GONE
+        }
+
+        GlideUtil.loadCircleImageWidthDimen(data.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
+        textViewName.text = data.user_name
+        if (data.is_official) {
             textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_show_window_official, 0)
         } else {
             textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
         }
 
-        shopWindowsBean.like_count = 1000
-        if (shopWindowsBean.like_count > 0) {
-            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
-            textViewLike.text = "${shopWindowsBean.like_count}"
+        if (data.like_count > 0) {
+            textViewLikeCount.text = "${data.like_count}"
         } else {
-            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
-            textViewLike.text = ""
+            textViewLikeCount.text = ""
         }
 
-        if (shopWindowsBean.comment_count > 0) {
-            textViewComment.text = "${shopWindowsBean.comment_count}"
+        if (data.is_like) {
+            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
+        } else {
+            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
+        }
+
+        if (data.comment_count > 0) {
+            textViewComment.text = "${data.comment_count}"
         } else {
             textViewComment.text = ""
         }
 
-        textViewTitle1.text = shopWindowsBean.title
+        textViewTitle1.text = data.title
 
-        textViewTitle2.text = shopWindowsBean.description
+        textViewTitle2.text = data.description
 
 
-        if (shopWindowsBean.is_follow) {
+        if (data.is_follow) {
             buttonFocus.text = Util.getString(R.string.text_focused)
         } else {
             buttonFocus.text = Util.getString(R.string.text_focus)
         }
 
-        setGoodsImages()
+        setGoodsImages(data)
 
+        val arrayList = ArrayList<String>()
+        for (tag in data.keywords) {
+            arrayList.add("#$tag")
+        }
         //设置标签
-        tagGroup.setTags(listOf("#生活", "#美学", "#夏天girl", "#东东"))
-        tagGroup.setOnTagClickListener { tag: String? -> ToastUtil.showInfo(tag) }
+        tagGroup.setTags(arrayList)
+//        tagGroup.setOnTagClickListener { tag: String? -> ToastUtil.showInfo(tag) }
     }
 
 
     /**
      * 设置橱窗产品图片
      */
-    private fun setGoodsImages() {
-        // 设置3张产品图
-        if (shopWindowsBean.products.isEmpty()) return
-
+    private fun setGoodsImages(data: ShowWindowDetailBean.DataBean) {
+        val products = data.products
+        var size = products.size
         val list = ArrayList<String>()
-        val size = shopWindowsBean.products.size
 
         //图片只能3,5,7张
         if (size < 3) return
 
         val view: View
 
-        for (product in shopWindowsBean.products) {
+        for (product in products) {
             list.add(product.cover)
         }
 
+        val screenW = ScreenUtil.getScreenWidth()
+        val dp2: Int by lazy { DimenUtil.dp2px(2.0) }
         when (size) {
             3 -> {
-                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image3, null)
+                val dp124: Int by lazy { screenW / 3 }
+                val dp250: Int by lazy { dp124 * 2 + dp2 / 2 }
+                val layoutParams250: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp250, dp250) }
+                val layoutParams31: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
+                val layoutParams32: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
+                view = LayoutInflater.from(this).inflate(R.layout.view_show_window_image3, null)
                 linearLayoutBox.addView(view)
                 GlideUtil.loadImageWithFading(list[0], view.imageView30)
                 GlideUtil.loadImageWithFading(list[1], view.imageView31)
                 GlideUtil.loadImageWithFading(list[2], view.imageView32)
+                view.imageView30.layoutParams = layoutParams250
+                view.imageView31.layoutParams = layoutParams31
+                layoutParams31.addRule(RelativeLayout.END_OF, R.id.imageView30)
+                layoutParams31.marginStart = dp2
+                layoutParams32.addRule(RelativeLayout.BELOW, R.id.imageView31)
+                layoutParams32.addRule(RelativeLayout.ALIGN_LEFT, R.id.imageView31)
+                layoutParams32.topMargin = dp2 / 2
+                view.relativeLayoutImage32.layoutParams = layoutParams32
+                view.imageView30.setOnClickListener {
+                    if (products[0] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[0].rid)
+                }
+
+                view.imageView31.setOnClickListener {
+                    if (products[1] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[1].rid)
+                }
+                view.imageView32.setOnClickListener {
+                    if (products[2] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[2].rid)
+                }
             }
 
             5 -> {
-                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image5, null)
+                val dp230: Int by lazy { screenW * 230 / 375 }
+                val dp215: Int by lazy { screenW * 215 / 375 }
+                val dp161: Int by lazy { dp215 * 161 / 215 }
+                val dp114: Int by lazy { (dp230 - dp2) / 2 }
+                val dp143: Int by lazy { screenW - dp230 }
+                val dp158: Int by lazy { screenW - dp215 - dp2 }
+                val layoutParams230: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp230, dp230) }
+                val layoutParams114: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp143, dp114) }
+                val layoutParams52: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp143, dp114) }
+                val layoutParams53: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp215, dp161) }
+                val layoutParams54: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp158, dp161) }
+
+                view = LayoutInflater.from(this).inflate(R.layout.view_show_window_image5, null)
+                view.imageView50.layoutParams = layoutParams230
+                view.imageView51.layoutParams = layoutParams114
+                layoutParams114.addRule(RelativeLayout.END_OF, R.id.imageView50)
+                layoutParams114.marginStart = dp2
+                layoutParams52.addRule(RelativeLayout.BELOW, R.id.imageView51)
+                layoutParams52.addRule(RelativeLayout.ALIGN_LEFT, R.id.imageView51)
+                layoutParams52.topMargin = dp2
+                view.imageView52.layoutParams = layoutParams52
+
+                layoutParams53.addRule(RelativeLayout.BELOW, R.id.imageView50)
+                layoutParams53.topMargin = dp2
+                view.imageView53.layoutParams = layoutParams53
+
+                layoutParams54.addRule(RelativeLayout.ALIGN_TOP, R.id.imageView53)
+                layoutParams54.addRule(RelativeLayout.END_OF, R.id.imageView53)
+                layoutParams54.leftMargin = dp2
+                view.imageView54.layoutParams = layoutParams54
                 linearLayoutBox.addView(view)
                 GlideUtil.loadImageWithFading(list[0], view.imageView50)
                 GlideUtil.loadImageWithFading(list[1], view.imageView51)
                 GlideUtil.loadImageWithFading(list[2], view.imageView52)
                 GlideUtil.loadImageWithFading(list[3], view.imageView53)
                 GlideUtil.loadImageWithFading(list[4], view.imageView54)
+                view.imageView50.setOnClickListener {
+                    if (products[0] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[0].rid)
+                }
+                view.imageView51.setOnClickListener {
+                    if (products[1] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[1].rid)
+                }
+
+                view.imageView52.setOnClickListener {
+                    if (products[2] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[2].rid)
+                }
+                view.imageView53.setOnClickListener {
+                    if (products[3] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[3].rid)
+                }
+
+                view.imageView54.setOnClickListener {
+                    if (products[4] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[4].rid)
+                }
             }
 
             7 -> {
-                view = LayoutInflater.from(applicationContext).inflate(R.layout.view_show_window_image7, null)
+                val dp215: Int by lazy { screenW * 215 / 375 }
+                val dp158: Int by lazy { screenW - dp215 }
+                val dp78: Int by lazy { (dp158 - dp2) / 2 }
+                val dp136: Int by lazy { dp215 - dp78 - dp2 }
+                val oneThirdScreenW: Int by lazy { (screenW - 2 * dp2) / 3 }
+                val layoutParamsImageView70: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp78, dp78) }
+                val layoutParamsImageView71: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp78, dp78) }
+                val layoutParamsImageView72: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp215, dp215) }
+                val layoutParamsImageView73: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp158, dp136) }
+                val layoutParamsImageView74: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(oneThirdScreenW, oneThirdScreenW) }
+                val layoutParamsImageView75: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(oneThirdScreenW, oneThirdScreenW) }
+                val layoutParamsImageView76: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(oneThirdScreenW, oneThirdScreenW) }
+                view = LayoutInflater.from(this).inflate(R.layout.view_show_window_image7, null)
+                view.imageView70.layoutParams = layoutParamsImageView70
+
+                layoutParamsImageView71.leftMargin = dp2
+                layoutParamsImageView71.addRule(RelativeLayout.END_OF, R.id.imageView70)
+                view.imageView71.layoutParams = layoutParamsImageView71
+                layoutParamsImageView72.addRule(RelativeLayout.END_OF, R.id.imageView71)
+                layoutParamsImageView72.leftMargin = dp2
+                view.imageView72.layoutParams = layoutParamsImageView72
+
+                layoutParamsImageView73.addRule(RelativeLayout.BELOW, R.id.imageView70)
+                layoutParamsImageView73.topMargin = dp2
+                view.imageView73.layoutParams = layoutParamsImageView73
+
+                layoutParamsImageView74.addRule(RelativeLayout.BELOW, R.id.imageView73)
+                layoutParamsImageView74.topMargin = dp2
+                view.imageView74.layoutParams = layoutParamsImageView74
+
+                layoutParamsImageView75.addRule(RelativeLayout.ALIGN_TOP, R.id.imageView74)
+                layoutParamsImageView75.addRule(RelativeLayout.END_OF, R.id.imageView74)
+                layoutParamsImageView75.leftMargin = dp2
+                view.imageView75.layoutParams = layoutParamsImageView75
+
+                layoutParamsImageView76.addRule(RelativeLayout.ALIGN_TOP, R.id.imageView74)
+                layoutParamsImageView76.addRule(RelativeLayout.END_OF, R.id.imageView75)
+                layoutParamsImageView76.leftMargin = dp2
+                view.imageView76.layoutParams = layoutParamsImageView76
                 linearLayoutBox.addView(view)
                 GlideUtil.loadImageWithFading(list[0], view.imageView70)
                 GlideUtil.loadImageWithFading(list[1], view.imageView71)
@@ -161,6 +315,35 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 GlideUtil.loadImageWithFading(list[4], view.imageView74)
                 GlideUtil.loadImageWithFading(list[5], view.imageView75)
                 GlideUtil.loadImageWithFading(list[6], view.imageView76)
+
+                view.imageView70.setOnClickListener {
+                    if (products[0] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[0].rid)
+                }
+                view.imageView71.setOnClickListener {
+                    if (products[1] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[1].rid)
+                }
+                view.imageView72.setOnClickListener {
+                    if (products[2] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[2].rid)
+                }
+                view.imageView73.setOnClickListener {
+                    if (products[3] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[3].rid)
+                }
+                view.imageView74.setOnClickListener {
+                    if (products[4] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[4].rid)
+                }
+                view.imageView75.setOnClickListener {
+                    if (products[5] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[5].rid)
+                }
+                view.imageView76.setOnClickListener {
+                    if (products[6] == null) return@setOnClickListener
+                    PageUtil.jump2GoodsDetailActivity(products[6].rid)
+                }
             }
         }
     }
@@ -169,7 +352,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 相关橱窗
      */
     private fun initRelateShowWindow() {
-        presenter.getRelateShowWindow(shopWindowsBean.rid)
+        presenter.getRelateShowWindow(rid)
         val linearLayoutManager = LinearLayoutManager(applicationContext)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewShowWindow.setHasFixedSize(true)
@@ -181,30 +364,17 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     /**
      * 设置相关橱窗数据
      */
-    override fun setRelateShowWindowData(windows: List<DiscoverLifeBean.DataBean.ShopWindowsBean>) {
-
-        var demos = ArrayList<DiscoverLifeBean.DataBean.ShopWindowsBean>()
-
-        for (i in 0..3) {
-            val windowsBean = DiscoverLifeBean.DataBean.ShopWindowsBean()
-            demos.add(windowsBean)
+    override fun setRelateShowWindowData(windows: List<ShopWindowBean>) {
+        if (windows.isEmpty()) {
+            relativeLayoutRelate.visibility = View.GONE
+            recyclerViewShowWindow.visibility = View.GONE
+            lineRelate.visibility = View.GONE
+        } else {
+            relativeLayoutRelate.visibility = View.VISIBLE
+            recyclerViewShowWindow.visibility = View.VISIBLE
+            lineRelate.visibility = View.VISIBLE
         }
-
-        for (item in demos) {
-            item.title = "发现生活美学"
-            item.description = "生活美学好"
-            val list = ArrayList<DiscoverLifeBean.DataBean.ShopWindowsBean.ProductsBean>()
-            for (i in 0..3) {
-                val productsBean = DiscoverLifeBean.DataBean.ShopWindowsBean.ProductsBean()
-                productsBean.cover = "http://c.hiphotos.baidu.com/image/h%3D300/sign=87d6daed02f41bd5c553eef461d881a0/f9198618367adab4b025268587d4b31c8601e47b.jpg"
-                list.add(productsBean)
-            }
-            item.products = list
-            item.avatar = "http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg"
-        }
-
-        adapterRelateShowWindow.setNewData(demos)
-//        adapterDiscoverLife.setNewData(windows)
+        adapterRelateShowWindow.setNewData(windows)
     }
 
 
@@ -212,7 +382,8 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 初始化猜你喜欢
      */
     private fun initGuessLike() {
-        presenter.getGuessLike(shopWindowsBean.rid)
+        if (!UserProfileUtil.isLogin()) return
+        presenter.getGuessLike(rid)
         val linearLayoutManager = LinearLayoutManager(applicationContext)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewGuess.setHasFixedSize(true)
@@ -225,20 +396,44 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 设置猜你喜欢界面
      */
     override fun setGuessLikeData(products: List<ProductBean>) {
+        if (products.isEmpty()) {
+            relativeLayoutGuess.visibility = View.GONE
+            recyclerViewGuess.visibility = View.GONE
+            lineGuess.visibility = View.GONE
+        } else {
+            relativeLayoutGuess.visibility = View.VISIBLE
+            recyclerViewGuess.visibility = View.VISIBLE
+            lineGuess.visibility = View.VISIBLE
+        }
         adapterGuessLike.setNewData(products)
     }
 
 
     override fun installListener() {
 
+        adapter.setOnItemChildClickListener { _, view, position ->
+
+            val commentsBean = adapter.getItem(position)?:return@setOnItemChildClickListener
+
+            when (view.id) {
+                R.id.textViewReply -> {
+                    //弹出键盘，输出回复
+                }
+
+                R.id.textViewPraise -> {
+                    presenter.praiseComment(commentsBean.comment_id,commentsBean.is_praise,position,view,false)
+                }
+            }
+        }
 
         editText.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
             }
+
             override fun afterTextChanged(s: Editable) { //动态设置底部栏高度
                 val lineCount = editText.lineCount
-                var height = DimenUtil.getDimensionPixelSize(R.dimen.dp50) + editText.lineHeight * (lineCount - 1)
+                val height = DimenUtil.getDimensionPixelSize(R.dimen.dp50) + editText.lineHeight * (lineCount - 1)
                 val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height)
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                 relativeLayoutBar.layoutParams = layoutParams
@@ -250,27 +445,29 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         })
 
         buttonFocus.setOnClickListener { view ->
-            //TODO 记得修改为真实UID
-            if (shopWindowsBean.is_follow) {
-                presenter.unfocusUser("uid", view)
+            if (shopWindow == null) return@setOnClickListener
+            if (shopWindow!!.is_follow) {
+                presenter.unfocusUser(shopWindow!!.uid, view)
             } else {
-                presenter.focusUser("uid", view)
+                presenter.focusUser(shopWindow!!.uid, view)
             }
         }
 
 
         relativeLayoutLike.setOnClickListener { view ->
-            if (shopWindowsBean.is_like) {
-                presenter.unfavoriteShowWindow(shopWindowsBean.rid, view)
+            if (shopWindow == null) return@setOnClickListener
+            if (shopWindow!!.is_like) {
+                presenter.unfavoriteShowWindow(shopWindow!!.rid, view)
             } else {
-                presenter.favoriteShowWindow(shopWindowsBean.rid, view)
+                presenter.favoriteShowWindow(shopWindow!!.rid, view)
             }
         }
 
         //跳转评论列表
         relativeLayoutComment.setOnClickListener { view ->
             val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
-            intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, shopWindowsBean.rid)
+            intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
+            intent.putExtra(ShowWindowCommentListActivity::class.java.name,shopWindow?.comment_count)
             startActivity(intent)
         }
 
@@ -281,18 +478,17 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
 
         //猜你喜欢点击
-        adapterGuessLike.setOnItemClickListener { adapter, view, position ->
-            val productsBean = adapterGuessLike.getItem(position) as ProductBean
-            ToastUtil.showInfo("商品详情=" + position)
+        adapterGuessLike.setOnItemClickListener { _, _, position ->
+            val productsBean = adapterGuessLike.getItem(position) ?: return@setOnItemClickListener
+            PageUtil.jump2GoodsDetailActivity(productsBean.rid)
         }
 
 
         //设置橱窗点击
-        adapterRelateShowWindow.setOnItemClickListener { adapter, view, position ->
-            val windowsBean = adapterRelateShowWindow.getItem(position) as DiscoverLifeBean.DataBean.ShopWindowsBean
-            val intent = Intent(applicationContext, ShowWindowDetailActivity::class.java)
-//            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName,windowsBean.rid)
-            startActivity(intent)
+        adapterRelateShowWindow.setOnItemClickListener { _, _, position ->
+            val windowsBean = adapterRelateShowWindow.getItem(position)
+                    ?: return@setOnItemClickListener
+            PageUtil.jump2ShopWindowDetailActivity(windowsBean.rid)
         }
 
         // 发送评论
@@ -302,7 +498,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 if (TextUtils.isEmpty(content)) {
                     ToastUtil.showInfo(Util.getString(R.string.hint_input_comment))
                 } else {
-                    presenter.sendComment(shopWindowsBean.rid, "", content)
+                    presenter.sendComment(rid, "", content)
                 }
                 return@setOnKeyListener true
             }
@@ -313,10 +509,34 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     }
 
     /**
+     * 更新评论点赞状态
+     */
+    override fun setPraiseCommentState(b: Boolean, position: Int, isSubAdapter: Boolean) {
+
+        if (isSubAdapter) {
+            adapter.setPraiseCommentState(b, position)
+        } else {
+            val commentsBean = adapter.getItem(position) as CommentBean
+            if (b) {
+                commentsBean.is_praise = true
+                commentsBean.praise_count += 1
+            } else {
+                commentsBean.is_praise = false
+                if (commentsBean.praise_count > 0) {
+                    commentsBean.praise_count -= 1
+                }
+            }
+            adapter.notifyItemChanged(position)
+        }
+
+    }
+
+    /**
      * 重新设置评论数
      */
     override fun setCommentState() {
-        textViewComment.text = "" + (shopWindowsBean.comment_count + 1)
+        if (shopWindow == null) return
+        textViewComment.text = "${shopWindow!!.comment_count++}"
     }
 
     /**
@@ -324,8 +544,10 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      */
     override fun setUserFocusState(b: Boolean) {
         if (b) {
+            shopWindow?.is_follow = b
             buttonFocus.text = Util.getString(R.string.text_focused)
         } else {
+            shopWindow?.is_follow = b
             buttonFocus.text = Util.getString(R.string.text_focus)
         }
     }
@@ -334,12 +556,17 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 设置喜欢
      */
     override fun setFavorite(b: Boolean) {
+        if (shopWindow == null) return
         if (b) {
+            shopWindow!!.is_like = true
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
-            textViewLike.text = "" + (shopWindowsBean.like_count + 1)
+            shopWindow!!.like_count = shopWindow!!.like_count + 1
+            textViewLikeCount.text = "${shopWindow!!.like_count}"
         } else {
+            shopWindow!!.is_like = false
             imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
-            textViewLike.text = "" + (shopWindowsBean.like_count - 1)
+            shopWindow!!.like_count = shopWindow!!.like_count - 1
+            textViewLikeCount.text = "${shopWindow!!.like_count}"
         }
     }
 
@@ -357,5 +584,33 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     override fun showError(string: String) {
         ToastUtil.showError(string)
+    }
+
+    internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
+        private val color: Int = Util.getColor(R.color.color_eee)
+        override fun getDivider(itemPosition: Int): Y_Divider? {
+            val count = adapter.itemCount
+            val divider: Y_Divider?
+            divider = when (itemPosition) {
+                count -2 -> {
+                    Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+                count - 1 -> {
+                    Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+
+                else -> {
+                    Y_DividerBuilder()
+                            .setBottomSideLine(true, color, 1f, 20f, 0f)
+                            .create()
+                }
+            }
+
+            return divider
+        }
     }
 }

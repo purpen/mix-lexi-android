@@ -379,4 +379,5 @@
     <string name="text_go_use">去使用</string>
     <string name="text_go_shop">进店领券</string>
     <string name="text_voucher_amount">券后价</string>
+    <string name="text_recommend">推荐</string>
 </resources>

@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_complete_info.*
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.lexivip.lexi.MainActivity
-import com.lexivip.lexi.MessageClose
+import com.lexivip.lexi.eventBusMessge.MessageClose
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import android.view.animation.*

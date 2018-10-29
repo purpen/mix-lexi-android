@@ -3,6 +3,7 @@ package com.lexivip.lexi.discoverLifeAesthetics
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.lexivip.lexi.beans.ShopWindowBean
 
 class ShowWindowContract {
     interface View : BaseView<Presenter> {
@@ -12,17 +13,19 @@ class ShowWindowContract {
 
         fun goPage()
 
-        fun setNewData(shopWindows: MutableList<ShowWindowBean.DataBean.ShopWindowsBean>) {
+        fun setNewData(shopWindows: MutableList<ShopWindowBean>) {
 
         }
 
-        fun addData(shopWindows: MutableList<ShowWindowBean.DataBean.ShopWindowsBean>) {
+        fun addData(shopWindows: MutableList<ShopWindowBean>) {
 
         }
 
         fun loadMoreEnd() {
 
         }
+
+        fun loadMoreFail(){}
 
         fun loadMoreComplete() {
 
@@ -31,10 +34,16 @@ class ShowWindowContract {
         fun setFavorite(b: Boolean, position: Int) {
 
         }
+
+        fun setFocusState(isFollowed: Boolean, position: Int) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
         fun loadData(isRefresh:Boolean)
         fun loadMoreData()
+        fun favoriteShowWindow(rid: String,isFavorite:Boolean,position: Int, view1: android.view.View)
+        fun focusUser(uid: String, v: android.view.View, isFollowed: Boolean, position: Int)
     }
 }

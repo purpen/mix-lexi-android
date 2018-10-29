@@ -3,6 +3,7 @@ package com.lexivip.lexi.discoverLifeAesthetics
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.lexivip.lexi.beans.CommentBean
 
 class ShowWindowCommentContract {
     interface View : BaseView<Presenter> {
@@ -37,13 +38,15 @@ class ShowWindowCommentContract {
         }
 
         fun addSubCommentsData(position: Int,comments: MutableList<CommentBean>){}
+        fun loadMoreFail() {
+
+        }
     }
 
     interface Presenter : BasePresenter {
         fun loadData(rid:String,isRefresh: Boolean)
         fun loadMoreData(rid: String)
-        fun praiseComment(comment_id: String, position: Int, view1: android.view.View, isSubAdapter: Boolean)
-        fun cancelPraiseComment(comment_id: String, position: Int, view1: android.view.View, isSubAdapter: Boolean)
+        fun praiseComment(comment_id: String,isPraise:Boolean,position: Int, view1: android.view.View, isSubAdapter: Boolean)
         fun loadMoreSubComments(comment_id: String,position: Int,view1: android.view.View)
     }
 }

@@ -21,10 +21,11 @@ import com.qiniu.android.storage.UploadManager;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
-import com.squareup.leakcanary.LeakCanary;
 
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Arrays;
 
 public class AppApplication extends MultiDexApplication {
 
@@ -42,12 +43,12 @@ public class AppApplication extends MultiDexApplication {
         Thread.setDefaultUncaughtExceptionHandler(restartHandler);
         instance = this;
 //        initPush();
-        if (BuildConfig.LOG_DEBUG) {
-            if (LeakCanary.isInAnalyzerProcess(this)) {
-                return;
-            }
-            LeakCanary.install(this);
-        }
+//        if (BuildConfig.LOG_DEBUG) {
+//            if (LeakCanary.isInAnalyzerProcess(this)) {
+//                return;
+//            }
+//            LeakCanary.install(this);
+//        }
 
         BaseModuleContext.init(this);
         //使用时才自动生成MyEventBusIndex
@@ -99,14 +100,15 @@ public class AppApplication extends MultiDexApplication {
 
     private Thread.UncaughtExceptionHandler restartHandler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
+            LogUtil.e(Arrays.toString(ex.getStackTrace()));
             restartApp();
         }
     };
 
     public void restartApp() {
-        Intent intent = new Intent(getApplicationContext(), UserGuideActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+//        Intent intent = new Intent(getApplicationContext(), UserGuideActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
         AppManager.getAppManager().appExit();
     }
 }
