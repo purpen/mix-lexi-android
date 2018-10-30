@@ -76,6 +76,9 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         //隐藏控件
         bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
 
+        bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindowData.is_like)
+        bundle.putInt(EmotionMainFragment.LIKE_COUNTS,shopWindowData.like_count)
+
         emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment.bindToContentView(swipeRefreshLayout)
         val transaction = supportFragmentManager.beginTransaction()

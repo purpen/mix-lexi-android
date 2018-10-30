@@ -105,7 +105,7 @@ public class PageUtil {
      */
     public static void jump2CollectionDetailActivity(@Nullable String recommend_id) {
         Application context = AppApplication.getContext();
-        Intent intent = new Intent(AppApplication.getContext(), CollectionDetailActivity.class);
+        Intent intent = new Intent(context, CollectionDetailActivity.class);
         intent.putExtra(CollectionDetailActivity.class.getSimpleName(),recommend_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -117,7 +117,7 @@ public class PageUtil {
      */
     public static void jump2ShopWindowDetailActivity(@Nullable String rid) {
         Application context = AppApplication.getContext();
-        Intent intent = new Intent(AppApplication.getContext(), ShowWindowDetailActivity.class);
+        Intent intent = new Intent(context, ShowWindowDetailActivity.class);
         intent.putExtra(ShowWindowDetailActivity.class.getSimpleName(),rid);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -129,7 +129,7 @@ public class PageUtil {
      */
     public static void jump2ShopWindowCommentListActivity(@NotNull ShowWindowDetailBean.DataBean dataBean) {
         Application context = AppApplication.getContext();
-        Intent intent = new Intent(AppApplication.getContext(), ShowWindowCommentListActivity.class);
+        Intent intent = new Intent(context, ShowWindowCommentListActivity.class);
         intent.putExtra(ShowWindowCommentListActivity.class.getSimpleName(),dataBean);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);

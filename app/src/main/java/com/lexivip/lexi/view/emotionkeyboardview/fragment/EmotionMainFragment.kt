@@ -1,5 +1,6 @@
 package com.lexivip.lexi.view.emotionkeyboardview.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -10,8 +11,12 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import com.basemodule.tools.LogUtil
+import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
+import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
 import com.lexivip.lexi.view.emotionkeyboardview.EmotionKeyboard
@@ -44,7 +49,7 @@ class EmotionMainFragment : BaseFragment() {
     private lateinit var relativeLayoutLike: RelativeLayout
     private lateinit var emotionLayout: LinearLayout
 
-    private var onSendCommentListener:IOnSendCommentListener?=null
+    private var onSendCommentListener: IOnSendCommentListener? = null
     private var showEmojiKeyBoard: Boolean = false
 
     //需要绑定的内容view
@@ -63,7 +68,7 @@ class EmotionMainFragment : BaseFragment() {
     internal var fragments: MutableList<Fragment> = ArrayList()
 
 
-    fun setOnSendCommentListener(listener: IOnSendCommentListener){
+    fun setOnSendCommentListener(listener: IOnSendCommentListener) {
         this.onSendCommentListener = listener
     }
 
@@ -110,27 +115,50 @@ class EmotionMainFragment : BaseFragment() {
         this.contentView = contentView
     }
 
+    private var imageViewLike: ImageView? = null
+    private var textViewLikeCount: TextView? = null
+
+    private lateinit var inputBar: LinearLayout
+
     /**
      * 初始化view控件
      */
     protected fun initView(rootView: View) {
         viewPager = rootView.findViewById(R.id.vp_emotionview_layout)
-        recyclerview_horizontal = rootView.findViewById<RecyclerView>(R.id.recyclerview_horizontal)
+        recyclerview_horizontal = rootView.findViewById(R.id.recyclerview_horizontal)
 
-        emotionLayout = rootView.findViewById<LinearLayout>(R.id.ll_emotion_layout)
+        emotionLayout = rootView.findViewById(R.id.ll_emotion_layout)
+        inputBar = rootView.findViewById(R.id.include_emotion_view)
 
-
-        editTextComment = rootView.findViewById<EditText>(R.id.editTextComment)
-        buttonSend = rootView.findViewById<Button>(R.id.buttonSend)
-        imageViewChangeEmotion = rootView.findViewById<ImageView>(R.id.imageViewChangeEmotion)
-        relativeLayoutLike = rootView.findViewById<RelativeLayout>(R.id.relativeLayoutLike)
-
+        editTextComment = rootView.findViewById(R.id.editTextComment)
+        buttonSend = rootView.findViewById(R.id.buttonSend)
+        imageViewChangeEmotion = rootView.findViewById(R.id.imageViewChangeEmotion)
+        relativeLayoutLike = rootView.findViewById(R.id.relativeLayoutLike)
+        imageViewLike = rootView.findViewById(R.id.imageViewLike)
+        textViewLikeCount = rootView.findViewById(R.id.textViewLikeCount)
+        setFavoriteData()
     }
 
     /**
      * 初始化监听器
      */
     protected fun initListener() {
+
+        val intArray = IntArray(2)
+
+        editTextComment.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            editTextComment.getLocationOnScreen(intArray)
+            if (intArray[1] > ScreenUtil.getScreenHeight() * 2 / 3) { //键盘被关闭
+                if (editTextComment.text.isEmpty()) {
+                    relativeLayoutLike.visibility = View.VISIBLE
+                    buttonSend.visibility = View.GONE
+                }
+            } else { //键盘打开
+                relativeLayoutLike.visibility = View.GONE
+                buttonSend.visibility = View.VISIBLE
+            }
+//            LogUtil.e("editTextComment y===="+intArray[1]+"ScreenUtil.getScreenHeight()*2/3==="+ScreenUtil.getScreenHeight()*2/3)
+        }
 
         editTextComment.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -157,9 +185,9 @@ class EmotionMainFragment : BaseFragment() {
         })
 
         //发布评论
-        buttonSend.setOnClickListener { view->
-            if (onSendCommentListener==null) return@setOnClickListener
-            onSendCommentListener!!.onSend(buttonSend,editTextComment)
+        buttonSend.setOnClickListener { view ->
+            if (onSendCommentListener == null) return@setOnClickListener
+            onSendCommentListener!!.onSend(buttonSend, editTextComment)
         }
     }
 
@@ -250,6 +278,11 @@ class EmotionMainFragment : BaseFragment() {
 
         //当前被选中底部tab
         private val CURRENT_POSITION_FLAG = "CURRENT_POSITION_FLAG"
+
+        //喜欢数量
+        const val LIKE_COUNTS = "LIKE_COUNTS"
+        //是否喜欢
+        const val IS_LIKE = "IS_LIKE"
     }
 
 
@@ -260,8 +293,8 @@ class EmotionMainFragment : BaseFragment() {
      */
     fun isInterceptBackPress(): Boolean {
         if (mEmotionKeyboard.interceptBackPress()) {
-//            relativeLayoutLike.visibility = View.VISIBLE
-//            buttonSend.visibility = View.GONE
+            relativeLayoutLike.visibility = View.VISIBLE
+            buttonSend.visibility = View.GONE
             return true
         } else {
             return false
@@ -272,6 +305,28 @@ class EmotionMainFragment : BaseFragment() {
         editTextComment.setHint("回复$user_name:")
     }
 
+    /**
+     * 设置喜欢数据
+     */
+    private fun setFavoriteData() {
+        if (arguments == null) return
+        val isLike = arguments!!.getBoolean(IS_LIKE, false)
+        if (isLike) {
+            imageViewLike!!.setImageResource(R.mipmap.icon_click_favorite_selected)
+        } else {
+            imageViewLike!!.setImageResource(R.mipmap.icon_click_favorite_normal)
+        }
+        val likeCount = arguments!!.getInt(LIKE_COUNTS, 0)
+        if (likeCount == 0) {
+            textViewLikeCount!!.text = ""
+        } else {
+            textViewLikeCount!!.text = "$likeCount"
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }
 
 
