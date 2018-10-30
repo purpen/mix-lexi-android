@@ -1,6 +1,7 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.support.annotation.NonNull
+import android.widget.Button
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.CommentBean
@@ -41,12 +42,22 @@ class ShowWindowCommentContract {
         fun loadMoreFail() {
 
         }
+
+        fun setCommentCount(count: Int) {
+
+        }
+
+        fun noticeCommentSucess(data: CommentSuccessBean.DataBean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
         fun loadData(rid:String,isRefresh: Boolean)
         fun loadMoreData(rid: String)
         fun praiseComment(comment_id: String,isPraise:Boolean,position: Int, view1: android.view.View, isSubAdapter: Boolean)
-        fun loadMoreSubComments(comment_id: String,position: Int,view1: android.view.View)
+        fun praiseComment(view1: android.view.View, commentBean:CommentBean,adapter:ShowWindowSubCommentListAdapter)
+        fun loadMoreSubComments(item:CommentBean, view1: android.view.View, adapter:ShowWindowSubCommentListAdapter)
+        fun submitComment(rid: String, pid: String, content: String, sendButton: Button)
     }
 }

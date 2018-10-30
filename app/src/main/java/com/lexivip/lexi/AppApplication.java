@@ -100,7 +100,7 @@ public class AppApplication extends MultiDexApplication {
 
     private Thread.UncaughtExceptionHandler restartHandler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
-            LogUtil.e(Arrays.toString(ex.getStackTrace()));
+            ex.printStackTrace();
             restartApp();
         }
     };

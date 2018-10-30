@@ -32,7 +32,9 @@
         android:layout_marginStart="-30dp"
         android:layout_marginTop="@dimen/dp15"
         android:layout_gravity="bottom"
-        android:src="@mipmap/icon_open_emoji" />
+        android:src="@mipmap/icon_open_emoji"
+        android:visibility="gone"
+        />
 
     <RelativeLayout
         android:id="@+id/relativeLayoutLike"
@@ -42,6 +44,7 @@
         android:paddingEnd="0dp"
         android:paddingStart="@dimen/dp15"
         android:paddingBottom="@dimen/dp15"
+        android:visibility="gone"
         >
 
         <ImageView
@@ -75,7 +78,6 @@
         android:text="发布"
         android:textColor="@color/color_999"
         android:layout_marginBottom="@dimen/dp4"
-        android:visibility="gone"
          />
 </LinearLayout>
 

@@ -189,6 +189,24 @@ open class ShowWindowCommentModel{
     }
 
 
+    fun submitComment(rid: String, pid: String, content: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getSubmitCommentsParams(rid,pid,content)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.SHOW_WINDOW_COMMENTS_LIST, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
 }
 
 

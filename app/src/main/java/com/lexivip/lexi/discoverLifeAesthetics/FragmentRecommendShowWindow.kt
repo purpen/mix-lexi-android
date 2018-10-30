@@ -67,7 +67,12 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
                     }
                 }
 
-                R.id.textViewComment -> ToastUtil.showInfo("评论")
+                R.id.textViewComment -> {
+                    val intent = Intent(activity, ShowWindowCommentListActivity::class.java)
+                    intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, showWindowBean.rid)
+                    intent.putExtra(ShowWindowCommentListActivity::class.java.name,showWindowBean.comment_count)
+                    startActivity(intent)
+                }
 
                 R.id.textViewShare -> {
                     val dialog = DistributeShareDialog(activity)

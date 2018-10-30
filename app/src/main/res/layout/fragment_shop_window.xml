@@ -107,7 +107,6 @@
         android:layout_marginBottom="@dimen/dp40"
         android:background="@drawable/bg_radius_round_white"
         android:gravity="center"
-        android:visibility="gone"
         >
 
         <TextView

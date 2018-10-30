@@ -12,8 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.basemodule.tools.Util
-
 import com.lexivip.lexi.R
+import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
 import com.lexivip.lexi.view.emotionkeyboardview.EmotionKeyboard
 import com.lexivip.lexi.view.emotionkeyboardview.NoHorizontalScrollerViewPager
 import com.lexivip.lexi.view.emotionkeyboardview.adapter.HorizontalRecyclerviewAdapter
@@ -44,7 +44,7 @@ class EmotionMainFragment : BaseFragment() {
     private lateinit var relativeLayoutLike: RelativeLayout
     private lateinit var emotionLayout: LinearLayout
 
-
+    private var onSendCommentListener:IOnSendCommentListener?=null
     private var showEmojiKeyBoard: Boolean = false
 
     //需要绑定的内容view
@@ -62,6 +62,10 @@ class EmotionMainFragment : BaseFragment() {
 
     internal var fragments: MutableList<Fragment> = ArrayList()
 
+
+    fun setOnSendCommentListener(listener: IOnSendCommentListener){
+        this.onSendCommentListener = listener
+    }
 
     /**
      * 创建与Fragment对象关联的View视图时调用
@@ -92,7 +96,7 @@ class EmotionMainFragment : BaseFragment() {
         } else {
             // false,则表示绑定contentView,此时外部提供的contentView必定也是EditText
             globalOnItemClickManager!!.attachToEditText(contentView as EditText?)
-            mEmotionKeyboard!!.bindToEditText(contentView as EditText?)
+            mEmotionKeyboard.bindToEditText(contentView as EditText?)
         }
         return rootView
     }
@@ -110,7 +114,7 @@ class EmotionMainFragment : BaseFragment() {
      * 初始化view控件
      */
     protected fun initView(rootView: View) {
-        viewPager = rootView.findViewById<NoHorizontalScrollerViewPager>(R.id.vp_emotionview_layout)
+        viewPager = rootView.findViewById(R.id.vp_emotionview_layout)
         recyclerview_horizontal = rootView.findViewById<RecyclerView>(R.id.recyclerview_horizontal)
 
         emotionLayout = rootView.findViewById<LinearLayout>(R.id.ll_emotion_layout)
@@ -135,13 +139,13 @@ class EmotionMainFragment : BaseFragment() {
             override fun afterTextChanged(s: Editable) { //动态设置底部栏高度
 
                 if (!TextUtils.isEmpty(s)) {
-                    relativeLayoutLike.visibility = View.GONE
-                    buttonSend.visibility = View.VISIBLE
+//                    relativeLayoutLike.visibility = View.GONE
+//                    buttonSend.visibility = View.VISIBLE
                     buttonSend.isEnabled = true
                     buttonSend.setTextColor(Util.getColor(R.color.color_6ed7af))
                 } else {
-                    relativeLayoutLike.visibility = View.VISIBLE
-                    buttonSend.visibility = View.GONE
+//                    relativeLayoutLike.visibility = View.VISIBLE
+//                    buttonSend.visibility = View.GONE
                     buttonSend.isEnabled = false
                     buttonSend.setTextColor(Util.getColor(R.color.color_999))
                 }
@@ -151,6 +155,12 @@ class EmotionMainFragment : BaseFragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
         })
+
+        //发布评论
+        buttonSend.setOnClickListener { view->
+            if (onSendCommentListener==null) return@setOnClickListener
+            onSendCommentListener!!.onSend(buttonSend,editTextComment)
+        }
     }
 
     /**
@@ -250,12 +260,16 @@ class EmotionMainFragment : BaseFragment() {
      */
     fun isInterceptBackPress(): Boolean {
         if (mEmotionKeyboard.interceptBackPress()) {
-            relativeLayoutLike.visibility = View.VISIBLE
-            buttonSend.visibility = View.GONE
+//            relativeLayoutLike.visibility = View.VISIBLE
+//            buttonSend.visibility = View.GONE
             return true
         } else {
             return false
         }
+    }
+
+    fun setEditTextHint(user_name: String) {
+        editTextComment.setHint("回复$user_name:")
     }
 
 }

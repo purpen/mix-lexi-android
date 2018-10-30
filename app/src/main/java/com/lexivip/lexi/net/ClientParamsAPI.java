@@ -1403,4 +1403,20 @@ public class ClientParamsAPI {
         params.put("sort_type", sort_type);
         return params;
     }
+
+    /**
+     * 提交评论
+     * @param rid
+     * @param pid
+     * @param content
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,Object> getSubmitCommentsParams(@NotNull String rid, @NotNull String pid, @NotNull String content) {
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("rid", rid);
+        params.put("pid", pid);
+        params.put("content", content);
+        return params;
+    }
 }

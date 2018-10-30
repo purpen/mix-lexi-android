@@ -19,7 +19,7 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 
 class ShopWindowDetailCommentListAdapter(res: Int, presenter: ShowWindowDetailPresenter) : BaseQuickAdapter<CommentBean, BaseViewHolder>(res) {
     private val present: ShowWindowDetailPresenter = presenter
-    private val adapter: ShowWindowSubCommentListAdapter by lazy { ShowWindowSubCommentListAdapter(R.layout.adapter_subcomment_list) }
+    private val adapter: ShowWindowDetailSubCommentListAdapter by lazy { ShowWindowDetailSubCommentListAdapter(R.layout.adapter_subcomment_list, present) }
     private var footerView: View? = null
     private val size30 by lazy { DimenUtil.dp2px(30.0) }
     private val dp13 by lazy { DimenUtil.dp2px(13.0) }
@@ -32,7 +32,12 @@ class ShopWindowDetailCommentListAdapter(res: Int, presenter: ShowWindowDetailPr
         if (item.praise_count > 0) {
             textViewPraise.setTextColor(Util.getColor(R.color.color_ff6666))
             textViewPraise.text = "${item.praise_count}"
-            textViewPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_active, dp13), null, null, null)
+            if (item.is_praise){
+                textViewPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_active, dp13), null, null, null)
+            }else{
+                textViewPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_normal, dp13), null, null, null)
+            }
+
         } else {
             textViewPraise.setTextColor(Util.getColor(R.color.color_999))
             textViewPraise.text = Util.getString(R.string.text_praise)
@@ -64,7 +69,7 @@ class ShopWindowDetailCommentListAdapter(res: Int, presenter: ShowWindowDetailPr
         adapter.setOnItemChildClickListener { _, view, position ->
             val subCommentsBean = adapter.getItem(position) ?: return@setOnItemChildClickListener
             when (view.id) {
-                R.id.textViewPraise -> {
+                R.id.textViewSubPraise -> {
                     present.praiseComment(subCommentsBean.comment_id, subCommentsBean.is_praise, position, view, true)
                 }
             }
