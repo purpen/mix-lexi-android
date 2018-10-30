@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -35,9 +34,8 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
     private val adapter: ShowWindowCommentListAdapter by lazy { ShowWindowCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
-    private lateinit var rid: String
-    private var count: Int = 0
-    private lateinit var emotionMainFragment: EmotionMainFragment;
+    private lateinit var shopWindowData: ShowWindowDetailBean.DataBean
+    private lateinit var emotionMainFragment: EmotionMainFragment
 
     //父级评论id
     private var pid: String = "0"
@@ -51,18 +49,14 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     }
 
     override fun getIntentData() {
-        if (intent.hasExtra(ShowWindowCommentListActivity::class.java.simpleName)) {
-            rid = intent.getStringExtra(ShowWindowCommentListActivity::class.java.simpleName)
+        if (intent.hasExtra(TAG)) {
+            shopWindowData = intent.getParcelableExtra(TAG)
         }
-        if (intent.hasExtra(ShowWindowCommentListActivity::class.java.name)) {
-            count = intent.getIntExtra(ShowWindowCommentListActivity::class.java.name, 0)
-        }
-
     }
 
     override fun initView() {
         swipeRefreshLayout.isEnabled = false
-        customHeadView.setHeadCenterTxtShow(true, "${count}条评论")
+        customHeadView.setHeadCenterTxtShow(true, "${shopWindowData.comment_count}条评论")
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = linearLayoutManager
@@ -112,7 +106,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
                         ToastUtil.showInfo("请先输入评论")
                         return
                     }
-                    presenter.submitComment(rid, pid, content, sendButton)
+                    presenter.submitComment(shopWindowData.rid, pid, content, sendButton)
                     editText.text.clear()
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
@@ -123,11 +117,11 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            presenter.loadData(rid, true)
+            presenter.loadData(shopWindowData.rid, true)
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData(rid)
+            presenter.loadMoreData(shopWindowData.rid)
         }, recyclerView)
 
 
@@ -213,13 +207,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
     }
 
-    /**
-     * 设置评论条数
-     */
-    override fun setCommentCount(count: Int) {
-        customHeadView.setHeadCenterTxtShow(true, "${count}条评论")
-    }
-
     override fun setNewData(comments: MutableList<CommentBean>) {
         adapter.setNewData(comments)
     }
@@ -229,7 +216,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     }
 
     override fun requestNet() {
-        presenter.loadData(rid, false)
+        presenter.loadData(shopWindowData.rid, false)
     }
 
     override fun loadMoreComplete() {

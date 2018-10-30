@@ -8,12 +8,15 @@ import com.basemodule.tools.Util;
 import com.lexivip.lexi.beans.LifeWillBean;
 import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.brandHouse.BrandHouseActivity;
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListActivity;
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailActivity;
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailBean;
 import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.index.detail.GoodsDetailActivity;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
 import com.lexivip.lexi.index.explore.collection.CollectionDetailActivity;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -116,6 +119,18 @@ public class PageUtil {
         Application context = AppApplication.getContext();
         Intent intent = new Intent(AppApplication.getContext(), ShowWindowDetailActivity.class);
         intent.putExtra(ShowWindowDetailActivity.class.getSimpleName(),rid);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转橱窗评论列表
+     * @param dataBean
+     */
+    public static void jump2ShopWindowCommentListActivity(@NotNull ShowWindowDetailBean.DataBean dataBean) {
+        Application context = AppApplication.getContext();
+        Intent intent = new Intent(AppApplication.getContext(), ShowWindowCommentListActivity.class);
+        intent.putExtra(ShowWindowCommentListActivity.class.getSimpleName(),dataBean);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

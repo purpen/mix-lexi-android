@@ -91,10 +91,8 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             view.textViewCommentCount.text = "查看全部" + data.comment_count + "条评论"
             adapter.addFooterView(view)
             view.setOnClickListener {
-                val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
-                intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
-                intent.putExtra(ShowWindowCommentListActivity::class.java.name, shopWindow?.comment_count)
-                startActivity(intent)
+                if (shopWindow == null) return@setOnClickListener
+                PageUtil.jump2ShopWindowCommentListActivity(shopWindow!!)
             }
         } else {
             line15Comment.visibility = View.GONE
@@ -463,10 +461,8 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         //跳转评论列表
         relativeLayoutComment.setOnClickListener { view ->
-            val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
-            intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
-            intent.putExtra(ShowWindowCommentListActivity::class.java.name, shopWindow?.comment_count)
-            startActivity(intent)
+            if (shopWindow == null) return@setOnClickListener
+            PageUtil.jump2ShopWindowCommentListActivity(shopWindow!!)
         }
 
         textViewShare.setOnClickListener { view ->

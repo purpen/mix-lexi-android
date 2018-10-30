@@ -34,7 +34,6 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                 view.dismissLoadingView()
                 val showWindowCommentBean = JsonUtil.fromJson(json, ShowWindowCommentListBean::class.java)
                 if (showWindowCommentBean.success) {
-                    view.setCommentCount(showWindowCommentBean.data.count)
                     view.setNewData(showWindowCommentBean.data.comments)
                     ++page
                 } else {

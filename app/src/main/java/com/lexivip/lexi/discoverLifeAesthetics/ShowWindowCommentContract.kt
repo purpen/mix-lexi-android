@@ -42,10 +42,6 @@ class ShowWindowCommentContract {
 
         }
 
-        fun setCommentCount(count: Int) {
-
-        }
-
         fun noticeCommentSucess(data: CommentSuccessBean.DataBean) {
 
         }

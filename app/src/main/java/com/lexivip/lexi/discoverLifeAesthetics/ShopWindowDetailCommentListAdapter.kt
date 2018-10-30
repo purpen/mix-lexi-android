@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.CustomLinearLayoutManager
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
 import com.yanyusong.y_divideritemdecoration.Y_Divider
@@ -86,10 +87,10 @@ class ShopWindowDetailCommentListAdapter(res: Int, presenter: ShowWindowDetailPr
                 if (adapter!!.footerLayoutCount == 0) adapter!!.addFooterView(footerView)
 
                 textViewReplyNum.setOnClickListener { //跳转评论列表
-                    val intent = Intent(mContext, ShowWindowCommentListActivity::class.java)
-                    intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, present.rid)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    mContext.startActivity(intent)
+                    val dataBean = ShowWindowDetailBean.DataBean()
+                    dataBean.rid = present.rid
+                    dataBean.comment_count = data.size
+                    PageUtil.jump2ShopWindowCommentListActivity(dataBean)
                 }
             } else {
                 footerView = null
