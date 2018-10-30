@@ -157,7 +157,6 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                     if (subCommentsBean.data != null && subCommentsBean.data.comments != null) sub_comments.addAll(subCommentsBean.data.comments)
                     item.subCommentPage++
                     adapter.notifyDataSetChanged()
-//                    view.addSubCommentsData(position, subCommentsBean.data.comments)
                 } else {
                     view.showError(subCommentsBean.status.message)
                 }

@@ -110,20 +110,6 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
 //        notifyDataSetChanged()
     }
 
-    /**
-     * 添加子评论
-     */
-    fun addSubCommentsData(position: Int, comments: List<CommentBean>) {
-
-        if (comments.isEmpty()) adapter?.removeFooterView(footerView)
-
-        val subComments = data[position].sub_comments
-        if (subComments.size <= 2) { //第一次加载子评论,清空原来数据，重头开始第一页
-            subComments.clear()
-        }
-
-        adapter?.addData(comments)
-    }
 
     internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
         private val color: Int = Util.getColor(android.R.color.transparent)

@@ -218,10 +218,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
     }
 
-    override fun addSubCommentsData(position: Int, comments: MutableList<CommentBean>) {
-        adapter.addSubCommentsData(position, comments)
-    }
-
     /**
      * 设置评论条数
      */

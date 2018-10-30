@@ -38,7 +38,6 @@ class ShowWindowCommentContract {
 
         }
 
-        fun addSubCommentsData(position: Int,comments: MutableList<CommentBean>){}
         fun loadMoreFail() {
 
         }
