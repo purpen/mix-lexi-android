@@ -20,7 +20,7 @@ public class CommentBean implements Parcelable {
      * user_avatar : https://s3.lexivip.com/wx_avatar/oDlWK5VU-UKnUrnL1nC97Lv7np4Q
      * user_name : 乐喜-让有趣变得流行
      */
-
+    public int subCommentPage=1;
     public String comment_id;
     public String content;
     public long created_at;
@@ -32,6 +32,9 @@ public class CommentBean implements Parcelable {
     public String user_name;
     public List<CommentBean> sub_comments;
 
+    public CommentBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -39,6 +42,7 @@ public class CommentBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.subCommentPage);
         dest.writeString(this.comment_id);
         dest.writeString(this.content);
         dest.writeLong(this.created_at);
@@ -48,13 +52,11 @@ public class CommentBean implements Parcelable {
         dest.writeInt(this.sub_comment_count);
         dest.writeString(this.user_avatar);
         dest.writeString(this.user_name);
-        dest.writeList(this.sub_comments);
-    }
-
-    public CommentBean() {
+        dest.writeTypedList(this.sub_comments);
     }
 
     protected CommentBean(Parcel in) {
+        this.subCommentPage = in.readInt();
         this.comment_id = in.readString();
         this.content = in.readString();
         this.created_at = in.readLong();
@@ -64,11 +66,10 @@ public class CommentBean implements Parcelable {
         this.sub_comment_count = in.readInt();
         this.user_avatar = in.readString();
         this.user_name = in.readString();
-        this.sub_comments = new ArrayList<CommentBean>();
-        in.readList(this.sub_comments, CommentBean.class.getClassLoader());
+        this.sub_comments = in.createTypedArrayList(CommentBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<CommentBean> CREATOR = new Parcelable.Creator<CommentBean>() {
+    public static final Creator<CommentBean> CREATOR = new Creator<CommentBean>() {
         @Override
         public CommentBean createFromParcel(Parcel source) {
             return new CommentBean(source);

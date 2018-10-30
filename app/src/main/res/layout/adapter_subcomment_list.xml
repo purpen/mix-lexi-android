@@ -37,7 +37,7 @@
         android:layout_marginTop="11dp"
         android:includeFontPadding="false"
         android:lineSpacingMultiplier="1.2"
-        android:text="哈教科书代姐啊代姐哈空间大代姐大声疾活动空 间点,环撒打算的"
+        android:text=""
         android:textColor="@color/color_333"
         android:textSize="@dimen/sp12" />
 

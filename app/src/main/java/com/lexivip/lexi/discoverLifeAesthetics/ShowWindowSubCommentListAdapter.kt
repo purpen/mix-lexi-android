@@ -20,9 +20,9 @@ class ShowWindowSubCommentListAdapter(res: Int, present: ShowWindowCommentPresen
         val textViewSubPraise = helper.getView<TextView>(R.id.textViewSubPraise)
         helper.setText(R.id.textViewTime,DateUtil.getDateByTimestamp(item.created_at))
 
-        if (item.sub_comment_count > 0) {
+        if (item.praise_count > 0) {
 
-            textViewSubPraise.text = "${item.sub_comment_count}"
+            textViewSubPraise.text = "${item.praise_count}"
             if (item.is_praise){
                 textViewSubPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_active, dp13), null, null, null)
                 textViewSubPraise.setTextColor(Util.getColor(R.color.color_ff6666))

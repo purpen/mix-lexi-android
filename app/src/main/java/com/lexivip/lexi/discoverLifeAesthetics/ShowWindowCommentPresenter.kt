@@ -19,7 +19,6 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
 
     private var page: Int = 1
 
-    private var subCommentPage = 1
     /**
      * 加载数据
      */
@@ -121,10 +120,10 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                 if (favoriteBean.success) {
                     if (commentBean.is_praise) {
                         commentBean.is_praise = false
-                        commentBean.sub_comment_count -= 1
+                        commentBean.praise_count -= 1
                     } else {
                         commentBean.is_praise = true
-                        commentBean.sub_comment_count += 1
+                        commentBean.praise_count += 1
                     }
                     adapter.notifyDataSetChanged()
                 } else {
@@ -142,8 +141,8 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
     /**
      * 根据父评论加载子评论
      */
-    override fun loadMoreSubComments(item: CommentBean, view1: View, adapter: ShowWindowSubCommentListAdapter) {
-        dataSource.loadMoreSubComments(subCommentPage, item.comment_id, object : IDataSource.HttpRequestCallBack {
+    override fun loadMoreSubComments(item: CommentBean, view1: View, adapter: ShowWindowCommentListAdapter) {
+        dataSource.loadMoreSubComments(item.subCommentPage, item.comment_id, object : IDataSource.HttpRequestCallBack {
 
             override fun onStart() {
                 view1.isEnabled = false
@@ -153,10 +152,12 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                 view1.isEnabled = true
                 val subCommentsBean = JsonUtil.fromJson(json, SubCommentsBean::class.java)
                 if (subCommentsBean.success) {
-                    if (subCommentsBean.data != null && subCommentsBean.data.comments != null) item.sub_comments.addAll(subCommentsBean.data.comments)
+                    val sub_comments = item.sub_comments
+                    if (item.subCommentPage == 1) sub_comments.clear()
+                    if (subCommentsBean.data != null && subCommentsBean.data.comments != null) sub_comments.addAll(subCommentsBean.data.comments)
+                    item.subCommentPage++
                     adapter.notifyDataSetChanged()
 //                    view.addSubCommentsData(position, subCommentsBean.data.comments)
-                    subCommentPage++
                 } else {
                     view.showError(subCommentsBean.status.message)
                 }
@@ -184,7 +185,7 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                 val commentSuccessBean = JsonUtil.fromJson(json, CommentSuccessBean::class.java)
                 if (commentSuccessBean.success) {
                     view.noticeCommentSucess(commentSuccessBean.data)
-                    ToastUtil.showSuccess("评论已发送")
+                    ToastUtil.showSuccess("发送评论成功")
                 } else {
                     view.showError(commentSuccessBean.status.message)
                 }

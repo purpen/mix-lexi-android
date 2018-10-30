@@ -57,7 +57,7 @@ class ShowWindowCommentContract {
         fun loadMoreData(rid: String)
         fun praiseComment(comment_id: String,isPraise:Boolean,position: Int, view1: android.view.View, isSubAdapter: Boolean)
         fun praiseComment(view1: android.view.View, commentBean:CommentBean,adapter:ShowWindowSubCommentListAdapter)
-        fun loadMoreSubComments(item:CommentBean, view1: android.view.View, adapter:ShowWindowSubCommentListAdapter)
+        fun loadMoreSubComments(item:CommentBean, view1: android.view.View, adapter:ShowWindowCommentListAdapter)
         fun submitComment(rid: String, pid: String, content: String, sendButton: Button)
     }
 }

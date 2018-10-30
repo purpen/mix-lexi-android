@@ -11,6 +11,7 @@ import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
 import com.yanyusong.y_divideritemdecoration.Y_Divider
@@ -57,7 +58,9 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
         } else {
             recyclerView.visibility = View.VISIBLE
             adapter = ShowWindowSubCommentListAdapter(R.layout.adapter_subcomment_list, present)
-            val linearLayoutManager = LinearLayoutManager(AppApplication.getContext(), LinearLayoutManager.VERTICAL, false)
+            val linearLayoutManager = CustomLinearLayoutManager(AppApplication.getContext())
+            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+            linearLayoutManager.setScrollEnabled(false)
             recyclerView.layoutManager = linearLayoutManager
             recyclerView.adapter = adapter
             adapter!!.setNewData(item.sub_comments)
@@ -79,7 +82,7 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
 
                 footerView?.setOnClickListener { view ->
                     //当前评论id就是子评论pid
-                    present.loadMoreSubComments(item, view, adapter!!)
+                    present.loadMoreSubComments(item, view, this)
                 }
             } else {
                 footerView = null
