@@ -112,7 +112,7 @@ public class DateUtil {
         Long spaceSecond = (currentMillisecond - millisecond) / 1000;
 
         //5分钟之内
-        if (spaceSecond >= 0 && spaceSecond <= 60 * 5) {
+        if (spaceSecond <= 60 * 5) {
             return "刚刚";
         }
         //一小时之内
