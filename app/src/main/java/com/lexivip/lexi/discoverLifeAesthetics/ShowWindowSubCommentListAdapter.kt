@@ -18,7 +18,7 @@ class ShowWindowSubCommentListAdapter(res: Int, present: ShowWindowCommentPresen
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp20))
         val textViewSubPraise = helper.getView<TextView>(R.id.textViewSubPraise)
-        helper.setText(R.id.textViewTime,DateUtil.getDateByTimestamp(item.created_at))
+        helper.setText(R.id.textViewTime, DateUtil.getSpaceTime(item.created_at*1000))
 
         if (item.praise_count > 0) {
 

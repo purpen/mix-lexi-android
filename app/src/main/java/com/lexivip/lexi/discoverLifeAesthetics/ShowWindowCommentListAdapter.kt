@@ -28,7 +28,7 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, size30)
         val textViewPraise = helper.getView<TextView>(R.id.textViewPraise)
-        helper.setText(R.id.textViewTime, DateUtil.getDateByTimestamp(item.created_at))
+        helper.setText(R.id.textViewTime, DateUtil.getSpaceTime(item.created_at*1000L))
         if (item.praise_count > 0) {
             if (item.is_praise) { //我已点赞
                 textViewPraise.setTextColor(Util.getColor(R.color.color_ff6666))
