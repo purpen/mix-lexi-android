@@ -69,18 +69,20 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
             if (item.sub_comment_count > 0) {
                 footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment, null)
                 val textView = footerView!!.findViewById<TextView>(R.id.textView)
+
                 val count = adapter!!.data.size
 
                 if (item.sub_comment_count == count) {
                     footerView!!.visibility = View.GONE
                 } else {
                     footerView!!.visibility = View.VISIBLE
+                    textView.visibility = View.VISIBLE
                     textView.text = "查看${item.sub_comment_count - count}条回复"
                 }
 
                 if (adapter!!.footerLayoutCount == 0) adapter!!.addFooterView(footerView)
 
-                footerView?.setOnClickListener { view ->
+                textView.setOnClickListener { view ->
                     //当前评论id就是子评论pid
                     present.loadMoreSubComments(item, view, this)
                 }
@@ -96,7 +98,7 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
     /**
      * 设置子评论点赞状态
      */
-    fun setPraiseCommentState(doPraise: Boolean, position: Int) {
+//    fun setPraiseCommentState(doPraise: Boolean, position: Int) {
 //        if (clickedSubCommentsBean == null) return
 //        if (doPraise) {
 //            clickedSubCommentsBean!!.is_praise = true
@@ -108,7 +110,7 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
 //            }
 //        }
 //        notifyDataSetChanged()
-    }
+//    }
 
 
     internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {

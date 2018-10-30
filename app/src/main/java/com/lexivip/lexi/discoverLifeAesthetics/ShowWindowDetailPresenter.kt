@@ -5,6 +5,7 @@ import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
+import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendBean
 import com.lexivip.lexi.index.selection.DiscoverLifeBean
 import com.lexivip.lexi.net.NetStatusBean
@@ -14,12 +15,13 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
     private var view: ShowWindowDetailContract.View = checkNotNull(view)
 
     private val dataSource: ShowWindowDetailModel by lazy { ShowWindowDetailModel() }
-
+    var rid:String = ""
 
     /**
      * 加载详情数据
      */
     override fun loadData(rid: String,isRefresh: Boolean) {
+        this.rid = rid
         dataSource.loadData(rid,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 if (!isRefresh) view.showLoadingView()
@@ -244,29 +246,32 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
     /**
      * 根据父评论加载子评论
      */
-    override fun loadMoreSubComments(comment_id: String, position: Int, view1: View) {
-//        dataSource.loadMoreSubComments(subCommentPage, comment_id, object : IDataSource.HttpRequestCallBack {
-//
-//            override fun onStart() {
-//                view1.isEnabled = false
-//            }
-//
-//            override fun onSuccess(json: String) {
-//                view1.isEnabled = true
-//                val subCommentsBean = JsonUtil.fromJson(json, SubCommentsBean::class.java)
-//                if (subCommentsBean.success) {
-//                    view.addSubCommentsData(position, subCommentsBean.data.comments)
-//                    subCommentPage++
-//                } else {
-//                    view.showError(subCommentsBean.status.message)
-//                }
-//            }
-//
-//            override fun onFailure(e: IOException) {
-//                view1.isEnabled = true
-//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-//            }
-//        })
+    override fun loadMoreSubComments(item: CommentBean, view1: View, adapter: ShopWindowDetailCommentListAdapter) {
+        dataSource.loadMoreSubComments(item.subCommentPage, item.comment_id, object : IDataSource.HttpRequestCallBack {
+
+            override fun onStart() {
+                view1.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                view1.isEnabled = true
+                val subCommentsBean = JsonUtil.fromJson(json, SubCommentsBean::class.java)
+                if (subCommentsBean.success) {
+                    val sub_comments = item.sub_comments
+                    if (item.subCommentPage == 1) sub_comments.clear()
+                    if (subCommentsBean.data != null && subCommentsBean.data.comments != null) sub_comments.addAll(subCommentsBean.data.comments)
+                    item.subCommentPage++
+                    adapter.notifyDataSetChanged()
+                } else {
+                    view.showError(subCommentsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view1.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
     }
 
 }

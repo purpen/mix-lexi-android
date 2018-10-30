@@ -199,10 +199,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
      * 更新评论点赞状态
      */
     override fun setPraiseCommentState(doPraise: Boolean, position: Int, isSubAdapter: Boolean) {
-
-        if (isSubAdapter) {
-            adapter.setPraiseCommentState(doPraise, position)
-        } else {
             val commentsBean = adapter.getItem(position) as CommentBean
             if (doPraise) {
                 commentsBean.is_praise = true
@@ -214,7 +210,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
                 }
             }
             adapter.notifyItemChanged(position)
-        }
 
     }
 

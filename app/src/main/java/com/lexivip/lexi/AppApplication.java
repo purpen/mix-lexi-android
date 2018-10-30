@@ -40,7 +40,7 @@ public class AppApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Thread.setDefaultUncaughtExceptionHandler(restartHandler);
+//        Thread.setDefaultUncaughtExceptionHandler(restartHandler);
         instance = this;
 //        initPush();
 //        if (BuildConfig.LOG_DEBUG) {
