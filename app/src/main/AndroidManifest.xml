@@ -105,6 +105,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".brandHouse.CloseHouseActivity"/>
         <activity android:name=".user.setting.address.AddressListActivity"/>
+        <activity android:name=".receiveVoucher.ReceiveVoucherActivity"/>
 
         <!--微博-->
         <activity

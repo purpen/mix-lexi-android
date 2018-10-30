@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffbd9f">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp35"
+        android:drawableLeft="@mipmap/icon_receive_voucher_title_left"
+        android:drawableRight="@mipmap/icon_receive_voucher_title_right"
+        android:drawablePadding="@dimen/dp10"
+        android:text="乐喜官方券"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp20" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewOfficial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp25"></android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp125"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp25"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginBottom="@dimen/dp25"
+        android:background="@color/color_e9e9e9"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp35"
+        android:drawableLeft="@mipmap/icon_receive_voucher_title_left"
+        android:drawableRight="@mipmap/icon_receive_voucher_title_right"
+        android:drawablePadding="@dimen/dp10"
+        android:text="精选品牌券"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp20" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewBrand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp30"
+        android:background="@mipmap/icon_receive_voucher_separate" />
+</LinearLayout>

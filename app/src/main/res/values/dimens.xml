@@ -43,4 +43,5 @@
     <dimen name="dp78">78dp</dimen>
     <dimen name="dp240">240dp</dimen>
     <dimen name="dp88">88dp</dimen>
+    <dimen name="sp28">28sp</dimen>
 </resources>

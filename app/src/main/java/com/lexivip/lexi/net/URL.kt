@@ -701,7 +701,7 @@ object URL {
     /**
      * 全部分类
      */
-    const val ALL_CLASS = "${BASE_URL}all_categories"
+    const val ALL_CLASS="${BASE_URL}official/categories"
     /**
      * 领券中心头条动态
      */
@@ -711,4 +711,12 @@ object URL {
      * 评论列表
      */
     const val SHOW_WINDOW_COMMENTS_LIST: String = "${BASE_URL}shop_windows/comments"
+    /**
+     * 领券中心-同享券-精品品牌券
+     */
+    const val VOUCHER_SHARE="${BASE_URL}market/coupon_center_shared"
+    /**
+     * 领券中心-单享券-精选商品券
+     */
+    const val VOUCHER_SINGLE="${BASE_URL}market/coupon_center_single"
 }
