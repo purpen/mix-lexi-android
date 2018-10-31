@@ -3,6 +3,7 @@ package com.lexivip.lexi;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.multidex.MultiDexApplication;
 import android.support.multidex.MultiDex;
 //import com.qiniu.android.storage.UploadManager;
@@ -40,7 +41,9 @@ public class AppApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        Thread.setDefaultUncaughtExceptionHandler(restartHandler);
+        if (!BuildConfig.LOG_DEBUG){
+            Thread.setDefaultUncaughtExceptionHandler(restartHandler);
+        }
         instance = this;
 //        initPush();
 //        if (BuildConfig.LOG_DEBUG) {
@@ -100,7 +103,7 @@ public class AppApplication extends MultiDexApplication {
 
     private Thread.UncaughtExceptionHandler restartHandler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
-            LogUtil.e(Arrays.toString(ex.getStackTrace()));
+            ex.printStackTrace();
             restartApp();
         }
     };

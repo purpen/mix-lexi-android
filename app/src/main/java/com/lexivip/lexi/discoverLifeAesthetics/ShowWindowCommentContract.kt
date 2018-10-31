@@ -1,6 +1,10 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.support.annotation.NonNull
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.CommentBean
@@ -29,7 +33,7 @@ class ShowWindowCommentContract {
 
         }
 
-        fun setFavorite(b: Boolean, position: Int) {
+        fun setFavorite(b: Boolean, view1: ImageView, textViewLikeCount: TextView) {
 
         }
 
@@ -37,8 +41,11 @@ class ShowWindowCommentContract {
 
         }
 
-        fun addSubCommentsData(position: Int,comments: MutableList<CommentBean>){}
         fun loadMoreFail() {
+
+        }
+
+        fun noticeCommentSucess(data: CommentSuccessBean.DataBean) {
 
         }
     }
@@ -47,6 +54,8 @@ class ShowWindowCommentContract {
         fun loadData(rid:String,isRefresh: Boolean)
         fun loadMoreData(rid: String)
         fun praiseComment(comment_id: String,isPraise:Boolean,position: Int, view1: android.view.View, isSubAdapter: Boolean)
-        fun loadMoreSubComments(comment_id: String,position: Int,view1: android.view.View)
+        fun praiseComment(view1: android.view.View, commentBean:CommentBean,adapter:ShowWindowSubCommentListAdapter)
+        fun loadMoreSubComments(item:CommentBean, view1: android.view.View, adapter:ShowWindowCommentListAdapter)
+        fun submitComment(rid: String, pid: String, content: String, sendButton: Button)
     }
 }

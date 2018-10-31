@@ -4,6 +4,7 @@ import android.support.annotation.NonNull
 import android.view.View
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
 
@@ -51,6 +52,6 @@ class ShowWindowDetailContract {
         fun getGuessLike(rid: String)
         fun sendComment(rid: String, pid: String, content: String)
         fun praiseComment(comment_id: String, isPraise:Boolean, position: Int, view1: android.view.View, isSubAdapter: Boolean)
-        fun loadMoreSubComments(comment_id: String, position: Int, view1: android.view.View)
+        fun loadMoreSubComments(item: CommentBean, view1: android.view.View, adapter: ShopWindowDetailCommentListAdapter)
     }
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
+    <include layout="@layout/line_color_eee" />
     <include
         android:id="@+id/include_emotion_view"
         layout="@layout/include_emotion_bar"

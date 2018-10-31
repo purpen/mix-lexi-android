@@ -184,18 +184,26 @@ public class EmotionKeyboard {
 
     }
 
+
     /**
      * 隐藏表情布局
      *
      * @param showSoftInput 是否显示软件盘
      */
-    private void hideEmotionLayout(boolean showSoftInput) {
+    public void hideEmotionLayout(boolean showSoftInput) {
         if (mEmotionLayout.isShown()) {
             mEmotionLayout.setVisibility(View.GONE);
             if (showSoftInput) {
                 showSoftInput();
             }
         }
+    }
+
+    /**
+     * 显示键盘
+     */
+    public void showKeyBorad() {
+        showSoftInput();
     }
 
     /**
@@ -317,4 +325,11 @@ public class EmotionKeyboard {
 
     }
 
+    /**
+     * 关闭键盘
+     */
+    public void hideKeyBoard() {
+        mEmotionLayout.setVisibility(View.GONE);
+        hideSoftInput();
+    }
 }

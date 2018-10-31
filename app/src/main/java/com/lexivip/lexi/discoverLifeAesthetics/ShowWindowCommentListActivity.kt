@@ -1,24 +1,24 @@
 package com.lexivip.lexi.discoverLifeAesthetics
+
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import com.basemodule.tools.LogUtil
-
+import android.text.TextUtils
+import android.widget.*
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
-import com.lexivip.lexi.view.emotionkeyboardview.EmotionKeyboard
+import com.lexivip.lexi.user.login.LoginActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.view.emotionkeyboardview.fragment.EmotionMainFragment
-
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.activity_show_window_comment_list.*
-
-
 
 
 class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.View {
@@ -31,33 +31,25 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
     private val adapter: ShowWindowCommentListAdapter by lazy { ShowWindowCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
-    private lateinit var rid: String
-    private var count: Int =0
-    private lateinit var emotionMainFragment:EmotionMainFragment;
+    private lateinit var shopWindowData: ShowWindowDetailBean.DataBean
+    private lateinit var emotionMainFragment: EmotionMainFragment
 
-
-
-    //表情面板
-    private lateinit var mEmotionKeyboard: EmotionKeyboard
-
+    //父级评论id
+    private var pid: String = "0"
 
     override fun setPresenter(presenter: ShowWindowCommentContract.Presenter?) {
         setPresenter(presenter)
     }
 
     override fun getIntentData() {
-        if (intent.hasExtra(ShowWindowCommentListActivity::class.java.simpleName)) {
-            rid = intent.getStringExtra(ShowWindowCommentListActivity::class.java.simpleName)
+        if (intent.hasExtra(TAG)) {
+            shopWindowData = intent.getParcelableExtra(TAG)
         }
-        if (intent.hasExtra(ShowWindowCommentListActivity::class.java.name)) {
-            count = intent.getIntExtra(ShowWindowCommentListActivity::class.java.name,0)
-        }
-
     }
 
     override fun initView() {
         swipeRefreshLayout.isEnabled = false
-        customHeadView.setHeadCenterTxtShow(true, "${count}条评论")
+        customHeadView.setHeadCenterTxtShow(true, "${shopWindowData.comment_count}条评论")
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = linearLayoutManager
@@ -77,6 +69,9 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         //隐藏控件
         bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
 
+        bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindowData.is_like)
+        bundle.putInt(EmotionMainFragment.LIKE_COUNTS, shopWindowData.like_count)
+
         emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment.bindToContentView(swipeRefreshLayout)
         val transaction = supportFragmentManager.beginTransaction()
@@ -85,8 +80,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         //提交修改
         transaction.commit()
     }
-
-
 
 
     override fun installListener() {
@@ -101,14 +94,51 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 //            }
 //        }
 
+        emotionMainFragment.setOnSendCommentListener(object : IOnSendCommentListener {
+            override fun onSend(sendButton: Button, editText: EditText) {
+                if (UserProfileUtil.isLogin()) {
+                    val content = editText.text.trim().toString()
+                    if (TextUtils.isEmpty(content)) {
+                        ToastUtil.showInfo("请先输入评论")
+                        return
+                    }
+                    presenter.submitComment(shopWindowData.rid, pid, content, sendButton)
+                    editText.text.clear()
+                    emotionMainFragment.hideKeyBoard()
+                } else {
+                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                }
+            }
+        })
+
+
+        emotionMainFragment.setOnFavoriteClickListener(object : IOnFavoriteClickListener {
+            override fun onClick(imageViewLike: ImageView, textViewLikeCount: TextView) {
+                if (UserProfileUtil.isLogin()) {
+                    presenter.favoriteShowWindow(shopWindowData.rid, imageViewLike, shopWindowData.is_like, textViewLikeCount)
+                } else {
+                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                }
+            }
+        })
+
+        //点击输入框外部关闭键盘
+        adapter.setOnItemClickListener { _, _, _ ->
+            if (emotionMainFragment.isUserInputEmpty()) {
+                pid = "0"
+                emotionMainFragment.setEditTextHint(getString(R.string.text_add_comment))
+            }
+            emotionMainFragment.hideKeyBoard()
+        }
+
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            presenter.loadData(rid, true)
+            presenter.loadData(shopWindowData.rid, true)
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData(rid)
+            presenter.loadMoreData(shopWindowData.rid)
         }, recyclerView)
 
 
@@ -117,61 +147,92 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
             val commentsBean = adapter.getItem(position) as CommentBean
 
             when (view.id) {
-                R.id.textViewReply -> {
-                    //弹出键盘，输出回复
+                R.id.textViewReply -> { //将被回复的评论id最为pid
+                    emotionMainFragment.showKeyBoard()
+                    pid = commentsBean.comment_id
+                    emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
                 }
 
                 R.id.textViewPraise -> {
-                    presenter.praiseComment(commentsBean.comment_id,commentsBean.is_praise,position,view,false)
+                    presenter.praiseComment(commentsBean.comment_id, commentsBean.is_praise, position, view, false)
                 }
             }
         }
+    }
 
-//        editText.addTextChangedListener(object : TextWatcher {
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//
-//            }
-//            override fun afterTextChanged(s: Editable) { //动态设置底部栏高度
-//                val lineCount = editText.lineCount
-//                var height = DimenUtil.getDimensionPixelSize(R.dimen.dp50) + editText.lineHeight * (lineCount - 1)
-//                val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height)
-//                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-//                relativeLayoutBar.layoutParams = layoutParams
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//
-//            }
-//        })
+    /**
+     * 重置输入框为默认状态
+     */
+    private fun resetInputBarState() {
+        pid = "0"
+        emotionMainFragment.resetInputBarState()
+    }
+
+    /**
+     * 当评论提交成功
+     */
+    override fun noticeCommentSucess(data: CommentSuccessBean.DataBean) {
+        resetInputBarState()
+        //当前提交成功的评论内容
+        val commentBean = CommentBean()
+        commentBean.pid = data.pid
+        commentBean.created_at = data.created_at
+        commentBean.user_avatar = data.user_avatar
+        commentBean.user_name = data.user_name
+        commentBean.comment_id = data.comment_id
+        commentBean.praise_count = data.praise_count
+        commentBean.is_praise = data.is_praise
+        commentBean.content = data.content
+        if (TextUtils.equals(data.pid, "0")) { //评论橱窗
+            adapter.addData(0, commentBean)
+        } else {//子评论,添加到评论列表最后
+            val list = adapter.data
+            for (item in list) {
+                if (TextUtils.equals(item.comment_id, data.pid)) { //子评论数+1
+                    item.sub_comment_count += 1
+                    if (item.sub_comments == null) item.sub_comments = ArrayList<CommentBean>()
+                    item.sub_comments.add(commentBean)
+                    break
+                }
+            }
+        }
+        adapter.notifyDataSetChanged()
     }
 
     /**
      * 更新评论点赞状态
      */
     override fun setPraiseCommentState(doPraise: Boolean, position: Int, isSubAdapter: Boolean) {
-
-        if (isSubAdapter) {
-            adapter.setPraiseCommentState(doPraise, position)
+        val commentsBean = adapter.getItem(position) as CommentBean
+        if (doPraise) {
+            commentsBean.is_praise = true
+            commentsBean.praise_count += 1
         } else {
-            val commentsBean = adapter.getItem(position) as CommentBean
-            if (doPraise) {
-                commentsBean.is_praise = true
-                commentsBean.praise_count += 1
-            } else {
-                commentsBean.is_praise = false
-                if (commentsBean.praise_count > 0) {
-                    commentsBean.praise_count -= 1
-                }
+            commentsBean.is_praise = false
+            if (commentsBean.praise_count > 0) {
+                commentsBean.praise_count -= 1
             }
-            adapter.notifyItemChanged(position)
         }
+        adapter.notifyItemChanged(position)
 
     }
 
-    override fun addSubCommentsData(position: Int,comments: MutableList<CommentBean>) {
-        adapter.addSubCommentsData(position,comments)
+    /**
+     * 设置喜欢状态
+     */
+    override fun setFavorite(b: Boolean, view1: ImageView, textViewLikeCount: TextView) {
+        if (b) {
+            shopWindowData.is_like = true
+            view1.setImageResource(R.mipmap.icon_click_favorite_selected)
+            shopWindowData.like_count += 1
+            textViewLikeCount.text = "${shopWindowData.like_count}"
+        } else {
+            shopWindowData.is_like = false
+            view1.setImageResource(R.mipmap.icon_click_favorite_normal)
+            shopWindowData.like_count -= 1
+            textViewLikeCount.text = "${shopWindowData.like_count}"
+        }
     }
-
 
     override fun setNewData(comments: MutableList<CommentBean>) {
         adapter.setNewData(comments)
@@ -182,7 +243,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     }
 
     override fun requestNet() {
-        presenter.loadData(rid, false)
+        presenter.loadData(shopWindowData.rid, false)
     }
 
     override fun loadMoreComplete() {

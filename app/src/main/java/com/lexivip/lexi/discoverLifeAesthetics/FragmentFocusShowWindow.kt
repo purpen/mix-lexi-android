@@ -68,7 +68,12 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
                     }
                 }
 
-                R.id.textViewComment -> ToastUtil.showInfo("评论")
+                R.id.textViewComment -> { //跳转评论列表
+                    val dataBean = ShowWindowDetailBean.DataBean()
+                    dataBean.rid = showWindowBean.rid
+                    dataBean.like_count = showWindowBean.like_count
+                    PageUtil.jump2ShopWindowCommentListActivity(dataBean)
+                }
 
                 R.id.textViewShare -> {
                     val dialog = DistributeShareDialog(activity)

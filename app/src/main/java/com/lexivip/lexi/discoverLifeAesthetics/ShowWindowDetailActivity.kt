@@ -1,7 +1,6 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.InputType
@@ -11,10 +10,7 @@ import android.view.*
 import android.widget.RelativeLayout
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
-import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.PageUtil
-import com.lexivip.lexi.R
-import com.lexivip.lexi.RecyclerViewDivider
+import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
@@ -81,21 +77,21 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             textViewCommentTitle.visibility = View.VISIBLE
             recyclerViewComment.visibility = View.VISIBLE
             line15Comment.visibility = View.VISIBLE
-            val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+            val linearLayoutManager = CustomLinearLayoutManager(applicationContext)
+            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+            linearLayoutManager.setScrollEnabled(false)
             recyclerViewComment.layoutManager = linearLayoutManager
             recyclerViewComment.adapter = adapter
             recyclerViewComment.addItemDecoration(DividerItemDecoration(applicationContext))
             adapter.setNewData(data.comments)
 
-
+            adapter.setWindowData(data)
             val view = View.inflate(this, R.layout.footer_comment_count, null)
             view.textViewCommentCount.text = "查看全部" + data.comment_count + "条评论"
             adapter.addFooterView(view)
             view.setOnClickListener {
-                val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
-                intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
-                intent.putExtra(ShowWindowCommentListActivity::class.java.name,shopWindow?.comment_count)
-                startActivity(intent)
+                if (shopWindow == null) return@setOnClickListener
+                PageUtil.jump2ShopWindowCommentListActivity(shopWindow!!)
             }
         } else {
             line15Comment.visibility = View.GONE
@@ -163,7 +159,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         //图片只能3,5,7张
         if (size < 3) return
 
-        val view: View
+
 
         for (product in products) {
             list.add(product.cover)
@@ -178,7 +174,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 val layoutParams250: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp250, dp250) }
                 val layoutParams31: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
                 val layoutParams32: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
-                view = LayoutInflater.from(this).inflate(R.layout.view_show_window_image3, null)
+                val view = View.inflate(this, R.layout.view_show_window_image3, null)
                 linearLayoutBox.addView(view)
                 GlideUtil.loadImageWithFading(list[0], view.imageView30)
                 GlideUtil.loadImageWithFading(list[1], view.imageView31)
@@ -218,8 +214,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 val layoutParams52: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp143, dp114) }
                 val layoutParams53: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp215, dp161) }
                 val layoutParams54: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp158, dp161) }
-
-                view = LayoutInflater.from(this).inflate(R.layout.view_show_window_image5, null)
+                val view = View.inflate(this, R.layout.view_show_window_image5, null)
                 view.imageView50.layoutParams = layoutParams230
                 view.imageView51.layoutParams = layoutParams114
                 layoutParams114.addRule(RelativeLayout.END_OF, R.id.imageView50)
@@ -280,7 +275,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 val layoutParamsImageView74: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(oneThirdScreenW, oneThirdScreenW) }
                 val layoutParamsImageView75: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(oneThirdScreenW, oneThirdScreenW) }
                 val layoutParamsImageView76: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(oneThirdScreenW, oneThirdScreenW) }
-                view = LayoutInflater.from(this).inflate(R.layout.view_show_window_image7, null)
+                val view = View.inflate(this, R.layout.view_show_window_image7, null)
                 view.imageView70.layoutParams = layoutParamsImageView70
 
                 layoutParamsImageView71.leftMargin = dp2
@@ -413,7 +408,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         adapter.setOnItemChildClickListener { _, view, position ->
 
-            val commentsBean = adapter.getItem(position)?:return@setOnItemChildClickListener
+            val commentsBean = adapter.getItem(position) ?: return@setOnItemChildClickListener
 
             when (view.id) {
                 R.id.textViewReply -> {
@@ -421,7 +416,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 }
 
                 R.id.textViewPraise -> {
-                    presenter.praiseComment(commentsBean.comment_id,commentsBean.is_praise,position,view,false)
+                    presenter.praiseComment(commentsBean.comment_id, commentsBean.is_praise, position, view, false)
                 }
             }
         }
@@ -465,10 +460,8 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         //跳转评论列表
         relativeLayoutComment.setOnClickListener { view ->
-            val intent = Intent(applicationContext, ShowWindowCommentListActivity::class.java)
-            intent.putExtra(ShowWindowCommentListActivity::class.java.simpleName, rid)
-            intent.putExtra(ShowWindowCommentListActivity::class.java.name,shopWindow?.comment_count)
-            startActivity(intent)
+            if (shopWindow == null) return@setOnClickListener
+            PageUtil.jump2ShopWindowCommentListActivity(shopWindow!!)
         }
 
         textViewShare.setOnClickListener { view ->
@@ -513,21 +506,17 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      */
     override fun setPraiseCommentState(b: Boolean, position: Int, isSubAdapter: Boolean) {
 
-        if (isSubAdapter) {
-            adapter.setPraiseCommentState(b, position)
+        val commentsBean = adapter.getItem(position) as CommentBean
+        if (b) {
+            commentsBean.is_praise = true
+            commentsBean.praise_count += 1
         } else {
-            val commentsBean = adapter.getItem(position) as CommentBean
-            if (b) {
-                commentsBean.is_praise = true
-                commentsBean.praise_count += 1
-            } else {
-                commentsBean.is_praise = false
-                if (commentsBean.praise_count > 0) {
-                    commentsBean.praise_count -= 1
-                }
+            commentsBean.is_praise = false
+            if (commentsBean.praise_count > 0) {
+                commentsBean.praise_count -= 1
             }
-            adapter.notifyItemChanged(position)
         }
+        adapter.notifyItemChanged(position)
 
     }
 
@@ -592,7 +581,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             val count = adapter.itemCount
             val divider: Y_Divider?
             divider = when (itemPosition) {
-                count -2 -> {
+                count - 2 -> {
                     Y_DividerBuilder()
                             .setBottomSideLine(false, color, 0f, 0f, 0f)
                             .create()

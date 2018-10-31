@@ -11,9 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.basemodule.tools.DimenUtil
+import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
-
 import com.lexivip.lexi.R
+import com.lexivip.lexi.discoverLifeAesthetics.IOnFavoriteClickListener
+import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
 import com.lexivip.lexi.view.emotionkeyboardview.EmotionKeyboard
 import com.lexivip.lexi.view.emotionkeyboardview.NoHorizontalScrollerViewPager
 import com.lexivip.lexi.view.emotionkeyboardview.adapter.HorizontalRecyclerviewAdapter
@@ -43,9 +46,11 @@ class EmotionMainFragment : BaseFragment() {
     private lateinit var buttonSend: Button
     private lateinit var relativeLayoutLike: RelativeLayout
     private lateinit var emotionLayout: LinearLayout
+    private lateinit var imageViewLike: ImageView
+    private lateinit var textViewLikeCount: TextView
 
-
-    private var showEmojiKeyBoard: Boolean = false
+    private var onSendCommentListener: IOnSendCommentListener? = null
+    private var onFavoriteClickListener: IOnFavoriteClickListener? = null
 
     //需要绑定的内容view
     private var contentView: View? = null
@@ -62,6 +67,13 @@ class EmotionMainFragment : BaseFragment() {
 
     internal var fragments: MutableList<Fragment> = ArrayList()
 
+    fun setOnSendCommentListener(listener: IOnSendCommentListener) {
+        this.onSendCommentListener = listener
+    }
+
+    fun setOnFavoriteClickListener(listener: IOnFavoriteClickListener) {
+        this.onFavoriteClickListener = listener
+    }
 
     /**
      * 创建与Fragment对象关联的View视图时调用
@@ -92,10 +104,12 @@ class EmotionMainFragment : BaseFragment() {
         } else {
             // false,则表示绑定contentView,此时外部提供的contentView必定也是EditText
             globalOnItemClickManager!!.attachToEditText(contentView as EditText?)
-            mEmotionKeyboard!!.bindToEditText(contentView as EditText?)
+            mEmotionKeyboard.bindToEditText(contentView as EditText?)
         }
         return rootView
     }
+
+
 
     /**
      * 绑定内容view
@@ -106,27 +120,62 @@ class EmotionMainFragment : BaseFragment() {
         this.contentView = contentView
     }
 
+
+    private lateinit var inputBar: LinearLayout
+
     /**
      * 初始化view控件
      */
     protected fun initView(rootView: View) {
-        viewPager = rootView.findViewById<NoHorizontalScrollerViewPager>(R.id.vp_emotionview_layout)
-        recyclerview_horizontal = rootView.findViewById<RecyclerView>(R.id.recyclerview_horizontal)
+        viewPager = rootView.findViewById(R.id.vp_emotionview_layout)
+        recyclerview_horizontal = rootView.findViewById(R.id.recyclerview_horizontal)
 
-        emotionLayout = rootView.findViewById<LinearLayout>(R.id.ll_emotion_layout)
+        emotionLayout = rootView.findViewById(R.id.ll_emotion_layout)
+        inputBar = rootView.findViewById(R.id.include_emotion_view)
 
+        editTextComment = rootView.findViewById(R.id.editTextComment)
+        val editTextW = ScreenUtil.getScreenWidth()*274/375
+        val params = LinearLayout.LayoutParams(editTextW,LinearLayout.LayoutParams.WRAP_CONTENT)
+        params.leftMargin = DimenUtil.dp2px(15.0)
+        params.topMargin = DimenUtil.dp2px(8.0)
+        params.bottomMargin = DimenUtil.dp2px(8.0)
+        editTextComment.layoutParams = params
+        buttonSend = rootView.findViewById(R.id.buttonSend)
+        imageViewChangeEmotion = rootView.findViewById(R.id.imageViewChangeEmotion)
+        relativeLayoutLike = rootView.findViewById(R.id.relativeLayoutLike)
+        imageViewLike = rootView.findViewById(R.id.imageViewLike)
+        textViewLikeCount = rootView.findViewById(R.id.textViewLikeCount)
+        setFavoriteData()
+    }
 
-        editTextComment = rootView.findViewById<EditText>(R.id.editTextComment)
-        buttonSend = rootView.findViewById<Button>(R.id.buttonSend)
-        imageViewChangeEmotion = rootView.findViewById<ImageView>(R.id.imageViewChangeEmotion)
-        relativeLayoutLike = rootView.findViewById<RelativeLayout>(R.id.relativeLayoutLike)
-
+    /**
+     * 判断用户输入是否为空
+     */
+    fun isUserInputEmpty(): Boolean {
+        return editTextComment.text.isEmpty()
     }
 
     /**
      * 初始化监听器
      */
     protected fun initListener() {
+
+        val intArray = IntArray(2)
+
+        editTextComment.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            editTextComment.getLocationOnScreen(intArray)
+            if (intArray[1] > ScreenUtil.getScreenHeight() * 2 / 3) { //键盘被关闭
+                if (editTextComment.text.isEmpty()) {
+                    relativeLayoutLike.visibility = View.VISIBLE
+                    buttonSend.visibility = View.GONE
+                }
+            } else { //键盘打开
+                relativeLayoutLike.visibility = View.GONE
+                buttonSend.visibility = View.VISIBLE
+            }
+//            LogUtil.e("editTextComment y===="+intArray[1]+"ScreenUtil.getScreenHeight()*2/3==="+ScreenUtil.getScreenHeight()*2/3)
+        }
+
 
         editTextComment.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -135,13 +184,13 @@ class EmotionMainFragment : BaseFragment() {
             override fun afterTextChanged(s: Editable) { //动态设置底部栏高度
 
                 if (!TextUtils.isEmpty(s)) {
-                    relativeLayoutLike.visibility = View.GONE
-                    buttonSend.visibility = View.VISIBLE
+//                    relativeLayoutLike.visibility = View.GONE
+//                    buttonSend.visibility = View.VISIBLE
                     buttonSend.isEnabled = true
                     buttonSend.setTextColor(Util.getColor(R.color.color_6ed7af))
                 } else {
-                    relativeLayoutLike.visibility = View.VISIBLE
-                    buttonSend.visibility = View.GONE
+//                    relativeLayoutLike.visibility = View.VISIBLE
+//                    buttonSend.visibility = View.GONE
                     buttonSend.isEnabled = false
                     buttonSend.setTextColor(Util.getColor(R.color.color_999))
                 }
@@ -151,6 +200,18 @@ class EmotionMainFragment : BaseFragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
         })
+
+        //发布评论
+        buttonSend.setOnClickListener { view ->
+            if (onSendCommentListener == null) return@setOnClickListener
+            onSendCommentListener!!.onSend(buttonSend, editTextComment)
+        }
+
+        //喜欢点击
+        imageViewLike.setOnClickListener {
+            if (onFavoriteClickListener == null) return@setOnClickListener
+            onFavoriteClickListener!!.onClick(imageViewLike, textViewLikeCount)
+        }
     }
 
     /**
@@ -240,6 +301,11 @@ class EmotionMainFragment : BaseFragment() {
 
         //当前被选中底部tab
         private val CURRENT_POSITION_FLAG = "CURRENT_POSITION_FLAG"
+
+        //喜欢数量
+        const val LIKE_COUNTS = "LIKE_COUNTS"
+        //是否喜欢
+        const val IS_LIKE = "IS_LIKE"
     }
 
 
@@ -258,6 +324,52 @@ class EmotionMainFragment : BaseFragment() {
         }
     }
 
+    fun setEditTextHint(text: String) {
+        editTextComment.hint = text
+    }
+
+    /**
+     * 设置喜欢数据
+     */
+    private fun setFavoriteData() {
+        if (arguments == null) return
+        val isLike = arguments!!.getBoolean(IS_LIKE, false)
+        if (isLike) {
+            imageViewLike!!.setImageResource(R.mipmap.icon_click_favorite_selected)
+        } else {
+            imageViewLike!!.setImageResource(R.mipmap.icon_click_favorite_normal)
+        }
+        val likeCount = arguments!!.getInt(LIKE_COUNTS, 0)
+        if (likeCount == 0) {
+            textViewLikeCount!!.text = ""
+        } else {
+            textViewLikeCount!!.text = "$likeCount"
+        }
+    }
+
+
+    /**
+     * 打开键盘
+     */
+    fun showKeyBoard() {
+        mEmotionKeyboard.showKeyBorad()
+    }
+
+    /**
+     * 关闭键盘
+     */
+    fun hideKeyBoard(){
+        mEmotionKeyboard.hideKeyBoard()
+    }
+
+    /**
+     * 重置底部输入栏状态
+     */
+    fun resetInputBarState() {
+        setEditTextHint(getString(R.string.text_add_comment))
+        relativeLayoutLike.visibility = View.VISIBLE
+        buttonSend.visibility = View.GONE
+    }
 }
 
 

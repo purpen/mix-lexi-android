@@ -60,7 +60,7 @@
         <activity android:name=".selectionGoodsCenter.SelectionGoodsCenterActivity" />
         <activity android:name=".discoverLifeAesthetics.DiscoverLifeAestheticsActivity" />
         <activity android:name=".discoverLifeAesthetics.ShowWindowDetailActivity" />
-        <activity android:name=".discoverLifeAesthetics.ShowWindowCommentListActivity" />
+        <activity android:name=".discoverLifeAesthetics.ShowWindowCommentListActivity" android:windowSoftInputMode = "adjustResize"/>
         <activity android:name=".brandPavilion.BrandPavilionListActivity" />
         <activity android:name=".mine.dynamic.DynamicActivity" />
         <activity android:name=".index.detail.FavoriteUserListActivity" />

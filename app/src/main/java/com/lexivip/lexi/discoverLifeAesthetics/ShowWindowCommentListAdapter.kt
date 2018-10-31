@@ -11,6 +11,7 @@ import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
 import com.yanyusong.y_divideritemdecoration.Y_Divider
@@ -22,20 +23,26 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
     private var adapter: ShowWindowSubCommentListAdapter? = null
     private var footerView: View? = null
     private val size30 by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp30) }
-
+    private val dp13 by lazy { DimenUtil.dp2px(13.0) }
     override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, size30)
         val textViewPraise = helper.getView<TextView>(R.id.textViewPraise)
-        helper.setText(R.id.textViewTime, DateUtil.getDateByTimestamp(item.created_at))
+        helper.setText(R.id.textViewTime, DateUtil.getSpaceTime(item.created_at*1000L))
         if (item.praise_count > 0) {
-            textViewPraise.setTextColor(Util.getColor(R.color.color_ff6666))
+            if (item.is_praise) { //我已点赞
+                textViewPraise.setTextColor(Util.getColor(R.color.color_ff6666))
+                textViewPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_active, dp13), null, null, null)
+            } else {
+                textViewPraise.text = Util.getString(R.string.text_praise)
+                textViewPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_normal, dp13), null, null, null)
+            }
             textViewPraise.text = "${item.praise_count}"
-            textViewPraise.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_praise_active,R.dimen.dp13,R.dimen.dp13), null, null, null)
+
         } else {
             textViewPraise.setTextColor(Util.getColor(R.color.color_999))
             textViewPraise.text = Util.getString(R.string.text_praise)
-            textViewPraise.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_praise_normal,R.dimen.dp13,R.dimen.dp13), null, null, null)
+            textViewPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_normal, dp13), null, null, null)
         }
 
         helper.addOnClickListener(R.id.textViewPraise)
@@ -46,39 +53,44 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)
 
-        adapter = ShowWindowSubCommentListAdapter(R.layout.adapter_subcomment_list)
-        val linearLayoutManager = LinearLayoutManager(AppApplication.getContext(), LinearLayoutManager.VERTICAL, false)
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapter
-        adapter!!.setNewData(item.sub_comments)
-        if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        if (item.sub_comment_count == 0) {
+            recyclerView.visibility = View.GONE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            adapter = ShowWindowSubCommentListAdapter(R.layout.adapter_subcomment_list, present)
+            val linearLayoutManager = CustomLinearLayoutManager(AppApplication.getContext())
+            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+            linearLayoutManager.setScrollEnabled(false)
+            recyclerView.layoutManager = linearLayoutManager
+            recyclerView.adapter = adapter
+            adapter!!.setNewData(item.sub_comments)
+            if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
 
+            if (item.sub_comment_count > 0) {
+                footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment, null)
+                val textView = footerView!!.findViewById<TextView>(R.id.textView)
 
-        adapter!!.setOnItemChildClickListener { adapter, view, position ->
-            val subCommentsBean = adapter.getItem(position) as CommentBean
-            when (view.id) {
-                R.id.textViewPraise -> {
-                    present.praiseComment(subCommentsBean.comment_id,subCommentsBean.is_praise,position, view, true)
+                val count = adapter!!.data.size
+
+                if (item.sub_comment_count == count) {
+                    footerView!!.visibility = View.GONE
+                } else {
+                    footerView!!.visibility = View.VISIBLE
+                    textView.visibility = View.VISIBLE
+                    textView.text = "查看${item.sub_comment_count - count}条回复"
                 }
+
+                if (adapter!!.footerLayoutCount == 0) adapter!!.addFooterView(footerView)
+
+                textView.setOnClickListener { view ->
+                    //当前评论id就是子评论pid
+                    present.loadMoreSubComments(item, view, this)
+                }
+            } else {
+                footerView = null
             }
         }
-        if (item.sub_comment_count>0){
-            footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment, null)
 
-            footerView?.findViewById<TextView>(R.id.textView)?.text = "查看${item.sub_comment_count}条回复"
-
-            if (adapter!!.footerLayoutCount == 0) adapter!!.addFooterView(footerView)
-
-            footerView?.setOnClickListener { view ->
-                //当前item.comment_id就是父评论的id
-
-                item.comment_id = "111"
-
-                present.loadMoreSubComments(item.comment_id, helper.adapterPosition, view)
-            }
-        }else{
-            footerView = null
-        }
 
     }
 
@@ -86,34 +98,20 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
     /**
      * 设置子评论点赞状态
      */
-    fun setPraiseCommentState(doPraise: Boolean, position: Int) {
-        val subCommentsBean = adapter!!.getItem(position) as CommentBean
-        if (doPraise) {
-            subCommentsBean.is_praise = true
-            subCommentsBean.praise_count += 1
-        } else {
-            subCommentsBean.is_praise = false
-            if (subCommentsBean.praise_count > 0) {
-                subCommentsBean.praise_count -= 1
-            }
-        }
-        adapter?.notifyItemChanged(position)
-    }
+//    fun setPraiseCommentState(doPraise: Boolean, position: Int) {
+//        if (clickedSubCommentsBean == null) return
+//        if (doPraise) {
+//            clickedSubCommentsBean!!.is_praise = true
+//            clickedSubCommentsBean!!.praise_count += 1
+//        } else {
+//            clickedSubCommentsBean!!.is_praise = false
+//            if (clickedSubCommentsBean!!.praise_count > 0) {
+//                clickedSubCommentsBean!!.praise_count -= 1
+//            }
+//        }
+//        notifyDataSetChanged()
+//    }
 
-    /**
-     * 添加子评论
-     */
-    fun addSubCommentsData(position: Int, comments: List<CommentBean>) {
-
-        if (comments.isEmpty()) adapter?.removeFooterView(footerView)
-
-        val subComments = data[position].sub_comments
-        if (subComments.size <= 2) { //第一次加载子评论,清空原来数据，重头开始第一页
-            subComments.clear()
-        }
-
-        adapter?.addData(comments)
-    }
 
     internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
         private val color: Int = Util.getColor(android.R.color.transparent)
