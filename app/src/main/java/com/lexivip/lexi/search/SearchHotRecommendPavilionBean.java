@@ -110,7 +110,7 @@ public class SearchHotRecommendPavilionBean {
             public String bgcover;
             public int category_id;
             public String city;
-            public int commission_price;
+            public double commission_price;
             public int commission_rate;
             public String country;
             public String cover;
