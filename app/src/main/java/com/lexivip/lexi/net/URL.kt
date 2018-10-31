@@ -719,4 +719,8 @@ object URL {
      * 领券中心-单享券-精选商品券
      */
     const val VOUCHER_SINGLE="${BASE_URL}market/coupon_center_single"
+    /**
+     * 领券中心活动图片
+     */
+    const val VOUCHER_IMAGE="${BASE_URL}coupon_ad"
 }

@@ -4,13 +4,16 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.user.login.UserProfileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +24,13 @@ import java.util.List;
 public class ReceiveVoucherRecommendFragment extends BaseFragment implements ReceiveVoucherRecommendContract.View{
 
     private WaitingDialog dialog;
-    private List<AdapterReceiveVoucherBrand.MultipleItem> list;
+    private List<MultipleItem> list;
     private AdapterReceiveVoucherBrand voucherBrand;
     private AdapterReceiveVoucherGoods voucherGoods;
     private AdapterReceiveVoucherOfficial voucherOfficial;
     private ReceiveVoucherRecommendPresenter presenter;
+    private int page=1;
+    private View hander;
 
     @Override
     protected int getLayout() {
@@ -41,9 +46,10 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
         super.initView();
         dialog = new WaitingDialog(getActivity());
         presenter = new ReceiveVoucherRecommendPresenter(this);
-        RecyclerView recyclerViewOfficial=getView().findViewById(R.id.recyclerViewOfficial);
-        RecyclerView recyclerViewBrand=getView().findViewById(R.id.recyclerViewBrand);
-        ImageView imageView=getView().findViewById(R.id.imageView);
+        hander = View.inflate(getContext(),R.layout.fragment_receive_voucher_recommend_header,null);
+        RecyclerView recyclerViewOfficial=hander.findViewById(R.id.recyclerViewOfficial);
+        RecyclerView recyclerViewBrand=hander.findViewById(R.id.recyclerViewBrand);
+        ImageView imageView=hander.findViewById(R.id.imageView);
         RecyclerView recyclerViewGoods=getView().findViewById(R.id.recyclerViewGoods);
         list = new ArrayList<>();
         voucherBrand = new AdapterReceiveVoucherBrand(list,getActivity());
@@ -55,16 +61,19 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
         recyclerViewOfficial.setAdapter(voucherOfficial);
         recyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerViewGoods.setAdapter(voucherGoods);
-        recyclerViewBrand.setLayoutManager(new GridLayoutManager(getContext(),2));
-        recyclerViewBrand.setAdapter(voucherBrand);
+        voucherGoods.addHeaderView(hander);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        recyclerViewBrand.setLayoutManager(gridLayoutManager);
         voucherBrand.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-                return voucherBrand.getData().get(position).getItemType();
+                return voucherBrand.getData().get(position).getSpanSize();
             }
         });
-        //presenter.loadBrand();
-        //presenter.loadGoods();
+        recyclerViewBrand.setAdapter(voucherBrand);
+        presenter.loadBrand("0",String.valueOf(page));
+        presenter.loadGoods("0",UserProfileUtil.storeId());
+        presenter.loadOfficial();
     }
 
     @Override
@@ -92,17 +101,29 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
 
     @Override
     public void getOfficial(VoucherOfficialBean bean) {
-
+        voucherOfficial.setNewData(bean.data.official_coupons);
     }
 
     @Override
     public void getBrand(VoucherBrandBean brandBean) {
-
+        for (int i=0;i<brandBean.data.coupons.size();i++){
+            if (i%3==0){
+                LogUtil.e("一个"+i);
+                list.add(new MultipleItem(brandBean.data.coupons.get(i),MultipleItem.ITEM_TYPE_SPAN1,MultipleItem.ITEM_SPAN1_SIZE));
+                LogUtil.e("第几个："+i+"几个:"+list.get(i).getItemType());
+            }else {
+                LogUtil.e("两个"+i);
+                list.add(new MultipleItem(brandBean.data.coupons.get(i),MultipleItem.ITEM_TYPE_SPAN2,MultipleItem.ITEM_SPAN2_SIZE));
+                LogUtil.e("第几个："+i+"几个:"+list.get(i).getItemType());
+            }
+            //list.add(new AdapterReceiveVoucherBrand.MultipleItem(2,brandBean.data.coupons.get(i)));
+        }
+        voucherBrand.setNewData(list);
     }
 
     @Override
     public void getGoods(VoucherGoodsBean bean) {
-
+        voucherGoods.setNewData(bean.data.coupons);
     }
 
     @Override

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_colorwhite_radiu4"
-    android:gravity="center_horizontal">
+    android:id="@+id/context"
+    >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp15"
+        android:gravity="center_horizontal">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -12,11 +19,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp62"
             android:layout_marginBottom="@dimen/dp25"
+            android:scaleType="centerCrop"
             android:background="@color/color_ff6666"/>
         <ImageView
-            android:id="@+id/tv_logo"
+            android:id="@+id/iv_logo"
             android:layout_width="@dimen/dp50"
             android:layout_height="@dimen/dp50"
+            android:scaleType="centerCrop"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="37dp"/>
     </RelativeLayout>
@@ -80,4 +89,5 @@
             android:includeFontPadding="false"
             android:drawableRight="@mipmap/icon_receive_voucher_right"/>
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
