@@ -388,7 +388,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
                 startActivity(intent)
             }
             R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
-            R.id.textViewCouponCenter -> startActivity(Intent(activity, TextActivity::class.java))
+            R.id.textViewCouponCenter -> startActivity(Intent(activity, ReceiveVoucherActivity::class.java))
             R.id.textViewExemptionMail -> ToastUtil.showInfo("包邮专区")
             R.id.textViewMoreDiscoverLife -> startActivity(Intent(context, DiscoverLifeAestheticsActivity::class.java))
 

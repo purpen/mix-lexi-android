@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"></com.lexivip.lexi.view.CustomHeadView>
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/customHeadView">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -53,4 +54,22 @@
                 android:layout_height="match_parent"></com.basemodule.ui.CustomViewPager>
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_voucher"
+        android:layout_width="77dp"
+        android:layout_height="@dimen/dp30"
+        android:orientation="vertical"
+        android:background="@mipmap/icon_receive_voucher"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp300"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我的券"
+            android:gravity="right"
+            android:layout_marginRight="@dimen/dp5"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</RelativeLayout>

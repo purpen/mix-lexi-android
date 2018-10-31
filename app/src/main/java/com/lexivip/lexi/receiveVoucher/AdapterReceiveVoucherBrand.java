@@ -35,13 +35,14 @@ public class AdapterReceiveVoucherBrand extends BaseMultiItemQuickAdapter<Multip
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, com.lexivip.lexi.receiveVoucher.MultipleItem item) {
+    protected void convert(BaseViewHolder helper, MultipleItem item) {
         LogUtil.e("几个："+item.getItemType()+"item:"+helper.getLayoutPosition());
         ImageView iv_logo=helper.getView(R.id.iv_logo);
-        GlideUtil.loadImageWithRadius(item.getBean().store_logo,iv_logo,DimenUtil.dp2px(R.dimen.dp5));
+        GlideUtil.loadImageWithRadius(item.getBean().store_logo,iv_logo,DimenUtil.getDimensionPixelSize(R.dimen.dp5));
         helper.setText(R.id.tv_name,item.getBean().store_name);
+        LogUtil.e("名字："+item.getBean().store_name);
         helper.setText(R.id.tv_full,"满"+item.getBean().min_amount+"可用");
-        RelativeLayout context=helper.getView(R.id.context);
+        RelativeLayout relativeLayout=helper.getView(R.id.context);
         int sizeScreen= ScreenUtil.getScreenWidth()-DimenUtil.dp2px(30.0);
         int sizeSmall=(int)((ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp40))*0.5);
         ViewGroup.LayoutParams layoutParams;
@@ -53,34 +54,17 @@ public class AdapterReceiveVoucherBrand extends BaseMultiItemQuickAdapter<Multip
                 AdapterReceiveVoucherBrandTwo adapter=new AdapterReceiveVoucherBrandTwo(R.layout.adapter_voucher_brand_one_two, item.getBean().product_sku);
                 recyclerView.setAdapter(adapter);
                 layoutParams=new LinearLayout.LayoutParams(sizeScreen,ViewGroup.LayoutParams.WRAP_CONTENT);
-                context.setLayoutParams(layoutParams);
+                relativeLayout.setLayoutParams(layoutParams);
                 break;
             case MultipleItem.ITEM_TYPE_SPAN2:
                 ImageView imageView=helper.getView(R.id.imageView);
-                GlideUtil.loadImageWithTopRadius(item.getBean().store_bgcover,imageView,DimenUtil.dp2px(R.dimen.dp4));
+                GlideUtil.loadImageWithRadius(item.getBean().store_bgcover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4));
+                LogUtil.e("上图："+item.getBean().store_bgcover);
+                //GlideUtil.loadImageWithTopRadius(item.getBean().store_bgcover,imageView,mContext.getResources().getDimensionPixelSize(R.dimen.dp4));
                 helper.setText(R.id.tv_amount,item.getBean().amount);
                 layoutParams=new LinearLayout.LayoutParams(sizeSmall,ViewGroup.LayoutParams.WRAP_CONTENT);
-                /*if (helper.getLayoutPosition()%3==1){
-                    ((LinearLayout.LayoutParams) layoutParams).setMargins(0,0,DimenUtil.dp2px(R.dimen.dp5),0);
-                }else {
-                    ((LinearLayout.LayoutParams) layoutParams).setMargins(DimenUtil.dp2px(R.dimen.dp5),0,0,0);
-                }*/
-                context.setLayoutParams(layoutParams);
+                relativeLayout.setLayoutParams(layoutParams);
                 break;
-        }
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-        if (manager instanceof GridLayoutManager){
-            GridLayoutManager gridManager = ((GridLayoutManager) manager);
-            LogUtil.e("啦啦啦啦啦1："+gridManager.getSpanSizeLookup().getSpanSize(1));
-            LogUtil.e("啦啦啦啦啦0："+gridManager.getSpanSizeLookup().getSpanSize(0));
-            LogUtil.e("啦啦啦啦啦2："+gridManager.getSpanSizeLookup().getSpanSize(2));
-        }else {
-            LogUtil.e("这是什么的呢啊？？？？？？？？？？");
         }
     }
 }
