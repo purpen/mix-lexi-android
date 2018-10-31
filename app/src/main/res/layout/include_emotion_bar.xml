@@ -24,6 +24,8 @@
         android:textColorHint="@color/color_999"
         android:textSize="@dimen/sp13" />
 
+
+
     <ImageView
         android:id="@+id/imageViewChangeEmotion"
         android:layout_width="@dimen/dp20"
@@ -71,6 +73,59 @@
                 android:textColor="@color/color_333"
                 android:textSize="@dimen/sp11" />
         </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/relativeLayoutLike"
+            >
+            <RelativeLayout
+                android:id="@+id/relativeLayoutComment"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp50"
+                android:paddingEnd="@dimen/dp10"
+                android:paddingStart="@dimen/dp10">
+
+                <ImageView
+                    android:id="@+id/imageViewComment"
+                    android:layout_width="22dp"
+                    android:layout_height="20dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_click_comment" />
+
+                <TextView
+                    android:id="@+id/textViewComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/imageViewComment"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imageViewComment"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:text=""
+                    android:textColor="@color/color_333"
+                    android:textSize="@dimen/sp11" />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/textViewShare"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp50"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:drawableStart="@mipmap/icon_click_share"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:paddingEnd="@dimen/dp20"
+                android:paddingStart="@dimen/dp15"
+                android:textColor="@color/color_959fa7"
+                android:textSize="@dimen/sp13" />
+        </RelativeLayout>
+
+
+
 
         <Button
             android:id="@+id/buttonSend"

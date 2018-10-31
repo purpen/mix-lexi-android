@@ -1,7 +1,9 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.support.annotation.NonNull
-import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.CommentBean
@@ -16,7 +18,7 @@ class ShowWindowDetailContract {
 
         fun goPage()
 
-        fun setFavorite(b: Boolean) {
+        fun setFavorite(b: Boolean, view1: ImageView, textViewLikeCount: TextView) {
 
         }
 
@@ -43,6 +45,10 @@ class ShowWindowDetailContract {
         fun setPraiseCommentState(b: Boolean, position: Int, isSubAdapter: Boolean) {
 
         }
+
+        fun noticeCommentSuccess(data: CommentSuccessBean.DataBean?) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -50,8 +56,8 @@ class ShowWindowDetailContract {
         fun unfocusUser(uid: String, view1: android.view.View)
         fun loadData(rid:String,isRefresh:Boolean)
         fun getGuessLike(rid: String)
-        fun sendComment(rid: String, pid: String, content: String)
         fun praiseComment(comment_id: String, isPraise:Boolean, position: Int, view1: android.view.View, isSubAdapter: Boolean)
         fun loadMoreSubComments(item: CommentBean, view1: android.view.View, adapter: ShopWindowDetailCommentListAdapter)
+        fun submitComment(rid: String, pid: String, content: String, sendButton: Button)
     }
 }

@@ -28,16 +28,19 @@ abstract class BaseActivity : AppCompatActivity() {
         LogUtil.e("id:"+layout.toLong())
         setContentView(layout)
         initView()
-        installListener()
         requestNet()
+        installListener()
     }
+
 
 
     open fun getIntentData() {}
 
+
     open fun initView() {
 
     }
+
 
     open fun installListener() {}
 

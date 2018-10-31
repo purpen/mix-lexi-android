@@ -1,4 +1,5 @@
 package com.lexivip.lexi.discoverLifeAesthetics
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -6,9 +7,9 @@ import android.widget.TextView
 import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
+import com.lexivip.lexi.user.login.UserProfileUtil
 import me.gujun.android.taggroup.TagGroup
 
 class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean, BaseViewHolder>(layoutResId) {
@@ -72,13 +73,19 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
 
         val textViewFocus = helper.getView<TextView>(R.id.textViewFocus)
 
-        if (item.is_follow) {
-            textViewFocus.text = Util.getString(R.string.text_focused)
-            textViewFocus.setTextColor(Util.getColor(R.color.color_999))
-        } else {
-            textViewFocus.text = Util.getString(R.string.text_focus)
-            textViewFocus.setTextColor(Util.getColor(R.color.color_6ed7af))
+        if (TextUtils.equals(UserProfileUtil.getUserId(),item.uid)){
+            textViewFocus.visibility = View.GONE
+        }else{
+            textViewFocus.visibility = View.VISIBLE
+            if (item.is_follow) {
+                textViewFocus.text = Util.getString(R.string.text_focused)
+                textViewFocus.setTextColor(Util.getColor(R.color.color_999))
+            } else {
+                textViewFocus.text = Util.getString(R.string.text_focus)
+                textViewFocus.setTextColor(Util.getColor(R.color.color_6ed7af))
+            }
         }
+
 
         helper.addOnClickListener(R.id.textViewFocus)
 
