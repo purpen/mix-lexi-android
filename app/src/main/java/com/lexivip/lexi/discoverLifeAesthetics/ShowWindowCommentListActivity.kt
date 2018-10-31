@@ -114,8 +114,10 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
 //点击外部关闭键盘，回复默认状态
         adapter.setOnItemClickListener { _, _, _ ->
-            pid = "0"
-            emotionMainFragment.setEditTextHint(getString(R.string.text_add_comment))
+            if (emotionMainFragment.isUserInputEmpty()) {
+                pid = "0"
+                emotionMainFragment.setEditTextHint(getString(R.string.text_add_comment))
+            }
             emotionMainFragment.hideKeyBoard()
         }
 
@@ -165,7 +167,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 //        })
     }
 
-    private fun resetInputBarState(){
+    private fun resetInputBarState() {
         pid = "0"
         emotionMainFragment.resetInputBarState()
     }

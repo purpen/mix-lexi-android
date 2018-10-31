@@ -148,6 +148,13 @@ class EmotionMainFragment : BaseFragment() {
     }
 
     /**
+     * 判断用户输入是否为空
+     */
+    fun isUserInputEmpty(): Boolean {
+        return editTextComment.text.isEmpty()
+    }
+
+    /**
      * 初始化监听器
      */
     protected fun initListener() {
