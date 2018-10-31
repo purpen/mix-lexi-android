@@ -99,6 +99,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                     presenter.submitComment(shopWindow!!.rid, pid, content, sendButton)
                     editText.text.clear()
                     emotionMainFragment!!.hideKeyBoard()
+                    relativeLayoutBar.visibility = View.VISIBLE
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
                 }
