@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
@@ -50,7 +51,6 @@ class EmotionMainFragment : BaseFragment() {
     private lateinit var emotionLayout: LinearLayout
 
     private var onSendCommentListener: IOnSendCommentListener? = null
-    private var showEmojiKeyBoard: Boolean = false
 
     //需要绑定的内容view
     private var contentView: View? = null
@@ -107,6 +107,13 @@ class EmotionMainFragment : BaseFragment() {
     }
 
     /**
+     * 关闭键盘
+     */
+    fun hideKeyBoard(){
+        mEmotionKeyboard.hideKeyBoard()
+    }
+
+    /**
      * 绑定内容view
      * @param contentView
      * @return
@@ -131,6 +138,12 @@ class EmotionMainFragment : BaseFragment() {
         inputBar = rootView.findViewById(R.id.include_emotion_view)
 
         editTextComment = rootView.findViewById(R.id.editTextComment)
+        val editTextW = ScreenUtil.getScreenWidth()*274/375
+        val params = LinearLayout.LayoutParams(editTextW,LinearLayout.LayoutParams.WRAP_CONTENT)
+        params.leftMargin = DimenUtil.dp2px(15.0)
+        params.topMargin = DimenUtil.dp2px(8.0)
+        params.bottomMargin = DimenUtil.dp2px(8.0)
+        editTextComment.layoutParams = params
         buttonSend = rootView.findViewById(R.id.buttonSend)
         imageViewChangeEmotion = rootView.findViewById(R.id.imageViewChangeEmotion)
         relativeLayoutLike = rootView.findViewById(R.id.relativeLayoutLike)

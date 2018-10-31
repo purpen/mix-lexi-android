@@ -15,9 +15,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
-import com.lexivip.lexi.view.emotionkeyboardview.EmotionKeyboard
 import com.lexivip.lexi.view.emotionkeyboardview.fragment.EmotionMainFragment
-
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -39,10 +37,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
     //父级评论id
     private var pid: String = "0"
-
-    //表情面板
-    private lateinit var mEmotionKeyboard: EmotionKeyboard
-
 
     override fun setPresenter(presenter: ShowWindowCommentContract.Presenter?) {
         setPresenter(presenter)
@@ -111,6 +105,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
                     }
                     presenter.submitComment(shopWindowData.rid, pid, content, sendButton)
                     editText.text.clear()
+                    emotionMainFragment.hideKeyBoard()
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
                 }
