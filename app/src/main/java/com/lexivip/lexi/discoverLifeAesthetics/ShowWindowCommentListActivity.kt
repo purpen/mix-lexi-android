@@ -113,9 +113,9 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
 
         emotionMainFragment.setOnFavoriteClickListener(object : IOnFavoriteClickListener {
-            override fun onClick(relativeLayoutLike: ImageView, textViewLikeCount: TextView) {
+            override fun onClick(imageViewLike: ImageView, textViewLikeCount: TextView) {
                 if (UserProfileUtil.isLogin()) {
-                    presenter.favoriteShowWindow(shopWindowData.rid, relativeLayoutLike, shopWindowData.is_like, textViewLikeCount)
+                    presenter.favoriteShowWindow(shopWindowData.rid, imageViewLike, shopWindowData.is_like, textViewLikeCount)
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
                 }
