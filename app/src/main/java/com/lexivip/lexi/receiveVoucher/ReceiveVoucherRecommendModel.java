@@ -2,6 +2,7 @@ package com.lexivip.lexi.receiveVoucher;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.Util;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.net.ClientParamsAPI;
 import com.lexivip.lexi.net.HttpRequest;
@@ -88,6 +89,30 @@ public class ReceiveVoucherRecommendModel {
             @Override
             public void onFailure(@NotNull IOException e) {
                 callBack.onFailure(e);
+            }
+        });
+    }
+    public void loadImage(String rid, IDataSource.HttpRequestCallBack callBack){
+        HashMap<String,Object> params=ClientParamsAPI.getDefaultParams();
+        HttpRequest.sendRequest(HttpRequest.GET, URL.VOUCHER_IMAGE, params, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+
             }
         });
     }
