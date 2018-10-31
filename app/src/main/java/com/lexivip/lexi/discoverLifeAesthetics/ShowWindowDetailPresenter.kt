@@ -1,6 +1,10 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import com.basemodule.tools.ToastUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -48,57 +52,57 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
     /**
      * 喜欢橱窗
      */
-    fun favoriteShowWindow(rid: String?,view1: View) {
-        dataSource.favoriteShowWindow(rid, object : IDataSource.HttpRequestCallBack {
-
-            override fun onStart() {
-                view1.isEnabled = false
-            }
-
-            override fun onSuccess(json: String) {
-                view1.isEnabled = true
-                val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
-                if (favoriteBean.success) {
-                    view.setFavorite(true)
-                } else {
-                    view.showError(favoriteBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view1.isEnabled = true
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
+//    fun favoriteShowWindow(rid: String?,view1: View) {
+//        dataSource.favoriteShowWindow(rid, object : IDataSource.HttpRequestCallBack {
+//
+//            override fun onStart() {
+//                view1.isEnabled = false
+//            }
+//
+//            override fun onSuccess(json: String) {
+//                view1.isEnabled = true
+//                val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+//                if (favoriteBean.success) {
+//                    view.setFavorite(true)
+//                } else {
+//                    view.showError(favoriteBean.status.message)
+//                }
+//            }
+//
+//            override fun onFailure(e: IOException) {
+//                view1.isEnabled = true
+//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+//            }
+//        })
+//    }
 
 
     /**
      *  取消喜欢
      */
-    fun unfavoriteShowWindow(rid: String?, view1: View) {
-        dataSource.unfavoriteShowWindow(rid, object : IDataSource.HttpRequestCallBack {
-
-            override fun onStart() {
-                view1.isEnabled = false
-            }
-
-            override fun onSuccess(json: String) {
-                view1.isEnabled = true
-                val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
-                if (favoriteBean.success) {
-                    view.setFavorite(false)
-                } else {
-                    view.showError(favoriteBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view1.isEnabled = true
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
+//    fun unfavoriteShowWindow(rid: String?, view1: View) {
+//        dataSource.unfavoriteShowWindow(rid, object : IDataSource.HttpRequestCallBack {
+//
+//            override fun onStart() {
+//                view1.isEnabled = false
+//            }
+//
+//            override fun onSuccess(json: String) {
+//                view1.isEnabled = true
+//                val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+//                if (favoriteBean.success) {
+//                    view.setFavorite(false)
+//                } else {
+//                    view.showError(favoriteBean.status.message)
+//                }
+//            }
+//
+//            override fun onFailure(e: IOException) {
+//                view1.isEnabled = true
+//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+//            }
+//        })
+//    }
 
 
 
@@ -200,22 +204,22 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
     /**
      * 发送橱窗评论
      */
-    override fun sendComment(rid: String, pid: String, content: String) {
-        dataSource.sendComment(rid,pid,content,object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val showWindowCommentBean = JsonUtil.fromJson(json, ShowWindowCommentBean::class.java)
-                if (showWindowCommentBean.success) {
-                    view.setCommentState()
-                } else {
-                    view.showError(showWindowCommentBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
+//    override fun sendComment(rid: String, pid: String, content: String) {
+//        dataSource.sendComment(rid,pid,content,object : IDataSource.HttpRequestCallBack {
+//            override fun onSuccess(json: String) {
+//                val showWindowCommentBean = JsonUtil.fromJson(json, ShowWindowCommentBean::class.java)
+//                if (showWindowCommentBean.success) {
+//                    view.setCommentState()
+//                } else {
+//                    view.showError(showWindowCommentBean.status.message)
+//                }
+//            }
+//
+//            override fun onFailure(e: IOException) {
+//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+//            }
+//        })
+//    }
 
     /**
      * 对评论点赞
@@ -264,6 +268,61 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
                     adapter.notifyDataSetChanged()
                 } else {
                     view.showError(subCommentsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view1.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 提交评论
+     */
+    override fun submitComment(rid: String, pid: String, content: String, sendButton: Button) {
+        dataSource.submitComment(rid, pid, content, object : IDataSource.HttpRequestCallBack {
+
+            override fun onStart() {
+                sendButton.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                sendButton.isEnabled = true
+                val commentSuccessBean = JsonUtil.fromJson(json, CommentSuccessBean::class.java)
+                if (commentSuccessBean.success) {
+                    view.noticeCommentSuccess(commentSuccessBean.data)
+                    ToastUtil.showSuccess("发送评论成功")
+                } else {
+                    view.showError(commentSuccessBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                sendButton.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 喜欢橱窗
+     */
+    fun favoriteShowWindow(rid: String, view1: ImageView, isFavorite: Boolean, textViewLikeCount: TextView) {
+        dataSource.favoriteShowWindow(rid,isFavorite,object : IDataSource.HttpRequestCallBack {
+
+            override fun onStart() {
+                view1.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                view1.isEnabled = true
+                val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (favoriteBean.success) {
+                    view.setFavorite(!isFavorite,view1,textViewLikeCount)
+                } else {
+                    view.showError(favoriteBean.status.message)
                 }
             }
 

@@ -38,4 +38,15 @@ public class UserProfileUtil {
         if (TextUtils.isEmpty(read)) return false;
         return true;
     }
+
+    /**
+     * 获取userId
+     * @return
+     */
+    public static String getUserId() {
+        String read = SPUtil.read(Constants.USER_PROFILE);
+        if (TextUtils.isEmpty(read)) return "";
+        UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);
+        return userProfileBean.data.profile.uid;
+    }
 }

@@ -50,57 +50,7 @@ open class ShowWindowCommentModel{
         })
     }
 
-    fun unfavoriteShowWindow(rid: String?, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getFavoriteShowWindowParams(rid)
-        HttpRequest.sendRequest(HttpRequest.DELETE, URL.FAVORITE_SHOW_WINDOW,params,object : IDataSource.HttpRequestCallBack{
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
 
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
-
-
-    fun getGuessLike(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.EDITOR_RECOMMEND_URL, params, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
-
-    fun getRelateShowWindow(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.DISCOVER_LIFE_URL, params, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
 
     fun focusUser(uid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getFocusUserParams(uid)
@@ -119,39 +69,6 @@ open class ShowWindowCommentModel{
         })
     }
 
-    fun unfocusUser(uid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getFocusUserParams(uid)
-        HttpRequest.sendRequest(HttpRequest.POST, URL.UNFOCUS_USER_URL, params, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
-
-    fun sendComment(rid: String, pid: String,content:String,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getSendCommentParams(rid,pid,content)
-        HttpRequest.sendRequest(HttpRequest.POST, URL.SHOP_WINDOWS_COMMENTS, params, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                httpRequestCallBack.onStart()
-            }
-
-            override fun onSuccess(json: String) {
-                httpRequestCallBack.onSuccess(json)
-            }
-
-            override fun onFailure(e: IOException) {
-                httpRequestCallBack.onFailure(e)
-            }
-        })
-    }
 
     fun praiseComment(comment_id: String,isPraise:Boolean,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getPraiseCommentParams(comment_id)

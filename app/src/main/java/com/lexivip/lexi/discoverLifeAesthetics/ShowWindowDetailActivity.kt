@@ -1,13 +1,11 @@
 package com.lexivip.lexi.discoverLifeAesthetics
-
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.text.Editable
-import android.text.InputType
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.view.*
-import android.widget.RelativeLayout
+import android.widget.*
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.*
@@ -17,7 +15,9 @@ import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.index.selection.DiscoverLifeAdapter
+import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.lexivip.lexi.view.emotionkeyboardview.fragment.EmotionMainFragment
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -42,6 +42,10 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     private val adapter: ShopWindowDetailCommentListAdapter by lazy { ShopWindowDetailCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
+    private var emotionMainFragment: EmotionMainFragment?=null
+    //父级评论id
+    private var pid: String = "0"
+
     override val layout: Int = R.layout.activity_show_window_detail
 
     override fun getIntentData() {
@@ -56,11 +60,50 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     override fun initView() {
         customHeadView.setHeadCenterTxtShow(true, R.string.title_show_case)
-        editText.inputType = InputType.TYPE_TEXT_FLAG_MULTI_LINE
-        editText.setSingleLine(false)
-        editText.clearFocus()
         initGuessLike()
         initRelateShowWindow()
+    }
+
+    /**
+     * 初始化EmotionMainFragment
+     */
+    private fun initEmotionFragment() {
+        if (shopWindow==null) return
+        //构建传递参数
+        val bundle = Bundle()
+        //绑定主内容编辑框
+        bundle.putBoolean(EmotionMainFragment.BIND_TO_EDITTEXT, true)
+        //隐藏控件
+        bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
+
+        bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindow!!.is_like)
+        bundle.putBoolean(EmotionMainFragment.IS_SHOP_WINDOW, true)
+        bundle.putInt(EmotionMainFragment.LIKE_COUNTS, shopWindow!!.like_count)
+
+        emotionMainFragment = EmotionMainFragment.newInstance(bundle)
+        emotionMainFragment!!.bindToContentView(scrollViewGoodsDetail)
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frameLayoutEmotion, emotionMainFragment)
+        transaction.addToBackStack(null)
+        //提交修改
+        transaction.commit()
+
+        emotionMainFragment!!.setOnSendCommentListener(object : IOnSendCommentListener {
+            override fun onSend(sendButton: Button, editText: EditText) {
+                if (UserProfileUtil.isLogin()) {
+                    val content = editText.text.trim().toString()
+                    if (TextUtils.isEmpty(content)) {
+                        ToastUtil.showInfo("请先输入评论")
+                        return
+                    }
+                    presenter.submitComment(shopWindow!!.rid, pid, content, sendButton)
+                    editText.text.clear()
+                    emotionMainFragment!!.hideKeyBoard()
+                } else {
+                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                }
+            }
+        })
     }
 
     override fun requestNet() {
@@ -73,6 +116,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     override fun setShowWindowData(data: ShowWindowDetailBean.DataBean?) {
         if (data == null) return
         shopWindow = data
+        initEmotionFragment()
         if (data.comment_count > 0) {
             textViewCommentTitle.visibility = View.VISIBLE
             recyclerViewComment.visibility = View.VISIBLE
@@ -129,11 +173,15 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         textViewTitle2.text = data.description
 
-
-        if (data.is_follow) {
-            buttonFocus.text = Util.getString(R.string.text_focused)
-        } else {
-            buttonFocus.text = Util.getString(R.string.text_focus)
+        if (TextUtils.equals(UserProfileUtil.getUserId(),data.uid)){
+            buttonFocus.visibility = View.GONE
+        }else{
+            buttonFocus.visibility = View.VISIBLE
+            if (data.is_follow) {
+                buttonFocus.text = Util.getString(R.string.text_focused)
+            } else {
+                buttonFocus.text = Util.getString(R.string.text_focus)
+            }
         }
 
         setGoodsImages(data)
@@ -405,14 +453,35 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
 
     override fun installListener() {
+        //点击输入框获取焦点
+        textViewInput.setOnClickListener {
+            emotionMainFragment!!.requestFocus()
+        }
+
+        val intArray = IntArray(2)
+        textViewInput.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            textViewInput.getLocationOnScreen(intArray)
+            if (intArray[1] > ScreenUtil.getScreenHeight() * 2 / 3) { //键盘被关闭
+                if (emotionMainFragment==null) return@addOnLayoutChangeListener
+                if (emotionMainFragment!!.isUserInputEmpty()) {
+                    relativeLayoutBar.visibility = View.VISIBLE
+                }
+            } else { //键盘打开
+                relativeLayoutBar.visibility = View.INVISIBLE
+                emotionMainFragment!!.requestFocus()
+
+            }
+        }
 
         adapter.setOnItemChildClickListener { _, view, position ->
 
             val commentsBean = adapter.getItem(position) ?: return@setOnItemChildClickListener
 
             when (view.id) {
-                R.id.textViewReply -> {
-                    //弹出键盘，输出回复
+                R.id.textViewReply -> { //将被回复的评论id最为pid
+                    emotionMainFragment!!.showKeyBoard()
+                    pid = commentsBean.comment_id
+                    emotionMainFragment!!.setEditTextHint("回复${commentsBean.user_name}:")
                 }
 
                 R.id.textViewPraise -> {
@@ -420,24 +489,6 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 }
             }
         }
-
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable) { //动态设置底部栏高度
-                val lineCount = editText.lineCount
-                val height = DimenUtil.getDimensionPixelSize(R.dimen.dp50) + editText.lineHeight * (lineCount - 1)
-                val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height)
-                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                relativeLayoutBar.layoutParams = layoutParams
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-        })
 
         buttonFocus.setOnClickListener { view ->
             if (shopWindow == null) return@setOnClickListener
@@ -449,13 +500,10 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         }
 
 
-        relativeLayoutLike.setOnClickListener { view ->
+        imageViewLike.setOnClickListener { view ->
             if (shopWindow == null) return@setOnClickListener
-            if (shopWindow!!.is_like) {
-                presenter.unfavoriteShowWindow(shopWindow!!.rid, view)
-            } else {
-                presenter.favoriteShowWindow(shopWindow!!.rid, view)
-            }
+
+            presenter.favoriteShowWindow(shopWindow!!.rid,imageViewLike,shopWindow!!.is_like,textViewLikeCount)
         }
 
         //跳转评论列表
@@ -479,26 +527,9 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         //设置橱窗点击
         adapterRelateShowWindow.setOnItemClickListener { _, _, position ->
-            val windowsBean = adapterRelateShowWindow.getItem(position)
-                    ?: return@setOnItemClickListener
+            val windowsBean = adapterRelateShowWindow.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2ShopWindowDetailActivity(windowsBean.rid)
         }
-
-        // 发送评论
-        editText.setOnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                val content = editText.text.toString().trim()
-                if (TextUtils.isEmpty(content)) {
-                    ToastUtil.showInfo(Util.getString(R.string.hint_input_comment))
-                } else {
-                    presenter.sendComment(rid, "", content)
-                }
-                return@setOnKeyListener true
-            }
-
-            return@setOnKeyListener false
-        }
-
     }
 
     /**
@@ -544,17 +575,17 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     /**
      * 设置喜欢
      */
-    override fun setFavorite(b: Boolean) {
-        if (shopWindow == null) return
+    override fun setFavorite(b: Boolean, view1: ImageView, textViewLikeCount: TextView) {
+        if (shopWindow==null) return
         if (b) {
             shopWindow!!.is_like = true
-            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_selected)
-            shopWindow!!.like_count = shopWindow!!.like_count + 1
+            view1.setImageResource(R.mipmap.icon_click_favorite_selected)
+            shopWindow!!.like_count += 1
             textViewLikeCount.text = "${shopWindow!!.like_count}"
         } else {
             shopWindow!!.is_like = false
-            imageViewLike.setImageResource(R.mipmap.icon_click_favorite_normal)
-            shopWindow!!.like_count = shopWindow!!.like_count - 1
+            view1.setImageResource(R.mipmap.icon_click_favorite_normal)
+            shopWindow!!.like_count -= 1
             textViewLikeCount.text = "${shopWindow!!.like_count}"
         }
     }
@@ -600,6 +631,15 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             }
 
             return divider
+        }
+    }
+
+    override fun onBackPressed() {
+        /**
+         * 判断是否拦截返回键操作
+         */
+        if (!emotionMainFragment!!.isInterceptBackPress()) {
+            finish()
         }
     }
 }
