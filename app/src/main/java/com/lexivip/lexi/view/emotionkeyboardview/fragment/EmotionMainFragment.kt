@@ -106,12 +106,7 @@ class EmotionMainFragment : BaseFragment() {
         return rootView
     }
 
-    /**
-     * 关闭键盘
-     */
-    fun hideKeyBoard(){
-        mEmotionKeyboard.hideKeyBoard()
-    }
+
 
     /**
      * 绑定内容view
@@ -314,8 +309,8 @@ class EmotionMainFragment : BaseFragment() {
         }
     }
 
-    fun setEditTextHint(user_name: String) {
-        editTextComment.setHint("回复$user_name:")
+    fun setEditTextHint(text: String) {
+        editTextComment.hint = text
     }
 
     /**
@@ -337,8 +332,28 @@ class EmotionMainFragment : BaseFragment() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+
+    /**
+     * 打开键盘
+     */
+    fun showKeyBoard() {
+        mEmotionKeyboard.showKeyBorad()
+    }
+
+    /**
+     * 关闭键盘
+     */
+    fun hideKeyBoard(){
+        mEmotionKeyboard.hideKeyBoard()
+    }
+
+    /**
+     * 重置底部输入栏状态
+     */
+    fun resetInputBarState() {
+        setEditTextHint(getString(R.string.text_add_comment))
+        relativeLayoutLike.visibility = View.VISIBLE
+        buttonSend.visibility = View.GONE
     }
 }
 

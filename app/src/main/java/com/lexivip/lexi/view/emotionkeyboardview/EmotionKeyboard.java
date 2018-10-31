@@ -200,6 +200,13 @@ public class EmotionKeyboard {
     }
 
     /**
+     * 显示键盘
+     */
+    public void showKeyBorad() {
+        showSoftInput();
+    }
+
+    /**
      * 锁定内容高度，防止跳闪
      */
     private void lockContentHeight() {

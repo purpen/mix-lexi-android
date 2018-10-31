@@ -71,7 +71,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
 
         bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindowData.is_like)
-        bundle.putInt(EmotionMainFragment.LIKE_COUNTS,shopWindowData.like_count)
+        bundle.putInt(EmotionMainFragment.LIKE_COUNTS, shopWindowData.like_count)
 
         emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment.bindToContentView(swipeRefreshLayout)
@@ -112,6 +112,13 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
             }
         })
 
+//点击外部关闭键盘，回复默认状态
+        adapter.setOnItemClickListener { _, _, _ ->
+            pid = "0"
+            emotionMainFragment.setEditTextHint(getString(R.string.text_add_comment))
+            emotionMainFragment.hideKeyBoard()
+        }
+
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
@@ -129,8 +136,9 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
             when (view.id) {
                 R.id.textViewReply -> { //将被回复的评论id最为pid
+                    emotionMainFragment.showKeyBoard()
                     pid = commentsBean.comment_id
-                    emotionMainFragment.setEditTextHint(commentsBean.user_name)
+                    emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
                 }
 
                 R.id.textViewPraise -> {
@@ -157,10 +165,16 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 //        })
     }
 
+    private fun resetInputBarState(){
+        pid = "0"
+        emotionMainFragment.resetInputBarState()
+    }
+
     /**
      * 当评论提交成功
      */
     override fun noticeCommentSucess(data: CommentSuccessBean.DataBean) {
+        resetInputBarState()
         //当前提交成功的评论内容
         val commentBean = CommentBean()
         commentBean.pid = data.pid
@@ -191,17 +205,17 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
      * 更新评论点赞状态
      */
     override fun setPraiseCommentState(doPraise: Boolean, position: Int, isSubAdapter: Boolean) {
-            val commentsBean = adapter.getItem(position) as CommentBean
-            if (doPraise) {
-                commentsBean.is_praise = true
-                commentsBean.praise_count += 1
-            } else {
-                commentsBean.is_praise = false
-                if (commentsBean.praise_count > 0) {
-                    commentsBean.praise_count -= 1
-                }
+        val commentsBean = adapter.getItem(position) as CommentBean
+        if (doPraise) {
+            commentsBean.is_praise = true
+            commentsBean.praise_count += 1
+        } else {
+            commentsBean.is_praise = false
+            if (commentsBean.praise_count > 0) {
+                commentsBean.praise_count -= 1
             }
-            adapter.notifyItemChanged(position)
+        }
+        adapter.notifyItemChanged(position)
 
     }
 
