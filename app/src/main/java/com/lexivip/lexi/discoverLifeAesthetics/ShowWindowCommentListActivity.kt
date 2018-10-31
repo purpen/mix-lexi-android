@@ -5,8 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -112,7 +111,18 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
             }
         })
 
-//点击外部关闭键盘，回复默认状态
+
+        emotionMainFragment.setOnFavoriteClickListener(object : IOnFavoriteClickListener {
+            override fun onClick(relativeLayoutLike: ImageView, textViewLikeCount: TextView) {
+                if (UserProfileUtil.isLogin()) {
+                    presenter.favoriteShowWindow(shopWindowData.rid, relativeLayoutLike, shopWindowData.is_like, textViewLikeCount)
+                } else {
+                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                }
+            }
+        })
+
+        //点击输入框外部关闭键盘
         adapter.setOnItemClickListener { _, _, _ ->
             if (emotionMainFragment.isUserInputEmpty()) {
                 pid = "0"
@@ -148,25 +158,11 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
                 }
             }
         }
-
-//        editText.addTextChangedListener(object : TextWatcher {
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//
-//            }
-//            override fun afterTextChanged(s: Editable) { //动态设置底部栏高度
-//                val lineCount = editText.lineCount
-//                var height = DimenUtil.getDimensionPixelSize(R.dimen.dp50) + editText.lineHeight * (lineCount - 1)
-//                val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, height)
-//                layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-//                relativeLayoutBar.layoutParams = layoutParams
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//
-//            }
-//        })
     }
 
+    /**
+     * 重置输入框为默认状态
+     */
     private fun resetInputBarState() {
         pid = "0"
         emotionMainFragment.resetInputBarState()
@@ -219,6 +215,23 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         }
         adapter.notifyItemChanged(position)
 
+    }
+
+    /**
+     * 设置喜欢状态
+     */
+    override fun setFavorite(b: Boolean, view1: ImageView, textViewLikeCount: TextView) {
+        if (b) {
+            shopWindowData.is_like = true
+            view1.setImageResource(R.mipmap.icon_click_favorite_selected)
+            shopWindowData.like_count += 1
+            textViewLikeCount.text = "${shopWindowData.like_count}"
+        } else {
+            shopWindowData.is_like = false
+            view1.setImageResource(R.mipmap.icon_click_favorite_normal)
+            shopWindowData.like_count -= 1
+            textViewLikeCount.text = "${shopWindowData.like_count}"
+        }
     }
 
     override fun setNewData(comments: MutableList<CommentBean>) {

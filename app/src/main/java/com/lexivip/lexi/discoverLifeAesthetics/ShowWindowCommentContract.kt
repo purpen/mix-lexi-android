@@ -2,6 +2,9 @@ package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.support.annotation.NonNull
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.CommentBean
@@ -30,7 +33,7 @@ class ShowWindowCommentContract {
 
         }
 
-        fun setFavorite(b: Boolean, position: Int) {
+        fun setFavorite(b: Boolean, view1: ImageView, textViewLikeCount: TextView) {
 
         }
 

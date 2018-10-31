@@ -1,7 +1,6 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.InputType
@@ -86,7 +85,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             recyclerViewComment.addItemDecoration(DividerItemDecoration(applicationContext))
             adapter.setNewData(data.comments)
 
-
+            adapter.setWindowData(data)
             val view = View.inflate(this, R.layout.footer_comment_count, null)
             view.textViewCommentCount.text = "查看全部" + data.comment_count + "条评论"
             adapter.addFooterView(view)

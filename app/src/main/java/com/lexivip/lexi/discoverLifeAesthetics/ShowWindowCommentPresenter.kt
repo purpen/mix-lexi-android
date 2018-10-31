@@ -2,7 +2,9 @@ package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.view.View
 import android.widget.Button
-import com.basemodule.tools.LogUtil
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.basemodule.tools.ToastUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
@@ -191,6 +193,30 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
 
             override fun onFailure(e: IOException) {
                 sendButton.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    fun favoriteShowWindow(rid: String, view1: ImageView, isFavorite: Boolean, textViewLikeCount: TextView) {
+        dataSource.favoriteShowWindow(rid,isFavorite,object : IDataSource.HttpRequestCallBack {
+
+            override fun onStart() {
+                view1.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                view1.isEnabled = true
+                val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (favoriteBean.success) {
+                    view.setFavorite(!isFavorite,view1,textViewLikeCount)
+                } else {
+                    view.showError(favoriteBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view1.isEnabled = true
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

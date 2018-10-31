@@ -1,6 +1,5 @@
 package com.lexivip.lexi.view.emotionkeyboardview.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -11,14 +10,12 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
-import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
+import com.lexivip.lexi.discoverLifeAesthetics.IOnFavoriteClickListener
 import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
 import com.lexivip.lexi.view.emotionkeyboardview.EmotionKeyboard
 import com.lexivip.lexi.view.emotionkeyboardview.NoHorizontalScrollerViewPager
@@ -49,8 +46,11 @@ class EmotionMainFragment : BaseFragment() {
     private lateinit var buttonSend: Button
     private lateinit var relativeLayoutLike: RelativeLayout
     private lateinit var emotionLayout: LinearLayout
+    private lateinit var imageViewLike: ImageView
+    private lateinit var textViewLikeCount: TextView
 
     private var onSendCommentListener: IOnSendCommentListener? = null
+    private var onFavoriteClickListener: IOnFavoriteClickListener? = null
 
     //需要绑定的内容view
     private var contentView: View? = null
@@ -67,9 +67,12 @@ class EmotionMainFragment : BaseFragment() {
 
     internal var fragments: MutableList<Fragment> = ArrayList()
 
-
     fun setOnSendCommentListener(listener: IOnSendCommentListener) {
         this.onSendCommentListener = listener
+    }
+
+    fun setOnFavoriteClickListener(listener: IOnFavoriteClickListener) {
+        this.onFavoriteClickListener = listener
     }
 
     /**
@@ -117,8 +120,6 @@ class EmotionMainFragment : BaseFragment() {
         this.contentView = contentView
     }
 
-    private var imageViewLike: ImageView? = null
-    private var textViewLikeCount: TextView? = null
 
     private lateinit var inputBar: LinearLayout
 
@@ -175,6 +176,7 @@ class EmotionMainFragment : BaseFragment() {
 //            LogUtil.e("editTextComment y===="+intArray[1]+"ScreenUtil.getScreenHeight()*2/3==="+ScreenUtil.getScreenHeight()*2/3)
         }
 
+
         editTextComment.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
@@ -203,6 +205,12 @@ class EmotionMainFragment : BaseFragment() {
         buttonSend.setOnClickListener { view ->
             if (onSendCommentListener == null) return@setOnClickListener
             onSendCommentListener!!.onSend(buttonSend, editTextComment)
+        }
+
+        //喜欢点击
+        imageViewLike.setOnClickListener {
+            if (onFavoriteClickListener == null) return@setOnClickListener
+            onFavoriteClickListener!!.onClick(imageViewLike, textViewLikeCount)
         }
     }
 

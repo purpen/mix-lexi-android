@@ -1,10 +1,9 @@
 package com.lexivip.lexi.discoverLifeAesthetics
-
-import android.widget.Button
-import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 
 interface IOnFavoriteClickListener {
-    fun onClick(sendButton:Button, editText: EditText) {
+    fun onClick(imageViewLike: ImageView, textViewLikeCount: TextView) {
 
     }
 }

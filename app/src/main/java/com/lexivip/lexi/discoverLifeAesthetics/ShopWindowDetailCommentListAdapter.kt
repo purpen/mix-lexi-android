@@ -1,7 +1,6 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
 import android.content.Context
-import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -26,6 +25,7 @@ class ShopWindowDetailCommentListAdapter(res: Int, presenter: ShowWindowDetailPr
     private var footerView: View? = null
     private val size30 by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp30) }
     private val dp13 by lazy { DimenUtil.dp2px(13.0) }
+    private var shopWindowData:ShowWindowDetailBean.DataBean?=null
     override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, size30)
@@ -87,17 +87,24 @@ class ShopWindowDetailCommentListAdapter(res: Int, presenter: ShowWindowDetailPr
                 if (adapter!!.footerLayoutCount == 0) adapter!!.addFooterView(footerView)
 
                 textViewReplyNum.setOnClickListener { //跳转评论列表
-                    val dataBean = ShowWindowDetailBean.DataBean()
-                    dataBean.rid = present.rid
-                    dataBean.comment_count = data.size
-                    PageUtil.jump2ShopWindowCommentListActivity(dataBean)
+                    if (shopWindowData==null) return@setOnClickListener
+                    PageUtil.jump2ShopWindowCommentListActivity(shopWindowData!!)
                 }
             } else {
+
                 footerView = null
             }
         }
 
 
+    }
+
+    /**
+     * 设置橱窗数据
+     */
+
+    fun setWindowData(data: ShowWindowDetailBean.DataBean) {
+        shopWindowData = data
     }
 
 
