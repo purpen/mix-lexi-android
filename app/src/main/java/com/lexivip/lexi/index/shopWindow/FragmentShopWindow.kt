@@ -1,14 +1,15 @@
 package com.lexivip.lexi.index.shopWindow
+import android.content.Intent
 import android.support.v4.view.ViewPager
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ScreenUtil
-import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.lexivip.lexi.R
 import com.lexivip.lexi.discoverLifeAesthetics.FragmentFocusShowWindow
 import com.lexivip.lexi.discoverLifeAesthetics.FragmentRecommendShowWindow
+import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_shop_window.*
 
@@ -49,8 +50,8 @@ class FragmentShopWindow : BaseFragment() {
 
     override fun installListener() {
 
-        linearLayoutPublishWindow.setOnClickListener {
-            ToastUtil.showInfo("发布橱窗")
+        linearLayoutPublishWindow.setOnClickListener { //跳转拼接橱窗
+            startActivity(Intent(activity,PublishShopWindowActivity::class.java))
         }
 
         customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {

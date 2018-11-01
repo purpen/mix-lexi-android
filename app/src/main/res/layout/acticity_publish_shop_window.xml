@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.lexivip.lexi.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            >
+            <TextView
+                android:id="@+id/textViewTipsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textSize="20sp"
+                android:textColor="@color/color_333"
+                android:includeFontPadding="false"
+                android:textStyle="bold"
+                android:text="@string/text_create_you_life_aesthetics"
+                />
+            <TextView
+                android:id="@+id/textViewTipsSubTitle"
+                android:layout_below="@id/textViewTipsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/publish_shopwindow_tips"
+                android:layout_marginTop="10dp"
+                android:includeFontPadding="false"
+                android:textColor="#ff333333"
+                android:textSize="14sp"
+                />
+
+            <Button
+                android:id="@+id/button3Image"
+                android:layout_width="79dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginBottom="20dp"
+                android:enabled="false"
+                android:layout_below="@id/textViewTipsSubTitle"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:background="@drawable/selector_switch_product_num"
+                android:text="@string/text_tile_with_3_image"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                />
+
+            <Button
+                android:id="@+id/button5Image"
+                android:layout_width="79dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/button3Image"
+                android:layout_alignTop="@id/button3Image"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:background="@drawable/selector_switch_product_num"
+                android:text="@string/text_tile_with_5_image"
+                android:textColor="@color/color_333"
+                android:textSize="12sp"
+                />
+            <Button
+                android:id="@+id/button7Image"
+                android:layout_alignTop="@id/button5Image"
+                android:layout_toEndOf="@id/button5Image"
+                android:layout_marginStart="15dp"
+                android:layout_width="79dp"
+                android:layout_height="30dp"
+                android:text="@string/text_tile_with_7_image"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:background="@drawable/selector_switch_product_num"
+                android:textColor="@color/color_333"
+                android:textSize="12sp"
+                />
+
+            <LinearLayout
+                android:id="@+id/linearLayoutBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button3Image"
+                android:orientation="vertical"
+                >
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

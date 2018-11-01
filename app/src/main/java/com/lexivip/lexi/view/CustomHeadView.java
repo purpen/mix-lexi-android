@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,6 +27,17 @@ public class CustomHeadView extends RelativeLayout {
     private TextView tv_tip_num;
     private ImageButton ib_right;
     private RelativeLayout rootView;
+    private Button buttonRight;
+
+    private OnViewClickListener viewClickListener;
+    interface OnViewClickListener{
+        void onClick(View view);
+    }
+
+    public void setOnViewClickListener(OnViewClickListener listener){
+        viewClickListener = listener;
+    }
+
     public void setGoBackListener(IGobackListener listener){
         mIGobackListener = listener;
     }
@@ -58,6 +70,7 @@ public class CustomHeadView extends RelativeLayout {
     private void initViews(View view) {
         head_goback = (ImageButton) view.findViewById(R.id.head_goback);
         head_center_tv = (TextView) view.findViewById(R.id.head_center_tv);
+        buttonRight = view.findViewById(R.id.buttonRight);
         iv_center_logo = (ImageView) view.findViewById(R.id.iv_center_logo);
         relativeSearch = findViewById(R.id.relativeSearch);
         imageViewClear = findViewById(R.id.imageViewClear);
@@ -72,6 +85,7 @@ public class CustomHeadView extends RelativeLayout {
 //        head_view_shop.setOnClickListener(onClickListener);
         rl_head_shop.setOnClickListener(onClickListener);
         imageViewClear.setOnClickListener(onClickListener);
+        buttonRight.setOnClickListener(onClickListener);
     }
 
     public void setRightImgBtnShow(boolean isShow) {
@@ -122,6 +136,11 @@ public class CustomHeadView extends RelativeLayout {
                 case R.id.iv_head_search:
 //                    activity.startActivity(new Intent(activity, UserSearchActivity.class));
                     break;
+                case R.id.buttonRight:
+                    if (viewClickListener!=null){
+                        viewClickListener.onClick(v);
+                    }
+                    break;
             }
         }
     };
@@ -167,6 +186,9 @@ public class CustomHeadView extends RelativeLayout {
 
     }
 
+    public Button getButtonRight() {
+        return buttonRight;
+    }
 
     public void setHeadLogoShow(boolean isShow) {
         if (isShow) {
