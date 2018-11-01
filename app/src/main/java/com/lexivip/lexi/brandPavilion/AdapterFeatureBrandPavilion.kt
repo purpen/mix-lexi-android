@@ -28,7 +28,7 @@ class AdapterFeatureBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavi
         val imageViewLogo = helper.getView<ImageView>(R.id.imageViewLogo)
         GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewLogo, size4,size60)
         helper.setText(R.id.textViewName, item.name)
-        helper.setText(R.id.textViewAddress, item.country + item.province + item.city)
+        helper.setText(R.id.textViewAddress, item.delivery_country + item.delivery_province + item.delivery_city)
         helper.setText(R.id.textViewDesc, item.tag_line)
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerView)

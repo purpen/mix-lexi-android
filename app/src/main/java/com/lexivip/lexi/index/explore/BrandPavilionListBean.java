@@ -24,7 +24,6 @@ public class BrandPavilionListBean {
             public String areacode;
             public String begin_date;
             public String bgcover;
-            public int bgcover_id;
             public int browse_number;
             public String city;
             public int city_id;
@@ -38,7 +37,6 @@ public class BrandPavilionListBean {
             public String delivery_date;
             public String delivery_province;
             public int delivery_province_id;
-//            public DetailBean detail;
             public int distribution_type;
             public String end_date;
             public int fans_count;
@@ -60,21 +58,6 @@ public class BrandPavilionListBean {
             public int type;
             public List<List<String>> categories;
             public List<String> products_cover;
-
-            public static class DetailBean {
-                /**
-                 * content : 只为精致生活
-                 * id : 2
-                 * split_content : []
-                 * store_rid : 95206897
-                 * updated_at : 1531806565
-                 */
-
-                public String content;
-                public int id;
-                public String store_rid;
-                public String updated_at;
-            }
         }
     }
 

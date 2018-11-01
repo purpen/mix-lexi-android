@@ -57,16 +57,6 @@ class FragmentFeatureBrandPavilion : BaseFragment(), FeatrueBrandPavilionContrac
             intent.putExtra("rid",item.rid)
             startActivity(intent)
         }
-
-        recyclerView.addOnScrollListener(object :RecyclerView.OnScrollListener(){
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                when(newState){
-                    RecyclerView.SCROLL_STATE_IDLE->{GlideUtil.resumeRequests(context)}
-                    RecyclerView.SCROLL_STATE_SETTLING,RecyclerView.SCROLL_STATE_DRAGGING->{GlideUtil.pauseRequests(context)}
-                }
-                super.onScrollStateChanged(recyclerView, newState)
-            }
-        })
     }
 
 
