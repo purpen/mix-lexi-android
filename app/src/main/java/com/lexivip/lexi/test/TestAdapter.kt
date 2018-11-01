@@ -9,8 +9,8 @@ import com.lexivip.lexi.beans.ProductBean
 
 class TestAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<TestAdapter.MultipleItem, BaseViewHolder>(list) {
     init {
-        addItemType(MultipleItem.ITEM_TYPE_SPAN2, R.layout.aaatext)
         addItemType(MultipleItem.ITEM_TYPE_SPAN1, R.layout.aaatext)
+        addItemType(MultipleItem.ITEM_TYPE_SPAN2, R.layout.aaatext)
     }
     override fun convert(helper: BaseViewHolder, item: TestAdapter.MultipleItem) {
         //helper.setText(R.id.textView,item.product.name)

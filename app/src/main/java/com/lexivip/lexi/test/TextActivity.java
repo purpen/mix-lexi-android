@@ -44,14 +44,15 @@ public class TextActivity extends BaseActivity {
 
 
         testAdapter = new TestAdapter(testList);
+
+        recyclerView.setAdapter(testAdapter);
         testAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
                 LogUtil.e(position+"第几个啊："+testAdapter.getData().get(position).getSpanSize());
-                return testAdapter.getData().get(position).getSpanSize();
+                return textAdapter.getData().get(position).getSpanSize();
             }
         });
-        recyclerView.setAdapter(testAdapter);
         loadData();
         loadTest();
     }
@@ -76,9 +77,9 @@ public class TextActivity extends BaseActivity {
             be.store_name="测试啊啊啊"+i;*/
             String s="测试啊啊啊"+i;
             if (i%3==0){
-                list.add(new Multiple(Multiple.TEXT,Multiple.IMG_SPAN_SIZE,s));
-            }else {
                 list.add(new Multiple(Multiple.IMG,Multiple.IMG_TEXT_SPAN_SIZE_MIN,s));
+            }else {
+                list.add(new Multiple(Multiple.TEXT,Multiple.IMG_SPAN_SIZE,s));
             }
         }
         textAdapter.setNewData(list);

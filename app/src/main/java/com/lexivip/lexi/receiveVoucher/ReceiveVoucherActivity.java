@@ -1,6 +1,8 @@
 package com.lexivip.lexi.receiveVoucher;
 
 import android.support.annotation.NonNull;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
@@ -27,6 +29,7 @@ public class ReceiveVoucherActivity extends BaseActivity implements ReceiveVouch
     private CustomViewPager viewPager;
     private ArrayList<BaseFragment> fragments;
     private List<String> titles;
+    private LinearLayout ll_voucher;
 
     @Override
     protected int getLayout() {
@@ -42,7 +45,19 @@ public class ReceiveVoucherActivity extends BaseActivity implements ReceiveVouch
         customHeadView.setHeadCenterTxtShow(true,R.string.text_coupon_center);
         slidingTabLayout = findViewById(R.id.slidingTabLayout);
         viewPager = findViewById(R.id.viewPager);
+        ll_voucher = findViewById(R.id.ll_voucher);
         presenter.loadClass();
+    }
+
+    @Override
+    public void installListener() {
+        super.installListener();
+        ll_voucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

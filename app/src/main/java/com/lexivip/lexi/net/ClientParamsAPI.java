@@ -1456,7 +1456,7 @@ public class ClientParamsAPI {
     public static HashMap<String,Object> getVoucherGoodsParams(String store_category,String open_id){
         HashMap<String,Object> params=generateCommonParams();
         params.put("store_category",store_category);
-        params.put("open_id",open_id);
+        params.put("rid",open_id);
         return params;
     }
 }

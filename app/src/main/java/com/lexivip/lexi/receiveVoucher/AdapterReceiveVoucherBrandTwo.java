@@ -21,7 +21,7 @@ public class AdapterReceiveVoucherBrandTwo extends BaseQuickAdapter<VoucherBrand
     @Override
     protected void convert(BaseViewHolder helper, VoucherBrandBean.DataBean.CouponsBean.ProductSkuBean item) {
         ImageView imageView=helper.getView(R.id.imageView);
-        GlideUtil.loadImageWithRadius(item.product_cover,imageView,DimenUtil.dp2px(R.dimen.dp2));
+        GlideUtil.loadImageWithRadius(item.product_cover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp2));
         helper.setText(R.id.tv_name,item.product_name);
         helper.setText(R.id.tv_price,item.product_coupon_amount);
         TextView textView=helper.getView(R.id.tv_price_old);

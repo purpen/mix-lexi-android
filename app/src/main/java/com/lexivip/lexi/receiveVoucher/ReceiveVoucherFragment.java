@@ -15,8 +15,6 @@ import com.basemodule.ui.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.AppApplication;
 import com.lexivip.lexi.R;
-import com.lexivip.lexi.brandHouse.BrandHouseGoodsFragment;
-import com.lexivip.lexi.search.AdapterSearchGoods;
 import com.yanyusong.y_divideritemdecoration.Y_Divider;
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
@@ -101,23 +99,12 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
     public void getBrand(VoucherBrandBean brandBean) {
         for (int i=0;i<brandBean.data.coupons.size();i++){
             if (i==0||i==9){
-                LogUtil.e("一个"+i);
                 list.add(new MultipleItem(brandBean.data.coupons.get(i),MultipleItem.ITEM_TYPE_SPAN1,MultipleItem.ITEM_SPAN1_SIZE));
-                LogUtil.e("第几个："+i+"几个:"+list.get(i).getItemType());
             }else {
-                LogUtil.e("两个"+i);
                 list.add(new MultipleItem(brandBean.data.coupons.get(i),MultipleItem.ITEM_TYPE_SPAN2,MultipleItem.ITEM_SPAN2_SIZE));
-                LogUtil.e("第几个："+i+"几个:"+list.get(i).getItemType());
             }
-            //list.add(new AdapterReceiveVoucherBrand.MultipleItem(2,brandBean.data.coupons.get(i)));
         }
         voucherBrands.setNewData(list);
-        /*voucherBrands.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-                return voucherBrands.getData().get(position).getSpanSize();
-            }
-        });*/
     }
 
     @Override
