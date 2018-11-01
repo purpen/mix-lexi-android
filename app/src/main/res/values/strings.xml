@@ -380,4 +380,11 @@
     <string name="text_go_shop">进店领券</string>
     <string name="text_voucher_amount">券后价</string>
     <string name="text_recommend">推荐</string>
+    <string name="text_publish">发布</string>
+    <string name="text_create_you_life_aesthetics">打造你的生活美学</string>
+    <string name="publish_shopwindow_tips">展示你的品位与搭配风格，拼揍一个设计主题橱窗</string>
+    <string name="text_tile_with_3_image">拼贴三张</string>
+    <string name="text_tile_with_5_image">拼贴5张</string>
+    <string name="text_tile_with_7_image">拼贴7张</string>
+    <string name="title_select_goods">选择商品</string>
 </resources>

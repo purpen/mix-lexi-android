@@ -460,7 +460,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         }
 
         val intArray = IntArray(2)
-        textViewInput.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+        textViewInput.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             textViewInput.getLocationOnScreen(intArray)
             if (intArray[1] > ScreenUtil.getScreenHeight() * 2 / 3) { //键盘被关闭
                 if (emotionMainFragment==null) return@addOnLayoutChangeListener
@@ -489,6 +489,20 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                     presenter.praiseComment(commentsBean.comment_id, commentsBean.is_praise, position, view, false)
                 }
             }
+        }
+
+        /**
+         * 外部点击重置输入状态
+         */
+        adapter.setOnItemClickListener { _, _, _ ->
+            resetInputState()
+        }
+
+        /**
+         * 外部点击重置输入状态
+         */
+        linearLayout.setOnClickListener {
+            resetInputState()
         }
 
         buttonFocus.setOnClickListener { view ->
@@ -531,6 +545,17 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             val windowsBean = adapterRelateShowWindow.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2ShopWindowDetailActivity(windowsBean.rid)
         }
+    }
+
+    /**
+     * 重置输入状态
+     */
+    private fun resetInputState() {
+        if (emotionMainFragment!!.isUserInputEmpty()) {
+            pid = "0"
+            emotionMainFragment!!.setEditTextHint(getString(R.string.text_add_comment))
+        }
+        emotionMainFragment!!.hideKeyBoard()
     }
 
     /**

@@ -154,6 +154,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".coupon.UserCouponActivity" />
+        <activity android:name=".publishShopWindow.PublishShopWindowActivity" />
     </application>
 
 </manifest>
