@@ -21,7 +21,6 @@ import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
 import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
-import com.lexivip.lexi.test.TextActivity
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*

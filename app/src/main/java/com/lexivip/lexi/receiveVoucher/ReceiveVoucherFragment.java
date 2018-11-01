@@ -15,6 +15,7 @@ import com.basemodule.ui.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.AppApplication;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.user.login.UserProfileUtil;
 import com.yanyusong.y_divideritemdecoration.Y_Divider;
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder;
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
@@ -35,6 +36,7 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
     private int page=1;
     private String key;
     private RecyclerView recyclerView;
+    private String rid;
 
     @Override
     protected int getLayout() {
@@ -63,7 +65,7 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
         recyclerViewCommon.setLayoutManager(new GridLayoutManager(getContext(),2));
         list = new ArrayList<>();
         voucherBrands = new AdapterReceiveVoucherBrand(list,getActivity());
-        //voucherGoods = new AdapterReceiveVoucherGoods(R.layout.adapter_voucher_goods,null);
+        voucherGoods = new AdapterReceiveVoucherGoods(R.layout.adapter_voucher_goods,null);
         voucherBrands.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
@@ -71,10 +73,24 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
             }
         });
         recyclerView.setAdapter(voucherBrands);
-        recyclerView.addItemDecoration(new DividerItemDecoration(AppApplication.getContext()));
         recyclerViewCommon.setAdapter(voucherGoods);
 
+        rid = UserProfileUtil.getUserId();
         presenter.loadBrand(key,String.valueOf(page));
+        presenter.loadGoods(key, rid);
+
+        voucherBrands.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                presenter.loadBrand(key,String.valueOf(page));
+            }
+        },recyclerView);
+        voucherGoods.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                presenter.loadGoods(key, rid);
+            }
+        },recyclerViewCommon);
     }
 
     @Override
@@ -109,40 +125,11 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
 
     @Override
     public void getGoods(VoucherGoodsBean bean) {
-
+        voucherGoods.setNewData(bean.data.coupons);
     }
 
     @Override
     public void setPresenter(ReceiveVoucherFragmentContract.Presenter presenter) {
         setPresenter(presenter);
-    }
-
-    private class DividerItemDecoration extends Y_DividerItemDecoration {
-        private int color = Util.getColor(android.R.color.white);
-
-        public DividerItemDecoration(Context context) {
-            super(context);
-        }
-
-        @Override
-        public Y_Divider getDivider(int itemPosition) {
-            LogUtil.e("position：" + itemPosition);
-            Y_Divider divider;
-
-            int count = voucherBrands.getItemCount();
-            LogUtil.e("总行数：" + count);
-            MultipleItem item = voucherBrands.getItem(itemPosition);
-            if (item == null) {
-                divider = new Y_DividerBuilder()
-                        .create();
-                return divider;
-            } else {
-                divider = new Y_DividerBuilder()
-                        .setTopSideLine(true, color, 20f, 0f, 0f)
-                        .setLeftSideLine(true, color, 5f, 0f, 0f)
-                        .create();
-                return divider;
-            }
-        }
     }
 }

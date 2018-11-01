@@ -2,6 +2,7 @@ package com.lexivip.lexi.receiveVoucher;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.JsonUtil;
@@ -65,7 +66,13 @@ public class ReceiveVoucherPresenter implements ReceiveVoucherContract.Presenter
 
             @Override
             public void onSuccess(@NotNull String json) {
-
+                LogUtil.e("动态"+json);
+                VoucherNoticeBean bean=JsonUtil.fromJson(json,VoucherNoticeBean.class);
+                if (bean.success){
+                    view.getNotice(bean);
+                }else {
+                    view.showError(bean.status.message);
+                }
             }
 
             @Override
