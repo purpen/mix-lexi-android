@@ -15,6 +15,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.selection.CardScaleHelper
 import com.lexivip.lexi.index.selection.HeadLineBean
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_goods_recommend.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
 import kotlinx.android.synthetic.main.view_selection_goods_center_recommend.*
@@ -76,7 +77,12 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
      * 初始化头条
      */
     private fun initNotice() {
-        presenter.getHeadLine()
+        if (UserProfileUtil.isSmallB()){
+            relativeLayoutUserGuide.visibility = View.GONE
+        }else{
+            presenter.getHeadLine()
+            relativeLayoutUserGuide.visibility = View.VISIBLE
+        }
     }
 
     /**
