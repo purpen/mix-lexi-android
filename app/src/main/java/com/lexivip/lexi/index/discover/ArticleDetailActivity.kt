@@ -13,6 +13,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.CustomStaggerGridLayoutManager
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
+import com.lexivip.lexi.beans.BrandPavilionBean
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
@@ -40,6 +41,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private lateinit var channelName: String
     private lateinit var headerView: View
     private lateinit var footerView: View
+    private var brandPavilionBean:BrandPavilionBean? = null
     override fun getIntentData() {
         rid = intent.getStringExtra(TAG)
         channelName = intent.getStringExtra(ArticleDetailActivity::class.java.name)
@@ -158,6 +160,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         val userAvatar = data.optString("user_avator")
         val userName = data.optString("user_name")
         val dealContent = data.optJSONArray("deal_content")
+        val recommendStore = data.optJSONObject("recommend_store")
 
         GlideUtil.loadImageWithDimenAndRadius(cover,headerView.imageViewCover,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(250.0))
         headerView.textViewArticleType.text = channelName
@@ -200,9 +203,74 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         }
 
         adapter.setNewData(listDescription)
+        if(recommendStore==null){
+            footerView.relativeLayoutLifeHouse.visibility = View.GONE
+            return
+        }else{
+            footerView.relativeLayoutLifeHouse.visibility = View.VISIBLE
+        }
+
+        brandPavilionBean = BrandPavilionBean()
+        val isFollowStore = recommendStore.optBoolean("is_follow_store")
+        val productCount = recommendStore.optInt("product_counts")
+        val storeName = recommendStore.optString("store_name")
+        val storeRid = recommendStore.optString("store_rid")
+        val storeLogo = recommendStore.optString("store_logo")
+        brandPavilionBean!!.is_followed = isFollowStore
+        brandPavilionBean!!.product_count = productCount
+        brandPavilionBean!!.name = storeName
+        brandPavilionBean!!.rid = storeRid
+
+        if (isFollowStore) {
+            footerView.buttonFocus.text = Util.getString(R.string.text_focused)
+            footerView.buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+            footerView.buttonFocus.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
+            footerView.buttonFocus.setPadding(0, 0, 0, 0)
+            footerView.buttonFocus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+        } else {
+            footerView.buttonFocus.text = Util.getString(R.string.text_focus)
+            footerView.buttonFocus.setTextColor(Util.getColor(android.R.color.white))
+            footerView.buttonFocus.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
+            footerView.buttonFocus.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_focus_pavilion, R.dimen.dp13, R.dimen.dp12), null, null, null)
+        }
+
+        val dp60 = DimenUtil.dp2px(60.0)
+        GlideUtil.loadImageWithDimenAndRadius(storeLogo,footerView.imageView,0,dp60)
+        footerView.textViewNum.text = "${productCount}件商品"
+        footerView.textViewPavilionName.text = storeName
+
+
+    }
+
+    //设置品牌馆关注状态
+    override fun setBrandPavilionFocusState(favorite: Boolean) {
+        if (favorite) {
+            footerView.buttonFocus.text = Util.getString(R.string.text_focused)
+            footerView.buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+            footerView.buttonFocus.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
+            footerView.buttonFocus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            footerView.buttonFocus.setPadding(0, 0, 0, 0)
+        } else {
+            footerView.buttonFocus.text = Util.getString(R.string.text_focus)
+            footerView.buttonFocus.setTextColor(Util.getColor(android.R.color.white))
+            footerView.buttonFocus.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
+            footerView.buttonFocus.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_focus_pavilion, R.dimen.dp13, R.dimen.dp12), null, null, null)
+        }
+
+        brandPavilionBean?.is_followed = favorite
     }
 
     override fun installListener() {
+
+        footerView.buttonFocus.setOnClickListener { v ->
+
+            if (brandPavilionBean==null) return@setOnClickListener
+            if (UserProfileUtil.isLogin()) {
+                presenter.focusBrandPavilion(brandPavilionBean!!.rid, !brandPavilionBean!!.is_followed,v)
+            }else{
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+        }
 
         imageViewBack.setOnClickListener { finish() }
 

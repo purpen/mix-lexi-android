@@ -17,6 +17,7 @@ import com.lexivip.lexi.beans.ProductBean
 class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<PeopleRecommendAdapter.MultipleItem, BaseViewHolder>(list) {
     private val dp4: Int by lazy { DimenUtil.dp2px(4.0) }
     private val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth() - DimenUtil.dp2px(40.0)) / 2 }
+    private val span2Height by lazy { sizeSpan2*128/160}
 
     private val sizeSpan1 by lazy { (ScreenUtil.getScreenWidth() - DimenUtil.dp2px(48.0)) / 3 }
 
@@ -50,9 +51,9 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
         val imageView = helper.getView<ImageView>(R.id.imageView)
 
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
-            layoutParams = RelativeLayout.LayoutParams(sizeSpan2, sizeSpan2)
+            layoutParams = RelativeLayout.LayoutParams(sizeSpan2, span2Height)
             imageView.layoutParams = layoutParams
-            GlideUtil.loadImageWithDimenAndRadius(itemProduct.cover, imageView, dp4, sizeSpan2)
+            GlideUtil.loadImageWithDimenAndRadius(itemProduct.cover, imageView, dp4, sizeSpan2,span2Height)
         } else {
             layoutParams = RelativeLayout.LayoutParams(sizeSpan1, sizeSpan1)
             imageView.layoutParams = layoutParams

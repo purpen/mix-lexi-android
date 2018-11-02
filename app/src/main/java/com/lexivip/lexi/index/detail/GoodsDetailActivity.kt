@@ -18,10 +18,7 @@ import kotlinx.android.synthetic.main.header_goods_detail.*
 import android.widget.TextView
 import com.basemodule.tools.*
 import com.lexivip.lexi.*
-import com.lexivip.lexi.beans.BrandPavilionBean
-import com.lexivip.lexi.beans.CouponBean
-import com.lexivip.lexi.beans.ProductBean
-import com.lexivip.lexi.beans.UserBean
+import com.lexivip.lexi.beans.*
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
 import com.lexivip.lexi.user.login.LoginActivity
@@ -63,7 +60,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     private var goodsData: GoodsAllDetailBean.DataBean? = null
 
     //品牌馆数据
-    private var brandPavilionData: BrandPavilionBean.DataBean? = null
+    private var brandPavilionData: BrandPavilionBean? = null
 
     override fun getIntentData() {
         product = intent.extras.getParcelable(TAG)
@@ -210,10 +207,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
     //设置品牌馆信息
-    override fun setBrandPavilionData(data: BrandPavilionBean.DataBean?) {
-
-        if (data == null) return
-
+    override fun setBrandPavilionData(data: BrandPavilionBean) {
         brandPavilionData = data
         val imgUrls = ArrayList<String>()
 
@@ -750,7 +744,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             R.id.buttonFocus -> { //关注大B/品牌馆/店铺
                 if (UserProfileUtil.isLogin()) {
                     if (brandPavilionData == null || goodsData == null) return
-                    presenter.focusBrandPavilion(goodsData!!.store_rid, !brandPavilionData!!.is_followed)
+                    presenter.focusBrandPavilion(goodsData!!.store_rid, !brandPavilionData!!.is_followed,v)
                 }else{
                     startActivity(Intent(this, LoginActivity::class.java))
                 }

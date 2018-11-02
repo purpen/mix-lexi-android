@@ -1,6 +1,7 @@
 package com.lexivip.lexi.index.discover
 
 import android.support.annotation.NonNull
+import android.view.View
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.LifeWillBean
@@ -28,6 +29,10 @@ class ArticleDetailContract {
         fun setRecommendProductsData(products: List<ProductBean>) {
 
         }
+
+        fun setBrandPavilionFocusState(favorite: Boolean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -35,5 +40,6 @@ class ArticleDetailContract {
         fun focusUser(uid: String, v: android.view.View, isFollow: Boolean)
         fun getRelateStories(rid: String)
         fun getRecommendProducts(rid: String)
+        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, v: android.view.View)
     }
 }
