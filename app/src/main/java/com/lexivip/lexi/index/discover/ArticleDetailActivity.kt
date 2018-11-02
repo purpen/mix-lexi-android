@@ -9,13 +9,11 @@ import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
-import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.CustomStaggerGridLayoutManager
-import com.lexivip.lexi.R
-import com.lexivip.lexi.RecyclerViewDivider
+import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.BrandPavilionBean
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.user.login.LoginActivity
@@ -270,6 +268,11 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             }else{
                 startActivity(Intent(this, LoginActivity::class.java))
             }
+        }
+
+        footerView.relativeLayoutLifeHouse.setOnClickListener {
+            if (brandPavilionBean==null) return@setOnClickListener
+            PageUtil.jump2BrandPavilionActivity(brandPavilionBean!!.rid)
         }
 
         imageViewBack.setOnClickListener { finish() }
