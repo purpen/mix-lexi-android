@@ -26,7 +26,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="144dp"
                 android:background="@mipmap/icon_receive_voucher_title"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"></RelativeLayout>
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+                <com.lexivip.lexi.receiveVoucher.SmoothScrollLayout
+                    android:id="@+id/scrollLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp65"></com.lexivip.lexi.receiveVoucher.SmoothScrollLayout>
+            </RelativeLayout>
 
             <com.flyco.tablayout.SlidingTabLayout
                 android:id="@+id/slidingTabLayout"

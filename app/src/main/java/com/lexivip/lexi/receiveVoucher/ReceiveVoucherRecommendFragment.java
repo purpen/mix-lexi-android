@@ -74,6 +74,7 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
         presenter.loadBrand("0",String.valueOf(page));
         presenter.loadGoods("0",UserProfileUtil.storeId());
         presenter.loadOfficial();
+        presenter.loadImage();
     }
 
     @Override
@@ -108,13 +109,9 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
     public void getBrand(VoucherBrandBean brandBean) {
         for (int i=0;i<brandBean.data.coupons.size();i++){
             if (i%3==0){
-                LogUtil.e("一个"+i);
                 list.add(new MultipleItem(brandBean.data.coupons.get(i),MultipleItem.ITEM_TYPE_SPAN1,MultipleItem.ITEM_SPAN1_SIZE));
-                LogUtil.e("第几个："+i+"几个:"+list.get(i).getItemType());
             }else {
-                LogUtil.e("两个"+i);
                 list.add(new MultipleItem(brandBean.data.coupons.get(i),MultipleItem.ITEM_TYPE_SPAN2,MultipleItem.ITEM_SPAN2_SIZE));
-                LogUtil.e("第几个："+i+"几个:"+list.get(i).getItemType());
             }
             //list.add(new AdapterReceiveVoucherBrand.MultipleItem(2,brandBean.data.coupons.get(i)));
         }

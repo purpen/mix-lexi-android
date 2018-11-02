@@ -30,6 +30,7 @@ public class ReceiveVoucherActivity extends BaseActivity implements ReceiveVouch
     private ArrayList<BaseFragment> fragments;
     private List<String> titles;
     private LinearLayout ll_voucher;
+    private SmoothScrollLayout scrollLayout;
 
     @Override
     protected int getLayout() {
@@ -46,7 +47,9 @@ public class ReceiveVoucherActivity extends BaseActivity implements ReceiveVouch
         slidingTabLayout = findViewById(R.id.slidingTabLayout);
         viewPager = findViewById(R.id.viewPager);
         ll_voucher = findViewById(R.id.ll_voucher);
+        scrollLayout = findViewById(R.id.scrollLayout);
         presenter.loadClass();
+        presenter.loadNotice();
     }
 
     @Override
@@ -96,7 +99,9 @@ public class ReceiveVoucherActivity extends BaseActivity implements ReceiveVouch
 
     @Override
     public void getNotice(VoucherNoticeBean bean) {
-
+        LogUtil.e("长度"+bean.data.coupon_lines.size());
+        LogUtil.e(bean.data.coupon_lines.get(0).store_name);
+        scrollLayout.setData(bean.data.coupon_lines);
     }
 
     @Override

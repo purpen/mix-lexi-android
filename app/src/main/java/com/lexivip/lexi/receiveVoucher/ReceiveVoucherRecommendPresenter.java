@@ -7,6 +7,7 @@ import com.basemodule.tools.Util;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.JsonUtil;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.user.login.UserProfileUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -86,7 +87,33 @@ public class ReceiveVoucherRecommendPresenter implements ReceiveVoucherRecommend
 
     @Override
     public void loadImage() {
+        model.loadImage(new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
 
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                LogUtil.e("图片："+json);
+                //VoucherNoticeBean bean=JsonUtil.fromJson(json,VoucherNoticeBean.class);
+                /*if (bean.success){
+                    //view.im
+                }else {
+                    view.showError(bean.status.message);
+                }*/
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.showError(Util.getString(R.string.text_net_error));
+            }
+        });
     }
 
     @Override

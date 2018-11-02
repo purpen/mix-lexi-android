@@ -54,7 +54,7 @@ public class GlideUtil {
      * @param <T>
      */
     public static <T> void loadImageWithTopRadius(T t, ImageView imageView, int radius) {
-        RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
+        RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.TOP))
                 .format(DecodeFormat.PREFER_RGB_565)
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

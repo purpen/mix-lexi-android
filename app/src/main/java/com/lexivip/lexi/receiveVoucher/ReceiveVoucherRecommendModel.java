@@ -92,9 +92,15 @@ public class ReceiveVoucherRecommendModel {
             }
         });
     }
-    public void loadImage(String rid, IDataSource.HttpRequestCallBack callBack){
-        HashMap<String,Object> params=ClientParamsAPI.getDefaultParams();
-        HttpRequest.sendRequest(HttpRequest.GET, URL.VOUCHER_IMAGE, params, new IDataSource.HttpRequestCallBack() {
+    public void loadImage(final IDataSource.HttpRequestCallBack callBack){
+       String rid;
+       if (UserProfileUtil.isLogin()){
+           rid="/"+UserProfileUtil.getUserId();
+       }else {
+           rid="";
+       }
+        HashMap<String,Object> params=ClientParamsAPI.getRidParams(UserProfileUtil.getUserId());
+        HttpRequest.sendRequest(HttpRequest.GET, URL.VOUCHER_IMAGE , params, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
@@ -102,17 +108,17 @@ public class ReceiveVoucherRecommendModel {
 
             @Override
             public void onStart() {
-
+                callBack.onStart();
             }
 
             @Override
             public void onSuccess(@NotNull String json) {
-
+                callBack.onSuccess(json);
             }
 
             @Override
             public void onFailure(@NotNull IOException e) {
-
+                callBack.onFailure(e);
             }
         });
     }
