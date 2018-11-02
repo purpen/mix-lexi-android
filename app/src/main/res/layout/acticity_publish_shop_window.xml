@@ -13,89 +13,150 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        >
+        android:background="@android:color/white">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/textViewTipsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:textSize="20sp"
-                android:textColor="@color/color_333"
                 android:includeFontPadding="false"
-                android:textStyle="bold"
                 android:text="@string/text_create_you_life_aesthetics"
-                />
+                android:textColor="@color/color_333"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/textViewTipsSubTitle"
-                android:layout_below="@id/textViewTipsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/publish_shopwindow_tips"
+                android:layout_below="@id/textViewTipsTitle"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:includeFontPadding="false"
+                android:text="@string/publish_shopwindow_tips"
                 android:textColor="#ff333333"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/button3Image"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="79dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="21dp"
-                android:layout_marginBottom="20dp"
-                android:enabled="false"
                 android:layout_below="@id/textViewTipsSubTitle"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="21dp"
                 android:background="@drawable/selector_switch_product_num"
+                android:enabled="false"
                 android:text="@string/text_tile_with_3_image"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/button5Image"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="79dp"
                 android:layout_height="30dp"
+                android:layout_alignTop="@id/button3Image"
                 android:layout_marginStart="15dp"
                 android:layout_toEndOf="@id/button3Image"
-                android:layout_alignTop="@id/button3Image"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:background="@drawable/selector_switch_product_num"
                 android:text="@string/text_tile_with_5_image"
                 android:textColor="@color/color_333"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
+
             <Button
                 android:id="@+id/button7Image"
-                android:layout_alignTop="@id/button5Image"
-                android:layout_toEndOf="@id/button5Image"
-                android:layout_marginStart="15dp"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="79dp"
                 android:layout_height="30dp"
-                android:text="@string/text_tile_with_7_image"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_alignTop="@id/button5Image"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/button5Image"
                 android:background="@drawable/selector_switch_product_num"
+                android:text="@string/text_tile_with_7_image"
                 android:textColor="@color/color_333"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:id="@+id/linearLayoutBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/button3Image"
-                android:orientation="vertical"
-                >
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:orientation="vertical">
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewProductCountTips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayoutBox"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:includeFontPadding="false"
+                android:text="@string/text_shop_window_product_num_tips"
+                android:textColor="@color/color_999"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/editTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewProductCountTips"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                android:background="@null"
+                android:gravity="start|center_vertical"
+                android:hint="@string/text_shop_window_title_hint"
+                android:includeFontPadding="false"
+                android:textColor="@color/color_333"
+                android:textColorHint="@color/color_ccc"
+                android:textSize="15sp" />
+
+            <include
+                android:id="@+id/line"
+                layout="@layout/line_color_eee"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/editTextTitle"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:id="@+id/editTextContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:background="@null"
+                android:gravity="start|center_vertical"
+                android:hint="@string/text_shop_window_content_tips"
+                android:includeFontPadding="false"
+                android:textColor="@color/color_333"
+                android:textColorHint="@color/color_ccc"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/buttonAddTag"
+                android:layout_below="@id/editTextContent"
+                android:layout_width="90dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/bg_colorff6b34_round"
+                android:layout_marginTop="40dp"
+                />
         </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>

@@ -119,7 +119,7 @@ public class GlideUtil {
         RequestOptions requestOptions = bitmapTransform(multi)
                 .override(width, height)
                 .dontAnimate()
-                .skipMemoryCache(true)
+                .skipMemoryCache(false)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER)
@@ -282,10 +282,10 @@ public class GlideUtil {
         Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
     }
 
-    public static <T> void loadCircleImageWidthDimen(@NotNull T t, @Nullable ImageView imageView, int size) {
+    public static <T> void loadCircleImageWidthDimen(@NotNull T t, @NotNull ImageView imageView, int size) {
         RequestOptions requestOptions = bitmapTransform(new CircleCrop()).diskCacheStrategy(DiskCacheStrategy.ALL)
                 .override(size)
-                .skipMemoryCache(true)
+                .skipMemoryCache(false)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
@@ -302,7 +302,7 @@ public class GlideUtil {
      * @param dimen
      * @param <T>
      */
-    public static <T> void loadImageWithBlurAndRadius(T t, @Nullable ImageView imageView, int radius, int dimen){
+    public static <T> void loadImageWithBlurAndRadius(T t, @NotNull ImageView imageView, int radius, int dimen){
         loadImageWithBlurAndRadius(t,imageView,radius,dimen,dimen);
     }
 
@@ -313,7 +313,7 @@ public class GlideUtil {
      * @param imageView
      * @param <T>
      */
-    public static <T> void loadImageWithBlurAndRadius(T t, @Nullable ImageView imageView, int radius, int width, int height) {
+    public static <T> void loadImageWithBlurAndRadius(T t, @NotNull ImageView imageView, int radius, int width, int height) {
         MultiTransformation multi = new MultiTransformation(
                 new CenterCrop(),
                 new BlurTransformation(65),
