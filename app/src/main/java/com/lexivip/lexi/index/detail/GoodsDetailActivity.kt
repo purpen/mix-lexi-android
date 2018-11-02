@@ -779,7 +779,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
             R.id.buttonGetDiscount -> { //获取优惠券
                 if (UserProfileUtil.isLogin()) {
-                    val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, product.store_rid)
+                    if (brandPavilionData==null) return
+                    val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, brandPavilionData!!.rid)
                     couponBottomDialog.show()
                 }else{
                     startActivity(Intent(this, LoginActivity::class.java))

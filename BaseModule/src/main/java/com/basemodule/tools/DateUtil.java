@@ -46,7 +46,7 @@ public class DateUtil {
         c.setTime(date);
         int month = c.get(Calendar.MONTH);
         c.set(Calendar.MONTH, month - interval);
-        return new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+        return new SimpleDateFormat(PATTERN).format(c.getTime());
     }
 
     /**
@@ -61,11 +61,11 @@ public class DateUtil {
         Calendar c = Calendar.getInstance();
         Date date;
         try {
-            date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+            date = new SimpleDateFormat(PATTERN).parse(dateStr);
             c.setTime(date);
             int month = c.get(Calendar.MONTH);
             c.set(Calendar.MONTH, month - interval);
-            return new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
+            return new SimpleDateFormat(PATTERN).format(c.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
         }
