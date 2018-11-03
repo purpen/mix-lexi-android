@@ -101,7 +101,6 @@ class EmotionMainFragment : BaseFragment() {
         return rootView
     }
 
-
     /**
      * 绑定内容view
      * @param contentView
@@ -115,7 +114,6 @@ class EmotionMainFragment : BaseFragment() {
     private lateinit var inputBar: LinearLayout
 
     private lateinit var relativeLayoutBox: RelativeLayout
-    private lateinit var textViewInput: TextView
 
     /**
      * 初始化view控件
@@ -239,7 +237,7 @@ class EmotionMainFragment : BaseFragment() {
     /**
      * 数据操作,这里是测试数据，请自行更换数据
      */
-    protected fun initDatas() {
+    private fun initDatas() {
         replaceFragment()
         val list = ArrayList<ImageModel>()
         for (i in fragments.indices) {

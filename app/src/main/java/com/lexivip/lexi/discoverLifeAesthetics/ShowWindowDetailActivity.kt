@@ -181,8 +181,12 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             buttonFocus.visibility = View.VISIBLE
             if (data.is_follow) {
                 buttonFocus.text = Util.getString(R.string.text_focused)
+                buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+                buttonFocus.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
             } else {
                 buttonFocus.text = Util.getString(R.string.text_focus)
+                buttonFocus.setTextColor(Util.getColor(android.R.color.white))
+                buttonFocus.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
             }
         }
 
