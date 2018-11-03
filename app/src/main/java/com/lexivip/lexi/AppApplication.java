@@ -58,12 +58,12 @@ public class AppApplication extends MultiDexApplication {
         EventBus.builder().addIndex(new MyEventBusIndex()).throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
 
         //umeng分享
-        UMConfigure.init(this,"5a12384aa40fa3551f0001d1"
+        UMConfigure.init(this,"5bc5c5f1b465f5c5a000007d"
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
-        PlatformConfig.setWeixin("wx777520ec6a61fff5", "a049e19a6f464e7d53ad28b4dbc905e2");
+        PlatformConfig.setWeixin("wx777520ec6a61fff5", "8eddb55d39cbfdb9fee1afa93a495db1");
         //豆瓣RENREN平台目前只能在服务器端配置
-        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
-        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        //PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
+        //PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
     }
 
 
