@@ -151,12 +151,19 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
     }
 
-
-    override fun loadData() {
+    override fun onResume() {
+        super.onResume()
         presenter.getUserRecentLook()
 
         presenter.getWishOrder()
     }
+
+//
+//    override fun loadData() {
+//        presenter.getUserRecentLook()
+//
+//        presenter.getWishOrder()
+//    }
 
 
     override fun showLoadingView() {

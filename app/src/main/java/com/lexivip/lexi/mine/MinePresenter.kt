@@ -19,7 +19,6 @@ class MinePresenter(view: MineContract.View) : MineContract.Presenter {
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 view.dismissLoadingView()
                 val userCenterBean = JsonUtil.fromJson(json, UserCenterBean::class.java)
                 if (userCenterBean.success) {

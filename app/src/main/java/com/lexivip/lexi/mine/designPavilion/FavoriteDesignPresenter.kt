@@ -1,4 +1,5 @@
 package com.lexivip.lexi.mine.designPavilion
+
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -11,10 +12,11 @@ class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesig
     private var view: FavoriteDesignContract.View = checkNotNull(view)
 
     private val dataSource: FavoriteDesignModel by lazy { FavoriteDesignModel() }
-    private var page:Int =1
+    private var page: Int = 1
 
-    override fun loadData() {
-        dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
+    override fun loadData(b: Boolean) {
+        if (b) page = 1
+        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -39,7 +41,7 @@ class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesig
 
 
     override fun loadMoreData() {
-        dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
+        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val designPavilionListBean = JsonUtil.fromJson(json, DesignPavilionListBean::class.java)
                 if (designPavilionListBean.success) {
@@ -66,11 +68,11 @@ class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesig
      * 关注/取消品牌馆
      */
     override fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int) {
-        dataSource.focusBrandPavilion(store_rid,isFavorite,object : IDataSource.HttpRequestCallBack {
+        dataSource.focusBrandPavilion(store_rid, isFavorite, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
-                    view.setBrandPavilionFocusState(isFavorite,position)
+                    view.setBrandPavilionFocusState(isFavorite, position)
                 } else {
                     view.showError(netStatusBean.status.message)
                 }

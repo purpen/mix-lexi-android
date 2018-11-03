@@ -32,6 +32,7 @@ import android.Manifest.permission.READ_LOGS
 import android.Manifest.permission.CALL_PHONE
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.Context
 import com.umeng.commonsdk.UMConfigure
 import com.lexivip.lexi.coupon.UserCouponActivity
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
@@ -59,6 +60,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
             return mainFragment3
         }
     }
+
 
     override val layout: Int = R.layout.fragment_main3
 
@@ -205,9 +207,14 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         }
     }
 
-    override fun loadData() {
+    override fun onResume() {
+        super.onResume()
         presenter.loadData()
     }
+
+//    override fun loadData() {
+//        presenter.loadData()
+//    }
 
     /**
      * 设置用户数据
