@@ -1,5 +1,4 @@
 package com.lexivip.lexi.index.detail
-
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
