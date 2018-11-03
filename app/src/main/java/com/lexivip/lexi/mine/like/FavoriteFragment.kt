@@ -4,27 +4,23 @@ import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
-import com.lexivip.lexi.index.detail.GoodsDetailActivity
-import com.lexivip.lexi.index.selection.DiscoverLifeBean
 import com.lexivip.lexi.mine.*
 import com.lexivip.lexi.mine.like.likeGoods.AllLikeGoodsActivity
-import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.adapter_goods_like.view.*
 import kotlinx.android.synthetic.main.adapter_item_show_window.view.*
 import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class FavoriteFragment : BaseFragment(), FavoriteContract.View {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
+    private val dialog: WaitingDialog by lazy { WaitingDialog(AppManager.getAppManager().currentActivity()) }
 
     private val adapterLikeGoods: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
 
@@ -32,12 +28,12 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
     private val adapterLikeShowWindow: AdapterLikeShowWindow by lazy { AdapterLikeShowWindow(R.layout.adapter_show_window_like) }
 
+    private val presenter: FavoritePresenter by lazy { FavoritePresenter(this) }
     private lateinit var headerView: View
 
     private lateinit var emptyHeaderView: View
 
     override val layout: Int = R.layout.fragment_recyclerview
-    private lateinit var presenter: FavoritePresenter
 
     companion object {
         @JvmStatic
@@ -45,8 +41,6 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
     }
 
     override fun initView() {
-
-        presenter = FavoritePresenter(this)
 
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -60,10 +54,14 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
         initShowWindowLike()
 
         adapterMineFavorite.addHeaderView(headerView)
-
         adapterMineFavorite.setHeaderAndEmpty(true)
 
+    }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.getUserGoodsLike()
+        presenter.getShowWindowLike()
     }
 
     private fun initShowWindowLike() {
@@ -79,7 +77,6 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
      * 设置喜欢的橱窗数据
      */
     override fun setShowWindowData(shop_windows: List<ShopWindowBean>) {
-
         adapterLikeShowWindow.setNewData(shop_windows)
         if (shop_windows.isEmpty()) headerView.linearLayoutLikeWindow.visibility = View.GONE
     }
@@ -111,7 +108,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
             emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_things)
             emptyHeaderView.textViewDesc1.visibility = View.VISIBLE
             adapterMineFavorite.setHeaderView(emptyHeaderView)
-        }else{
+        } else {
             headerView.linearLayoutGoodsLike.visibility = View.VISIBLE
         }
     }
@@ -122,21 +119,17 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
             startActivity(Intent(activity, AllLikeGoodsActivity::class.java))
         }
 
+
         adapterLikeGoods.setOnItemClickListener { _, _, position ->
-            val item = adapterLikeGoods.getItem(position)
-            val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
-            startActivity(intent)
+            LogUtil.e("setOnItemClickListener"+position)
+            val item = adapterLikeGoods.getItem(position)?:return@setOnItemClickListener
+            PageUtil.jump2GoodsDetailActivity(item.rid)
         }
     }
 
 
     override fun loadData() {
-        if (UserProfileUtil.isLogin()) {
-            presenter.getUserGoodsLike()
 
-            presenter.getShowWindowLike()
-        }
     }
 
 

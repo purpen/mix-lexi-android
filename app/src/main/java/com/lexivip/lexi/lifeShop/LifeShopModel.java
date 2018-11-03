@@ -51,7 +51,7 @@ public class LifeShopModel {
 
             @Override
             public void onSuccess(@NotNull String json) {
-                LogUtil.e("?????"+json);
+//                LogUtil.e("?????"+json);
                 callBack.onSuccess(json);
             }
 

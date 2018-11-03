@@ -37,7 +37,7 @@ class FavoriteDesignContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData()
+        fun loadData(b: Boolean)
         fun loadMoreData()
         fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int)
     }

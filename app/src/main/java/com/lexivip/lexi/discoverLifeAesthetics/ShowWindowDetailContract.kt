@@ -38,15 +38,11 @@ class ShowWindowDetailContract {
 
         }
 
-        fun setCommentState() {
-
-        }
-
         fun setPraiseCommentState(b: Boolean, position: Int, isSubAdapter: Boolean) {
 
         }
 
-        fun noticeCommentSuccess(data: CommentSuccessBean.DataBean?) {
+        fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
 
         }
     }

@@ -38,4 +38,5 @@ public class ShopWindowBean {
     public List<String> keywords;
     public List<String> product_covers;
     public List<ProductBean> products;
+    public String PAGE_TAG;
 }

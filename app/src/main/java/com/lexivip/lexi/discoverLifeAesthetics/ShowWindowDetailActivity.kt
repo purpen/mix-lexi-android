@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.footer_comment_count.view.*
 import kotlinx.android.synthetic.main.view_show_window_image3.view.*
 import kotlinx.android.synthetic.main.view_show_window_image5.view.*
 import kotlinx.android.synthetic.main.view_show_window_image7.view.*
+import org.greenrobot.eventbus.EventBus
 
 class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
@@ -60,6 +61,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     }
 
     override fun initView() {
+//        EventBus.getDefault().register(this)
         customHeadView.setHeadCenterTxtShow(true, R.string.title_show_case)
         initGuessLike()
         initRelateShowWindow()
@@ -526,6 +528,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                 PageUtil.jump2LoginActivity()
             }
 
+
         }
 
 
@@ -598,9 +601,10 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     /**
      * 重新设置评论数
      */
-    override fun setCommentState() {
+    override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
         if (shopWindow == null) return
         textViewComment.text = "${shopWindow!!.comment_count++}"
+        EventBus.getDefault().post(shopWindow)
     }
 
     /**
@@ -618,6 +622,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             buttonFocus.setTextColor(Util.getColor(android.R.color.white))
             buttonFocus.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
         }
+        EventBus.getDefault().post(shopWindow)
     }
 
     /**
@@ -636,6 +641,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
             shopWindow!!.like_count -= 1
             textViewLikeCount.text = "${shopWindow!!.like_count}"
         }
+        EventBus.getDefault().post(shopWindow)
     }
 
     override fun goPage() {
@@ -689,5 +695,10 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         if (!emotionMainFragment!!.isInterceptBackPress()) {
             finish()
         }
+    }
+
+    override fun onDestroy() {
+//        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 }

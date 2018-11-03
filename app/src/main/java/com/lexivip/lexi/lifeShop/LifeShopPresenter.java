@@ -18,6 +18,7 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
     private LifeShopModel model=new LifeShopModel();
     public LifeShopPresenter(LifeShopContract.View view) {
         this.view = view;
+
     }
 
     @Override
@@ -47,7 +48,7 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
                         break;
                     case 1:
                         LifeShopSaleBean saleBean=JsonUtil.fromJson(json,LifeShopSaleBean.class);
-                        LogUtil.e(json);
+//                        LogUtil.e(json);
                         if (saleBean.success){
                             view.setSaleData(saleBean);
                         }else {
@@ -56,7 +57,7 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
                         break;
                     case 2:
                         LifeShopOrderBean orderBean=JsonUtil.fromJson(json,LifeShopOrderBean.class);
-                        LogUtil.e(json);
+//                        LogUtil.e(json);
                         if (orderBean.success){
                             view.setOrderData(orderBean);
                         }else {
@@ -65,7 +66,7 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
                         break;
                     case 3:
                         LifeShopCashBean cashBean=JsonUtil.fromJson(json,LifeShopCashBean.class);
-                        LogUtil.e(json);
+//                        LogUtil.e(json);
                         if (cashBean.success){
                             view.setCashData(cashBean);
                         }else {

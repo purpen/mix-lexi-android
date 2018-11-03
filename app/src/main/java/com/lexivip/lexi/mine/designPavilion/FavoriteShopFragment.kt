@@ -90,9 +90,14 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         adapter.notifyDataSetChanged()
     }
 
-    override fun loadData() {
-        presenter.loadData()
+    override fun onResume() {
+        super.onResume()
+        presenter.loadData(true)
     }
+
+//    override fun loadData() {
+//        presenter.loadData()
+//    }
 
 
     override fun setNewData(data: MutableList<DesignPavilionBean>) {
