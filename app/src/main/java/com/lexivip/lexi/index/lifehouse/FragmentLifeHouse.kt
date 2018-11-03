@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.lifehouse
+
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
@@ -154,7 +155,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         headerLifeHouse.textViewLook.visibility = View.VISIBLE
         val string = SpannableString("$count 人浏览过生活馆")
-        val end=count.toString().length
+        val end = count.toString().length
         string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)), 0, end + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         headerLifeHouse.textViewLook.text = string
 
@@ -215,7 +216,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         recyclerViewWelcome.layoutManager = gridLayoutManager
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
 
-        recyclerViewWelcome.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
+        recyclerViewWelcome.addItemDecoration(GridSpacingItemDecoration(2, DimenUtil.dp2px(10.0), DimenUtil.dp2px(20.0), false))
         adapter.addFooterView(footerWelcome)
 
     }
@@ -287,8 +288,13 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      */
     override fun setFavorite(b: Boolean, position: Int) {
         val item = adapter.getItem(position) as ProductBean
+        if (b) {
+            item.like_count += 1
+        } else {
+            item.like_count -=1
+        }
         item.is_like = b
-        adapter.notifyItemChanged(position+1)
+        adapter.notifyItemChanged(position + 1)
     }
 
     override fun installListener() {
@@ -533,7 +539,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onClipComplete(message: ImageCropActivity.MessageCropComplete) {
-        if(FragmentLifeHouse::class.java.simpleName.equals(message.simpleName)) {
+        if (FragmentLifeHouse::class.java.simpleName.equals(message.simpleName)) {
             val byteArray = ImageUtils.bitmap2ByteArray(message.bitmap)
             presenter.getUploadToken(byteArray)
             setLifeHouseLogo(byteArray)

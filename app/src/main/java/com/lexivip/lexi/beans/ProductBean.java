@@ -89,7 +89,7 @@ public class ProductBean implements Parcelable {
     public boolean is_made_holiday;
     public boolean is_sold_out;
     public boolean is_proprietary;
-    public String like_count;
+    public int like_count;
     public boolean is_wish;
     public String made_cycle;
     public String max_price;
@@ -158,7 +158,7 @@ public class ProductBean implements Parcelable {
         dest.writeByte(this.is_made_holiday ? (byte) 1 : (byte) 0);
         dest.writeByte(this.is_sold_out ? (byte) 1 : (byte) 0);
         dest.writeByte(this.is_proprietary ? (byte) 1 : (byte) 0);
-        dest.writeString(this.like_count);
+        dest.writeInt(this.like_count);
         dest.writeByte(this.is_wish ? (byte) 1 : (byte) 0);
         dest.writeString(this.made_cycle);
         dest.writeString(this.max_price);
@@ -219,7 +219,7 @@ public class ProductBean implements Parcelable {
         this.is_made_holiday = in.readByte() != 0;
         this.is_sold_out = in.readByte() != 0;
         this.is_proprietary = in.readByte() != 0;
-        this.like_count = in.readString();
+        this.like_count = in.readInt();
         this.is_wish = in.readByte() != 0;
         this.made_cycle = in.readString();
         this.max_price = in.readString();
