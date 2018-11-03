@@ -3,6 +3,7 @@ package com.lexivip.lexi.discoverLifeAesthetics
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -18,6 +19,9 @@ import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
@@ -37,6 +41,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
 
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
+        EventBus.getDefault().register(this)
         swipeRefreshLayout.isEnabled = false
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -117,13 +122,33 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
         val item = adapter.getItem(position) ?: return
         item.is_follow = isFollowed
         adapter.notifyItemChanged(position)
+        item.PAGE_TAG = TAG
+        EventBus.getDefault().post(item)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onOuterPageShopWindow(message:ShopWindowBean) {
+        if (TextUtils.equals(TAG,message.PAGE_TAG)) return
+        val data = adapter.data
+        for (item in data){
+            if (TextUtils.equals(item.rid,message.rid)){
+                item.is_follow = message.is_follow
+                item.is_expert = message.is_expert
+                item.is_official = message.is_official
+                item.like_count = message.like_count
+                item.is_like = message.is_like
+                item.comment_count = message.comment_count
+                adapter.notifyDataSetChanged()
+                break
+            }
+        }
     }
 
     /**
      * 更新喜欢状态
      */
     override fun setFavorite(b: Boolean, position: Int) {
-        val item = adapter.getItem(position) as ShopWindowBean
+        val item = adapter.getItem(position)?:return
         item.is_like = b
         if (b) {
             item.like_count++
@@ -131,6 +156,8 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
             item.like_count--
         }
         adapter.notifyItemChanged(position)
+        item.PAGE_TAG = TAG
+        EventBus.getDefault().post(item)
     }
 
     override fun setNewData(shopWindows: MutableList<ShopWindowBean>) {
@@ -202,5 +229,10 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
 
             return divider
         }
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 }
