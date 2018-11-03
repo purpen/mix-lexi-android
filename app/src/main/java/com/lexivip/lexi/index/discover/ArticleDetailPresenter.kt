@@ -7,6 +7,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.discoverLifeAesthetics.UserFocusState
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendBean
+import com.lexivip.lexi.net.NetStatusBean
 import org.json.JSONObject
 import java.io.IOException
 
@@ -119,6 +120,32 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
 
             override fun onFailure(e: IOException) {
                 view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 关注/取消品牌馆
+     */
+    override fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, v: View) {
+        dataSource.focusBrandPavilion(store_rid, isFavorite, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                v.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                v.isEnabled = true
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    view.setBrandPavilionFocusState(isFavorite)
+                } else {
+                    view.showError(netStatusBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                v.isEnabled = true
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

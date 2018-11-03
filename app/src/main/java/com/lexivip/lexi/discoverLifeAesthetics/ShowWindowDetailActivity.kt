@@ -1,4 +1,5 @@
 package com.lexivip.lexi.discoverLifeAesthetics
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -42,7 +43,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
     private val adapter: ShopWindowDetailCommentListAdapter by lazy { ShopWindowDetailCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
-    private var emotionMainFragment: EmotionMainFragment?=null
+    private var emotionMainFragment: EmotionMainFragment? = null
     //父级评论id
     private var pid: String = "0"
 
@@ -68,7 +69,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 初始化EmotionMainFragment
      */
     private fun initEmotionFragment() {
-        if (shopWindow==null) return
+        if (shopWindow == null) return
         //构建传递参数
         val bundle = Bundle()
         //绑定主内容编辑框
@@ -174,14 +175,18 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         textViewTitle2.text = data.description
 
-        if (TextUtils.equals(UserProfileUtil.getUserId(),data.uid)){
+        if (TextUtils.equals(UserProfileUtil.getUserId(), data.uid)) {
             buttonFocus.visibility = View.GONE
-        }else{
+        } else {
             buttonFocus.visibility = View.VISIBLE
             if (data.is_follow) {
                 buttonFocus.text = Util.getString(R.string.text_focused)
+                buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+                buttonFocus.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
             } else {
                 buttonFocus.text = Util.getString(R.string.text_focus)
+                buttonFocus.setTextColor(Util.getColor(android.R.color.white))
+                buttonFocus.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
             }
         }
 
@@ -463,7 +468,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         textViewInput.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             textViewInput.getLocationOnScreen(intArray)
             if (intArray[1] > ScreenUtil.getScreenHeight() * 2 / 3) { //键盘被关闭
-                if (emotionMainFragment==null) return@addOnLayoutChangeListener
+                if (emotionMainFragment == null) return@addOnLayoutChangeListener
                 if (emotionMainFragment!!.isUserInputEmpty()) {
                     relativeLayoutBar.visibility = View.VISIBLE
                 }
@@ -485,8 +490,12 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
                     emotionMainFragment!!.setEditTextHint("回复${commentsBean.user_name}:")
                 }
 
-                R.id.textViewPraise -> {
-                    presenter.praiseComment(commentsBean.comment_id, commentsBean.is_praise, position, view, false)
+                R.id.textViewPraise -> { //点赞
+                    if (UserProfileUtil.isLogin()) {
+                        presenter.praiseComment(commentsBean.comment_id, commentsBean.is_praise, position, view, false)
+                    }else{
+                        PageUtil.jump2LoginActivity()
+                    }
                 }
             }
         }
@@ -507,18 +516,26 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         buttonFocus.setOnClickListener { view ->
             if (shopWindow == null) return@setOnClickListener
-            if (shopWindow!!.is_follow) {
-                presenter.unfocusUser(shopWindow!!.uid, view)
+            if (UserProfileUtil.isLogin()) {
+                if (shopWindow!!.is_follow) {
+                    presenter.unfocusUser(shopWindow!!.uid, view)
+                } else {
+                    presenter.focusUser(shopWindow!!.uid, view)
+                }
             } else {
-                presenter.focusUser(shopWindow!!.uid, view)
+                PageUtil.jump2LoginActivity()
             }
+
         }
 
 
         imageViewLike.setOnClickListener { view ->
             if (shopWindow == null) return@setOnClickListener
-
-            presenter.favoriteShowWindow(shopWindow!!.rid,imageViewLike,shopWindow!!.is_like,textViewLikeCount)
+            if (UserProfileUtil.isLogin()) {
+                presenter.favoriteShowWindow(shopWindow!!.rid, imageViewLike, shopWindow!!.is_like, textViewLikeCount)
+            }else{
+                PageUtil.jump2LoginActivity()
+            }
         }
 
         //跳转评论列表
@@ -542,7 +559,8 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
 
         //设置橱窗点击
         adapterRelateShowWindow.setOnItemClickListener { _, _, position ->
-            val windowsBean = adapterRelateShowWindow.getItem(position) ?: return@setOnItemClickListener
+            val windowsBean = adapterRelateShowWindow.getItem(position)
+                    ?: return@setOnItemClickListener
             PageUtil.jump2ShopWindowDetailActivity(windowsBean.rid)
         }
     }
@@ -592,9 +610,13 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         if (b) {
             shopWindow?.is_follow = b
             buttonFocus.text = Util.getString(R.string.text_focused)
+            buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+            buttonFocus.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
         } else {
             shopWindow?.is_follow = b
             buttonFocus.text = Util.getString(R.string.text_focus)
+            buttonFocus.setTextColor(Util.getColor(android.R.color.white))
+            buttonFocus.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
         }
     }
 
@@ -602,7 +624,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
      * 设置喜欢
      */
     override fun setFavorite(b: Boolean, view1: ImageView, textViewLikeCount: TextView) {
-        if (shopWindow==null) return
+        if (shopWindow == null) return
         if (b) {
             shopWindow!!.is_like = true
             view1.setImageResource(R.mipmap.icon_click_favorite_selected)

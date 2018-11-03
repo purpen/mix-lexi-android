@@ -94,6 +94,8 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 //            }
 //        }
 
+
+
         emotionMainFragment.setOnSendCommentListener(object : IOnSendCommentListener {
             override fun onSend(sendButton: Button, editText: EditText) {
                 if (UserProfileUtil.isLogin()) {
@@ -235,6 +237,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     }
 
     override fun setNewData(comments: MutableList<CommentBean>) {
+        emotionMainFragment.requestFocus()
         adapter.setNewData(comments)
     }
 

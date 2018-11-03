@@ -9,7 +9,6 @@
         android:layout_height="@dimen/dp249"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
-        android:src="@drawable/drawable_add_product"
         />
     <ImageView
         android:id="@+id/imageView31"
@@ -18,7 +17,6 @@
         android:layout_height="@dimen/dp124"
         android:layout_marginStart="@dimen/dp2"
         android:layout_marginBottom="@dimen/dp1"
-        android:src="@drawable/drawable_add_product"
         android:scaleType="fitXY"
         />
     <RelativeLayout

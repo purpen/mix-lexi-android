@@ -15,6 +15,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.selection.CardScaleHelper
 import com.lexivip.lexi.index.selection.HeadLineBean
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_goods_recommend.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
 import kotlinx.android.synthetic.main.view_selection_goods_center_recommend.*
@@ -28,7 +29,7 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
     private val fragment1: BaseFragment by lazy { FragmentOfficialRecommend.newInstance() }
     private val fragment2: BaseFragment by lazy { FragmentFirstPublish.newInstance() }
 
-    private val fragments:ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
+    private val fragments: ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
 
     private var page: Int = 1
 
@@ -76,7 +77,12 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
      * 初始化头条
      */
     private fun initNotice() {
-        presenter.getHeadLine()
+        if (UserProfileUtil.isSmallB() || UserProfileUtil.isBigB()) {
+            relativeLayoutUserGuide.visibility = View.GONE
+        } else {
+            presenter.getHeadLine()
+            relativeLayoutUserGuide.visibility = View.VISIBLE
+        }
     }
 
     /**
@@ -88,10 +94,10 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
         var i = 0
         while (i < size) {
             //设置滚动的单个布局
-            val noticeView = View.inflate(activity,R.layout.view_notice_item_view,null)
-            setNoticeTextViewData(data[i],noticeView.tv1)
+            val noticeView = View.inflate(activity, R.layout.view_notice_item_view, null)
+            setNoticeTextViewData(data[i], noticeView.tv1)
             if (size > i + 1) {
-                setNoticeTextViewData(data[i+1],noticeView.tv2)
+                setNoticeTextViewData(data[i + 1], noticeView.tv2)
             } else {
                 noticeView.tv2.visibility = View.GONE
             }
@@ -102,16 +108,17 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
         upMarqueeView.setViews(views)
 
     }
+
     /**
      * 设置通知
      */
     private fun setNoticeTextViewData(bean: HeadLineBean.DataBean.HeadlinesBean, textView: TextView) {
-        if (bean.username==null) bean.username=""
+        if (bean.username == null) bean.username = ""
         when (bean.event) {
             1 -> { //开通生活馆 人名蓝色
                 val content = "${bean.username} ${bean.time}${bean.time_info}开通了自己的生活馆"
                 val string = SpannableString(content)
-                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)),0, bean.username.toString().length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_6ed7af)), 0, bean.username.toString().length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
                 textView.text = string
             }
 
@@ -121,13 +128,13 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
             3 -> {//刚刚售出1单
                 val content = "「${bean.username}」的生活馆 ${bean.time}${bean.time_info} 售出${bean.quantity}单"
                 val string = SpannableString(content)
-                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)),content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)), content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
                 textView.text = string
             }
             4 -> {//售出单数
                 val content = "「${bean.username}」的生活馆 ${bean.time}${bean.time_info} 售出${bean.quantity}单"
                 val string = SpannableString(content)
-                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)),content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+                string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_f5a43c)), content.indexOf("售"), content.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
                 textView.text = string
             }
         }
@@ -193,7 +200,6 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
 //        }
 
 
-
     }
 
     override fun onClick(v: View) {
@@ -209,9 +215,6 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
         page = 1
         presenter.loadData("", page)
     }
-
-
-
 
 
     override fun showLoadingView() {

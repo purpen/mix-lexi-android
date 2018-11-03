@@ -21,24 +21,26 @@ import java.io.IOException
 
 class CouponBottomDialog(context: Context?) : BottomBaseDialog<CouponBottomDialog>(context) {
     private lateinit var couponsList: List<CouponBean>
-    private lateinit var present: GoodsDetailPresenter
-    private lateinit var presenter: BrandHousePresenter
+    private var present: GoodsDetailPresenter? = null
+    private var presenter: BrandHousePresenter? = null
     private lateinit var storeId: String
     private val list: ArrayList<CouponBean> by lazy { ArrayList<CouponBean>() }
     private val adapterDialogCoupon: AdapterDialogCoupon by lazy { AdapterDialogCoupon(R.layout.adapter_dialog_coupon) }
     private lateinit var view: View
     private lateinit var headerView: View
 
-    constructor(context: Context, coupons: List<CouponBean>, present: GoodsDetailPresenter, storeRid: String) : this(context){
-        couponsList=coupons
-        this.present=present
-        storeId=storeRid
+    constructor(context: Context, coupons: List<CouponBean>, present: GoodsDetailPresenter, storeRid: String) : this(context) {
+        couponsList = coupons
+        this.present = present
+        storeId = storeRid
     }
-    constructor(context: Context, coupons: List<CouponBean>, presenter: BrandHousePresenter, storeRid: String) : this(context){
-        couponsList=coupons
-        this.presenter=presenter
-        storeId=storeRid
+
+    constructor(context: Context, coupons: List<CouponBean>, presenter: BrandHousePresenter, storeRid: String) : this(context) {
+        couponsList = coupons
+        this.presenter = presenter
+        storeId = storeRid
     }
+
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_coupon_bottom, null)
         return view
@@ -104,8 +106,8 @@ class CouponBottomDialog(context: Context?) : BottomBaseDialog<CouponBottomDialo
 
         adapterDialogCoupon.setOnItemClickListener { adapter, _, position ->
             val couponBean = adapter.getItem(position) as CouponBean
-            if (present==null) {
-                present.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
+            if (present != null) {
+                present!!.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
                     override fun onSuccess(json: String) {
                         couponBean.status = 1
                         adapter.notifyDataSetChanged()
@@ -114,8 +116,8 @@ class CouponBottomDialog(context: Context?) : BottomBaseDialog<CouponBottomDialo
                     override fun onFailure(e: IOException) {
                     }
                 })
-            }else{
-                presenter.clickGetCoupon(storeId,couponBean.code,object :IDataSource.HttpRequestCallBack{
+            } else if (presenter != null) {
+                presenter!!.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
                     override fun onFailure(e: IOException) {
 
                     }

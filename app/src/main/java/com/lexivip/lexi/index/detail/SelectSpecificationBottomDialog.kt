@@ -1,5 +1,4 @@
 package com.lexivip.lexi.index.detail
-
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
@@ -353,7 +352,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             goods = ProductBean()
 
             goods.quantity = 1
-            goods.delivery_country = product.delivery_country
+            goods.delivery_country_id = product.delivery_country_id
             goods.delivery_province = product.delivery_province
             goods.delivery_city = product.delivery_city
             goods.cover = selectedSKU.cover

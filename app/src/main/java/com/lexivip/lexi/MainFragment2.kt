@@ -1,6 +1,4 @@
 package com.lexivip.lexi
-
-import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View

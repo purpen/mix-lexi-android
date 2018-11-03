@@ -31,8 +31,9 @@ open class GoodsClassifyModel {
     /**
      * 获取商品分类
      */
-    fun getGoodsClassify(callBack: IDataSource.HttpRequestCallBack) {
+    fun getGoodsClassify(pid:String,callBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
+        params.put("pid",pid)
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_CATEGORIES_URL, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callBack.onStart()

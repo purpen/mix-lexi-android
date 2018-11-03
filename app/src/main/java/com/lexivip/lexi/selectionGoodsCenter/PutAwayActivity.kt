@@ -63,19 +63,13 @@ class PutAwayActivity : BaseActivity(), PutAwayActivityContract.View {
     override fun installListener() {
         buttonConfirmOrder.setOnClickListener {
 
-            val content:String
-
-            if (TextUtils.isEmpty(goods.features)) { //产品无亮点推荐语必填
-                if (editText.text.trim().isEmpty() || editText.text.trim().length < 10) {
-                    ToastUtil.showInfo("请填写不少10个字推荐语")
-                    return@setOnClickListener
-                }
-                content = editText.text.trim().toString()
-            }else{
-                content = goods.features
+            if (editText.text.trim().isEmpty() || editText.text.trim().length < 10) {
+                ToastUtil.showInfo("请填写不少10个字推荐语")
+                return@setOnClickListener
             }
+            val content = editText.text.trim().toString()
 
-            presenter.putAwayGoods(goods.rid,content)
+            presenter.putAwayGoods(goods.rid, content)
         }
     }
 

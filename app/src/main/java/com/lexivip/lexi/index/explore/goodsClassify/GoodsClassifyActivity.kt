@@ -98,7 +98,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
 
         headerView.linearLayoutFilter.setOnClickListener { _ ->
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(this, presenter)
+            dialogBottomFilter = DialogBottomFilter(this, presenter,categoriesBean.id)
             dialogBottomFilter?.show()
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)

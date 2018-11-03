@@ -1,4 +1,5 @@
 package com.lexivip.lexi.shopCart
+import com.basemodule.tools.ToastUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -152,6 +153,7 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
             override fun onSuccess(json: String) {
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
+                    ToastUtil.showSuccess(AppApplication.getContext().getString(R.string.text_already_add_shop_cart))
                     view.setAddWishOrderStatus(list)
                 } else {
                     view.showError(netStatusBean.status.message)

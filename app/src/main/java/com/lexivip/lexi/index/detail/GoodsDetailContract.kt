@@ -3,10 +3,7 @@ package com.lexivip.lexi.index.detail
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.lexivip.lexi.beans.BrandPavilionBean
-import com.lexivip.lexi.beans.CouponBean
-import com.lexivip.lexi.beans.ProductBean
-import com.lexivip.lexi.beans.UserBean
+import com.lexivip.lexi.beans.*
 
 class GoodsDetailContract {
     interface View : BaseView<Presenter> {
@@ -18,7 +15,7 @@ class GoodsDetailContract {
 
         }
 
-        fun setBrandPavilionData(data: BrandPavilionBean.DataBean?) {
+        fun setBrandPavilionData(data: BrandPavilionBean) {
 
         }
 
@@ -84,7 +81,7 @@ class GoodsDetailContract {
 
         fun favoriteGoods(rid: String, v: android.view.View, favorite: Boolean)
 
-        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean)
+        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, v: android.view.View)
 
         fun getFavoriteUsers(goodsId: String)
 

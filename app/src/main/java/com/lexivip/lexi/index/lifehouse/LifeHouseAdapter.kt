@@ -17,13 +17,26 @@ import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.Util
 import com.lexivip.lexi.beans.ProductBean
-
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ImageSpan
 
 class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res){
     private val dp87:Int by lazy { DimenUtil.dp2px(87.0) }
     private val dp28:Int by lazy { DimenUtil.dp2px(28.0) }
+    private val dp20:Int by lazy { DimenUtil.dp2px(20.0) }
+    private val dp12:Int by lazy { DimenUtil.dp2px(12.0) }
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
-        helper.setText(R.id.textView0, item.name)
+        val textView0 = helper.getView<TextView>(R.id.textView0)
+        if (item.is_free_postage){
+            val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express,dp20,dp12)
+            val span = ImageSpan(drawable, ImageSpan.ALIGN_BASELINE)
+            val spannable = SpannableString("   "+item.name)
+            spannable.setSpan(span,0,1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            textView0.text = spannable
+        }else{
+            textView0.text = item.name
+        }
 
         val textView2 = helper.getView<TextView>(R.id.textView2)
 

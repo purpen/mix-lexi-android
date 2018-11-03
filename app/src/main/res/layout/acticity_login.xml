@@ -14,6 +14,7 @@
         android:layout_height="match_parent"
         android:scrollbars="none"
         android:overScrollMode="never"
+        android:background="@android:color/white"
         >
 
         <LinearLayout
@@ -30,6 +31,7 @@
                 android:layout_marginTop="@dimen/dp10"
                 android:text="@string/text_user_login"
                 android:textColor="@color/color_333"
+                android:includeFontPadding="false"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -281,7 +283,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp35"
+                android:layout_marginTop="@dimen/dp30"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -316,7 +318,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp20"
+                android:layout_marginBottom="@dimen/dp30"
                 android:gravity="center_horizontal">
 
                 <LinearLayout

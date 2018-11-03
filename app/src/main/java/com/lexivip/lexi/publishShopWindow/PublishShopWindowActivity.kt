@@ -45,7 +45,7 @@ class PublishShopWindowActivity : BaseActivity() {
      * 绘制占位图
      */
     private fun getPlaceHolderImage(): Bitmap {
-        val width = ScreenUtil.getScreenWidth() * 4 / 5
+        val width = ScreenUtil.getScreenWidth() * 3 / 5
         val createBitmap = Bitmap.createBitmap(width, width, Bitmap.Config.RGB_565)
         val canvas = Canvas(createBitmap)
         val paint = Paint()
@@ -124,7 +124,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 val view = View.inflate(this, R.layout.view_show_window_image3, null)
                 linearLayoutBox.addView(view)
                 if (productsMap[0] == null) {
-                    view.imageView30.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView30.scaleType = ImageView.ScaleType.CENTER
                     view.imageView30.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView30.scaleType = ImageView.ScaleType.FIT_XY
@@ -132,7 +132,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[1] == null) {
-                    view.imageView31.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView31.scaleType = ImageView.ScaleType.CENTER
                     view.imageView31.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView31.scaleType = ImageView.ScaleType.FIT_XY
@@ -140,7 +140,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[2] == null) {
-                    view.imageView32.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView32.scaleType = ImageView.ScaleType.CENTER
                     view.imageView32.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView32.scaleType = ImageView.ScaleType.FIT_XY
@@ -202,7 +202,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 view.imageView54.layoutParams = layoutParams54
                 linearLayoutBox.addView(view)
                 if (productsMap[0] == null) {
-                    view.imageView50.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView50.scaleType = ImageView.ScaleType.CENTER
                     view.imageView50.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView50.scaleType = ImageView.ScaleType.FIT_XY
@@ -210,7 +210,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[1] == null) {
-                    view.imageView51.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView51.scaleType = ImageView.ScaleType.CENTER
                     view.imageView51.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView51.scaleType = ImageView.ScaleType.FIT_XY
@@ -218,7 +218,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[2] == null) {
-                    view.imageView52.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView52.scaleType = ImageView.ScaleType.CENTER
                     view.imageView52.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView52.scaleType = ImageView.ScaleType.FIT_XY
@@ -226,7 +226,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[3] == null) {
-                    view.imageView53.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView53.scaleType = ImageView.ScaleType.CENTER
                     view.imageView53.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView53.scaleType = ImageView.ScaleType.FIT_XY
@@ -234,7 +234,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[4] == null) {
-                    view.imageView54.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView54.scaleType = ImageView.ScaleType.CENTER
                     view.imageView54.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView54.scaleType = ImageView.ScaleType.FIT_XY
@@ -270,15 +270,14 @@ class PublishShopWindowActivity : BaseActivity() {
                 val dp190: Int by lazy { screenW - dp68 * 2 - dp30 - dp2 * 2 }
                 val dp138: Int by lazy { dp68 * 2 + dp2 }
                 val dp120: Int by lazy { dp190 - dp68 - dp2 }
-                val dp108: Int by lazy { screenW * 108 / 375 }
-                val dp110: Int by lazy { screenW - 2 * dp108 - dp30 - dp2 * 2 }
+                val dp110: Int by lazy { (screenW - dp30 - dp2 * 2)/3 }
                 val layoutParamsImageView70: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp68, dp68) }
                 val layoutParamsImageView71: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp68, dp68) }
                 val layoutParamsImageView72: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp190, dp190) }
                 val layoutParamsImageView73: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp138, dp120) }
-                val layoutParamsImageView74: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp110, dp108) }
-                val layoutParamsImageView75: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp108, dp108) }
-                val layoutParamsImageView76: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp108, dp108) }
+                val layoutParamsImageView74: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp110, dp110) }
+                val layoutParamsImageView75: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp110, dp110) }
+                val layoutParamsImageView76: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp110, dp110) }
                 val view = View.inflate(this, R.layout.view_show_window_image7, null)
                 view.imageView70.layoutParams = layoutParamsImageView70
 
@@ -310,7 +309,7 @@ class PublishShopWindowActivity : BaseActivity() {
 
 
                 if (productsMap[0] == null) {
-                    view.imageView70.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView70.scaleType = ImageView.ScaleType.CENTER
                     view.imageView70.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView70.scaleType = ImageView.ScaleType.FIT_XY
@@ -318,7 +317,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[1] == null) {
-                    view.imageView71.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView71.scaleType = ImageView.ScaleType.CENTER
                     view.imageView71.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView71.scaleType = ImageView.ScaleType.FIT_XY
@@ -326,7 +325,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[2] == null) {
-                    view.imageView72.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView72.scaleType = ImageView.ScaleType.CENTER
                     view.imageView72.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView72.scaleType = ImageView.ScaleType.FIT_XY
@@ -334,7 +333,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[3] == null) {
-                    view.imageView73.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView73.scaleType = ImageView.ScaleType.CENTER
                     view.imageView73.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView73.scaleType = ImageView.ScaleType.FIT_XY
@@ -342,7 +341,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[4] == null) {
-                    view.imageView74.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView74.scaleType = ImageView.ScaleType.CENTER
                     view.imageView74.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView74.scaleType = ImageView.ScaleType.FIT_XY
@@ -350,7 +349,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[5] == null) {
-                    view.imageView75.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView75.scaleType = ImageView.ScaleType.CENTER
                     view.imageView75.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView75.scaleType = ImageView.ScaleType.FIT_XY
@@ -358,7 +357,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 if (productsMap[6] == null) {
-                    view.imageView76.scaleType = ImageView.ScaleType.CENTER_CROP
+                    view.imageView76.scaleType = ImageView.ScaleType.CENTER
                     view.imageView76.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView76.scaleType = ImageView.ScaleType.FIT_XY

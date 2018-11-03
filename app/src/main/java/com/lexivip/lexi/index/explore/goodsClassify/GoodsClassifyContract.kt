@@ -30,6 +30,6 @@ class GoodsClassifyContract {
         fun loadData(isRefresh: Boolean,id:String)
         fun loadData(page: Int, sortType: String,minePrice: String, maxPrice: String,cids:String, is_free_postage: String, is_preferential: String,is_custom_made: String,sort_newest: String,id:String)
         fun loadMoreData()
-        fun getGoodsClassify(callBacks: IDataSource.HttpRequestCallBack)
+        fun getGoodsClassify(pid:String,callBacks: IDataSource.HttpRequestCallBack)
     }
 }

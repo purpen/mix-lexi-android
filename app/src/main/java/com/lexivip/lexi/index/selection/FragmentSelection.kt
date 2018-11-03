@@ -21,6 +21,7 @@ import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
 import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
@@ -80,11 +81,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initZCManifest() {
         presenter.getZCManifest()
         adapterZCManifest = ZCManifestAdapter(R.layout.adapter_zc_manifest)
-        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(),2)
+        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.setScrollEnabled(false)
         recyclerViewZCManifest.layoutManager = gridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
-        recyclerViewZCManifest.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
+        recyclerViewZCManifest.addItemDecoration(GridSpacingItemDecoration(2, DimenUtil.dp2px(10.0), DimenUtil.dp2px(20.0), false))
     }
 
     /**
@@ -107,7 +108,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewGoodSelection.setHasFixedSize(true)
         recyclerViewGoodSelection.layoutManager = gridLayoutManager
         recyclerViewGoodSelection.adapter = adapterGoodSelection
-        recyclerViewGoodSelection.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
+        recyclerViewGoodSelection.addItemDecoration(GridSpacingItemDecoration(2, DimenUtil.dp2px(10.0), DimenUtil.dp2px(20.0), false))
     }
 
     /**
@@ -231,7 +232,12 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      * 初始化头条
      */
     private fun initNotice() {
-        presenter.getHeadLine()
+        if (UserProfileUtil.isSmallB() || UserProfileUtil.isBigB()) {
+            linearLayoutOpenLifeHouseGuide.visibility = View.GONE
+        } else {
+            linearLayoutOpenLifeHouseGuide.visibility = View.VISIBLE
+            presenter.getHeadLine()
+        }
     }
 
 
