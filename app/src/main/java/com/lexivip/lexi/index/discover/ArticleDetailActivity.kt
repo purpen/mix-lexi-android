@@ -13,7 +13,6 @@ import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.BrandPavilionBean
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
-import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.user.login.LoginActivity

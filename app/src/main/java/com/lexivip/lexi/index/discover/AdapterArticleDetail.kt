@@ -20,8 +20,9 @@ import org.json.JSONObject
 class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMultiItemQuickAdapter<AdapterArticleDetail.MultipleItem, BaseViewHolder>(list) {
     private val channelName:String by lazy { channelName }
     private val dp15:Int by lazy { DimenUtil.dp2px(15.0) }
-    private val dp87:Int by lazy { DimenUtil.dp2px(87.0) }
+    private val dp100:Int by lazy { DimenUtil.dp2px(100.0) }
     private val dp246:Int by lazy { DimenUtil.dp2px(246.0) }
+    private val dp4:Int by lazy { DimenUtil.dp2px(4.0) }
     private val screenW:Int by lazy { ScreenUtil.getScreenWidth() }
     init {
         addItemType(MultipleItem.TEXT_ITEM_TYPE, R.layout.adapter_goods_detail_text)
@@ -75,7 +76,7 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 val is_free_postage = content.optBoolean("is_free_postage")
                 val rid = content.optString("rid")
                 val imageView = helper.getView<ImageView>(R.id.imageView)
-                GlideUtil.loadImageAdjustImageViewDimen(cover, imageView,0,screenW,dp246)
+                GlideUtil.loadImageWithDimenAndRadius(cover, imageView,dp4,screenW,dp246)
 
                 helper.setText(R.id.textViewName, name)
 
@@ -122,7 +123,7 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 val rid = content.optString("rid")
 
                 val imageView = helper.getView<ImageView>(R.id.imageView)
-                GlideUtil.loadImageAdjustImageViewDimen(cover, imageView,0,dp87,dp87)
+                GlideUtil.loadImageWithDimenAndRadius(cover, imageView,dp4,dp100,dp100)
                 helper.setText(R.id.textViewName, name)
 
                 val imageViewFreeExpress = helper.getView<ImageView>(R.id.imageViewFreeExpress)

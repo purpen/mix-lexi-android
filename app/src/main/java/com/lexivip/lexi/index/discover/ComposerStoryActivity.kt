@@ -55,6 +55,7 @@ class ComposerStoryActivity : BaseActivity(), ComposerStoryContract.View {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         recyclerView.setPadding(DimenUtil.dp2px(15.0), 0, DimenUtil.dp2px(15.0), 0)
         val staggeredGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.setBackgroundColor(Util.getColor(android.R.color.white))
         recyclerView.layoutManager = staggeredGridLayoutManager
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
