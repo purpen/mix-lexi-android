@@ -255,7 +255,7 @@ object URL {
     /**
      * 选品中心 -> 筛选->分类
      */
-    const val GOODS_CATEGORIES_URL = "${BASE_URL}categories"
+    const val GOODS_CATEGORIES_URL = "${BASE_URL}official/categories"
 
     /**
      *  发现生活美学 -> 橱窗推荐

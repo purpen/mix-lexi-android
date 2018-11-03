@@ -154,8 +154,8 @@ class GoodsClassifyPresenter(view: GoodsClassifyContract.View) : GoodsClassifyCo
     /**
      * 获取商品分类
      */
-    override fun getGoodsClassify(callBacks: IDataSource.HttpRequestCallBack) {
-        dataSource.getGoodsClassify(object : IDataSource.HttpRequestCallBack {
+    override fun getGoodsClassify(pid:String,callBacks: IDataSource.HttpRequestCallBack) {
+        dataSource.getGoodsClassify(pid,object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
                 callBacks.onSuccess(json)

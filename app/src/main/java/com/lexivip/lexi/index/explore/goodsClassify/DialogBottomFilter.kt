@@ -16,9 +16,10 @@ import com.lexivip.lexi.selectionGoodsCenter.GoodsClassifyBean
 import kotlinx.android.synthetic.main.dialog_filter_sort_bottom.view.*
 import java.io.IOException
 
-class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPresenter) : BottomBaseDialog<DialogBottomFilter>(context) {
+class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPresenter, id: String) : BottomBaseDialog<DialogBottomFilter>(context) {
     private lateinit var view: View
     private val present: GoodsClassifyPresenter = presenter
+    private val pid: String by lazy { id }
     private val adapter: AdapterGoodsClassify by lazy { AdapterGoodsClassify(R.layout.adapter_text_border) }
     private val adapterRecommend: AdapterGoodsClassify by lazy { AdapterGoodsClassify(R.layout.adapter_text_border) }
     private var minPrice: String = ""
@@ -54,7 +55,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPre
             val sortType = ""
             val cids = getSelectedItem()
             val id = present.getClassifyId()
-            present.loadData(page, sortType, minPrice, maxPrice, cids, "", "", "", "",id)
+            present.loadData(page, sortType, minPrice, maxPrice, cids, "", "", "", "", id)
         }
 
         return view
@@ -66,7 +67,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPre
         view.recyclerView.setHasFixedSize(false)
         view.recyclerView.layoutManager = manager
         view.recyclerView.adapter = adapter
-        present.getGoodsClassify(object : IDataSource.HttpRequestCallBack {
+        present.getGoodsClassify(pid, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val goodsClassifyBean = JsonUtil.fromJson(json, GoodsClassifyBean::class.java)
                 if (goodsClassifyBean.status.code == Constants.SUCCESS) {
@@ -117,16 +118,16 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPre
             val cids = getSelectedItem()
             val sortType = ""
             val categoriesBean0 = adapterRecommend.getItem(0) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isFreePostage = if(categoriesBean0.selected) "1" else "0"
+            val isFreePostage = if (categoriesBean0.selected) "1" else "0"
 
             val categoriesBean1 = adapterRecommend.getItem(1) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isPreferential = if(categoriesBean1.selected) "1" else "0"
+            val isPreferential = if (categoriesBean1.selected) "1" else "0"
 
             val categoriesBean2 = adapterRecommend.getItem(2) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isCustomMade = if(categoriesBean2.selected) "1" else "0"
+            val isCustomMade = if (categoriesBean2.selected) "1" else "0"
 
             val id = present.getClassifyId()
-            present.loadData(page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, "",id)
+            present.loadData(page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, "", id)
         }
 
         //  推荐点击
@@ -138,19 +139,18 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPre
             val cids = getSelectedItem()
             val sortType = ""
             val categoriesBean0 = adapterRecommend.getItem(0) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isFreePostage = if(categoriesBean0.selected) "1" else "0"
+            val isFreePostage = if (categoriesBean0.selected) "1" else "0"
 
             val categoriesBean1 = adapterRecommend.getItem(1) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isPreferential = if(categoriesBean1.selected) "1" else "0"
+            val isPreferential = if (categoriesBean1.selected) "1" else "0"
 
             val categoriesBean2 = adapterRecommend.getItem(2) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isCustomMade = if(categoriesBean2.selected) "1" else "0"
+            val isCustomMade = if (categoriesBean2.selected) "1" else "0"
 
             val id = present.getClassifyId()
-            present.loadData(page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, "",id)
+            present.loadData(page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, "", id)
         }
     }
-
 
 
     /**
