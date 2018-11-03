@@ -2,9 +2,9 @@ package com.lexivip.lexi.net
 
 object URL {
     //测试服务器
-//    const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
+    const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
     //正式服务器
-    const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
+//    const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
 
     /**
      * 注册
@@ -723,4 +723,8 @@ object URL {
      * 领券中心活动图片
      */
     const val VOUCHER_IMAGE="${BASE_URL}coupon_ad"
+    /**
+     * 领取官方优惠券
+     */
+    const val VOUCHER_OFFICIAL_RECEIVE="${BASE_URL}market/official_coupons/grant"
 }

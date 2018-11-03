@@ -12,9 +12,14 @@ public class ReceiveVoucherFragmentContract {
         void showError(@NonNull String error);
         void getBrand(VoucherBrandBean brandBean);
         void getGoods(VoucherGoodsBean bean);
+        void loadMoreFail();
+        void loadMoreEnd();
+        void loadMoreComplete();
+        void getReceive(boolean isReceive);
     }
     interface Presenter extends BasePresenter{
         void loadBrand(String store_category, String page);
-        void loadGoods(String store_category, String rid);
+        void loadGoods(String store_category, String rid,String page);
+        void receiveVoucher(String rid,String store_rid);
     }
 }

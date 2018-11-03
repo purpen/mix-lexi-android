@@ -11,16 +11,14 @@
         android:drawableLeft="@mipmap/icon_receive_voucher_title_left"
         android:drawableRight="@mipmap/icon_receive_voucher_title_right"
         android:drawablePadding="@dimen/dp10"
-        android:text="乐喜官方券"
+        android:text="精选品牌券"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp20" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewOfficial"
-        android:layout_width="wrap_content"
+        android:id="@+id/recyclerViewBrand"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp25"
-        android:paddingLeft="@dimen/dp15"></android.support.v7.widget.RecyclerView>
-
-
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15"></android.support.v7.widget.RecyclerView>
 </LinearLayout>

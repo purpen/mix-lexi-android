@@ -87,7 +87,9 @@ public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandH
 
     @Override
     public void showError(@NonNull String error) {
-        dialog.dismiss();
+        if (dialog!=null) {
+            dialog.dismiss();
+        }
         ToastUtil.showError(error);
     }
 

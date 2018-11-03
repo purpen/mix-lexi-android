@@ -27,11 +27,11 @@ import java.util.TreeMap;
 
 public class ClientParamsAPI {
     //测试
-//    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
-//    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
+    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
+    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
     //正式
-    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
-    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
+//    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
+//    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
     /**
      * 获取登录后的authorization
      * @param token
@@ -1435,7 +1435,20 @@ public class ClientParamsAPI {
     }
 
     /**
-     * 同享券
+     * 同享券推荐页
+     * @param store_category
+     * @param page
+     * @return
+     */
+    public static HashMap<String,Object> getVoucherRecommendParams(String store_category, String page){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("store_category",store_category);
+        params.put("page",page);
+        params.put("per_page","50");
+        return params;
+    }
+    /**
+     * 同享券分类页
      * @param store_category
      * @param page
      * @return
@@ -1453,10 +1466,22 @@ public class ClientParamsAPI {
      * @param open_id
      * @return
      */
-    public static HashMap<String,Object> getVoucherGoodsParams(String store_category,String open_id){
+    public static HashMap<String,Object> getVoucherGoodsParams(String store_category,String open_id,String page){
         HashMap<String,Object> params=generateCommonParams();
         params.put("store_category",store_category);
         params.put("rid",open_id);
+        params.put("page",page);
+        return params;
+    }
+
+    /**
+     * 领取官方优惠
+     * @param rid
+     * @return
+     */
+    public static HashMap<String,Object> getReceiveVoucherOfficialParams(String rid){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("rid",rid);
         return params;
     }
 }

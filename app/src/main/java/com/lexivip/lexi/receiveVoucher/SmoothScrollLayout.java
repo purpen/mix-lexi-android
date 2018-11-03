@@ -107,7 +107,7 @@ public class SmoothScrollLayout extends FrameLayout {
             helper.setText(R.id.tv_name, item.user_info.user_name + "刚刚领取了");
             helper.setText(R.id.tv_amount, item.amount + "元");
             ImageView imageView = helper.getView(R.id.imageView);
-            GlideUtil.loadCircleImageWidthDimen(item.user_info.user_logo, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp25));
+            GlideUtil.loadCircleImageWidthDimen(item.user_info.user_logo, imageView, DimenUtil.dp2px(25.0));
             // 1: 红包; 2: 官方优惠券; 3: 店铺优惠券 4: 现金
             switch (item.activity_type) {
                 case 1:

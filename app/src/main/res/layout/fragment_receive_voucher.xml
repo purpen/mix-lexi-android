@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
 
@@ -43,7 +43,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/color_ffbd9f"
         android:orientation="vertical">
 
@@ -55,11 +55,31 @@
             android:paddingLeft="@dimen/dp15"></android.support.v7.widget.RecyclerView>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewCommon"
+            android:id="@+id/recyclerViewSingle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
             android:paddingRight="@dimen/dp15"
             android:paddingLeft="@dimen/dp15"></android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:id="@+id/ll_null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp100"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone">
+            <ImageView
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp60"
+                android:background="@mipmap/icon_receive_null"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:text="该分类暂无优惠券"
+                android:layout_marginTop="@dimen/dp10"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
