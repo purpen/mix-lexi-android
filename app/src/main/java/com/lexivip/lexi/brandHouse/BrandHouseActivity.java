@@ -239,8 +239,9 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void showError(@NonNull String error) {
-        if (dialog!=null)
-        dialog.dismiss();
+        if (dialog!=null) {
+            dialog.dismiss();
+        }
         showError(error);
     }
 

@@ -135,8 +135,6 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
             }
         })
 
-        imageViewShare.setOnClickListener(this)
-        imageViewSetting.setOnClickListener(this)
         buttonOrder.setOnClickListener(this)
 
         linearLayoutLike.setOnClickListener {
@@ -173,36 +171,8 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         val id = v.id
         when (id) {
             R.id.imageViewShare -> {
-                UMConfigure.setLogEnabled(true)
-                //分享
-                val mPermissionList = arrayOf<String>(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE,
-                        Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP,
-                        Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS,
-                        Manifest.permission.WRITE_APN_SETTINGS)
-                ShareAction(activity).withText("hello")
-                        .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
-                        .setCallback(object :UMShareListener{
-                            override fun onResult(p0: SHARE_MEDIA?) {
 
-                            }
-
-                            override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
-                                LogUtil.e("回调出错")
-                            }
-
-                            override fun onStart(p0: SHARE_MEDIA?) {
-
-                            }
-
-                            override fun onCancel(p0: SHARE_MEDIA?) {
-
-                            }
-
-                        }).open()
             }
-            R.id.imageViewSetting -> startActivity(Intent(activity, SettingActivity::class.java))
             R.id.buttonOrder->startActivity(Intent(activity,OrderListActivity::class.java))
         }
     }

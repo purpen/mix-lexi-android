@@ -1,5 +1,6 @@
 package com.lexivip.lexi.brandHouse;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,8 +12,10 @@ import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lexivip.lexi.PageUtil;
 import com.lexivip.lexi.R;
-
+import com.lexivip.lexi.index.discover.ArticleDetailActivity;
+//TODO 文章待测试
 public class BrandHouseArticleFragment extends BaseFragment implements BrandHouseArticleContract.View{
 
     private WaitingDialog dialog;
@@ -54,6 +57,15 @@ public class BrandHouseArticleFragment extends BaseFragment implements BrandHous
                 presenter.loadArticle(rid,String.valueOf(page));
             }
         }, recyclerView);
+        adapterBrandHouseArticle.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent=new Intent(getActivity(),ArticleDetailActivity.class);
+                intent.putExtra(ArticleDetailActivity.class.getSimpleName(),adapterBrandHouseArticle.getData().get(position).rid);
+                intent.putExtra(ArticleDetailActivity.class.getName(),adapterBrandHouseArticle.getData().get(position).channel_name);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

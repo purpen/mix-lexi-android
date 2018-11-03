@@ -23,7 +23,7 @@ public class ReceiveVoucherRecommendPresenter implements ReceiveVoucherRecommend
 
     @Override
     public void loadBrand(String store_category, String page) {
-        model.loadBrand(store_category, page, new IDataSource.HttpRequestCallBack() {
+        model.loadBrandRecommend(store_category, page, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
@@ -54,8 +54,8 @@ public class ReceiveVoucherRecommendPresenter implements ReceiveVoucherRecommend
     }
 
     @Override
-    public void loadGoods(String store_category, String rid) {
-        model.loadGoods(store_category, rid, new IDataSource.HttpRequestCallBack() {
+    public void loadGoods(String store_category, String rid,String page) {
+        model.loadGoods(store_category, rid,page, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
@@ -72,8 +72,14 @@ public class ReceiveVoucherRecommendPresenter implements ReceiveVoucherRecommend
                 VoucherGoodsBean bean=JsonUtil.fromJson(json,VoucherGoodsBean.class);
                 if (bean.success){
                     view.getGoods(bean);
+                    if(bean.data.coupons.size()==10){
+                        view.loadMoreComplete();
+                    }else {
+                        view.loadMoreEnd();
+                    }
                     view.dismissLoadingView();
                 }else {
+                    view.loadMoreFail();
                     view.showError(bean.status.message);
                 }
             }
@@ -135,6 +141,69 @@ public class ReceiveVoucherRecommendPresenter implements ReceiveVoucherRecommend
                 VoucherOfficialBean bean=JsonUtil.fromJson(json,VoucherOfficialBean.class);
                 if (bean.success){
                     view.getOfficial(bean);
+                    view.dismissLoadingView();
+                }else {
+                    view.showError(bean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.showError(Util.getString(R.string.text_net_error));
+            }
+        });
+    }
+
+    @Override
+    public void receiveVoucher(String rid, String store_rid) {
+        model.receiveVoucher(rid, store_rid, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                VoucherReceiveGoodsBean bean=JsonUtil.fromJson(json,VoucherReceiveGoodsBean.class);
+                if (bean.success){
+                    view.getReceive(true);
+                    view.dismissLoadingView();
+                }else {
+                    view.showError(bean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.showError(Util.getString(R.string.text_net_error));
+            }
+        });
+    }
+
+    @Override
+    public void receiveOfficial(String rid) {
+        model.receiveOfficial(rid, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                LogUtil.e("领取："+json);
+                VoucherReceiveOfficialBean bean=JsonUtil.fromJson(json,VoucherReceiveOfficialBean.class);
+                if (bean.success){
+                    view.getReceiveOfficial(true);
                     view.dismissLoadingView();
                 }else {
                     view.showError(bean.status.message);

@@ -72,11 +72,12 @@ class MainActivity : BaseActivity() {
      * 初始化个人中心
      */
     private fun initUserCenter() {
-        if (UserProfileUtil.isSmallB()) {
-            fragment3 = MainFragmentUser.newInstance()
+        fragment3 = MainFragmentUser.newInstance()
+        /*if (UserProfileUtil.isSmallB()) {
+
         } else {
             fragment3 = MainFragment3.newInstance()
-        }
+        }*/
     }
 
     override fun installListener() {

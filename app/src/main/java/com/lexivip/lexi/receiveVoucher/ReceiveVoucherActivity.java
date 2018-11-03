@@ -1,5 +1,6 @@
 package com.lexivip.lexi.receiveVoucher;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import com.basemodule.ui.BaseFragment;
 import com.basemodule.ui.CustomViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.coupon.UserCouponActivity;
 import com.lexivip.lexi.orderList.OrderPagerAdapter;
 import com.lexivip.lexi.view.CustomHeadView;
 
@@ -58,7 +60,7 @@ public class ReceiveVoucherActivity extends BaseActivity implements ReceiveVouch
         ll_voucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(ReceiveVoucherActivity.this,UserCouponActivity.class));
             }
         });
     }
@@ -99,8 +101,6 @@ public class ReceiveVoucherActivity extends BaseActivity implements ReceiveVouch
 
     @Override
     public void getNotice(VoucherNoticeBean bean) {
-        LogUtil.e("长度"+bean.data.coupon_lines.size());
-        LogUtil.e(bean.data.coupon_lines.get(0).store_name);
         scrollLayout.setData(bean.data.coupon_lines);
     }
 

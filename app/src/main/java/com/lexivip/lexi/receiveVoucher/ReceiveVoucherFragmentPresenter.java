@@ -35,12 +35,18 @@ public class ReceiveVoucherFragmentPresenter implements ReceiveVoucherFragmentCo
 
             @Override
             public void onSuccess(@NotNull String json) {
-                LogUtil.e("共享券："+json);
+                LogUtil.e("共享券1："+json);
                 VoucherBrandBean bean=JsonUtil.fromJson(json,VoucherBrandBean.class);
                 if (bean.success){
                     view.getBrand(bean);
+                    if (bean.data.coupons.size()==10){
+                        view.loadMoreComplete();
+                    }else {
+                        view.loadMoreEnd();
+                    }
                     view.dismissLoadingView();
                 }else {
+                    view.loadMoreFail();
                     view.showError(bean.status.message);
                 }
             }
@@ -53,8 +59,8 @@ public class ReceiveVoucherFragmentPresenter implements ReceiveVoucherFragmentCo
     }
 
     @Override
-    public void loadGoods(String store_category, String rid) {
-        model.loadGoods(store_category, rid, new IDataSource.HttpRequestCallBack() {
+    public void loadGoods(String store_category, String rid,String page) {
+        model.loadGoods(store_category, rid, page, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
@@ -71,6 +77,43 @@ public class ReceiveVoucherFragmentPresenter implements ReceiveVoucherFragmentCo
                 VoucherGoodsBean bean=JsonUtil.fromJson(json,VoucherGoodsBean.class);
                 if (bean.success){
                     view.getGoods(bean);
+                    if(bean.data.coupons.size()==10){
+                        view.loadMoreComplete();
+                    }else {
+                        view.loadMoreEnd();
+                    }
+                    view.dismissLoadingView();
+                }else {
+                    view.loadMoreFail();
+                    view.showError(bean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.showError(Util.getString(R.string.text_net_error));
+            }
+        });
+    }
+
+    @Override
+    public void receiveVoucher(String rid, String store_rid) {
+        model.receiveVoucher(rid, store_rid, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                VoucherReceiveGoodsBean bean=JsonUtil.fromJson(json,VoucherReceiveGoodsBean.class);
+                if (bean.success){
+                    view.getReceive(true);
                     view.dismissLoadingView();
                 }else {
                     view.showError(bean.status.message);

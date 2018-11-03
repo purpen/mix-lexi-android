@@ -1,8 +1,10 @@
 package com.lexivip.lexi.receiveVoucher;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,7 +15,9 @@ import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ScreenUtil;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lexivip.lexi.PageUtil;
 import com.lexivip.lexi.R;
 
 import java.util.List;
@@ -38,7 +42,7 @@ public class AdapterReceiveVoucherBrand extends BaseMultiItemQuickAdapter<Multip
     protected void convert(BaseViewHolder helper, MultipleItem item) {
         LogUtil.e("几个："+item.getItemType()+"item:"+helper.getLayoutPosition());
         ImageView iv_logo=helper.getView(R.id.iv_logo);
-        GlideUtil.loadImageWithRadius(item.getBean().store_logo,iv_logo,DimenUtil.getDimensionPixelSize(R.dimen.dp5));
+        GlideUtil.loadImageWithRadius(item.getBean().store_logo,iv_logo,DimenUtil.dp2px(5.0));
         helper.setText(R.id.tv_name,item.getBean().store_name);
         LogUtil.e("名字："+item.getBean().store_name);
         helper.setText(R.id.tv_full,"满"+item.getBean().min_amount+"可用");
@@ -51,14 +55,20 @@ public class AdapterReceiveVoucherBrand extends BaseMultiItemQuickAdapter<Multip
                 helper.setText(R.id.tv_price,item.getBean().amount);
                 RecyclerView recyclerView=helper.getView(R.id.recyclerView);
                 recyclerView.setLayoutManager(new GridLayoutManager(activity,3));
-                AdapterReceiveVoucherBrandTwo adapter=new AdapterReceiveVoucherBrandTwo(R.layout.adapter_voucher_brand_one_two, item.getBean().product_sku);
-                recyclerView.setAdapter(adapter);
+                final AdapterReceiveVoucherBrandTwo adapters=new AdapterReceiveVoucherBrandTwo(R.layout.adapter_voucher_brand_one_two, item.getBean().product_sku);
+                recyclerView.setAdapter(adapters);
                 layoutParams=new LinearLayout.LayoutParams(sizeScreen,ViewGroup.LayoutParams.WRAP_CONTENT);
                 relativeLayout.setLayoutParams(layoutParams);
+                adapters.setOnItemClickListener(new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        PageUtil.jump2GoodsDetailActivity(adapters.getData().get(position).product_rid);
+                    }
+                });
                 break;
             case MultipleItem.ITEM_TYPE_SPAN2:
                 ImageView imageView=helper.getView(R.id.imageView);
-                GlideUtil.loadImageWithRadius(item.getBean().store_bgcover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4));
+                GlideUtil.loadImageWithRadius(item.getBean().store_bgcover,imageView,DimenUtil.dp2px(4.0));
                 LogUtil.e("上图："+item.getBean().store_bgcover);
                 //GlideUtil.loadImageWithTopRadius(item.getBean().store_bgcover,imageView,mContext.getResources().getDimensionPixelSize(R.dimen.dp4));
                 helper.setText(R.id.tv_amount,item.getBean().amount);

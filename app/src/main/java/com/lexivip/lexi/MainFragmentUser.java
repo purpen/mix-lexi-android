@@ -1,6 +1,9 @@
 package com.lexivip.lexi;
 
+import android.Manifest;
+import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.basemodule.ui.BaseFragment;
 import com.basemodule.ui.CustomFragmentPagerAdapter;
@@ -8,6 +11,9 @@ import com.basemodule.ui.CustomViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.lexivip.lexi.lifeShop.LifeShopFragment;
 import com.lexivip.lexi.user.login.UserProfileUtil;
+import com.lexivip.lexi.user.setting.SettingActivity;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +39,8 @@ public class MainFragmentUser extends BaseFragment {
         super.initView();
         slidingTabLayout = getView().findViewById(R.id.slidingTabLayout);
         viewPager = getView().findViewById(R.id.customViewPager);
+        ImageView imageViewShare=getView().findViewById(R.id.imageViewShare);
+        ImageView imageViewSetting=getView().findViewById(R.id.imageViewSetting);
         fragments = new ArrayList<>();
         String[] titles=getResources().getStringArray(R.array.strings_main_user_titles);
         listTitle = Arrays.asList(titles);
@@ -49,6 +57,46 @@ public class MainFragmentUser extends BaseFragment {
         CustomFragmentPagerAdapter adapter=new CustomFragmentPagerAdapter(getChildFragmentManager(),fragments,listTitle);
         viewPager.setAdapter(adapter);
         slidingTabLayout.setViewPager(viewPager);
+
+        imageViewShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UMConfigure.setLogEnabled(true);
+                //分享
+                /*String[] mPermissionList = String(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE,
+                        Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP,
+                        Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS,
+                        Manifest.permission.WRITE_APN_SETTINGS)
+                ShareAction(activity).withText("hello")
+                        .setDisplayList(SHARE_MEDIA.SINA,SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN)
+                        .setCallback(object :UMShareListener{
+                    override fun onResult(p0: SHARE_MEDIA?) {
+
+                    }
+
+                    override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
+                        LogUtil.e("回调出错")
+                    }
+
+                    override fun onStart(p0: SHARE_MEDIA?) {
+
+                    }
+
+                    override fun onCancel(p0: SHARE_MEDIA?) {
+
+                    }
+
+                }).open()*/
+            }
+        });
+        imageViewSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),SettingActivity.class));
+            }
+        });
     }
 
     public static BaseFragment newInstance(){

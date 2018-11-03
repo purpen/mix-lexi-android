@@ -30,7 +30,6 @@ public class ReceiveVoucherPresenter implements ReceiveVoucherContract.Presenter
 
             @Override
             public void onStart() {
-                view.showLoadingView();
             }
 
             @Override
@@ -38,7 +37,6 @@ public class ReceiveVoucherPresenter implements ReceiveVoucherContract.Presenter
                 VoucherCategoriesBean bean=JsonUtil.fromJson(json,VoucherCategoriesBean.class);
                 if (bean.success){
                     view.getCategories(bean);
-                    view.dismissLoadingView();
                 }else {
                     view.showError(bean.status.message);
                 }
@@ -69,6 +67,7 @@ public class ReceiveVoucherPresenter implements ReceiveVoucherContract.Presenter
                 LogUtil.e("动态"+json);
                 VoucherNoticeBean bean=JsonUtil.fromJson(json,VoucherNoticeBean.class);
                 if (bean.success){
+                    view.dismissLoadingView();
                     view.getNotice(bean);
                 }else {
                     view.showError(bean.status.message);
