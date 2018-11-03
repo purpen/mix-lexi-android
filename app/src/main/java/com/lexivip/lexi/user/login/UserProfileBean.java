@@ -22,6 +22,7 @@ public class UserProfileBean {
          */
 
         public boolean is_small_b;
+        public boolean is_supplier;
         public ProfileBean profile;
         public String store_rid;
 

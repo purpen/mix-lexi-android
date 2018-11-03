@@ -30,6 +30,18 @@ public class UserProfileUtil {
     }
 
     /**
+     * 判断是否是大B
+     * @return
+     */
+    public static boolean isBigB() {
+        String read = SPUtil.read(Constants.USER_PROFILE);
+        if (TextUtils.isEmpty(read)) return false;
+        UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);
+        return  userProfileBean.data.is_supplier;
+    }
+
+
+    /**
      * 判断用户是否登录
      * @return
      */

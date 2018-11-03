@@ -390,4 +390,5 @@
     <string name="text_shop_window_title_hint">起一个吸引人的标题</string>
     <string name="text_shop_window_product_num_tips">一个橱窗最多可放置2个同一个原创品牌设计馆商品</string>
     <string name="text_shop_window_content_tips">每个人都是生活美学家，分享你的搭配灵感与故事</string>
+    <string name="text_check_code_sended">验证码已发送</string>
 </resources>

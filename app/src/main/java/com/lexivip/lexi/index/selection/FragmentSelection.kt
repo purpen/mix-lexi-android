@@ -232,7 +232,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      * 初始化头条
      */
     private fun initNotice() {
-        if (UserProfileUtil.isSmallB()) {
+        if (UserProfileUtil.isSmallB() || UserProfileUtil.isBigB()) {
             linearLayoutOpenLifeHouseGuide.visibility = View.GONE
         } else {
             linearLayoutOpenLifeHouseGuide.visibility = View.VISIBLE
