@@ -77,7 +77,9 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 val rid = content.optString("rid")
                 val imageView = helper.getView<ImageView>(R.id.imageView)
                 GlideUtil.loadImageWithDimenAndRadius(cover, imageView,dp4,screenW,dp246)
-
+                imageView.setOnClickListener {
+                    PageUtil.jump2GoodsDetailActivity(rid)
+                }
                 helper.setText(R.id.textViewName, name)
 
                 val imageViewFreeExpress = helper.getView<ImageView>(R.id.imageViewFreeExpress)
@@ -124,6 +126,10 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
 
                 val imageView = helper.getView<ImageView>(R.id.imageView)
                 GlideUtil.loadImageWithDimenAndRadius(cover, imageView,dp4,dp100,dp100)
+
+                imageView.setOnClickListener {
+                    PageUtil.jump2GoodsDetailActivity(rid)
+                }
                 helper.setText(R.id.textViewName, name)
 
                 val imageViewFreeExpress = helper.getView<ImageView>(R.id.imageViewFreeExpress)

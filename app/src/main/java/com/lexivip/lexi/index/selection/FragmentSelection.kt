@@ -21,6 +21,7 @@ import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
 import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
+import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
@@ -385,7 +386,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     override fun onClick(v: View) {
         when (v.id) {
             R.id.buttonOpenShop -> { //开馆指引 https://h5.lexivip.com/shop/guide
-                startActivity(Intent(activity, OpenLifeHouseActivity::class.java))
+                if (UserProfileUtil.isLogin()) {
+                    startActivity(Intent(activity, OpenLifeHouseActivity::class.java))
+                } else {
+                    startActivity(Intent(activity,LoginActivity::class.java))
+                }
             }
             R.id.textViewMoreZCManifest -> { //全部种草清单
                 val intent = Intent(activity, ComposerStoryActivity::class.java)
