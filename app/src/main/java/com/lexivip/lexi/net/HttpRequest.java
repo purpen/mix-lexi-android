@@ -109,7 +109,7 @@ public class HttpRequest {
 
         LogUtil.e("----------sendRequest: " + "\n Type:" + type + "\n URL: " + url + "\n Authorization: " + authorization + "\n Params: " + params);
 
-        Request request = getRequest(type, url, authorization, params);
+        final Request request = getRequest(type, url, authorization, params);
         if (null == request) return null;
         Call call = mOkHttpClient.newCall(request);
         callback.onStart();
@@ -131,7 +131,7 @@ public class HttpRequest {
                     message.obj = response.body().string();
                     handler.sendMessage(message);
                 } else {
-                    LogUtil.e("服务器响应失败： URL = " + url + " 状态码 " + response.code()+" 错误信息 "+response.toString());
+                    LogUtil.e("服务器响应失败： URL = " + url + " 状态码 " + response.code() + " 错误信息 " + response.toString());
                     Message message = Message.obtain();
                     message.what = NetWorkHandler.CALLBACK_FAILURE;
                     message.obj = new IOException("INTERNAL SERVER ERROR");

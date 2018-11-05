@@ -37,6 +37,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
             }
 
             override fun onFailure(e: IOException) {
+                view.showHint()
                 view.dismissLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }

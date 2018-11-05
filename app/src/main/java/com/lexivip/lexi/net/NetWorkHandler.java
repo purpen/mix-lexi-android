@@ -18,6 +18,7 @@ import java.io.IOException;
 public class NetWorkHandler extends Handler {
     public static final int CALLBACK_SUCCESS = 200;
     public static final int CALLBACK_FAILURE = 400;
+    public static final int AUTH_ERROR = 401;
     private IDataSource.HttpRequestCallBack callback;
 
     public NetWorkHandler(IDataSource.HttpRequestCallBack callback) {
