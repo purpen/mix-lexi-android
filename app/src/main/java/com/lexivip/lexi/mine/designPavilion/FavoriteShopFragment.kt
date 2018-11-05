@@ -11,6 +11,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.R
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
 
@@ -92,6 +93,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
 
     override fun onResume() {
         super.onResume()
+        if (!UserProfileUtil.isLogin()) return
         presenter.loadData(true)
     }
 

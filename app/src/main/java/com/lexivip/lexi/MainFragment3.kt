@@ -35,6 +35,7 @@ import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Context
 import com.umeng.commonsdk.UMConfigure
 import com.lexivip.lexi.coupon.UserCouponActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
 
 
@@ -81,6 +82,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
 
     override fun initView() {
+        if (!UserProfileUtil.isLogin()) return
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
     }
@@ -179,6 +181,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
+        if (!UserProfileUtil.isLogin()) return
         presenter.loadData()
     }
 

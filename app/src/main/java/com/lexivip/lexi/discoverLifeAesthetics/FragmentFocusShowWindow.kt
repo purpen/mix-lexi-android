@@ -76,7 +76,9 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
                 R.id.textViewComment -> { //跳转评论列表
                     val dataBean = ShowWindowDetailBean.DataBean()
                     dataBean.rid = showWindowBean.rid
+                    dataBean.is_like = showWindowBean.is_like
                     dataBean.like_count = showWindowBean.like_count
+                    dataBean.comment_count = showWindowBean.comment_count
                     PageUtil.jump2ShopWindowCommentListActivity(dataBean)
                 }
 
