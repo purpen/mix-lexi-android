@@ -67,6 +67,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 view.dismissLoadingView()
                 val verifyCodeBean = JsonUtil.fromJson(json, VerifyCodeBean::class.java)
                 if (verifyCodeBean.success) {
+                    view.startCountDown()
                     ToastUtil.showSuccess(AppApplication.getContext().getString(R.string.text_check_code_sended))
                 } else {
                     view.showInfo(verifyCodeBean.status.message)

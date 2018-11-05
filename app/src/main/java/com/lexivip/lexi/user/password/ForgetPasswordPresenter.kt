@@ -29,10 +29,10 @@ class ForgetPasswordPresenter(view: ForgetPasswordContract.View) : ForgetPasswor
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 view.dismissLoadingView()
                 val verifyCodeBean = JsonUtil.fromJson(json, VerifyCodeBean::class.java)
                 if (verifyCodeBean.success) {
+                    view.startCountDown()
                     ToastUtil.showSuccess(verifyCodeBean.status.message)
                 } else {
                     view.showInfo(verifyCodeBean.status.message)
