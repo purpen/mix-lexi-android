@@ -134,7 +134,7 @@ public class GlideUtil {
      * @param radius
      * @param <T>
      */
-    public static <T> void loadImageAdjustImageViewDimen(T t, final ImageView imageView, int radius, final int width, final int height) {
+    public static <T> void loadImageAdjustImageViewDimen(final T t, final ImageView imageView, int radius, final int width, final int height) {
 
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
                 .override(width, height)
@@ -159,6 +159,7 @@ public class GlideUtil {
                 int resourceW = resource.getIntrinsicWidth();
                 int resourceH = resource.getIntrinsicHeight();
 
+                LogUtil.e("url=="+t+";;originW="+resourceW+";;;originH="+resourceH);
                 ViewGroup.LayoutParams params = imageView.getLayoutParams();
                 if (params == null) params = new ViewGroup.LayoutParams(width, height);
                 int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();

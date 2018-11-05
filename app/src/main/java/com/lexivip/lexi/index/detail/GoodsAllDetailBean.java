@@ -86,7 +86,7 @@ public class GoodsAllDetailBean implements Parcelable {
         public int cover_id;
         public String custom_details;
         public String delivery_country;
-        public int delivery_country_id;
+        public int country_id;
         public String features;
         public String fid; //运费模板
         public boolean have_distributed;
@@ -414,7 +414,7 @@ public class GoodsAllDetailBean implements Parcelable {
             dest.writeInt(this.cover_id);
             dest.writeString(this.custom_details);
             dest.writeString(this.delivery_country);
-            dest.writeInt(this.delivery_country_id);
+            dest.writeInt(this.country_id);
             dest.writeString(this.features);
             dest.writeString(this.fid);
             dest.writeByte(this.have_distributed ? (byte) 1 : (byte) 0);
@@ -477,7 +477,7 @@ public class GoodsAllDetailBean implements Parcelable {
             this.cover_id = in.readInt();
             this.custom_details = in.readString();
             this.delivery_country = in.readString();
-            this.delivery_country_id = in.readInt();
+            this.country_id = in.readInt();
             this.features = in.readString();
             this.fid = in.readString();
             this.have_distributed = in.readByte() != 0;

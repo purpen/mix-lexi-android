@@ -25,6 +25,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e(json)
                 view.dismissLoadingView()
                 val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
                 if (loginBean.success) {

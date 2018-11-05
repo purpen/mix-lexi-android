@@ -352,7 +352,6 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             goods = ProductBean()
 
             goods.quantity = 1
-            goods.delivery_country_id = product.delivery_country_id
             goods.delivery_province = product.delivery_province
             goods.delivery_city = product.delivery_city
             goods.cover = selectedSKU.cover
@@ -368,7 +367,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             }
 
             goods.fid = product.fid
-            goods.delivery_country_id = product.delivery_country_id
+            goods.delivery_country_id = product.country_id
             goodsList.add(goods)
 
             if (product.is_distributed) { //分销1，不是分销0
