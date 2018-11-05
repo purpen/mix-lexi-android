@@ -35,6 +35,12 @@ android {
             keyAlias 'lexi'
             keyPassword 'lexi456'
         }
+        debug {
+            storeFile file('lexi.jks')
+            storePassword "lexi456"
+            keyAlias "lexi"
+            keyPassword "lexi456"
+        }
     }
 
     buildTypes {
@@ -52,6 +58,11 @@ android {
                     }
                 }
             }
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles 'proguard-rules.pro'
         }
     }
 }

@@ -27,11 +27,11 @@ import java.util.TreeMap;
 
 public class ClientParamsAPI {
     //测试
-//    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
-//    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
+    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
+    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
     //正式
-    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
-    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
+//    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
+//    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
     /**
      * 获取登录后的authorization
      * @param token
@@ -1482,6 +1482,19 @@ public class ClientParamsAPI {
     public static HashMap<String,Object> getReceiveVoucherOfficialParams(String rid){
         HashMap<String,Object> params=generateCommonParams();
         params.put("rid",rid);
+        return params;
+    }
+
+    /**
+     * 微信支付
+     * @param rid
+     * @param pay_type
+     * @return
+     */
+    public static HashMap<String,Object> getWXPayParams(String rid, int pay_type){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("rid",rid);
+        params.put("pay_type",pay_type);
         return params;
     }
 }

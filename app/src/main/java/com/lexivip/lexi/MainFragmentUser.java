@@ -19,6 +19,7 @@ import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,7 +76,10 @@ public class MainFragmentUser extends BaseFragment {
                         Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,
                         Manifest.permission.WRITE_APN_SETTINGS};
                 ActivityCompat.requestPermissions(getActivity(),mPermissionList,123);
-                new ShareAction(getActivity()).withText("hello")
+                UMImage image = new UMImage(getActivity(), R.drawable.ic_camera);//资源文件
+                new ShareAction(getActivity())
+                        .withText("hello")
+                        //.withMedia(image)
                         .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                         .setCallback(shareListener)
                         .open();

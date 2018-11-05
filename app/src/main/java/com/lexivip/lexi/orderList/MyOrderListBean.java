@@ -192,7 +192,7 @@ public class MyOrderListBean implements Parcelable{
             private String buyer_zipcode;
             private double coupon_amount;
             private int created_at;
-            private int current_time;
+            private String current_time;
             private Object customer_order_id;
             private double discount_amount;
             private boolean distributed;
@@ -233,7 +233,7 @@ public class MyOrderListBean implements Parcelable{
                 buyer_zipcode = in.readString();
                 coupon_amount = in.readDouble();
                 created_at = in.readInt();
-                current_time = in.readInt();
+                current_time = in.readString();
                 discount_amount = in.readDouble();
                 distributed = in.readByte() != 0;
                 first_discount = in.readDouble();
@@ -373,11 +373,11 @@ public class MyOrderListBean implements Parcelable{
                 this.created_at = created_at;
             }
 
-            public int getCurrent_time() {
+            public String getCurrent_time() {
                 return current_time;
             }
 
-            public void setCurrent_time(int current_time) {
+            public void setCurrent_time(String current_time) {
                 this.current_time = current_time;
             }
 
@@ -609,7 +609,7 @@ public class MyOrderListBean implements Parcelable{
                 dest.writeString(buyer_zipcode);
                 dest.writeDouble(coupon_amount);
                 dest.writeInt(created_at);
-                dest.writeInt(current_time);
+                dest.writeString(current_time);
                 dest.writeDouble(discount_amount);
                 dest.writeByte((byte) (distributed ? 1 : 0));
                 dest.writeDouble(first_discount);

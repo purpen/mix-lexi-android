@@ -1,9 +1,7 @@
-package com.lexivip.lexi.lifeShop;
+package com.lexivip.lexi.orderList;
 
 import android.content.Context;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,24 +9,25 @@ import android.view.View;
 import android.widget.Button;
 
 import com.basemodule.tools.DateUtil;
-import com.contrarywind.timer.MessageHandler;
 import com.flyco.dialog.widget.base.BottomBaseDialog;
 import com.lexivip.lexi.R;
-
-import java.util.Date;
 
 //TODO 支付dialog待完成
 public class PayDialog extends BottomBaseDialog<PayDialog> {
 
     private View view;
     private Context context;
-    private PayBean bean;
+    private MergeBean bean;
     private CountDownTimer countDownTimer;
+    private int pay_type;
+    private String rid;
 
-    public PayDialog(Context context,PayBean bean) {
+    public PayDialog(Context context,MergeBean bean,String rid, int pay_type) {
         super(context);
         this.context=context;
         this.bean=bean;
+        this.rid=rid;
+        this.pay_type=pay_type;
     }
 
     @Override
