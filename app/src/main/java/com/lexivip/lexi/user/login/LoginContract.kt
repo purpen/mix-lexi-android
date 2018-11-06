@@ -11,6 +11,9 @@ class LoginContract {
         fun showError(@NonNull string: String)
         fun showInfo(message: String)
         fun goPage(vararg args: Boolean)
+        fun showHint() {
+
+        }
     }
 
     interface Presenter : BasePresenter {

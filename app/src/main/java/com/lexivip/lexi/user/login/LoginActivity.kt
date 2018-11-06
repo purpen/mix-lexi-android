@@ -159,6 +159,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
         ToastUtil.showInfo(message)
     }
 
+    override fun showHint() {
+        textViewHint.visibility = View.VISIBLE
+    }
 
     override fun onDestroy() {
         EventBus.getDefault().unregister(this);

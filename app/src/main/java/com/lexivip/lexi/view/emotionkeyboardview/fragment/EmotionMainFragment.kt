@@ -393,6 +393,7 @@ class EmotionMainFragment : BaseFragment() {
         relativeLayoutLike.visibility = View.VISIBLE
         buttonSend.visibility = View.GONE
     }
+
 }
 
 

@@ -326,6 +326,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             intent.putExtra(ArticleDetailActivity::class.java.name,item.channel_name)
             startActivity(intent)
         }
+
     }
 
     override fun showLoadingView() {

@@ -14,6 +14,7 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.mine.*
 import com.lexivip.lexi.mine.like.likeGoods.AllLikeGoodsActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.adapter_goods_like.view.*
 import kotlinx.android.synthetic.main.adapter_item_show_window.view.*
 import kotlinx.android.synthetic.main.empty_user_center.view.*
@@ -60,6 +61,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
     override fun onResume() {
         super.onResume()
+        if (!UserProfileUtil.isLogin()) return
         presenter.getUserGoodsLike()
         presenter.getShowWindowLike()
     }

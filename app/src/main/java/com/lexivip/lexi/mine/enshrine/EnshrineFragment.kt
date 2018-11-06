@@ -15,6 +15,7 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.mine.like.AdapterLikeGoods
 import com.lexivip.lexi.mine.AdapterMineFavorite
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import kotlinx.android.synthetic.main.view_head_mine_enshrine.view.*
@@ -153,6 +154,7 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
     override fun onResume() {
         super.onResume()
+        if (!UserProfileUtil.isLogin()) return
         presenter.getUserRecentLook()
 
         presenter.getWishOrder()

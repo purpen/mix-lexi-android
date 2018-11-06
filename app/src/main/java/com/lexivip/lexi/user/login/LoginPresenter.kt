@@ -25,6 +25,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e(json)
                 view.dismissLoadingView()
                 val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
                 if (loginBean.success) {
@@ -36,6 +37,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
             }
 
             override fun onFailure(e: IOException) {
+                view.showHint()
                 view.dismissLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }

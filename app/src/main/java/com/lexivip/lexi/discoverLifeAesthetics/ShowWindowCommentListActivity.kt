@@ -81,7 +81,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         transaction.commit()
     }
 
-
     override fun installListener() {
 
 //        imageViewChangeInput.setOnClickListener{

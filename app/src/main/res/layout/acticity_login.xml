@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/linearLayoutPassword"
                     android:layout_marginTop="@dimen/dp10"
-                    android:text="错误提示"
+                    android:text="用户名或密码错误"
                     android:textColor="@color/color_ff6666"
                     android:textSize="@dimen/sp12"
                     android:visibility="gone"
