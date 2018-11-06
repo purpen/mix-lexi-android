@@ -244,8 +244,9 @@ public class PayResultBean {
                 public String store_rid;
                 public String tag_line;
                 public String town;
-                public String min_days;
-                public String max_days;
+                public int min_days;
+                public int max_days;
+                public String py_intro;
             }
         }
     }

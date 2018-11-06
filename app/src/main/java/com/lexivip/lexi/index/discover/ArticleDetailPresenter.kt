@@ -132,13 +132,14 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
         dataSource.focusBrandPavilion(store_rid, isFavorite, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 v.isEnabled = false
+                view.setBrandPavilionFocusState(isFavorite)
             }
 
             override fun onSuccess(json: String) {
                 v.isEnabled = true
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
-                    view.setBrandPavilionFocusState(isFavorite)
+//                    view.setBrandPavilionFocusState(isFavorite)
                 } else {
                     view.showError(netStatusBean.status.message)
                 }

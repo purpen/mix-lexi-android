@@ -49,9 +49,9 @@ class UserGuideActivity : BaseActivity() {
 
     override fun initView() {
 //        if (TextUtils.isEmpty(fromPage)) {
-        imageView.visibility = View.VISIBLE
+//        imageView.visibility = View.VISIBLE
             Handler().postDelayed({
-                imageView.visibility = View.GONE
+//                imageView.visibility = View.GONE
 //                if (empty) {
 //                    initGuide()
 //                } else {

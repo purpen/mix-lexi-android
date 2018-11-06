@@ -154,7 +154,7 @@ public class GlideUtil {
 
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
                 .override(width, height)
-                .format(DecodeFormat.PREFER_ARGB_8888)
+                .format(DecodeFormat.PREFER_RGB_565)
                 .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .dontAnimate()
@@ -174,34 +174,15 @@ public class GlideUtil {
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 int resourceW = resource.getIntrinsicWidth();
                 int resourceH = resource.getIntrinsicHeight();
-                LogUtil.e("url==" + t + ";;originW=" + resourceW + ";;;originH=" + resourceH);
                 ViewGroup.LayoutParams params = imageView.getLayoutParams();
                 if (params == null) params = new ViewGroup.LayoutParams(width, height);
                 int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();
                 float scale = (float) vw / (float) resourceW;
                 int vh = Math.round(resourceH * scale);
-                LogUtil.e("url==" + t + ";;scaleW=" + vw + ";;;scaleH=" + vh);
                 params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
                 imageView.setLayoutParams(params);
                 return false;
             }
-
-//            @Override
-//            public boolean onResourceReady(Bitmap resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                int resourceW = resource.getIntrinsicWidth();
-//                int resourceH = resource.getIntrinsicHeight();
-//                LogUtil.e("url==" + t + ";;originW=" + resourceW + ";;;originH=" + resourceH);
-//                ViewGroup.LayoutParams params = imageView.getLayoutParams();
-//                if (params == null) params = new ViewGroup.LayoutParams(width, height);
-//                int vw = imageView.getWidth() - imageView.getPaddingLeft() - imageView.getPaddingRight();
-//                if (resourceW <= vw) vw = resourceW;
-//                float scale = (float) vw / (float) resourceW;
-//                int vh = Math.round(resourceH * scale);
-//                LogUtil.e("url==" + t + ";;scaleW=" + vw + ";;;scaleH=" + vh);
-//                params.height = vh + imageView.getPaddingTop() + imageView.getPaddingBottom();
-//                imageView.setLayoutParams(params);
-//                return false;
-//            }
         }
         ).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
 

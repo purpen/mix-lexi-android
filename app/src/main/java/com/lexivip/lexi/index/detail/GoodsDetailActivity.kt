@@ -362,8 +362,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.textViewExpress.visibility = View.GONE
             return
         }
-        val expressItem: ExpressInfoBean.DataBean.ItemsBean? = items[0]
-        val expressTime = "预计${expressItem?.min_days}~${expressItem?.max_days}到达"
+        val expressItem: ExpressInfoBean.DataBean.ItemsBean = items[0] ?: return
+
+        val expressTime:String
+        if (expressItem.max_days==0){
+            expressTime =  goodsData!!.py_intro
+        }else{
+            expressTime = "预计${expressItem.min_days}~${expressItem.max_days}到达"
+        }
         headerView.textViewExpressTime.text = expressTime
         goodsData?.expressTime = expressTime
         lookGoodsAllDetailDialog?.setExpressTime(expressTime)

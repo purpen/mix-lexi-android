@@ -186,13 +186,14 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
             override fun onStart() {
                 viewClicked.isEnabled = false
+                view.setFavorite(false,position)
             }
 
             override fun onSuccess(json: String) {
                 viewClicked.isEnabled = true
                 val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
                 if (favoriteBean.success) {
-                    view.setFavorite(false,position)
+
                 } else {
                     view.showError(favoriteBean.status.message)
                 }
@@ -213,12 +214,13 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
             override fun onStart() {
                 viewClicked.isEnabled = false
+                view.setFavorite(true,position)
             }
             override fun onSuccess(json: String) {
                 viewClicked.isEnabled = true
                 val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
                 if (favoriteBean.success) {
-                    view.setFavorite(true,position)
+//                    view.setFavorite(true,position)
                 } else {
                     view.showError(favoriteBean.status.message)
                 }

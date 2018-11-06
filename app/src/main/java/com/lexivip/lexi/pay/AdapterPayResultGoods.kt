@@ -34,6 +34,10 @@ class AdapterPayResultGoods(@LayoutRes res: Int) : BaseQuickAdapter<PayResultBea
 
         helper.setText(R.id.textViewGoodsNum, "x${item.quantity}")
 
-        helper.setText(R.id.textViewExpressTime, "交货.${item.min_days}-${item.max_days}送达")
+        if (item.max_days==0){
+            helper.setText(R.id.textViewExpressTime, "交货.${item.py_intro}")
+        }else{
+            helper.setText(R.id.textViewExpressTime, "交货.${item.min_days}-${item.max_days}送达")
+        }
     }
 }
