@@ -30,16 +30,22 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\lilin\\Desktop\\lexi.jks')
+            storeFile file('lexi.jks')
             storePassword 'lexi456'
             keyAlias 'lexi'
             keyPassword 'lexi456'
+        }
+        debug {
+            storeFile file('lexi.jks')
+            storePassword "lexi456"
+            keyAlias "lexi"
+            keyPassword "lexi456"
         }
     }
 
     buildTypes {
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "LOG_DEBUG", "true"
             minifyEnabled false
             debuggable true
             signingConfig signingConfigs.release
@@ -52,6 +58,11 @@ android {
                     }
                 }
             }
+        }
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles 'proguard-rules.pro'
         }
     }
 }

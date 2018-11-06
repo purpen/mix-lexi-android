@@ -22,7 +22,7 @@ public class SubmitOrderBean {
          * orders : [{"buyer_address":"青年路","buyer_city":"淄博","buyer_country":"中国","buyer_name":"ZT-2","buyer_phone":"13260180689","buyer_province":"山东","buyer_remark":"哈哈哈","buyer_tel":"13260180689","buyer_zipcode":"255300","coupon_amount":0,"created_at":1530608616,"current_time":1533813725,"customer_order_id":null,"discount_amount":0,"first_discount":0,"freight":14,"official_order_id":null,"outside_target_id":"D18070316803529","pay_amount":17,"reach_minus":0,"distributed":false,"remark":null,"rid":"D18070316803529","ship_mode":1,"status":5,"store":{"store_logo":{"created_at":1,"filename":"1","filepath":"180523/8f51855eedae984.jpg","id":1,"type":1,"view_url":"http://0.0.0.0:9000/_uploads/photos/180523/8f51855eedae984.jpg"},"store_name":"第一家","store_rid":"2"},"total_amount":3,"total_quantity":3,"blessing_utterance":"嘿嘿嘿","payed_at":12321312,"received_at":12321312,"is_many_express":false,"items":[{"order_sku_commission_price":6,"order_sku_commission_rate":5,"commission_price":null,"commission_rate":5,"cover":"http://0.0.0.0:9000/_uploads/photos/1","deal_price":1,"express":4,"express_code":"YTO","express_name":"圆通","express_at":0,"express_no":null,"id_code":"1","mode":"1 1","price":1,"product_name":"摩托","quantity":3,"rid":"1","s_color":"1","s_model":"1","s_weight":1,"sale_price":1,"stock_count":11020}]}]
          */
 
-        public int actual_payment;
+        public String actual_payment;
         public int bonus_amount;
         public String order_rid;
         public List<OrdersBean> orders;
@@ -159,7 +159,7 @@ public class SubmitOrderBean {
                 public Object commission_price;
                 public int commission_rate;
                 public String cover;
-                public int deal_price;
+                public String deal_price;
                 public int express;
                 public String express_code;
                 public String express_name;

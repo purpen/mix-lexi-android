@@ -13,13 +13,17 @@ import android.support.multidex.MultiDex;
 
 import com.basemodule.tools.AppManager;
 import com.basemodule.tools.BaseModuleContext;
+import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 
 import com.example.myapp.MyEventBusIndex;
 import com.qiniu.android.common.AutoZone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 
 
@@ -32,6 +36,7 @@ public class AppApplication extends MultiDexApplication {
 
 
     private static Application instance;
+    public static IWXAPI msgApi;
 
     public static Application getContext() {
         return instance;
@@ -56,14 +61,19 @@ public class AppApplication extends MultiDexApplication {
         BaseModuleContext.init(this);
         //使用时才自动生成MyEventBusIndex
         EventBus.builder().addIndex(new MyEventBusIndex()).throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
-
+        //Config.DEBUG = true;
         //umeng分享
-        UMConfigure.init(this,"5a12384aa40fa3551f0001d1"
+        UMConfigure.init(this,"5bc5c5f1b465f5c5a000007d"
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
-        PlatformConfig.setWeixin("wx777520ec6a61fff5", "a049e19a6f464e7d53ad28b4dbc905e2");
+
+        PlatformConfig.setWeixin(Constants.WX_ID, "8eddb55d39cbfdb9fee1afa93a495db1");
+
+        msgApi = WXAPIFactory.createWXAPI(this, Constants.WX_ID);
+        msgApi.registerApp(Constants.WX_ID);
+
         //豆瓣RENREN平台目前只能在服务器端配置
-        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
-        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        //PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
+        //PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
     }
 
 

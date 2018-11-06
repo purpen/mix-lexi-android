@@ -14,7 +14,11 @@ import com.basemodule.ui.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.CustomLinearLayoutManager;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.payUtil.PayUtil;
+import com.lexivip.lexi.user.areacode.MessageAreaCode;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,6 +37,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     private int positions;
     private Intent intent;
     private InquiryDialog inquiryDialog;
+    private String rid;
 
 
     @Override
@@ -107,7 +112,8 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         break;
                     case R.id.bt_money:
                         //todo 订单支付待完成
-                        LogUtil.e("支付订单啊啊啊啊啊啊啊");
+                        rid = adapterOrderList.getData().get(position).getRid();
+                        presenter.isMerge(rid);
                         break;
                     case R.id.bt_logistics:
                         //todo 物流跟踪
@@ -193,6 +199,17 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     public void getFinish() {
         adapterOrderList.getData().get(positions).setUser_order_status(5);
         adapterOrderList.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getMerge(MergeBean bean) {
+        if (bean.data.is_merge){
+            PayDialog payDialog=new PayDialog(getContext(),bean,rid,1);
+            dialog.show();
+        }else {
+            //todo pay_type待添加
+            PayUtil payUtil=new PayUtil(dialog,rid,1,1);
+        }
     }
 
     @Override

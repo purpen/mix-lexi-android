@@ -10,6 +10,7 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.lexivip.lexi.CustomCountDownTimer
+import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.R
@@ -18,6 +19,8 @@ import com.lexivip.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import com.lexivip.lexi.user.password.ForgetPasswordActivity
 import com.lexivip.lexi.user.register.RegisterActivity
+import com.umeng.socialize.UMShareAPI
+import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.acticity_login.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -129,6 +132,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
             }
 
             R.id.linearLayoutWeChat -> presenter.wechatLogin()
+                //UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, umAuthListener)
 
 //            R.id.linearLayoutQQ -> presenter.qqLogin()
 //

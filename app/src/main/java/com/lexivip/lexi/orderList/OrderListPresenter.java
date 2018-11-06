@@ -3,6 +3,8 @@ package com.lexivip.lexi.orderList;
 import android.graphics.Bitmap;
 
 import com.basemodule.tools.LogUtil;
+import com.basemodule.tools.ToastUtil;
+import com.basemodule.tools.Util;
 import com.lexivip.lexi.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.AppApplication;
@@ -119,6 +121,38 @@ public class OrderListPresenter implements OrderListContract.Presenter {
             public void onFailure(@NotNull IOException e) {
                 view.dismissLoadingView();
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error));
+            }
+        });
+    }
+
+    @Override
+    public void isMerge(String rid) {
+        model.isMerge(rid, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                LogUtil.e("合并"+json);
+                MergeBean bean=JsonUtil.fromJson(json,MergeBean.class);
+                if (bean.success){
+                    view.getMerge(bean);
+                    view.dismissLoadingView();
+                }else {
+                    ToastUtil.showError(bean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                ToastUtil.showError(Util.getString(R.string.text_net_error));
             }
         });
     }

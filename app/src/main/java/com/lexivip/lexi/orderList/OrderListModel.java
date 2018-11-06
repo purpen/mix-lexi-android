@@ -87,4 +87,28 @@ public class OrderListModel implements IDataSource {
             }
         });
     }
+    public void isMerge(String rid, final HttpRequestCallBack callBack){
+        HashMap<String,Object> params=ClientParamsAPI.getRidParams(rid);
+        HttpRequest.sendRequest(HttpRequest.POST, URL.IS_MERGE, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
 }

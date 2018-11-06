@@ -16,10 +16,12 @@ public class OrderListContract {
         void addData(List<MyOrderListBean.DataBean.OrdersBean> bean);
         void getDelete();
         void getFinish();
+        void getMerge(MergeBean bean);
     }
     interface Presenter extends BasePresenter {
         void getData(int status,int page);
         void deleteOrder(String rid);
         void finishOrder(String rid);
+        void isMerge(String rid);
     }
 }

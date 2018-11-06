@@ -13,6 +13,8 @@ public class Constants {
 
     public static final String PAGE_SIZE20= "20";
 
+    public static final String WX_ID="wx456e2f0cb22db269";
+
     //从获取相册图片
     public static final int REQUEST_CODE_PICK_IMAGE = 0x000011;
 
