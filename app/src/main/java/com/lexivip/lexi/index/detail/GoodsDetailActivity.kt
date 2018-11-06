@@ -85,7 +85,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         recyclerView.layoutManager = linearLayoutManager
         adapter = AdapterGoodsDetail(listDescription)
         recyclerView.adapter = adapter
-
+        adapter.setNewData(listDescription)
         val footerView = View(this)
         footerView.setBackgroundColor(Util.getColor(android.R.color.white))
         footerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp20))
@@ -94,7 +94,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         adapter.addHeaderView(headerView)
 
-        adapter.setHeaderAndEmpty(true)
+        adapter.setHeaderFooterEmpty(true,true)
 
         headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(336.0)))
         headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
@@ -102,43 +102,45 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         this.presenter = GoodsDetailPresenter(this)
         headerView.textViewCoupon.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_get_coupon, R.dimen.dp29, R.dimen.dp15), null, null, null)
         headerView.textViewSub.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_full_reduction, R.dimen.dp15, R.dimen.dp15), null, null, null)
-
         initFooter()
     }
 
     private fun initFooter() {
         webView = WebView(this)
+        webView.overScrollMode = WebView.OVER_SCROLL_NEVER
+        webView.isHorizontalScrollBarEnabled = false
+        webView.isVerticalScrollBarEnabled = false
         adapter.addFooterView(webView)
         val settings = webView.settings;
         settings.javaScriptEnabled = false
         settings.domStorageEnabled = true
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
-        webView.webViewClient = MyWebViewClient()
+        webView.webViewClient = object : WebViewClient() {
+
+            override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+                handler?.proceed()
+                super.onReceivedSslError(view, handler, error);
+            }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                view?.loadUrl(url)
+                return true
+            }
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+            }
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING;
         } else {
             settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
         }
-    }
-
-
-
-    internal class MyWebViewClient : WebViewClient() {
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            view?.loadUrl(url)
-            return true
-        }
-
-        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-            handler?.proceed()
-            super.onReceivedSslError(view, handler, error)
-        }
-
-        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-            super.onPageStarted(view, url, favicon)
-        }
-
     }
 
     override fun setPresenter(presenter: GoodsDetailContract.Presenter?) {
@@ -425,7 +427,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             buttonAddWish.text = Util.getString(R.string.text_wish_order)
         }
 
-        adapter.setNewData(listDescription)
+
 
         headerView.textViewName.text = data.name
 
@@ -842,5 +844,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     override fun goPage() {
 
+    }
+
+    override fun onDestroy() {
+        val parent = webView.parent as ViewGroup
+        parent.removeView(webView)
+        webView.removeView(webView)
+        webView.destroy()
+
+        super.onDestroy()
     }
 }
