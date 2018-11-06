@@ -35,7 +35,9 @@
             android:includeFontPadding="false"
             android:text="@string/text_look_all"
             android:textColor="@color/color_999"
-            android:textSize="@dimen/sp14" />
+            android:textSize="@dimen/sp14"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
