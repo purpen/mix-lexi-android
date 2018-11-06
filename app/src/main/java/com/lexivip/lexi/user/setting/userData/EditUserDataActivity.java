@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -87,6 +88,7 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
     private int cityId;
     private int areaId;
     private ArrayList<String> sexList=new ArrayList<>();
+    private HashMap<String, ArrayList<CityBean.CityNameBean>> cityMap;
 
     @Override
     protected int getLayout() {
@@ -112,6 +114,7 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
         tv_date = findViewById(R.id.tv_date);
         tv_sex = findViewById(R.id.tv_sex);
         presenter = new EditUserDataPresenter(this);
+        et_email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
         sexList.add(Util.getString(R.string.text_gender_woman));
         sexList.add(Util.getString(R.string.text_gender_man));
@@ -277,8 +280,9 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
 
     @Override
     public void getCity(HashMap<String, ArrayList<CityBean.CityNameBean>> map) {
+        cityMap = map;
         //地址选择器
-        AddressDialog addressDialog=new AddressDialog(this,map);
+        AddressDialog addressDialog=new AddressDialog(this, cityMap);
         addressDialog.setDialogCallback(new AddressDialog.DialogCallback() {
 
             @Override
@@ -336,10 +340,14 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
                 });
                 break;
             case R.id.et_position:
-                if (userBean.data.profile.country_id!=0) {
-                    presenter.loadCity(String.valueOf(userBean.data.profile.country_id));
+                if(cityMap!=null){
+                    getCity(cityMap);
                 }else {
-                    presenter.loadCity("1");
+                    if (userBean.data.profile.country_id != 0) {
+                        presenter.loadCity(String.valueOf(userBean.data.profile.country_id));
+                    } else {
+                        presenter.loadCity("1");
+                    }
                 }
                 break;
             case R.id.tv_date:

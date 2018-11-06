@@ -96,6 +96,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private int areaId;
     private boolean isdefault;
     private String id_card=null;
+    private HashMap<String, ArrayList<CityBean.CityNameBean>> cityMap;
 
     @Override
     protected int getLayout() {
@@ -208,7 +209,11 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.ll_region:
                 LogUtil.e("你有么有被触发");
-                presenter.loadCityData("1");
+                if (cityMap!=null){
+                    setCityData(cityMap);
+                }else {
+                    presenter.loadCityData("1");
+                }
                 break;
             case R.id.ll_country:
                 presenter.loadCountry();
@@ -361,8 +366,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setCityData(HashMap<String, ArrayList<CityBean.CityNameBean>> map) {
+        cityMap = map;
         //地址选择器
-        AddressDialog addressDialog=new AddressDialog(context,map);
+        AddressDialog addressDialog=new AddressDialog(context, cityMap);
         addressDialog.setDialogCallback(new AddressDialog.DialogCallback() {
 
             @Override

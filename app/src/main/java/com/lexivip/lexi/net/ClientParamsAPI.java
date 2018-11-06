@@ -1486,6 +1486,16 @@ public class ClientParamsAPI {
     }
 
     /**
+     * 优惠券头条动态
+     * @return
+     */
+    public static HashMap<String,Object> getVoucherNoticeParams(){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("count","50");
+        return params;
+    }
+
+    /**
      * 微信支付
      * @param rid
      * @param pay_type

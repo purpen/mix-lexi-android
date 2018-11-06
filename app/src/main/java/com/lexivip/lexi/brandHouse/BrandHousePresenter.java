@@ -182,6 +182,7 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
     }
 
     public void clickGetCoupon(String storeId, String code, final IDataSource.HttpRequestCallBack callBack){
+        LogUtil.e("店铺id："+storeId+"code :"+code);
         model.clickGetCoupon(storeId, code, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
@@ -195,11 +196,11 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
-                view.dismissLoadingView();
                 GetCouponBean bean=JsonUtil.fromJson(json,GetCouponBean.class);
                 if (bean.success){
                     callBack.onSuccess(json);
                     ToastUtil.showInfo(R.string.text_get_coupon_success);
+                    view.dismissLoadingView();
                 }else{
                     view.showError(bean.status.message);
                 }

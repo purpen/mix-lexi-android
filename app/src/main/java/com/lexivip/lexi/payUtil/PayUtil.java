@@ -24,6 +24,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
     private PayPresenter presenter;
     private Application context = AppApplication.getContext();
     private String rid;
+    private int pay_type;
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -47,6 +48,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
     public PayUtil(WaitingDialog dialog, String rid, int pay_type, int type) {
         this.dialog = dialog;
         this.rid=rid;
+        this.pay_type=pay_type;
         presenter=new PayPresenter(this);
         presenter.loadWXPayOrder(rid,pay_type,type);
     }
@@ -54,7 +56,8 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
     @Override
     public void paySuccess(int code) {
         Intent intent=new Intent(context,PayResultActivity.class);
-        intent.putExtra("rid",rid);
+        intent.putExtra(PayResultActivity.class.getSimpleName(),rid);
+        intent.putExtra(PayResultActivity.class.getName(),pay_type);
         context.startActivity(intent);
     }
 

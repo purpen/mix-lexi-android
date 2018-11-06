@@ -106,27 +106,29 @@ class CouponBottomDialog(context: Context?) : BottomBaseDialog<CouponBottomDialo
 
         adapterDialogCoupon.setOnItemClickListener { adapter, _, position ->
             val couponBean = adapter.getItem(position) as CouponBean
-            if (present != null) {
-                present!!.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
-                    override fun onSuccess(json: String) {
-                        couponBean.status = 1
-                        adapter.notifyDataSetChanged()
-                    }
+            if (0==couponBean.status) {
+                if (present != null) {
+                    present!!.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
+                        override fun onSuccess(json: String) {
+                            couponBean.status = 1
+                            adapter.notifyDataSetChanged()
+                        }
 
-                    override fun onFailure(e: IOException) {
-                    }
-                })
-            } else if (presenter != null) {
-                presenter!!.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
-                    override fun onFailure(e: IOException) {
+                        override fun onFailure(e: IOException) {
+                        }
+                    })
+                } else if (presenter != null) {
+                    presenter!!.clickGetCoupon(storeId, couponBean.code, object : IDataSource.HttpRequestCallBack {
+                        override fun onFailure(e: IOException) {
 
-                    }
+                        }
 
-                    override fun onSuccess(json: String) {
-                        couponBean.status = 1
-                        adapter.notifyDataSetChanged()
-                    }
-                })
+                        override fun onSuccess(json: String) {
+                            couponBean.status = 1
+                            adapter.notifyDataSetChanged()
+                        }
+                    })
+                }
             }
         }
     }

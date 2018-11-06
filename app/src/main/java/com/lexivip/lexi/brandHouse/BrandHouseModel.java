@@ -95,7 +95,7 @@ public class BrandHouseModel {
     }
     public void clickGetCoupon(String storeId, String code, final IDataSource.HttpRequestCallBack callBack){
         HashMap<String,Object> params=ClientParamsAPI.getClickCouponsParams(storeId, code);
-        HttpRequest.sendRequest(HttpRequest.GET, URL.CLICK_GET_COUPON, params, new IDataSource.HttpRequestCallBack() {
+        HttpRequest.sendRequest(HttpRequest.POST, URL.CLICK_GET_COUPON, params, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
