@@ -68,7 +68,7 @@ public class AppApplication extends MultiDexApplication {
 
         PlatformConfig.setWeixin(Constants.WX_ID, "8eddb55d39cbfdb9fee1afa93a495db1");
 
-        msgApi = WXAPIFactory.createWXAPI(this, null);
+        msgApi = WXAPIFactory.createWXAPI(this, Constants.WX_ID);
         msgApi.registerApp(Constants.WX_ID);
 
         //豆瓣RENREN平台目前只能在服务器端配置

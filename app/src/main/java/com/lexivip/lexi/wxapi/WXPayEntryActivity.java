@@ -44,7 +44,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp baseResp) {
-        LogUtil.e(baseResp.errStr+baseResp.transaction+"::::"+baseResp.errCode);
+        LogUtil.e("微信支付回调："+baseResp.errStr+baseResp.transaction+"::::"+baseResp.errCode);
         if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             mPayListener.paySuccess(baseResp.errCode);
         }

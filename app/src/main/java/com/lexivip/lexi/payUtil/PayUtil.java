@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 
 import com.basemodule.tools.Constants;
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.WaitingDialog;
 import com.lexivip.lexi.AppApplication;
@@ -28,6 +29,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what==WECHATPAY){
+                LogUtil.e("调起微信");
                 PayReq request = new PayReq();
                 request.appId =Constants.WX_ID; // 公众账号ID
                 request.partnerId =bean.data.mch_id;// 商户号
@@ -76,6 +78,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
 
     @Override
     public void getPayOrder(PayWXBean bean) {
+        this.bean=bean;
         handler.sendEmptyMessage(WECHATPAY);
     }
 

@@ -12,6 +12,7 @@ import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.AppApplication;
+import com.lexivip.lexi.PageUtil;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.view.CustomHeadView;
 
@@ -81,7 +82,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     @Override
     public void installListener() {
         super.installListener();
-
+        adapterOrderList.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                PageUtil.jump2GoodsDetailActivity(adapterOrderList.getData().get(position).getRid());
+            }
+        });
     }
 
     @Override
