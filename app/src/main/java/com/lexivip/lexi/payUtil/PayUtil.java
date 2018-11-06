@@ -55,10 +55,16 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
 
     @Override
     public void paySuccess(int code) {
-        Intent intent=new Intent(context,PayResultActivity.class);
-        intent.putExtra(PayResultActivity.class.getSimpleName(),rid);
-        intent.putExtra(PayResultActivity.class.getName(),pay_type);
-        context.startActivity(intent);
+        if (-1==code){
+            ToastUtil.showError("支付异常");
+        }else if (-2==code){
+            ToastUtil.showError("取消支付");
+        }else {
+            Intent intent = new Intent(context, PayResultActivity.class);
+            intent.putExtra(PayResultActivity.class.getSimpleName(), rid);
+            intent.putExtra(PayResultActivity.class.getName(), pay_type);
+            context.startActivity(intent);
+        }
     }
 
     @Override

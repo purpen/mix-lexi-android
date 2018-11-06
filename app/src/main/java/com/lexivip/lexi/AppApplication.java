@@ -1,9 +1,11 @@
 package com.lexivip.lexi;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
 import android.support.multidex.MultiDex;
 //import com.qiniu.android.storage.UploadManager;
@@ -37,9 +39,14 @@ public class AppApplication extends MultiDexApplication {
 
     private static Application instance;
     public static IWXAPI msgApi;
+    private static Activity mActivity;
 
     public static Application getContext() {
         return instance;
+    }
+
+    public static Activity getActivity(){
+        return mActivity;
     }
 
 
@@ -50,6 +57,43 @@ public class AppApplication extends MultiDexApplication {
             Thread.setDefaultUncaughtExceptionHandler(restartHandler);
         }
         instance = this;
+
+        this.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+                mActivity=activity;
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
 //        initPush();
 //        if (BuildConfig.LOG_DEBUG) {
 //            if (LeakCanary.isInAnalyzerProcess(this)) {

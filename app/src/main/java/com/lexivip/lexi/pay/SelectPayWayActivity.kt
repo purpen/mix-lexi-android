@@ -1,16 +1,18 @@
 package com.lexivip.lexi.pay
 
-import android.content.Intent
 import com.basemodule.tools.Util
+import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.R
 import com.lexivip.lexi.order.CreateOrderBean
+import com.lexivip.lexi.payUtil.PayUtil
 import kotlinx.android.synthetic.main.activity_select_pay_way.*
 
 class SelectPayWayActivity : BaseActivity() {
     override val layout: Int = R.layout.activity_select_pay_way
 
     private var createOrderBean: CreateOrderBean? = null
+    private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     override fun getIntentData() {
         createOrderBean = intent.getParcelableExtra(TAG)
     }
@@ -79,10 +81,11 @@ class SelectPayWayActivity : BaseActivity() {
         //点击开启支付窗口
         buttonPayNow.setOnClickListener {
             //TODO 支付成功跳转支付结果页
-            val intent = Intent(this, PayResultActivity::class.java)
+            /*val intent = Intent(this, PayResultActivity::class.java)
             intent.putExtra(PayResultActivity::class.java.simpleName, createOrderBean)
             startActivity(intent)
-            finish()
+            finish()*/
+            val payUtil = PayUtil(dialog, createOrderBean!!.consigneeInfo.rid, createOrderBean!!.payWay,0)
 
         }
     }
