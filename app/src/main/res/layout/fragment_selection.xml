@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -440,5 +442,5 @@
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </com.lexivip.lexi.view.VCSwipeRefreshView>
