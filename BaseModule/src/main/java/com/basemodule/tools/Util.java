@@ -80,6 +80,7 @@ public class Util {
 
     /**
      * 获取指定大小的Drawable
+     *
      * @param imgId
      * @param width
      * @param height
@@ -95,6 +96,7 @@ public class Util {
 
     /**
      * 获取指定大小的Drawable
+     *
      * @param imgId
      * @return
      */
@@ -108,6 +110,7 @@ public class Util {
 
     /**
      * 获取指定大小的Drawable
+     *
      * @param imgId
      * @return
      */
@@ -117,5 +120,18 @@ public class Util {
             drawable.setBounds(0, 0, size, size);
         }
         return drawable;
+    }
+
+    /**
+     * 根据部分内容生成Html
+     * @param bodyHTML
+     * @return
+     */
+    public static String createPageByHtmlBodyContent(String bodyHTML) {
+        String head = "<head>" +
+                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> " +
+                "<style>html{padding:15px;} body{word-wrap:break-word;font-size:13px;padding:0px;margin:0px} p{padding:0px;margin:0px;font-size:13px;color:#222222;line-height:1.3;} img{padding:0px,margin:0px;max-width:100%; width:auto; height:auto;}</style>" +
+                "</head>";
+        return "<html>" + head + "<body>" + bodyHTML + "</body></html>";
     }
 }

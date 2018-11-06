@@ -10,6 +10,9 @@ class ForgetPasswordContract {
         fun goPage(email: String)
         fun dismissLoadingView()
         fun showInfo(string: String)
+        fun startCountDown() {
+
+        }
     }
     interface Presenter : BasePresenter {
 

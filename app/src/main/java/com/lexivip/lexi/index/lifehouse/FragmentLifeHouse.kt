@@ -235,7 +235,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.imageViewEdit -> { //编辑生活馆
+            R.id.imageViewEdit,R.id.textViewTitle -> { //编辑生活馆
                 val title = headerLifeHouse.textViewTitle.text
                 val description = headerLifeHouse.textViewDesc.text
                 val dialog = EditLifeHouseDialog(activity, presenter, title, description)
@@ -304,6 +304,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headerLifeHouse.imageViewEdit.setOnClickListener(this)
+        headerLifeHouse.textViewTitle.setOnClickListener(this)
 
         headerLifeHouse.imageViewCover.setOnClickListener(this)
 

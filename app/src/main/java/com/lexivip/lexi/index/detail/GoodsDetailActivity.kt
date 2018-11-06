@@ -1,8 +1,11 @@
 package com.lexivip.lexi.index.detail
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Paint
 import android.graphics.Rect
+import android.net.http.SslError
+import android.os.Build
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -10,6 +13,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.youth.banner.BannerConfig
@@ -50,6 +54,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var headerView: View
 
+    private lateinit var webView: WebView
+
     private lateinit var couponList: ArrayList<CouponBean>
 
     private lateinit var productId: String
@@ -64,23 +70,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     override fun getIntentData() {
         product = intent.extras.getParcelable(TAG)
-
-//        val pageName = intent.extras.getString(TAG)
-
-//        if (!TextUtils.isEmpty(pageName)) {
-//            when(pageName){
-//                MainFragment1::class.java.simpleName ->{ //购物车界面为product_rid
-//                    productId = product.product_rid
-//                }
-//
-//                FragmentSelection::class.java.simpleName ->{ //精选界面
-//                    productId = product.rid
-//                }
-//            }
-//
-//        } else {
-            productId = product.rid
-//        }
+        productId = product.rid
     }
 
     override fun initView() {
@@ -95,7 +85,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         recyclerView.layoutManager = linearLayoutManager
         adapter = AdapterGoodsDetail(listDescription)
         recyclerView.adapter = adapter
-
+        adapter.setNewData(listDescription)
         val footerView = View(this)
         footerView.setBackgroundColor(Util.getColor(android.R.color.white))
         footerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DimenUtil.getDimensionPixelSize(R.dimen.dp20))
@@ -104,14 +94,53 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         adapter.addHeaderView(headerView)
 
-        adapter.setHeaderAndEmpty(true)
+        adapter.setHeaderFooterEmpty(true,true)
 
-        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(336.0)))
+        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(336.0)))
         headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
         headerView.banner.isAutoPlay(false)
         this.presenter = GoodsDetailPresenter(this)
         headerView.textViewCoupon.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_get_coupon, R.dimen.dp29, R.dimen.dp15), null, null, null)
         headerView.textViewSub.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_full_reduction, R.dimen.dp15, R.dimen.dp15), null, null, null)
+        initFooter()
+    }
+
+    private fun initFooter() {
+        webView = WebView(this)
+        webView.overScrollMode = WebView.OVER_SCROLL_NEVER
+        webView.isHorizontalScrollBarEnabled = false
+        webView.isVerticalScrollBarEnabled = false
+        adapter.addFooterView(webView)
+        val settings = webView.settings;
+        settings.javaScriptEnabled = false
+        settings.domStorageEnabled = true
+        settings.useWideViewPort = true
+        settings.loadWithOverviewMode = true
+        webView.webViewClient = object : WebViewClient() {
+
+            override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+                handler?.proceed()
+                super.onReceivedSslError(view, handler, error);
+            }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                view?.loadUrl(url)
+                return true
+            }
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING;
+        } else {
+            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
+        }
     }
 
     override fun setPresenter(presenter: GoodsDetailContract.Presenter?) {
@@ -215,7 +244,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             imgUrls.add(product.cover)
         }
 
-        GlideUtil.loadImageWithDimenAndRadius(data.logo, headerView.imageViewLogo,0,DimenUtil.dp2px(45.0))
+        GlideUtil.loadImageWithDimenAndRadius(data.logo, headerView.imageViewLogo, 0, DimenUtil.dp2px(45.0))
 
         headerView.textViewShopName.text = data.name
 
@@ -244,7 +273,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         designPavilionProductAdapter.setNewData(imgUrls)
 
         //跳转品牌馆商品详情
-        designPavilionProductAdapter.setOnItemClickListener { _, view, position ->
+        designPavilionProductAdapter.setOnItemClickListener { _, _, position ->
             val productBean = data.products[position]
             val intent = Intent(this, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
@@ -348,10 +377,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         goodsData = data
 
-        if(TextUtils.isEmpty(data.store_rid)){
+        if (TextUtils.isEmpty(data.store_rid)) {
             LogUtil.e("店铺store_id不存在goodsId=$productId")
             return
         }
+
+        webView.loadData(Util.createPageByHtmlBodyContent(data.content), "text/html;charset=utf-8", "utf-8");
 
         // 获取交货时间
         presenter.getExpressTime(data.fid, data.store_rid, productId)
@@ -378,13 +409,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
         }
 
-        for (item in data.deal_content) {
-            if (TextUtils.equals("text", item.type)) {
-                listDescription.add(AdapterGoodsDetail.MultipleItem(item, AdapterGoodsDetail.MultipleItem.TEXT_ITEM_TYPE))
-            } else if (TextUtils.equals("image", item.type)) {
-                listDescription.add(AdapterGoodsDetail.MultipleItem(item, AdapterGoodsDetail.MultipleItem.IMAGE_ITEM_TYPE))
-            }
-        }
+//        for (item in data.deal_content) {
+//            if (TextUtils.equals("text", item.type)) {
+//                listDescription.add(AdapterGoodsDetail.MultipleItem(item, AdapterGoodsDetail.MultipleItem.TEXT_ITEM_TYPE))
+//            } else if (TextUtils.equals("image", item.type)) {
+//                listDescription.add(AdapterGoodsDetail.MultipleItem(item, AdapterGoodsDetail.MultipleItem.IMAGE_ITEM_TYPE))
+//            }
+//        }
 
         //设置心愿单状态
         if (data.is_wish) {
@@ -396,7 +427,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             buttonAddWish.text = Util.getString(R.string.text_wish_order)
         }
 
-        adapter.setNewData(listDescription)
+
 
         headerView.textViewName.text = data.name
 
@@ -426,14 +457,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             titleList.add("")
         }
 
-        headerView.banner.update(urlList,titleList)
+        headerView.banner.update(urlList, titleList)
         headerView.banner.start()
         headerView.banner.setOnBannerListener { position ->
-            if (goodsData==null || skuData==null) return@setOnBannerListener
-            val intent = Intent(this,GoodsImageViewActivity::class.java)
+            if (goodsData == null || skuData == null) return@setOnBannerListener
+            val intent = Intent(this, GoodsImageViewActivity::class.java)
             goodsData!!.clickPosition = position
             goodsData!!.allSKUData = skuData
-            intent.putExtra(GoodsImageViewActivity::class.java.simpleName,goodsData)
+            intent.putExtra(GoodsImageViewActivity::class.java.simpleName, goodsData)
             startActivity(intent)
         }
 
@@ -610,7 +641,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     override fun installListener() {
 
         headerView.linearLayoutPavilion.setOnClickListener {
-            if (goodsData==null) return@setOnClickListener
+            if (goodsData == null) return@setOnClickListener
             val intent = Intent(this, BrandHouseActivity::class.java)
             intent.putExtra("rid", goodsData!!.store_rid)
             startActivity(intent)
@@ -726,7 +757,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                     if (goodsData == null || skuData == null) return
                     val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.buttonAddShopCart, skuData!!)
                     selectSpecificationBottomDialog.show()
-                }else{
+                } else {
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
@@ -744,8 +775,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             R.id.buttonFocus -> { //关注大B/品牌馆/店铺
                 if (UserProfileUtil.isLogin()) {
                     if (brandPavilionData == null || goodsData == null) return
-                    presenter.focusBrandPavilion(goodsData!!.store_rid, !brandPavilionData!!.is_followed,v)
-                }else{
+                    presenter.focusBrandPavilion(goodsData!!.store_rid, !brandPavilionData!!.is_followed, v)
+                } else {
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
@@ -759,7 +790,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                     } else {
                         presenter.favoriteGoods(goodsData!!.rid, v, true)
                     }
-                }else{
+                } else {
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
@@ -773,16 +804,16 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                     } else {
                         presenter.addWishOrder(goodsData!!.rid, true)
                     }
-                }else{
+                } else {
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
             R.id.buttonGetDiscount -> { //获取优惠券
                 if (UserProfileUtil.isLogin()) {
-                    if (brandPavilionData==null) return
+                    if (brandPavilionData == null) return
                     val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, brandPavilionData!!.rid)
                     couponBottomDialog.show()
-                }else{
+                } else {
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
@@ -792,7 +823,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                     if (skuData == null || goodsData == null) return
                     val selectSpecificationBottomDialog = SelectSpecificationBottomDialog(this, presenter, goodsData!!, R.id.textViewSelectSpec, skuData!!)
                     selectSpecificationBottomDialog.show()
-                }else{
+                } else {
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
@@ -813,5 +844,14 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     override fun goPage() {
 
+    }
+
+    override fun onDestroy() {
+        val parent = webView.parent as ViewGroup
+        parent.removeView(webView)
+        webView.removeView(webView)
+        webView.destroy()
+
+        super.onDestroy()
     }
 }

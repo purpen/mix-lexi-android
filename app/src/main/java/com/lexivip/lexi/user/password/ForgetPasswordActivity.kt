@@ -5,6 +5,7 @@ import android.view.View
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
+import com.lexivip.lexi.CustomCountDownTimer
 import com.lexivip.lexi.R
 import com.lexivip.lexi.user.areacode.MessageAreaCode
 import com.lexivip.lexi.user.areacode.SelectCountryOrAreaActivity
@@ -22,11 +23,14 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
 
     private lateinit var presenter: ForgetPasswordPresenter
 
+    private lateinit var timeCount: CustomCountDownTimer
+
     override val layout: Int = R.layout.acticity_forget_password
 
     override fun initView() {
         EventBus.getDefault().register(this)
         presenter = ForgetPasswordPresenter(this)
+        timeCount = CustomCountDownTimer(60000,1000,textViewGetCode)
     }
 
     override fun installListener() {
@@ -50,6 +54,10 @@ class ForgetPasswordActivity : BaseActivity(), View.OnClickListener, ForgetPassw
             }
             R.id.textViewGetCode -> presenter.sendCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString())
         }
+    }
+
+    override fun startCountDown() {
+        timeCount.start()
     }
 
     override fun onDestroy() {

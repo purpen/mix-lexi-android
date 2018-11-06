@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.ToastUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
@@ -17,21 +16,17 @@ import com.lexivip.lexi.index.selection.DiscoverLifeProductAdapter
 class AdapterLikeShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean, BaseViewHolder>(layoutResId) {
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
-        helper.setText(R.id.textView,item.description)
+        helper.setText(R.id.textView,item.title)
 
-        if (item.products.isEmpty()) return
+        if (item.product_covers.isEmpty()) return
 
         val list = ArrayList<String>()
 
-        if (item.products.size <= 3){
-            for (product in item.products){
-                list.add(product.cover)
-            }
+        if (item.product_covers.size <= 3){
+            list.addAll(item.product_covers)
         }else{
-            val subList = item.products.subList(0, 3)
-            for (product in subList){
-                list.add(product.cover)
-            }
+            val subList = item.product_covers.subList(0, 3)
+            list.addAll(subList)
         }
 
         val list1 = ArrayList<DiscoverLifeProductAdapter.MultipleItem>()
@@ -53,7 +48,6 @@ class AdapterLikeShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean,
 
         adapter.setOnItemClickListener { _, _, _ ->
             PageUtil.jump2ShopWindowDetailActivity(item.rid)
-//            val item1 = adapter.getItem(position)
         }
 
         adapter.setSpanSizeLookup { _, position ->

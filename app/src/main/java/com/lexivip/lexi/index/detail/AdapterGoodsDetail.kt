@@ -46,7 +46,6 @@ class AdapterGoodsDetail(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
             MultipleItem.IMAGE_ITEM_TYPE -> {
                 val imageView = helper.getView<ImageView>(R.id.imageView)
                 imageView.setPadding(dp15, 0, dp15, 0)
-//                GlideUtil.loadLongImage(item.content.content,imageView)
                 GlideUtil.loadImageAdjustImageViewDimen(item.content.content, imageView,0,imgW,ViewGroup.LayoutParams.WRAP_CONTENT)
             }
         }

@@ -14,6 +14,10 @@ class LoginContract {
         fun showHint() {
 
         }
+
+        fun startCountDown() {
+
+        }
     }
 
     interface Presenter : BasePresenter {

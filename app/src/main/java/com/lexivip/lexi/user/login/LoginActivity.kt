@@ -9,6 +9,7 @@ import com.basemodule.ui.BaseActivity
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
+import com.lexivip.lexi.CustomCountDownTimer
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.eventBusMessge.MessageClose
@@ -34,6 +35,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
 
     private lateinit var presenter: LoginPresenter
 
+    private lateinit var timeCount: CustomCountDownTimer
     private var showPassword:Boolean = false
 
     override val layout: Int = R.layout.acticity_login
@@ -42,6 +44,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
         EventBus.getDefault().register(this)
         this.presenter = LoginPresenter(this)
         customHeadView.setRightTxt(getString(R.string.text_skip),R.color.color_666)
+        timeCount = CustomCountDownTimer(60000,1000,textViewGetCode)
     }
 
     override fun installListener() {
@@ -137,6 +140,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
         }
     }
 
+    override fun startCountDown() {
+        timeCount.start()
+    }
 
     override fun showLoadingView() {
         dialog?.show()

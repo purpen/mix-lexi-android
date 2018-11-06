@@ -9,7 +9,6 @@ import java.io.IOException
 
 class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Presenter {
 
-
     private var view: SelectionContract.View = checkNotNull(view)
 
     private val dataSource: SelectionModel by lazy { SelectionModel() }
