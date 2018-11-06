@@ -59,6 +59,7 @@ public class ExpressInfoBean {
             public boolean is_default;
             public int max_days;
             public int min_days;
+            public String py_intro;
             public String rid;
             public List<PlaceItemsBean> place_items;
 

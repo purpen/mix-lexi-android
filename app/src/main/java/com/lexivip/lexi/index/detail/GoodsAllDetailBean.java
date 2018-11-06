@@ -84,6 +84,7 @@ public class GoodsAllDetailBean implements Parcelable {
         public String content;
         public String cover;
         public int cover_id;
+        public String py_intro;
         public String custom_details;
         public String delivery_country;
         public int country_id;
@@ -412,6 +413,7 @@ public class GoodsAllDetailBean implements Parcelable {
             dest.writeString(this.content);
             dest.writeString(this.cover);
             dest.writeInt(this.cover_id);
+            dest.writeString(this.py_intro);
             dest.writeString(this.custom_details);
             dest.writeString(this.delivery_country);
             dest.writeInt(this.country_id);
@@ -475,6 +477,7 @@ public class GoodsAllDetailBean implements Parcelable {
             this.content = in.readString();
             this.cover = in.readString();
             this.cover_id = in.readInt();
+            this.py_intro = in.readString();
             this.custom_details = in.readString();
             this.delivery_country = in.readString();
             this.country_id = in.readInt();
