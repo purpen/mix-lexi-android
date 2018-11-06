@@ -3,6 +3,7 @@ package com.lexivip.lexi.discoverLifeAesthetics
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -45,6 +46,7 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
         swipeRefreshLayout.isEnabled = false
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
