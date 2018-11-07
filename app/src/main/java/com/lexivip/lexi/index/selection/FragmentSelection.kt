@@ -226,7 +226,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     override fun setTodayRecommendData(products: MutableList<TodayRecommendBean.DataBean.DailyRecommendsBean>) {
         adapterTodayRecommend.setNewData(products)
-        adapterTodayRecommend.notifyDataSetChanged()
     }
 
     /**
@@ -363,6 +362,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         //今日推荐
         adapterTodayRecommend.setOnItemClickListener { _, _, position ->
             val item = adapterTodayRecommend.getItem(position) ?: return@setOnItemClickListener
+            LogUtil.e("${item.target_type}")
             when (item.target_type) {
                 1, 2 -> { //1=生活志文章, 2=种草清单 3=主题
                     val bean = LifeWillBean()
@@ -372,6 +372,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
                 }
                 3 -> { //集合详情
                     PageUtil.jump2CollectionDetailActivity(item.recommend_id)
+                }
+                4->{//商品详情
+                    PageUtil.jump2GoodsDetailActivity(item.recommend_id)
                 }
             }
 

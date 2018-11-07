@@ -94,7 +94,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         adapter.addHeaderView(headerView)
 
-        adapter.setHeaderFooterEmpty(true,true)
+        adapter.setHeaderFooterEmpty(true, true)
 
         headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(336.0)))
         headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
@@ -364,14 +364,19 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         }
         val expressItem: ExpressInfoBean.DataBean.ItemsBean = items[0] ?: return
 
-        val expressTime:String
-        if (expressItem.max_days==0){
-            expressTime =  goodsData!!.py_intro
-        }else{
+        val expressTime: String?
+        if (expressItem.max_days == 0) {
+            expressTime = goodsData?.py_intro
+        } else {
             expressTime = "预计${expressItem.min_days}~${expressItem.max_days}到达"
         }
-        headerView.textViewExpressTime.text = expressTime
-        goodsData?.expressTime = expressTime
+
+        if (!TextUtils.isEmpty(expressTime)){
+            headerView.textViewExpress.visibility = View.VISIBLE
+            headerView.textViewExpressTime.visibility = View.VISIBLE
+            headerView.textViewExpressTime.text = expressTime
+            goodsData?.expressTime = expressTime
+        }
         lookGoodsAllDetailDialog?.setExpressTime(expressTime)
     }
 

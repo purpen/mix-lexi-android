@@ -35,7 +35,11 @@ class LookGoodsAllDetailDialog(context: FragmentActivity?, goodsData: GoodsAllDe
             view.textViewLightSpot.text = "亮点：${data.features}"
         }
 
-        if (!TextUtils.isEmpty(data.expressTime)) view.textViewExpressTime.text = data.expressTime
+        if (!TextUtils.isEmpty(data.expressTime)) {
+            view.textViewExpress.visibility = View.VISIBLE
+            view.textViewExpressTime.visibility = View.VISIBLE
+            view.textViewExpressTime.text = data.expressTime
+        }
 
         if (data.is_custom_service) { //可定制
             view.textViewCharacter.visibility = View.VISIBLE
@@ -65,7 +69,12 @@ class LookGoodsAllDetailDialog(context: FragmentActivity?, goodsData: GoodsAllDe
         view.textViewProductReturnPolicy.text = data.product_return_policy
     }
 
-    fun setExpressTime(expressTime: String) {
-        view.textViewExpressTime.text = expressTime
+    fun setExpressTime(expressTime: String?) {
+        if (!expressTime.isNullOrEmpty()) {
+            view.textViewExpress.visibility = View.VISIBLE
+            view.textViewExpressTime.visibility = View.VISIBLE
+            view.textViewExpressTime.text = expressTime
+        }
+
     }
 }
