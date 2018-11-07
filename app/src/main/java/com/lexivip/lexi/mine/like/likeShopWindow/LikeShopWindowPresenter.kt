@@ -25,7 +25,6 @@ class LikeShopWindowPresenter(view: LikeShopWindowContract.View) : LikeShopWindo
 
         dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 val discoverLifeBean = JsonUtil.fromJson(json, DiscoverLifeBean::class.java)
                 if (discoverLifeBean.success) {
                     view.setNewData(discoverLifeBean.data.shop_windows)

@@ -1,5 +1,6 @@
 package com.lexivip.lexi.mine.like.likeShopWindow
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SimpleItemAnimator
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
@@ -19,6 +20,7 @@ class LikeShopWindowActivity : BaseActivity(),LikeShopWindowContract.View {
         customHeadView.setHeadCenterTxtShow(true, R.string.text_shop_window_like)
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(), R.color.color_f5f7f9, recyclerView, 10f))

@@ -1,4 +1,5 @@
 package com.lexivip.lexi.mine.like.likeShopWindow
+
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -20,19 +21,22 @@ class AdapterLikeShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean,
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
         helper.setText(R.id.textViewTitle, item.title)
+
+        val productCovers = item.product_covers
+
         // 设置3张产品图
-        if (item.product_covers.isEmpty()) return
+        if (productCovers.isEmpty()) return
 
         val textView = helper.getView<TextView>(R.id.textView)
         val list = ArrayList<String>()
 
-        val size = item.product_covers.size
+        val size = item.product_count
 
         if (size <= 3) {
-            list.addAll(item.product_covers)
+            list.addAll(productCovers)
             textView.visibility = View.GONE
         } else {
-            val subList = item.product_covers.subList(0, 3)
+            val subList = productCovers.subList(0, 3)
             list.addAll(subList)
             textView.visibility = View.VISIBLE
             textView.text = "+" + (size - 3)
