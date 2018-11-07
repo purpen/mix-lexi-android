@@ -1,7 +1,5 @@
 package com.lexivip.lexi.selectionGoodsCenter
-
 import android.graphics.Paint
-import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil

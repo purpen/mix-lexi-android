@@ -30,6 +30,7 @@ class AllLikeGoodsActivity : BaseActivity(), AllLikeGoodsContract.View {
     }
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
+        swipeRefreshLayout.isEnabled = false
         customHeadView.setHeadCenterTxtShow(true,R.string.text_goods_like)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL

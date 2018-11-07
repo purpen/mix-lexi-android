@@ -14,6 +14,7 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.mine.*
 import com.lexivip.lexi.mine.like.likeGoods.AllLikeGoodsActivity
+import com.lexivip.lexi.mine.like.likeShopWindow.LikeShopWindowActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.adapter_goods_like.view.*
 import kotlinx.android.synthetic.main.adapter_item_show_window.view.*
@@ -121,9 +122,11 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
             startActivity(Intent(activity, AllLikeGoodsActivity::class.java))
         }
 
+        headerView.textViewMoreWindowLike.setOnClickListener {
+            startActivity(Intent(activity, LikeShopWindowActivity::class.java))
+        }
 
         adapterLikeGoods.setOnItemClickListener { _, _, position ->
-            LogUtil.e("setOnItemClickListener"+position)
             val item = adapterLikeGoods.getItem(position)?:return@setOnItemClickListener
             PageUtil.jump2GoodsDetailActivity(item.rid)
         }

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="244dp"
-    android:layout_height="@dimen/dp162">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <include layout="@layout/view_show_window_image3" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,16 +12,16 @@
         >
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp15"
             android:layout_marginEnd="@dimen/dp15"
-            android:layout_marginBottom="@dimen/dp10"
+            android:layout_marginBottom="15dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/text_loading"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp15" />
+            android:textSize="@dimen/sp14" />
     </LinearLayout>
 </RelativeLayout>

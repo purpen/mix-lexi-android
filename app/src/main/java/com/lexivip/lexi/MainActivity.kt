@@ -121,7 +121,6 @@ class MainActivity : BaseActivity() {
         }
 
         if (TextUtils.isEmpty(str)) { //跳转首页
-            lastClickedId = -1
             showIndexPage()
             return
         }
@@ -150,7 +149,11 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    /**
+     * 切换到首页
+     */
     private fun showIndexPage() {
+        lastClickedId = -1
         switchFragment(R.id.button0)
         customBottomBar.getButton(R.id.button0).performClick()
     }

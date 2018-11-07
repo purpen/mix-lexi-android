@@ -161,6 +161,7 @@
         <activity android:name=".coupon.UserCouponActivity" />
         <activity android:name=".publishShopWindow.PublishShopWindowActivity" />
         <activity android:name=".shopCart.ShopCartActivity" />
+        <activity android:name=".mine.like.likeShopWindow.LikeShopWindowActivity" />
     </application>
 
 </manifest>
