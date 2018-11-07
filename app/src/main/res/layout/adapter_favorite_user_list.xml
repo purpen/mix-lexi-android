@@ -41,5 +41,6 @@
         android:text="@string/text_focus"
         android:textSize="@dimen/sp12"
         android:textColor="@android:color/white"
+        android:visibility="gone"
         />
 </RelativeLayout>

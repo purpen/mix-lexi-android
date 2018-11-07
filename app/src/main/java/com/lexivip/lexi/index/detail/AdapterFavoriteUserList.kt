@@ -1,6 +1,8 @@
 package com.lexivip.lexi.index.detail
 
 import android.support.annotation.LayoutRes
+import android.text.TextUtils
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import com.basemodule.tools.DimenUtil
@@ -11,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.UserBean
+import com.lexivip.lexi.user.login.UserProfileUtil
 
 class AdapterFavoriteUserList(@LayoutRes res: Int) : BaseQuickAdapter<UserBean, BaseViewHolder>(res) {
 
@@ -22,6 +25,12 @@ class AdapterFavoriteUserList(@LayoutRes res: Int) : BaseQuickAdapter<UserBean, 
         helper.setText(R.id.textViewName,item.username)
 
         val buttonFocus = helper.getView<Button>(R.id.buttonFocus)
+
+        if (TextUtils.equals(UserProfileUtil.getUserId(),item.uid)){
+            buttonFocus.visibility = View.GONE
+        }else{
+            buttonFocus.visibility = View.VISIBLE
+        }
 
         //关注
         helper.addOnClickListener(R.id.buttonFocus)
