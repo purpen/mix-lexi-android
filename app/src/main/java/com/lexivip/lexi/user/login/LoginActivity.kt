@@ -158,7 +158,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
 
     override fun goPage(vararg args: Boolean) {
         if (args.isEmpty() || !args[0]){
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra(MainActivity::class.java.simpleName,TAG)
+            startActivity(intent)
             EventBus.getDefault().post(MessageClose())
         }else{
             startActivity(Intent(this, CompleteInfoActivity::class.java))

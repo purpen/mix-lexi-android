@@ -10,8 +10,11 @@ import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.eventBusMessge.MessageChangePage
+import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.lexivip.lexi.user.register.RegisterActivity
+import com.lexivip.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -102,21 +105,24 @@ class MainActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent?) {
 
-        hideFragments()
-
-        //TODO 退出登录/和登录
-        initFragments()
-
         if (intent == null) return
         var str = ""
         if (intent.hasExtra(TAG)) {
             str = intent.getStringExtra(TAG)
         }
 
+        when(str){ //MainActivity存在时刷新fragment
+            LoginActivity::class.java.simpleName,CompleteInfoActivity::class.java.simpleName,
+            RegisterActivity::class.java.simpleName,SettingActivity::class.java.simpleName->{
+                hideFragments()
+                initFragments()
+                showIndexPage()
+            }
+        }
+
         if (TextUtils.isEmpty(str)) { //跳转首页
             lastClickedId = -1
-            switchFragment(R.id.button0)
-            customBottomBar.getButton(R.id.button0).performClick()
+            showIndexPage()
             return
         }
 
@@ -126,8 +132,7 @@ class MainActivity : BaseActivity() {
                 customBottomBar.getButton(R.id.button2).performClick()
             }
             MainFragment0::class.java.simpleName -> { //其它界面跳转到首页
-                switchFragment(R.id.button0)
-                customBottomBar.getButton(R.id.button0).performClick()
+                showIndexPage()
             }
         }
 
@@ -135,14 +140,19 @@ class MainActivity : BaseActivity() {
     }
 
 
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeFragment(messageChangePage: MessageChangePage) {
         when (messageChangePage.page) {
             MainFragment0::class.java.simpleName -> {
-                switchFragment(R.id.button0)
-                customBottomBar.getButton(R.id.button0).performClick()
+                showIndexPage()
             }
         }
+    }
+
+    private fun showIndexPage() {
+        switchFragment(R.id.button0)
+        customBottomBar.getButton(R.id.button0).performClick()
     }
 
 

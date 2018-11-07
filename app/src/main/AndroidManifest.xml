@@ -160,6 +160,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".coupon.UserCouponActivity" />
         <activity android:name=".publishShopWindow.PublishShopWindowActivity" />
+        <activity android:name=".shopCart.ShopCartActivity" />
     </application>
 
 </manifest>

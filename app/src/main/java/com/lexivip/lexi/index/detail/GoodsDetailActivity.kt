@@ -25,6 +25,7 @@ import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.*
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
+import com.lexivip.lexi.shopCart.ShopCartActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.zhy.view.flowlayout.FlowLayout
@@ -668,8 +669,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         relativeLayoutShopCart.setOnClickListener {
             //跳转购物车
             EventBus.getDefault().post(MainFragment1::class.java.simpleName)
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            intent.putExtra(MainActivity::class.java.simpleName, MainFragment1::class.java.simpleName)
+//            intent.putExtra(MainActivity::class.java.simpleName, MainFragment1::class.java.simpleName)
+            val intent = Intent(this, ShopCartActivity::class.java)
             startActivity(intent)
         }
 

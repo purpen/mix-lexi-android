@@ -81,7 +81,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
                 SPUtil.clear(Constants.AUTHORIZATION)
                 EventBus.getDefault().post(MessageLogout())
                 val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra(MainActivity::class.java.simpleName, MainFragment0::class.java.simpleName)
+                intent.putExtra(MainActivity::class.java.simpleName, TAG)
                 startActivity(intent)
                 finish()
             }
