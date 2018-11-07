@@ -1,14 +1,9 @@
 package com.lexivip.lexi.brandPavilion
-import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
-import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.GlideImageLoader
-import com.lexivip.lexi.R
-import com.lexivip.lexi.RecyclerViewDivider
-import com.lexivip.lexi.brandHouse.BrandHouseActivity
+import com.lexivip.lexi.*
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
@@ -49,7 +44,7 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
         headerView = View.inflate(activity, R.layout.header_selection_brand_pavilion, null)
 
         adapter.setHeaderView(headerView)
-        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(360.0)))
+        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(360.0)))
         headerView.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
         headerView.banner.setIndicatorGravity(BannerConfig.CENTER)
 
@@ -87,16 +82,13 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
 
         headerView.banner.setOnBannerListener { position ->
             val item = pavilionBannerList?.get(position) ?: return@setOnBannerListener
-            val intent = Intent(activity, BrandHouseActivity::class.java)
-            intent.putExtra("rid", item.rid)
-            startActivity(intent)
+            PageUtil.jump2BrandPavilionActivity(item.link)
         }
 
         adapterSelectionBrandPavilion.setOnItemClickListener { _, _, position ->
-            val item = adapterSelectionBrandPavilion.getItem(position) ?: return@setOnItemClickListener
-            val intent = Intent(activity, BrandHouseActivity::class.java)
-            intent.putExtra("rid", item.rid)
-            startActivity(intent)
+            val item = adapterSelectionBrandPavilion.getItem(position)
+                    ?: return@setOnItemClickListener
+            PageUtil.jump2BrandPavilionActivity(item.rid)
         }
     }
 
