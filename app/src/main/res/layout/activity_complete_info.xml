@@ -24,7 +24,6 @@
         android:layout_marginTop="@dimen/dp40"
         android:background="@drawable/bg_colorf5f7f9_oval"
         >
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
