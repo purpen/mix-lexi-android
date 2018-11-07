@@ -157,12 +157,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         //获取喜欢商品用户
         presenter.getFavoriteUsers(productId)
 
-//        //获取优惠券
-//        presenter.getCouponsByStoreId(product.store_rid)
-//
-//        //获取商品所在品牌馆信息
-//        presenter.loadBrandPavilionInfo(product.store_rid)
-
         //获取购物车商品数量
         if (UserProfileUtil.isLogin()) presenter.getShopCartProductsNum()
 
