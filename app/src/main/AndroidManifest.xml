@@ -106,7 +106,6 @@
         <activity android:name=".brandHouse.CloseHouseActivity"/>
         <activity android:name=".user.setting.address.AddressListActivity"/>
         <activity android:name=".receiveVoucher.ReceiveVoucherActivity"/>
-        <activity android:name=".test.TextActivity"/>
 
         <!--微博-->
         <activity
@@ -162,6 +161,7 @@
         <activity android:name=".publishShopWindow.PublishShopWindowActivity" />
         <activity android:name=".shopCart.ShopCartActivity" />
         <activity android:name=".mine.like.likeShopWindow.LikeShopWindowActivity" />
+        <activity android:name=".user.OtherUserCenterActivity" />
     </application>
 
 </manifest>

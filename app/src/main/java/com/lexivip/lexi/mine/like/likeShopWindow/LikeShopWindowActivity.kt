@@ -1,6 +1,8 @@
 package com.lexivip.lexi.mine.like.likeShopWindow
+
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SimpleItemAnimator
+import android.text.TextUtils
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
@@ -11,11 +13,18 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
 import kotlinx.android.synthetic.main.activity_like_shop_window.*
 
-class LikeShopWindowActivity : BaseActivity(),LikeShopWindowContract.View {
+class LikeShopWindowActivity : BaseActivity(), LikeShopWindowContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     override val layout: Int = R.layout.activity_like_shop_window
     private val presenter: LikeShopWindowPresenter by lazy { LikeShopWindowPresenter(this) }
     private val adapter: AdapterLikeShowWindow by lazy { AdapterLikeShowWindow(R.layout.adapter_like_shop_window) }
+
+    private var uid: String? = null
+
+    override fun getIntentData() {
+        uid = intent.getStringExtra(TAG)
+    }
+
     override fun initView() {
         customHeadView.setHeadCenterTxtShow(true, R.string.text_shop_window_like)
         val linearLayoutManager = LinearLayoutManager(this)
@@ -27,16 +36,26 @@ class LikeShopWindowActivity : BaseActivity(),LikeShopWindowContract.View {
     }
 
     override fun requestNet() {
-        presenter.loadData(false)
+        if (TextUtils.isEmpty(uid)) {
+            presenter.loadData(false)
+        } else {
+            presenter.loadData(uid!!, false)
+
+        }
     }
 
     override fun installListener() {
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData()
-        },recyclerView)
-        
+            if (TextUtils.isEmpty(uid)) {
+
+                presenter.loadMoreData()
+            } else {
+                presenter.loadMoreData(uid!!)
+            }
+        }, recyclerView)
+
         adapter.setOnItemClickListener { _, _, position ->
-            val item = adapter.getItem(position)?:return@setOnItemClickListener
+            val item = adapter.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2ShopWindowDetailActivity(item.rid)
         }
     }

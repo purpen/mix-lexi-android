@@ -23,6 +23,8 @@ class LikeShopWindowContract {
 
     interface Presenter : BasePresenter {
         fun loadData(isRefresh: Boolean)
+        fun loadData(uid: String, isRefresh: Boolean)
         fun loadMoreData()
+        fun loadMoreData(uid: String)
     }
 }

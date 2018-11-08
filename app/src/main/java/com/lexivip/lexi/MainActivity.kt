@@ -1,6 +1,7 @@
 package com.lexivip.lexi
 
 import android.content.Intent
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.widget.Toast
@@ -36,9 +37,20 @@ class MainActivity : BaseActivity() {
 
     private var lastClickedId: Int = -1
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            fragment0 = supportFragmentManager.getFragment(savedInstanceState, MainFragment0::class.java.simpleName) as BaseFragment
+            fragment1 = supportFragmentManager.getFragment(savedInstanceState, MainFragment2::class.java.simpleName) as BaseFragment
+            fragment2 = supportFragmentManager.getFragment(savedInstanceState, MainFragment1::class.java.simpleName) as BaseFragment
+            fragment3 = supportFragmentManager.getFragment(savedInstanceState, MainFragment3::class.java.simpleName) as BaseFragment
+        } else {
+            initFragments()
+        }
+        super.onCreate(savedInstanceState)
+    }
+
     override fun initView() {
         LogUtil.e("screenW=${ScreenUtil.getScreenWidth()};;screenHeight=${ScreenUtil.getScreenHeight()};;density=${ScreenUtil.getDensity()}")
-        initFragments()
         switchFragment(R.id.button0)
         EventBus.getDefault().register(this)
     }
@@ -111,9 +123,9 @@ class MainActivity : BaseActivity() {
             str = intent.getStringExtra(TAG)
         }
 
-        when(str){ //MainActivity存在时刷新fragment
-            LoginActivity::class.java.simpleName,CompleteInfoActivity::class.java.simpleName,
-            RegisterActivity::class.java.simpleName,SettingActivity::class.java.simpleName->{
+        when (str) { //MainActivity存在时刷新fragment
+            LoginActivity::class.java.simpleName, CompleteInfoActivity::class.java.simpleName,
+            RegisterActivity::class.java.simpleName, SettingActivity::class.java.simpleName -> {
                 hideFragments()
                 initFragments()
                 showIndexPage()
@@ -137,7 +149,6 @@ class MainActivity : BaseActivity() {
 
 
     }
-
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -255,6 +266,27 @@ class MainActivity : BaseActivity() {
         } else {
             AppManager.getAppManager().appExit()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        LogUtil.e("$TAG====onSaveInstanceState")
+        val fragments = supportFragmentManager.fragments
+
+        if (fragment0 != null && fragments.contains(fragment0)) {
+            supportFragmentManager.putFragment(outState, MainFragment0::class.java.simpleName, fragment0)
+        }
+        if (fragment1 != null && fragments.contains(fragment1)) {
+            supportFragmentManager.putFragment(outState, MainFragment2::class.java.simpleName, fragment1)
+        }
+
+        if (fragment2 != null && fragments.contains(fragment2)) {
+            supportFragmentManager.putFragment(outState, MainFragment1::class.java.simpleName, fragment2)
+        }
+
+        if (fragment3 != null &&fragments.contains(fragment3)) {
+            supportFragmentManager.putFragment(outState, MainFragment3::class.java.simpleName, fragment3)
+        }
+        super.onSaveInstanceState(outState)
     }
 }
 

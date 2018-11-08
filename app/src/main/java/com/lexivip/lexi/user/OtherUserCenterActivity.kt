@@ -1,74 +1,61 @@
-package com.lexivip.lexi
+package com.lexivip.lexi.user
 
 import android.content.Intent
-import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.*
+import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
-import com.lexivip.lexi.mine.*
+import com.lexivip.lexi.R
+import com.lexivip.lexi.coupon.UserCouponActivity
+import com.lexivip.lexi.mine.MineContract
+import com.lexivip.lexi.mine.MineFavoritesAdapter
+import com.lexivip.lexi.mine.MinePresenter
+import com.lexivip.lexi.mine.UserCenterBean
 import com.lexivip.lexi.mine.designPavilion.FavoriteShopFragment
 import com.lexivip.lexi.mine.dynamic.DynamicActivity
 import com.lexivip.lexi.mine.enshrine.EnshrineFragment
 import com.lexivip.lexi.mine.like.FavoriteFragment
 import com.lexivip.lexi.orderList.OrderListActivity
+import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
+import kotlinx.android.synthetic.main.activity_other_user_center.*
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
-import com.lexivip.lexi.coupon.UserCouponActivity
-import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
-import com.lexivip.lexi.user.login.UserProfileUtil
-import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
 
-
-class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
-
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
+class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListener {
+    private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     private val presenter: MinePresenter by lazy { MinePresenter(this) }
     private lateinit var adapter0: MineFavoritesAdapter
     private lateinit var fragments: ArrayList<BaseFragment>
+    override val layout: Int = R.layout.activity_other_user_center
+    private lateinit var userId:String
 
-    companion object {
-        fun newInstance(bean: UserCenterBean.DataBean): MainFragment3 {
-            val mainFragment3 = MainFragment3()
-            val bundle = Bundle()
-            bundle.putParcelable("key", bean)
-            mainFragment3.arguments = bundle
-            return mainFragment3
-        }
-
-
-        fun newInstance(): MainFragment3 {
-            return MainFragment3()
-        }
+    override fun getIntentData() {
+        userId = intent.getStringExtra(TAG)
     }
-
-
-    override val layout: Int = R.layout.fragment_main3
-
-
-    private fun setUpViewPager() {
-        fragments = ArrayList()
-        fragments.add(FavoriteFragment.newInstance())
-        fragments.add(EnshrineFragment.newInstance())
-        fragments.add(FavoriteShopFragment.newInstance())
-
-        val titles = resources.getStringArray(R.array.strings_mine_titles)
-
-        val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles.asList())
-        customViewPager.setPagingEnabled(false)
-        customViewPager.adapter = adapter
-        customViewPager.offscreenPageLimit = fragments.size
-    }
-
 
     override fun initView() {
-        if (!UserProfileUtil.isLogin()) return
+        customHeadView.setRightImgBtnShow(true)
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
     }
 
+
+    private fun setUpViewPager() {
+        fragments = ArrayList()
+        fragments.add(FavoriteFragment.newInstance(userId))
+        fragments.add(EnshrineFragment.newInstance(userId))
+        fragments.add(FavoriteShopFragment.newInstance(userId))
+
+        val titles = resources.getStringArray(R.array.strings_mine_titles)
+
+        val adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles.asList())
+        customViewPager.setPagingEnabled(false)
+        customViewPager.adapter = adapter
+        customViewPager.offscreenPageLimit = fragments.size
+    }
 
     /**
      * 重置文字颜色
@@ -134,24 +121,20 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         }
 
         buttonActivity.setOnClickListener {
-            startActivity(Intent(activity, DynamicActivity::class.java))
+            startActivity(Intent(this, DynamicActivity::class.java))
         }
 
         imageView.setOnClickListener {
-            startActivity(Intent(activity,EditUserDataActivity::class.java))
+            startActivity(Intent(this, EditUserDataActivity::class.java))
         }
 
         textViewName.setOnClickListener {
-            startActivity(Intent(activity,EditUserDataActivity::class.java))
+            startActivity(Intent(this, EditUserDataActivity::class.java))
         }
 
         //优惠券
         linearLayoutCoupon.setOnClickListener {
-            startActivity(Intent(activity, UserCouponActivity::class.java))
-        }
-
-        textViewLTest.setOnClickListener {
-            startActivity(Intent(activity,CompleteInfoActivity::class.java))
+            startActivity(Intent(this, UserCouponActivity::class.java))
         }
     }
 
@@ -161,20 +144,14 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
             R.id.imageViewShare -> {
 
             }
-            R.id.buttonOrder->startActivity(Intent(activity,OrderListActivity::class.java))
+            R.id.buttonOrder->startActivity(Intent(this, OrderListActivity::class.java))
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (!UserProfileUtil.isLogin()) return
-        presenter.loadData()
+
+    override fun requestNet() {
+        presenter.loadData(userId)
     }
-
-//    override fun loadData() {
-//        presenter.loadData()
-//    }
-
     /**
      * 设置用户数据
      */

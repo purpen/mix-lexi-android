@@ -39,6 +39,34 @@ class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesig
         })
     }
 
+    /**
+     * 加载别人的关注品牌馆
+     */
+    override fun loadData(b: Boolean,uid:String) {
+        if (b) page = 1
+        dataSource.loadData(page,uid,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val designPavilionListBean = JsonUtil.fromJson(json, DesignPavilionListBean::class.java)
+                if (designPavilionListBean.success) {
+                    view.setNewData(designPavilionListBean.data.stores)
+                    ++page
+                } else {
+                    view.showError(designPavilionListBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 
     override fun loadMoreData() {
         dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
@@ -63,6 +91,34 @@ class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesig
             }
         })
     }
+
+    /**
+     * 加载更多别人的关注品牌馆
+     */
+    override fun loadMoreData(uid: String) {
+        dataSource.loadData(page,uid,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val designPavilionListBean = JsonUtil.fromJson(json, DesignPavilionListBean::class.java)
+                if (designPavilionListBean.success) {
+                    val stores = designPavilionListBean.data.stores
+                    if (stores.isEmpty()) {
+                        view.loadMoreEnd()
+                    } else {
+                        view.loadMoreComplete()
+                        view.addData(stores)
+                        ++page
+                    }
+                } else {
+                    view.showError(designPavilionListBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 
     /**
      * 关注/取消品牌馆

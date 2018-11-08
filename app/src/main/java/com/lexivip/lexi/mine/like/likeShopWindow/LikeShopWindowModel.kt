@@ -25,6 +25,25 @@ open class LikeShopWindowModel {
             }
         })
     }
+
+    fun loadData(page: Int,uid:String,callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["page"] = "$page"
+        params["uid"] = uid
+        HttpRequest.sendRequest(HttpRequest.GET, URL.OTHERS_FAVORITE_SHOW_WINDOW, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
 }
 
 

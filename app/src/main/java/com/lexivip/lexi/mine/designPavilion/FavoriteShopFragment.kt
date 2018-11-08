@@ -1,7 +1,8 @@
 package com.lexivip.lexi.mine.designPavilion
-
 import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.ToastUtil
@@ -22,9 +23,25 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
     private val adapter: AdapterDesignPavilion by lazy { AdapterDesignPavilion(R.layout.adapter_design_pavilion) }
     private lateinit var emptyHeaderView: View
 
+    private var uid: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        uid = arguments?.getString(FavoriteShopFragment::class.java.simpleName)
+    }
+
+
     companion object {
         @JvmStatic
         fun newInstance(): FavoriteShopFragment = FavoriteShopFragment()
+
+        fun newInstance(userId: String): FavoriteShopFragment {
+            val fragment = FavoriteShopFragment()
+            val bundle = Bundle()
+            bundle.putString(FavoriteShopFragment::class.java.simpleName, userId)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initView() {
@@ -93,13 +110,16 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
 
     override fun onResume() {
         super.onResume()
-        if (!UserProfileUtil.isLogin()) return
+        //没登录或者不是自己都不执行后面代码
+        if (!UserProfileUtil.isLogin() || !TextUtils.isEmpty(uid)) return
         presenter.loadData(true)
     }
 
-//    override fun loadData() {
-//        presenter.loadData()
-//    }
+    override fun loadData() {
+        if (!TextUtils.isEmpty(uid)) {
+            presenter.loadData(true,uid!!)
+        }
+    }
 
 
     override fun setNewData(data: MutableList<DesignPavilionBean>) {

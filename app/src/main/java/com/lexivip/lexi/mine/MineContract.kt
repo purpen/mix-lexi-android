@@ -21,5 +21,6 @@ class MineContract {
 
     interface Presenter : BasePresenter {
         fun loadData()
+        fun loadData(uid:String)
     }
 }

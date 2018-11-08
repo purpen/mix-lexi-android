@@ -1,7 +1,9 @@
 package com.lexivip.lexi.mine.like.likeGoods
+
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
+import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
@@ -18,20 +20,26 @@ import kotlinx.android.synthetic.main.acticity_all_editor_recommend.*
 
 class AllLikeGoodsActivity : BaseActivity(), AllLikeGoodsContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
-    private var goodsCount=0
+    private var goodsCount = 0
     private val presenter: AllLikeGoodsPresenter by lazy { AllLikeGoodsPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
     private var dialogBottomFilter: DialogBottomFilter? = null
     override val layout: Int = R.layout.acticity_all_editor_recommend
+    private var uid: String? = null
     override fun setPresenter(presenter: AllLikeGoodsContract.Presenter?) {
         setPresenter(presenter)
     }
+
+    override fun getIntentData() {
+        uid = intent.getStringExtra(TAG)
+    }
+
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isEnabled = false
-        customHeadView.setHeadCenterTxtShow(true,R.string.text_goods_like)
+        customHeadView.setHeadCenterTxtShow(true, R.string.text_goods_like)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
@@ -49,7 +57,7 @@ class AllLikeGoodsActivity : BaseActivity(), AllLikeGoodsContract.View {
 
     override fun setGoodsCount(count: Int) {
         goodsCount = count
-        if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
+        if (dialogBottomFilter != null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
 
     override fun installListener() {
@@ -80,11 +88,20 @@ class AllLikeGoodsActivity : BaseActivity(), AllLikeGoodsContract.View {
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            presenter.loadData(true)
+            if (TextUtils.isEmpty(uid)) {
+                presenter.loadData(true)
+            } else {
+                presenter.loadData(uid!!, true)
+            }
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData()
+            if (TextUtils.isEmpty(uid)) {
+                presenter.loadMoreData()
+            } else {
+                presenter.loadMoreData(uid!!)
+            }
+
         }, recyclerView)
 
         adapter.setOnItemClickListener { _, _, position ->
@@ -97,7 +114,11 @@ class AllLikeGoodsActivity : BaseActivity(), AllLikeGoodsContract.View {
     }
 
     override fun requestNet() {
-        presenter.loadData(false)
+        if (TextUtils.isEmpty(uid)) {
+            presenter.loadData(false)
+        } else {
+            presenter.loadData(uid!!, false)
+        }
     }
 
     /**

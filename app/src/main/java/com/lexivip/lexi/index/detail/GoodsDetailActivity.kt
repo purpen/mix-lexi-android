@@ -117,11 +117,17 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         settings.domStorageEnabled = true
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
+        settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING;
+        } else {
+            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
+        }
         webView.webViewClient = object : WebViewClient() {
 
             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
                 handler?.proceed()
-                super.onReceivedSslError(view, handler, error);
+                super.onReceivedSslError(view, handler, error)
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
@@ -136,11 +142,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
             }
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING;
-        } else {
-            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
         }
     }
 
@@ -366,7 +367,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             expressTime = "预计${expressItem.min_days}~${expressItem.max_days}到达"
         }
 
-        if (!TextUtils.isEmpty(expressTime)){
+        if (!TextUtils.isEmpty(expressTime)) {
             headerView.textViewExpress.visibility = View.VISIBLE
             headerView.textViewExpressTime.visibility = View.VISIBLE
             headerView.textViewExpressTime.text = expressTime

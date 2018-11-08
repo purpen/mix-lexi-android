@@ -27,8 +27,10 @@ class AdapterFavoriteUserList(@LayoutRes res: Int) : BaseQuickAdapter<UserBean, 
         val buttonFocus = helper.getView<Button>(R.id.buttonFocus)
 
         if (TextUtils.equals(UserProfileUtil.getUserId(),item.uid)){
+            helper.itemView.isEnabled = false
             buttonFocus.visibility = View.GONE
         }else{
+            helper.itemView.isEnabled = true
             buttonFocus.visibility = View.VISIBLE
         }
 

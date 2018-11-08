@@ -28,6 +28,8 @@ class FavoriteContract {
 
     interface Presenter : BasePresenter {
         fun getUserGoodsLike()
+        fun getOtherUserGoodsLike(uid:String)
         fun getShowWindowLike()
+        fun getOtherUserShowWindowLike(uid:String)
     }
 }

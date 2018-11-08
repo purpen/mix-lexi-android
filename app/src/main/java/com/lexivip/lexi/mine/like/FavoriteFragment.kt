@@ -1,7 +1,9 @@
 package com.lexivip.lexi.mine.like
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.*
@@ -35,11 +37,26 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
     private lateinit var emptyHeaderView: View
 
+    private var uid: String? = null
+
     override val layout: Int = R.layout.fragment_recyclerview
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        uid = arguments?.getString(FavoriteFragment::class.java.simpleName)
+    }
 
     companion object {
         @JvmStatic
         fun newInstance(): FavoriteFragment = FavoriteFragment()
+
+        fun newInstance(userId: String): FavoriteFragment {
+            val fragment = FavoriteFragment()
+            val bundle = Bundle()
+            bundle.putString(FavoriteFragment::class.java.simpleName, userId)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initView() {
@@ -62,7 +79,8 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
     override fun onResume() {
         super.onResume()
-        if (!UserProfileUtil.isLogin()) return
+        //没登录或者不是自己都不执行后面代码
+        if (!UserProfileUtil.isLogin() || !TextUtils.isEmpty(uid)) return
         presenter.getUserGoodsLike()
         presenter.getShowWindowLike()
     }
@@ -119,22 +137,29 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
 
     override fun installListener() {
         headerView.textViewMoreGoodsLike.setOnClickListener {
-            startActivity(Intent(activity, AllLikeGoodsActivity::class.java))
+            val intent = Intent(activity, AllLikeGoodsActivity::class.java)
+            intent.putExtra(AllLikeGoodsActivity::class.java.simpleName,uid)
+            startActivity(intent)
         }
 
         headerView.textViewMoreWindowLike.setOnClickListener {
-            startActivity(Intent(activity, LikeShopWindowActivity::class.java))
+            val intent = Intent(activity, LikeShopWindowActivity::class.java)
+            intent.putExtra(LikeShopWindowActivity::class.java.simpleName,uid)
+            startActivity(intent)
         }
 
         adapterLikeGoods.setOnItemClickListener { _, _, position ->
-            val item = adapterLikeGoods.getItem(position)?:return@setOnItemClickListener
+            val item = adapterLikeGoods.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2GoodsDetailActivity(item.rid)
         }
     }
 
 
-    override fun loadData() {
-
+    override fun loadData() {//不是自己走下面代码
+        if (!TextUtils.isEmpty(uid)) {
+            presenter.getOtherUserGoodsLike(uid!!)
+            presenter.getOtherUserShowWindowLike(uid!!)
+        }
     }
 
 

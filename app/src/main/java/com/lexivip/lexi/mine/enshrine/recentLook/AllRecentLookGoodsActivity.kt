@@ -2,6 +2,7 @@ package com.lexivip.lexi.mine.enshrine.recentLook
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
+import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
@@ -22,14 +23,21 @@ class AllRecentLookGoodsActivity : BaseActivity(), AllRecentLookGoodsContract.Vi
     private val presenter: AllRecentLookGoodsPresenter by lazy { AllRecentLookGoodsPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
+    private var uid: String? = null
 
     private var dialogBottomFilter: DialogBottomFilter? = null
     override val layout: Int = R.layout.acticity_all_editor_recommend
     override fun setPresenter(presenter: AllRecentLookGoodsContract.Presenter?) {
         setPresenter(presenter)
     }
+
+    override fun getIntentData() {
+        uid = intent.getStringExtra(TAG)
+    }
+
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
+        swipeRefreshLayout.isEnabled = false
         customHeadView.setHeadCenterTxtShow(true,R.string.text_recent_look_goods)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
@@ -77,11 +85,19 @@ class AllRecentLookGoodsActivity : BaseActivity(), AllRecentLookGoodsContract.Vi
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            presenter.loadData(true)
+            if (TextUtils.isEmpty(uid)){
+                presenter.loadData(true)
+            }else{
+                presenter.loadData(uid!!,true)
+            }
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData()
+            if (TextUtils.isEmpty(uid)){
+                presenter.loadMoreData()
+            }else{
+                presenter.loadMoreData(uid!!)
+            }
         }, recyclerView)
 
         adapter.setOnItemClickListener { _, _, position ->
@@ -94,7 +110,11 @@ class AllRecentLookGoodsActivity : BaseActivity(), AllRecentLookGoodsContract.Vi
     }
 
     override fun requestNet() {
-        presenter.loadData(false)
+        if (TextUtils.isEmpty(uid)){
+            presenter.loadData(false)
+        }else{
+            presenter.loadData(uid!!,false)
+        }
     }
 
     /**

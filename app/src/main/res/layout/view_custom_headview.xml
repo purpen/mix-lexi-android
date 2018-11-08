@@ -112,12 +112,14 @@
 
     <ImageButton
         android:id="@+id/ib_right"
-        android:layout_width="wrap_content"
+        android:layout_width="45dp"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:background="@null"
-        android:padding="@dimen/dp16"
-        android:visibility="gone" />
+        android:src="@mipmap/icon_click_share"
+        android:padding="15dp"
+        android:visibility="gone"
+        />
 
     <Button
         android:id="@+id/buttonRight"

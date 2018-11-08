@@ -1,5 +1,6 @@
 package com.lexivip.lexi.index.explore
 import com.basemodule.tools.Constants
+import com.basemodule.tools.LogUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
