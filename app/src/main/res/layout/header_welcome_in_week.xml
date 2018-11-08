@@ -123,7 +123,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/bg_oval_000"
                 android:gravity="center"
-                android:text="999+"
+                android:text="0"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp9"
                 android:textStyle="bold" />

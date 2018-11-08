@@ -26,10 +26,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.flyco.dialog.listener.OnBtnClickL
 import com.flyco.dialog.widget.ActionSheetDialog
 import com.flyco.dialog.widget.NormalDialog
-import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.CustomGridLayoutManager
-import com.lexivip.lexi.GridSpacingItemDecoration
-import com.lexivip.lexi.R
+import com.lexivip.lexi.*
 import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.album.PicturePickerUtils
@@ -197,6 +194,10 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headImageAdapter.setNewData(urlList)
+        
+        headImageAdapter.setOnItemClickListener { _, _, position ->
+            PageUtil.jump2OtherUserCenterActivity(users[position].uid)
+        }
     }
 
     /**

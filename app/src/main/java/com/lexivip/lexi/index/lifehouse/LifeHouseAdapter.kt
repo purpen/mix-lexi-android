@@ -20,6 +20,7 @@ import com.lexivip.lexi.beans.ProductBean
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ImageSpan
+import com.lexivip.lexi.PageUtil
 
 class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res){
     private val dp87:Int by lazy { DimenUtil.dp2px(87.0) }
@@ -112,6 +113,10 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
                     }
                 }
             })
+        }
+
+        headImageAdapter.setOnItemClickListener { _, _, position ->
+            PageUtil.jump2OtherUserCenterActivity(item.product_like_users[position].uid)
         }
 
 //        val linearLayoutLoadMore = helper.getView<View>(R.id.linearLayoutLoadMore)
