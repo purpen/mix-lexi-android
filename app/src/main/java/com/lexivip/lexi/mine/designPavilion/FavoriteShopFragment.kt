@@ -72,12 +72,12 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
 //        }
 
         //关注品牌馆
-        adapter.setOnItemChildClickListener { _, _, position ->
+        adapter.setOnItemChildClickListener { _, v, position ->
             val pavilionBean = adapter.getItem(position) as DesignPavilionBean
             if (pavilionBean.followed_status == 1) { //点击取消关注
-                presenter.focusBrandPavilion(pavilionBean.rid, false, position)
+                presenter.focusBrandPavilion(pavilionBean.rid, false, position,v)
             } else {
-                presenter.focusBrandPavilion(pavilionBean.rid, true, position)
+                presenter.focusBrandPavilion(pavilionBean.rid, true, position,v)
             }
         }
 

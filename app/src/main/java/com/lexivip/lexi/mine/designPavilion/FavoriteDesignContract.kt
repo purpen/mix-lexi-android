@@ -41,6 +41,6 @@ class FavoriteDesignContract {
         fun loadData(b: Boolean,uid:String)
         fun loadMoreData()
         fun loadMoreData(uid: String)
-        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int)
+        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int, v: android.view.View)
     }
 }

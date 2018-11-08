@@ -1,5 +1,6 @@
 package com.lexivip.lexi.mine.designPavilion
 
+import android.view.View
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -123,18 +124,24 @@ class FavoriteDesignPresenter(view: FavoriteDesignContract.View) : FavoriteDesig
     /**
      * 关注/取消品牌馆
      */
-    override fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int) {
+    override fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int, v: View) {
         dataSource.focusBrandPavilion(store_rid, isFavorite, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                v.isEnabled = false
+                view.setBrandPavilionFocusState(isFavorite, position)
+            }
             override fun onSuccess(json: String) {
+                v.isEnabled = true
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
-                    view.setBrandPavilionFocusState(isFavorite, position)
+//                    view.setBrandPavilionFocusState(isFavorite, position)
                 } else {
                     view.showError(netStatusBean.status.message)
                 }
             }
 
             override fun onFailure(e: IOException) {
+                v.isEnabled = true
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
