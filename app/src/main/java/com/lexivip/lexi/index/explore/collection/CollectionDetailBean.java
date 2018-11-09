@@ -28,7 +28,7 @@ public class CollectionDetailBean {
          * sort_order : 1
          * sub_name : 主题标题二
          */
-
+        public String count;
         public String cover;
         public int cover_id;
         public int id;

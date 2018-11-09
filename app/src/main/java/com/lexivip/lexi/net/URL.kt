@@ -180,8 +180,14 @@ object URL {
      */
     const val DISTRIBUTION_GOODS_LIST = "${BASE_URL}core_platforms/products/by_store"
 
+
     /**
      * 探索->集合
+     */
+    const val EXPLORE_WELL_GOODS_COLLECTION = "${BASE_URL}column/collections/basic"
+
+    /**
+     * 集合列表
      */
     const val WELL_GOODS_COLLECTION = "${BASE_URL}column/collections"
 
