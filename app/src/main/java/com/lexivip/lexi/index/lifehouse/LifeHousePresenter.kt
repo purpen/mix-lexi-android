@@ -3,7 +3,6 @@ import android.text.TextUtils
 import android.view.View
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.tools.LogUtil
-import com.basemodule.tools.SPUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -12,7 +11,6 @@ import com.lexivip.lexi.index.bean.FavoriteBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendBean
 import com.lexivip.lexi.net.NetStatusBean
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean
-import com.lexivip.lexi.user.login.UserProfileUtil
 import org.json.JSONArray
 import java.io.IOException
 

@@ -1,6 +1,7 @@
 package com.lexivip.lexi
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -49,9 +50,15 @@ class UserGuideActivity : BaseActivity() {
 
     override fun initView() {
 //        if (TextUtils.isEmpty(fromPage)) {
-//        imageView.visibility = View.VISIBLE
+//        val options = BitmapFactory.Options()
+//        val bitmap = BitmapFactory.decodeResource(resources,R.mipmap.welcome, options)
+//        val scaleImage = ImageUtil.scaleImage(bitmap, ScreenUtil.getScreenWidth(), ScreenUtil.getScreenHeight())
+//        imageView.setImageBitmap(scaleImage)
+//        bitmap.recycle()
+        imageView.visibility = View.VISIBLE
             Handler().postDelayed({
 //                imageView.visibility = View.GONE
+//                scaleImage.recycle()
 //                if (empty) {
 //                    initGuide()
 //                } else {

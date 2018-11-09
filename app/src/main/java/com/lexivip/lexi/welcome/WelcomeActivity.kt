@@ -1,7 +1,9 @@
 package com.lexivip.lexi.welcome
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.view.View
+import com.basemodule.tools.ImageUtil
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.R
@@ -10,6 +12,7 @@ import com.lexivip.lexi.user.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 import org.greenrobot.eventbus.EventBus
 import com.basemodule.tools.LogUtil
+import com.basemodule.tools.ScreenUtil
 import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import org.greenrobot.eventbus.ThreadMode
@@ -22,6 +25,10 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener {
 
     override fun initView() {
         EventBus.getDefault().register(this)
+        val options = BitmapFactory.Options()
+        val bitmap = BitmapFactory.decodeResource(resources,R.mipmap.img_bg_welcome, options)
+        imageViewBg.setImageBitmap(ImageUtil.scaleImage(bitmap,ScreenUtil.getScreenWidth(),ScreenUtil.getScreenHeight()))
+        bitmap.recycle()
     }
 
     override fun installListener() {

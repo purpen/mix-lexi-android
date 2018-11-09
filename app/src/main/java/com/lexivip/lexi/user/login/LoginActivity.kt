@@ -10,7 +10,6 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.lexivip.lexi.CustomCountDownTimer
-import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.R
