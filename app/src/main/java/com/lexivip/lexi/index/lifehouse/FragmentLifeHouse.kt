@@ -26,10 +26,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.flyco.dialog.listener.OnBtnClickL
 import com.flyco.dialog.widget.ActionSheetDialog
 import com.flyco.dialog.widget.NormalDialog
-import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.CustomGridLayoutManager
-import com.lexivip.lexi.GridSpacingItemDecoration
-import com.lexivip.lexi.R
+import com.lexivip.lexi.*
 import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.album.PicturePickerUtils
@@ -54,7 +51,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
-    private lateinit var adapter: LifeHouseAdapter
+    private val adapter: LifeHouseAdapter by lazy { LifeHouseAdapter(R.layout.adapter_curator_recommend) }
     private lateinit var adapterWelcomeInWeek: WelcomeInWeekAdapter
 
     private lateinit var headerLifeHouse: View
@@ -66,9 +63,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun initView() {
         swipeRefreshLayout.isEnabled = false
-
         EventBus.getDefault().register(this)
-        adapter = LifeHouseAdapter(R.layout.adapter_curator_recommend)
         adapter.setEmptyView(R.layout.empty_view_distribute_goods, recyclerView.parent as ViewGroup)
         adapter.setHeaderFooterEmpty(true, true)
         val linearLayoutManager = LinearLayoutManager(activity)
@@ -197,6 +192,10 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headImageAdapter.setNewData(urlList)
+        
+        headImageAdapter.setOnItemClickListener { _, _, position ->
+            PageUtil.jump2OtherUserCenterActivity(users[position].uid)
+        }
     }
 
     /**

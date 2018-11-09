@@ -25,8 +25,6 @@ public class DiscoverLifeBean {
          */
 
         public int count;
-        public boolean next;
-        public boolean prev;
         public List<ShopWindowBean> shop_windows;
     }
 

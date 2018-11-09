@@ -10,6 +10,7 @@ import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.index.explore.BrandPavilionListBean
@@ -53,9 +54,7 @@ class FragmentFeatureBrandPavilion : BaseFragment(), FeatrueBrandPavilionContrac
 
         adapter.setOnItemClickListener { _, _, position ->
             val item = adapter.getItem(position) ?: return@setOnItemClickListener
-            val intent = Intent(activity, BrandHouseActivity::class.java)
-            intent.putExtra("rid",item.rid)
-            startActivity(intent)
+            PageUtil.jump2BrandPavilionActivity(item.rid)
         }
     }
 

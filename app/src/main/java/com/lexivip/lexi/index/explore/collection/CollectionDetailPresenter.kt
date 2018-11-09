@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.explore.collection
+
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -10,11 +11,16 @@ class CollectionDetailPresenter(view: CollectionDetailContract.View) : Collectio
 
     private val dataSource: CollectionDetailModel by lazy { CollectionDetailModel() }
 
+    private var page: Int = 1
+    private var id: String = ""
+
     /**
      * 加载数据
      */
-    override fun loadData(id:String,isRefresh: Boolean) {
-        dataSource.loadData(id,object : IDataSource.HttpRequestCallBack {
+    override fun loadData(id: String, isRefresh: Boolean) {
+        if (isRefresh) this.page = 1
+        this.id = id
+        dataSource.loadData(id, page, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 if (!isRefresh) view.showLoadingView()
             }
@@ -24,6 +30,7 @@ class CollectionDetailPresenter(view: CollectionDetailContract.View) : Collectio
                 val collectionDetailBean = JsonUtil.fromJson(json, CollectionDetailBean::class.java)
                 if (collectionDetailBean.success) {
                     view.setNewData(collectionDetailBean.data)
+                    page++
                 } else {
                     view.showError(collectionDetailBean.status.message)
                 }
@@ -31,6 +38,36 @@ class CollectionDetailPresenter(view: CollectionDetailContract.View) : Collectio
 
             override fun onFailure(e: IOException) {
                 view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+
+    /**
+     * 加载更多
+     */
+    fun loadMoreData() {
+        dataSource.loadData(id, page, object : IDataSource.HttpRequestCallBack {
+
+            override fun onSuccess(json: String) {
+                val collectionDetailBean = JsonUtil.fromJson(json, CollectionDetailBean::class.java)
+                if (collectionDetailBean.success) {
+                    val products = collectionDetailBean.data.products
+                    if (products.isEmpty()) {
+                        view.loadMoreEnd()
+                    } else {
+                        view.loadMoreComplete()
+                        view.addData(products)
+                        ++page
+                    }
+                } else {
+                    view.loadMoreFail()
+                    view.showError(collectionDetailBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

@@ -7,10 +7,11 @@ import java.io.IOException
 
 open class CollectionDetailModel{
 
-    fun loadData(id:String,callBack: IDataSource.HttpRequestCallBack) {
+    fun loadData(id:String,page:Int,callBack: IDataSource.HttpRequestCallBack) {
 
         val params = ClientParamsAPI.getDefaultParams()
         params["id"] = id
+        params["page"] = "$page"
 
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_COLLECTION_DETAIL, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {

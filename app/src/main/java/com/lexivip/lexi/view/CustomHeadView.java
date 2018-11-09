@@ -86,6 +86,7 @@ public class CustomHeadView extends RelativeLayout {
         rl_head_shop.setOnClickListener(onClickListener);
         imageViewClear.setOnClickListener(onClickListener);
         buttonRight.setOnClickListener(onClickListener);
+        ib_right.setOnClickListener(onClickListener);
     }
 
     public void setRightImgBtnShow(boolean isShow) {
@@ -137,6 +138,11 @@ public class CustomHeadView extends RelativeLayout {
 //                    activity.startActivity(new Intent(activity, UserSearchActivity.class));
                     break;
                 case R.id.buttonRight:
+                    if (viewClickListener!=null){
+                        viewClickListener.onClick(v);
+                    }
+                    break;
+                case R.id.ib_right: //分享
                     if (viewClickListener!=null){
                         viewClickListener.onClick(v);
                     }

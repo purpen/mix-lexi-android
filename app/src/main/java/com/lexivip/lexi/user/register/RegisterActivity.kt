@@ -59,7 +59,9 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
         val id = v?.id
         when (id) {
             R.id.tv_head_right -> {
-                startActivity(Intent(applicationContext, MainActivity::class.java))
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra(MainActivity::class.java.simpleName,TAG)
+                startActivity(intent)
                 EventBus.getDefault().post(MessageClose())
                 finish()
             }

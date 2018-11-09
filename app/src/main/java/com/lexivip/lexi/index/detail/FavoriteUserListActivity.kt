@@ -1,5 +1,6 @@
 package com.lexivip.lexi.index.detail
 
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
@@ -11,6 +12,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.UserBean
+import com.lexivip.lexi.user.OtherUserCenterActivity
 import kotlinx.android.synthetic.main.acticity_header_recyclerview.*
 
 
@@ -68,12 +70,11 @@ class FavoriteUserListActivity : BaseActivity(), FavoriteUserListContract.View {
             presenter.focusUser(usersBean.uid, v, usersBean.followed_status,position)
         }
 
-        adapter.setOnItemClickListener { adapter, view, position ->
-//            ToastUtil.showInfo("跳转用户")
-//            val showWindowBean = adapter.getItem(position) as ShowWindowListBean.DataBean.ShopWindowsBean
-//            val intent = Intent(context, ShowWindowDetailActivity::class.java)
-//            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName, showWindowBean)
-//            startActivity(intent)
+        adapter.setOnItemClickListener { _, _, position ->
+            val usersBean = adapter.getItem(position)?:return@setOnItemClickListener
+            val intent = Intent(this, OtherUserCenterActivity::class.java)
+            intent.putExtra(OtherUserCenterActivity::class.java.simpleName,usersBean.uid)
+            startActivity(intent)
         }
     }
 

@@ -11,7 +11,6 @@ class EnshrinePresenter(view: EnshrineContract.View) : EnshrineContract.Presente
 
     private val dataSource: EnshrineModel by lazy { EnshrineModel() }
 
-
     /**
      * 获取最近查看
      */
@@ -43,6 +42,58 @@ class EnshrinePresenter(view: EnshrineContract.View) : EnshrineContract.Presente
      */
     override fun getWishOrder() {
         dataSource.getWishOrder(object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val wishOrderBean = JsonUtil.fromJson(json, WishOrderBean::class.java)
+                if (wishOrderBean.success) {
+                    view.setWishOrderData(wishOrderBean.data.products)
+                } else {
+                    view.showError(wishOrderBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取别人最近查看
+     */
+    fun getOtherUserRecentLook(uid: String) {
+        dataSource.getOtherUserRecentLook(uid,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val recentLookGoodsBean = JsonUtil.fromJson(json, RecentLookGoodsBean::class.java)
+                if (recentLookGoodsBean.success) {
+                    view.setRecentLookData(recentLookGoodsBean.data.products)
+                } else {
+                    view.showError(recentLookGoodsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取别人的心愿单
+     */
+    fun getOtherUserWishOrder(uid: String) {
+        dataSource.getOtherUserWishOrder(uid,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }

@@ -40,6 +40,7 @@ public class GoodsClassBean implements Parcelable {
             public String id;
             public String name;
             public int pid;
+            public String browse_count;
             public int sort_order;
             public int status;
 

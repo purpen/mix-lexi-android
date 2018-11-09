@@ -223,7 +223,9 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
 
     override fun goPage() {//上传完关闭比界面，跳转主页
         EventBus.getDefault().post(MessageClose())
-        startActivity(Intent(this, MainActivity::class.java))
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra(MainActivity::class.java.simpleName,TAG)
+        startActivity(intent)
         finish()
     }
 

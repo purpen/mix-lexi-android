@@ -160,4 +160,61 @@ class AllLikeGoodsPresenter(view: AllLikeGoodsContract.View) : AllLikeGoodsContr
         })
     }
 
+    /**
+     * 加载别人喜欢商品列表
+     */
+    fun loadData(uid: String, isRefresh: Boolean) {
+        this.isRefresh = isRefresh
+        if (isRefresh) this.curPage = 1
+        dataSource.loadData(uid,curPage,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                if (!isRefresh) view.showLoadingView()
+            }
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setGoodsCount(editorRecommendBean.data.count)
+                    view.setNewData(editorRecommendBean.data.products)
+                    ++curPage
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 加载更多别人喜欢商品列表
+     */
+    fun loadMoreData(uid: String) {
+        dataSource.loadData(uid,curPage,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    val products = editorRecommendBean.data.products
+                    if (products.isEmpty()) {
+                        view.loadMoreEnd()
+                    } else {
+                        view.loadMoreComplete()
+                        view.addData(products)
+                        ++curPage
+                    }
+                } else {
+                    view.loadMoreFail()
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 }

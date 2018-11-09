@@ -108,7 +108,9 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewHeader"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -123,7 +125,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/bg_oval_000"
                 android:gravity="center"
-                android:text="999+"
+                android:text="0"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp9"
                 android:textStyle="bold" />

@@ -15,6 +15,7 @@ import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.index.detail.GoodsDetailActivity;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
 import com.lexivip.lexi.index.explore.collection.CollectionDetailActivity;
+import com.lexivip.lexi.user.OtherUserCenterActivity;
 import com.lexivip.lexi.user.login.LoginActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -142,6 +143,18 @@ public class PageUtil {
     public static void jump2LoginActivity() {
         Application context = AppApplication.getContext();
         Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转别人个人中心
+     * @param uid
+     */
+    public static void jump2OtherUserCenterActivity(@NotNull String uid) {
+        Application context = AppApplication.getContext();
+        Intent intent = new Intent(context,OtherUserCenterActivity.class);
+        intent.putExtra(OtherUserCenterActivity.class.getSimpleName(),uid);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

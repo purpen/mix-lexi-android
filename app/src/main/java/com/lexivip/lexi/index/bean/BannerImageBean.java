@@ -15,7 +15,7 @@ public class BannerImageBean {
     public String description;
     public String image;
     public String link;
-    public int rid;
+    public String rid;
     public int sort_order;
     public boolean status;
     public String title;

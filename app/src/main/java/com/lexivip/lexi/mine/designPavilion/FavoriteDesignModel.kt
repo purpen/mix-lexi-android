@@ -8,11 +8,28 @@ import java.io.IOException
 
 open class FavoriteDesignModel:IDataSource{
 
-    //TODO 改为FOLLOWED_STORES
     fun loadData(page:Int,callBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getFocusedDesignPavilionParams(page)
 
         HttpRequest.sendRequest(HttpRequest.GET,URL.FOCUSED_BRAND_PAVILION_URL,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
+    fun loadData(page:Int,uid:String,callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFocusedDesignPavilionParams(page)
+        params["uid"] = uid
+        HttpRequest.sendRequest(HttpRequest.GET,URL.OTHER_FOCUSED_BRAND_PAVILION,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callBack.onStart()
             }

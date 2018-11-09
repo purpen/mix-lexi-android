@@ -180,8 +180,14 @@ object URL {
      */
     const val DISTRIBUTION_GOODS_LIST = "${BASE_URL}core_platforms/products/by_store"
 
+
     /**
      * 探索->集合
+     */
+    const val EXPLORE_WELL_GOODS_COLLECTION = "${BASE_URL}column/collections/basic"
+
+    /**
+     * 集合列表
      */
     const val WELL_GOODS_COLLECTION = "${BASE_URL}column/collections"
 
@@ -739,6 +745,46 @@ object URL {
      * 订单是否合并支付
      */
     const val IS_MERGE="${BASE_URL}orders/app_pay/is_merge"
+
+    /**
+     * 别人喜欢的商品
+     */
+   const val OTHERS_FAVORITE_GOODS = "${BASE_URL}other_userlike"
+
+    /**
+     * 别人喜欢的橱窗
+     */
+   const val OTHERS_FAVORITE_SHOW_WINDOW = "${BASE_URL}shop_windows/other_user_likes"
+
+    /**
+     * 别人的心愿单
+     */
+    const val OTHERS_USER_WISHLIST = "${BASE_URL}other_wishlist"
+
+    /**
+     * 别人最近查看的商品
+     */
+    const val OTHER_RECENT_LOOK_GOODS = "${BASE_URL}other_user_browses"
+
+    /**
+     * 别人关注
+     */
+    const val OTHER_FOCUSED_BRAND_PAVILION = "${BASE_URL}users/other_followed_stores"
+
+    /**
+     * 别人的个人中心
+     */
+    const val OTHERS_USER_CENTER="${BASE_URL}users/get_other_user_center"
+
+    /**
+     * 别人喜欢商品列表
+     */
+    const val OTHER_FAVORITE_GOODS = "${BASE_URL}other_userlike"
+
+    /**
+     * 别人最近查看商品列表
+     */
+    const val OTHERS_RECENT_LOOK_GOODS = "${BASE_URL}other_user_browses"
     /**
      * 分享品牌馆
      */

@@ -153,7 +153,7 @@ open class ExploreModel {
 
     fun getGoodsCollection(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.WELL_GOODS_COLLECTION, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.GET, URL.EXPLORE_WELL_GOODS_COLLECTION, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

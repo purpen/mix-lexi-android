@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         android:overScrollMode="never"
         android:layout_marginBottom="80dp"
+        android:scrollbars="none"
         >
 
         <include

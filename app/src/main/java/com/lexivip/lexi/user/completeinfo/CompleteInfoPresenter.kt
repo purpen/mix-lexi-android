@@ -80,6 +80,7 @@ class CompleteInfoPresenter(view: CompleteInfoContract.View) : CompleteInfoContr
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e(json)
                 view.dismissLoadingView()
                 val completeInfoBean = JsonUtil.fromJson(json, CompleteInfoBean::class.java)
                 if (completeInfoBean.success) {

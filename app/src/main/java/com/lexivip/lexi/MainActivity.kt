@@ -1,6 +1,7 @@
 package com.lexivip.lexi
 
 import android.content.Intent
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.widget.Toast
@@ -10,8 +11,11 @@ import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.eventBusMessge.MessageChangePage
+import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.lexivip.lexi.user.register.RegisterActivity
+import com.lexivip.lexi.user.setting.SettingActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -33,9 +37,20 @@ class MainActivity : BaseActivity() {
 
     private var lastClickedId: Int = -1
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (savedInstanceState != null) {
+            fragment0 = supportFragmentManager.getFragment(savedInstanceState, MainFragment0::class.java.simpleName) as BaseFragment
+            fragment1 = supportFragmentManager.getFragment(savedInstanceState, MainFragment2::class.java.simpleName) as BaseFragment
+            fragment2 = supportFragmentManager.getFragment(savedInstanceState, MainFragment1::class.java.simpleName) as BaseFragment
+            fragment3 = supportFragmentManager.getFragment(savedInstanceState, MainFragment3::class.java.simpleName) as BaseFragment
+        } else {
+            initFragments()
+        }
+        super.onCreate(savedInstanceState)
+    }
+
     override fun initView() {
         LogUtil.e("screenW=${ScreenUtil.getScreenWidth()};;screenHeight=${ScreenUtil.getScreenHeight()};;density=${ScreenUtil.getDensity()}")
-        initFragments()
         switchFragment(R.id.button0)
         EventBus.getDefault().register(this)
     }
@@ -102,21 +117,23 @@ class MainActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent?) {
 
-        hideFragments()
-
-        //TODO 退出登录/和登录
-        initFragments()
-
         if (intent == null) return
         var str = ""
         if (intent.hasExtra(TAG)) {
             str = intent.getStringExtra(TAG)
         }
 
+        when (str) { //MainActivity存在时刷新fragment
+            LoginActivity::class.java.simpleName, CompleteInfoActivity::class.java.simpleName,
+            RegisterActivity::class.java.simpleName, SettingActivity::class.java.simpleName -> {
+                hideFragments()
+                initFragments()
+                showIndexPage()
+            }
+        }
+
         if (TextUtils.isEmpty(str)) { //跳转首页
-            lastClickedId = -1
-            switchFragment(R.id.button0)
-            customBottomBar.getButton(R.id.button0).performClick()
+            showIndexPage()
             return
         }
 
@@ -126,8 +143,7 @@ class MainActivity : BaseActivity() {
                 customBottomBar.getButton(R.id.button2).performClick()
             }
             MainFragment0::class.java.simpleName -> { //其它界面跳转到首页
-                switchFragment(R.id.button0)
-                customBottomBar.getButton(R.id.button0).performClick()
+                showIndexPage()
             }
         }
 
@@ -139,10 +155,18 @@ class MainActivity : BaseActivity() {
     fun changeFragment(messageChangePage: MessageChangePage) {
         when (messageChangePage.page) {
             MainFragment0::class.java.simpleName -> {
-                switchFragment(R.id.button0)
-                customBottomBar.getButton(R.id.button0).performClick()
+                showIndexPage()
             }
         }
+    }
+
+    /**
+     * 切换到首页
+     */
+    private fun showIndexPage() {
+        lastClickedId = -1
+        switchFragment(R.id.button0)
+        customBottomBar.getButton(R.id.button0).performClick()
     }
 
 
@@ -242,6 +266,27 @@ class MainActivity : BaseActivity() {
         } else {
             AppManager.getAppManager().appExit()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        LogUtil.e("$TAG====onSaveInstanceState")
+        val fragments = supportFragmentManager.fragments
+
+        if (fragment0 != null && fragments.contains(fragment0)) {
+            supportFragmentManager.putFragment(outState, MainFragment0::class.java.simpleName, fragment0)
+        }
+        if (fragment1 != null && fragments.contains(fragment1)) {
+            supportFragmentManager.putFragment(outState, MainFragment2::class.java.simpleName, fragment1)
+        }
+
+        if (fragment2 != null && fragments.contains(fragment2)) {
+            supportFragmentManager.putFragment(outState, MainFragment1::class.java.simpleName, fragment2)
+        }
+
+        if (fragment3 != null &&fragments.contains(fragment3)) {
+            supportFragmentManager.putFragment(outState, MainFragment3::class.java.simpleName, fragment3)
+        }
+        super.onSaveInstanceState(outState)
     }
 }
 

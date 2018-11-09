@@ -25,6 +25,7 @@ import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.*
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
+import com.lexivip.lexi.shopCart.ShopCartActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.zhy.view.flowlayout.FlowLayout
@@ -94,7 +95,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         adapter.addHeaderView(headerView)
 
-        adapter.setHeaderFooterEmpty(true,true)
+        adapter.setHeaderFooterEmpty(true, true)
 
         headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(336.0)))
         headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
@@ -116,11 +117,17 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         settings.domStorageEnabled = true
         settings.useWideViewPort = true
         settings.loadWithOverviewMode = true
+        settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING;
+        } else {
+            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
+        }
         webView.webViewClient = object : WebViewClient() {
 
             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
                 handler?.proceed()
-                super.onReceivedSslError(view, handler, error);
+                super.onReceivedSslError(view, handler, error)
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
@@ -135,11 +142,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
             }
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING;
-        } else {
-            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
         }
     }
 
@@ -156,12 +158,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         //获取喜欢商品用户
         presenter.getFavoriteUsers(productId)
-
-//        //获取优惠券
-//        presenter.getCouponsByStoreId(product.store_rid)
-//
-//        //获取商品所在品牌馆信息
-//        presenter.loadBrandPavilionInfo(product.store_rid)
 
         //获取购物车商品数量
         if (UserProfileUtil.isLogin()) presenter.getShopCartProductsNum()
@@ -364,14 +360,19 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         }
         val expressItem: ExpressInfoBean.DataBean.ItemsBean = items[0] ?: return
 
-        val expressTime:String
-        if (expressItem.max_days==0){
-            expressTime =  goodsData!!.py_intro
-        }else{
+        val expressTime: String?
+        if (expressItem.max_days == 0) {
+            expressTime = goodsData?.py_intro
+        } else {
             expressTime = "预计${expressItem.min_days}~${expressItem.max_days}到达"
         }
-        headerView.textViewExpressTime.text = expressTime
-        goodsData?.expressTime = expressTime
+
+        if (!TextUtils.isEmpty(expressTime)) {
+            headerView.textViewExpress.visibility = View.VISIBLE
+            headerView.textViewExpressTime.visibility = View.VISIBLE
+            headerView.textViewExpressTime.text = expressTime
+            goodsData?.expressTime = expressTime
+        }
         lookGoodsAllDetailDialog?.setExpressTime(expressTime)
     }
 
@@ -577,6 +578,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             })
         }
 
+        headImageAdapter.setOnItemClickListener { _, _, position ->
+            PageUtil.jump2OtherUserCenterActivity(product_like_users[position].uid)
+        }
+
     }
 
     /**
@@ -669,8 +674,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         relativeLayoutShopCart.setOnClickListener {
             //跳转购物车
             EventBus.getDefault().post(MainFragment1::class.java.simpleName)
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            intent.putExtra(MainActivity::class.java.simpleName, MainFragment1::class.java.simpleName)
+//            intent.putExtra(MainActivity::class.java.simpleName, MainFragment1::class.java.simpleName)
+            val intent = Intent(this, ShopCartActivity::class.java)
             startActivity(intent)
         }
 

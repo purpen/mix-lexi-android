@@ -737,7 +737,7 @@ public class ClientParamsAPI {
      * @param page
      * @return
      */
-    @Nullable
+    @NotNull
     public static HashMap<String, Object> getFocusedDesignPavilionParams(int page) {
         HashMap<String, Object> params = generateCommonParams();
         params.put("per_page", Constants.PAGE_SIZE);

@@ -1,7 +1,9 @@
 package com.lexivip.lexi.mine.enshrine
 
 import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.ToastUtil
@@ -15,6 +17,7 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.mine.like.AdapterLikeGoods
 import com.lexivip.lexi.mine.AdapterMineFavorite
+import com.lexivip.lexi.mine.enshrine.recentLook.AllRecentLookGoodsActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -37,9 +40,24 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     private lateinit var emptyHeaderView: View
     private var isWishOrderLoaded: Boolean = false
     private var isRecentLookLoaded: Boolean = false
+    private var uid: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        uid = arguments?.getString(EnshrineFragment::class.java.simpleName)
+    }
+
     companion object {
         @JvmStatic
         fun newInstance(): EnshrineFragment = EnshrineFragment()
+
+        fun newInstance(userId: String): EnshrineFragment {
+            val fragment = EnshrineFragment()
+            val bundle = Bundle()
+            bundle.putString(EnshrineFragment::class.java.simpleName, userId)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun initView() {
@@ -100,8 +118,6 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     }
 
 
-
-
     /**
      * 设置心愿单
      */
@@ -117,9 +133,9 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
      * 都加载完毕都无数据
      */
     private fun setEmptyView() {
-        if (isRecentLookLoaded && isWishOrderLoaded){
+        if (isRecentLookLoaded && isWishOrderLoaded) {
 
-            if (adapterRecent.data.isEmpty() && adapterWishOrder.data.isEmpty()){
+            if (adapterRecent.data.isEmpty() && adapterWishOrder.data.isEmpty()) {
                 emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
                 emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_goods)
                 adapterMineFavorite.setHeaderView(emptyHeaderView)
@@ -131,7 +147,9 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
         //查看最近全部
         headerView.textViewMoreRecent.setOnClickListener {
-            //            startActivity(Intent(activity,AllRecentLookGoodsActivity::class.java))
+           val intent = Intent(activity, AllRecentLookGoodsActivity::class.java)
+            intent.putExtra(AllRecentLookGoodsActivity::class.java.simpleName,uid)
+            startActivity(intent)
         }
 
         //最近查看item点击
@@ -152,20 +170,23 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
     }
 
-    override fun onResume() {
+    override fun onResume() { //自己需要每次都更新
         super.onResume()
-        if (!UserProfileUtil.isLogin()) return
+        //没登录或者不是自己都不执行后面代码
+        if (!UserProfileUtil.isLogin() || !TextUtils.isEmpty(uid)) return
         presenter.getUserRecentLook()
 
         presenter.getWishOrder()
     }
 
-//
-//    override fun loadData() {
-//        presenter.getUserRecentLook()
-//
-//        presenter.getWishOrder()
-//    }
+
+    override fun loadData() { //别人只需加载一次
+        if (!TextUtils.isEmpty(uid)) {
+            presenter.getOtherUserRecentLook(uid!!)
+
+            presenter.getOtherUserWishOrder(uid!!)
+        }
+    }
 
 
     override fun showLoadingView() {

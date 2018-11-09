@@ -59,4 +59,50 @@ class FavoritePresenter(view: FavoriteContract.View) : FavoriteContract.Presente
         })
     }
 
+    /**
+     * 获取用户喜欢的商品
+     */
+    override fun getOtherUserGoodsLike(uid:String) {
+        dataSource.getOtherUserGoodsLike(uid,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setGoodsLikeData(editorRecommendBean.data.products)
+                } else {
+                    view.showError(editorRecommendBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取其他用户喜欢的橱窗
+     */
+    override fun getOtherUserShowWindowLike(uid: String) {
+        dataSource.getOtherUserShowWindowLike(uid,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val discoverLifeBean = JsonUtil.fromJson(json, DiscoverLifeBean::class.java)
+                if (discoverLifeBean.success) {
+                    view.setShowWindowData(discoverLifeBean.data.shop_windows)
+                } else {
+                    view.showError(discoverLifeBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 }

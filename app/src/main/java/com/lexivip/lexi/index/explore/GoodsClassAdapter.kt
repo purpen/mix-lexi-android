@@ -10,7 +10,7 @@ import com.lexivip.lexi.R
 class GoodsClassAdapter(layoutResId: Int) : BaseQuickAdapter<GoodsClassBean.DataBean.CategoriesBean, BaseViewHolder>(layoutResId) {
     override fun convert(helper: BaseViewHolder, item: GoodsClassBean.DataBean.CategoriesBean) {
         helper.setText(R.id.textViewTitle,item.name)
-        helper.setText(R.id.textViewNum,""+item.id)
+        helper.setText(R.id.textViewNum,""+item.browse_count)
         val imageView = helper.getView<ImageView>(R.id.imageView)
         GlideUtil.loadCircleImageWidthDimen(item.cover,imageView,AppApplication.getContext().resources.getDimensionPixelSize(R.dimen.dp40))
     }

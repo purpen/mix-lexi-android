@@ -1,6 +1,5 @@
 package com.lexivip.lexi
 
-import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
@@ -15,26 +14,10 @@ import com.lexivip.lexi.mine.dynamic.DynamicActivity
 import com.lexivip.lexi.mine.enshrine.EnshrineFragment
 import com.lexivip.lexi.mine.like.FavoriteFragment
 import com.lexivip.lexi.orderList.OrderListActivity
-import com.lexivip.lexi.user.setting.SettingActivity
-import com.umeng.socialize.ShareAction
-import com.umeng.socialize.UMShareListener
-import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
-import android.Manifest.permission
-import android.Manifest.permission.WRITE_APN_SETTINGS
-import android.Manifest.permission.GET_ACCOUNTS
-import android.Manifest.permission.SYSTEM_ALERT_WINDOW
-import android.Manifest.permission.SET_DEBUG_APP
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.READ_PHONE_STATE
-import android.Manifest.permission.READ_LOGS
-import android.Manifest.permission.CALL_PHONE
-import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.content.Context
-import com.umeng.commonsdk.UMConfigure
 import com.lexivip.lexi.coupon.UserCouponActivity
+import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
 
@@ -57,8 +40,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
 
         fun newInstance(): MainFragment3 {
-            val mainFragment3 = MainFragment3()
-            return mainFragment3
+            return MainFragment3()
         }
     }
 
@@ -166,6 +148,10 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         //优惠券
         linearLayoutCoupon.setOnClickListener {
             startActivity(Intent(activity, UserCouponActivity::class.java))
+        }
+
+        textViewLTest.setOnClickListener {
+            startActivity(Intent(activity,CompleteInfoActivity::class.java))
         }
     }
 

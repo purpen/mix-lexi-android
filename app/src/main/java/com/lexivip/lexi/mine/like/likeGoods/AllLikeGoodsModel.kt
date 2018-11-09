@@ -28,11 +28,33 @@ open class AllLikeGoodsModel {
     }
 
     /**
+     * 加载别人喜欢数据
+     */
+    fun loadData(uid:String,page:Int,callBack: IDataSource.HttpRequestCallBack){
+        val params = ClientParamsAPI.getDefaultParams()
+        params["uid"] = uid
+        params["page"] = "$page"
+        HttpRequest.sendRequest(HttpRequest.GET, URL.OTHER_FAVORITE_GOODS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
+    /**
      * 获取商品分类
      */
     fun getGoodsClassify(callBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_CATEGORIES_URL, params, object : IDataSource.HttpRequestCallBack {
+        HttpRequest.sendRequest(HttpRequest.GET, URL.OTHER_FAVORITE_GOODS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callBack.onStart()
             }

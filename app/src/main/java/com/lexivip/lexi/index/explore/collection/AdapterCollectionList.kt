@@ -41,7 +41,7 @@ class AdapterCollectionList(@LayoutRes res: Int) : BaseQuickAdapter<GoodsCollect
         if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(RecyclerViewDivider(context,LinearLayoutManager.HORIZONTAL, dp10, color))
 
         helper.setText(R.id.textViewTitle,item.name)
-        helper.setText(R.id.textViewNum,"${item.products.size}件商品")
+        helper.setText(R.id.textViewNum,"${item.count}件商品")
 
         //跳转商品详情
         adapter.setOnItemClickListener { _, _, position ->

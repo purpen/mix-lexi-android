@@ -44,5 +44,42 @@ open class EnshrineModel:IDataSource{
         })
     }
 
+    fun getOtherUserWishOrder(uid: String, callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["uid"] = uid
+        HttpRequest.sendRequest(HttpRequest.GET,URL.OTHERS_USER_WISHLIST,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
+
+    fun getOtherUserRecentLook(uid: String, callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["uid"] = uid
+        HttpRequest.sendRequest(HttpRequest.GET,URL.OTHER_RECENT_LOOK_GOODS,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
 
 }

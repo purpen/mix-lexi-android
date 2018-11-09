@@ -10,7 +10,6 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.lexivip.lexi.CustomCountDownTimer
-import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.R
@@ -158,7 +157,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
 
     override fun goPage(vararg args: Boolean) {
         if (args.isEmpty() || !args[0]){
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra(MainActivity::class.java.simpleName,TAG)
+            startActivity(intent)
             EventBus.getDefault().post(MessageClose())
         }else{
             startActivity(Intent(this, CompleteInfoActivity::class.java))

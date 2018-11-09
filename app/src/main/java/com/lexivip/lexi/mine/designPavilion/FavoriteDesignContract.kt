@@ -38,7 +38,9 @@ class FavoriteDesignContract {
 
     interface Presenter : BasePresenter {
         fun loadData(b: Boolean)
+        fun loadData(b: Boolean,uid:String)
         fun loadMoreData()
-        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int)
+        fun loadMoreData(uid: String)
+        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, position: Int, v: android.view.View)
     }
 }

@@ -7,7 +7,7 @@
     android:layout_marginBottom="6dp"
     >
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
         android:layout_width="@dimen/dp70"
         android:layout_height="@dimen/dp70"
@@ -124,7 +124,16 @@
             />
 
     </RelativeLayout>
-
+    <TextView
+        android:id="@+id/textViewLTest"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:includeFontPadding="false"
+        android:text="完善资料"
+        android:textColor="@color/color_6ed7af"
+        android:textSize="@dimen/sp12"
+        android:visibility="gone"
+        />
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
