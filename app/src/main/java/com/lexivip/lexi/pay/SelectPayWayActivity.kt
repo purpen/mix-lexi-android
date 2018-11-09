@@ -1,5 +1,6 @@
 package com.lexivip.lexi.pay
 
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
@@ -80,12 +81,12 @@ class SelectPayWayActivity : BaseActivity() {
 
         //点击开启支付窗口
         buttonPayNow.setOnClickListener {
-            //TODO 支付成功跳转支付结果页
             /*val intent = Intent(this, PayResultActivity::class.java)
             intent.putExtra(PayResultActivity::class.java.simpleName, createOrderBean)
             startActivity(intent)
             finish()*/
-            val payUtil = PayUtil(dialog, createOrderBean!!.consigneeInfo.rid, createOrderBean!!.payWay,0)
+            LogUtil.e("订单编号："+createOrderBean!!.order_rid)
+            val payUtil = PayUtil(dialog, createOrderBean!!.order_rid, createOrderBean!!.payWay,0)
 
         }
     }

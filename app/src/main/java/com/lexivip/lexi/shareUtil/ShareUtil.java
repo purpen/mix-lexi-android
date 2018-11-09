@@ -10,18 +10,44 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.shareboard.SnsPlatform;
+import com.umeng.socialize.utils.ShareBoardlistener;
 
 public class ShareUtil {
     private Activity context = AppApplication.getActivity();
     public ShareUtil() {
         UMImage image = new UMImage(context, R.drawable.ic_camera);//资源文件
         new ShareAction(context)
-                .withText("hello")
+                //.withText("hello")
                 //.withMedia(image)
                 .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
-                .setCallback(shareListener)
+                .setShareboardclickCallback(shareBoardlistener)
+                //.setCallback(shareListener)
                 .open();
     }
+
+    private ShareBoardlistener shareBoardlistener=new ShareBoardlistener() {
+        @Override
+        public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+            if (share_media!=null){
+                if (share_media==SHARE_MEDIA.WEIXIN){
+                    new ShareAction(context)
+                            .withText("hello")
+                            //.withMedia(image)
+                            .setShareboardclickCallback(shareBoardlistener)
+                            .setCallback(shareListener)
+                            .open();
+                }else if (share_media==SHARE_MEDIA.WEIXIN_CIRCLE){
+                    new ShareAction(context)
+                            .withText("hello")
+                            //.withMedia(image)
+                            .setShareboardclickCallback(shareBoardlistener)
+                            .setCallback(shareListener)
+                            .open();
+                }
+            }
+        }
+    };
 
     private UMShareListener shareListener = new UMShareListener() {
         /**

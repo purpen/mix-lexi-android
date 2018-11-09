@@ -34,6 +34,7 @@ public class AdapterEvaluate extends BaseQuickAdapter<MyOrderListBean.DataBean.O
     }
 
     @Override
+
     protected void convert(final BaseViewHolder helper, final MyOrderListBean.DataBean.OrdersBean.ItemsBean item) {
         GlideUtil.loadImageWithFading(item.getStore_logo(),(ImageView) helper.getView(R.id.iv_goods));
         helper.setText(R.id.tv_sale_price,"¥"+item.getDeal_price());
@@ -42,12 +43,12 @@ public class AdapterEvaluate extends BaseQuickAdapter<MyOrderListBean.DataBean.O
         helper.setText(R.id.tv_goods_price,"¥"+item.getPrice());
         helper.setText(R.id.tv_goods_name,item.getStore_name());
         StringBuilder stringBuilder=new StringBuilder("");
-        if(!item.getS_color().isEmpty()) {
+        if(item.getS_color()!=null&&!item.getS_color().isEmpty()) {
             LogUtil.e("颜色：" + item.getS_color());
             stringBuilder.append(item.getS_color()+"/");
             LogUtil.e(stringBuilder.toString());
         }
-        if (!item.getS_model().isEmpty()) {
+        if (item.getS_model()!=null&&!item.getS_model().isEmpty()) {
             LogUtil.e("样式：" + item.getS_model());
             stringBuilder.append(item.getS_model()+ "/" );
             LogUtil.e(stringBuilder.toString());

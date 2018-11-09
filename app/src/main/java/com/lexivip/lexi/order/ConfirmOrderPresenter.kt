@@ -144,7 +144,7 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
                 view.dismissLoadingView()
                 val submitOrderBean = JsonUtil.fromJson(json, SubmitOrderBean::class.java)
                 if (submitOrderBean.success) {
-                    view.setSubmitOrderSuccess()
+                    view.setSubmitOrderSuccess(submitOrderBean.data.order_rid)
                 } else {
                     view.showError(submitOrderBean.status.message)
                 }

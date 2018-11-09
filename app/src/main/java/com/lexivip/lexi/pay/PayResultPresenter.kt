@@ -1,5 +1,6 @@
 package com.lexivip.lexi.pay
 
+import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.JsonUtil
@@ -18,6 +19,7 @@ class PayResultPresenter(view: PayResultContract.View) : PayResultContract.Prese
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e(json)
                 view.dismissLoadingView()
                 val payResultBean = JsonUtil.fromJson(json, PayResultBean::class.java)
                 if (payResultBean.success) {

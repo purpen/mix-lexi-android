@@ -61,7 +61,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * 收货地址详情页面
  */
-public class AddressActivity extends BaseActivity implements View.OnClickListener,AddressContract.View,EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
+public class AddressActivity extends BaseActivity implements View.OnClickListener, AddressContract.View, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
     private Context context;
     private WaitingDialog dialog;
     private AddressPresenter presenter;
@@ -84,19 +84,21 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private TextView tv_city;
     private TextView tv_country;
     private List<String> countryList;//国家的数据
-    private Map<String,ArrayList<CityBean.CityNameBean>> map;
+    private Map<String, ArrayList<CityBean.CityNameBean>> map;
     private UploadTokenBean bean;
     private boolean isPosition;
-    private String id_card_front=null;
-    private String id_card_back=null;
+    private String id_card_front = null;
+    private String id_card_back = null;
     private String addressId;
     private AddressBean.DataBean dataBean;
     private int provinceId;
     private int cityId;
     private int areaId;
     private boolean isdefault;
-    private String id_card=null;
+    private String id_card = null;
     private HashMap<String, ArrayList<CityBean.CityNameBean>> cityMap;
+    private int countryID;
+    private int newCountryID;
 
     @Override
     protected int getLayout() {
@@ -105,13 +107,13 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initView() {
-        context=this;
+        context = this;
         //注册eventBus
         EventBus.getDefault().register(this);
-       dialog =new WaitingDialog(AddressActivity.this);
-       dataBean=new AddressBean.DataBean();
+        dialog = new WaitingDialog(AddressActivity.this);
+        dataBean = new AddressBean.DataBean();
         super.initView();
-        presenter=new AddressPresenter(this);
+        presenter = new AddressPresenter(this);
 
         customHeadView = findViewById(R.id.customHeadView);
         bt_save = findViewById(R.id.bt_save);
@@ -132,33 +134,28 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         if (isNew) {
             customHeadView.setHeadCenterTxtShow(true, R.string.title_new_address);
             bt_delete.setVisibility(View.GONE);
-        }else{
-            customHeadView.setHeadCenterTxtShow(true,R.string.title_edit_address);
+        } else {
+            customHeadView.setHeadCenterTxtShow(true, R.string.title_edit_address);
             bt_delete.setVisibility(View.VISIBLE);
         }
 
-        RelativeLayout rl_photo=findViewById(R.id.rl_photo);
-        LinearLayout ll_ID=findViewById(R.id.ll_ID);
-        TextView tv_remind=findViewById(R.id.tv_remind);
+        RelativeLayout rl_photo = findViewById(R.id.rl_photo);
+        LinearLayout ll_ID = findViewById(R.id.ll_ID);
+        TextView tv_remind = findViewById(R.id.tv_remind);
 
-        if (isForeign){
-            ll_country.setVisibility(View.VISIBLE);
-            ll_country.setEnabled(true);
+        if (isForeign) {
             rl_photo.setVisibility(View.VISIBLE);
             ll_ID.setVisibility(View.VISIBLE);
             tv_remind.setVisibility(View.VISIBLE);
-        }else{
-            ll_country.setVisibility(View.GONE);
-            ll_country.setEnabled(false);
-            ll_country.setClickable(false);
+        } else {
             rl_photo.setVisibility(View.GONE);
             ll_ID.setVisibility(View.GONE);
             tv_remind.setVisibility(View.GONE);
         }
 
-        if (isNew){
+        if (isNew) {
             bt_delete.setVisibility(View.GONE);
-        }else{
+        } else {
             bt_delete.setVisibility(View.VISIBLE);
         }
 
@@ -172,7 +169,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         swit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isdefault=isChecked;
+                isdefault = isChecked;
             }
         });
     }
@@ -181,7 +178,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     public void installListener() {
         super.installListener();
         //如果是编辑地址，先请求网络获取地址
-        if (!isNew)
+        if (!isNew || isForeign)
             presenter.loadData(addressId);
     }
 
@@ -193,13 +190,13 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_save:
                 if (setDataBean())
-                presenter.saveAddress(dataBean,isForeign,id_card,id_card_front,id_card_back);
+                    presenter.saveAddress(dataBean, isForeign, id_card, id_card_front, id_card_back);
                 break;
             case R.id.bt_delete:
-                InquiryDialog inquiryDialog=new InquiryDialog("确定删除地址？", this, new InquiryDialog.ImagePopwindowInterface() {
+                InquiryDialog inquiryDialog = new InquiryDialog("确定删除地址？", this, new InquiryDialog.ImagePopwindowInterface() {
                     @Override
                     public void getCheck(boolean isCheck) {
                         if (isCheck)
@@ -208,11 +205,20 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 });
                 break;
             case R.id.ll_region:
-                LogUtil.e("你有么有被触发");
-                if (cityMap!=null){
-                    setCityData(cityMap);
+                if (countryID==0){
+                    if (newCountryID==0) {
+                        ToastUtil.showError("请先选择国家");
+                    }else {
+                        countryID = newCountryID;
+                        presenter.loadCityData(String.valueOf(countryID));
+                    }
                 }else {
-                    presenter.loadCityData("1");
+                    if (cityMap != null&&countryID==newCountryID) {
+                        setCityData(cityMap);
+                    } else {
+                        countryID=newCountryID;
+                        presenter.loadCityData(String.valueOf(countryID));
+                    }
                 }
                 break;
             case R.id.ll_country:
@@ -223,11 +229,11 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.iv_photo_position:
 
-                isPosition=true;
-                String[] result= Util.getStringArray(R.array.strings_photo_titles);
-                final ActionSheetDialog dialog0=new ActionSheetDialog(context,result,null);
+                isPosition = true;
+                String[] result = Util.getStringArray(R.array.strings_photo_titles);
+                final ActionSheetDialog dialog0 = new ActionSheetDialog(context, result, null);
                 dialog0.itemTextColor(Util.getColor(R.color.color_333));
-                TranslateAnimation animation=new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF,
+                TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF,
                         0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f);
                 animation.setInterpolator(new DecelerateInterpolator());
                 dialog0.layoutAnimation(new LayoutAnimationController(animation));
@@ -235,8 +241,8 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 dialog0.setOnOperItemClickL(new OnOperItemClickL() {
                     @Override
                     public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        LogUtil.e("点击了第几个："+position);
-                        switch (position){
+                        LogUtil.e("点击了第几个：" + position);
+                        switch (position) {
                             case 0:
                                 cameraTask();
                                 break;
@@ -249,11 +255,11 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 });
                 break;
             case R.id.iv_photo_opposite:
-                isPosition=false;
-                String[] results= Util.getStringArray(R.array.strings_photo_titles);
-                final ActionSheetDialog dialog1=new ActionSheetDialog(context,results,null);
+                isPosition = false;
+                String[] results = Util.getStringArray(R.array.strings_photo_titles);
+                final ActionSheetDialog dialog1 = new ActionSheetDialog(context, results, null);
                 dialog1.itemTextColor(Util.getColor(R.color.color_333));
-                TranslateAnimation animations=new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF,
+                TranslateAnimation animations = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF,
                         0f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f);
                 animations.setInterpolator(new DecelerateInterpolator());
                 dialog1.layoutAnimation(new LayoutAnimationController(animations));
@@ -261,7 +267,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 dialog1.setOnOperItemClickL(new OnOperItemClickL() {
                     @Override
                     public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        switch (position){
+                        switch (position) {
                             case 0:
                                 cameraTask();
                                 break;
@@ -279,46 +285,46 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void getIntentData() {
         super.getIntentData();
-        Intent intent=getIntent();
-        isNew = intent.getBooleanExtra("isNew",true);
-        isForeign = intent.getBooleanExtra("isForeign",false);
+        Intent intent = getIntent();
+        isNew = intent.getBooleanExtra("isNew", true);
+        isForeign = intent.getBooleanExtra("isForeign", false);
         addressId = intent.getStringExtra(AddressActivity.class.getSimpleName());
 
     }
 
-    private boolean setDataBean(){
-        if (et_name.getText().toString().isEmpty()){
+    private boolean setDataBean() {
+        if (et_name.getText().toString().isEmpty()) {
             ToastUtil.showInfo("请输入姓名");
-        }else {
+        } else {
             dataBean.setFirst_name(et_name.getText().toString());
             if (et_mobile.getText().toString().isEmpty())
                 ToastUtil.showInfo("请输入手机号");
             else {
                 dataBean.setMobile(et_mobile.getText().toString());
                 et_mobile.getText().toString();
-                if (areaId==0){
+                if (areaId == 0) {
                     ToastUtil.showInfo("请选择地址");
-                }else{
+                } else {
                     dataBean.setProvince_id(provinceId);
                     dataBean.setCity_id(cityId);
                     dataBean.setTown_id(areaId);
-                    if (et_detailed.getText().toString().isEmpty()){
+                    if (et_detailed.getText().toString().isEmpty()) {
                         ToastUtil.showInfo("请输入详细地址");
-                    }else{
+                    } else {
                         if (!isForeign) {
                             dataBean.setStreet_address(et_detailed.getText().toString());
                             //dataBean.setCountry_id(Integer.valueOf(rid));
                             dataBean.setZipcode(et_code.getText().toString());
                             dataBean.setIs_default(isdefault);
                             return true;
-                        }else{
-                            if (id_card.isEmpty()){
+                        } else {
+                            if (id_card.isEmpty()) {
                                 ToastUtil.showInfo("请输入身份证号");
-                            }else{
-                                id_card=et_id.getText().toString();
-                                if (!id_card_back.isEmpty()&&!id_card_front.isEmpty()){
+                            } else {
+                                id_card = et_id.getText().toString();
+                                if (!id_card_back.isEmpty() && !id_card_front.isEmpty()) {
                                     return true;
-                                }else{
+                                } else {
                                     ToastUtil.showInfo("请上传身份证照片");
                                 }
                             }
@@ -354,28 +360,31 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setAddressData(AddressBean.DataBean data) {
+        tv_country.setText(data.getCountry_name());
+        countryID=data.getCountry_id();
+        newCountryID=data.getCountry_id();
         et_name.setText(data.getFull_name());
         et_mobile.setText(data.getMobile());
         swit.setChecked(data.isIs_default());
         if (!data.getZipcode().isEmpty())
-        et_code.setText(data.getZipcode());
+            et_code.setText(data.getZipcode());
         et_detailed.setText(data.getStreet_address());
-        tv_city.setText(data.getProvince()+data.getCity()+data.getTown());
-        dataBean=data;
+        tv_city.setText(data.getProvince() + data.getCity() + data.getTown());
+        dataBean = data;
     }
 
     @Override
     public void setCityData(HashMap<String, ArrayList<CityBean.CityNameBean>> map) {
         cityMap = map;
         //地址选择器
-        AddressDialog addressDialog=new AddressDialog(context, cityMap);
+        AddressDialog addressDialog = new AddressDialog(context, cityMap);
         addressDialog.setDialogCallback(new AddressDialog.DialogCallback() {
 
             @Override
             public void callBack(String addressName, int pId, int cId, int aId) {
-                provinceId=pId;
-                cityId=cId;
-                areaId=aId;
+                provinceId = pId;
+                cityId = cId;
+                areaId = aId;
                 tv_city.setText(addressName);
             }
         });
@@ -384,53 +393,49 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setToken(UploadTokenBean bean) {
-        this.bean=bean;
+        this.bean = bean;
     }
 
     @Override
     public void setImageId(JSONArray ids) throws JSONException {
-        if (isPosition){
-            id_card_front=ids.getString(0);
-        }else{
-            id_card_back=ids.getString(0);
+        if (isPosition) {
+            id_card_front = ids.getString(0);
+        } else {
+            id_card_back = ids.getString(0);
         }
     }
 
     @Override
-    public void setCountry(CountryAreaCodeBean bean) {
-        countryList=new ArrayList<>();
-        for (int i=0;i<bean.data.area_codes.size();i++){
+    public void setCountry(final CountryAreaCodeBean bean) {
+        countryList = new ArrayList<>();
+        for (int i = 0; i < bean.data.area_codes.size(); i++) {
             countryList.add(bean.data.area_codes.get(i).name);
         }
 
-            //国家选择器
-            OptionsPickerView pvOptions1 = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-                @Override
-                public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                    //返回的分别是三个级别的选中位置
-                        /*String tx = options1Items.get(options1).getPickerViewText()
-                            +options2Items.get(options1).get(option2)
-                                    + options3Items.get(options1).get(option2).get(options3).getPickerViewText();*/
-                    //tvOptions.setText(tx);
-                    tv_country.setText(countryList.get(options1));
-                }
-            }).build();
-            pvOptions1.setPicker(countryList);
-            pvOptions1.show();
+        //国家选择器
+        final OptionsPickerView pvOptions1 = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                tv_country.setText(countryList.get(options1));
+                newCountryID=bean.data.area_codes.get(options1).id;
+            }
+        }).build();
+        pvOptions1.setPicker(countryList);
+        pvOptions1.show();
     }
 
     @Override
     public void finishActivity() {
-        Intent intent=new Intent();
-        intent.putExtra("isRefresh",true);
-        setResult(RESULT_OK,intent);
+        Intent intent = new Intent();
+        intent.putExtra("isRefresh", true);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
     //相机
     @AfterPermissionGranted(Constants.REQUEST_CODE_CAPTURE_CAMERA)
-    private void cameraTask(){
-        String[] perms = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private void cameraTask() {
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             LogUtil.e("有权限");
             openCamera();
@@ -440,7 +445,8 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     }
 
     private File mCurrentPhotoFile;
-    private void openCamera(){
+
+    private void openCamera() {
         mCurrentPhotoFile = ImageUtils.getDefaultFile();
         ImageUtils.getImageFromCamera(AddressActivity.this, ImageUtils.getUriForFile(getApplicationContext(), mCurrentPhotoFile));
     }
@@ -461,10 +467,10 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LogUtil.e("这里有没有调用"+requestCode+"这个code："+RESULT_OK+"resultCode:"+resultCode);
-        if (resultCode!= RESULT_OK)
+        LogUtil.e("这里有没有调用" + requestCode + "这个code：" + RESULT_OK + "resultCode:" + resultCode);
+        if (resultCode != RESULT_OK)
             return;
-        switch (requestCode){
+        switch (requestCode) {
             case Constants.REQUEST_CODE_CAPTURE_CAMERA:
                 LogUtil.e("有没有调用成功");
                 if (null == mCurrentPhotoFile)
@@ -474,7 +480,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                 break;
             case Constants.REQUEST_CODE_PICK_IMAGE:
                 LogUtil.e("调用成功");
-                List<Uri> iamgeList=PicturePickerUtils.obtainResult(data);
+                List<Uri> iamgeList = PicturePickerUtils.obtainResult(data);
                 if (iamgeList == null || iamgeList.isEmpty()) {
                     LogUtil.e("启动失败");
                     return;
@@ -484,14 +490,14 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    private void toCropActivity(Uri uri){
-        Intent intent= new Intent(context,ImageCropActivity.class);
+    private void toCropActivity(Uri uri) {
+        Intent intent = new Intent(context, ImageCropActivity.class);
         intent.putExtra(AddressActivity.class.getSimpleName(), uri);
         startActivity(intent);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onClipComplete(ImageCropActivity.MessageCropComplete cropComplete){
+    public void onClipComplete(ImageCropActivity.MessageCropComplete cropComplete) {
         if (AddressActivity.class.getSimpleName().equals(cropComplete.getSimpleName())) {
             byte[] data = ImageUtils.bitmap2ByteArray(cropComplete.getBitmap());
             presenter.loadPhoto(bean, data);
@@ -500,7 +506,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent( MessageAreaCode code){
+    public void onMessageEvent(MessageAreaCode code) {
         tv_mobile.setText(code.areaCode);
     }
 
@@ -511,10 +517,10 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         super.onDestroy();
     }
 
-    private void setImageUri(byte[] bytes){
+    private void setImageUri(byte[] bytes) {
         if (isPosition) {
             GlideUtil.loadImageAsBitmap(bytes, iv_position);
-        }else{
+        } else {
             GlideUtil.loadImageAsBitmap(bytes, iv_opposion);
         }
     }
@@ -533,7 +539,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-           new AppSettingsDialog.Builder(AddressActivity.this).build().show();
+            new AppSettingsDialog.Builder(AddressActivity.this).build().show();
         }
     }
 

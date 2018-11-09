@@ -739,4 +739,20 @@ object URL {
      * 订单是否合并支付
      */
     const val IS_MERGE="${BASE_URL}orders/app_pay/is_merge"
+    /**
+     * 分享品牌馆
+     */
+    const val SHARE_BRAND="${BASE_URL}market/share/store"
+    /**
+     * 分享生活馆
+     */
+    const val SHARE_LIFE="${BASE_URL}market/share/life_store"
+    /**
+     * 邀请好友开馆卡片
+     */
+    const val SHARE_INVITE="${BASE_URL}market/share/invite_carde"
+    /**
+     * 分享优惠券
+     */
+    const val SHARE_VOUCHER="${BASE_URL}market/share/coupons"
 }
