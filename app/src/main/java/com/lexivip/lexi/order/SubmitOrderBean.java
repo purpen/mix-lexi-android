@@ -26,7 +26,7 @@ public class SubmitOrderBean {
         public int bonus_amount;
         public String order_rid;
         public List<OrdersBean> orders;
-
+        public boolean is_paid;
         public static class OrdersBean {
             /**
              * buyer_address : 青年路

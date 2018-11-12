@@ -1,5 +1,4 @@
 package com.lexivip.lexi.order
-
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -230,7 +229,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 //            adapter.notifyDataSetChanged()
 //        }
 
-        buttonSubmitOrder.setOnClickListener { //提交订单
+        buttonSubmitOrder.setOnClickListener {
+            //提交订单
             presenter.submitOrder(createOrderBean)
         }
     }
@@ -238,13 +238,13 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     /**
      * 订单提交成功
      */
-    override fun setSubmitOrderSuccess(order_id : String) {
+    override fun setSubmitOrderSuccess(order_id: String) {
 //        清空购物车
         EventBus.getDefault().post(MessageOrderSuccess())
-        createOrderBean.order_rid=order_id
+        createOrderBean.order_rid = order_id
 //         跳转支付界面
         val intent = Intent(this, SelectPayWayActivity::class.java)
-        intent.putExtra(SelectPayWayActivity::class.java.simpleName,createOrderBean)
+        intent.putExtra(SelectPayWayActivity::class.java.simpleName, createOrderBean)
         startActivity(intent)
         finish()
     }
