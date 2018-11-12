@@ -162,6 +162,7 @@
         <activity android:name=".shopCart.ShopCartActivity" />
         <activity android:name=".mine.like.likeShopWindow.LikeShopWindowActivity" />
         <activity android:name=".user.OtherUserCenterActivity" />
+        <activity android:name=".index.selection.freePostage.AllFreePostageActivity" />
     </application>
 
 </manifest>

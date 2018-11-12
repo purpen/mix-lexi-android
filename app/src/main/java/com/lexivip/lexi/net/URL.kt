@@ -785,4 +785,9 @@ object URL {
      * 别人最近查看商品列表
      */
     const val OTHERS_RECENT_LOOK_GOODS = "${BASE_URL}other_user_browses"
+
+    /**
+     * 包邮专区
+     */
+    const val GOODS_FREE_POSTAGE = "${BASE_URL}products/free_postage"
 }

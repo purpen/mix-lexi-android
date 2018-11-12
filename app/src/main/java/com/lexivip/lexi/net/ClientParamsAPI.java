@@ -1167,7 +1167,7 @@ public class ClientParamsAPI {
      * @param is_custom_made
      * @return
      */
-    @Nullable
+    @NotNull
     public static HashMap<String,Object> getAllEditorRecommendParams(int page, @NotNull String sortType, @NotNull String minePrice, @NotNull String maxPrice, @NotNull String cids, @NotNull String is_free_postage, @NotNull String is_preferential, @NotNull String is_custom_made,@NotNull String sort_newest) {
         HashMap<String,Object> params=generateCommonParams();
         params.put("page",String.valueOf(page));
@@ -1495,6 +1495,28 @@ public class ClientParamsAPI {
         HashMap<String,Object> params=generateCommonParams();
         params.put("rid",rid);
         params.put("pay_type",pay_type);
+        return params;
+    }
+
+    /**
+     * 包邮专区
+     * @param page
+     * @param sortType
+     * @param minePrice
+     * @param maxPrice
+     * @param cids
+     * @param sort_newest
+     * @return
+     */
+    @NotNull
+    public static HashMap<String, Object> getAllFreePostageParams(int page, @NotNull String sortType, @NotNull String minePrice, @NotNull String maxPrice, @NotNull String cids, @NotNull String sort_newest) {
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("sort_type", sortType);
+        params.put("min_price", minePrice);
+        params.put("max_price", maxPrice);
+        params.put("sort_newest", sort_newest);
+        params.put("cids", cids);
         return params;
     }
 }

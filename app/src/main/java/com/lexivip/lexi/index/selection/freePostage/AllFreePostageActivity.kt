@@ -1,4 +1,4 @@
-package com.lexivip.lexi.index.selection.goodsSelection
+package com.lexivip.lexi.index.selection.freePostage
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
@@ -9,6 +9,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
+import com.lexivip.lexi.index.selection.goodsSelection.*
 import com.lexivip.lexi.search.AdapterSearchGoods
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
@@ -16,25 +17,22 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.acticity_all_editor_recommend.*
 
 
-class AllGoodsSelectionActivity : BaseActivity(), AllGoodsSelectionContract.View {
+class AllFreePostageActivity : BaseActivity(), AllGoodsSelectionContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     private var goodsCount =0
     private val presenter: AllGoodsSelectionPresenter by lazy { AllGoodsSelectionPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
-    private var dialogBottomFilter: DialogBottomFilter? = null
+    private val dialogBottomFilter: DialogBottomFilter by lazy {DialogBottomFilter(TAG,this, presenter) }
     override val layout: Int = R.layout.acticity_all_editor_recommend
-
-    private lateinit var  headerView: View
-
     override fun setPresenter(presenter: AllGoodsSelectionContract.Presenter?) {
         setPresenter(presenter)
     }
     override fun initView() {
         linearLayout.visibility = View.VISIBLE
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        customHeadView.setHeadCenterTxtShow(true,R.string.text_good_selection)
+        customHeadView.setHeadCenterTxtShow(true,R.string.text_free_postage_perfecture)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
@@ -52,7 +50,7 @@ class AllGoodsSelectionActivity : BaseActivity(), AllGoodsSelectionContract.View
 
     override fun setGoodsCount(count: Int) {
         goodsCount = count
-        if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
+        if (dialogBottomFilter.isShowing) dialogBottomFilter.setGoodsCount(count)
     }
 
     override fun installListener() {
@@ -72,12 +70,11 @@ class AllGoodsSelectionActivity : BaseActivity(), AllGoodsSelectionContract.View
 
         linearLayoutFilter.setOnClickListener { _ ->
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(TAG,this, presenter)
-            dialogBottomFilter?.show()
-            dialogBottomFilter?.setOnDismissListener {
+            dialogBottomFilter.show()
+            dialogBottomFilter.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
             }
-            dialogBottomFilter?.setGoodsCount(goodsCount)
+            dialogBottomFilter.setGoodsCount(goodsCount)
         }
 
         swipeRefreshLayout.setOnRefreshListener {
