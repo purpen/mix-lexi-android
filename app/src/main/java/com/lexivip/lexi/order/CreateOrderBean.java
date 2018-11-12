@@ -9,6 +9,8 @@ public class CreateOrderBean implements Parcelable {
 
     public int payWay;
 
+    public String order_rid;
+
     public UserAddressListBean.DataBean consigneeInfo;
 
     //官方券
@@ -79,6 +81,7 @@ public class CreateOrderBean implements Parcelable {
         dest.writeString(this.sync_pay);
         dest.writeString(this.last_store_rid);
         dest.writeTypedList(this.store_items);
+        dest.writeString(this.order_rid);
     }
 
     protected CreateOrderBean(Parcel in) {
@@ -98,6 +101,7 @@ public class CreateOrderBean implements Parcelable {
         this.sync_pay = in.readString();
         this.last_store_rid = in.readString();
         this.store_items = in.createTypedArrayList(StoreItemBean.CREATOR);
+        this.order_rid = in.readString();
     }
 
     public static final Creator<CreateOrderBean> CREATOR = new Creator<CreateOrderBean>() {

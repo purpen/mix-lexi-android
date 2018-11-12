@@ -69,20 +69,14 @@ public class MainFragmentUser extends BaseFragment {
             public void onClick(View v) {
                 UMConfigure.setLogEnabled(true);
                 //分享
-                String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+               /* String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,
                         Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,
                         Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,
                         Manifest.permission.WRITE_APN_SETTINGS};
-                ActivityCompat.requestPermissions(getActivity(),mPermissionList,123);
-                UMImage image = new UMImage(getActivity(), R.drawable.ic_camera);//资源文件
-                new ShareAction(getActivity())
-                        .withText("hello")
-                        //.withMedia(image)
-                        .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
-                        .setCallback(shareListener)
-                        .open();
+                ActivityCompat.requestPermissions(getActivity(),mPermissionList,123);*/
+
             }
         });
         imageViewSetting.setOnClickListener(new View.OnClickListener() {
@@ -92,41 +86,6 @@ public class MainFragmentUser extends BaseFragment {
             }
         });
     }
-
-    private UMShareListener shareListener = new UMShareListener() {
-        /**
-         * @descrption 分享开始的回调
-         * @param platform 平台类型
-         */
-        @Override
-        public void onStart(SHARE_MEDIA platform) {
-        }
-        /**
-         * @descrption 分享成功的回调
-         * @param platform 平台类型
-         */
-        @Override
-        public void onResult(SHARE_MEDIA platform) {
-            LogUtil.e("成功了");
-        }
-        /**
-         * @descrption 分享失败的回调
-         * @param platform 平台类型
-         * @param t 错误原因
-         */
-        @Override
-        public void onError(SHARE_MEDIA platform, Throwable t) {
-            LogUtil.e("失败:"+t.toString());
-        }
-        /**
-         * @descrption 分享取消的回调
-         * @param platform 平台类型
-         */
-        @Override
-        public void onCancel(SHARE_MEDIA platform) {
-            LogUtil.e("取消了");
-        }
-    };
 
     public static BaseFragment newInstance(){
         MainFragmentUser mainFragmentUser=new MainFragmentUser();

@@ -82,7 +82,7 @@ public class SubmitOrderBean {
             public int freight;
             public Object official_order_id;
             public String outside_target_id;
-            public int pay_amount;
+            public String pay_amount;
             public int reach_minus;
             public boolean distributed;
             public Object remark;
@@ -90,7 +90,7 @@ public class SubmitOrderBean {
             public int ship_mode;
             public int status;
             public StoreBean store;
-            public int total_amount;
+            public String total_amount;
             public int total_quantity;
             public String blessing_utterance;
             public int payed_at;
@@ -167,14 +167,14 @@ public class SubmitOrderBean {
                 public Object express_no;
                 public String id_code;
                 public String mode;
-                public int price;
+                public String price;
                 public String product_name;
                 public int quantity;
                 public String rid;
                 public String s_color;
                 public String s_model;
                 public double s_weight;
-                public int sale_price;
+                public String sale_price;
                 public int stock_count;
             }
         }

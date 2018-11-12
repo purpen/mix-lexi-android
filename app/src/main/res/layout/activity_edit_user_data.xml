@@ -141,7 +141,6 @@
                     android:layout_marginBottom="@dimen/dp10"
                     android:background="@null"
                     android:hint="定期为你推荐好设计"
-                    android:maxLength="10"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
             <LinearLayout

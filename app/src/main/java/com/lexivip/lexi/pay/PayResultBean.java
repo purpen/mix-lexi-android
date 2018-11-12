@@ -135,7 +135,7 @@ public class PayResultBean {
                  * store_rid : 2
                  */
 
-                public StoreLogoBean store_logo;
+                public String store_logo;
                 public String store_name;
                 public String store_rid;
 

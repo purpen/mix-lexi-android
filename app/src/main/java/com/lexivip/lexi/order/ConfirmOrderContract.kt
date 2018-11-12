@@ -54,7 +54,7 @@ class ConfirmOrderContract {
 
         }
 
-        fun setSubmitOrderSuccess() {
+        fun setSubmitOrderSuccess(string: String) {
 
         }
 

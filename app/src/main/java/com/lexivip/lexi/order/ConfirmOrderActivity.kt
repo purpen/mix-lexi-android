@@ -238,10 +238,10 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     /**
      * 订单提交成功
      */
-    override fun setSubmitOrderSuccess() {
+    override fun setSubmitOrderSuccess(order_id : String) {
 //        清空购物车
         EventBus.getDefault().post(MessageOrderSuccess())
-
+        createOrderBean.order_rid=order_id
 //         跳转支付界面
         val intent = Intent(this, SelectPayWayActivity::class.java)
         intent.putExtra(SelectPayWayActivity::class.java.simpleName,createOrderBean)

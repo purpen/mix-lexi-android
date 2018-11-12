@@ -785,6 +785,22 @@ object URL {
      * 别人最近查看商品列表
      */
     const val OTHERS_RECENT_LOOK_GOODS = "${BASE_URL}other_user_browses"
+    /**
+     * 分享品牌馆
+     */
+    const val SHARE_BRAND="${BASE_URL}market/share/store"
+    /**
+     * 分享生活馆
+     */
+    const val SHARE_LIFE="${BASE_URL}market/share/life_store"
+    /**
+     * 邀请好友开馆卡片
+     */
+    const val SHARE_INVITE="${BASE_URL}market/share/invite_carde"
+    /**
+     * 分享优惠券
+     */
+    const val SHARE_VOUCHER="${BASE_URL}market/share/coupons"
 
     /**
      * 包邮专区
