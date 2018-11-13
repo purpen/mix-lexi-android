@@ -93,18 +93,16 @@ class PavilionCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
         view.textViewConfirm.setOnClickListener {
 
             if (selectedCoupon == null) {
-                store.couponPrice = 0
-                store.coupon_codes = ""
                 store.notUsingCoupon = true
+                store.couponPrice = 0
                 EventBus.getDefault().post(MessageUpdate())
                 dismiss()
                 return@setOnClickListener
             }
 
             if (!selectedCoupon!!.selected) { //未选中取消优惠券
-                store.couponPrice = 0
-                store.coupon_codes = ""
                 store.notUsingCoupon = true
+                store.couponPrice = 0
             } else {
                 store.couponPrice = selectedCoupon!!.amount
                 store.coupon_codes = selectedCoupon!!.code

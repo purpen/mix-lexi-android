@@ -16,7 +16,6 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
-import kotlinx.android.synthetic.main.footer_comfirm_order.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -55,12 +54,10 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
             textViewPavilionCoupon.isEnabled = false
         } else {
             textViewPavilionCoupon.isEnabled = true
-            if (item.couponPrice == 0 && item.notUsingCoupon) {
-                textViewPavilionCoupon.text = "不使用优惠券"
-            } else if (item.couponPrice == 0 && !item.notUsingCoupon) {
+            textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
+            if (item.notUsingCoupon) {
                 textViewPavilionCoupon.text = "${coupons.size}张可用"
-                textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
-            } else {
+            } else if (!item.notUsingCoupon) {
                 helper.setText(R.id.textViewPavilionCoupon, "已抵扣￥${item.couponPrice}")
             }
         }

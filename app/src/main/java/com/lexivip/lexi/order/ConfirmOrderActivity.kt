@@ -43,6 +43,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     //订单信息
     private lateinit var createOrderBean: CreateOrderBean
 
+
     /**
      * 所有订单店铺优惠券
      */
@@ -60,6 +61,16 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     private var shopCouponTotalPrice: Int = 0
 
     private var officialCoupons: List<CouponBean>? = null
+
+    //官方券最大面额
+    private var maxOfficialCouponPrice: Int = 0
+
+    //店铺券最大面额总和
+    private var sumMaxShopCouponPrice: Int = 0
+
+    private var isOfficialCouponLoaded = false
+
+    private var isShopCouponLoaded = false
 
     override fun getIntentData() {
         if (intent.hasExtra(ConfirmOrderActivity::class.java.simpleName)) {
@@ -83,7 +94,6 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         adapter.addHeaderView(headerView)
 
         footerView = View.inflate(this, R.layout.footer_comfirm_order, null)
-        footerView.isEnabled = false
         adapter.addFooterView(footerView)
         adapter.setHeaderFooterEmpty(true, true)
 
@@ -138,7 +148,14 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         } else {
             headerView.textViewCouponPrice.text = "-￥$shopCouponTotalPrice"
         }
-        calculateUserPayTotalPrice()
+        //选择店铺券则不用官方券
+        createOrderBean.notUsingOfficialCoupon = true
+        if (officialCoupons==null || officialCoupons!!.isEmpty()){
+            setOfficialCouponText(0)
+        }else{
+            setOfficialCouponText(officialCoupons!!.size)
+        }
+        calculateUserPayTotalPrice(true)
     }
 
     /**
@@ -152,21 +169,23 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
         val stores = createOrderBean.store_items
 
-        //将店铺优惠券清零
+        //选择官方券则不使用店铺优惠券
         for (store in stores) {
-            store.couponPrice = 0
+            store.notUsingCoupon = true
             store.coupon_codes = ""
         }
 
         adapter.notifyDataSetChanged()
-
+        createOrderBean
         if (couponBean.amount == 0) {
             headerView.textViewCouponPrice.text = "未使用"
         } else {
             //设置为官方优惠券
             headerView.textViewCouponPrice.text = "-￥${createOrderBean.officialCouponPrice}"
+            footerView.textViewOfficialCoupon.text = "已抵扣￥${createOrderBean.officialCouponPrice}元"
+            footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
         }
-        calculateUserPayTotalPrice()
+        calculateUserPayTotalPrice(false)
     }
 
     /**
@@ -216,22 +235,12 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         }
 
 
-        footerView.setOnClickListener {
-            //领官方券总价计算
-            //获取满足订单条件官方优惠券
-//            val sumPrice = createOrderBean.orderTotalPrice - shopCouponTotalPrice - fullReductionTotalPrice
+        footerView.setOnClickListener { //显示领取官方券对话框
             if (officialCoupons == null) return@setOnClickListener
             val officialCouponBottomDialog = OfficialCouponBottomDialog(this, createOrderBean, officialCoupons!!)
             officialCouponBottomDialog.show()
         }
 
-//        adapter.setOnItemClickListener { _, _, position ->
-        //            val data = adapter.data
-//            val item = adapter.getItem(position) as UserAddressListBean.DataBean
-//            item.is_default = true
-//
-//            adapter.notifyDataSetChanged()
-//        }
 
         buttonSubmitOrder.setOnClickListener {
             //提交订单
@@ -258,7 +267,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      */
     override fun setNewUserDiscountData(data: NewUserDiscountBean.DataBean) {
         newUserDiscountBean = data
-        calculateUserPayTotalPrice()
+        calculateUserPayTotalPrice(true)
     }
 
 
@@ -279,6 +288,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      * 设置每个订单店铺优惠券
      */
     override fun setPavilionCouponByOrderData(data: JSONObject) {
+        sumMaxShopCouponPrice = 0
         var arrayList: ArrayList<CouponBean>
         var jsonArrayCoupon: JSONArray
         for (item in createOrderBean.store_items) {
@@ -301,8 +311,54 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             }
             item.coupons = arrayList
             orderShopCouponMap[item.store_rid] = arrayList
+            item.couponPrice = arrayList[0].amount
+            sumMaxShopCouponPrice += arrayList[0].amount
         }
         adapter.notifyDataSetChanged()
+        setAllCouponSelectedState()
+        isShopCouponLoaded = true
+    }
+
+    /**
+     * 进入设置默认选中的优惠券
+     */
+    private fun setAllCouponSelectedState() {
+        if (isShopCouponLoaded && isOfficialCouponLoaded) return
+        if (sumMaxShopCouponPrice == 0 && maxOfficialCouponPrice == 0) return
+        LogUtil.e("sumMaxShopCouponPrice===$sumMaxShopCouponPrice;;;maxOfficialCouponPrice===$maxOfficialCouponPrice")
+
+        val data = adapter.data
+        if (sumMaxShopCouponPrice >= maxOfficialCouponPrice) { //使用店铺优惠券
+            createOrderBean.notUsingOfficialCoupon = true
+            for (item in data) { //默认使用优惠券
+                item.notUsingCoupon = false
+            }
+            if (officialCoupons == null || officialCoupons!!.isEmpty()) {
+                footerView.isEnabled = false
+                footerView.textViewOfficialCoupon.text = "没有可用优惠券"
+                footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_999))
+            } else {
+                footerView.isEnabled = true
+                footerView.textViewOfficialCoupon.text = "${officialCoupons!!.size}张可用"
+                footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
+            }
+            shopCouponTotalPrice = sumMaxShopCouponPrice
+            createOrderBean.officialCouponPrice = 0
+            headerView.textViewCouponPrice.text = "-￥$shopCouponTotalPrice"
+        } else { //使用乐喜优惠券
+            createOrderBean.notUsingOfficialCoupon = false
+            footerView.isEnabled = true
+            for (item in data) { //默认使用优惠券
+                item.notUsingCoupon = true
+            }
+            shopCouponTotalPrice = 0
+            createOrderBean.officialCouponPrice = maxOfficialCouponPrice
+            footerView.textViewOfficialCoupon.text = "已抵扣￥${maxOfficialCouponPrice}元"
+            footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
+            headerView.textViewCouponPrice.text = "-￥${createOrderBean.officialCouponPrice}"
+        }
+        adapter.notifyDataSetChanged()
+        calculateUserPayTotalPrice(false)
     }
 
 
@@ -376,7 +432,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
         createOrderBean.expressTotalPrice = expressTotalPrice
 
-        calculateUserPayTotalPrice()
+        calculateUserPayTotalPrice(true)
     }
 
 
@@ -483,15 +539,14 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         }
 
         headerView.textViewFullReducePrice.text = "-￥$fullReductionTotalPrice"
-        calculateUserPayTotalPrice()
+        calculateUserPayTotalPrice(true)
     }
 
     /**
      * 计算用户应支付价格和首单优惠价格
      */
-    private fun calculateUserPayTotalPrice() {
+    private fun calculateUserPayTotalPrice(needRequestOfficial: Boolean) {
         var userPayPrice = createOrderBean.orderTotalPrice + expressTotalPrice - createOrderBean.officialCouponPrice - shopCouponTotalPrice - fullReductionTotalPrice
-
 
         //满足首单优惠折扣
         if (newUserDiscountBean == null) {
@@ -508,9 +563,9 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
         headerView.textViewTotalPrice.text = "$userPayPrice"
 
-
-        getOfficialCoupons()
-
+        if (needRequestOfficial) {
+            getOfficialCoupons()
+        }
     }
 
     /**
@@ -532,18 +587,41 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      * 设置官方优惠券信息
      */
     override fun setOfficialCouponData(coupons: List<CouponBean>) {
+        //第一张为最大面额
+        maxOfficialCouponPrice = coupons[0].amount
         // 设置官方优惠券可用数量
         officialCoupons = coupons
-        val size = coupons.size
+//        if (size > 0) {
+//            footerView.isEnabled = true
+//            if (createOrderBean.notUsingOfficialCoupon) { //不使用官方券
+//                footerView.textViewOfficialCoupon.text = "${size}张可用"
+//                footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
+//            } else {
+//                footerView.textViewOfficialCoupon.text = "已抵扣￥${createOrderBean.officialCouponPrice}元"
+//                footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
+//            }
+//        } else {
+//            footerView.isEnabled = false
+//            footerView.textViewOfficialCoupon.text = "没有可用优惠券"
+//            footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_999))
+//        }
+        setOfficialCouponText(coupons.size)
+        setAllCouponSelectedState()
+
+        isOfficialCouponLoaded = true
+    }
+
+
+    /**
+     * 设置官方券显示文字
+     */
+    private fun setOfficialCouponText(size:Int){
         if (size > 0) {
             footerView.isEnabled = true
-            if (createOrderBean.notUsingOfficialCoupon) {
-                footerView.textViewOfficialCoupon.text = "不使用优惠券"
-                footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_999))
-            } else if (createOrderBean.officialCouponPrice == 0) {
+            if (createOrderBean.notUsingOfficialCoupon) { //不使用官方券
                 footerView.textViewOfficialCoupon.text = "${size}张可用"
                 footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
-            } else if (createOrderBean.officialCouponPrice > 0) {
+            } else {
                 footerView.textViewOfficialCoupon.text = "已抵扣￥${createOrderBean.officialCouponPrice}元"
                 footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
             }
@@ -553,6 +631,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_999))
         }
     }
+
 
     override fun showLoadingView() {
         dialog.show()
