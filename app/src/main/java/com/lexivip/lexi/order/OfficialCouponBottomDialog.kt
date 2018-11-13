@@ -5,57 +5,33 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
 import com.basemodule.tools.DimenUtil
-import com.lexivip.lexi.JsonUtil
-import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
-import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CouponBean
-import com.lexivip.lexi.index.detail.ShopCouponListBean
 import kotlinx.android.synthetic.main.dialog_pavilion_coupon_bottom.view.*
 import kotlinx.android.synthetic.main.header_coupon_bottom_dialog.view.*
 import org.greenrobot.eventbus.EventBus
-import java.io.IOException
 
 
-class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresenter, sumPrice: Double, createOrderBean: CreateOrderBean) : BottomBaseDialog<OfficialCouponBottomDialog>(context) {
-    private val present: ConfirmOrderPresenter by lazy { presenter }
+class OfficialCouponBottomDialog(context: Context,createOrderBean: CreateOrderBean, officialCoupons: List<CouponBean>) : BottomBaseDialog<OfficialCouponBottomDialog>(context) {
     private val orderBean: CreateOrderBean by lazy { createOrderBean }
-    private val price: Double by lazy { sumPrice }
+    private val coupons: List<CouponBean> by lazy { officialCoupons }
     private val adapterDialogCoupon: AdapterDialogPavilionCoupon by lazy { AdapterDialogPavilionCoupon(R.layout.adapter_dialog_official_coupon) }
     private lateinit var view: View
     private lateinit var headerView: View
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_pavilion_coupon_bottom, null)
-        present.getOfficialCoupons(price,object:IDataSource.HttpRequestCallBack{
-            override fun onStart() {
-                view.progressBar.visibility = View.VISIBLE
-            }
-
-            override fun onSuccess(json: String) {
-                view.progressBar.visibility = View.GONE
-                val shopCouponListBean = JsonUtil.fromJson(json, ShopCouponListBean::class.java)
-                if (shopCouponListBean.success) {
-                    adapterDialogCoupon.setNewData(shopCouponListBean.data.coupons)
-                } else {
-                    ToastUtil.showError(shopCouponListBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.progressBar.visibility = View.GONE
-            }
-        })
         return view
     }
 
 
     override fun setUiBeforShow() {
         headerView = View.inflate(context, R.layout.header_coupon_bottom_dialog, null)
+        headerView.relativeLayoutNoUseCoupon.visibility = View.VISIBLE
         headerView.textViewCouponTitle.text = Util.getString(R.string.text_official_coupon)
         adapterDialogCoupon.addHeaderView(headerView)
 
@@ -73,7 +49,7 @@ class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
         view.recyclerViewCoupon.layoutManager = linearLayoutManager
         view.recyclerViewCoupon.adapter = adapterDialogCoupon
         view.recyclerViewCoupon.addItemDecoration(DividerItemDecoration(context, android.R.color.transparent, view.recyclerViewCoupon, 15f))
-
+        adapterDialogCoupon.setNewData(coupons)
 
         var selectedCoupon: CouponBean? =null
 
@@ -96,9 +72,14 @@ class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
                 item.selected = false
             }
 
+            headerView.checkBox.isChecked = false
+
             selectedCoupon!!.selected = !selected
 
             adapterDialogCoupon.notifyDataSetChanged()
+
+            view.textViewReducePrice.visibility = View.VISIBLE
+            view.textViewUseCouponNum.visibility = View.VISIBLE
 
             if (selectedCoupon!!.selected) {
                 view.textViewReducePrice.text = "已抵扣${selectedCoupon!!.amount}元"
@@ -113,6 +94,10 @@ class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
         view.textViewConfirm.setOnClickListener {
 
             if (selectedCoupon == null) {
+                orderBean.officialCouponPrice = 0
+                orderBean.officialCouponCode = ""
+                orderBean.notUsingOfficialCoupon = true
+                EventBus.getDefault().post(CouponBean())
                 dismiss()
                 return@setOnClickListener
             }
@@ -120,12 +105,26 @@ class OfficialCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
             if (!selectedCoupon!!.selected) { //取消选中优惠券
                 orderBean.officialCouponPrice = 0
                 orderBean.officialCouponCode = ""
+                orderBean.notUsingOfficialCoupon = true
             } else {
                 orderBean.officialCouponPrice = selectedCoupon!!.amount
                 orderBean.officialCouponCode = selectedCoupon!!.code
+                orderBean.notUsingOfficialCoupon = false
             }
             EventBus.getDefault().post(selectedCoupon)
             dismiss()
+        }
+
+        //不使用优惠券
+        headerView.relativeLayoutNoUseCoupon.setOnClickListener {
+            for (item in adapterDialogCoupon.data) {
+                item.selected = false
+            }
+            adapterDialogCoupon.notifyDataSetChanged()
+            headerView.checkBox.isChecked = true
+            view.textViewReducePrice.visibility = View.GONE
+            view.textViewUseCouponNum.visibility = View.GONE
+            selectedCoupon = null
         }
     }
 }

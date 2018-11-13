@@ -9,18 +9,20 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.TextView
+import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
+import kotlinx.android.synthetic.main.footer_comfirm_order.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQuickAdapter<StoreItemBean, BaseViewHolder>(res) {
 
-    private val addressId:String by lazy { address_rid }
+    private val addressId: String by lazy { address_rid }
     override fun convert(helper: BaseViewHolder, item: StoreItemBean) {
 
         //取第一个商品以获取发货地店铺名等信息
@@ -38,19 +40,31 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
             helper.setText(R.id.textViewPromotion, item.fullReductionText)
         }
 
-        if (item.expressExpense==0.0){
-            helper.setText(R.id.textViewFreight,"包邮")
-        }else{
-            helper.setText(R.id.textViewFreight,"${item.expressExpense}")
+        if (item.expressExpense == 0.0) {
+            helper.setText(R.id.textViewFreight, "包邮")
+        } else {
+            helper.setText(R.id.textViewFreight, "${item.expressExpense}")
         }
 
         val textViewPavilionCoupon = helper.getView<TextView>(R.id.textViewPavilionCoupon)
 
-        if (item.couponPrice==0){
-            textViewPavilionCoupon.text = "选择优惠券"
-        }else{
-            helper.setText(R.id.textViewPavilionCoupon,"已抵扣￥${item.couponPrice}")
+        val coupons = item.coupons
+        if (coupons == null || coupons.isEmpty()) {
+            textViewPavilionCoupon.text = "没有可用优惠券"
+            textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_999))
+            textViewPavilionCoupon.isEnabled = false
+        } else {
+            textViewPavilionCoupon.isEnabled = true
+            if (item.couponPrice == 0 && item.notUsingCoupon) {
+                textViewPavilionCoupon.text = "不使用优惠券"
+            } else if (item.couponPrice == 0 && !item.notUsingCoupon) {
+                textViewPavilionCoupon.text = "${coupons.size}张可用"
+                textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
+            } else {
+                helper.setText(R.id.textViewPavilionCoupon, "已抵扣￥${item.couponPrice}")
+            }
         }
+
 
         helper.addOnClickListener(R.id.textViewPavilionCoupon)
 
@@ -82,13 +96,14 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
         val editTextShopNote = helper.getView<EditText>(R.id.editTextShopNote)
 
         //给卖家备注
-        editTextShopNote.addTextChangedListener(object :TextWatcher{
+        editTextShopNote.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
             }
+
             override fun afterTextChanged(s: Editable?) {
                 //给商家留言
                 item.buyer_remark = s?.toString()
@@ -98,13 +113,14 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
         //给商品备注
         val editTextGoodsNote = helper.getView<EditText>(R.id.editTextGoodsNote)
 
-        editTextGoodsNote.addTextChangedListener(object :TextWatcher{
+        editTextGoodsNote.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
             }
+
             override fun afterTextChanged(s: Editable?) {
                 //给商家留言
                 item.blessing_utterance = s?.toString()
@@ -115,16 +131,16 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
             val bean = adapter.getItem(position) as ProductBean
 
             //设置默认快递
-            var defaultExpress:ExpressInfoBean? = null
-            for (express in bean.express){
-                if (express.is_default){
+            var defaultExpress: ExpressInfoBean? = null
+            for (express in bean.express) {
+                if (express.is_default) {
                     defaultExpress = express
                     break
                 }
             }
 
-            when(view.id){
-                R.id.relativeLayoutGoodsItemExpress ->{
+            when (view.id) {
+                R.id.relativeLayoutGoodsItemExpress -> {
                     val selectExpressRequestBean = SelectExpressRequestBean()
                     selectExpressRequestBean.productBean = bean
                     selectExpressRequestBean.defaultExpress = defaultExpress
@@ -134,14 +150,14 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
 
                     val items = ArrayList<ProductBean>()
                     for (product in item.items) {
-                        if (TextUtils.equals(product.fid,bean.fid)){
+                        if (TextUtils.equals(product.fid, bean.fid)) {
                             product.sku = product.rid
                             items.add(product)
                         }
                     }
                     selectExpressRequestBean.items = items
-                    val intent = Intent(mContext,SelectExpressActivity::class.java)
-                    intent.putExtra(SelectExpressActivity::class.java.simpleName,selectExpressRequestBean)
+                    val intent = Intent(mContext, SelectExpressActivity::class.java)
+                    intent.putExtra(SelectExpressActivity::class.java.simpleName, selectExpressRequestBean)
                     mContext.startActivity(intent)
                 }
             }

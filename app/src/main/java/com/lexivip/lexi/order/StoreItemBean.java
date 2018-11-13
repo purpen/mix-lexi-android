@@ -3,6 +3,7 @@ package com.lexivip.lexi.order;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.lexivip.lexi.beans.CouponBean;
 import com.lexivip.lexi.beans.ProductBean;
 
 import java.util.ArrayList;
@@ -32,6 +33,9 @@ public class StoreItemBean implements Parcelable {
     //店铺优惠券码
     public String coupon_codes;
 
+    //不使用优惠券
+    public boolean notUsingCoupon;
+
     //店铺优惠券面值
     public int couponPrice;
 
@@ -46,6 +50,8 @@ public class StoreItemBean implements Parcelable {
 
     //店铺商品列表
     public ArrayList<ProductBean> items;
+
+    public ArrayList<CouponBean> coupons;
 
     public StoreItemBean() {
     }
@@ -65,11 +71,13 @@ public class StoreItemBean implements Parcelable {
         dest.writeString(this.blessing_utterance);
         dest.writeValue(this.expressExpense);
         dest.writeString(this.coupon_codes);
+        dest.writeByte(this.notUsingCoupon ? (byte) 1 : (byte) 0);
         dest.writeInt(this.couponPrice);
         dest.writeDouble(this.fullReductionAmount);
         dest.writeString(this.fullReductionText);
         dest.writeTypedList(this.sku_items);
         dest.writeTypedList(this.items);
+        dest.writeList(this.coupons);
     }
 
     protected StoreItemBean(Parcel in) {
@@ -81,11 +89,14 @@ public class StoreItemBean implements Parcelable {
         this.blessing_utterance = in.readString();
         this.expressExpense = (Double) in.readValue(Double.class.getClassLoader());
         this.coupon_codes = in.readString();
+        this.notUsingCoupon = in.readByte() != 0;
         this.couponPrice = in.readInt();
         this.fullReductionAmount = in.readDouble();
         this.fullReductionText = in.readString();
         this.sku_items = in.createTypedArrayList(ProductBean.CREATOR);
         this.items = in.createTypedArrayList(ProductBean.CREATOR);
+        this.coupons = new ArrayList<CouponBean>();
+        in.readList(this.coupons, CouponBean.class.getClassLoader());
     }
 
     public static final Creator<StoreItemBean> CREATOR = new Creator<StoreItemBean>() {

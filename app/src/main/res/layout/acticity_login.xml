@@ -86,7 +86,7 @@
                     android:text="+86"
                     android:textColor="@color/color_333"
                     android:textSize="@dimen/sp16" />
-                <!--android:text="18612963205"-->
+
                 <EditText
                     android:id="@+id/etPhone"
                     android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                     android:maxLines="1"
                     android:paddingStart="@dimen/dp15"
                     android:paddingEnd="@dimen/dp5"
-
+                    android:text="18612963205"
                     android:textColor="@color/color_333"
                     android:textColorHint="@color/color_b2b2b2"
                     android:textSize="@dimen/sp18" />
@@ -112,7 +112,6 @@
                     android:layout_alignParentBottom="true" />
             </RelativeLayout>
 
-            <!--android:text="in456321"-->
             <!--填写密码-->
             <RelativeLayout
                 android:id="@+id/relativeLayoutPassWordBox"
@@ -139,6 +138,7 @@
                         android:maxLength="30"
                         android:maxLines="1"
                         android:paddingStart="@dimen/dp15"
+                        android:text="in456321"
                         android:textColor="@color/color_333"
                         android:textColorHint="@color/color_b2b2b2"
                         android:textSize="@dimen/sp18" />

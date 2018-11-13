@@ -16,6 +16,9 @@ public class CreateOrderBean implements Parcelable {
     //官方券
     public int officialCouponPrice;
 
+    //是否使用官方券
+    public boolean notUsingOfficialCoupon;
+
     //官方券码
     public String officialCouponCode;
 
@@ -66,8 +69,10 @@ public class CreateOrderBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.payWay);
+        dest.writeString(this.order_rid);
         dest.writeParcelable(this.consigneeInfo, flags);
         dest.writeInt(this.officialCouponPrice);
+        dest.writeByte(this.notUsingOfficialCoupon ? (byte) 1 : (byte) 0);
         dest.writeString(this.officialCouponCode);
         dest.writeDouble(this.orderTotalPrice);
         dest.writeDouble(this.expressTotalPrice);
@@ -81,13 +86,14 @@ public class CreateOrderBean implements Parcelable {
         dest.writeString(this.sync_pay);
         dest.writeString(this.last_store_rid);
         dest.writeTypedList(this.store_items);
-        dest.writeString(this.order_rid);
     }
 
     protected CreateOrderBean(Parcel in) {
         this.payWay = in.readInt();
+        this.order_rid = in.readString();
         this.consigneeInfo = in.readParcelable(UserAddressListBean.DataBean.class.getClassLoader());
         this.officialCouponPrice = in.readInt();
+        this.notUsingOfficialCoupon = in.readByte() != 0;
         this.officialCouponCode = in.readString();
         this.orderTotalPrice = in.readDouble();
         this.expressTotalPrice = in.readDouble();
@@ -101,7 +107,6 @@ public class CreateOrderBean implements Parcelable {
         this.sync_pay = in.readString();
         this.last_store_rid = in.readString();
         this.store_items = in.createTypedArrayList(StoreItemBean.CREATOR);
-        this.order_rid = in.readString();
     }
 
     public static final Creator<CreateOrderBean> CREATOR = new Creator<CreateOrderBean>() {

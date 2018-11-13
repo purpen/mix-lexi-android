@@ -32,6 +32,7 @@ class PavilionCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
 
     override fun setUiBeforShow() {
         headerView = View.inflate(context, R.layout.header_coupon_bottom_dialog, null)
+        headerView.relativeLayoutNoUseCoupon.visibility = View.VISIBLE
         headerView.textViewCouponTitle.text = Util.getString(R.string.text_get_coupon_packet)
         adapterDialogCoupon.addHeaderView(headerView)
 
@@ -72,8 +73,12 @@ class PavilionCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
                 item.selected = false
             }
 
+            headerView.checkBox.isChecked = false
             selectedCoupon?.selected = !selected!!
             adapterDialogCoupon.notifyDataSetChanged()
+
+            view.textViewReducePrice.visibility = View.VISIBLE
+            view.textViewUseCouponNum.visibility = View.VISIBLE
 
             if (selectedCoupon!!.selected) {
                 view.textViewReducePrice.text = "已抵扣${selectedCoupon?.amount}元"
@@ -88,6 +93,10 @@ class PavilionCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
         view.textViewConfirm.setOnClickListener {
 
             if (selectedCoupon == null) {
+                store.couponPrice = 0
+                store.coupon_codes = ""
+                store.notUsingCoupon = true
+                EventBus.getDefault().post(MessageUpdate())
                 dismiss()
                 return@setOnClickListener
             }
@@ -95,18 +104,26 @@ class PavilionCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
             if (!selectedCoupon!!.selected) { //未选中取消优惠券
                 store.couponPrice = 0
                 store.coupon_codes = ""
+                store.notUsingCoupon = true
             } else {
                 store.couponPrice = selectedCoupon!!.amount
                 store.coupon_codes = selectedCoupon!!.code
+                store.notUsingCoupon = false
             }
             EventBus.getDefault().post(MessageUpdate())
             dismiss()
         }
 
-//        setOnDismissListener {
-//            for (coupon in coupons){
-//                coupon.selected = false
-//            }
-//        }
+        //不使用优惠券
+        headerView.relativeLayoutNoUseCoupon.setOnClickListener {
+            for (item in adapterDialogCoupon.data) {
+                item.selected = false
+            }
+            adapterDialogCoupon.notifyDataSetChanged()
+            headerView.checkBox.isChecked = true
+            view.textViewReducePrice.visibility = View.GONE
+            view.textViewUseCouponNum.visibility = View.GONE
+            selectedCoupon = null
+        }
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="68dp"
     android:orientation="vertical"
     android:background="@android:color/white"
@@ -12,7 +12,7 @@
         android:layout_height="@dimen/dp40"
         android:layout_centerVertical="true"
         android:layout_marginStart="@dimen/dp20"
-        android:scaleType="fitXY" />
+        />
 
 
     <TextView

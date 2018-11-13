@@ -2,14 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/dp15"
-    android:paddingEnd="@dimen/dp15"
     android:paddingTop="@dimen/dp20"
     >
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:src="@mipmap/icon_full_reduction"
         android:layout_marginEnd="@dimen/dp5"
         android:visibility="gone"
@@ -22,6 +21,7 @@
         android:textSize="@dimen/sp12"
         android:textColor="@color/color_555"
         android:text="满"
+        android:layout_marginEnd="15dp"
         android:lineSpacingMultiplier="1.2"
         android:layout_marginBottom="@dimen/dp20"
         android:visibility="gone"
@@ -31,10 +31,43 @@
         android:id="@+id/textViewCouponTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp15"
         android:layout_below="@+id/textViewSub"
         android:textSize="@dimen/sp14"
         android:textColor="@color/color_333"
         android:textStyle="bold"
         android:text="设计馆优惠红包"
         />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutNoUseCoupon"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/textViewCouponTitle"
+        android:background="@android:color/white"
+        android:visibility="gone"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:textColor="@color/color_333"
+            android:textSize="14sp"
+            android:text="@string/text_not_use_coupon" />
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:button="@drawable/check_box_style"
+            android:paddingStart="0dp"
+            android:paddingEnd="15dp"
+            android:checked="false"
+            android:clickable="false"
+            android:background="@null"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            />
+    </RelativeLayout>
 </RelativeLayout>

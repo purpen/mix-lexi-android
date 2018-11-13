@@ -4,7 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import org.json.JSONObject
-import com.basemodule.ui.IDataSource
+import com.lexivip.lexi.beans.CouponBean
 
 class ConfirmOrderContract {
     interface View : BaseView<Presenter> {
@@ -58,6 +58,10 @@ class ConfirmOrderContract {
 
         }
 
+        fun setOfficialCouponData(coupons: List<CouponBean>) {
+
+        }
+
     }
 
     interface Presenter : BasePresenter {
@@ -68,8 +72,8 @@ class ConfirmOrderContract {
         fun getPerOrderFullReduction(list: ArrayList<FullReductionRequestBean>)
 
         fun getDefaultExpressCompany(stores: ArrayList<FullReductionRequestBean>)
-        fun getOfficialCoupons(price: Double, param: IDataSource.HttpRequestCallBack)
-
+//        fun getOfficialCoupons(price: Double, param: IDataSource.HttpRequestCallBack)
+        fun getOfficialCoupons(price: Double, list: ArrayList<String>)
         fun submitOrder(createOrderBean: CreateOrderBean)
     }
 }

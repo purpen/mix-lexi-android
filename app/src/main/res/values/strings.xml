@@ -394,4 +394,5 @@
     <string name="text_already_add_shop_cart">已加入心愿单</string>
     <string name="text_shop_window_like">喜欢的橱窗</string>
     <string name="text_free_postage_perfecture">包邮专区</string>
+    <string name="text_not_use_coupon">不使用优惠券</string>
 </resources>
