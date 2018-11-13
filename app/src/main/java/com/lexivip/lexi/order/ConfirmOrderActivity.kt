@@ -591,20 +591,6 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         maxOfficialCouponPrice = coupons[0].amount
         // 设置官方优惠券可用数量
         officialCoupons = coupons
-//        if (size > 0) {
-//            footerView.isEnabled = true
-//            if (createOrderBean.notUsingOfficialCoupon) { //不使用官方券
-//                footerView.textViewOfficialCoupon.text = "${size}张可用"
-//                footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
-//            } else {
-//                footerView.textViewOfficialCoupon.text = "已抵扣￥${createOrderBean.officialCouponPrice}元"
-//                footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
-//            }
-//        } else {
-//            footerView.isEnabled = false
-//            footerView.textViewOfficialCoupon.text = "没有可用优惠券"
-//            footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_999))
-//        }
         setOfficialCouponText(coupons.size)
         setAllCouponSelectedState()
 
