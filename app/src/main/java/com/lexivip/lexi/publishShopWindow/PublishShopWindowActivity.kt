@@ -92,6 +92,10 @@ class PublishShopWindowActivity : BaseActivity() {
             button7Image.isEnabled = false
             button7Image.setTextColor(Util.getColor(android.R.color.white))
         }
+
+        buttonAddTag.setOnClickListener {
+
+        }
     }
 
     private fun resetButtonState() {

@@ -1,6 +1,4 @@
 package com.lexivip.lexi.search
-
-import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
@@ -11,16 +9,17 @@ import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
-import com.lexivip.lexi.index.detail.GoodsDetailActivity
+import com.lexivip.lexi.beans.BrandPavilionBean
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionBean
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
 
-class AdapterSearchBrandPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionBean, BaseViewHolder>(layoutResId) {
+class AdapterSearchBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavilionBean, BaseViewHolder>(layoutResId) {
     private val dp4: Int by lazy { DimenUtil.dp2px(4.0) }
     private val dp45: Int by lazy { DimenUtil.dp2px(45.0) }
-    override fun convert(helper: BaseViewHolder, item: DesignPavilionBean) {
+    override fun convert(helper: BaseViewHolder, item: BrandPavilionBean) {
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)
 
@@ -66,11 +65,12 @@ class AdapterSearchBrandPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavi
 
         //品牌馆产品点击
         adapter.setOnItemClickListener { _, _, position ->
-            val context = AppApplication.getContext()
+//            val context = AppApplication.getContext()
             val productBean = item.products[position]
-            val intent = Intent(context, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
-            context.startActivity(intent)
+//            val intent = Intent(context, GoodsDetailActivity::class.java)
+//            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
+//            context.startActivity(intent)
+            PageUtil.jump2GoodsDetailActivity(productBean.rid)
         }
     }
 }

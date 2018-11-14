@@ -33,7 +33,8 @@ public class BrandPavilionBean {
     public String delivery_province;
     public int fans_count;
     public boolean is_followed;
-    public int life_record_count;
+    public boolean is_follow_store;
+    public int followed_status;
     public String logo;
     public String name;
     public int product_count;

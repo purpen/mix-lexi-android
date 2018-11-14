@@ -1,4 +1,6 @@
-package com.lexivip.lexi.mine.designPavilion;
+package com.lexivip.lexi.search;
+import com.lexivip.lexi.beans.BrandPavilionBean;
+
 import java.util.List;
 
 public class DesignPavilionListBean {
@@ -22,7 +24,7 @@ public class DesignPavilionListBean {
          */
 
         public int count;
-        public List<DesignPavilionBean> stores;
+        public List<BrandPavilionBean> stores;
 
     }
 
