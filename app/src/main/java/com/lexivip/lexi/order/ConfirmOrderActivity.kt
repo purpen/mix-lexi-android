@@ -150,9 +150,9 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         }
         //选择店铺券则不用官方券
         createOrderBean.notUsingOfficialCoupon = true
-        if (officialCoupons==null || officialCoupons!!.isEmpty()){
+        if (officialCoupons == null || officialCoupons!!.isEmpty()) {
             setOfficialCouponText(0)
-        }else{
+        } else {
             setOfficialCouponText(officialCoupons!!.size)
         }
         calculateUserPayTotalPrice(true)
@@ -235,7 +235,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         }
 
 
-        footerView.setOnClickListener { //显示领取官方券对话框
+        footerView.setOnClickListener {
+            //显示领取官方券对话框
             if (officialCoupons == null) return@setOnClickListener
             val officialCouponBottomDialog = OfficialCouponBottomDialog(this, createOrderBean, officialCoupons!!)
             officialCouponBottomDialog.show()
@@ -311,8 +312,12 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             }
             item.coupons = arrayList
             orderShopCouponMap[item.store_rid] = arrayList
-            item.couponPrice = arrayList[0].amount
-            sumMaxShopCouponPrice += arrayList[0].amount
+            if (arrayList.isEmpty()) {
+                item.couponPrice = 0
+            } else {
+                item.couponPrice = arrayList[0].amount
+            }
+            sumMaxShopCouponPrice += item.couponPrice
         }
         adapter.notifyDataSetChanged()
         setAllCouponSelectedState()
@@ -325,7 +330,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     private fun setAllCouponSelectedState() {
         if (isShopCouponLoaded && isOfficialCouponLoaded) return
         if (sumMaxShopCouponPrice == 0 && maxOfficialCouponPrice == 0) return
-        LogUtil.e("sumMaxShopCouponPrice===$sumMaxShopCouponPrice;;;maxOfficialCouponPrice===$maxOfficialCouponPrice")
+//        LogUtil.e("sumMaxShopCouponPrice===$sumMaxShopCouponPrice;;;maxOfficialCouponPrice===$maxOfficialCouponPrice")
 
         val data = adapter.data
         if (sumMaxShopCouponPrice >= maxOfficialCouponPrice) { //使用店铺优惠券
@@ -588,12 +593,14 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
      */
     override fun setOfficialCouponData(coupons: List<CouponBean>) {
         //第一张为最大面额
-        maxOfficialCouponPrice = coupons[0].amount
-        // 设置官方优惠券可用数量
+        if (coupons.isEmpty()) {// 设置官方优惠券可用数量
+            maxOfficialCouponPrice = 0
+        } else {
+            maxOfficialCouponPrice = coupons[0].amount
+        }
         officialCoupons = coupons
-        setOfficialCouponText(coupons.size)
         setAllCouponSelectedState()
-
+        setOfficialCouponText(coupons.size)
         isOfficialCouponLoaded = true
     }
 
@@ -601,7 +608,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
     /**
      * 设置官方券显示文字
      */
-    private fun setOfficialCouponText(size:Int){
+    private fun setOfficialCouponText(size: Int) {
         if (size > 0) {
             footerView.isEnabled = true
             if (createOrderBean.notUsingOfficialCoupon) { //不使用官方券
