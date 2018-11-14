@@ -140,6 +140,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
 
         for (store in stores) {
+            if (store.notUsingCoupon) continue
             shopCouponTotalPrice += store.couponPrice
         }
 
