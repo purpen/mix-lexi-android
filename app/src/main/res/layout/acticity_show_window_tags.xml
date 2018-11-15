@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+    <com.lexivip.lexi.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/relativeSearch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <EditText
+            android:id="@+id/editTextSearchTag"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp30"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingEnd="38dp"
+            android:layout_toStartOf="@id/textViewCancel"
+            android:background="@drawable/bg_radius_round_eaedf0"
+            android:hint="输入标签"
+            android:imeOptions="actionDone"
+            android:maxLength="15"
+            android:maxLines="1"
+            android:paddingStart="15dp"
+            android:textColor="@color/color_333"
+            android:textColorHint="@color/color_ccc"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/imageViewClearInput"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="25dp"
+            android:visibility="gone"
+            android:background="@mipmap/icon_clear_search_box" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewFuzzyMatch"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--搜索历史-->
+            <RelativeLayout
+                android:id="@+id/relativeLayoutSearchHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="15dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textViewHistoryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="历史添加"
+                    android:textColor="@color/color_949ea6"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/imageViewDeleteHistory"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentEnd="true"
+                    android:padding="15dp"
+                    android:src="@mipmap/icon_delete" />
+
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/tagFlowLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageViewDeleteHistory" />
+            </RelativeLayout>
+
+
+            <!--热门推荐-->
+            <LinearLayout
+                android:id="@+id/linearLayoutHotRecommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:paddingEnd="0dp"
+                android:paddingStart="@dimen/dp15">
+
+                <TextView
+                    android:id="@+id/textViewHotRecommendTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/text_hot_tags"
+                    android:textColor="@color/color_949ea6"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewHotTags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

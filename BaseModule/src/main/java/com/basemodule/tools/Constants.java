@@ -45,4 +45,10 @@ public class Constants {
     public static final long GUIDE_INTERVAL = 1500;
     @Nullable
     public static final String GUIDE_TAG = "GUIDE_TAG";
+
+    /**
+     * 橱窗标签历史
+     */
+    @Nullable
+    public static final String ADD_TAG_HISTORY = "ADD_TAG_HISTORY";
 }

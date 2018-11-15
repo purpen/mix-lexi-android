@@ -16,6 +16,7 @@ import android.view.animation.RotateAnimation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -133,5 +134,21 @@ public class Util {
                 "<style>html{padding:15px;} body{word-wrap:break-word;font-size:13px;padding:0px;margin:0px} p{padding:0px;margin:0px;font-size:13px;color:#222222;line-height:1.3;} img{padding:0px,margin:0px;max-width:100%; width:auto; height:auto;}</style>" +
                 "</head>";
         return "<html>" + head + "<body>" + bodyHTML + "</body></html>";
+    }
+
+
+    /**
+     * 获取数量
+     * @param num
+     * @return
+     */
+    public static String getNumberString(int num){
+        if (num<10000){
+            return String.valueOf(num);
+        }else {
+            DecimalFormat df = new DecimalFormat("#.0");
+            return df.format(num/10000.0)+"w";
+        }
+
     }
 }

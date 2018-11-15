@@ -76,7 +76,7 @@
                 <include
                     layout="@layout/line_color_eee"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp1" />
+                    android:layout_height="@dimen/dp05" />
             </LinearLayout>
 
         </android.support.design.widget.AppBarLayout>

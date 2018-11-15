@@ -141,6 +141,7 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
     override fun submitOrder(createOrderBean: CreateOrderBean) {
         dataSource.submitOrder(createOrderBean, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
+                view.setOnBackPressUnable()
                 view.showLoadingView()
             }
 

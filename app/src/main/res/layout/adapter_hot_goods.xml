@@ -119,7 +119,7 @@
     <include layout="@layout/line_color_eee"
         android:layout_marginStart="@dimen/dp10"
         android:layout_marginEnd="@dimen/dp10"
-        android:layout_height="@dimen/dp1"
+        android:layout_height="@dimen/dp05"
         android:layout_width="match_parent"/>
     <RelativeLayout
         android:layout_width="match_parent"

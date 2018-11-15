@@ -35,7 +35,7 @@
         <include layout="@layout/line_color_eee"
             android:id="@+id/line"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1"
+            android:layout_height="@dimen/dp05"
             />
     </LinearLayout>
 

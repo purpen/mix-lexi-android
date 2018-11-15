@@ -65,7 +65,7 @@
     <include
         layout="@layout/line_color_eee"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
+        android:layout_height="@dimen/dp05"
         android:layout_marginStart="@dimen/dp15"
         />
     <android.support.v7.widget.RecyclerView
@@ -91,7 +91,7 @@
     <include
         layout="@layout/line_color_eee"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
+        android:layout_height="@dimen/dp05"
         />
     <include layout="@layout/line_height20_bgf5f7f9"/>
 </LinearLayout>

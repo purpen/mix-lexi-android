@@ -23,7 +23,7 @@
         android:id="@+id/line0"
         layout="@layout/line_color_eee"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/dp05"
         android:layout_below="@id/textViewPavilionName" />
 
     <android.support.v7.widget.RecyclerView
@@ -64,7 +64,7 @@
     <include
         android:id="@+id/line_freight_bottom"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/dp05"
         android:layout_marginStart="15dp"
         android:layout_below="@id/textViewFreightTitle"
         layout="@layout/line_color_eee" />

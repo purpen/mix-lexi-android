@@ -131,7 +131,7 @@
                 android:id="@+id/line"
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="@dimen/dp05"
                 android:layout_below="@id/editTextTitle"
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="10dp" />

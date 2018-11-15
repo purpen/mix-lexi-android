@@ -5,7 +5,7 @@
     <include
         layout="@layout/line_color_eee"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/dp05"
         />
     <TextView
         android:id="@+id/textViewCommentCount"
@@ -18,7 +18,7 @@
         />
     <include layout="@layout/line_color_eee"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/dp05"
         android:layout_alignParentBottom="true"
         />
 </RelativeLayout>

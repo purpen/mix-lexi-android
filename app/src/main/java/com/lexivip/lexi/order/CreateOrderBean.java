@@ -16,6 +16,9 @@ public class CreateOrderBean implements Parcelable {
     //官方券
     public int officialCouponPrice;
 
+    //官方券是否使用
+    public boolean officialCouponCanSelected;
+
     //是否使用官方券
     public boolean notUsingOfficialCoupon;
 
@@ -72,6 +75,7 @@ public class CreateOrderBean implements Parcelable {
         dest.writeString(this.order_rid);
         dest.writeParcelable(this.consigneeInfo, flags);
         dest.writeInt(this.officialCouponPrice);
+        dest.writeByte(this.officialCouponCanSelected ? (byte) 1 : (byte) 0);
         dest.writeByte(this.notUsingOfficialCoupon ? (byte) 1 : (byte) 0);
         dest.writeString(this.officialCouponCode);
         dest.writeDouble(this.orderTotalPrice);
@@ -93,6 +97,7 @@ public class CreateOrderBean implements Parcelable {
         this.order_rid = in.readString();
         this.consigneeInfo = in.readParcelable(UserAddressListBean.DataBean.class.getClassLoader());
         this.officialCouponPrice = in.readInt();
+        this.officialCouponCanSelected = in.readByte() != 0;
         this.notUsingOfficialCoupon = in.readByte() != 0;
         this.officialCouponCode = in.readString();
         this.orderTotalPrice = in.readDouble();

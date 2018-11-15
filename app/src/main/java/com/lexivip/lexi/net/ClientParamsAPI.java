@@ -1149,7 +1149,7 @@ public class ClientParamsAPI {
      * @param keyWord
      * @return
      */
-    @Nullable
+    @NotNull
     public static HashMap<String,Object> getFuzzyWordParams(@NotNull String keyWord) {
         HashMap<String,Object> params=generateCommonParams();
         params.put("qk",keyWord);

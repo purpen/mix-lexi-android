@@ -1,5 +1,6 @@
 package com.lexivip.lexi.publishShopWindow
 
+import android.content.Intent
 import android.graphics.*
 import android.util.SparseArray
 import android.view.View
@@ -18,6 +19,10 @@ import kotlinx.android.synthetic.main.view_show_window_image3.view.*
 import kotlinx.android.synthetic.main.view_show_window_image5.view.*
 import kotlinx.android.synthetic.main.view_show_window_image7.view.*
 import android.graphics.Bitmap
+import com.lexivip.lexi.eventBusMessge.MessageShopWindowTag
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class PublishShopWindowActivity : BaseActivity() {
@@ -29,6 +34,9 @@ class PublishShopWindowActivity : BaseActivity() {
     override val layout: Int = R.layout.acticity_publish_shop_window
 
     override fun initView() {
+
+        EventBus.getDefault().register(this)
+
         productsMap = SparseArray()
         for (i in 0..maxImageCount) {
             productsMap.put(i, null)
@@ -94,7 +102,7 @@ class PublishShopWindowActivity : BaseActivity() {
         }
 
         buttonAddTag.setOnClickListener {
-
+            startActivity(Intent(this,ShopWindowTagsActivity::class.java))
         }
     }
 
@@ -400,8 +408,17 @@ class PublishShopWindowActivity : BaseActivity() {
         }
     }
 
+    /**
+     * 当有标签被选中
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTagSelected(message:MessageShopWindowTag){
+
+    }
+
     override fun onDestroy() {
         placeHolderBitmap.recycle()
+        EventBus.getDefault().unregister(this)
         super.onDestroy()
     }
 }

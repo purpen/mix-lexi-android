@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="58dp"
-    android:paddingTop="13dp"
+    android:layout_height="64dp"
+    android:background="@color/color_f5f7f9"
     >
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -15,26 +14,33 @@
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:text="@string/text_loading"
-        android:textColor="@color/color_333"
+        android:textColor="@color/color_6ed7af"
+        android:layout_marginTop="15dp"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/textViewType"
+        android:id="@+id/textViewTips"
         android:layout_below="@id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:includeFontPadding="false"
-        android:text="@string/text_loading"
-        android:textColor="@color/color_999"
         android:paddingStart="@dimen/dp15"
-        android:paddingEnd="@dimen/dp15"
-        android:textSize="11sp"
+        android:text="这个标签还没有人发起"
+        android:includeFontPadding="false"
+        android:textColor="#ff999999"
+        android:textSize="12sp"
         />
 
-    <include layout="@layout/line_color_eee"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp05"
-        android:layout_alignParentBottom="true"
+    <TextView
+        android:id="@+id/textViewAddTag"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="点击添加"
+        android:paddingStart="0dp"
+        android:paddingEnd="15dp"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/color_333"
+        android:textSize="12sp"
         />
 </RelativeLayout>

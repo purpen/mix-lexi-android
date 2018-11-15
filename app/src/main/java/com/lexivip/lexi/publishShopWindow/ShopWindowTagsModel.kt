@@ -64,10 +64,47 @@ open class ShopWindowTagsModel {
     }
 
 
-    fun getFuzzyWordList(keyWord: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+    fun getFuzzyWordList(keyWord: String, page:Int,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getFuzzyWordParams(keyWord)
+        params["page"] = "$page"
+        HttpRequest.sendRequest(HttpRequest.GET,URL.FUZZY_WORD_SEARCH_TAG,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
 
-        HttpRequest.sendRequest(HttpRequest.GET,URL.FUZZY_WORD_SEARCH_URL,params,object : IDataSource.HttpRequestCallBack{
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    fun getHotShopWindowTags(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+
+        HttpRequest.sendRequest(HttpRequest.GET,URL.SHOP_WINDOW_HOT_TAGS,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun addShopWindowTag(searchString: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["name"] = searchString
+        HttpRequest.sendRequest(HttpRequest.POST,URL.SHOP_WINDOW_KEYWORD,params,object : IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

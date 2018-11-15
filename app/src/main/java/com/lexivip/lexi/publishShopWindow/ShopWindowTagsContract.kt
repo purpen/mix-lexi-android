@@ -5,7 +5,6 @@ import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.search.FuzzyWordMatchListBean
 import com.lexivip.lexi.search.HotSearchBean
-import com.lexivip.lexi.search.SearchHotRecommendPavilionBean
 
 class ShopWindowTagsContract {
     interface View : BaseView<Presenter> {
@@ -19,27 +18,39 @@ class ShopWindowTagsContract {
 
         }
 
-        fun setRecentLookData(products: List<ProductBean>) {
-
-        }
-
-        fun setHotRecommendPavilionData(hot_recommends: MutableList<SearchHotRecommendPavilionBean.DataBean.HotRecommendsBean>) {
-
-        }
-
         fun setHotSearchData(search_items: List<HotSearchBean.DataBean.SearchItemsBean>) {
 
         }
 
-        fun setFuzzyWordListData(search_items: List<FuzzyWordMatchListBean.DataBean.SearchItemsBean>) {
+        fun setFuzzyWordListData(search_items: List<FuzzyMatchTagsBean.DataBean.KeywordsBean>) {
+
+        }
+
+        fun setHotTags(keywords: List<HotShopWindowTagsBean.DataBean.KeywordsBean>) {
+
+        }
+
+        fun loadMoreEnd() {
+            
+        }
+
+        fun loadMoreComplete() {
+            
+        }
+
+        fun setMoreFuzzyWordListData(keywords: List<FuzzyMatchTagsBean.DataBean.KeywordsBean>) {
+
+        }
+
+        fun setAddTagSuccess(searchString: String) {
 
         }
     }
 
     interface Presenter : BasePresenter {
-        fun getUserRecentLook()
-        fun getHotRecommendPavilion()
         fun getHotSearch()
         fun getFuzzyWordList(keyWord: String)
+        fun getMoreFuzzyWordList()
+        fun addShopWindowTag(searchString: String)
     }
 }
