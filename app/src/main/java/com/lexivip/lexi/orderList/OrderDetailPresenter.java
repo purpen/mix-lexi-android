@@ -2,6 +2,7 @@ package com.lexivip.lexi.orderList;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.lexivip.lexi.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.AppApplication;
@@ -34,6 +35,7 @@ public class OrderDetailPresenter implements OrderDetailContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("订单详情："+json);
                 OrderDetailBean bean= JsonUtil.fromJson(json,OrderDetailBean.class);
                 view.getData(bean);
                 view.dismissLoadingView();

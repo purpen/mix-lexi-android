@@ -203,6 +203,7 @@ public class MyOrderListBean implements Parcelable{
             private String order_total_commission_price;
             private String outside_target_id;
             private double pay_amount;
+            private int pay_type;
             private int payed_at;
             private Object payment_sn;
             private double reach_minus;
@@ -242,6 +243,7 @@ public class MyOrderListBean implements Parcelable{
                 order_total_commission_price = in.readString();
                 outside_target_id = in.readString();
                 pay_amount = in.readDouble();
+                pay_type = in.readInt();
                 payed_at = in.readInt();
                 reach_minus = in.readDouble();
                 received_at = in.readInt();
@@ -445,6 +447,14 @@ public class MyOrderListBean implements Parcelable{
                 this.pay_amount = pay_amount;
             }
 
+            public int getPay_type() {
+                return pay_type;
+            }
+
+            public void setPay_type(int pay_type) {
+                this.pay_type = pay_type;
+            }
+
             public int getPayed_at() {
                 return payed_at;
             }
@@ -618,6 +628,7 @@ public class MyOrderListBean implements Parcelable{
                 dest.writeString(order_total_commission_price);
                 dest.writeString(outside_target_id);
                 dest.writeDouble(pay_amount);
+                dest.writeInt(pay_type);
                 dest.writeInt(payed_at);
                 dest.writeDouble(reach_minus);
                 dest.writeInt(received_at);

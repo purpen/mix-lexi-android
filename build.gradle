@@ -22,6 +22,11 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+        //支付宝仓库
+        flatDir {
+            dirs 'libs'
+        }
+
     }
 }
 

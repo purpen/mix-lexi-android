@@ -46,6 +46,7 @@ public class PayWXBean {
         public String return_msg;
         public String sign;
         public String trade_type;
+        public String order_string;
         public List<OrderListBean> order_list;
 
         public static class AsdictBean {

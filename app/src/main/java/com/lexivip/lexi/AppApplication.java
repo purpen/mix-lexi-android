@@ -109,6 +109,7 @@ public class AppApplication extends MultiDexApplication {
         //umeng分享
         UMConfigure.init(this,"5bc5c5f1b465f5c5a000007d"
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
+        UMConfigure.setLogEnabled(true);
 
         PlatformConfig.setWeixin(Constants.WX_ID, "8eddb55d39cbfdb9fee1afa93a495db1");
 

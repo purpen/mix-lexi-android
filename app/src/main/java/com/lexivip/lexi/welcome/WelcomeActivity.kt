@@ -28,7 +28,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener {
         val options = BitmapFactory.Options()
         val bitmap = BitmapFactory.decodeResource(resources,R.mipmap.img_bg_welcome, options)
         imageViewBg.setImageBitmap(ImageUtil.scaleImage(bitmap,ScreenUtil.getScreenWidth(),ScreenUtil.getScreenHeight()))
-        bitmap.recycle()
+        //bitmap.recycle()
     }
 
     override fun installListener() {
