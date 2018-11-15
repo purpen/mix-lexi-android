@@ -126,9 +126,10 @@ open class ConfirmOrderModel{
             }
         })
     }
-    fun getOfficialCoupons(price: Double, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getOfficialCouponsParams(price)
-        HttpRequest.sendRequest(HttpRequest.GET, URL.ORDER_OFFICIAL_COUPONS, params, object : IDataSource.HttpRequestCallBack {
+
+    fun getOfficialCoupons(price: Double,list: ArrayList<String>,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getOfficialCouponsParams(price,list)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.ORDER_OFFICIAL_COUPONS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

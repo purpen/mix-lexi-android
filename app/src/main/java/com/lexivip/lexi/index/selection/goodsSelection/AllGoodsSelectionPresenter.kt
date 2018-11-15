@@ -11,6 +11,8 @@ class AllGoodsSelectionPresenter(view: AllGoodsSelectionContract.View) : AllGood
 
     private val dataSource: AllGoodsSelectionModel by lazy { AllGoodsSelectionModel() }
 
+    private var pageType:String=""
+
     private var sortType: String = SORT_TYPE_SYNTHESISE
 
     private var minePrice: String = ""
@@ -60,17 +62,17 @@ class AllGoodsSelectionPresenter(view: AllGoodsSelectionContract.View) : AllGood
     /**
      * 默认参数加载数据
      */
-    override fun loadData(isRefresh: Boolean) {
+    override fun loadData(whichPage:String,isRefresh: Boolean) {
         this.isRefresh = isRefresh
+        this.pageType =  whichPage
         if (isRefresh) this.curPage = 1
-
-        loadData(curPage, sortType,minePrice, maxPrice,cids,isFreePostage,isPreferential,isCustomMade,sortNewest)
+        loadData(whichPage,curPage, sortType,minePrice, maxPrice,cids,isFreePostage,isPreferential,isCustomMade,sortNewest)
     }
 
     /**
      * 根据用户选择条件搜索
      */
-    override fun loadData(page: Int, sortType: String, minePrice: String, maxPrice: String, cids: String, is_free_postage: String, is_preferential: String, is_custom_made: String,sort_newest: String) {
+    override fun loadData(whichPage: String,page: Int, sortType: String, minePrice: String, maxPrice: String, cids: String, is_free_postage: String, is_preferential: String, is_custom_made: String,sort_newest: String) {
         this.curPage = page
         this.sortType = sortType
         this.minePrice = minePrice
@@ -80,8 +82,8 @@ class AllGoodsSelectionPresenter(view: AllGoodsSelectionContract.View) : AllGood
         this.isPreferential = is_preferential
         this.isCustomMade = is_custom_made
         this.sortNewest = sort_newest
-
-        dataSource.loadData(page, sortType, minePrice, maxPrice, cids, is_free_postage, is_preferential,is_custom_made,sort_newest,object : IDataSource.HttpRequestCallBack {
+        this.pageType = whichPage
+        dataSource.loadData(pageType,page, sortType, minePrice, maxPrice, cids, is_free_postage, is_preferential,is_custom_made,sort_newest,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                if (!isRefresh) view.showLoadingView()
             }
@@ -110,7 +112,7 @@ class AllGoodsSelectionPresenter(view: AllGoodsSelectionContract.View) : AllGood
      * 加载更多
      */
     fun loadMoreData(page: Int, sortType: String,minePrice: String, maxPrice: String,cids: String,is_free_postage: String, is_preferential: String, is_custom_made: String,sort_newest: String) {
-        dataSource.loadData(page, sortType, minePrice, maxPrice, cids, is_free_postage, is_preferential,is_custom_made,sort_newest,object : IDataSource.HttpRequestCallBack {
+        dataSource.loadData(pageType,page, sortType, minePrice, maxPrice, cids, is_free_postage, is_preferential,is_custom_made,sort_newest,object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)

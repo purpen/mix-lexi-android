@@ -1,8 +1,11 @@
 package com.lexivip.lexi.order
+
+import com.basemodule.tools.ToastUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
+import com.lexivip.lexi.index.detail.ShopCouponListBean
 import org.json.JSONObject
 import java.io.IOException
 
@@ -64,7 +67,7 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
      * 获取每个订单(每店)满减信息
      */
     override fun getPerOrderFullReduction(list: ArrayList<FullReductionRequestBean>) {
-        dataSource.getPerOrderFullReduction(list,object : IDataSource.HttpRequestCallBack {
+        dataSource.getPerOrderFullReduction(list, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
                 val response = JSONObject(json)
@@ -88,7 +91,7 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
      * 获取默认快递公司
      */
     override fun getDefaultExpressCompany(stores: ArrayList<FullReductionRequestBean>) {
-        dataSource.getDefaultExpressCompany(stores,object : IDataSource.HttpRequestCallBack {
+        dataSource.getDefaultExpressCompany(stores, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val response = JSONObject(json)
                 val isSuccess = response.optBoolean("success")
@@ -113,7 +116,7 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
      */
     fun getPavilionCouponByOrder(stores: ArrayList<FullReductionRequestBean>) {
 
-        dataSource.getPavilionCouponByOrder(stores,object : IDataSource.HttpRequestCallBack {
+        dataSource.getPavilionCouponByOrder(stores, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val response = JSONObject(json)
                 val isSuccess = response.getBoolean("success")
@@ -136,10 +139,11 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
      *  提交订单
      */
     override fun submitOrder(createOrderBean: CreateOrderBean) {
-        dataSource.submitOrder(createOrderBean,object : IDataSource.HttpRequestCallBack {
+        dataSource.submitOrder(createOrderBean, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
+
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
                 val submitOrderBean = JsonUtil.fromJson(json, SubmitOrderBean::class.java)
@@ -162,7 +166,7 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
      * 获取订单运费列表
      */
     fun calculateExpressExpenseForEachOrder(requestBean: CalculateExpressExpenseRequestBean) {
-        dataSource.calculateExpressExpenseForEachOrder(requestBean,object : IDataSource.HttpRequestCallBack {
+        dataSource.calculateExpressExpenseForEachOrder(requestBean, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val response = JSONObject(json)
                 val isSuccess = response.getBoolean("success")
@@ -184,22 +188,41 @@ class ConfirmOrderPresenter(view: ConfirmOrderContract.View) : ConfirmOrderContr
     /**
      * 获取官方优惠券
      */
-    override fun getOfficialCoupons(price: Double, callback: IDataSource.HttpRequestCallBack) {
-        dataSource.getOfficialCoupons(price,object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                callback.onStart()
-            }
+//    override fun getOfficialCoupons(price: Double, callback: IDataSource.HttpRequestCallBack) {
+//        dataSource.getOfficialCoupons(price,object : IDataSource.HttpRequestCallBack {
+//            override fun onStart() {
+//                callback.onStart()
+//            }
+//
+//            override fun onSuccess(json: String) {
+//                callback.onSuccess(json)
+//            }
+//
+//            override fun onFailure(e: IOException) {
+//                callback.onFailure(e)
+//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+//            }
+//        })
+//    }
 
+
+    /**
+     * 获取官方优惠券
+     */
+    override fun getOfficialCoupons(price: Double, list: ArrayList<String>) {
+        dataSource.getOfficialCoupons(price,list,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                callback.onSuccess(json)
+                val shopCouponListBean = JsonUtil.fromJson(json, ShopCouponListBean::class.java)
+                if (shopCouponListBean.success) {
+                    view.setOfficialCouponData(shopCouponListBean.data.coupons)
+                } else {
+                    ToastUtil.showError(shopCouponListBean.status.message)
+                }
             }
 
             override fun onFailure(e: IOException) {
-                callback.onFailure(e)
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
     }
-
-
 }

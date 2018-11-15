@@ -19,6 +19,7 @@ import com.lexivip.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
+import com.lexivip.lexi.index.selection.freePostage.AllFreePostageActivity
 import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
 import com.lexivip.lexi.user.login.LoginActivity
@@ -402,7 +403,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             }
             R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
             R.id.textViewCouponCenter -> startActivity(Intent(activity, ReceiveVoucherActivity::class.java))
-            R.id.textViewExemptionMail -> ToastUtil.showInfo("包邮专区")
+            R.id.textViewExemptionMail -> startActivity(Intent(activity, AllFreePostageActivity::class.java))
             R.id.textViewMoreDiscoverLife -> startActivity(Intent(context, DiscoverLifeAestheticsActivity::class.java))
 
         }

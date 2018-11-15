@@ -16,13 +16,13 @@ import com.lexivip.lexi.selectionGoodsCenter.GoodsClassifyBean
 import kotlinx.android.synthetic.main.dialog_filter_sort_bottom.view.*
 import java.io.IOException
 
-class DialogBottomFilter(context: FragmentActivity?, presenter: AllGoodsSelectionPresenter) : BottomBaseDialog<DialogBottomFilter>(context) {
+class DialogBottomFilter(whichPage:String,context: FragmentActivity?, presenter: AllGoodsSelectionPresenter) : BottomBaseDialog<DialogBottomFilter>(context) {
     private lateinit var view: View
     private val present: AllGoodsSelectionPresenter = presenter
     private val adapter: AdapterGoodsClassify by lazy { AdapterGoodsClassify(R.layout.adapter_text_border) }
     private val adapterRecommend: AdapterGoodsClassify by lazy { AdapterGoodsClassify(R.layout.adapter_text_border) }
     private var minPrice: String = ""
-
+    private val whichPage by lazy { whichPage }
     private var maxPrice: String = ""
 
 
@@ -53,7 +53,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: AllGoodsSelectio
             //            LogUtil.e("minPrice==" + minPrice + ";maxPrice==" + maxPrice)
             val sortType = ""
             val cids = getSelectedItem()
-            present.loadData(page, sortType, minPrice, maxPrice, cids, "", "", "", "")
+            present.loadData(whichPage, page, sortType, minPrice, maxPrice, cids, "", "", "", "")
         }
 
         return view
@@ -116,14 +116,14 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: AllGoodsSelectio
             val cids = getSelectedItem()
             val sortType = ""
             val categoriesBean0 = adapterRecommend.getItem(0) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isFreePostage = if(categoriesBean0.selected) "1" else "0"
+            val isFreePostage = if (categoriesBean0.selected) "1" else "0"
 
             val categoriesBean1 = adapterRecommend.getItem(1) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isPreferential = if(categoriesBean1.selected) "1" else "0"
+            val isPreferential = if (categoriesBean1.selected) "1" else "0"
 
             val categoriesBean2 = adapterRecommend.getItem(2) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isCustomMade = if(categoriesBean2.selected) "1" else "0"
-            present.loadData(page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, "")
+            val isCustomMade = if (categoriesBean2.selected) "1" else "0"
+            present.loadData(whichPage,page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, "")
         }
 
         //  推荐点击
@@ -135,17 +135,16 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: AllGoodsSelectio
             val cids = getSelectedItem()
             val sortType = ""
             val categoriesBean0 = adapterRecommend.getItem(0) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isFreePostage = if(categoriesBean0.selected) "1" else "0"
+            val isFreePostage = if (categoriesBean0.selected) "1" else "0"
 
             val categoriesBean1 = adapterRecommend.getItem(1) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isPreferential = if(categoriesBean1.selected) "1" else "0"
+            val isPreferential = if (categoriesBean1.selected) "1" else "0"
 
             val categoriesBean2 = adapterRecommend.getItem(2) as GoodsClassifyBean.DataBean.CategoriesBean
-            val isCustomMade = if(categoriesBean2.selected) "1" else "0"
-            present.loadData(page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, "")
+            val isCustomMade = if (categoriesBean2.selected) "1" else "0"
+            present.loadData(whichPage,page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, "")
         }
     }
-
 
 
     /**

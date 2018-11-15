@@ -801,4 +801,9 @@ object URL {
      * 分享优惠券
      */
     const val SHARE_VOUCHER="${BASE_URL}market/share/coupons"
+
+    /**
+     * 包邮专区
+     */
+    const val GOODS_FREE_POSTAGE = "${BASE_URL}products/free_postage"
 }

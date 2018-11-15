@@ -1,5 +1,4 @@
 package com.lexivip.lexi.index.selection.goodsSelection
-
 import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.basemodule.tools.Util
@@ -7,9 +6,11 @@ import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.R
 import kotlinx.android.synthetic.main.dialog_synthesise_sort_bottom.view.*
 
-class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllGoodsSelectionPresenter) : BottomBaseDialog<DialogBottomSynthesiseSort>(context) {
+class DialogBottomSynthesiseSort(whichPage:String,context: FragmentActivity?, presenter: AllGoodsSelectionPresenter) : BottomBaseDialog<DialogBottomSynthesiseSort>(context) {
     private lateinit var view: View
     private val present: AllGoodsSelectionPresenter = presenter
+    private val whichPage:String by lazy { whichPage }
+
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_synthesise_sort_bottom, null)
 
@@ -21,7 +22,7 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllGoods
     /**
      * 设置选中状态
      */
-    private fun setSelection(sortType:String){
+    private fun setSelection(sortType: String) {
         resetSelectionStatus()
         when (sortType) {
             AllGoodsSelectionPresenter.SORT_TYPE_SYNTHESISE -> {
@@ -43,7 +44,7 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllGoods
     /**
      * 重置选中状态
      */
-    private fun resetSelectionStatus(){
+    private fun resetSelectionStatus() {
         view.textViewSynthesis.setTextColor(Util.getColor(R.color.color_333))
         view.textViewSynthesis.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
         view.textViewLow2Up.setTextColor(Util.getColor(R.color.color_333))
@@ -62,7 +63,7 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllGoods
             val minPrice = ""
             val maxPrice = ""
             val cids = ""
-            present.loadData(page, AllGoodsSelectionPresenter.SORT_TYPE_SYNTHESISE, minPrice, maxPrice,cids,"","","","")
+            present.loadData(whichPage, page, AllGoodsSelectionPresenter.SORT_TYPE_SYNTHESISE, minPrice, maxPrice, cids, "", "", "", "")
             dismiss()
         }
 
@@ -73,7 +74,7 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllGoods
             val minPrice = ""
             val maxPrice = ""
             val cids = ""
-            present.loadData(page, AllGoodsSelectionPresenter.SORT_TYPE_LOW_UP, minPrice, maxPrice,cids,"","","","")
+            present.loadData(whichPage, page, AllGoodsSelectionPresenter.SORT_TYPE_LOW_UP, minPrice, maxPrice, cids, "", "", "", "")
             dismiss()
         }
 
@@ -84,7 +85,7 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllGoods
             val minPrice = ""
             val maxPrice = ""
             val cids = ""
-            present.loadData(page, AllGoodsSelectionPresenter.SORT_TYPE_UP_LOW, minPrice, maxPrice,cids,"","","","")
+            present.loadData(whichPage, page, AllGoodsSelectionPresenter.SORT_TYPE_UP_LOW, minPrice, maxPrice, cids, "", "", "", "")
             dismiss()
         }
     }
