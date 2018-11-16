@@ -1,14 +1,12 @@
 package com.lexivip.lexi.order
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
@@ -72,7 +70,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
         footerView.setOnClickListener {
             val intent = Intent(this, AddressActivity::class.java)
             intent.putExtra(AddressActivity::class.java.simpleName, createOrderBean.address_rid)
-            startActivity(intent)
+            startActivityForResult(intent,Constants.REQUEST_CODE_REFRESH_ADDRESS)
         }
 
         //编辑地址
@@ -81,7 +79,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
             val intent = Intent(this, AddressActivity::class.java)
             intent.putExtra("isNew", false)
             intent.putExtra(AddressActivity::class.java.simpleName, item.rid)
-            startActivity(intent)
+            startActivityForResult(intent,Constants.REQUEST_CODE_REFRESH_ADDRESS)
         }
 
         //checkBox点击
@@ -163,7 +161,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
             val intent = Intent(this, AddressActivity::class.java)
             intent.putExtra("isForeign", true)
             intent.putExtra(AddressActivity::class.java.simpleName, selectedItem.rid)
-            startActivity(intent)
+            startActivityForResult(intent,Constants.REQUEST_CODE_REFRESH_ADDRESS)
         }else{ //已上传身份信息
             jump2ConfirmOrder()
         }
@@ -225,6 +223,11 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     override fun goPage() {
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode != Activity.RESULT_OK) return
+        presenter.loadData()
     }
 
     override fun onDestroy() {
