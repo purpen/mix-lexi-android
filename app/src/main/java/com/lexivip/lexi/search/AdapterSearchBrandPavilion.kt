@@ -1,4 +1,5 @@
 package com.lexivip.lexi.search
+
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Button
@@ -22,7 +23,7 @@ class AdapterSearchBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavil
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)
 
-        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewShop, dp4,dp45)
+        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewShop, dp4, dp45)
 
         helper.setText(R.id.textViewTitle, item.name)
 
@@ -53,6 +54,7 @@ class AdapterSearchBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavil
 
         if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
 
+        if (item.products == null || item.products.isEmpty()) return
 
         val covers = ArrayList<String>()
         for (product in item.products) {
@@ -64,11 +66,7 @@ class AdapterSearchBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavil
 
         //品牌馆产品点击
         adapter.setOnItemClickListener { _, _, position ->
-//            val context = AppApplication.getContext()
             val productBean = item.products[position]
-//            val intent = Intent(context, GoodsDetailActivity::class.java)
-//            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
-//            context.startActivity(intent)
             PageUtil.jump2GoodsDetailActivity(productBean.rid)
         }
     }
