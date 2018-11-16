@@ -13,7 +13,6 @@ import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
 import com.lexivip.lexi.beans.BrandPavilionBean
-import com.lexivip.lexi.mine.designPavilion.DesignPavilionBean
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
 
 class AdapterSearchBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavilionBean, BaseViewHolder>(layoutResId) {
