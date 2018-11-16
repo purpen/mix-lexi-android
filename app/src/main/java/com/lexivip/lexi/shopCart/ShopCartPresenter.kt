@@ -154,7 +154,7 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
                     ToastUtil.showSuccess(AppApplication.getContext().getString(R.string.text_already_add_shop_cart))
-//                    view.setAddWishOrderStatus(list)
+                    view.setAddWishOrderStatus(list)
                 } else {
                     view.showError(netStatusBean.status.message)
                 }
