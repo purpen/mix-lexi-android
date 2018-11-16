@@ -98,8 +98,7 @@ class ShopWindowTagsActivity : BaseActivity(), ShopWindowTagsContract.View {
             //点击返回编辑橱窗，添加被点击标签
             tagFlowLayout.setOnTagClickListener { _, position, _ ->
                 val item = adapterHistory.getItem(position)
-                EventBus.getDefault().post(MessageShopWindowTag(item))
-                finish()
+                sendAddTagMessage(item)
                 true
             }
         }
@@ -245,45 +244,6 @@ class ShopWindowTagsActivity : BaseActivity(), ShopWindowTagsContract.View {
             }
         })
 
-        //点击搜索按钮
-        editTextSearchTag.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-//                val content = editTextSearchTag.text.toString().trim()
-//                if (TextUtils.isEmpty(content)) {
-//                    ToastUtil.showInfo(Util.getString(R.string.hint_input_search_text))
-//                } else {
-//                    val historyList: ArrayList<String>
-//                    val historyString = SPUtil.read(Constants.SEARCH_HISTORY)
-//                    if (TextUtils.isEmpty(historyString)) {
-//                        historyList = ArrayList()
-//                        historyList.add(content)
-//                    } else {
-//                        historyList = JsonUtil.getGson().fromJson(historyString, object : TypeToken<List<String>>() {}.type)
-//                        if (historyList.contains(content)) {
-//                            historyList.remove(content)
-//                        }
-//                        historyList.add(0, content)
-//                    }
-//
-//                    //保存最新10条搜索记录
-//                    if (historyList.size > 10) {
-//                        SPUtil.write(Constants.SEARCH_HISTORY, JsonUtil.list2Json(historyList.subList(0, 10)))
-//                    } else {
-//                        SPUtil.write(Constants.SEARCH_HISTORY, JsonUtil.list2Json(historyList))
-//                    }
-
-//                    //跳转搜索结果
-//                    val intent = Intent(applicationContext, SearchResultActivity::class.java)
-//                    intent.putExtra(SearchResultActivity::class.java.simpleName, content)
-//                    startActivity(intent)
-
-//                }
-                return@setOnKeyListener true
-            }
-
-            return@setOnKeyListener false
-        }
-
 
         //清空输入框
         imageViewClearInput.setOnClickListener {
@@ -303,21 +263,25 @@ class ShopWindowTagsActivity : BaseActivity(), ShopWindowTagsContract.View {
          * 模糊匹配条目点击
          */
         adapterFuzzyMatch.setOnItemClickListener { _, _, position ->
-            val item = adapterFuzzyMatch.getItem(position)
-//            val intent = Intent(applicationContext, SearchResultActivity::class.java)
-//            intent.putExtra(FuzzyWordMatchListBean::class.java.simpleName, item)
-//            startActivity(intent)
+            val item = adapterFuzzyMatch.getItem(position)?:return@setOnItemClickListener
+            sendAddTagMessage(item.name)
         }
 
         /**
          * 热门搜索点击
          */
         adapterHotTag.setOnItemClickListener { _, _, position ->
-            val item = adapterHotTag.getItem(position)
-//            val intent = Intent(applicationContext, SearchResultActivity::class.java)
-//            intent.putExtra(SearchResultActivity::class.java.simpleName, item!!.query_word)
-//            startActivity(intent)
+            val item = adapterHotTag.getItem(position) ?: return@setOnItemClickListener
+            sendAddTagMessage(item.name)
         }
+    }
+
+    /**
+     * 添加选择标签标签
+     */
+    private fun sendAddTagMessage(tag: String) {
+        EventBus.getDefault().post(MessageShopWindowTag(tag))
+        finish()
     }
 
     override fun showLoadingView() {

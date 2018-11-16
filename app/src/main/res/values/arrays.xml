@@ -90,7 +90,11 @@
         <item>乐喜券</item>
         <item>失效券</item>
     </string-array>
-
+    <string-array name="strings_select_goods_titles">
+        <item>喜欢</item>
+        <item>心愿单</item>
+        <item>最近查看</item>
+    </string-array>
     <!--自定义ratingbar-->
     <declare-styleable name="RatingBar">
         <!--尺寸值-->

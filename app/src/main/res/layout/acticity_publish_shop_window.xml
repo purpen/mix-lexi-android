@@ -170,12 +170,12 @@
                 android:id="@+id/tagFlowLayout"
                 android:layout_toEndOf="@+id/buttonAddTag"
                 android:layout_alignTop="@+id/buttonAddTag"
-                android:layout_marginEnd="15dp"
+                android:layout_marginEnd="5dp"
                 zhy:max_select="3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
-                android:padding="20dp">
+                >
             </com.zhy.view.flowlayout.TagFlowLayout>
         </RelativeLayout>
 

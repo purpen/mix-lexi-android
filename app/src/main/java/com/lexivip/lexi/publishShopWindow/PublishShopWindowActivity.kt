@@ -6,10 +6,6 @@ import android.util.SparseArray
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.ScreenUtil
-import com.basemodule.tools.Util
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
@@ -19,7 +15,16 @@ import kotlinx.android.synthetic.main.view_show_window_image3.view.*
 import kotlinx.android.synthetic.main.view_show_window_image5.view.*
 import kotlinx.android.synthetic.main.view_show_window_image7.view.*
 import android.graphics.Bitmap
+import android.text.TextUtils
+import android.util.TypedValue
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.basemodule.tools.*
 import com.lexivip.lexi.eventBusMessge.MessageShopWindowTag
+import com.zhy.view.flowlayout.FlowLayout
+import com.zhy.view.flowlayout.TagAdapter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -29,7 +34,8 @@ class PublishShopWindowActivity : BaseActivity() {
     private val color949ea6: Int by lazy { Util.getColor(R.color.color_949ea6) }
     private val maxImageCount: Int by lazy { 7 }
     private lateinit var productsMap: SparseArray<ProductBean>
-
+    private lateinit var adapterTags: TagAdapter<String>
+    private val tagList by lazy { ArrayList<String>(3) }
     private val placeHolderBitmap: Bitmap by lazy { getPlaceHolderImage() }
     override val layout: Int = R.layout.acticity_publish_shop_window
 
@@ -45,8 +51,53 @@ class PublishShopWindowActivity : BaseActivity() {
         customHeadView.buttonRight.visibility = View.VISIBLE
         customHeadView.buttonRight.setTextColor(color949ea6)
         switchImageMode(3)
+        initTagsView()
 
+    }
 
+    private fun initTagsView() {
+        val dp6 = DimenUtil.dp2px(6.0)
+        val dp10 = DimenUtil.dp2px(10.0)
+        val dp27 = DimenUtil.dp2px(27.0)
+        val layoutParams = ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dp27)
+        layoutParams.rightMargin = dp10
+        layoutParams.bottomMargin = dp10
+
+        adapterTags = object : TagAdapter<String>(tagList) {
+            private val color333 = Util.getColor(R.color.color_333)
+            override fun getView(parent: FlowLayout, position: Int, t: String): View {
+                val linearLayout = LinearLayout(applicationContext)
+                linearLayout.orientation = LinearLayout.HORIZONTAL
+                val textView = TextView(applicationContext)
+                textView.setCompoundDrawables(null,null, Util.getDrawableWidthPxDimen(R.mipmap.icon_clear_search_box, DimenUtil.dp2px(12.0)), null)
+                textView.compoundDrawablePadding = DimenUtil.dp2px(10.0)
+                textView.gravity = Gravity.CENTER_VERTICAL
+                val imageView = ImageView(applicationContext)
+                imageView.setImageResource(R.mipmap.icon_clear_search_box)
+                textView.layoutParams = layoutParams
+                textView.setPadding(dp10, dp6, dp10, dp6)
+                textView.includeFontPadding = false
+                textView.gravity = Gravity.CENTER
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+                textView.maxLines = 1
+                textView.maxEms = 12
+                textView.ellipsize = TextUtils.TruncateAt.END
+                textView.text = "# $t"
+                textView.setTextColor(color333)
+                textView.setBackgroundResource(R.drawable.bg_radius_round_f5f7f9)
+                return textView
+            }
+        }
+        tagFlowLayout.adapter = adapterTags
+
+        //点击删除标签
+        tagFlowLayout.setOnTagClickListener { _, position, _ ->
+            val item = adapterTags.getItem(position)
+            if (TextUtils.isEmpty(item)) return@setOnTagClickListener false
+            tagList.remove(item)
+            adapterTags.notifyDataChanged()
+            true
+        }
     }
 
     /**
@@ -102,7 +153,11 @@ class PublishShopWindowActivity : BaseActivity() {
         }
 
         buttonAddTag.setOnClickListener {
-            startActivity(Intent(this,ShopWindowTagsActivity::class.java))
+            if (tagList.size == 3) {
+                ToastUtil.showInfo("最多添加3个标签")
+                return@setOnClickListener
+            }
+            startActivity(Intent(this, ShopWindowTagsActivity::class.java))
         }
     }
 
@@ -168,17 +223,14 @@ class PublishShopWindowActivity : BaseActivity() {
                 layoutParams32.topMargin = dp2
                 view.relativeLayoutImage32.layoutParams = layoutParams32
                 view.imageView30.setOnClickListener {
-                    if (productsMap[0] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[0].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(0)
                 }
 
                 view.imageView31.setOnClickListener {
-                    if (productsMap[1] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[1].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(1)
                 }
                 view.imageView32.setOnClickListener {
-                    if (productsMap[2] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[2].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(2)
                 }
             }
 
@@ -282,7 +334,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 val dp190: Int by lazy { screenW - dp68 * 2 - dp30 - dp2 * 2 }
                 val dp138: Int by lazy { dp68 * 2 + dp2 }
                 val dp120: Int by lazy { dp190 - dp68 - dp2 }
-                val dp110: Int by lazy { (screenW - dp30 - dp2 * 2)/3 }
+                val dp110: Int by lazy { (screenW - dp30 - dp2 * 2) / 3 }
                 val layoutParamsImageView70: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp68, dp68) }
                 val layoutParamsImageView71: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp68, dp68) }
                 val layoutParamsImageView72: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp190, dp190) }
@@ -412,8 +464,10 @@ class PublishShopWindowActivity : BaseActivity() {
      * 当有标签被选中
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onTagSelected(message:MessageShopWindowTag){
-
+    fun onTagSelected(message: MessageShopWindowTag) {
+        if (tagList.contains(message.tag)) return
+        tagList.add(message.tag)
+        adapterTags.notifyDataChanged()
     }
 
     override fun onDestroy() {

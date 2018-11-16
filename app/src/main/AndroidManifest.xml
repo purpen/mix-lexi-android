@@ -190,6 +190,7 @@
         <activity android:name=".user.OtherUserCenterActivity" />
         <activity android:name=".index.selection.freePostage.AllFreePostageActivity" />
         <activity android:name=".publishShopWindow.ShopWindowTagsActivity" />
+        <activity android:name=".publishShopWindow.SelectShopWindowGoodsImageActivity" />
     </application>
 
 </manifest>
