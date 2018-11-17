@@ -59,6 +59,8 @@ class PavilionCouponBottomDialog(context: Context, presenter: ConfirmOrderPresen
         for (coupon in coupons) {
             if (coupon.selected) {
                 selectedCoupon =coupon
+                view.textViewReducePrice.visibility = View.VISIBLE
+                view.textViewUseCouponNum.visibility = View.VISIBLE
                 view.textViewReducePrice.text = "已抵扣${coupon.amount}元"
                 view.textViewUseCouponNum.text = "使用1张"
                 break

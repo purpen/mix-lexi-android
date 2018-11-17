@@ -10,9 +10,9 @@ import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
-import com.lexivip.lexi.index.detail.GoodsDetailActivity
 
 class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionBean, BaseViewHolder>(layoutResId) {
     private val dp4:Int by lazy { DimenUtil.dp2px(4.0) }
@@ -63,12 +63,13 @@ class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionB
 
         //品牌馆产品点击
         adapter.setOnItemClickListener { _, _, position ->
-            val context = AppApplication.getContext()
+//            val context = AppApplication.getContext()
             val productBean = item.products[position]
-            val intent = Intent(context, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(intent)
+//            val intent = Intent(context, GoodsDetailActivity::class.java)
+//            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//            context.startActivity(intent)
+            PageUtil.jump2GoodsDetailActivity(productBean.rid)
         }
     }
 }

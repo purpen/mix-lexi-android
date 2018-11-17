@@ -92,7 +92,7 @@
         android:layout_below="@+id/textViewJump"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="@dimen/dp05"
         layout="@layout/line_color_eee"
         />
 </RelativeLayout>

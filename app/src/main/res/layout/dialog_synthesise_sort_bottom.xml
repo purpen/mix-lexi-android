@@ -40,7 +40,7 @@
     <include
         android:id="@+id/line0"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
+        android:layout_height="@dimen/dp05"
         android:layout_below="@+id/textViewSynthesis"
         layout="@layout/line_color_eee" />
     <TextView
@@ -87,7 +87,7 @@
     <include
         android:id="@+id/line1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
+        android:layout_height="@dimen/dp05"
         android:layout_below="@+id/textViewUp2Low"
         layout="@layout/line_color_eee" />
     <View

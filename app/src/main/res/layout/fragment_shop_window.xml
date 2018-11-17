@@ -20,13 +20,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                >
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="255dp"
-                    >
+                    android:layout_height="255dp">
 
                     <ImageView
                         android:id="@+id/imageViewBg"
@@ -37,9 +35,9 @@
                         android:id="@+id/textViewTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dp20"
                         android:layout_marginStart="@dimen/dp20"
                         android:layout_marginTop="@dimen/dp30"
+                        android:layout_marginEnd="@dimen/dp20"
                         android:text="@string/text_discover_life"
                         android:textColor="@android:color/white"
                         android:textSize="20sp"
@@ -50,9 +48,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textViewTitle"
-                        android:layout_marginEnd="@dimen/dp20"
                         android:layout_marginStart="@dimen/dp20"
                         android:layout_marginTop="@dimen/dp15"
+                        android:layout_marginEnd="@dimen/dp20"
                         android:lineSpacingMultiplier="1.2"
                         android:text="@string/text_discover_life_description"
                         android:textColor="@android:color/white"
@@ -78,7 +76,7 @@
                 <include
                     layout="@layout/line_color_eee"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp1" />
+                    android:layout_height="@dimen/dp05" />
             </LinearLayout>
 
         </android.support.design.widget.AppBarLayout>
@@ -98,14 +96,15 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
+
     <LinearLayout
         android:id="@+id/linearLayoutPublishWindow"
         android:layout_width="123dp"
         android:layout_height="@dimen/dp40"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dp40"
-        android:background="@drawable/bg_radius_round_white"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shadow_round_button"
         android:gravity="center"
         android:visibility="gone"
         >

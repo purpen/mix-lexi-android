@@ -81,7 +81,9 @@
         android:paddingBottom="20dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
-        android:paddingTop="20dp">
+        android:paddingTop="20dp"
+        android:visibility="gone"
+        >
 
         <TextView
             android:id="@+id/textViewSubtotal"

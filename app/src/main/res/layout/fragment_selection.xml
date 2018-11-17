@@ -163,7 +163,7 @@
             <include
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
+                android:layout_height="@dimen/dp05"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15" />
 
@@ -227,7 +227,7 @@
             <include
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
+                android:layout_height="@dimen/dp05"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15" />
 
@@ -274,7 +274,7 @@
             <include
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
+                android:layout_height="@dimen/dp05"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15" />
 
@@ -296,7 +296,7 @@
             <include
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
+                android:layout_height="@dimen/dp05"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15" />
 
@@ -343,7 +343,7 @@
             <include
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
+                android:layout_height="@dimen/dp05"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15" />
 
@@ -392,7 +392,7 @@
             <include
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
+                android:layout_height="@dimen/dp05"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15" />
 
@@ -438,7 +438,7 @@
             <include
                 layout="@layout/line_color_eee"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
+                android:layout_height="@dimen/dp05"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginStart="@dimen/dp15" />
         </LinearLayout>

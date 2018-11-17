@@ -36,6 +36,9 @@ public class StoreItemBean implements Parcelable {
     //不使用优惠券
     public boolean notUsingCoupon;
 
+    //是否选择店铺券
+    public boolean couponCanSelected;
+
     //店铺优惠券面值
     public int couponPrice;
 
@@ -72,6 +75,7 @@ public class StoreItemBean implements Parcelable {
         dest.writeValue(this.expressExpense);
         dest.writeString(this.coupon_codes);
         dest.writeByte(this.notUsingCoupon ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.couponCanSelected ? (byte) 1 : (byte) 0);
         dest.writeInt(this.couponPrice);
         dest.writeDouble(this.fullReductionAmount);
         dest.writeString(this.fullReductionText);
@@ -90,6 +94,7 @@ public class StoreItemBean implements Parcelable {
         this.expressExpense = (Double) in.readValue(Double.class.getClassLoader());
         this.coupon_codes = in.readString();
         this.notUsingCoupon = in.readByte() != 0;
+        this.couponCanSelected = in.readByte() != 0;
         this.couponPrice = in.readInt();
         this.fullReductionAmount = in.readDouble();
         this.fullReductionText = in.readString();

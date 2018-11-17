@@ -24,6 +24,9 @@ public class Constants {
     //保存图片到本地的所需的权限
     public static final int REQUEST_CODE_SAVE_IMAGE = 0x000100;
 
+    //添加新地址
+    public static final int REQUEST_CODE_REFRESH_ADDRESS = 0x0000012;
+
     public static final int SUCCESS = 200;
 
 
@@ -45,4 +48,11 @@ public class Constants {
     public static final long GUIDE_INTERVAL = 1500;
     @Nullable
     public static final String GUIDE_TAG = "GUIDE_TAG";
+
+    /**
+     * 橱窗标签历史
+     */
+    @Nullable
+    public static final String ADD_TAG_HISTORY = "ADD_TAG_HISTORY";
+
 }

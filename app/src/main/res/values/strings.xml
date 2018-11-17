@@ -383,7 +383,7 @@
     <string name="text_publish">发布</string>
     <string name="text_create_you_life_aesthetics">打造你的生活美学</string>
     <string name="publish_shopwindow_tips">展示你的品位与搭配风格，拼揍一个设计主题橱窗</string>
-    <string name="text_tile_with_3_image">拼贴三张</string>
+    <string name="text_tile_with_3_image">拼贴3张</string>
     <string name="text_tile_with_5_image">拼贴5张</string>
     <string name="text_tile_with_7_image">拼贴7张</string>
     <string name="title_select_goods">选择商品</string>
@@ -395,4 +395,6 @@
     <string name="text_shop_window_like">喜欢的橱窗</string>
     <string name="text_free_postage_perfecture">包邮专区</string>
     <string name="text_not_use_coupon">不使用优惠券</string>
+    <string name="title_add_tag">添加标签</string>
+    <string name="text_hot_tags">热门标签</string>
 </resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    >
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="220dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_centerVertical="true"
+        android:text=""
+        android:textColor="@color/color_333"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/textViewActivity"
+        android:layout_width="27dp"
+        android:layout_height="13dp"
+        android:layout_toEndOf="@id/textView"
+        android:layout_marginStart="5dp"
+        android:includeFontPadding="false"
+        android:layout_centerVertical="true"
+        android:text="活动"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:background="@drawable/bg_color5fe4b1_radius2"
+        android:textSize="9sp"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/textViewCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_centerVertical="true"
+        android:textSize="12sp"
+        android:textColor="@color/color_999"
+        android:text="0参与"
+        />
+    <include layout="@layout/line_color_eee"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp05"
+        android:layout_alignParentEnd="true"
+        />
+</RelativeLayout>

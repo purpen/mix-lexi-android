@@ -806,4 +806,19 @@ object URL {
      * 包邮专区
      */
     const val GOODS_FREE_POSTAGE = "${BASE_URL}products/free_postage"
+
+    /**
+     * 热门橱窗标签
+     */
+    const val SHOP_WINDOW_HOT_TAGS = "${BASE_URL}shop_windows/hot_keywords"
+
+    /**
+     * 动态匹配橱窗标签
+     */
+    const val FUZZY_WORD_SEARCH_TAG = "${BASE_URL}shop_windows/search/keywords"
+
+    /**
+     * 添加标签
+     */
+    const val SHOP_WINDOW_KEYWORD = "${BASE_URL}shop_windows/keywords"
 }

@@ -3,7 +3,7 @@ package com.lexivip.lexi.search
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.lexivip.lexi.mine.designPavilion.DesignPavilionBean
+import com.lexivip.lexi.beans.BrandPavilionBean
 
 class SearchBrandPavilionContract {
 
@@ -14,7 +14,7 @@ class SearchBrandPavilionContract {
         fun showError(@NonNull string: String)
         fun goPage()
 
-        fun setNewData(data: MutableList<DesignPavilionBean>) {
+        fun setNewData(data: MutableList<BrandPavilionBean>) {
 
         }
 
@@ -26,7 +26,7 @@ class SearchBrandPavilionContract {
             
         }
 
-        fun addData(stores: MutableList<DesignPavilionBean>) {
+        fun addData(stores: MutableList<BrandPavilionBean>) {
 
         }
 

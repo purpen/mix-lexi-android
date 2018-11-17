@@ -62,6 +62,10 @@ class ConfirmOrderContract {
 
         }
 
+        fun setOnBackPressUnable() {
+
+        }
+
     }
 
     interface Presenter : BasePresenter {

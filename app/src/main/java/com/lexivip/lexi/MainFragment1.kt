@@ -130,12 +130,21 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
      *  放入心愿单
      */
     override fun setAddWishOrderStatus(list: ArrayList<String>) {
+        val addWishOrderList = ArrayList<String>()
         //从产品列表删除加入心愿单产品
         val iterator = adapterEditShopCartGoods.data.iterator()
         while (iterator.hasNext()) {
             val itemsBean = iterator.next()
-            if (list.contains(itemsBean.product.product_rid)) iterator.remove()
+            if (list.contains(itemsBean.product.product_rid)) {
+                if (itemsBean.isChecked){
+                    addWishOrderList.add(itemsBean.product.rid)
+                    iterator.remove()
+                }
+            }
         }
+
+        //加入心愿单商品从购物车删除
+        presenter.removeProductFromShopCart(addWishOrderList)
 
         if (adapterEditShopCartGoods.data.isEmpty()) {
             linearLayoutNum.visibility = View.GONE

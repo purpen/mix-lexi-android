@@ -15,6 +15,7 @@ import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.index.detail.GoodsDetailActivity;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
 import com.lexivip.lexi.index.explore.collection.CollectionDetailActivity;
+import com.lexivip.lexi.publishShopWindow.SelectShopWindowGoodsImageActivity;
 import com.lexivip.lexi.user.OtherUserCenterActivity;
 import com.lexivip.lexi.user.login.LoginActivity;
 
@@ -155,6 +156,18 @@ public class PageUtil {
         Application context = AppApplication.getContext();
         Intent intent = new Intent(context,OtherUserCenterActivity.class);
         intent.putExtra(OtherUserCenterActivity.class.getSimpleName(),uid);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 选择橱窗商品图片
+     * @param i
+     */
+    public static void jump2SelectGoodsImageActivity(int i) {
+        Application context = AppApplication.getContext();
+        Intent intent = new Intent(context,SelectShopWindowGoodsImageActivity.class);
+        intent.putExtra(SelectShopWindowGoodsImageActivity.class.getSimpleName(),i);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

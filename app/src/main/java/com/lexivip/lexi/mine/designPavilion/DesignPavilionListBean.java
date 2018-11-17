@@ -1,5 +1,4 @@
 package com.lexivip.lexi.mine.designPavilion;
-
 import java.util.List;
 
 public class DesignPavilionListBean {

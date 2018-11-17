@@ -10,6 +10,7 @@ import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.R
+import com.lexivip.lexi.beans.BrandPavilionBean
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionBean
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
@@ -101,13 +102,13 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
     }
 
 
-    override fun setNewData(data: MutableList<DesignPavilionBean>) {
+    override fun setNewData(data: MutableList<BrandPavilionBean>) {
         adapter.setNewData(data)
         adapter.setEnableLoadMore(true)
     }
 
 
-    override fun addData(products: MutableList<DesignPavilionBean>) {
+    override fun addData(products: MutableList<BrandPavilionBean>) {
         adapter.addData(products)
     }
 

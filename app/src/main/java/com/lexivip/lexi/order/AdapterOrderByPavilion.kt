@@ -49,16 +49,25 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
 
         val coupons = item.coupons
         if (coupons == null || coupons.isEmpty()) {
-            textViewPavilionCoupon.text = "没有可用优惠券"
+            textViewPavilionCoupon.text = "无可用优惠券"
             textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_999))
             textViewPavilionCoupon.isEnabled = false
         } else {
-            textViewPavilionCoupon.isEnabled = true
-            textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
+
             if (item.notUsingCoupon) {
-                textViewPavilionCoupon.text = "${coupons.size}张可用"
+                if (item.couponCanSelected){
+                    textViewPavilionCoupon.isEnabled = true
+                    textViewPavilionCoupon.text = "${coupons.size}张优惠券可用"
+                    textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
+                }else{ //使用了乐喜券
+                    textViewPavilionCoupon.isEnabled = false
+                    textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_999))
+                    textViewPavilionCoupon.text = "不可使用"
+                }
             } else if (!item.notUsingCoupon) {
-                helper.setText(R.id.textViewPavilionCoupon, "已抵扣￥${item.couponPrice}")
+                textViewPavilionCoupon.isEnabled = true
+                textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
+                helper.setText(R.id.textViewPavilionCoupon, "已抵￥${item.couponPrice}")
             }
         }
 
