@@ -95,6 +95,7 @@ public class EditUserDataModel {
         });
     }
     public void uploadImage(UploadTokenBean bean, byte[] data,final IDataSource.UpLoadCallBack callBack){
+        LogUtil.e("上传图片开始");
         String token = bean.data.up_token;
         HashMap<String, String> map = new HashMap<>();
         map.put("x:user_id", bean.data.user_id);
@@ -104,7 +105,7 @@ public class EditUserDataModel {
         AppApplication.getUploadManager().put(data, null, token, new UpCompletionHandler() {
             @Override
             public void complete(String key, ResponseInfo info, JSONObject response) {
-                LogUtil.i("CompleteInfoModel", "$key,\r\n $info,\r\n $res");
+                LogUtil.e("CompleteInfoModel", "$key,\r\n $info,\r\n $res");
                 //res包含hash、key等信息，具体字段取决于上传策略的设置
                 if (info.isOK()) {
                     try {
@@ -112,9 +113,9 @@ public class EditUserDataModel {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    LogUtil.i("CompleteInfoModel", "qiniu Upload Success");
+                    LogUtil.e("CompleteInfoModel", "qiniu Upload Success");
                 } else {
-                    LogUtil.i("CompleteInfoModel", "qiniu Upload Fail");
+                    LogUtil.e("CompleteInfoModel", "qiniu Upload Fail");
                     //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                 }
 

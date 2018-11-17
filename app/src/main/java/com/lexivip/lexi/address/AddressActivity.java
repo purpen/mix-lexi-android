@@ -287,8 +287,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         super.getIntentData();
         Intent intent = getIntent();
         isNew = intent.getBooleanExtra("isNew", true);
-        //TODO 别忘了修改
-        isForeign = intent.getBooleanExtra("isForeign", true);
+        isForeign = intent.getBooleanExtra("isForeign", false);
         addressId = intent.getStringExtra(AddressActivity.class.getSimpleName());
 
     }

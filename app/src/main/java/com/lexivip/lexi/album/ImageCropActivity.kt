@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.R
 import com.lexivip.lexi.address.AddressActivity
@@ -41,12 +42,12 @@ class ImageCropActivity : BaseActivity(), View.OnClickListener {
             key = EvaluateActivity::class.java.simpleName
         } else if (intent.hasExtra(EditUserDataActivity::class.java.simpleName)) {
             uri = intent.getParcelableExtra(EditUserDataActivity::class.java.simpleName)
-            key = EvaluateActivity::class.java.simpleName
+            key = EditUserDataActivity::class.java.simpleName
         }
     }
 
     override fun initView() {
-        GlideUtil.loadImageAsBitmap(uri, csiv as ImageView)
+        GlideUtil.loadImageUpBitmap(uri, csiv as ImageView)
     }
 
     override fun installListener() {

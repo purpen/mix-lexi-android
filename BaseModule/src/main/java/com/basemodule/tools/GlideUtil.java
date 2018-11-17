@@ -256,6 +256,26 @@ public class GlideUtil {
         Glide.with(context).asBitmap().apply(requestOptions).load(t).into(imageView);
     }
 
+    /**
+     * 使用软件画布 (software Canvas) 渲染硬件位图时，glide不能使用硬件位图
+     * @param t
+     * @param imageView
+     * @param <T>
+     */
+    public static <T> void loadImageUpBitmap(T t, ImageView imageView){
+        RequestOptions requestOptions = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .skipMemoryCache(true)
+                .format(DecodeFormat.PREFER_RGB_565)
+                .centerCrop()
+                .error(DEFAULT_ERROR_HOLDER)
+                .placeholder(DEFAULT_PLACE_HOLDER)
+                .disallowHardwareConfig();
+        Context context = imageView.getContext();
+        if (context == null) return;
+        Glide.with(context).asBitmap().apply(requestOptions).load(t).into(imageView);
+    }
+
 
     public static void resumeRequests(Context context) {
         if (context == null) return;

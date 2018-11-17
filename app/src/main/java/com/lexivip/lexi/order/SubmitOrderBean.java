@@ -77,7 +77,7 @@ public class SubmitOrderBean {
             public int created_at;
             public int current_time;
             public Object customer_order_id;
-            public int discount_amount;
+            public String discount_amount;
             public int first_discount;
             public int freight;
             public Object official_order_id;

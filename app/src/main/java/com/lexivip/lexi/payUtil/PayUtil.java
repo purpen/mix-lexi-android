@@ -138,7 +138,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
     @Override
     public void getPayOrder(final PayWXBean bean) {
         this.bean=bean;
-        if (0==pay_type) {
+        if (1==pay_type) {
             handler.sendEmptyMessage(WECHATPAY);
         }else {
             Runnable runnable = new Runnable() {

@@ -208,7 +208,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             dialog.show();
         }else {
             //todo pay_type待添加
-            PayUtil payUtil=new PayUtil(dialog,rid,1,1);
+            PayUtil payUtil=new PayUtil(dialog,rid,adapterOrderList.getData().get(positions).getPay_type(),1);
         }
     }
 
