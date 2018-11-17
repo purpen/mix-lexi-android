@@ -16,12 +16,13 @@ import com.umeng.socialize.utils.ShareBoardlistener;
 public class ShareUtil {
     private Activity context = AppApplication.getActivity();
     public ShareUtil() {
+        UMImage image = new UMImage(context, R.drawable.ic_camera);//资源文件
         new ShareAction(context)
-                //.withText("hello")
-                //.withMedia(image)
+                .withText("hello")
+                .withMedia(image)
                 .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
                 //.setShareContent()
-                .setShareboardclickCallback(shareBoardlistener)
+                //.setShareboardclickCallback(shareBoardlistener)
                 .setCallback(shareListener)
                 .open();
     }
