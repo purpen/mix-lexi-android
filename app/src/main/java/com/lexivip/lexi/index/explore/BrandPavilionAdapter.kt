@@ -2,6 +2,7 @@ package com.lexivip.lexi.index.explore
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
 import android.widget.ImageView
 import android.widget.TextView
 import com.basemodule.tools.DimenUtil
@@ -47,14 +48,7 @@ class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionLis
         val adapter = BrandPavilionProductAdapter(R.layout.adapter_brand_pavilion_product)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = linearLayoutManager
-
-//        val list = ArrayList<String>()
-//
-//        if (item.products==null) return
-//        for (product in item.products) {
-//            list.add(product.cover)
-//        }
-//        adapter.setNewData(list)
+        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         adapter.setNewData(item.products_cover)
 
         helper.addOnClickListener(R.id.textViewFocus)
@@ -62,8 +56,6 @@ class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionLis
 
         //跳转品牌馆主页
         adapter.setOnItemClickListener { _, _, _ ->
-//            if (item.products == null || item.products.isEmpty()) return@setOnItemClickListener
-//            PageUtil.jump2GoodsDetailActivity(item.products[position].rid)
             PageUtil.jump2BrandPavilionActivity(item.rid)
         }
 
