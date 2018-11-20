@@ -194,7 +194,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         headImageAdapter.setNewData(urlList)
         
         headImageAdapter.setOnItemClickListener { _, _, position ->
-            PageUtil.jump2OtherUserCenterActivity(users[position].uid)
+            PageUtil.jump2OtherUserCenterActivity(users[count-position-1].uid)
         }
     }
 
