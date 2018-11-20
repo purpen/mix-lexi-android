@@ -1,7 +1,9 @@
 package com.lexivip.lexi.orderList;
 
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +16,10 @@ import com.basemodule.ui.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.CustomLinearLayoutManager;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.dialog.InquiryDialog;
 import com.lexivip.lexi.payUtil.PayUtil;
-import com.lexivip.lexi.user.areacode.MessageAreaCode;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -36,8 +35,8 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     private boolean isInit;
     private int positions;
     private Intent intent;
-    private InquiryDialog inquiryDialog;
     private String rid;
+    private InquiryDialog inquiryDialog;
 
 
     @Override
@@ -82,15 +81,15 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                     case R.id.bt_delete1:
                     case R.id.bt_delete:
                         LogUtil.e("删除订单啊啊啊啊啊啊啊");
-                        inquiryDialog=new InquiryDialog("确定删除订单？", getContext(), new InquiryDialog.ImagePopwindowInterface() {
+
+                        inquiryDialog = new InquiryDialog(getContext(),"确定删除订单？","确定","取消", new InquiryDialog.InquiryInterface() {
                             @Override
                             public void getCheck(boolean isCheck) {
-                                if (isCheck){
+                                if (isCheck)
                                     presenter.deleteOrder(adapterOrderList.getData().get(position).getRid());
-                                }
                             }
                         });
-
+                        inquiryDialog.show();
                         break;
                     case R.id.bt_evaluate:
                         LogUtil.e("评价订单啊啊啊啊啊啊啊");
@@ -100,18 +99,16 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         break;
                     case R.id.bt_confirm:
                         LogUtil.e("收货订单啊啊啊啊啊啊啊");
-                        inquiryDialog = new InquiryDialog("确认收货？", getContext(), new InquiryDialog.ImagePopwindowInterface() {
+                        inquiryDialog = new InquiryDialog(getContext(),"确认收货？","确定","取消", new InquiryDialog.InquiryInterface() {
                             @Override
                             public void getCheck(boolean isCheck) {
-                                if (isCheck){
+                                if (isCheck)
                                     presenter.deleteOrder(adapterOrderList.getData().get(position).getRid());
-                                }
                             }
                         });
-
+                        inquiryDialog.show();
                         break;
                     case R.id.bt_money:
-                        //todo 订单支付待完成
                         rid = adapterOrderList.getData().get(position).getRid();
                         presenter.isMerge(rid);
                         break;
@@ -207,7 +204,6 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             PayDialog payDialog=new PayDialog(getContext(),bean,rid,1);
             dialog.show();
         }else {
-            //todo pay_type待添加
             PayUtil payUtil=new PayUtil(dialog,rid,adapterOrderList.getData().get(positions).getPay_type(),1);
         }
     }

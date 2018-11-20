@@ -18,6 +18,7 @@ import com.basemodule.tools.Util;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.dialog.InquiryDialog;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -51,17 +52,18 @@ public class AdapterLogistics extends BaseQuickAdapter<LogisticsBean.DataBean.Tr
                 @Override
                 public void onClick(View widget) {
                     LogUtil.e("tel:" + express.substring(matcher.start(), matcher.end()));
-                    InquiryDialog dialog=new InquiryDialog(express.substring(matcher.start(), matcher.end()),context, new InquiryDialog.ImagePopwindowInterface() {
+
+                    InquiryDialog inquiryDialog = new InquiryDialog(context,express.substring(matcher.start(), matcher.end()),"取消","拨打", new InquiryDialog.InquiryInterface() {
                         @Override
                         public void getCheck(boolean isCheck) {
-                            if(isCheck) {
+                            if (!isCheck) {
                                 //拨打电话
                                 intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + express.substring(matcher.start(), matcher.end())));
                                 context.startActivity(intent);
                             }
                         }
                     });
-
+                    inquiryDialog.show();
                 }
 
                 @Override

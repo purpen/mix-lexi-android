@@ -36,7 +36,7 @@ import com.lexivip.lexi.R;
 import com.lexivip.lexi.album.ImageCropActivity;
 import com.lexivip.lexi.album.ImageUtils;
 import com.lexivip.lexi.album.PicturePickerUtils;
-import com.lexivip.lexi.orderList.InquiryDialog;
+import com.lexivip.lexi.dialog.InquiryDialog;
 import com.lexivip.lexi.user.areacode.CountryAreaCodeBean;
 import com.lexivip.lexi.user.areacode.MessageAreaCode;
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean;
@@ -196,13 +196,14 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                     presenter.saveAddress(dataBean, isForeign, id_card, id_card_front, id_card_back);
                 break;
             case R.id.bt_delete:
-                InquiryDialog inquiryDialog = new InquiryDialog("确定删除地址？", this, new InquiryDialog.ImagePopwindowInterface() {
+                InquiryDialog inquiryDialog = new InquiryDialog(this,"确定删除地址？","确定","取消", new InquiryDialog.InquiryInterface() {
                     @Override
                     public void getCheck(boolean isCheck) {
                         if (isCheck)
                             presenter.deleteAddress(addressId);
                     }
                 });
+                inquiryDialog.show();
                 break;
             case R.id.ll_region:
                 if (countryID==0){
