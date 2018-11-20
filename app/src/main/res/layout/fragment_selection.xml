@@ -224,7 +224,7 @@
                         android:id="@+id/textViewExemptionMail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="70dp"
+                        android:layout_marginStart="93dp"
                         android:layout_marginTop="10dp"
                         android:drawableTop="@mipmap/icon_exemption_mail"
                         android:drawablePadding="@dimen/dp10"

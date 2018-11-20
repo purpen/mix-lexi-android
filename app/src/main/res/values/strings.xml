@@ -397,4 +397,5 @@
     <string name="text_not_use_coupon">不使用优惠券</string>
     <string name="title_add_tag">添加标签</string>
     <string name="text_hot_tags">热门标签</string>
+    <string name="text_curator_recommend">馆长极力推荐</string>
 </resources>

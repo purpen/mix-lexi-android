@@ -47,7 +47,8 @@ open class LifeHouseModel {
 
 
     fun getWelcomeInWeek(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getGoodSelectionParams()
+        val params = ClientParamsAPI.getDefaultParams()
+        params["per_page"] = "20"
         HttpRequest.sendRequest(HttpRequest.GET, URL.WELCOME_IN_WEEK, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()

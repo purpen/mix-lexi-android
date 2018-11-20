@@ -27,7 +27,9 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
     private val dp28:Int by lazy { DimenUtil.dp2px(28.0) }
     private val dp20:Int by lazy { DimenUtil.dp2px(20.0) }
     private val dp12:Int by lazy { DimenUtil.dp2px(12.0) }
+    private val textTitle:String by lazy { Util.getString(R.string.text_curator_recommend) }
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
+        helper.setText(R.id.textViewName,textTitle)
         val textView0 = helper.getView<TextView>(R.id.textView0)
         if (item.is_free_postage){
             val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express,dp20,dp12)
@@ -74,7 +76,7 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
 
-        GlideUtil.loadCircleImageWidthDimen(item.cover,imageViewAvatar,dp28)
+        GlideUtil.loadCircleImageWidthDimen(item.store_logo,imageViewAvatar,dp28)
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
         GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView,0,dp87)
@@ -118,17 +120,5 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
         headImageAdapter.setOnItemClickListener { _, _, position ->
             PageUtil.jump2OtherUserCenterActivity(item.product_like_users[position].uid)
         }
-
-//        val linearLayoutLoadMore = helper.getView<View>(R.id.linearLayoutLoadMore)
-
-        //点击加载更多
-//        helper.addOnClickListener(R.id.linearLayoutLoadMore)
-
-//        LogUtil.e("layoutpositon==="+helper.layoutPosition+";;data.size==="+data.size)
-//        if (helper.layoutPosition==data.size){
-//            linearLayoutLoadMore.visibility = View.VISIBLE
-//        }else{
-//            linearLayoutLoadMore.visibility = View.GONE
-//        }
     }
 }
