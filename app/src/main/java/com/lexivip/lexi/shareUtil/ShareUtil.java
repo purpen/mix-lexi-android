@@ -18,32 +18,37 @@ public class ShareUtil {
     public ShareUtil() {
         UMImage image = new UMImage(context, R.drawable.ic_camera);//资源文件
         new ShareAction(context)
-                //.withText("hello")
-                //.withMedia(image)
+                .withText("hello")
+                .withMedia(image)
                 .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
-                .setShareboardclickCallback(shareBoardlistener)
-                //.setCallback(shareListener)
+                //.setShareContent()
+                //.setShareboardclickCallback(shareBoardlistener)
+                .setCallback(shareListener)
                 .open();
     }
 
     private ShareBoardlistener shareBoardlistener=new ShareBoardlistener() {
         @Override
         public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+            UMImage image = new UMImage(context, R.drawable.ic_camera);//资源文件
             if (share_media!=null){
                 if (share_media==SHARE_MEDIA.WEIXIN){
                     new ShareAction(context)
                             .withText("hello")
                             //.withMedia(image)
-                            .setShareboardclickCallback(shareBoardlistener)
-                            .setCallback(shareListener)
-                            .open();
+                            .withMedia(image)
+                            //.setShareboardclickCallback(shareBoardlistener)
+                            .share();
+                            //.setCallback(shareListener);
+                            //.open();
                 }else if (share_media==SHARE_MEDIA.WEIXIN_CIRCLE){
                     new ShareAction(context)
                             .withText("hello")
                             //.withMedia(image)
-                            .setShareboardclickCallback(shareBoardlistener)
-                            .setCallback(shareListener)
-                            .open();
+                            //.setShareboardclickCallback(shareBoardlistener)
+                            .share();
+                            //.setCallback(shareListener);
+                            //.open();
                 }
             }
         }
@@ -56,6 +61,7 @@ public class ShareUtil {
          */
         @Override
         public void onStart(SHARE_MEDIA platform) {
+            LogUtil.e("回调开始了");
         }
         /**
          * @descrption 分享成功的回调
@@ -63,7 +69,7 @@ public class ShareUtil {
          */
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            LogUtil.e("成功了");
+            LogUtil.e("回调成功了");
         }
         /**
          * @descrption 分享失败的回调
@@ -72,7 +78,7 @@ public class ShareUtil {
          */
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            LogUtil.e("失败:"+t.toString());
+            LogUtil.e("回调失败:"+t.toString());
         }
         /**
          * @descrption 分享取消的回调
@@ -80,7 +86,7 @@ public class ShareUtil {
          */
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            LogUtil.e("取消了");
+            LogUtil.e("回调取消了");
         }
     };
 }

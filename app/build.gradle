@@ -16,8 +16,8 @@ android {
         applicationId "com.lexivip.lexi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "boolean", "LOG_DEBUG", "true"
@@ -45,7 +45,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "LOG_DEBUG", "false"
             minifyEnabled false
             debuggable true
             signingConfig signingConfigs.release
@@ -68,11 +68,12 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
     implementation project(':BaseModule')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     implementation 'com.flyco.dialog:FlycoDialog_Lib:1.3.2@aar'
+    //noinspection GradleCompatible
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
@@ -104,11 +105,11 @@ dependencies {
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.2'
     implementation files('libs/umeng-common-1.5.4.jar')
     implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
-    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
     implementation files('libs/umeng-share-core-6.9.3.jar')
     implementation files('libs/umeng-share-QQ-simplify-6.9.3.jar')
     implementation files('libs/umeng-shareboard-widget-6.9.3.jar')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
+    //api (name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
 }
 
 kapt {

@@ -13,6 +13,7 @@ import com.basemodule.ui.CustomFragmentPagerAdapter;
 import com.basemodule.ui.CustomViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.lexivip.lexi.lifeShop.LifeShopFragment;
+import com.lexivip.lexi.shareUtil.ShareUtil;
 import com.lexivip.lexi.user.login.UserProfileUtil;
 import com.lexivip.lexi.user.setting.SettingActivity;
 import com.umeng.commonsdk.UMConfigure;
@@ -67,15 +68,16 @@ public class MainFragmentUser extends BaseFragment {
         imageViewShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UMConfigure.setLogEnabled(true);
+
                 //分享
-               /* String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,
                         Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,
                         Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,
                         Manifest.permission.WRITE_APN_SETTINGS};
-                ActivityCompat.requestPermissions(getActivity(),mPermissionList,123);*/
+                ActivityCompat.requestPermissions(getActivity(),mPermissionList,123);
+                ShareUtil shareUtil=new ShareUtil();
 
             }
         });

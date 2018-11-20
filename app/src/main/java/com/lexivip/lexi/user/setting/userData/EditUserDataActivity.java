@@ -196,8 +196,10 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onClipComplete(ImageCropActivity.MessageCropComplete cropComplete){
+        LogUtil.e("这里有没有调用"+cropComplete.getSimpleName());
         if (EditUserDataActivity.class.getSimpleName().equals(cropComplete.getSimpleName())) {
             data = ImageUtils.bitmap2ByteArray(cropComplete.getBitmap());
+            LogUtil.e("这里有没有调用");
             if (tokenBean.success) {
                 presenter.loadPhoto(tokenBean, data);
             }else {

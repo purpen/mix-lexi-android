@@ -82,12 +82,6 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     @Override
     public void installListener() {
         super.installListener();
-        adapterOrderList.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                PageUtil.jump2GoodsDetailActivity(adapterOrderList.getData().get(position).getRid());
-            }
-        });
     }
 
     @Override
@@ -160,7 +154,11 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                     break;
             }
             tv_delivery_city.setText("从"+bean.data.getItems().get(0).getDelivery_province()+"发货");
-            tv_pay_type.setText(AppApplication.getContext().getString(R.string.order_pay_type_wx));
+            if (1==bean.data.getPay_type()) {
+                tv_pay_type.setText(AppApplication.getContext().getString(R.string.order_pay_type_wx));
+            }else {
+                tv_pay_type.setText(AppApplication.getContext().getString(R.string.text_ali_pay));
+            }
 
             tv_name.setText(bean.data.getBuyer_name());
             tv_mobile.setText(bean.data.getBuyer_phone());
@@ -180,6 +178,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                         intent.putExtra("kdn_company_code", String.valueOf(adapterOrderList.getData().get(position).getExpress()));
                         startActivity(intent);
                     }
+                }
+            });
+            adapterOrderList.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    PageUtil.jump2GoodsDetailActivity(adapterOrderList.getData().get(position).getRid());
                 }
             });
         }else{

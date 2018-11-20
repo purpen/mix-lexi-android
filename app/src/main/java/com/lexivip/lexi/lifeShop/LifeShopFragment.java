@@ -22,8 +22,8 @@ import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseFragment;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.dialog.InquiryDialog;
 import com.lexivip.lexi.index.lifehouse.LifeHouseBean;
-import com.lexivip.lexi.orderList.InquiryDialog;
 import com.lexivip.lexi.user.login.UserProfileUtil;
 
 import java.util.Date;
@@ -202,16 +202,17 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                 getActivity().startActivity(intent);
                 break;
             case R.id.button:
-                InquiryDialog dialog = new InquiryDialog("确定拨打客服电话？", getActivity(), new InquiryDialog.ImagePopwindowInterface() {
+                InquiryDialog inquiryDialog = new com.lexivip.lexi.dialog.InquiryDialog(getContext(),"确定拨打客服电话？","取消","拨打", new InquiryDialog.InquiryInterface() {
                     @Override
                     public void getCheck(boolean isCheck) {
-                        if (isCheck) {
+                        if (!isCheck) {
                             //拨打电话
                             intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-2345-0000"));
                             getActivity().startActivity(intent);
                         }
                     }
                 });
+                inquiryDialog.show();
                 break;
             case R.id.ll_invite:
                 break;

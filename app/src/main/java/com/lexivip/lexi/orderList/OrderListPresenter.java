@@ -24,7 +24,6 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
     @Override
     public void getData(int status, int page) {
-        LogUtil.e("当前："+status);
         model.getData(status, page, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
@@ -38,6 +37,7 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("当前数据："+json);
                 MyOrderListBean bean= JsonUtil.fromJson(json,MyOrderListBean.class);
                 view.dismissLoadingView();
                 if (bean.isSuccess()){
