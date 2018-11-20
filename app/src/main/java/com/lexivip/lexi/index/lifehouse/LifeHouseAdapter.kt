@@ -21,7 +21,6 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ImageSpan
 import com.lexivip.lexi.PageUtil
-import de.hdodenhof.circleimageview.CircleImageView
 
 class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res){
     private val dp87:Int by lazy { DimenUtil.dp2px(87.0) }

@@ -5,6 +5,7 @@ import android.util.Base64;
 
 import com.basemodule.tools.Constants;
 import com.lexivip.lexi.address.AddressBean;
+import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.order.CreateOrderBean;
 import com.lexivip.lexi.order.FullReductionRequestBean;
 import com.lexivip.lexi.orderList.EvaluateBean;
@@ -1528,6 +1529,24 @@ public class ClientParamsAPI {
         params.put("max_price", maxPrice);
         params.put("sort_newest", sort_newest);
         params.put("cids", cids);
+        return params;
+    }
+
+    /**
+     * 发布橱窗
+     * @param title
+     * @param content
+     * @param products
+     * @param tagList
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getPublishShopWindowParams(@NotNull String title, @NotNull String content, @NotNull ArrayList<ProductBean> products, @NotNull ArrayList<String> tagList) {
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("title", title);
+        params.put("description", content);
+        params.put("product_items", products);
+        params.put("keywords", tagList);
         return params;
     }
 }

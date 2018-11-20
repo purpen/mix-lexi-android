@@ -39,8 +39,6 @@ class FragmentShopWindow : BaseFragment() {
         titles.add(getString(R.string.text_recommend))
         fragments.add(fragment1)
 
-        if (activity==null) return
-
         val adapter = CustomFragmentPagerAdapter(childFragmentManager, fragments, titles)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size

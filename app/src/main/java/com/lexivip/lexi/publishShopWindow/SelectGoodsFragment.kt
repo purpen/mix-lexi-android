@@ -1,14 +1,23 @@
 package com.lexivip.lexi.publishShopWindow
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.SimpleItemAnimator
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
+import com.lexivip.lexi.GridSpacingItemDecoration
 import com.lexivip.lexi.R
+import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.eventBusMessge.MessageRequestGoodsImages
+import kotlinx.android.synthetic.main.fragment_select_goods.*
+import org.greenrobot.eventbus.EventBus
 
-class SelectGoodsFragment: BaseFragment(),SelectGoodsContract.View {
+class SelectGoodsFragment : BaseFragment(), SelectGoodsContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
 
-    private val adapterGrid:AdapterGridImage by lazy {AdapterGridImage(R.layout.adapter_pure_imageview)}
+    private val adapterGrid: AdapterGridImage by lazy { AdapterGridImage(R.layout.adapter_pure_imageview) }
+
 
     override val layout: Int = R.layout.fragment_select_goods
 
@@ -18,7 +27,7 @@ class SelectGoodsFragment: BaseFragment(),SelectGoodsContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments==null) return
+        if (arguments == null) return
         whichPage = arguments!!.getInt(SelectGoodsFragment::class.java.simpleName, PAGE_LIKE)
     }
 
@@ -37,27 +46,52 @@ class SelectGoodsFragment: BaseFragment(),SelectGoodsContract.View {
         }
     }
 
+    override fun initView() {
+        recyclerView.layoutManager = GridLayoutManager(activity, 3)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapterGrid
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(3, DimenUtil.dp2px(1.0), false))
+        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+    }
+
+
     override fun loadData() {
         presenter.loadData(whichPage)
     }
 
+    override fun setNewData(data: List<ProductBean>) {
+        adapterGrid.setNewData(data)
+    }
+
+
+    override fun addData(products: MutableList<ProductBean>) {
+        adapterGrid.addData(products)
+    }
 
     override fun loadMoreComplete() {
-        super.loadMoreComplete()
+        adapterGrid.loadMoreComplete()
     }
 
 
     override fun loadMoreEnd() {
-        super.loadMoreEnd()
+        adapterGrid.loadMoreEnd()
     }
 
     override fun loadMoreFail() {
-        super.loadMoreFail()
+        adapterGrid.loadMoreFail()
     }
 
     override fun installListener() {
-        presenter.loadMoreData()
+        adapterGrid.setOnLoadMoreListener({
+            presenter.loadMoreData()
+        }, recyclerView)
+
+        adapterGrid.setOnItemClickListener { _, view, position ->
+            val item = adapterGrid.getItem(position) ?: return@setOnItemClickListener
+            EventBus.getDefault().post(MessageRequestGoodsImages(item.rid,item.store_rid))
+        }
     }
+
 
     override fun showLoadingView() {
         dialog.show()

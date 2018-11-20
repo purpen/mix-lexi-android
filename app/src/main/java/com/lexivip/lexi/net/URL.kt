@@ -821,4 +821,14 @@ object URL {
      * 添加标签
      */
     const val SHOP_WINDOW_KEYWORD = "${BASE_URL}shop_windows/keywords"
+
+    /**
+     * 选中的商品图片
+     */
+    const val SELECT_GOODS_IMAGE = "${BASE_URL}products/images"
+
+    /**
+     * 发布橱窗
+     */
+    const val PUBLISH_SHOP_WINDOW = "${BASE_URL}shop_windows"
 }

@@ -120,6 +120,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="30dp"
                 android:background="@null"
+                android:maxLength="50"
                 android:gravity="start|center_vertical"
                 android:hint="@string/text_shop_window_title_hint"
                 android:includeFontPadding="false"
@@ -146,6 +147,7 @@
                 android:background="@null"
                 android:gravity="start|center_vertical"
                 android:hint="@string/text_shop_window_content_tips"
+                android:maxLength="500"
                 android:includeFontPadding="false"
                 android:textColor="@color/color_333"
                 android:textColorHint="@color/color_ccc"
@@ -164,6 +166,7 @@
                 android:textSize="14sp"
                 android:background="@drawable/bg_round_color5fe4b1"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="@dimen/dp40"
 
                 />
             <com.zhy.view.flowlayout.TagFlowLayout
