@@ -39,7 +39,7 @@ public class InquiryDialog extends BaseDialog<InquiryDialog> {
 
     @Override
     public View onCreateView() {
-        view = View.inflate(context, R.layout.dialog_test,null);
+        view = View.inflate(context, R.layout.dialog_inquiry,null);
         return view;
     }
 
