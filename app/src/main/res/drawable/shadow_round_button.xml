@@ -10,10 +10,10 @@
     </item>
     <!--最上面的View，距离底部2dp的高度，这样底层的View就会露出，这样就有阴影效果了-->
     <item
-        android:bottom="3dp"
-        android:left="2dp"
-        android:right="2dp"
-        android:top="1dp"
+        android:bottom="0.5dp"
+        android:left="0.5dp"
+        android:right="0.5dp"
+        android:top="0.5dp"
         >
         <shape android:shape="rectangle">
             <solid android:color="@android:color/white" />

@@ -219,24 +219,6 @@ public class GlideUtil {
     }
 
     /**
-     * @param t
-     * @param imageView
-     * @param <T>
-     */
-    public static <T> void loadLongImage(T t, ImageView imageView) {
-        RequestOptions requestOptions = new RequestOptions()
-                .format(DecodeFormat.PREFER_RGB_565)
-                .skipMemoryCache(true)
-                .override(990, 14714)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
-        Context context = imageView.getContext();
-        if (context == null) return;
-        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
-    }
-
-    /**
      * By default you get a Drawable RequestBuilder
      * if you call asBitmap() you will get a Bitmap RequestBuilder
      *
@@ -371,7 +353,8 @@ public class GlideUtil {
 
         RequestOptions requestOptions = bitmapTransform(multi)
                 .override(width, height)
-                .skipMemoryCache(true)
+                .skipMemoryCache(false)
+                .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .format(DecodeFormat.PREFER_RGB_565)
                 .error(DEFAULT_ERROR_HOLDER)

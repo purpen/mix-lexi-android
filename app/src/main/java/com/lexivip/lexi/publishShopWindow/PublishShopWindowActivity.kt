@@ -15,13 +15,17 @@ import kotlinx.android.synthetic.main.view_show_window_image3.view.*
 import kotlinx.android.synthetic.main.view_show_window_image5.view.*
 import kotlinx.android.synthetic.main.view_show_window_image7.view.*
 import android.graphics.Bitmap
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.basemodule.tools.*
+import com.lexivip.lexi.beans.ShopWindowBean
+import com.lexivip.lexi.eventBusMessge.MessageAddGoodsImages
 import com.lexivip.lexi.eventBusMessge.MessageShopWindowTag
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
@@ -30,15 +34,24 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class PublishShopWindowActivity : BaseActivity() {
-    private val color949ea6: Int by lazy { Util.getColor(R.color.color_949ea6) }
-    private val maxImageCount: Int by lazy { 7 }
+class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View {
+
+    companion object {
+        const val THREE = 3
+        const val FIVE = 5
+        const val SEVEN = 7
+    }
+
+    private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
+    private val presenter: PublishShopWindowPresenter by lazy { PublishShopWindowPresenter(this) }
+    private val maxImageCount: Int by lazy { SEVEN }
     private lateinit var productsMap: SparseArray<ProductBean>
     private lateinit var adapterTags: TagAdapter<String>
     private val tagList by lazy { ArrayList<String>(3) }
     private val placeHolderBitmap: Bitmap by lazy { getPlaceHolderImage() }
     override val layout: Int = R.layout.acticity_publish_shop_window
-
+    private var publishCount: Int = THREE
+    private lateinit var view: View
     override fun initView() {
 
         EventBus.getDefault().register(this)
@@ -49,8 +62,8 @@ class PublishShopWindowActivity : BaseActivity() {
         }
         customHeadView.setHeadCenterTxtShow(true, R.string.title_select_goods)
         customHeadView.buttonRight.visibility = View.VISIBLE
-        customHeadView.buttonRight.setTextColor(color949ea6)
-        switchImageMode(3)
+        customHeadView.buttonRight.setTextColor(Util.getColor(R.color.color_949ea6))
+        switchImageMode(THREE)
         initTagsView()
 
     }
@@ -69,7 +82,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 val linearLayout = LinearLayout(applicationContext)
                 linearLayout.orientation = LinearLayout.HORIZONTAL
                 val textView = TextView(applicationContext)
-                textView.setCompoundDrawables(null,null, Util.getDrawableWidthPxDimen(R.mipmap.icon_clear_search_box, DimenUtil.dp2px(12.0)), null)
+                textView.setCompoundDrawables(null, null, Util.getDrawableWidthPxDimen(R.mipmap.icon_clear_search_box, DimenUtil.dp2px(12.0)), null)
                 textView.compoundDrawablePadding = DimenUtil.dp2px(10.0)
                 textView.gravity = Gravity.CENTER_VERTICAL
                 val imageView = ImageView(applicationContext)
@@ -130,26 +143,89 @@ class PublishShopWindowActivity : BaseActivity() {
     }
 
 
+    /**
+     * 返回待发布商品列表
+     */
+    private fun getPublishProducts(): ArrayList<ProductBean> {
+        val products = ArrayList<ProductBean>()
+        for (i in 0 until publishCount) {
+            val bean = productsMap[i] ?: continue
+            products.add(bean)
+        }
+        return products
+    }
+
+    /**
+     * 发布橱窗成功
+     */
+    override fun publishShopWindowSuccess(data: ShopWindowBean) {
+        data.PAGE_TAG = TAG
+        EventBus.getDefault().post(data)
+        ToastUtil.showSuccess("发布成功")
+        finish()
+    }
+
     override fun installListener() {
+        editTextTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                setPublishButtonState()
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+
+        editTextContent.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                setPublishButtonState()
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+
+        customHeadView.buttonRight.setOnClickListener {
+            val title = editTextTitle.text.trim().toString()
+            val content = editTextContent.text.trim().toString()
+            val products = getPublishProducts()
+            presenter.publishShopWindow(title, content, products, tagList)
+        }
+
         button3Image.setOnClickListener {
-            switchImageMode(3)
+            publishCount = THREE
+            switchImageMode(THREE)
             resetButtonState()
             button3Image.isEnabled = false
             button3Image.setTextColor(Util.getColor(android.R.color.white))
+            setPublishButtonState()
         }
 
         button5Image.setOnClickListener {
-            switchImageMode(5)
+            publishCount = FIVE
+            switchImageMode(FIVE)
             resetButtonState()
             button5Image.isEnabled = false
             button5Image.setTextColor(Util.getColor(android.R.color.white))
+            setPublishButtonState()
         }
 
         button7Image.setOnClickListener {
-            switchImageMode(7)
+            publishCount = SEVEN
+            switchImageMode(SEVEN)
             resetButtonState()
             button7Image.isEnabled = false
             button7Image.setTextColor(Util.getColor(android.R.color.white))
+            setPublishButtonState()
         }
 
         buttonAddTag.setOnClickListener {
@@ -158,6 +234,19 @@ class PublishShopWindowActivity : BaseActivity() {
                 return@setOnClickListener
             }
             startActivity(Intent(this, ShopWindowTagsActivity::class.java))
+        }
+    }
+
+    /**
+     * 设置发布按钮状态
+     */
+    private fun setPublishButtonState() {
+        if (publishEnable()) {
+            customHeadView.buttonRight.setTextColor(Util.getColor(android.R.color.white))
+            customHeadView.buttonRight.isEnabled = true
+        } else {
+            customHeadView.buttonRight.setTextColor(Util.getColor(R.color.color_949ea6))
+            customHeadView.buttonRight.isEnabled = false
         }
     }
 
@@ -188,7 +277,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 val layoutParams30: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp220, dp220) }
                 val layoutParams31: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp108, dp110) }
                 val layoutParams32: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp108, dp110) }
-                val view = View.inflate(this, R.layout.view_show_window_image3, null)
+                view = View.inflate(this, R.layout.view_show_window_image3, null)
                 linearLayoutBox.addView(view)
                 if (productsMap[0] == null) {
                     view.imageView30.scaleType = ImageView.ScaleType.CENTER
@@ -223,14 +312,14 @@ class PublishShopWindowActivity : BaseActivity() {
                 layoutParams32.topMargin = dp2
                 view.relativeLayoutImage32.layoutParams = layoutParams32
                 view.imageView30.setOnClickListener {
-                    PageUtil.jump2SelectGoodsImageActivity(0)
+                    PageUtil.jump2SelectGoodsImageActivity(0, productsMap)
                 }
 
                 view.imageView31.setOnClickListener {
-                    PageUtil.jump2SelectGoodsImageActivity(1)
+                    PageUtil.jump2SelectGoodsImageActivity(1, productsMap)
                 }
                 view.imageView32.setOnClickListener {
-                    PageUtil.jump2SelectGoodsImageActivity(2)
+                    PageUtil.jump2SelectGoodsImageActivity(2, productsMap)
                 }
             }
 
@@ -246,7 +335,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 val layoutParams52: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp125, dp101) }
                 val layoutParams53: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp188, dp141) }
                 val layoutParams54: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp140, dp141) }
-                val view = View.inflate(this, R.layout.view_show_window_image5, null)
+                view = View.inflate(this, R.layout.view_show_window_image5, null)
                 view.imageView50.layoutParams = layoutParams50
                 view.imageView51.layoutParams = layoutParams51
                 layoutParams51.addRule(RelativeLayout.END_OF, R.id.imageView50)
@@ -306,26 +395,21 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 view.imageView50.setOnClickListener {
-                    if (productsMap[0] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[0].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(0, productsMap)
                 }
                 view.imageView51.setOnClickListener {
-                    if (productsMap[1] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[1].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(1, productsMap)
                 }
 
                 view.imageView52.setOnClickListener {
-                    if (productsMap[2] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[2].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(2, productsMap)
                 }
                 view.imageView53.setOnClickListener {
-                    if (productsMap[3] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[3].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(3, productsMap)
                 }
 
                 view.imageView54.setOnClickListener {
-                    if (productsMap[4] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[4].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(4, productsMap)
                 }
             }
 
@@ -342,7 +426,7 @@ class PublishShopWindowActivity : BaseActivity() {
                 val layoutParamsImageView74: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp110, dp110) }
                 val layoutParamsImageView75: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp110, dp110) }
                 val layoutParamsImageView76: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp110, dp110) }
-                val view = View.inflate(this, R.layout.view_show_window_image7, null)
+                view = View.inflate(this, R.layout.view_show_window_image7, null)
                 view.imageView70.layoutParams = layoutParamsImageView70
 
                 layoutParamsImageView71.leftMargin = dp2
@@ -429,32 +513,146 @@ class PublishShopWindowActivity : BaseActivity() {
                 }
 
                 view.imageView70.setOnClickListener {
-                    if (productsMap[0] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[0].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(0, productsMap)
                 }
                 view.imageView71.setOnClickListener {
-                    if (productsMap[1] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[1].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(1, productsMap)
                 }
                 view.imageView72.setOnClickListener {
-                    if (productsMap[2] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[2].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(2, productsMap)
                 }
                 view.imageView73.setOnClickListener {
-                    if (productsMap[3] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[3].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(3, productsMap)
                 }
                 view.imageView74.setOnClickListener {
-                    if (productsMap[4] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[4].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(4, productsMap)
                 }
                 view.imageView75.setOnClickListener {
-                    if (productsMap[5] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[5].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(5, productsMap)
                 }
                 view.imageView76.setOnClickListener {
-                    if (productsMap[6] == null) return@setOnClickListener
-                    PageUtil.jump2GoodsDetailActivity(productsMap[6].rid)
+                    PageUtil.jump2SelectGoodsImageActivity(6, productsMap)
+                }
+            }
+        }
+    }
+
+    /**
+     * 当有产品被选中
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onImageSelected(message: MessageAddGoodsImages) {
+        val bean = ProductBean()
+        bean.rid = message.rid
+        bean.cover = message.url
+        bean.cover_id = message.id
+        productsMap.put(message.position, bean)
+        setImageForGridView(publishCount)
+
+        setPublishButtonState()
+    }
+
+    /**
+     * 能否发布
+     */
+    private fun publishEnable(): Boolean {
+        val title = editTextTitle.text.trim().toString()
+        val content = editTextContent.text.trim().toString()
+        val products = getPublishProducts()
+        if (TextUtils.isEmpty(title)) {
+            customHeadView.buttonRight.isEnabled = false
+            return false
+        }
+        if (TextUtils.isEmpty(content)) {
+            customHeadView.buttonRight.isEnabled = false
+            return false
+        }
+        if (products.isEmpty() || products.size < publishCount) {
+            customHeadView.buttonRight.isEnabled = false
+            return false
+        }
+        return true
+    }
+
+    private fun setImageForGridView(count: Int) {
+        when (count) {
+            3 -> {
+                if (productsMap[0] != null) {
+                    view.imageView30.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[0].cover, view.imageView30)
+                }
+
+                if (productsMap[1] != null) {
+                    view.imageView31.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[1].cover, view.imageView31)
+                }
+
+                if (productsMap[2] != null) {
+                    view.imageView32.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[2].cover, view.imageView32)
+                }
+            }
+
+            5 -> {
+                if (productsMap[0] != null) {
+                    view.imageView50.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[0].cover, view.imageView50)
+                }
+
+                if (productsMap[1] != null) {
+                    view.imageView51.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[1].cover, view.imageView51)
+                }
+
+                if (productsMap[2] != null) {
+                    view.imageView52.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[2].cover, view.imageView52)
+                }
+
+                if (productsMap[3] != null) {
+                    view.imageView53.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[3].cover, view.imageView53)
+                }
+
+                if (productsMap[4] != null) {
+                    view.imageView54.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[4].cover, view.imageView54)
+                }
+            }
+            7 -> {
+                if (productsMap[0] != null) {
+                    view.imageView70.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[0].cover, view.imageView70)
+                }
+
+                if (productsMap[1] != null) {
+                    view.imageView71.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[1].cover, view.imageView71)
+                }
+
+                if (productsMap[2] != null) {
+                    view.imageView72.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[2].cover, view.imageView72)
+                }
+
+                if (productsMap[3] != null) {
+                    view.imageView73.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[3].cover, view.imageView73)
+                }
+
+                if (productsMap[4] != null) {
+                    view.imageView74.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[4].cover, view.imageView74)
+                }
+
+                if (productsMap[5] != null) {
+                    view.imageView75.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[5].cover, view.imageView75)
+                }
+
+                if (productsMap[6] != null) {
+                    view.imageView76.scaleType = ImageView.ScaleType.FIT_XY
+                    GlideUtil.loadImageWithFading(productsMap[6].cover, view.imageView76)
                 }
             }
         }
@@ -470,9 +668,25 @@ class PublishShopWindowActivity : BaseActivity() {
         adapterTags.notifyDataChanged()
     }
 
+    override fun showLoadingView() {
+        dialog.show()
+    }
+
+    override fun dismissLoadingView() {
+        dialog.dismiss()
+    }
+
+    override fun showError(string: String) {
+        ToastUtil.showError(string)
+    }
+
     override fun onDestroy() {
         placeHolderBitmap.recycle()
         EventBus.getDefault().unregister(this)
         super.onDestroy()
+    }
+
+    override fun setPresenter(presenter: PublishShopWindowPresenter?) {
+        setPresenter(presenter)
     }
 }

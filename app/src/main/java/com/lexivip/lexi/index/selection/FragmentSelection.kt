@@ -140,7 +140,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      * 设置发现生活美学数据
      */
     override fun setDiscoverLifeData(windows: List<ShopWindowBean>) {
-
         adapterDiscoverLife.setNewData(windows)
     }
 
@@ -342,9 +341,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         textViewExemptionMail.setOnClickListener(this)
         textViewMoreDiscoverLife.setOnClickListener(this)
         textViewMoreZCManifest.setOnClickListener(this)
-        adapterDiscoverLife.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, view, position ->
-            val item = adapter.getItem(position) as ProductBean
-            ToastUtil.showInfo(item.name)
+
+        adapterDiscoverLife.setOnItemClickListener { _, _, position ->
+            val item = adapterDiscoverLife.getItem(position)?:return@setOnItemClickListener
+            PageUtil.jump2ShopWindowDetailActivity(item.rid)
         }
 
         adapterGoodSelection.setOnItemClickListener { adapter, _, position ->
@@ -374,7 +374,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
                 3 -> { //集合详情
                     PageUtil.jump2CollectionDetailActivity(item.recommend_id)
                 }
-                4->{//商品详情
+                4 -> {//商品详情
                     PageUtil.jump2GoodsDetailActivity(item.recommend_id)
                 }
             }
@@ -393,7 +393,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
                 if (UserProfileUtil.isLogin()) {
                     startActivity(Intent(activity, OpenLifeHouseActivity::class.java))
                 } else {
-                    startActivity(Intent(activity,LoginActivity::class.java))
+                    startActivity(Intent(activity, LoginActivity::class.java))
                 }
             }
             R.id.textViewMoreZCManifest -> { //全部种草清单

@@ -109,6 +109,7 @@ public class ProductBean implements Parcelable {
     public String sticked;
     public String store_name;
     public String store_rid;
+    public String store_logo;
     public String top_category_id;
     public int total_stock;
     public List<String> modes;

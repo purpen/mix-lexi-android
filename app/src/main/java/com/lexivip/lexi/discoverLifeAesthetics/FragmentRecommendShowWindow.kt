@@ -14,6 +14,7 @@ import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
+import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
@@ -120,6 +121,7 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onOuterPageShopWindow(message:ShopWindowBean) {
+        if (TextUtils.equals(PublishShopWindowActivity::class.java.simpleName,message.PAGE_TAG)) return
         if (TextUtils.equals(TAG,message.PAGE_TAG)) return
         val data = adapter.data
         for (item in data){

@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <include layout="@layout/view_show_window_image3" />
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bg_gradient_color000_angle270"
-        android:paddingTop="20dp"
         >
 
         <TextView
@@ -18,10 +17,11 @@
             android:layout_marginStart="@dimen/dp15"
             android:layout_marginEnd="@dimen/dp15"
             android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/text_loading"
             android:textColor="@android:color/white"
             android:textSize="@dimen/sp14" />
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

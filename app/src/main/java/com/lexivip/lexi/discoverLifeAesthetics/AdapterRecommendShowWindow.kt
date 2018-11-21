@@ -1,4 +1,5 @@
 package com.lexivip.lexi.discoverLifeAesthetics
+
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
@@ -14,14 +15,14 @@ import me.gujun.android.taggroup.TagGroup
 
 class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean, BaseViewHolder>(layoutResId) {
     private val dp124: Int by lazy { ScreenUtil.getScreenWidth() / 3 }
-    private val dp250: Int by lazy { dp124*2+1 }
+    private val dp250: Int by lazy { dp124 * 2 + 1 }
     private val dp13: Int by lazy { DimenUtil.dp2px(13.0) }
     private val dp20: Int by lazy { DimenUtil.dp2px(20.0) }
     private val dp2: Int by lazy { DimenUtil.dp2px(2.0) }
 
-    private val layoutParams250:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp250,dp250) }
-    private val layoutParams31:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124,dp124) }
-    private val layoutParams32:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124,dp124) }
+    private val layoutParams250: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp250, dp250) }
+    private val layoutParams31: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
+    private val layoutParams32: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
@@ -66,16 +67,36 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
 
         helper.addOnClickListener(R.id.textViewShare)
 
-        helper.setText(R.id.textViewLikeCommentCount, "${item.like_count}" + Util.getString(R.string.text_favorite) + " · ${item.comment_count}" + Util.getString(R.string.text_comment_count))
+        val textViewLikeCount = helper.getView<TextView>(R.id.textViewLikeCount)
+        if (item.like_count == 0) {
+            textViewLikeCount.visibility = View.GONE
+        } else {
+            textViewLikeCount.visibility = View.VISIBLE
+            helper.setText(R.id.textViewLikeCount, "${item.like_count}" + Util.getString(R.string.text_favorite))
+        }
+        val textViewCommentCount = helper.getView<TextView>(R.id.textViewCommentCount)
+        if (item.comment_count == 0) {
+            textViewCommentCount.visibility = View.GONE
+        } else {
+            textViewCommentCount.visibility = View.VISIBLE
+            helper.setText(R.id.textViewCommentCount, "${item.comment_count}" + Util.getString(R.string.text_comment_count))
+        }
+
+        val viewDot = helper.getView<View>(R.id.viewDot)
+        if (item.comment_count > 0 && item.like_count > 0) {
+            viewDot.visibility = View.VISIBLE
+        } else {
+            viewDot.visibility = View.GONE
+        }
 
         helper.setText(R.id.textViewTitle1, item.title)
         helper.setText(R.id.textViewTitle2, item.description)
 
         val textViewFocus = helper.getView<TextView>(R.id.textViewFocus)
 
-        if (TextUtils.equals(UserProfileUtil.getUserId(),item.uid)){
+        if (TextUtils.equals(UserProfileUtil.getUserId(), item.uid) || item.is_official) { //官方和自己隐藏关注按钮
             textViewFocus.visibility = View.GONE
-        }else{
+        } else {
             textViewFocus.visibility = View.VISIBLE
             if (item.is_follow) {
                 textViewFocus.text = Util.getString(R.string.text_focused)
@@ -117,12 +138,12 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         val relativeLayoutImage32 = helper.getView<RelativeLayout>(R.id.relativeLayoutImage32)
         imageView30.layoutParams = layoutParams250
         imageView31.layoutParams = layoutParams31
-        layoutParams31.addRule(RelativeLayout.END_OF,R.id.imageView30)
+        layoutParams31.addRule(RelativeLayout.END_OF, R.id.imageView30)
         layoutParams31.marginStart = dp2
 
-        layoutParams32.addRule(RelativeLayout.BELOW,R.id.imageView31)
-        layoutParams32.addRule(RelativeLayout.ALIGN_LEFT,R.id.imageView31)
-        layoutParams32.topMargin = dp2/2
+        layoutParams32.addRule(RelativeLayout.BELOW, R.id.imageView31)
+        layoutParams32.addRule(RelativeLayout.ALIGN_LEFT, R.id.imageView31)
+        layoutParams32.topMargin = dp2 / 2
         relativeLayoutImage32.layoutParams = layoutParams32
 
         GlideUtil.loadImageWithDimenAndRadius(list[0], imageView30, 0, dp250, dp250)

@@ -1,6 +1,7 @@
 package com.lexivip.lexi.index.explore
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SimpleItemAnimator
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -133,7 +134,6 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化优质新品
      */
     private fun initFeatureNewGoods() {
-
         adapterFeatureNewGoods = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -157,13 +157,13 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化品牌馆
      */
     private fun initBrandPavilion() {
-
         adapterBrandPavilion = BrandPavilionAdapter(R.layout.adapter_brand_pavilion)
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewBrand.setHasFixedSize(true)
         recyclerViewBrand.layoutManager = linearLayoutManager
         recyclerViewBrand.adapter = adapterBrandPavilion
+        (recyclerViewBrand.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         recyclerViewBrand.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
@@ -255,7 +255,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     override fun setBrandPavilionFocusStateData(b: Boolean, position: Int) {
         val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
         item.is_followed = b
-        adapterBrandPavilion.notifyDataSetChanged()
+        adapterBrandPavilion.notifyItemChanged(position)
     }
 
 

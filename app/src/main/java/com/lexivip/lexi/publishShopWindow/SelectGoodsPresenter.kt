@@ -47,12 +47,8 @@ class SelectGoodsPresenter(view: SelectGoodsContract.View) : SelectGoodsContract
      */
     override fun loadMoreData() {
         dataSource.loadData(whichPage, page, object : IDataSource.HttpRequestCallBack {
-            override fun onStart() {
-                view.showLoadingView()
-            }
 
             override fun onSuccess(json: String) {
-                view.dismissLoadingView()
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
                 if (editorRecommendBean.success) {
                     val products = editorRecommendBean.data.products

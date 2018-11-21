@@ -556,7 +556,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             relativeLayoutFavoriteGoodsUser.visibility = View.GONE
             return
         }
-
+        val count = product_like_users.size
         val urlList = ArrayList<String>()
 
         for (item in product_like_users) urlList.add(item.avatar)
@@ -586,7 +586,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         }
 
         headImageAdapter.setOnItemClickListener { _, _, position ->
-            PageUtil.jump2OtherUserCenterActivity(product_like_users[position].uid)
+            PageUtil.jump2OtherUserCenterActivity(product_like_users[count - position - 1].uid)
         }
 
     }

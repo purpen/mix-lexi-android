@@ -2,6 +2,8 @@ package com.lexivip.lexi;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.SparseArray;
 
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
@@ -21,6 +23,9 @@ import com.lexivip.lexi.user.login.LoginActivity;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 界面跳转工具类
@@ -163,11 +168,15 @@ public class PageUtil {
     /**
      * 选择橱窗商品图片
      * @param i
+     * @param productsMap
      */
-    public static void jump2SelectGoodsImageActivity(int i) {
+    public static void jump2SelectGoodsImageActivity(int i, SparseArray<ProductBean> productsMap) {
         Application context = AppApplication.getContext();
         Intent intent = new Intent(context,SelectShopWindowGoodsImageActivity.class);
-        intent.putExtra(SelectShopWindowGoodsImageActivity.class.getSimpleName(),i);
+        Bundle bundle = new Bundle();
+        bundle.putInt(SelectShopWindowGoodsImageActivity.class.getSimpleName(), i);
+        bundle.putSparseParcelableArray(SelectShopWindowGoodsImageActivity.class.getName(), productsMap);
+        intent.putExtras(bundle);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
