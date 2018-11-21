@@ -821,4 +821,12 @@ object URL {
      * 添加标签
      */
     const val SHOP_WINDOW_KEYWORD = "${BASE_URL}shop_windows/keywords"
+    /**
+     * 分享海报
+     */
+    const val SHARE_POSTER="${BASE_URL}market/wxa_poster"
+    /**
+     * 橱窗分享海报
+     */
+    const val SHARE_WINDOW="${BASE_URL}market/share/shop_window_poster"
 }

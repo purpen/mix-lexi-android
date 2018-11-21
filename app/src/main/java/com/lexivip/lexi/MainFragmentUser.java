@@ -70,14 +70,14 @@ public class MainFragmentUser extends BaseFragment {
             public void onClick(View v) {
 
                 //分享
-                String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                /*String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,
                         Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE,
                         Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,
                         Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,
                         Manifest.permission.WRITE_APN_SETTINGS};
-                ActivityCompat.requestPermissions(getActivity(),mPermissionList,123);
-                ShareUtil shareUtil=new ShareUtil();
+                ActivityCompat.requestPermissions(getActivity(),mPermissionList,123);*/
+//                ShareUtil shareUtil=new ShareUtil();
 
             }
         });
@@ -97,5 +97,14 @@ public class MainFragmentUser extends BaseFragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        LogUtil.e("外层的fragment");
+        for (BaseFragment fragment : fragments)
+        {
+            if (fragment != null)
+            {
+                // 这里就会调用我们Fragment中的onRequestPermissionsResult方法
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+        }
     }
 }

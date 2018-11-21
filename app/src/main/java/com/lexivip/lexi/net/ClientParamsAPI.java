@@ -1530,4 +1530,32 @@ public class ClientParamsAPI {
         params.put("cids", cids);
         return params;
     }
+
+    /**
+     * 生成分享海报图
+     * @param auth_app_id
+     * @param path
+     * @param type
+     * @param rid
+     * @param scene
+     * @return
+     */
+    public static HashMap<String,Object> getShareImage(String auth_app_id,String path,int type,String rid,String scene){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("auth_app_id", auth_app_id);
+        params.put("path", path);
+        params.put("type", type);
+        params.put("rid", rid);
+        params.put("scene", scene);
+        return params;
+    }
+
+    public static HashMap<String,Object> getShareWindow(String auth_app_id,String path,String rid,String scene){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("auth_app_id", auth_app_id);
+        params.put("path", path);
+        params.put("rid", rid);
+        params.put("scene", scene);
+        return params;
+    }
 }

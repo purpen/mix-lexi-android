@@ -1,5 +1,6 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.index.selection.DiscoverLifeAdapter
+import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.view.emotionkeyboardview.fragment.EmotionMainFragment
@@ -28,8 +30,11 @@ import kotlinx.android.synthetic.main.view_show_window_image3.view.*
 import kotlinx.android.synthetic.main.view_show_window_image5.view.*
 import kotlinx.android.synthetic.main.view_show_window_image7.view.*
 import org.greenrobot.eventbus.EventBus
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
-class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
+class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
 
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
 
@@ -548,8 +553,9 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         }
 
         textViewShare.setOnClickListener { view ->
-            val dialog = DistributeShareDialog(this)
-            dialog.show()
+            //val dialog = DistributeShareDialog(this)
+            //dialog.show()
+            share()
         }
 
 
@@ -700,5 +706,39 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
     override fun onDestroy() {
 //        EventBus.getDefault().unregister(this)
         super.onDestroy()
+    }
+
+    @AfterPermissionGranted(Constants.REQUEST_CODE_PICK_IMAGE)
+    private fun share(){
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            val share= ShareUtil(this,dialog,rid,rid)
+        } else {
+            // 申请权限。
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo),
+                    Constants.REQUEST_CODE_PICK_IMAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+
+    }
+
+    override fun onRationaleDenied(requestCode: Int) {
+
+    }
+
+    override fun onRationaleAccepted(requestCode: Int) {
+
     }
 }

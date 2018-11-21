@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,13 +23,16 @@ import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseFragment;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.address.AddressActivity;
 import com.lexivip.lexi.dialog.InquiryDialog;
 import com.lexivip.lexi.index.lifehouse.LifeHouseBean;
 import com.lexivip.lexi.user.login.UserProfileUtil;
 
 import java.util.Date;
+import java.util.List;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -231,7 +235,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     private void saveImage() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(getActivity(), perms)) {
-            PreserveImageDialog imageDialog = new PreserveImageDialog(getActivity(), getActivity());
+            PreserveImageDialog imageDialog = new PreserveImageDialog(getContext(), getActivity());
             imageDialog.show();
         } else {
             EasyPermissions.requestPermissions(getActivity(), getString(R.string.rationale_camera), Constants.REQUEST_CODE_SAVE_IMAGE, perms);
@@ -302,4 +306,32 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     public void setPresenter(LifeShopContract.Presenter presenter) {
         setPresenter(presenter);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    /*@Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(getActivity()).build().show();
+        }
+    }
+
+    @Override
+    public void onRationaleAccepted(int requestCode) {
+
+    }
+
+    @Override
+    public void onRationaleDenied(int requestCode) {
+
+    }*/
 }

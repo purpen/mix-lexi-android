@@ -96,7 +96,7 @@
     <string name="text_explore_collection">集合</string>
     <string name="text_explore_good100">百元好物</string>
     <string name="text_good_design">特惠好设计</string>
-    <string name="rationale_photo">需要获取相册权限</string>
+    <string name="rationale_photo">需要获取文件权限</string>
     <string name="rationale_camera">需要获取相机与文件权限</string>
     <string name="hint_text_upload_avatar">请先上传头像</string>
     <string name="tex_hint_new_password_again">请再次输入新密码</string>

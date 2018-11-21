@@ -2,6 +2,8 @@ package com.basemodule.tools;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.security.PublicKey;
+
 /**
  * Created by lilin on 2017/6/16.
  */
@@ -14,6 +16,11 @@ public class Constants {
     public static final String PAGE_SIZE20= "20";
 
     public static final String WX_ID="wx456e2f0cb22db269";
+
+    public static final String AUTHAPPID="wx60ed17bfd850985d";
+    public static final String HOMEPATH="pages/index/index";
+    public static final String PRODUCTPATH="pages/product/product";
+    public static final String WINDOWPATH="pages/windowDetail/windowDetail";
 
     //从获取相册图片
     public static final int REQUEST_CODE_PICK_IMAGE = 0x000011;

@@ -103,7 +103,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                             @Override
                             public void getCheck(boolean isCheck) {
                                 if (isCheck)
-                                    presenter.deleteOrder(adapterOrderList.getData().get(position).getRid());
+                                    presenter.finishOrder(adapterOrderList.getData().get(position).getRid());
                             }
                         });
                         inquiryDialog.show();
