@@ -33,7 +33,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
     private var selectedColor: String? = null
     private var selectedSize: String? = null
     private lateinit var view: View
-    private var selectedSKU: GoodsAllSKUBean.DataBean.ItemsBean? = null
+    private var selectedSKU: GoodsAllSKUBean.DataBean.ItemsBean?=null
 
     private lateinit var adapterColor: TagAdapter<GoodsAllSKUBean.DataBean.ColorsBean>
     private lateinit var adapterSize: TagAdapter<GoodsAllSKUBean.DataBean.ModesBean>
@@ -109,6 +109,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
         }
 
         items.addAll(goodsAllSKUBean.data.items)
+        selectedSKU = items[0]
         modes.addAll(modesList)
         colors.addAll(colorsList)
 
@@ -295,6 +296,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                 ToastUtil.showInfo("请选择规格")
                 return@setOnClickListener
             }
+
             dismiss()
             present.addShopCart(selectedSKU!!.rid, 1)
         }
@@ -491,9 +493,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
      * @return
      */
     private fun setSkuSpecInfoByAttr() {
-        //        只有颜色列表
-        if (view.flowLayoutColor.isShown && !view.flowLayoutSize.isShown) {
-
+       if (view.flowLayoutColor.isShown && !view.flowLayoutSize.isShown) { // 只有颜色列表
             if (TextUtils.isEmpty(selectedColor)) return
 
             for (item in items) {
