@@ -1,6 +1,7 @@
 package com.lexivip.lexi.index.discover
 
 import android.view.View
+import com.basemodule.tools.LogUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -27,12 +28,12 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e(json)
                 view.dismissLoadingView()
                 val response = JSONObject(json)
-                val isSuccess = response.getBoolean("success")
-                val status = response.getJSONObject("status")
-                val data = response.getJSONObject("data")
-//                val articleDetailBean = JsonUtil.fromJson(json, ArticleDetailBean::class.java)
+                val isSuccess = response.optBoolean("success")
+                val status = response.optJSONObject("status")
+                val data = response.optJSONObject("data")
                 if (isSuccess) {
                     view.setData(data)
                 } else {
