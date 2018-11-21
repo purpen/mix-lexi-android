@@ -37,6 +37,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="68dp"
+            android:visibility="gone"
             android:background="@mipmap/icon_clear_search_box" />
 
         <TextView
@@ -149,6 +150,7 @@
                     android:id="@+id/recyclerViewHotRecommend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:overScrollMode="never" />
             </LinearLayout>
 

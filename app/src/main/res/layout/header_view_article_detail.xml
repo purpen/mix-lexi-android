@@ -63,13 +63,12 @@
         android:textSize="12sp"
         />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewHeader"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="15dp"
         android:layout_below="@id/textViewDate"
-        android:src="@drawable/default_load"
         android:layout_marginTop="@dimen/dp10"
         />
     <TextView

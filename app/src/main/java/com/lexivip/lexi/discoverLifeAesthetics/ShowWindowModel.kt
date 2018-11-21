@@ -97,6 +97,25 @@ open class ShowWindowModel{
         })
     }
 
+    fun loadRelateShopWIndow(page: Int, tag: String, callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["page"] = "$page"
+        params["keyword"] = tag
+        HttpRequest.sendRequest(HttpRequest.GET,URL.RELATE_SHOW_WINDOW,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
 }
 
 

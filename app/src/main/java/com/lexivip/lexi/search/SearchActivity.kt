@@ -127,7 +127,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         recyclerViewHotRecommend.setHasFixedSize(true)
         recyclerViewHotRecommend.layoutManager = linearLayoutManager
         recyclerViewHotRecommend.adapter = adapterHotRecommendPavilion
-        recyclerViewHotRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(30.0), Util.getColor(android.R.color.transparent)))
+        recyclerViewHotRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(31.0), Util.getColor(android.R.color.transparent)))
     }
 
     override fun setHotRecommendPavilionData(hot_recommends: MutableList<SearchHotRecommendPavilionBean.DataBean.HotRecommendsBean>) {
@@ -199,9 +199,11 @@ class SearchActivity : BaseActivity(), SearchContract.View {
             override fun afterTextChanged(s: Editable?) {
                 if (TextUtils.isEmpty(s)) {
                     recyclerViewFuzzyMatch.visibility = View.GONE
+                    imageViewClear.visibility = View.GONE
                     return
                 }
 
+                imageViewClear.visibility = View.VISIBLE
                 if (!recyclerViewFuzzyMatch.isShown){
                     recyclerViewFuzzyMatch.visibility = View.VISIBLE
                 }
@@ -256,6 +258,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         //清空输入框
         imageViewClear.setOnClickListener {
             editTextSearch.text.clear()
+            imageViewClear.visibility = View.GONE
         }
 
         textViewCancel.setOnClickListener {

@@ -38,6 +38,10 @@ class ShowWindowContract {
         fun setFocusState(isFollowed: Boolean, position: Int) {
 
         }
+
+        fun setRelateShopWIndowData(shop_windows: List<ShopWindowBean>) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

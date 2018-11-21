@@ -35,6 +35,7 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
@@ -195,7 +196,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         val size = data.users.size
         headImageAdapter.setOnItemClickListener { _, _, position ->
             val uid = data.users[size - position - 1].uid
-            if (TextUtils.isEmpty(uid)) return@setOnItemClickListener
+            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(),uid)) return@setOnItemClickListener
             PageUtil.jump2OtherUserCenterActivity(uid)
         }
     }

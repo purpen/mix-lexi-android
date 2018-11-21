@@ -586,7 +586,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         }
 
         headImageAdapter.setOnItemClickListener { _, _, position ->
-            PageUtil.jump2OtherUserCenterActivity(product_like_users[count - position - 1].uid)
+            val uid = product_like_users[count - position - 1].uid
+            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(),uid)) return@setOnItemClickListener
+            PageUtil.jump2OtherUserCenterActivity(uid)
         }
 
     }

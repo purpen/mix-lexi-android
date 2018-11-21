@@ -831,6 +831,11 @@ object URL {
      * 发布橱窗
      */
     const val PUBLISH_SHOP_WINDOW = "${BASE_URL}shop_windows"
+
+    /**
+     * 包含指定标签的橱窗
+     */
+    const val RELATE_SHOW_WINDOW = "${BASE_URL}shop_windows/keyword"
     /**
      * 分享海报
      */

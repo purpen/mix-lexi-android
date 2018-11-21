@@ -49,11 +49,11 @@
         android:layout_marginTop="@dimen/dp10"
         >
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageViewAvatar"
             android:layout_width="@dimen/dp25"
             android:layout_height="@dimen/dp25"
-            android:scaleType="fitXY" />
+            />
 
         <TextView
             android:id="@+id/textViewName"

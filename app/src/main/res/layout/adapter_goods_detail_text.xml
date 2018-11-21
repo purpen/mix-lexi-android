@@ -11,5 +11,5 @@
     android:includeFontPadding="false"
     android:textSize="@dimen/sp14"
     android:textColor="@color/color_333"
-    android:lineSpacingMultiplier="1.2"
+    android:lineSpacingMultiplier="1.5"
     />

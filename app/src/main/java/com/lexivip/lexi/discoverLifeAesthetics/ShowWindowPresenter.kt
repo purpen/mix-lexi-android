@@ -183,4 +183,60 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
             }
         })
     }
+
+
+    /**
+     * 加载相关的橱窗
+     */
+    fun loadRelateShopWIndow(tag: String) {
+        dataSource.loadRelateShopWIndow(page,tag, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val showWindowListBean = JsonUtil.fromJson(json, ShowWindowListBean::class.java)
+                if (showWindowListBean.success) {
+                    view.setNewData(showWindowListBean.data.shop_windows)
+                    page++
+                } else {
+                    view.showError(showWindowListBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 加载更多包含橱窗
+     */
+    fun loadMoreRelateShopWindow(tag: String) {
+        dataSource.loadRelateShopWIndow(page,tag,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val showWindowBean = JsonUtil.fromJson(json, ShowWindowListBean::class.java)
+                if (showWindowBean.success) {
+                    val shopWindows = showWindowBean.data.shop_windows
+                    if (shopWindows.isEmpty()) {
+                        view.loadMoreEnd()
+                    } else {
+                        view.loadMoreComplete()
+                        view.addData(shopWindows)
+                        ++page
+                    }
+                } else {
+                    view.loadMoreFail()
+                    view.showError(showWindowBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.TextUtils
 import android.view.View
@@ -56,7 +57,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.setHasFixedSize(false)
         recyclerView.layoutManager = linearLayoutManager
-
+        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         adapter = AdapterArticleDetail(listDescription,channelName)
         recyclerView.adapter = adapter
         initRecommendGoods()
