@@ -213,7 +213,8 @@ public class GlideUtil {
     public static <T> void loadImageWithFading(T t, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions()
                 .format(DecodeFormat.PREFER_RGB_565)
-                .centerCrop()
+                //.centerCrop()
+                .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
