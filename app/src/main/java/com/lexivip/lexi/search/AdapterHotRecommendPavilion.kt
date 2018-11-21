@@ -1,5 +1,4 @@
 package com.lexivip.lexi.search
-
 import android.widget.ImageView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil

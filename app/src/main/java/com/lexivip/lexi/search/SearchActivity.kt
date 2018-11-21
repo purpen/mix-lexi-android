@@ -127,7 +127,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         recyclerViewHotRecommend.setHasFixedSize(true)
         recyclerViewHotRecommend.layoutManager = linearLayoutManager
         recyclerViewHotRecommend.adapter = adapterHotRecommendPavilion
-        recyclerViewHotRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(30.0), Util.getColor(android.R.color.transparent)))
+        recyclerViewHotRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(31.0), Util.getColor(android.R.color.transparent)))
     }
 
     override fun setHotRecommendPavilionData(hot_recommends: MutableList<SearchHotRecommendPavilionBean.DataBean.HotRecommendsBean>) {
