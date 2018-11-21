@@ -1,6 +1,7 @@
 package com.lexivip.lexi.publishShopWindow
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SimpleItemAnimator
 import com.basemodule.tools.ToastUtil
@@ -13,11 +14,16 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.discoverLifeAesthetics.AdapterRecommendShowWindow
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowContract
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailBean
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowPresenter
+import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
+import com.lexivip.lexi.user.login.LoginActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.acticity_header_recyclerview.*
+import org.greenrobot.eventbus.EventBus
 
 class RelateShopWindowActivity:BaseActivity(), ShowWindowContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
@@ -63,6 +69,67 @@ class RelateShopWindowActivity:BaseActivity(), ShowWindowContract.View {
             val showWindowBean = adapter.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2ShopWindowDetailActivity(showWindowBean.rid)
         }
+
+        adapter.setOnItemChildClickListener { _, view, position ->
+            val showWindowBean = adapter.getItem(position) ?: return@setOnItemChildClickListener
+            when (view.id) {
+                R.id.textViewLike -> {
+                    if (UserProfileUtil.isLogin()) {
+                        presenter.favoriteShowWindow(showWindowBean.rid, showWindowBean.is_like, position, view)
+                    } else {
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    }
+                }
+
+                R.id.textViewComment -> { //跳转评论列表
+                    val dataBean = ShowWindowDetailBean.DataBean()
+                    dataBean.rid = showWindowBean.rid
+                    dataBean.is_like = showWindowBean.is_like
+                    dataBean.like_count = showWindowBean.like_count
+                    dataBean.comment_count = showWindowBean.comment_count
+                    PageUtil.jump2ShopWindowCommentListActivity(dataBean)
+                }
+
+                R.id.textViewShare -> {
+                    val dialog = DistributeShareDialog(this)
+                    dialog.show()
+                }
+                R.id.textViewFocus -> { //关注用户
+                    if (UserProfileUtil.isLogin()) {
+                        presenter.focusUser(showWindowBean.uid, view, showWindowBean.is_follow, position)
+                    } else {
+                        startActivity(Intent(this, LoginActivity::class.java))
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 设置用户关注状态
+     */
+    override fun setFocusState(isFollowed: Boolean, position: Int) {
+        val item = adapter.getItem(position) ?: return
+        item.is_follow = isFollowed
+        adapter.notifyItemChanged(position)
+        item.PAGE_TAG = TAG
+        EventBus.getDefault().post(item)
+    }
+
+    /**
+     * 更新喜欢状态
+     */
+    override fun setFavorite(b: Boolean, position: Int) {
+        val item = adapter.getItem(position)?:return
+        item.is_like = b
+        if (b) {
+            item.like_count++
+        } else {
+            item.like_count--
+        }
+        adapter.notifyItemChanged(position)
+        item.PAGE_TAG = TAG
+        EventBus.getDefault().post(item)
     }
 
     override fun showLoadingView() {
