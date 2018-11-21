@@ -47,7 +47,7 @@ public class PreserveImageDialog extends Dialog {
             public void onClick(View v) {
                 ImageUtils.saveBitmap(bitmap,activity);
                 dismiss();
-                ToastUtil.showInfo("保存图片成功");
+                ToastUtil.showInfo("保存图片成功！");
             }
         });
     }

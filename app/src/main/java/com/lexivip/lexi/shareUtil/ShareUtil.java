@@ -2,8 +2,13 @@ package com.lexivip.lexi.shareUtil;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.basemodule.tools.LogUtil;
+import com.basemodule.tools.ToastUtil;
+import com.basemodule.tools.WaitingDialog;
+import com.basemodule.ui.BasePresenter;
 import com.lexivip.lexi.AppApplication;
 import com.lexivip.lexi.R;
 import com.umeng.socialize.ShareAction;
@@ -13,9 +18,44 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
-public class ShareUtil {
+public class ShareUtil implements ShareContract.View{
     private Activity context = AppApplication.getActivity();
-    public ShareUtil() {
+    private WaitingDialog dialog;
+    private String rid;
+    private int type;
+    private SharePresenter presenter=new SharePresenter(this);
+    private String scene;
+
+    public ShareUtil(Activity context, WaitingDialog dialog, String rid, int type) {
+        this.context = context;
+        this.dialog = dialog;
+        this.rid = rid;
+        this.type = type;
+    }
+
+    public ShareUtil(Activity context, WaitingDialog dialog, int type) {
+        this.context = context;
+        this.dialog = dialog;
+        this.type = type;
+    }
+
+    public ShareUtil(Activity context, WaitingDialog dialog, String rid, int type, String scene) {
+        this.context = context;
+        this.dialog = dialog;
+        this.rid = rid;
+        this.type = type;// 1=品牌馆, 2=生活馆, 4=分享商品
+        this.scene = scene;
+        presenter.loadShareImage(type,rid,scene);
+    }
+
+    public ShareUtil(Activity context, WaitingDialog dialog, String rid, String scene) {
+        this.context = context;
+        this.dialog = dialog;
+        this.rid = rid;
+        this.scene = scene;
+        presenter.loadShareWindow(rid,scene);
+    }
+    /*public ShareUtil() {
         UMImage image = new UMImage(context, R.drawable.ic_camera);//资源文件
         new ShareAction(context)
                 .withText("hello")
@@ -25,7 +65,7 @@ public class ShareUtil {
                 //.setShareboardclickCallback(shareBoardlistener)
                 .setCallback(shareListener)
                 .open();
-    }
+    }*/
 
     private ShareBoardlistener shareBoardlistener=new ShareBoardlistener() {
         @Override
@@ -89,4 +129,34 @@ public class ShareUtil {
             LogUtil.e("回调取消了");
         }
     };
+
+    @Override
+    public void setImage(String imageUrl) {
+        LogUtil.e("图片地址："+imageUrl);
+        ShareDialog shareDialog=new ShareDialog(context,imageUrl);
+        shareDialog.show();
+    }
+
+    @Override
+    public void showLoadingView() {
+        dialog.show();
+    }
+
+    @Override
+    public void dismissLoadingView() {
+        dialog.dismiss();
+    }
+
+    @Override
+    public void showError(@NonNull String error) {
+        if (dialog!=null){
+            dialog.dismiss();
+        }
+        ToastUtil.showError(error);
+    }
+
+    @Override
+    public void setPresenter(BasePresenter presenter) {
+        setPresenter(presenter);
+    }
 }

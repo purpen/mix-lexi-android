@@ -1,5 +1,6 @@
 package com.lexivip.lexi.index.detail
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Paint
@@ -22,9 +23,11 @@ import kotlinx.android.synthetic.main.header_goods_detail.*
 import android.widget.TextView
 import com.basemodule.tools.*
 import com.lexivip.lexi.*
+import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.beans.*
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
+import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.shopCart.ShopCartActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
@@ -35,9 +38,13 @@ import kotlinx.android.synthetic.main.view_goods_description.view.*
 import kotlinx.android.synthetic.main.view_goods_shop.view.*
 import kotlinx.android.synthetic.main.view_similar_goods.view.*
 import org.greenrobot.eventbus.EventBus
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
 
-class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener {
+class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
+
     private val showTagCount: Int = 5
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
 
@@ -776,7 +783,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             }
 
             R.id.imageViewShare -> {
-                ToastUtil.showInfo("分享产品")
+                //ToastUtil.showInfo("分享产品")
+                share()
             }
 
             R.id.imageButton -> { //喜欢用户列表
@@ -866,5 +874,39 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         webView.destroy()
 
         super.onDestroy()
+    }
+
+    @AfterPermissionGranted(Constants.REQUEST_CODE_PICK_IMAGE)
+    private fun share(){
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            val share=ShareUtil(this,dialog,productId,4,goodsData!!.rid+"-"+goodsData!!.store_rid)
+        } else {
+            // 申请权限。
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo),
+                    Constants.REQUEST_CODE_PICK_IMAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+
+    }
+
+    override fun onRationaleDenied(requestCode: Int) {
+
+    }
+
+    override fun onRationaleAccepted(requestCode: Int) {
+
     }
 }

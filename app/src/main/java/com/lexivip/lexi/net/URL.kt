@@ -836,6 +836,14 @@ object URL {
      * 包含指定标签的橱窗
      */
     const val RELATE_SHOW_WINDOW = "${BASE_URL}shop_windows/keyword"
+    /**
+     * 分享海报
+     */
+    const val SHARE_POSTER="${BASE_URL}market/wxa_poster"
+    /**
+     * 橱窗分享海报
+     */
+    const val SHARE_WINDOW="${BASE_URL}market/share/shop_window_poster"
 
     /**
      * 保存支付方式

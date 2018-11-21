@@ -148,7 +148,9 @@ public class GlideUtil {
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL))
                 .override(width, height)
                 .format(DecodeFormat.PREFER_RGB_565)
+                .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
 
@@ -211,7 +213,8 @@ public class GlideUtil {
     public static <T> void loadImageWithFading(T t, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions()
                 .format(DecodeFormat.PREFER_RGB_565)
-                .centerCrop()
+                //.centerCrop()
+                .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
@@ -373,6 +376,15 @@ public class GlideUtil {
      */
     public static File downLoadOriginalImage(String imgUrl, Context context) throws ExecutionException, InterruptedException {
         return Glide.with(context).asFile().load(imgUrl).submit().get();
+    }
+
+    /**
+     * 下载图片
+     *
+     * @param imgUrl
+     */
+    public static Bitmap downLoadOriginalBitmap(String imgUrl, Context context) throws ExecutionException, InterruptedException {
+        return Glide.with(context).asBitmap().load(imgUrl).submit().get();
     }
 
 
