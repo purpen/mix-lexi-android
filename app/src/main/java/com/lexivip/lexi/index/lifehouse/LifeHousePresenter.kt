@@ -30,6 +30,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e(json)
                 view.dismissLoadingView()
                 val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
                 if (distributionGoodsBean.success) {
@@ -100,7 +101,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
             override fun onSuccess(json: String) {
                 val lookPeopleBean = JsonUtil.fromJson(json, LookPeopleBean::class.java)
                 if (lookPeopleBean.success) {
-                    view.setLookPeopleData(lookPeopleBean.data.users)
+                    view.setLookPeopleData(lookPeopleBean.data)
                 } else {
                     view.showError(lookPeopleBean.status.message)
                 }

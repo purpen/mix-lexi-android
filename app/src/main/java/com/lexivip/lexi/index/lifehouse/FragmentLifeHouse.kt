@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -31,7 +32,6 @@ import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.album.PicturePickerUtils
 import com.lexivip.lexi.beans.ProductBean
-import com.lexivip.lexi.beans.UserBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
@@ -121,7 +121,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置生活馆信息
      */
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
-
+        adapter.setBrandLogo(data.logo)
         GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
 
         headerLifeHouse.textViewTitle.text = data.name
@@ -145,8 +145,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     /**
      * 设置看过的用户信息
      */
-    override fun setLookPeopleData(users: List<UserBean>) {
-        val count = users.size
+    override fun setLookPeopleData(data: LookPeopleBean.DataBean) {
+        val count = data.count
 
         if (count == 0) return
 
@@ -165,7 +165,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         val urlList = ArrayList<String>()
-        for (item in users) {
+        for (item in data.users) {
             urlList.add(item.avatar)
         }
 
@@ -192,9 +192,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headImageAdapter.setNewData(urlList)
-        
+        val size = data.users.size
         headImageAdapter.setOnItemClickListener { _, _, position ->
-            PageUtil.jump2OtherUserCenterActivity(users[count-position-1].uid)
+            val uid = data.users[size - position - 1].uid
+            if (TextUtils.isEmpty(uid)) return@setOnItemClickListener
+            PageUtil.jump2OtherUserCenterActivity(uid)
         }
     }
 
@@ -407,7 +409,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun addData(products: List<ProductBean>) {
         adapter.addData(products)
-        adapter.notifyDataSetChanged()
     }
 
     override fun loadMoreComplete() {
