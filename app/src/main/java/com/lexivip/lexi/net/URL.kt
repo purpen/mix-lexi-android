@@ -836,4 +836,9 @@ object URL {
      * 包含指定标签的橱窗
      */
     const val RELATE_SHOW_WINDOW = "${BASE_URL}shop_windows/keyword"
+
+    /**
+     * 保存支付方式
+     */
+    const val SAVE_PAY_WAY = "${BASE_URL}orders/pay_type"
 }

@@ -1,17 +1,20 @@
 package com.lexivip.lexi.pay
 
+import android.os.Handler
 import com.basemodule.tools.LogUtil
+import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.R
+import com.lexivip.lexi.dialog.InquiryDialog
 import com.lexivip.lexi.order.CreateOrderBean
 import com.lexivip.lexi.payUtil.PayUtil
 import kotlinx.android.synthetic.main.activity_select_pay_way.*
 
-class SelectPayWayActivity : BaseActivity() {
+class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
     override val layout: Int = R.layout.activity_select_pay_way
-
+    private val presenter: SelectPayWayPresenter by lazy { SelectPayWayPresenter(this) }
     private var createOrderBean: CreateOrderBean? = null
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     override fun getIntentData() {
@@ -85,9 +88,46 @@ class SelectPayWayActivity : BaseActivity() {
             intent.putExtra(PayResultActivity::class.java.simpleName, createOrderBean)
             startActivity(intent)
             finish()*/
-            LogUtil.e("订单编号："+createOrderBean!!.order_rid)
-            val payUtil = PayUtil(dialog, createOrderBean!!.order_rid, createOrderBean!!.payWay,0)
-
+            LogUtil.e("订单编号：" + createOrderBean!!.order_rid)
+            val payUtil = PayUtil(dialog, createOrderBean!!.order_rid, createOrderBean!!.payWay, 0)
         }
+
+        customHeadView.setGoBackListener { showConfirmDialog() }
     }
+
+    override fun dismissLoadingView() {
+        dialog.dismiss()
+    }
+
+    override fun showLoadingView() {
+        dialog.show()
+    }
+
+    override fun showError(string: String) {
+        ToastUtil.showError(string)
+    }
+
+
+    override fun setPresenter(presenter: SelectPayWayContract.Presenter?) {
+        setPresenter(presenter)
+    }
+
+    override fun savePayWaySuccess() {
+        LogUtil.e("已保存支付方式")
+    }
+
+
+    private fun showConfirmDialog() {
+        InquiryDialog(this, Util.getString(R.string.text_confirm_exit_payway_page), Util.getString(R.string.text_order_will_cancel_in_ten_minute), Util.getString(R.string.text_confirm_exit), Util.getString(R.string.text_continue_pay), InquiryDialog.InquiryInterface { isCheck ->
+            if (isCheck) {
+                presenter.savePayWay(createOrderBean!!.order_rid, "${createOrderBean!!.payWay}")
+                Handler().postDelayed({ finish() }, 300)
+            }
+        }).show()
+    }
+
+    override fun onBackPressed() {
+        showConfirmDialog()
+    }
+
 }

@@ -399,4 +399,8 @@
     <string name="text_hot_tags">热门标签</string>
     <string name="text_curator_recommend">馆长极力推荐</string>
     <string name="title_relate_shop_window">相关的橱窗</string>
+    <string name="text_confirm_exit_payway_page">确认离开付款页面？</string>
+    <string name="text_order_will_cancel_in_ten_minute">订单在10分钟内如仍未支付将被取消。</string>
+    <string name="text_confirm_exit">确认离开</string>
+    <string name="text_continue_pay">继续支付</string>
 </resources>
