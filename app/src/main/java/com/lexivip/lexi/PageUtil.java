@@ -17,15 +17,12 @@ import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.index.detail.GoodsDetailActivity;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
 import com.lexivip.lexi.index.explore.collection.CollectionDetailActivity;
+import com.lexivip.lexi.publishShopWindow.RelateShopWindowActivity;
 import com.lexivip.lexi.publishShopWindow.SelectShopWindowGoodsImageActivity;
 import com.lexivip.lexi.user.OtherUserCenterActivity;
 import com.lexivip.lexi.user.login.LoginActivity;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * 界面跳转工具类
@@ -177,6 +174,18 @@ public class PageUtil {
         bundle.putInt(SelectShopWindowGoodsImageActivity.class.getSimpleName(), i);
         bundle.putSparseParcelableArray(SelectShopWindowGoodsImageActivity.class.getName(), productsMap);
         intent.putExtras(bundle);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转相关橱窗
+     * @param tag
+     */
+    public static void jump2RelateShopWindowActivity(@NotNull String tag) {
+        Application context = AppApplication.getContext();
+        Intent intent = new Intent(context,RelateShopWindowActivity.class);
+        intent.putExtra(RelateShopWindowActivity.class.getSimpleName(),tag);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

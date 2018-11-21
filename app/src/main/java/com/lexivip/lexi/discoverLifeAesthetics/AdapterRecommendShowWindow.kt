@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.user.login.UserProfileUtil
@@ -166,6 +167,8 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
             arrayList.add("#$word")
         }
         mTagGroup.setTags(arrayList)
-//        mTagGroup.setOnTagClickListener { tag: String? -> ToastUtil.showInfo(tag) }
+        mTagGroup.setOnTagClickListener {tag->
+            PageUtil.jump2RelateShopWindowActivity(tag.removePrefix("#"))
+        }
     }
 }

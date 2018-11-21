@@ -200,7 +200,9 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View {
         }
         //设置标签
         tagGroup.setTags(arrayList)
-//        tagGroup.setOnTagClickListener { tag: String? -> ToastUtil.showInfo(tag) }
+        tagGroup.setOnTagClickListener { tag: String ->
+            PageUtil.jump2RelateShopWindowActivity(tag.removePrefix("#"))
+        }
     }
 
 
