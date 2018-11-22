@@ -6,6 +6,7 @@ import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CouponBean
 
@@ -54,7 +55,7 @@ class AdapterUserCoupon(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<Ad
             helper.setText(R.id.textViewTime, "$startDate 至 $endDate")
             helper.setText(R.id.textViewName, couponBean.store_name)
             val imageView = helper.getView<ImageView>(R.id.imageView)
-            GlideUtil.loadImageWithDimenAndRadius(couponBean.store_logo, imageView, dp4, dp20)
+            GlideUtil.loadImageWithDimenAndRadius(couponBean.store_logo, imageView, dp4, dp20,ImageSizeConfig.SIZE_AVA)
         } else { //官方
             val relativeLayout = helper.getView<RelativeLayout>(R.id.relativeLayout)
             val textViewUse = helper.getView<TextView>(R.id.textViewUse)

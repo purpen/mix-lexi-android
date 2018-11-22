@@ -17,7 +17,6 @@
         android:background="@android:color/white">
 
         <TextView
-            android:id="@+id/textViewDelivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -113,24 +112,24 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
         android:id="@+id/relativeLayoutPayInfo"
+        android:layout_below="@id/relativeLayoutLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayoutLine"
         android:layout_marginTop="@dimen/dp13"
         android:background="@android:color/white"
         android:paddingBottom="20dp"
         android:paddingEnd="15dp"
-        android:paddingStart="15dp">
+        android:paddingStart="15dp"
+        android:paddingTop="20dp"
+        >
 
         <TextView
             android:id="@+id/textViewSubtotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:paddingTop="22dp"
             android:text="@string/text_subtotal"
             android:textColor="@color/color_9099a6"
             android:textSize="12sp" />
@@ -139,8 +138,7 @@
             android:id="@+id/textViewSubtotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/textViewSubtotal"
-            android:layout_toEndOf="@+id/textViewSubtotal"
+            android:layout_alignParentEnd="true"
             android:drawablePadding="5dp"
             android:drawableStart="@mipmap/icon_price_unit"
             android:includeFontPadding="false"
@@ -148,52 +146,117 @@
             android:textColor="@color/color_333"
             android:textSize="15sp" />
 
-
         <TextView
-            android:id="@+id/textViewTextDelivery"
+            android:id="@+id/textViewDelivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewSubtotal"
             android:layout_marginTop="13dp"
             android:includeFontPadding="false"
-            android:text="配送："
+            android:text="@string/text_delivery"
             android:textColor="@color/color_9099a6"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/textViewTextDeliveryPrice"
+            android:id="@+id/textViewDeliveryPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/textViewTextDelivery"
-            android:layout_toEndOf="@id/textViewTextDelivery"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textViewDelivery"
             android:includeFontPadding="false"
-            android:drawablePadding="5dp"
-            android:text="免费"
-            android:textColor="@color/color_333"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_c2a67d"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFirstOrderDiscount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewDelivery"
+            android:layout_marginTop="13dp"
+            android:includeFontPadding="false"
+            android:text="@string/text_first_order_discount"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFirstOrderDiscountPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textViewFirstOrderDiscount"
+            android:includeFontPadding="false"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFullReduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewFirstOrderDiscount"
+            android:layout_marginTop="13dp"
+            android:includeFontPadding="false"
+            android:text="@string/text_full_reduce"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFullReducePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textViewFullReduce"
+            android:includeFontPadding="false"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <!--优惠券-->
+        <TextView
+            android:id="@+id/textViewCoupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewFullReduce"
+            android:layout_marginTop="13dp"
+            android:includeFontPadding="false"
+            android:text="@string/text_coupon"
+            android:textColor="@color/color_9099a6"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewCouponPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/textViewCoupon"
+            android:includeFontPadding="false"
+            android:text="未使用"
+            android:textColor="@color/color_9099a6"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            />
 
         <!--订单总计-->
         <TextView
             android:id="@+id/textViewTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/textViewCoupon"
+            android:layout_marginTop="13dp"
             android:includeFontPadding="false"
-            android:paddingTop="20dp"
-            android:text="总计"
-            android:textColor="@color/color_999"
-            android:textSize="12sp" />
+            android:text="@string/text_order_total"
+            android:textStyle="bold"
+            android:textColor="@color/color_333"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textViewTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:drawableStart="@mipmap/icon_price_unit_ff6666"
-            android:drawablePadding="5dp"
-            android:layout_alignTop="@id/textViewTextDelivery"
             android:includeFontPadding="false"
+            android:drawableStart="@mipmap/icon_price_unit_ff6666"
+            android:layout_alignBottom="@+id/textViewTotal"
             android:text="0"
             android:textColor="@color/color_ff6666"
             android:textSize="17sp" />

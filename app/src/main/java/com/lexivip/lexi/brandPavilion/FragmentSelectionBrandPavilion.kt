@@ -44,7 +44,7 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
         headerView = View.inflate(activity, R.layout.header_selection_brand_pavilion, null)
 
         adapter.setHeaderView(headerView)
-        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(360.0)))
+        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(360.0),ImageSizeConfig.DEFAULT))
         headerView.banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
         headerView.banner.setIndicatorGravity(BannerConfig.CENTER)
 

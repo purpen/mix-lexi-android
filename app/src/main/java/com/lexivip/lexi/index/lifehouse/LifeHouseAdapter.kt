@@ -20,6 +20,7 @@ import com.lexivip.lexi.beans.ProductBean
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ImageSpan
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.PageUtil
 
 class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
@@ -77,10 +78,10 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
 
-        GlideUtil.loadCircleImageWidthDimen(logo, imageViewAvatar, dp28)
+        GlideUtil.loadCircleImageWidthDimen(logo, imageViewAvatar, dp28,ImageSizeConfig.SIZE_AVA)
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
-        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, 0, dp87)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, 0, dp87,ImageSizeConfig.SIZE_P30X2)
 
         //删除分销商品
         helper.addOnClickListener(R.id.imageViewDelete)

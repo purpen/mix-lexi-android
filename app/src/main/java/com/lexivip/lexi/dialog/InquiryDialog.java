@@ -74,6 +74,8 @@ public class InquiryDialog extends BaseDialog<InquiryDialog> {
         });
     }
 
+
+
     public interface InquiryInterface {
         void getCheck(boolean isCheck);
     }

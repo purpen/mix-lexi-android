@@ -1,5 +1,4 @@
 package com.lexivip.lexi.search
-
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -12,7 +11,6 @@ import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.BrandPavilionBean
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
-import com.lexivip.lexi.mine.designPavilion.DesignPavilionBean
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
 
 class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.View {
@@ -66,7 +64,7 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
 //            loadData()
 //        }
         adapter.setOnItemClickListener { _, _, position ->
-            val item = adapter.getItem(position)?:return@setOnItemClickListener
+            val item = adapter.getItem(position) ?: return@setOnItemClickListener
             val intent = Intent(activity, BrandHouseActivity::class.java)
             intent.putExtra("rid", item.rid)
             startActivity(intent)
@@ -74,7 +72,7 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
 
         //关注品牌馆
         adapter.setOnItemChildClickListener { _, _, position ->
-            val pavilionBean = adapter.getItem(position) as DesignPavilionBean
+            val pavilionBean = adapter.getItem(position) ?: return@setOnItemChildClickListener
             if (pavilionBean.is_follow_store) { //点击取消关注
                 presenter.focusBrandPavilion(pavilionBean.rid, false, position)
             } else {
@@ -90,7 +88,7 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
 
     //设置品牌馆关注状态
     override fun setBrandPavilionFocusState(favorite: Boolean, position: Int) {
-        val pavilionBean = adapter.getItem(position) as DesignPavilionBean
+        val pavilionBean = adapter.getItem(position) ?: return
         pavilionBean.is_follow_store = favorite
         adapter.notifyDataSetChanged()
     }

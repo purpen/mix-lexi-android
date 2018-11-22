@@ -17,6 +17,7 @@ import java.util.*
 import android.view.animation.*
 import com.basemodule.tools.*
 import com.flyco.dialog.widget.ActionSheetDialog
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.album.PicturePickerUtils
@@ -213,7 +214,7 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
      * 显示头像
      */
     private fun setUserAvatar(byteArray: ByteArray) {
-        GlideUtil.loadCircleImageWidthDimen(byteArray, imageView, resources.getDimensionPixelSize(R.dimen.dp90))
+        GlideUtil.loadImageWithDimen(byteArray, imageView, resources.getDimensionPixelSize(R.dimen.dp90),ImageSizeConfig.DEFAULT)
         imageViewBottom.visibility = View.VISIBLE
     }
 

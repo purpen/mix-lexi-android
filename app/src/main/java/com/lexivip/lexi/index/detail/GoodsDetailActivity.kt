@@ -104,7 +104,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         adapter.setHeaderFooterEmpty(true, true)
 
-        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(336.0)))
+        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(336.0),ImageSizeConfig.SIZE_P50))
         headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
         headerView.banner.isAutoPlay(false)
         this.presenter = GoodsDetailPresenter(this)
@@ -247,7 +247,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             imgUrls.add(product.cover)
         }
 
-        GlideUtil.loadImageWithDimenAndRadius(data.logo, headerView.imageViewLogo, 0, DimenUtil.dp2px(45.0))
+        GlideUtil.loadImageWithDimenAndRadius(data.logo, headerView.imageViewLogo, 0, DimenUtil.dp2px(45.0),ImageSizeConfig.SIZE_AVA)
 
         headerView.textViewShopName.text = data.name
 

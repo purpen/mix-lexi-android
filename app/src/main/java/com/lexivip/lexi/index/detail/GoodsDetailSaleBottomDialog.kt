@@ -7,6 +7,7 @@ import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.JsonUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.album.ImageUtils
@@ -21,7 +22,7 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
     private val product: GoodsAllDetailBean.DataBean by lazy { goodsData }
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_share_goods_bottom, null)
-        GlideUtil.loadImageWithDimen(product.assets[0].view_url,view.imageView1,DimenUtil.dp2px(145.0),DimenUtil.dp2px(124.0))
+        GlideUtil.loadImageWithDimen(product.assets[0].view_url,view.imageView1,DimenUtil.dp2px(145.0),DimenUtil.dp2px(124.0),ImageSizeConfig.SIZE_P30X2)
         view.textViewPrice.text = "${product.commission_price}"
         loadData()
         return view
@@ -39,7 +40,7 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
                 if (posterBean.success) {
                     posterUrl = posterBean.data.image_url
                     if (TextUtils.isEmpty(posterUrl)) return
-                    GlideUtil.loadImageWithDimen(posterUrl,view.imageView2,DimenUtil.dp2px(74.0),DimenUtil.dp2px(131.0))
+                    GlideUtil.loadImageWithDimen(posterUrl,view.imageView2,DimenUtil.dp2px(74.0),DimenUtil.dp2px(131.0),ImageSizeConfig.SIZE_P30X2)
                 } else {
                     ToastUtil.showError(posterBean.status.message)
                 }

@@ -9,6 +9,7 @@ import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.LifeWillBean
 
@@ -26,7 +27,7 @@ class ZCManifestAdapter(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseV
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = layoutParams
-        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView,dp4,sizeSpan2,dp106)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView,dp4,sizeSpan2,dp106,ImageSizeConfig.SIZE_P326X216)
 
         helper.setText(R.id.textViewTitle0, item.title)
         helper.setText(R.id.textViewTitle1, item.description)
@@ -35,7 +36,7 @@ class ZCManifestAdapter(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseV
         textViewName.text = item.user_name
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.cover, imageViewAvatar, dp20)
+        GlideUtil.loadCircleImageWidthDimen(item.cover, imageViewAvatar, dp20,ImageSizeConfig.SIZE_AVA)
 
 
     }

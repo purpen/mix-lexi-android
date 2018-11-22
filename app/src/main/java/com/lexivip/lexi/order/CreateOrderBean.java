@@ -13,8 +13,14 @@ public class CreateOrderBean implements Parcelable {
 
     public UserAddressListBean.DataBean consigneeInfo;
 
+    //订单首单满减价格
+    public double firstOrderDiscountPrice;
+
     //官方券
     public int officialCouponPrice;
+
+    //订单总的满减
+    public double fullReductionTotalPrice;
 
     //官方券是否使用
     public boolean officialCouponCanSelected;

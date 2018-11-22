@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import kotlinx.android.synthetic.main.activity_mine_dynamic.*
 import kotlinx.android.synthetic.main.view_head_mine_dynamic.view.*
@@ -51,8 +52,8 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
 
     override fun setNewData(data: DynamicBean.DataBean) {
         swipeRefreshLayout.isRefreshing = false
-        GlideUtil.loadImageWithFading(data.bg_cover,headerView.imageViewHeader)
-        GlideUtil.loadCircleImageWidthDimen(data.user_avatar,headerView.imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp60))
+        GlideUtil.loadImageWithDimen(data.bg_cover,headerView.imageViewHeader,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(147.0),ImageSizeConfig.SIZE_AVABG)
+        GlideUtil.loadCircleImageWidthDimen(data.user_avatar,headerView.imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp60),ImageSizeConfig.SIZE_AVA)
         headerView.textViewName.text = data.username
     }
 

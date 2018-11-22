@@ -160,13 +160,13 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         val dealContent = data.optJSONArray("deal_content")
         val recommendStore = data.optJSONObject("recommend_store")
 
-        GlideUtil.loadImageWithDimenAndRadius(cover,headerView.imageViewCover,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(250.0))
+        GlideUtil.loadImageWithDimenAndRadius(cover,headerView.imageViewCover,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(250.0),ImageSizeConfig.SIZE_AVABG)
         headerView.textViewArticleType.text = channelName
 
         headerView.textViewArticleTitle.text = title
         headerView.textViewDate.text = DateUtil.getDateByTimestamp(publishedAt,"yyyy.MM.dd")
         headerView.textViewBrowserNum.text = "$browseCount"
-        GlideUtil.loadCircleImageWidthDimen(userAvatar,headerView.imageViewHeader,DimenUtil.dp2px(25.0))
+        GlideUtil.loadCircleImageWidthDimen(userAvatar,headerView.imageViewHeader,DimenUtil.dp2px(25.0),ImageSizeConfig.SIZE_AVA)
         headerView.textViewName.text = userName
         setUserFocusState()
 
@@ -233,7 +233,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         }
 
         val dp60 = DimenUtil.dp2px(60.0)
-        GlideUtil.loadImageWithDimenAndRadius(storeLogo,footerView.imageView,0,dp60)
+        GlideUtil.loadImageWithDimenAndRadius(storeLogo,footerView.imageView,0,dp60,ImageSizeConfig.SIZE_AVA)
         footerView.textViewNum.text = "${productCount}件商品"
         footerView.textViewPavilionName.text = storeName
 

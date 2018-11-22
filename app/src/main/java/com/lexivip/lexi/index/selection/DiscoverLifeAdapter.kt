@@ -11,6 +11,7 @@ import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
@@ -21,7 +22,7 @@ class DiscoverLifeAdapter(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean, B
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, dp25)
+        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, dp25,ImageSizeConfig.SIZE_AVA)
 
         helper.setText(R.id.textViewName, item.user_name)
         helper.setText(R.id.textViewTitle1, item.title)

@@ -844,4 +844,9 @@ object URL {
      * 橱窗分享海报
      */
     const val SHARE_WINDOW="${BASE_URL}market/share/shop_window_poster"
+
+    /**
+     * 保存支付方式
+     */
+    const val SAVE_PAY_WAY = "${BASE_URL}orders/pay_type"
 }

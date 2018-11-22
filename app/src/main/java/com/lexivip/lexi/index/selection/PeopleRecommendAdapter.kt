@@ -11,6 +11,7 @@ import com.basemodule.tools.ScreenUtil
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
@@ -53,11 +54,11 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
             layoutParams = RelativeLayout.LayoutParams(sizeSpan2, span2Height)
             imageView.layoutParams = layoutParams
-            GlideUtil.loadImageWithDimenAndRadius(itemProduct.cover, imageView, dp4, sizeSpan2,span2Height)
+            GlideUtil.loadImageWithDimenAndRadius(itemProduct.cover, imageView, dp4, sizeSpan2,span2Height,ImageSizeConfig.SIZE_P325X260)
         } else {
             layoutParams = RelativeLayout.LayoutParams(sizeSpan1, sizeSpan1)
             imageView.layoutParams = layoutParams
-            GlideUtil.loadImageWithDimenAndRadius(itemProduct.cover, imageView, dp4, sizeSpan1)
+            GlideUtil.loadImageWithDimenAndRadius(itemProduct.cover, imageView, dp4, sizeSpan1,ImageSizeConfig.SIZE_P30X2)
         }
 
 

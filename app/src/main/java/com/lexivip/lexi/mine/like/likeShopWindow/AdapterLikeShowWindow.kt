@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
 
@@ -56,8 +57,8 @@ class AdapterLikeShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean,
         layoutParams32.topMargin = dp2 / 2
         relativeLayoutImage32.layoutParams = layoutParams32
 
-        GlideUtil.loadImageWithDimenAndRadius(list[0], imageView30, 0, dp250, dp250)
-        GlideUtil.loadImageWithDimenAndRadius(list[1], imageView31, 0, dp124)
-        GlideUtil.loadImageWithDimenAndRadius(list[2], imageView32, 0, dp124)
+        GlideUtil.loadImageWithDimenAndRadius(list[0], imageView30, 0, dp250, dp250,ImageSizeConfig.SIZE_P500)
+        GlideUtil.loadImageWithDimenAndRadius(list[1], imageView31, 0, dp124,ImageSizeConfig.SIZE_P30X2)
+        GlideUtil.loadImageWithDimenAndRadius(list[2], imageView32, 0, dp124,ImageSizeConfig.SIZE_P30X2)
     }
 }

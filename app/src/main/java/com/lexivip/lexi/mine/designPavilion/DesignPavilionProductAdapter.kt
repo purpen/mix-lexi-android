@@ -7,6 +7,7 @@ import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 
 class DesignPavilionProductAdapter(@LayoutRes res: Int): BaseQuickAdapter<String, BaseViewHolder>(res) {
@@ -15,6 +16,6 @@ class DesignPavilionProductAdapter(@LayoutRes res: Int): BaseQuickAdapter<String
     override fun convert(helper: BaseViewHolder, item: String) {
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = ViewGroup.LayoutParams(dp90,dp90)
-        GlideUtil.loadImageWithDimenAndRadius(item,imageView,dp4,dp90)
+        GlideUtil.loadImageWithDimenAndRadius(item,imageView,dp4,dp90,ImageSizeConfig.SIZE_P30X2)
     }
 }

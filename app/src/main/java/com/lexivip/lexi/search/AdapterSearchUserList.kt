@@ -9,6 +9,7 @@ import com.basemodule.tools.Util
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.UserBean
 
@@ -17,7 +18,7 @@ class AdapterSearchUserList(@LayoutRes res: Int) : BaseQuickAdapter<UserBean, Ba
     override fun convert(helper: BaseViewHolder, item: UserBean) {
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadCircleImageWidthDimen(item.avatar,imageView,dp40)
+        GlideUtil.loadCircleImageWidthDimen(item.avatar,imageView,dp40,ImageSizeConfig.SIZE_AVA)
 
         helper.setText(R.id.textViewName,item.username)
 

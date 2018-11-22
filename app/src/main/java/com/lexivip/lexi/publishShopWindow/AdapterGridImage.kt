@@ -6,6 +6,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ScreenUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
@@ -17,6 +18,6 @@ class AdapterGridImage(layoutResId: Int) : BaseQuickAdapter<ProductBean, BaseVie
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = layoutParams
-        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, 0,imageSize)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, 0,imageSize,ImageSizeConfig.SIZE_P30X2)
     }
 }

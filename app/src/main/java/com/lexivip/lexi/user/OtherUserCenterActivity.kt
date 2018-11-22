@@ -8,6 +8,7 @@ import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.coupon.UserCouponActivity
 import com.lexivip.lexi.mine.MineContract
@@ -168,7 +169,7 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
             textViewSignature.visibility = View.VISIBLE
             textViewSignature.text = data.about_me
         }
-        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70))
+        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70),ImageSizeConfig.SIZE_AVA)
     }
 
     override fun showLoadingView() {

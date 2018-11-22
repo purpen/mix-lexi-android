@@ -4,6 +4,7 @@ import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 
 class CollectionGoodsAdapter(layoutResId: Int) : BaseQuickAdapter<GoodsCollectionBean.DataBean.CollectionsBean, BaseViewHolder>(layoutResId) {
@@ -13,6 +14,6 @@ class CollectionGoodsAdapter(layoutResId: Int) : BaseQuickAdapter<GoodsCollectio
         helper.setText(R.id.textViewTitle0,item.name)
         helper.setText(R.id.textViewTitle1,item.sub_name)
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,dp4,dp150)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,dp4,dp150,ImageSizeConfig.SIZE_P30X2)
     }
 }
