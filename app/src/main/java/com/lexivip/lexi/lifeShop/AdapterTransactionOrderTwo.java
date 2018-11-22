@@ -18,7 +18,7 @@ public class AdapterTransactionOrderTwo extends BaseQuickAdapter<TransactionOrde
     @Override
     protected void convert(BaseViewHolder helper, TransactionOrderBean.DataBean.OrdersBean.ItemsBean item) {
         ImageView imageView=helper.getView(R.id.iv_shop);
-        GlideUtil.loadImageWithFading(item.store_logo,imageView);
+        GlideUtil.loadImageWithFading(item.store_logo+"-p30x2",imageView);
         helper.setText(R.id.tv_goods_name,item.store_name);
         StringBuilder stringBuilder=new StringBuilder("");
         if(!item.s_color.isEmpty())

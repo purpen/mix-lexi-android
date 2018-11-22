@@ -18,7 +18,7 @@ public class AdapterAccountDetailDialog extends BaseQuickAdapter<AccountDetailOr
     @Override
     protected void convert(BaseViewHolder helper, AccountDetailOrderBean.DataBean.ItemsBean item) {
         ImageView imageView=helper.getView(R.id.iv_shop);
-        GlideUtil.loadImageWithFading(item.cover,imageView);
+        GlideUtil.loadImageWithFading(item.cover+"-p30x2",imageView);
         helper.setText(R.id.tv_goods_name,item.product_name);
         helper.setText(R.id.tv_goods_num,"x"+item.quantity);
         helper.setText(R.id.tv_goods,"¥"+item.deal_price);

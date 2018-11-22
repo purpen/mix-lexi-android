@@ -46,7 +46,11 @@ public class AdapterBrandHouseGoods extends BaseMultiItemQuickAdapter<AdapterSea
             relativeLayout.setLayoutParams(new ViewGroup.LayoutParams(sizeSmall,ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         imageView.setLayoutParams(layoutParams);
-        GlideUtil.loadImageWithRadius(bean.cover, imageView,DimenUtil.dp2px(4.0));
+        if ((helper.getLayoutPosition()+1)%5==0){
+            GlideUtil.loadImageWithRadius(bean.cover + "-p500", imageView, DimenUtil.dp2px(4.0));
+        }else {
+            GlideUtil.loadImageWithRadius(bean.cover + "-p30x2", imageView, DimenUtil.dp2px(4.0));
+        }
         helper.setText(R.id.textViewTitle,bean.name);
         helper.setText(R.id.textViewPrice, String.valueOf(bean.min_price));
         helper.setText(R.id.textViewLike,"喜欢 +"+bean.like_count);

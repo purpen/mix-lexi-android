@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.Constants
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
@@ -89,6 +90,7 @@ class DialogBottomFilter(context: Activity, presenter: BrandHouseGoodsPresenter,
             adapter.notifyItemChanged(position)
             val page = 1
             val cids = getSelectedItem()
+            LogUtil.e("选中的分类："+cids)
             present.loadGoodsData(rid,page,cids,minPrice,maxPrice,"","")
         }
     }
