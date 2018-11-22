@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.detail
+
 import android.graphics.Color
 import android.support.v4.app.FragmentActivity
 import android.text.TextUtils
@@ -22,12 +23,15 @@ class LookGoodsAllDetailDialog(context: FragmentActivity?, goodsData: GoodsAllDe
         dismissAnim(SlideBottomExit())
         view.buttonLookAll.visibility = View.GONE
         view.background = CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), 0f)
+
         return view
     }
 
     override fun setUiBeforShow() {
         view.imageViewClose.setOnClickListener { dismiss() }
-
+        view.textViewLightSpot.maxLines = Int.MAX_VALUE
+        view.textViewMaterial.maxLines = Int.MAX_VALUE
+        view.textViewCharacter.maxLines = Int.MAX_VALUE
         if (TextUtils.isEmpty(data.features)) {
             view.textViewLightSpot.visibility = View.GONE
         } else {
@@ -59,9 +63,9 @@ class LookGoodsAllDetailDialog(context: FragmentActivity?, goodsData: GoodsAllDe
 
         view.textViewSendAddress.text = data.delivery_country
 
-        if (TextUtils.isEmpty(data.return_policy_title)){
+        if (TextUtils.isEmpty(data.return_policy_title)) {
             view.textViewReturnPolicy.visibility = View.GONE
-        }else{
+        } else {
             view.textViewReturnPolicy.text = data.return_policy_title
         }
 
