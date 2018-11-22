@@ -90,7 +90,7 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
 
     private fun initBanner() {
         val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
-        banner.setImageLoader(GlideImageLoader(R.dimen.dp4,contentW,DimenUtil.dp2px(178.0)))
+        banner.setImageLoader(GlideImageLoader(R.dimen.dp4,contentW,DimenUtil.dp2px(178.0),ImageSizeConfig.DEFAULT))
         banner.setIndicatorGravity(BannerConfig.RIGHT)
     }
 

@@ -3,10 +3,10 @@ package com.lexivip.lexi.index.detail
 import android.support.v4.view.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import com.basemodule.tools.GlideUtil
 import com.github.chrisbanes.photoview.PhotoView
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.ImageSizeConfig
 
 class GoodsImagePagerAdapter(data: GoodsAllDetailBean.DataBean):PagerAdapter() {
 
@@ -18,8 +18,7 @@ class GoodsImagePagerAdapter(data: GoodsAllDetailBean.DataBean):PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val photoView = PhotoView(AppApplication.getContext())
-        photoView.scaleType = ImageView.ScaleType.FIT_CENTER
-        GlideUtil.loadImageWithDimenAndRadius(assets[position].view_url,photoView,0,0)
+        GlideUtil.loadImage(assets[position].view_url,photoView,ImageSizeConfig.SIZE_P50)
         container.addView(photoView)
         return photoView
     }

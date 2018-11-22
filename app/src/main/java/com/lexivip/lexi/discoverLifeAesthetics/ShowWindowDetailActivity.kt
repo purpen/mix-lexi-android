@@ -152,7 +152,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
             recyclerViewComment.visibility = View.GONE
         }
 
-        GlideUtil.loadCircleImageWidthDimen(data.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
+        GlideUtil.loadCircleImageWidthDimen(data.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30),ImageSizeConfig.SIZE_AVA)
         textViewName.text = data.user_name
         if (data.is_official) {
             textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_show_window_official, 0)
@@ -239,9 +239,9 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
                 val layoutParams32: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
                 val view = View.inflate(this, R.layout.view_show_window_image3, null)
                 linearLayoutBox.addView(view)
-                GlideUtil.loadImageWithDimen(list[0], view.imageView30,dp250)
-                GlideUtil.loadImageWithDimen(list[1], view.imageView31,dp124)
-                GlideUtil.loadImageWithDimen(list[2], view.imageView32,dp124)
+                GlideUtil.loadImageWithDimen(list[0], view.imageView30,dp250,ImageSizeConfig.SIZE_P500)
+                GlideUtil.loadImageWithDimen(list[1], view.imageView31,dp124,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[2], view.imageView32,dp124,ImageSizeConfig.SIZE_P30X2)
                 view.imageView30.layoutParams = layoutParams250
                 view.imageView31.layoutParams = layoutParams31
                 layoutParams31.addRule(RelativeLayout.END_OF, R.id.imageView30)
@@ -296,11 +296,11 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
                 layoutParams54.leftMargin = dp2
                 view.imageView54.layoutParams = layoutParams54
                 linearLayoutBox.addView(view)
-                GlideUtil.loadImageWithDimen(list[0], view.imageView50,dp230)
-                GlideUtil.loadImageWithDimen(list[1], view.imageView51,dp143,dp114)
-                GlideUtil.loadImageWithDimen(list[2], view.imageView52,dp143,dp114)
-                GlideUtil.loadImageWithDimen(list[3], view.imageView53,dp215,dp161)
-                GlideUtil.loadImageWithDimen(list[4], view.imageView54,dp158,dp161)
+                GlideUtil.loadImageWithDimen(list[0], view.imageView50,dp230,ImageSizeConfig.SIZE_P500)
+                GlideUtil.loadImageWithDimen(list[1], view.imageView51,dp143,dp114,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[2], view.imageView52,dp143,dp114,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[3], view.imageView53,dp215,dp161,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[4], view.imageView54,dp158,dp161,ImageSizeConfig.SIZE_P30X2)
                 view.imageView50.setOnClickListener {
                     if (products[0] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[0].rid)
@@ -366,13 +366,13 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
                 layoutParamsImageView76.leftMargin = dp2
                 view.imageView76.layoutParams = layoutParamsImageView76
                 linearLayoutBox.addView(view)
-                GlideUtil.loadImageWithDimen(list[0], view.imageView70,dp78)
-                GlideUtil.loadImageWithDimen(list[1], view.imageView71,dp78)
-                GlideUtil.loadImageWithDimen(list[2], view.imageView72,dp215)
-                GlideUtil.loadImageWithDimen(list[3], view.imageView73,dp158,dp136)
-                GlideUtil.loadImageWithDimen(list[4], view.imageView74,oneThirdScreenW)
-                GlideUtil.loadImageWithDimen(list[5], view.imageView75,oneThirdScreenW)
-                GlideUtil.loadImageWithDimen(list[6], view.imageView76,oneThirdScreenW)
+                GlideUtil.loadImageWithDimen(list[0], view.imageView70,dp78,ImageSizeConfig.SIZE_P500)
+                GlideUtil.loadImageWithDimen(list[1], view.imageView71,dp78,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[2], view.imageView72,dp215,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[3], view.imageView73,dp158,dp136,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[4], view.imageView74,oneThirdScreenW,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[5], view.imageView75,oneThirdScreenW,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[6], view.imageView76,oneThirdScreenW,ImageSizeConfig.SIZE_P30X2)
 
                 view.imageView70.setOnClickListener {
                     if (products[0] == null) return@setOnClickListener

@@ -9,10 +9,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.PageUtil
-import com.lexivip.lexi.R
-import com.lexivip.lexi.RecyclerViewDivider
+import com.lexivip.lexi.*
 
 class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionBean, BaseViewHolder>(layoutResId) {
     private val dp4:Int by lazy { DimenUtil.dp2px(4.0) }
@@ -21,7 +18,7 @@ class AdapterDesignPavilion(layoutResId: Int) : BaseQuickAdapter<DesignPavilionB
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)
 
-        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewShop, dp4,dp45)
+        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewShop, dp4,dp45,ImageSizeConfig.SIZE_AVA)
 
         helper.setText(R.id.textViewTitle, item.name)
 

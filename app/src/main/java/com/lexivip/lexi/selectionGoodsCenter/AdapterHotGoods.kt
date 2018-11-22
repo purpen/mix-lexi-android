@@ -11,6 +11,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
@@ -60,7 +61,7 @@ class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
 
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
-        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, size4,dp100,dp100)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, size4,dp100,dp100,ImageSizeConfig.SIZE_P30X2)
 
 
 

@@ -8,6 +8,7 @@ import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 
 class DiscoverLifeProductAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<DiscoverLifeProductAdapter.MultipleItem, BaseViewHolder>(list) {
@@ -41,10 +42,10 @@ class DiscoverLifeProductAdapter(list: List<MultipleItem>) : BaseMultiItemQuickA
 
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
             layoutParams = ViewGroup.LayoutParams(size162,size162)
-            GlideUtil.loadImageWithDimenAndRadius(item.str,imageView,0,size162)
+            GlideUtil.loadImageWithDimenAndRadius(item.str,imageView,0,size162,ImageSizeConfig.SIZE_P500)
         } else {
             layoutParams = ViewGroup.LayoutParams(size80, size80)
-            GlideUtil.loadImageWithDimenAndRadius(item.str,imageView,0,size80)
+            GlideUtil.loadImageWithDimenAndRadius(item.str,imageView,0,size80,ImageSizeConfig.SIZE_P30X2)
         }
         relativeLayout.layoutParams = layoutParams
     }

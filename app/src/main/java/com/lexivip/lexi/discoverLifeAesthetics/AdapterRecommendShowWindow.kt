@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
@@ -27,7 +28,7 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30))
+        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30),ImageSizeConfig.SIZE_AVA)
 
         val textViewName = helper.getView<TextView>(R.id.textViewName)
         textViewName.text = item.user_name
@@ -147,9 +148,9 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         layoutParams32.topMargin = dp2 / 2
         relativeLayoutImage32.layoutParams = layoutParams32
 
-        GlideUtil.loadImageWithDimenAndRadius(list[0], imageView30, 0, dp250, dp250)
-        GlideUtil.loadImageWithDimenAndRadius(list[1], imageView31, 0, dp124)
-        GlideUtil.loadImageWithDimenAndRadius(list[2], imageView32, 0, dp124)
+        GlideUtil.loadImageWithDimenAndRadius(list[0], imageView30, 0, dp250, dp250,ImageSizeConfig.SIZE_P500)
+        GlideUtil.loadImageWithDimenAndRadius(list[1], imageView31, 0, dp124,ImageSizeConfig.SIZE_P30X2)
+        GlideUtil.loadImageWithDimenAndRadius(list[2], imageView32, 0, dp124,ImageSizeConfig.SIZE_P30X2)
 
 //        helper.addOnClickListener(R.id.imageView30)
 //        helper.addOnClickListener(R.id.imageView31)

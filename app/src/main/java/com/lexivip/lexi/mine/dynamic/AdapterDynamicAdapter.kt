@@ -7,6 +7,7 @@ import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 
 class AdapterDynamicAdapter(@LayoutRes res: Int): BaseQuickAdapter<String, BaseViewHolder>(res) {
@@ -14,7 +15,7 @@ class AdapterDynamicAdapter(@LayoutRes res: Int): BaseQuickAdapter<String, BaseV
     private val bounds:Rect by lazy { Rect(0,0,DimenUtil.getDimensionPixelSize(R.dimen.dp22),DimenUtil.getDimensionPixelSize(R.dimen.dp20)) }
     override fun convert(helper: BaseViewHolder, item: String) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp30))
+        GlideUtil.loadCircleImageWidthDimen(item,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp30),ImageSizeConfig.SIZE_AVA)
         helper.setText(R.id.textViewName,"")
     }
 }

@@ -9,6 +9,7 @@ import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.LifeWillBean
 
@@ -24,7 +25,7 @@ class AdapterGuessLike(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseVi
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2,size106)
-        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, size4,sizeSpan2,size106)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, size4,sizeSpan2,size106,ImageSizeConfig.SIZE_P326X216)
 
         val textViewTitle0 = helper.getView<TextView>(R.id.textViewTitle0)
 
@@ -54,7 +55,7 @@ class AdapterGuessLike(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseVi
         helper.setText(R.id.textViewName, item.user_name)
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.cover, imageViewAvatar, size20)
+        GlideUtil.loadCircleImageWidthDimen(item.cover, imageViewAvatar, size20,ImageSizeConfig.SIZE_AVA)
 
 
 

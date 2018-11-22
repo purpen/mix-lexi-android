@@ -7,6 +7,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
 
@@ -16,7 +17,7 @@ class ShowWindowSubCommentListAdapter(res: Int, present: ShowWindowCommentPresen
     private val presenter:ShowWindowCommentPresenter by lazy { present }
     override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.user_avatar,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp20))
+        GlideUtil.loadCircleImageWidthDimen(item.user_avatar,imageViewAvatar,DimenUtil.getDimensionPixelSize(R.dimen.dp20),ImageSizeConfig.SIZE_AVA)
         val textViewSubPraise = helper.getView<TextView>(R.id.textViewSubPraise)
         helper.setText(R.id.textViewTime, DateUtil.getSpaceTime(item.created_at*1000))
 

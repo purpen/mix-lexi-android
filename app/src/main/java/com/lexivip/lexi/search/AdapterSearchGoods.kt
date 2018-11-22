@@ -12,6 +12,7 @@ import com.basemodule.tools.ScreenUtil
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
@@ -48,11 +49,11 @@ class AdapterSearchGoods(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
         if (item.itemType == MultipleItem.ITEM_TYPE_SPAN2) {
             layoutParams = RelativeLayout.LayoutParams(sizeScreen,sizeScreen)
             relativeLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-            GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,dp4,sizeScreen)
+            GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,dp4,sizeScreen,ImageSizeConfig.SIZE_P500)
         } else {
             layoutParams = RelativeLayout.LayoutParams(sizeSmall, sizeSmall)
             relativeLayout.layoutParams = ViewGroup.LayoutParams(sizeSmall,ViewGroup.LayoutParams.WRAP_CONTENT)
-            GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,dp4,sizeSmall)
+            GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,dp4,sizeSmall,ImageSizeConfig.SIZE_P30X2)
         }
         imageView.layoutParams = layoutParams
 

@@ -9,6 +9,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.mine.UserCenterBean
 import kotlinx.android.synthetic.main.activity_setting.*
 import android.net.Uri
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.eventBusMessge.MessageLogout
 import com.lexivip.lexi.orderList.OrderListActivity
 import com.lexivip.lexi.user.setting.address.AddressListActivity
@@ -103,7 +104,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
 
     override fun setUserInfo(data: UserCenterBean.DataBean) {
         textView0.text = data.username
-        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, resources.getDimensionPixelSize(R.dimen.dp60))
+        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, resources.getDimensionPixelSize(R.dimen.dp60),ImageSizeConfig.SIZE_AVA)
     }
 
     override fun showLoadingView() {

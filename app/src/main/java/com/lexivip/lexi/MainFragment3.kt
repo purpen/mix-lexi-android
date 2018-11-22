@@ -191,7 +191,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
             textViewSignature.visibility = View.VISIBLE
             textViewSignature.text = data.about_me
         }
-        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70))
+        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70),ImageSizeConfig.SIZE_AVA)
     }
 
     override fun showLoadingView() {

@@ -10,6 +10,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ScreenUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
@@ -25,7 +26,7 @@ class WelcomeInWeekAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, Bas
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = RelativeLayout.LayoutParams(sizeSpan2, sizeSpan2)
 
-        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, dp4,sizeSpan2,sizeSpan2)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, dp4,sizeSpan2,sizeSpan2,ImageSizeConfig.SIZE_P30X2)
 
 
         val imageViewStatus = helper.getView<View>(R.id.imageViewStatus)

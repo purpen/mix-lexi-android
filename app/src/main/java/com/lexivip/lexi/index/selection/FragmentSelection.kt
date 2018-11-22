@@ -148,7 +148,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initHotRecommendBanner() {
         presenter.getHotRecommendBanner()
         val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
-        hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4, contentW, DimenUtil.dp2px(135.0)))
+        hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4, contentW, DimenUtil.dp2px(135.0),ImageSizeConfig.DEFAULT))
         hotBanner.setIndicatorGravity(BannerConfig.RIGHT)
     }
 

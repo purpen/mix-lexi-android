@@ -10,6 +10,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.eventBusMessge.MessageUpdate
 import com.lexivip.lexi.R
 import com.lexivip.lexi.view.AddSubView
@@ -20,7 +21,7 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
     override fun convert(helper: BaseViewHolder, item: ShopCartBean.DataBean.ItemsBean) {
         val product = item.product
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,0,dp70)
+        GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,0,dp70,ImageSizeConfig.SIZE_P30X2)
         helper.setText(R.id.textViewName, product.product_name)
         val textViewPrice = helper.getView<TextView>(R.id.textViewPrice)
         val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)

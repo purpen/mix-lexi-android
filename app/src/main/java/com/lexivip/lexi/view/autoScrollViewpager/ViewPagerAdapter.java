@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.WaitingDialog;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 
 import java.util.List;
@@ -86,7 +87,7 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
             if (imgW==0 || imgH==0){
                 GlideUtil.loadImageWithFading(content, holder.imageView);
             }else {
-                GlideUtil.loadImageWithDimen(content, holder.imageView,imgW,imgH);
+                GlideUtil.loadImageWithDimen(content, holder.imageView,imgW,imgH,ImageSizeConfig.DEFAULT);
             }
         }
 

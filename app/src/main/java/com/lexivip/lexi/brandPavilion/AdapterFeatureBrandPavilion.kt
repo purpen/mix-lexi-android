@@ -11,6 +11,7 @@ import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
@@ -26,7 +27,7 @@ class AdapterFeatureBrandPavilion(layoutResId: Int) : BaseQuickAdapter<BrandPavi
 
     override fun convert(helper: BaseViewHolder, item: BrandPavilionListBean.DataBean.StoresBean) {
         val imageViewLogo = helper.getView<ImageView>(R.id.imageViewLogo)
-        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewLogo, size4,size60)
+        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewLogo, size4,size60,ImageSizeConfig.SIZE_AVA)
         helper.setText(R.id.textViewName, item.name)
         helper.setText(R.id.textViewAddress, item.delivery_country + item.delivery_province + item.delivery_city)
         helper.setText(R.id.textViewDesc, item.tag_line)

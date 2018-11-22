@@ -7,6 +7,7 @@ import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
@@ -16,6 +17,6 @@ class CollectionProductAdapter(@LayoutRes res: Int): BaseQuickAdapter<ProductBea
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
         val imageView = helper.getView<ImageView>(R.id.imageView)
         imageView.layoutParams = ViewGroup.LayoutParams(size,size)
-        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,dp4,size)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,dp4,size,ImageSizeConfig.SIZE_P30X2)
     }
 }

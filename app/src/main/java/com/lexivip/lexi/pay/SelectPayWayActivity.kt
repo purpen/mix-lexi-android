@@ -1,5 +1,4 @@
 package com.lexivip.lexi.pay
-
 import android.os.Handler
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
@@ -38,14 +37,18 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
         textViewSubtotalPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp11, R.dimen.dp14), null, null, null)
 
         if (createOrderBean?.expressTotalPrice == 0.0) {
-            textViewTextDeliveryPrice.text = "包邮"
-            textViewTextDeliveryPrice.setTextColor(Util.getColor(R.color.color_c2a67d))
-            textViewTextDeliveryPrice.setCompoundDrawables(null, null, null, null)
+            textViewDeliveryPrice.text = "包邮"
+            textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_c2a67d))
+            textViewDeliveryPrice.setCompoundDrawables(null, null, null, null)
         } else {
-            textViewTextDeliveryPrice.text = "${createOrderBean?.expressTotalPrice}"
-            textViewTextDeliveryPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp6, R.dimen.dp8), null, null, null)
-            textViewTextDeliveryPrice.setTextColor(Util.getColor(R.color.color_333))
+            textViewDeliveryPrice.text = "${createOrderBean?.expressTotalPrice}"
+            textViewDeliveryPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp6, R.dimen.dp8), null, null, null)
+            textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_333))
         }
+
+        textViewFirstOrderDiscountPrice.text = "-￥${createOrderBean?.firstOrderDiscountPrice}"
+
+        textViewFullReducePrice.text = "-￥${createOrderBean?.fullReductionTotalPrice}"
 
         textViewTotalPrice.text = "${createOrderBean?.userPayTotalPrice}"
 

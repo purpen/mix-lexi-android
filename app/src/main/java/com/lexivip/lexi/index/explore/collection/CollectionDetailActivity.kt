@@ -7,6 +7,7 @@ import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
@@ -107,7 +108,7 @@ class CollectionDetailActivity : BaseActivity(), CollectionDetailContract.View {
     override fun setNewData(data: CollectionDetailBean.DataBean) {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(formatData(data.products))
-        GlideUtil.loadImageWithDimenAndRadius(data.cover, headerView.imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(192.0))
+        GlideUtil.loadImageWithDimenAndRadius(data.cover, headerView.imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(192.0),ImageSizeConfig.SIZE_P500)
         headerView.textViewHeadTitle.text = data.name
         headerView.textViewNum.text = "${data.count}件商品"
     }

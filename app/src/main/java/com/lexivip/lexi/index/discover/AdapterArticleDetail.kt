@@ -14,6 +14,7 @@ import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import org.json.JSONObject
@@ -71,7 +72,7 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 }else{
                     imageView.setPadding(0,0,0,0)
                 }
-                GlideUtil.loadImageWithDimenAndRadius(content, imageView,0,screenW,imageViewH,R.drawable.bg_image_place_holder)
+                GlideUtil.loadImageWithDimenAndRadius(content, imageView,0,screenW,imageViewH,R.drawable.bg_image_place_holder,ImageSizeConfig.DEFAULT)
             }
 
             MultipleItem.LARGE_PRODUCT_ITEM_TYPE -> {
@@ -84,7 +85,7 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 val is_free_postage = content.optBoolean("is_free_postage")
                 val rid = content.optString("rid")
                 val imageView = helper.getView<ImageView>(R.id.imageView)
-                GlideUtil.loadImageWithDimenAndRadius(cover, imageView,dp4,screenW,dp246,R.drawable.bg_image_place_holder)
+                GlideUtil.loadImageWithDimenAndRadius(cover, imageView,dp4,screenW,dp246,R.drawable.bg_image_place_holder,ImageSizeConfig.SIZE_P50)
                 helper.itemView.setOnClickListener {
                     PageUtil.jump2GoodsDetailActivity(rid)
                 }
@@ -133,7 +134,7 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 val rid = content.optString("rid")
 
                 val imageView = helper.getView<ImageView>(R.id.imageView)
-                GlideUtil.loadImageWithDimenAndRadius(cover, imageView,dp4,dp100,dp100)
+                GlideUtil.loadImageWithDimenAndRadius(cover, imageView,dp4,dp100,dp100,ImageSizeConfig.SIZE_P30X2)
 
                 helper.itemView.setOnClickListener {
                     PageUtil.jump2GoodsDetailActivity(rid)

@@ -10,10 +10,7 @@ import android.widget.TextView
 import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.CustomLinearLayoutManager
-import com.lexivip.lexi.PageUtil
-import com.lexivip.lexi.R
+import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.CommentBean
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
@@ -28,7 +25,7 @@ class ShopWindowDetailCommentListAdapter(res: Int, presenter: ShowWindowDetailPr
     private var shopWindowData:ShowWindowDetailBean.DataBean?=null
     override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, size30)
+        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, size30,ImageSizeConfig.SIZE_AVA)
         val textViewPraise = helper.getView<TextView>(R.id.textViewPraise)
         helper.setText(R.id.textViewTime, DateUtil.getSpaceTime(item.created_at*1000L))
         if (item.praise_count > 0) {

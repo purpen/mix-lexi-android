@@ -9,6 +9,7 @@ import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
@@ -36,7 +37,7 @@ class EditorRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, B
         }
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,dp4,pixelSize)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,dp4,pixelSize,ImageSizeConfig.SIZE_P30X2)
 
         helper.setText(R.id.textViewTitle,item.name)
 

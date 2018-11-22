@@ -13,6 +13,7 @@ import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
@@ -29,7 +30,7 @@ class AdapterCollectionList(@LayoutRes res: Int) : BaseQuickAdapter<GoodsCollect
     override fun convert(helper: BaseViewHolder, item: GoodsCollectionBean.DataBean.CollectionsBean) {
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,0,screenWidth,dp192)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover,imageView,0,screenWidth,dp192,ImageSizeConfig.SIZE_P500)
 
         val recyclerView = helper.getView<RecyclerView>(R.id.recyclerViewGoods)
         recyclerView.setHasFixedSize(true)

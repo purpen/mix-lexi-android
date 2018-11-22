@@ -10,6 +10,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 
@@ -23,7 +24,7 @@ class BrandPavilionAdapter(layoutResId: Int) : BaseQuickAdapter<BrandPavilionLis
         GlideUtil.loadImageWithBlurAndRadius(item.bgcover, imageViewBg, dp4, dp249, dp219)
 
         val imageViewShop = helper.getView<ImageView>(R.id.imageViewShop)
-        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewShop, dp4, dp44)
+        GlideUtil.loadImageWithDimenAndRadius(item.logo, imageViewShop, dp4, dp44,ImageSizeConfig.SIZE_AVA)
 
         helper.setText(R.id.textViewTitle, item.name)
         helper.setText(R.id.textViewCount, "${item.store_products_counts}件")

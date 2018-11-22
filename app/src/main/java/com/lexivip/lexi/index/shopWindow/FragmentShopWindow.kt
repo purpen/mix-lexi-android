@@ -6,6 +6,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.discoverLifeAesthetics.FragmentFocusShowWindow
 import com.lexivip.lexi.discoverLifeAesthetics.FragmentRecommendShowWindow
@@ -21,7 +22,7 @@ class FragmentShopWindow : BaseFragment() {
     private val fragments:ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
 
     override fun initView() {
-        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_shop_window,imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(255.0))
+        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_shop_window,imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(255.0),ImageSizeConfig.DEFAULT)
         setUpViewPager()
     }
 

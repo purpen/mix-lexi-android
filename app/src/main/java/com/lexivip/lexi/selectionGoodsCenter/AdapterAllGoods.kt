@@ -11,6 +11,7 @@ import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
@@ -55,7 +56,7 @@ class AdapterAllGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
 
         imageView.layoutParams = RelativeLayout.LayoutParams(imageViewWidth, imageViewWidth)
 
-        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4),imageViewWidth,imageViewWidth)
+        GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4),imageViewWidth,imageViewWidth,ImageSizeConfig.SIZE_P30X2)
 
 
         //卖
