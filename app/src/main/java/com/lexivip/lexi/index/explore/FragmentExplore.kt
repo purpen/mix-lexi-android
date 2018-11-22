@@ -220,11 +220,9 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      * 初始化banner
      */
     private fun initBanner() {
-
         val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
         banner.setImageLoader(GlideImageLoader(R.dimen.dp4,contentW,DimenUtil.dp2px(112.0)))
         banner.setIndicatorGravity(BannerConfig.RIGHT)
-
     }
 
 

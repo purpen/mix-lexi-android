@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.TextView
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
@@ -150,7 +149,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         presenter.getHotRecommendBanner()
         val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
         hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4, contentW, DimenUtil.dp2px(135.0)))
-        hotBanner.setBannerStyle(BannerConfig.NOT_INDICATOR)
+        hotBanner.setIndicatorGravity(BannerConfig.RIGHT)
     }
 
     /**
