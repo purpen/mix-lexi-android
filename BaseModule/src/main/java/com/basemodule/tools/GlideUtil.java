@@ -1,15 +1,10 @@
 package com.basemodule.tools;
-
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
@@ -24,15 +19,11 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.lexivip.basemodule.R;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.util.concurrent.ExecutionException;
-
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 /**
@@ -43,7 +34,7 @@ public class GlideUtil {
     public static final int DEFAULT_PLACE_HOLDER = R.drawable.default_load;
     public static final int DEFAULT_ERROR_HOLDER = R.drawable.default_load;
     //The duration of the cross fade animation in milliseconds.
-    public static final int FADING_DURING = 300;
+    public static final int FADING_DURING = 100;
 
 
     public static <T> void loadingImage(T t, ImageView imageView) {
@@ -72,7 +63,7 @@ public class GlideUtil {
                 .placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
         if (context == null) return;
-        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -92,7 +83,7 @@ public class GlideUtil {
 
         Context context = imageView.getContext();
         if (context == null) return;
-        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -108,7 +99,7 @@ public class GlideUtil {
         requestOptions.skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER);
         Context context = imageView.getContext();
         if (context == null) return;
-        Glide.with(context).load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Glide.with(context).load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -132,7 +123,7 @@ public class GlideUtil {
                 .placeholder(placeHolder);
         Context context = imageView.getContext();
         if (context == null) return;
-        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -182,6 +173,29 @@ public class GlideUtil {
     }
 
     /**
+     * 加载正方形图片
+     * @param t
+     * @param imageView
+     * @param size
+     * @param <T>
+     */
+    public static <T> void loadImageWithDimen(T t, ImageView imageView,int size) {
+        loadImageWithDimenAndRadius(t, imageView, 0, size, size, 0);
+    }
+
+    /**
+     * 加载指定宽高图片
+     * @param t
+     * @param imageView
+     * @param width
+     * @param height
+     * @param <T>
+     */
+    public static <T> void loadImageWithDimen(T t, ImageView imageView,int width,int height) {
+        loadImageWithDimenAndRadius(t, imageView, 0, width, height, 0);
+    }
+
+    /**
      * 使加载图片带有圆角
      *
      * @param t
@@ -219,7 +233,7 @@ public class GlideUtil {
                 .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
         if (context == null) return;
-        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(imageView);
+        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
     /**
@@ -273,51 +287,6 @@ public class GlideUtil {
     public static void pauseRequests(Context context) {
         if (context == null) return;
         Glide.with(context).pauseRequests();
-    }
-
-
-    /**
-     * 加载指定宽高图片
-     *
-     * @param t
-     * @param imageView
-     * @param width
-     * @param height
-     * @param <T>
-     */
-    public static <T> void loadImageWithDimen(T t, ImageView imageView, int width, int height) {
-        RequestOptions requestOptions = new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .skipMemoryCache(true)
-                .format(DecodeFormat.PREFER_RGB_565)
-                .override(width, height)
-                .centerCrop()
-                .error(DEFAULT_ERROR_HOLDER)
-                .placeholder(DEFAULT_PLACE_HOLDER);
-        Context context = imageView.getContext();
-        if (context == null) return;
-        Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
-    }
-
-    /**
-     * 加载指定宽高同size图片
-     *
-     * @param t
-     * @param imageView
-     * @param size
-     * @param <T>
-     */
-    public static <T> void loadImageWithDimen(T t, ImageView imageView, int size) {
-        RequestOptions requestOptions = new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
-                .override(size)
-                .skipMemoryCache(true)
-                .centerCrop()
-                .format(DecodeFormat.PREFER_RGB_565)
-                .error(DEFAULT_ERROR_HOLDER)
-                .placeholder(DEFAULT_PLACE_HOLDER);
-        Context context = imageView.getContext();
-        if (context == null) return;
-        Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
     }
 
     public static <T> void loadCircleImageWidthDimen(@NotNull T t, @NotNull ImageView imageView, int size) {

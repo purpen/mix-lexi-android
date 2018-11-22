@@ -87,17 +87,19 @@ class SelectShopWindowGoodsImageActivity : BaseActivity(), SelectShopWindowGoods
         button.setOnClickListener {
             if (selectedProductImage == null) return@setOnClickListener
             var sameRidCount = 0
-            for (i in 0..6) {
+            for (i in 0..6) {//橱窗该位置已有图且选图不重复则执行替换操作
                 val bean = productsMap[i] ?: break
+                if (i != pos) {
+                    if (TextUtils.equals(bean.rid, rid)) {
+                        sameRidCount++
+                    }
+                    if (sameRidCount == 2) {
+                        ToastUtil.showInfo("一个橱窗最多添加一个品牌馆两件商品")
+                        return@setOnClickListener
+                    }
+                }
                 if (TextUtils.equals(bean.cover_id, selectedProductImage!!.id)) {
                     ToastUtil.showInfo("该图已添加至橱窗")
-                    return@setOnClickListener
-                }
-                if (TextUtils.equals(bean.rid, rid)) {
-                    sameRidCount++
-                }
-                if (sameRidCount == 2) {
-                    ToastUtil.showInfo("一个橱窗最多添加一个品牌馆两件商品")
                     return@setOnClickListener
                 }
             }

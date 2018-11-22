@@ -284,7 +284,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView30.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView30.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[0].cover, view.imageView30)
+                    GlideUtil.loadImageWithDimen(productsMap[0].cover, view.imageView30,dp220)
                 }
 
                 if (productsMap[1] == null) {
@@ -292,7 +292,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView31.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView31.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[1].cover, view.imageView31)
+                    GlideUtil.loadImageWithDimen(productsMap[1].cover, view.imageView31,dp108,dp110)
                 }
 
                 if (productsMap[2] == null) {
@@ -300,7 +300,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView32.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView32.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[2].cover, view.imageView32)
+                    GlideUtil.loadImageWithDimen(productsMap[2].cover, view.imageView32,dp108,dp110)
                 }
 
                 view.imageView30.layoutParams = layoutParams30
@@ -359,7 +359,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView50.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView50.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[0].cover, view.imageView50)
+                    GlideUtil.loadImageWithDimen(productsMap[0].cover, view.imageView50,dp203)
                 }
 
                 if (productsMap[1] == null) {
@@ -367,7 +367,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView51.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView51.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[1].cover, view.imageView51)
+                    GlideUtil.loadImageWithDimen(productsMap[1].cover, view.imageView51,dp125,dp101)
                 }
 
                 if (productsMap[2] == null) {
@@ -375,7 +375,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView52.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView52.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[2].cover, view.imageView52)
+                    GlideUtil.loadImageWithDimen(productsMap[2].cover, view.imageView52,dp125,dp101)
                 }
 
                 if (productsMap[3] == null) {
@@ -383,7 +383,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView53.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView53.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[3].cover, view.imageView53)
+                    GlideUtil.loadImageWithDimen(productsMap[3].cover, view.imageView53,dp188,dp141)
                 }
 
                 if (productsMap[4] == null) {
@@ -391,7 +391,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView54.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView54.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[4].cover, view.imageView54)
+                    GlideUtil.loadImageWithDimen(productsMap[4].cover, view.imageView54,dp140,dp141)
                 }
 
                 view.imageView50.setOnClickListener {
@@ -461,7 +461,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView70.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView70.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[0].cover, view.imageView70)
+                    GlideUtil.loadImageWithDimen(productsMap[0].cover, view.imageView70,dp68)
                 }
 
                 if (productsMap[1] == null) {
@@ -469,7 +469,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView71.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView71.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[1].cover, view.imageView71)
+                    GlideUtil.loadImageWithDimen(productsMap[1].cover, view.imageView71,dp68)
                 }
 
                 if (productsMap[2] == null) {
@@ -477,7 +477,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView72.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView72.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[2].cover, view.imageView72)
+                    GlideUtil.loadImageWithDimen(productsMap[2].cover, view.imageView72,dp190)
                 }
 
                 if (productsMap[3] == null) {
@@ -485,7 +485,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView73.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView73.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[3].cover, view.imageView73)
+                    GlideUtil.loadImageWithDimen(productsMap[3].cover, view.imageView73,dp138,dp120)
                 }
 
                 if (productsMap[4] == null) {
@@ -493,7 +493,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView74.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView74.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[4].cover, view.imageView74)
+                    GlideUtil.loadImageWithDimen(productsMap[4].cover, view.imageView74,dp110)
                 }
 
                 if (productsMap[5] == null) {
@@ -501,7 +501,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView75.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView75.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[5].cover, view.imageView75)
+                    GlideUtil.loadImageWithDimen(productsMap[5].cover, view.imageView75,dp110)
                 }
 
                 if (productsMap[6] == null) {
@@ -509,7 +509,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
                     view.imageView76.setImageBitmap(placeHolderBitmap)
                 } else {
                     view.imageView76.scaleType = ImageView.ScaleType.FIT_XY
-                    GlideUtil.loadImageWithFading(productsMap[6].cover, view.imageView76)
+                    GlideUtil.loadImageWithDimen(productsMap[6].cover, view.imageView76,dp110)
                 }
 
                 view.imageView70.setOnClickListener {
