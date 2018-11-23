@@ -354,6 +354,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             goods = ProductBean()
 
             goods.quantity = 1
+            goods.delivery_country = product.delivery_country
             goods.delivery_province = product.delivery_province
             goods.delivery_city = product.delivery_city
             goods.cover = selectedSKU.cover

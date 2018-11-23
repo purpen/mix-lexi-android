@@ -56,7 +56,6 @@ class OfficialCouponBottomDialog(context: Context,createOrderBean: CreateOrderBe
         //有选中优惠券
         for (coupon in adapterDialogCoupon.data) {
             if (coupon.selected) {
-                LogUtil.e("fasdfsafsdfdsdsfsdfsdfsdfsd")
                 selectedCoupon =coupon
                 view.textViewReducePrice.visibility = View.VISIBLE
                 view.textViewUseCouponNum.visibility = View.VISIBLE

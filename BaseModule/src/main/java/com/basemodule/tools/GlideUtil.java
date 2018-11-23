@@ -37,10 +37,10 @@ import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
  */
 public class GlideUtil {
     //默认占位图
-    public static final int DEFAULT_PLACE_HOLDER = R.drawable.default_load;
-    public static final int DEFAULT_ERROR_HOLDER = R.drawable.default_load;
+    private static final int DEFAULT_PLACE_HOLDER = R.drawable.default_load;
+    private static final int DEFAULT_ERROR_HOLDER = R.drawable.default_load;
     //The duration of the cross fade animation in milliseconds.
-    public static final int FADING_DURING = 100;
+    private static final int FADING_DURING = 100;
 
 
     public static <T> void loadingImage(T t, ImageView imageView) {
