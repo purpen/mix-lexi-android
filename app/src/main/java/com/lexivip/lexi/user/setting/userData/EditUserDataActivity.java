@@ -32,6 +32,7 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.address.AddressActivity;
 import com.lexivip.lexi.address.AddressDialog;
@@ -234,7 +235,7 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
     @Override
     public void getData(UserProfileBean bean) {
         userBean = bean;
-        GlideUtil.loadImageWithFading(bean.data.profile.avatar+"-avabg",iv_logo);
+        GlideUtil.loadImageWithFading(bean.data.profile.avatar+ImageSizeConfig.SIZE_AVABG,iv_logo);
         tv_time.setText(Util.getString(R.string.text_register_time)+DateUtil.getDateByTimestamp(bean.data.profile.created_at,"yyyy年MM月dd日"));
         et_name.setText(bean.data.profile.username);
         if (bean.data.profile.about_me!=null&&!bean.data.profile.about_me.isEmpty()){

@@ -16,6 +16,7 @@ import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.view.MyRatingBar;
 
@@ -36,13 +37,13 @@ public class AdapterEvaluate extends BaseQuickAdapter<MyOrderListBean.DataBean.O
     @Override
 
     protected void convert(final BaseViewHolder helper, final MyOrderListBean.DataBean.OrdersBean.ItemsBean item) {
-        GlideUtil.loadImageWithFading(item.getStore_logo(),(ImageView) helper.getView(R.id.iv_goods));
+        GlideUtil.loadImageWithFading(item.getStore_logo()+ImageSizeConfig.SIZE_P30X2,(ImageView) helper.getView(R.id.iv_goods));
         helper.setText(R.id.tv_sale_price,"¥"+item.getDeal_price());
         TextView price=helper.getView(R.id.tv_goods_price);
         price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         helper.setText(R.id.tv_goods_price,"¥"+item.getPrice());
         helper.setText(R.id.tv_goods_name,item.getStore_name());
-        StringBuilder stringBuilder=new StringBuilder("");
+        StringBuilder stringBuilder=new StringBuilder();
         if(item.getS_color()!=null&&!item.getS_color().isEmpty()) {
             LogUtil.e("颜色：" + item.getS_color());
             stringBuilder.append(item.getS_color()+"/");

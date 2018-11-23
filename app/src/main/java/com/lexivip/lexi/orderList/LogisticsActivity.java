@@ -42,6 +42,7 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
         Intent intent=getIntent();
         logistic_code = intent.getStringExtra("logistic_code");
         String kdn_company_code=intent.getStringExtra("kdn_company_code");
+        String order_rid=intent.getStringExtra("order_rid");
         dialog = new WaitingDialog(this);
 
         CustomHeadView customHeadView=findViewById(R.id.customHeadView);
@@ -57,7 +58,7 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
         tv_freight_type = findViewById(R.id.tv_freight_type);
         tv_state = findViewById(R.id.tv_state);
 
-        presenter.getData(logistic_code,kdn_company_code);
+        presenter.getData(logistic_code,kdn_company_code,order_rid);
     }
 
     @Override

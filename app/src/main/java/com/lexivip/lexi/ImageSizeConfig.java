@@ -28,6 +28,9 @@ public class ImageSizeConfig {
     //文章详情头部背景
     public static final String SIZE_AVABG = "-avabg";
 
+    //领券中心品牌券头部
+    public static final String SIZE_AVAL68 = "-ava168";
+
     //默认大小
     public static final String DEFAULT = "";
 }

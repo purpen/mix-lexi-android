@@ -27,11 +27,11 @@ import java.util.TreeMap;
 
 public class ClientParamsAPI {
     //测试
-//    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
-//    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
+    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
+    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
 //    正式
-    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
-    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
+//    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
+//    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
     /**
      * 获取登录后的authorization
      * @param token
@@ -999,8 +999,9 @@ public class ClientParamsAPI {
      * @return
      */
     @NotNull
-    public static HashMap<String,Object> getAddressParams(AddressBean.DataBean bean,boolean is_overseas,String id_card,String id_card_front,String id_card_back){
+    public static HashMap<String,Object> getAddressParams(AddressBean.DataBean bean,String rid,boolean is_overseas,String id_card,String id_card_front,String id_card_back){
         HashMap<String,Object> params=generateCommonParams();
+        params.put("rid",rid);
         params.put("first_name",bean.getFirst_name());
         params.put("phone",bean.getPhone());
         params.put("mobile",bean.getMobile());
@@ -1037,10 +1038,11 @@ public class ClientParamsAPI {
      * @param kdn_company_code
      * @return
      */
-    public static HashMap<String,Object> getLogistics(String logistic_code, String kdn_company_code){
+    public static HashMap<String,Object> getLogistics(String logistic_code, String kdn_company_code,String order_rid){
         HashMap<String,Object> params=generateCommonParams();
         params.put("logistic_code",logistic_code);
         params.put("kdn_company_code",kdn_company_code);
+        params.put("order_rid",order_rid);
         return params;
     }
 

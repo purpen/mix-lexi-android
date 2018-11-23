@@ -8,6 +8,7 @@ import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.Util;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.beans.LifeWillBean;
 
@@ -23,7 +24,7 @@ public class AdapterBrandHouseArticle extends BaseQuickAdapter<LifeWillBean, Bas
         ImageView imageView = helper.getView(R.id.imageView);
         GlideUtil.loadImageWithRadius(item.cover, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp4));
         ImageView iv_logo = helper.getView(R.id.imageViewAvatar);
-        GlideUtil.loadCircleImageWidthDimen(item.user_avator + "-p30x2", iv_logo, DimenUtil.getDimensionPixelSize(R.dimen.dp20));
+        GlideUtil.loadCircleImageWidthDimen(item.user_avator + ImageSizeConfig.SIZE_P30X2, iv_logo, DimenUtil.getDimensionPixelSize(R.dimen.dp20));
         helper.setText(R.id.textViewTitle0, item.title);
         helper.setText(R.id.textViewName, item.user_name);
         if (item.channel_name.isEmpty()) {

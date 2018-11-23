@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.basemodule.tools.GlideUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class AdapterOrderDetail extends BaseQuickAdapter<MyOrderListBean.DataBea
             helper.setVisible(R.id.relativeLayout,true);
             helper.setText(R.id.tv_logistics_name,item.getExpress_name());
         }
-        GlideUtil.loadImageWithFading(item.getStore_logo(),(ImageView) helper.getView(R.id.iv_order_goods));
+        GlideUtil.loadImageWithFading(item.getStore_logo()+ImageSizeConfig.SIZE_P30X2,(ImageView) helper.getView(R.id.iv_order_goods));
         helper.setText(R.id.tv_goods_sale_price,"¥"+item.getDeal_price());
         helper.setText(R.id.tv_goods_num,"x"+item.getQuantity());
         TextView price=helper.getView(R.id.tv_goods_price);

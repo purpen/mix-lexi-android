@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.basemodule.tools.GlideUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class AdapterTransactionOrderTwo extends BaseQuickAdapter<TransactionOrde
     @Override
     protected void convert(BaseViewHolder helper, TransactionOrderBean.DataBean.OrdersBean.ItemsBean item) {
         ImageView imageView=helper.getView(R.id.iv_shop);
-        GlideUtil.loadImageWithFading(item.store_logo+"-p30x2",imageView);
+        GlideUtil.loadImageWithFading(item.store_logo+ImageSizeConfig.SIZE_P30X2,imageView);
         helper.setText(R.id.tv_goods_name,item.store_name);
         StringBuilder stringBuilder=new StringBuilder("");
         if(!item.s_color.isEmpty())

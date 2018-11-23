@@ -12,6 +12,7 @@ import com.basemodule.tools.Util;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lexivip.lexi.CustomLinearLayoutManager;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class AdapterTransactionOrder extends BaseQuickAdapter<TransactionOrderBe
     @Override
     protected void convert(BaseViewHolder helper, TransactionOrderBean.DataBean.OrdersBean item) {
         ImageView imageView=helper.getView(R.id.iv_logo);
-        GlideUtil.loadImageWithRadius(item.user_info.user_logo+"-ava50",imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4));
+        GlideUtil.loadImageWithRadius(item.user_info.user_logo+ImageSizeConfig.SIZE_AVA50 ,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp4));
         helper.setText(R.id.tv_name,item.store.store_name);
         helper.setText(R.id.tv_order_total,"¥"+String.valueOf(item.pay_amount));
         helper.setText(R.id.tv_order_code,item.rid);

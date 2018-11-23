@@ -12,6 +12,6 @@ public class LogisticsContract {
         void showList(LogisticsBean.DataBean bean);
     }
     interface Presenter extends BasePresenter {
-        void getData(String logistic_code,String kdn_company_code);
+        void getData(String logistic_code,String kdn_company_code,String order_rid);
     }
 }

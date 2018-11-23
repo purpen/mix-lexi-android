@@ -1,6 +1,7 @@
 package com.lexivip.lexi.address;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.lexivip.lexi.JsonUtil;
 import com.basemodule.tools.LogUtil;
@@ -161,7 +162,7 @@ public class AddressPresenter implements AddressContract.Presenter {
     }
 
     @Override
-    public void saveAddress(AddressBean.DataBean bean, boolean is_overseas, String id_card, String id_card_front, String id_card_back) {
+    public void saveAddress(AddressBean.DataBean bean,String rid, boolean is_overseas, String id_card, String id_card_front, String id_card_back,int type) {
         model.saveAddress(new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
@@ -175,11 +176,15 @@ public class AddressPresenter implements AddressContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("返回的："+json);
                 AddressBean bean= JsonUtil.fromJson(json,AddressBean.class);
                 if (bean.isSuccess()){
                     view.finishActivity();
+                    view.dismissLoadingView();
+                }else {
+                    view.dismissLoadingView();
+                    view.showError(bean.getStatus().getMessage());
                 }
-                view.dismissLoadingView();
             }
 
             @Override
@@ -187,7 +192,7 @@ public class AddressPresenter implements AddressContract.Presenter {
                 view.dismissLoadingView();
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error));
             }
-        },bean,is_overseas,id_card,id_card_front,id_card_back);
+        },bean, rid,is_overseas,id_card,id_card_front,id_card_back,type);
     }
 
     public void getToken(){

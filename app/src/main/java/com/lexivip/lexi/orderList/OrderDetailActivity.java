@@ -176,6 +176,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                         Intent intent=new Intent(OrderDetailActivity.this,LogisticsActivity.class);
                         intent.putExtra("logistic_code", String.valueOf(adapterOrderList.getData().get(position).getExpress_no()));
                         intent.putExtra("kdn_company_code", String.valueOf(adapterOrderList.getData().get(position).getExpress()));
+                        intent.putExtra("order_rid",adapterOrderList.getData().get(position).getRid());
                         startActivity(intent);
                     }
                 }

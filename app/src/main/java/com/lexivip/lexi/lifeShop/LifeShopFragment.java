@@ -22,6 +22,7 @@ import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseFragment;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.address.AddressActivity;
 import com.lexivip.lexi.dialog.InquiryDialog;
@@ -259,7 +260,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void setShopData(LifeHouseBean bean) {
-        GlideUtil.loadImageWithRadiusNotPlace(bean.data.logo+"-ava", logo, DimenUtil.dp2px(4.0));
+        GlideUtil.loadImageWithRadiusNotPlace(bean.data.logo+ ImageSizeConfig.SIZE_AVA, logo, DimenUtil.dp2px(4.0));
         name.setText(bean.data.name);
         if (1 != bean.data.phases) {
             tv_status.setText(Util.getString(R.string.text_formal_shop));
