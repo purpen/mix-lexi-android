@@ -410,8 +410,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
         if (data.is_distributed) { //分销商品
-            buttonPurchase.visibility = View.VISIBLE
-            buttonSaleDistribution.visibility = View.VISIBLE
+            if (UserProfileUtil.isSmallB()){
+                buttonPurchase.visibility = View.VISIBLE
+                buttonSaleDistribution.visibility = View.VISIBLE
+            }else{
+                buttonAddShopCart.visibility = View.VISIBLE
+                buttonGoOrderConfirm.visibility = View.VISIBLE
+            }
         } else {  //非分销商品
             buttonAddShopCart.visibility = View.VISIBLE
             if (data.is_custom_made) { //支持接单订制
