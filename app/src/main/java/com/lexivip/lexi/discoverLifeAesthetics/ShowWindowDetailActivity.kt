@@ -129,7 +129,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         if (data.comment_count > 0) {
             textViewCommentTitle.visibility = View.VISIBLE
             recyclerViewComment.visibility = View.VISIBLE
-            line15Comment.visibility = View.VISIBLE
+            viewLineComment.visibility = View.VISIBLE
             val linearLayoutManager = CustomLinearLayoutManager(applicationContext)
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             linearLayoutManager.setScrollEnabled(false)
@@ -147,7 +147,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
                 PageUtil.jump2ShopWindowCommentListActivity(shopWindow!!)
             }
         } else {
-            line15Comment.visibility = View.GONE
+            viewLineComment.visibility = View.GONE
             textViewCommentTitle.visibility = View.GONE
             recyclerViewComment.visibility = View.GONE
         }
@@ -427,10 +427,12 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
             relativeLayoutRelate.visibility = View.GONE
             recyclerViewShowWindow.visibility = View.GONE
             lineRelate.visibility = View.GONE
+            viewSeparatorRelate.visibility = View.GONE
         } else {
             relativeLayoutRelate.visibility = View.VISIBLE
             recyclerViewShowWindow.visibility = View.VISIBLE
             lineRelate.visibility = View.VISIBLE
+            viewSeparatorRelate.visibility = View.VISIBLE
         }
         adapterRelateShowWindow.setNewData(windows)
     }
@@ -458,10 +460,12 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
             relativeLayoutGuess.visibility = View.GONE
             recyclerViewGuess.visibility = View.GONE
             lineGuess.visibility = View.GONE
+            line15Comment.visibility = View.GONE
         } else {
             relativeLayoutGuess.visibility = View.VISIBLE
             recyclerViewGuess.visibility = View.VISIBLE
             lineGuess.visibility = View.VISIBLE
+            line15Comment.visibility = View.VISIBLE
         }
         adapterGuessLike.setNewData(products)
     }
