@@ -104,7 +104,7 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
             }
 
             R.id.button -> {
-                presenter.uploadUserInfo(avatarId, etName.text.toString(), birth, gender)
+                presenter.uploadUserInfo(avatarId, etName.text.trim().toString(), birth, gender)
             }
         }
     }
