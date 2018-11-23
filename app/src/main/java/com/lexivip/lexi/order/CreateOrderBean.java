@@ -16,14 +16,17 @@ public class CreateOrderBean implements Parcelable {
     //订单首单满减价格
     public double firstOrderDiscountPrice;
 
-    //官方券
+    //用户选的官方券优惠额度
     public int officialCouponPrice;
 
     //订单总的满减
     public double fullReductionTotalPrice;
 
-    //官方券是否使用
+    //官方券是否可选
     public boolean officialCouponCanSelected;
+
+    //用户选店铺券总额度
+    public int shopCouponTotalPrice;
 
     //是否使用官方券
     public boolean notUsingOfficialCoupon;

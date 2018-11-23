@@ -1,4 +1,5 @@
 package com.lexivip.lexi.pay
+
 import android.os.Handler
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_select_pay_way.*
 class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
     override val layout: Int = R.layout.activity_select_pay_way
     private val presenter: SelectPayWayPresenter by lazy { SelectPayWayPresenter(this) }
-    private var createOrderBean: CreateOrderBean? = null
+    private lateinit var createOrderBean: CreateOrderBean
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     override fun getIntentData() {
         createOrderBean = intent.getParcelableExtra(TAG)
@@ -33,26 +34,32 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
 
         customHeadView.setHeadCenterTxtShow(true, R.string.title_select_pay_way)
 
-        textViewSubtotalPrice.text = "${createOrderBean?.orderTotalPrice}"
+        textViewSubtotalPrice.text = "${createOrderBean.orderTotalPrice}"
         textViewSubtotalPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp11, R.dimen.dp14), null, null, null)
 
-        if (createOrderBean?.expressTotalPrice == 0.0) {
+        if (createOrderBean.expressTotalPrice == 0.0) {
             textViewDeliveryPrice.text = "包邮"
             textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_c2a67d))
             textViewDeliveryPrice.setCompoundDrawables(null, null, null, null)
         } else {
-            textViewDeliveryPrice.text = "${createOrderBean?.expressTotalPrice}"
+            textViewDeliveryPrice.text = "${createOrderBean.expressTotalPrice}"
             textViewDeliveryPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp6, R.dimen.dp8), null, null, null)
             textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_333))
         }
 
-        textViewFirstOrderDiscountPrice.text = "-￥${createOrderBean?.firstOrderDiscountPrice}"
+        textViewFirstOrderDiscountPrice.text = "-￥${createOrderBean.firstOrderDiscountPrice}"
 
-        textViewFullReducePrice.text = "-￥${createOrderBean?.fullReductionTotalPrice}"
+        textViewFullReducePrice.text = "-￥${createOrderBean.fullReductionTotalPrice}"
 
-        textViewTotalPrice.text = "${createOrderBean?.userPayTotalPrice}"
+        if (createOrderBean.notUsingOfficialCoupon) {
+            textViewCouponPrice.text = "-￥${createOrderBean.shopCouponTotalPrice}"
+        } else {
+            textViewCouponPrice.text = "-￥${createOrderBean.officialCouponPrice}"
+        }
 
-        createOrderBean?.payWay = WECHAT_PAY
+        textViewTotalPrice.text = "${createOrderBean.userPayTotalPrice}"
+
+        createOrderBean.payWay = WECHAT_PAY
     }
 
     /**
@@ -70,19 +77,19 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
         relativeLayoutWeChatPay.setOnClickListener {
             resetSelectState()
             checkBoxWechat.isChecked = true
-            createOrderBean?.payWay = WECHAT_PAY
+            createOrderBean.payWay = WECHAT_PAY
         }
 
         relativeLayoutAliPay.setOnClickListener {
             resetSelectState()
             checkBoxAli.isChecked = true
-            createOrderBean?.payWay = ALI_PAY
+            createOrderBean.payWay = ALI_PAY
         }
 
         relativeLayoutAntPay.setOnClickListener {
             resetSelectState()
             checkBoxAnt.isChecked = true
-            createOrderBean?.payWay = ANT_PAY
+            createOrderBean.payWay = ANT_PAY
         }
 
         //点击开启支付窗口
@@ -91,8 +98,8 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
             intent.putExtra(PayResultActivity::class.java.simpleName, createOrderBean)
             startActivity(intent)
             finish()*/
-            LogUtil.e("订单编号：" + createOrderBean!!.order_rid)
-            val payUtil = PayUtil(dialog, createOrderBean!!.order_rid, createOrderBean!!.payWay, 0)
+            LogUtil.e("订单编号：" + createOrderBean.order_rid)
+            val payUtil = PayUtil(dialog, createOrderBean.order_rid, createOrderBean.payWay, 0)
         }
 
         customHeadView.setGoBackListener { showConfirmDialog() }
@@ -123,7 +130,7 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
     private fun showConfirmDialog() {
         InquiryDialog(this, Util.getString(R.string.text_confirm_exit_payway_page), Util.getString(R.string.text_order_will_cancel_in_ten_minute), Util.getString(R.string.text_confirm_exit), Util.getString(R.string.text_continue_pay), InquiryDialog.InquiryInterface { isCheck ->
             if (isCheck) {
-                presenter.savePayWay(createOrderBean!!.order_rid, "${createOrderBean!!.payWay}")
+                presenter.savePayWay(createOrderBean.order_rid, "${createOrderBean.payWay}")
                 Handler().postDelayed({ finish() }, 300)
             }
         }).show()

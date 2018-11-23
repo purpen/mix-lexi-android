@@ -4,6 +4,7 @@ import android.text.TextUtils
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
@@ -46,12 +47,12 @@ class CompleteInfoPresenter(view: CompleteInfoContract.View) : CompleteInfoContr
      * 上传图片
      */
     override fun uploadAvatar(uploadTokenBean: UploadTokenBean?, byteArray: ByteArray) {
-        if (uploadTokenBean==null) {
+        if (uploadTokenBean == null) {
             ToastUtil.showInfo(R.string.text_net_error)
             return
         }
 
-        dataSource.uploadAvatar(byteArray,uploadTokenBean,object : IDataSource.UpLoadCallBack {
+        dataSource.uploadAvatar(byteArray, uploadTokenBean, object : IDataSource.UpLoadCallBack {
             override fun onComplete(ids: JSONArray) {
                 LogUtil.e("uploadAvatar===上传完成，图片id=${ids[0]}")
                 view.setUploadAvatarData(ids)
@@ -64,13 +65,18 @@ class CompleteInfoPresenter(view: CompleteInfoContract.View) : CompleteInfoContr
      * 上传用户信息
      */
     override fun uploadUserInfo(avatar_id: String, name: String, birth: String, gender: String) {
-        if (TextUtils.isEmpty(avatar_id)){
+        if (TextUtils.isEmpty(avatar_id)) {
             ToastUtil.showInfo(AppApplication.getContext().getString(R.string.hint_text_upload_avatar))
             return
         }
 
-        if (TextUtils.isEmpty(name)){
-            ToastUtil.showInfo(AppApplication.getContext().getString(R.string.hint_input_user_name))
+        if (TextUtils.isEmpty(name)) {
+            ToastUtil.showInfo(Util.getString(R.string.hint_input_user_name))
+            return
+        }
+
+        if (name.length < 2) {
+            ToastUtil.showInfo(Util.getString(R.string.hint_input_user_name_less_than_2))
             return
         }
 

@@ -403,4 +403,5 @@
     <string name="text_order_will_cancel_in_ten_minute">订单在10分钟内如仍未支付将被取消。</string>
     <string name="text_confirm_exit">确认离开</string>
     <string name="text_continue_pay">继续支付</string>
+    <string name="hint_input_user_name_less_than_2">用户名长度不少于2</string>
 </resources>

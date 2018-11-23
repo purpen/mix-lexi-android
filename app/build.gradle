@@ -110,7 +110,7 @@ dependencies {
     implementation files('libs/umeng-shareboard-widget-6.9.3.jar')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
     api  'com.umeng.umsdk:analytics:7.5.4'
-    //api (name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
+    api (name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
 }
 
 kapt {

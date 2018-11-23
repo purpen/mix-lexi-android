@@ -2,6 +2,7 @@ package com.lexivip.lexi.index.lifehouse
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
@@ -34,8 +35,12 @@ import com.lexivip.lexi.album.PicturePickerUtils
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
+import com.lexivip.lexi.search.AdapterSearchGoods
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.yanyusong.y_divideritemdecoration.Y_Divider
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
+import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
@@ -53,7 +58,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
     private val adapter: LifeHouseAdapter by lazy { LifeHouseAdapter(R.layout.adapter_curator_recommend) }
-    private lateinit var adapterWelcomeInWeek: WelcomeInWeekAdapter
+    private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
+    private val adapterWelcomeInWeek: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
     private lateinit var headerLifeHouse: View
 
@@ -196,7 +202,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         val size = data.users.size
         headImageAdapter.setOnItemClickListener { _, _, position ->
             val uid = data.users[size - position - 1].uid
-            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(),uid)) return@setOnItemClickListener
+            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(), uid)) return@setOnItemClickListener
             PageUtil.jump2OtherUserCenterActivity(uid)
         }
     }
@@ -212,24 +218,49 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         val recyclerViewWelcome = footerWelcome.recyclerViewWelcome
 
-        adapterWelcomeInWeek = WelcomeInWeekAdapter(R.layout.adapter_editor_recommend)
         val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.setScrollEnabled(false)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
-        recyclerViewWelcome.setHasFixedSize(true)
         recyclerViewWelcome.layoutManager = gridLayoutManager
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
+        val colorWhite = Util.getColor(android.R.color.white)
+        recyclerViewWelcome.setBackgroundColor(colorWhite)
+        adapterWelcomeInWeek.setSpanSizeLookup { _, position ->
+            adapterWelcomeInWeek.data[position].spanSize
+        }
+        recyclerViewWelcome.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
 
-        recyclerViewWelcome.addItemDecoration(GridSpacingItemDecoration(2, DimenUtil.dp2px(10.0), DimenUtil.dp2px(20.0), false))
+//        val headerView = View(activity)
+//        adapterWelcomeInWeek.setHeaderView(headerView)
+
         adapter.addFooterView(footerWelcome)
 
     }
 
     /**
+     * 根据角标整理数据
+     */
+    private fun formatData(data: List<ProductBean>): ArrayList<AdapterSearchGoods.MultipleItem> {
+        val curList = ArrayList<AdapterSearchGoods.MultipleItem>()
+        val size = data.size - 1
+        for (i in 0..size) {
+            if (i % 10 == 4 || i % 10 == 9) {
+                curList.add(AdapterSearchGoods.MultipleItem(data[i], AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN2, AdapterSearchGoods.MultipleItem.ITEM_SPAN2_SIZE))
+            } else {
+                data[i].isRight = (i % 10 == 1 || i % 10 == 3 || i % 10 == 6 || i % 10 == 8)
+                curList.add(AdapterSearchGoods.MultipleItem(data[i], AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN1, AdapterSearchGoods.MultipleItem.ITEM_SPAN1_SIZE))
+            }
+
+        }
+        return curList
+    }
+
+
+    /**
      * 设置本周最受欢迎数据
      */
     override fun setWelcomeInWeekData(products: List<ProductBean>) {
-        adapterWelcomeInWeek.setNewData(products)
+        adapterWelcomeInWeek.setNewData(formatData(products))
     }
 
     override fun setPresenter(presenter: LifeHouseContract.Presenter?) {
@@ -239,7 +270,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.imageViewEdit,R.id.textViewTitle -> { //编辑生活馆
+            R.id.imageViewEdit, R.id.textViewTitle -> { //编辑生活馆
                 val title = headerLifeHouse.textViewTitle.text
                 val description = headerLifeHouse.textViewDesc.text
                 val dialog = EditLifeHouseDialog(activity, presenter, title, description)
@@ -295,7 +326,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         if (b) {
             item.like_count += 1
         } else {
-            item.like_count -=1
+            item.like_count -= 1
         }
         item.is_like = b
         adapter.notifyItemChanged(position + 1)
@@ -559,5 +590,36 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
         super.onDestroy()
+    }
+
+
+    private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
+        private val color: Int = Util.getColor(android.R.color.white)
+        private val height = 20f
+        override fun getDivider(itemPosition: Int): Y_Divider? {
+            val count = adapterWelcomeInWeek.itemCount
+            val divider: Y_Divider
+            when (itemPosition) {
+                count - 1 -> {
+                    divider = Y_DividerBuilder()
+                            .setBottomSideLine(true, color, height, 0f, 0f)
+                            .create()
+                }
+                else -> {
+                    val item = adapterWelcomeInWeek.getItem(itemPosition) as AdapterSearchGoods.MultipleItem
+                    if (item.product.isRight) {
+                        divider = Y_DividerBuilder()
+                                .setBottomSideLine(true, color, height, 0f, 0f)
+                                .setLeftSideLine(true, color, 10f, 0f, 0f)
+                                .create()
+                    } else {
+                        divider = Y_DividerBuilder()
+                                .setBottomSideLine(true, color, height, 0f, 0f)
+                                .create()
+                    }
+                }
+            }
+            return divider
+        }
     }
 }

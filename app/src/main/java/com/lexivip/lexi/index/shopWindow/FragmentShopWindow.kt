@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.shopWindow
+
 import android.content.Intent
 import android.support.v4.view.ViewPager
 import com.basemodule.tools.DimenUtil
@@ -11,6 +12,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.discoverLifeAesthetics.FragmentFocusShowWindow
 import com.lexivip.lexi.discoverLifeAesthetics.FragmentRecommendShowWindow
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
+import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_shop_window.*
 
@@ -19,10 +21,10 @@ class FragmentShopWindow : BaseFragment() {
     private val fragment0: BaseFragment by lazy { FragmentFocusShowWindow.newInstance() }
     private val fragment1: BaseFragment by lazy { FragmentRecommendShowWindow.newInstance() }
 
-    private val fragments:ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
+    private val fragments: ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
 
     override fun initView() {
-        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_shop_window,imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(255.0),ImageSizeConfig.DEFAULT)
+        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_shop_window, imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(255.0), ImageSizeConfig.DEFAULT)
         setUpViewPager()
     }
 
@@ -33,7 +35,7 @@ class FragmentShopWindow : BaseFragment() {
 
     private fun setUpViewPager() {
         val titles = ArrayList<String>()
-        if (UserProfileUtil.isLogin()){
+        if (UserProfileUtil.isLogin()) {
             fragments.add(fragment0)
             titles.add(getString(R.string.text_focus))
         }
@@ -49,8 +51,13 @@ class FragmentShopWindow : BaseFragment() {
 
     override fun installListener() {
 
-        linearLayoutPublishWindow.setOnClickListener { //跳转拼接橱窗
-            startActivity(Intent(activity,PublishShopWindowActivity::class.java))
+        linearLayoutPublishWindow.setOnClickListener {
+            //跳转拼接橱窗
+            if (UserProfileUtil.isLogin()) {
+                startActivity(Intent(activity, PublishShopWindowActivity::class.java))
+            }else{
+                startActivity(Intent(activity, LoginActivity::class.java))
+            }
         }
 
         customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {

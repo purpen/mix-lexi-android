@@ -114,7 +114,9 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
     }
 
     private void startOrder(){
-        context.startActivity(new Intent(context, OrderListActivity.class));
+        Intent intent = new Intent(context, OrderListActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     @Override
