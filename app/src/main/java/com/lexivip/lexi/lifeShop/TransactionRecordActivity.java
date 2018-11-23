@@ -62,6 +62,7 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
     private String saleMoney=null;
     private String rId;
     private TransactionRecordPresenter presenter=new TransactionRecordPresenter(this);
+    private LifeShopSaleBean saleBean;
 
     @Override
     protected int getLayout() {
@@ -240,13 +241,19 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
                     iv_money_show.setBackgroundResource(R.mipmap.icon_live_hidden_money);
                     isShowSale=false;
                     tv_gross_earnings.setText("***");
+                    tv_day_money.setText("***");
+                    tv_loading_money.setText("***");
                 }else{
                     iv_money_show.setBackgroundResource(R.mipmap.icon_live_show_money);
                     isShowSale=true;
-                    if (saleMoney.isEmpty()){
+                    if (saleBean==null){
                         tv_gross_earnings.setText("0.00");
+                        tv_day_money.setText("0.00");
+                        tv_loading_money.setText("0.00");
                     }else{
-                        tv_gross_earnings.setText(saleMoney);
+                        tv_gross_earnings.setText(saleBean.data.total_commission_price);
+                        tv_day_money.setText(String.valueOf(saleBean.data.today_commission_price));
+                        tv_loading_money.setText(String.valueOf(saleBean.data.pending_commission_price));
                     }
                 }
                 break;
@@ -311,11 +318,12 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void setData(LifeShopSaleBean bean) {
-        saleMoney = bean.data.total_commission_price;
-        if (isShowSale)
+        saleBean = bean;
+        if (isShowSale) {
             tv_gross_earnings.setText(bean.data.total_commission_price);
-        tv_day_money.setText(String.valueOf(bean.data.today_commission_price));
-        tv_loading_money.setText(String.valueOf(bean.data.pending_commission_price));
+            tv_day_money.setText(bean.data.today_commission_price);
+            tv_loading_money.setText(bean.data.pending_commission_price);
+        }
     }
 
     @Override

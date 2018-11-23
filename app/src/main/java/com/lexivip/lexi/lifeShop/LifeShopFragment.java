@@ -163,13 +163,19 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                     iv_money_show.setBackgroundResource(R.mipmap.icon_live_hidden_money);
                     isShowSale = false;
                     tv_gross_earnings.setText("***");
+                    tv_day_money.setText("***");
+                    tv_loading_money.setText("***");
                 } else {
                     iv_money_show.setBackgroundResource(R.mipmap.icon_live_show_money);
                     isShowSale = true;
-                    if (saleMoney.isEmpty()) {
+                    if (saleBean==null) {
                         tv_gross_earnings.setText("0.00");
+                        tv_day_money.setText("0.00");
+                        tv_loading_money.setText("0.00");
                     } else {
-                        tv_gross_earnings.setText(saleMoney);
+                        tv_gross_earnings.setText(saleBean.data.total_commission_price);
+                        tv_day_money.setText(saleBean.data.today_commission_price);
+                        tv_loading_money.setText(String.valueOf(saleBean.data.pending_commission_price));
                     }
                 }
                 break;
@@ -183,13 +189,16 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                     iv_show_put.setBackgroundResource(R.mipmap.icon_live_hidden_put);
                     isShowCash = false;
                     tv_put_money.setText("***");
+                    tv_already_put.setText("***");
                 } else {
                     iv_show_put.setBackgroundResource(R.mipmap.icon_live_show_put);
                     isShowCash = true;
-                    if (cashMoney.isEmpty()) {
+                    if (cashBean==null) {
                         tv_put_money.setText("0.00");
+                        tv_already_put.setText("0.00");
                     } else {
-                        tv_put_money.setText(cashMoney);
+                        tv_put_money.setText(cashBean.data.cash_price);
+                        tv_already_put.setText(cashBean.data.total_cash_price);
                     }
                 }
                 break;
@@ -287,20 +296,21 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void setCashData(LifeShopCashBean bean) {
         cashBean = bean;
-        cashMoney = bean.data.cash_price;
-        if (isShowCash)
+        if (isShowCash) {
             tv_put_money.setText(bean.data.cash_price);
-        tv_already_put.setText(String.valueOf(bean.data.total_cash_price));
+            tv_already_put.setText(bean.data.total_cash_price);
+        }
     }
 
     @Override
     public void setSaleData(LifeShopSaleBean bean) {
         saleBean = bean;
         saleMoney = bean.data.total_commission_price;
-        if (isShowSale)
+        if (isShowSale) {
             tv_gross_earnings.setText(bean.data.total_commission_price);
-        tv_day_money.setText(String.valueOf(bean.data.today_commission_price));
-        tv_loading_money.setText(String.valueOf(bean.data.pending_commission_price));
+            tv_day_money.setText(bean.data.today_commission_price);
+            tv_loading_money.setText(String.valueOf(bean.data.pending_commission_price));
+        }
     }
 
     @Override
