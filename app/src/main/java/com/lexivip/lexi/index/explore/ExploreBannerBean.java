@@ -7,7 +7,7 @@ import java.util.List;
 public class ExploreBannerBean {
 
     /**
-     * data : {"banner_images":[{"description":"广告图描述","image":"http://127.0.0.1:9000/_uploads/photos/180530/72de0b9ca1ae5a3.jpg","link":"链接地址","rid":4,"sort_order":"排序","status":true,"title":"标题","type":"0=全部, 1=链接地址, 2=商品, 3=分类, 4=品牌, 5=专题"},{"description":"广告图描述","image":"http://127.0.0.1:9000/_uploads/photos/180530/72de0b9ca1ae5a3.jpg","link":"链接地址","rid":3,"sort_order":1,"status":true,"title":"标题","type":2}]}
+     * data : {"banner_images":[{"image":"https://s3.lexivip.com/20181108/2433FsMHYLW7l0dwsfAzBOnB7zj3PdLC.png","link":" 97239150","type":4},{"image":"https://s3.lexivip.com/20181108/2329FtyeCOnnQUpJJ1eyhWa4iPpN5j19.png","link":"92081537","type":2},{"image":"https://s3.lexivip.com/20181108/2156FpMjNndApB5JkO7CTrP-DcDnB_j8.png","link":"8930587614","type":2},{"image":"https://s3.lexivip.com/20181108/2039Fn_0IxucI6PAtnBQ9vWZ0C7tSH16.png","link":"8853072194","type":2}]}
      * status : {"code":200,"message":"Ok all right."}
      * success : true
      */
@@ -19,7 +19,17 @@ public class ExploreBannerBean {
     public static class DataBean {
         public List<BannerImageBean> banner_images;
 
-
+//        public static class BannerImagesBean {
+//            /**
+//             * image : https://s3.lexivip.com/20181108/2433FsMHYLW7l0dwsfAzBOnB7zj3PdLC.png
+//             * link :  97239150
+//             * type : 4
+//             */
+//
+//            public String image;
+//            public String link;
+//            public int type;
+//        }
     }
 
     public static class StatusBean {

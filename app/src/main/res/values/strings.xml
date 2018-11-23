@@ -404,4 +404,5 @@
     <string name="text_confirm_exit">确认离开</string>
     <string name="text_continue_pay">继续支付</string>
     <string name="hint_input_user_name_less_than_2">用户名长度不少于2</string>
+    <string name="load_failed">加载更多失败</string>
 </resources>

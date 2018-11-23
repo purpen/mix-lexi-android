@@ -36,7 +36,7 @@ open class SelectionModel{
      */
     fun getBanners(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        val url = URL.BASE_URL+"banners/hotpick_ad"
+        val url = URL.BASE_URL+"banners/hotpick_app"
         HttpRequest.sendRequest(HttpRequest.GET, url, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
