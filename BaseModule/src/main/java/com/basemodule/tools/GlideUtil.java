@@ -45,11 +45,10 @@ public class GlideUtil {
 
     public static <T> void loadingImage(T t, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions()
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE);
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
         Context context = imageView.getContext();
         if (context == null) return;
-        Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
+        Glide.with(context).asGif().load(t).apply(requestOptions).into(imageView);
     }
 
 

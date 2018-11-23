@@ -11,6 +11,7 @@ import com.basemodule.tools.*
 
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.lexivip.lexi.view.autoScrollViewpager.ViewPagerAdapter
 import com.lexivip.lexi.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_user_guide.*
 
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_user_guide.*
  * created at 2016/4/18 16:10
  */
 class UserGuideActivity : BaseActivity() {
-    private var list: MutableList<Int>? = null
+
     private val flag = false
     private val currentPosition: Int = 0
     private val mediaPlayer: MediaPlayer? = null
@@ -33,7 +34,7 @@ class UserGuideActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!isTaskRoot) {
-            if (intent!!.hasCategory(Intent.CATEGORY_LAUNCHER) && TextUtils.equals(Intent.ACTION_MAIN, intent!!.action)) {
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && TextUtils.equals(Intent.ACTION_MAIN, intent.action)) {
                 finish()
             }
         }
@@ -55,16 +56,16 @@ class UserGuideActivity : BaseActivity() {
 //        val scaleImage = ImageUtil.scaleImage(bitmap, ScreenUtil.getScreenWidth(), ScreenUtil.getScreenHeight())
 //        imageView.setImageBitmap(scaleImage)
 //        bitmap.recycle()
-        imageView.visibility = View.VISIBLE
+//        imageView.visibility = View.VISIBLE
             Handler().postDelayed({
 //                imageView.visibility = View.GONE
 //                scaleImage.recycle()
-//                if (empty) {
-//                    initGuide()
-//                } else {
+                if (empty) {
+                    initGuide()
+                } else {
                     if (isTaskRoot) {
                         goMainPage()
-//                    }
+                    }
                 }
             }, Constants.GUIDE_INTERVAL)
 //        } else {
@@ -73,13 +74,13 @@ class UserGuideActivity : BaseActivity() {
     }
 
     private fun initGuide() {
-//        scrollableView!!.visibility = View.VISIBLE
-//        list = ArrayList()
-//        list!!.add(R.mipmap.guide0)
-//        list!!.add(R.mipmap.guide1)
-//        list!!.add(R.mipmap.guide2)
-//        list!!.add(R.mipmap.guide3)
-//        scrollableView!!.setAdapter(ViewPagerAdapter(this, list))
+        scrollableView.visibility = View.VISIBLE
+        val list: MutableList<Int> = ArrayList()
+        list.add(R.mipmap.guide)
+        list.add(R.mipmap.guide1)
+        list.add(R.mipmap.guide2)
+        list.add(R.mipmap.guide3)
+        scrollableView.setAdapter(ViewPagerAdapter(this, list))
         SPUtil.write(Constants.GUIDE_TAG, Constants.GUIDE_TAG)
     }
 

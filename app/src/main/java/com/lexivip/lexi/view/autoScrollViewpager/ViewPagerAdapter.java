@@ -1,6 +1,7 @@
 package com.lexivip.lexi.view.autoScrollViewpager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.WaitingDialog;
 import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.welcome.WelcomeActivity;
 
 import java.util.List;
 
@@ -91,6 +93,15 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
             }
         }
 
+        if (position == size -1){
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activity.startActivity(new Intent(activity, WelcomeActivity.class));
+                    activity.finish();
+                }
+            });
+        }
 //        if (activity instanceof UserGuideActivity) {
 //            if (position == size - 1) {
 //                view_selection_goods_center_recommend.setOnClickListener(new View.OnClickListener() {
