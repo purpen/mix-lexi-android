@@ -79,7 +79,7 @@ class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyP
     }
 
     override fun initView() {
-        LogUtil.e("screenW=${ScreenUtil.getScreenWidth()};;screenHeight=${ScreenUtil.getScreenHeight()};;density=${ScreenUtil.getDensity()}")
+//        LogUtil.e("screenW=${ScreenUtil.getScreenWidth()};;screenHeight=${ScreenUtil.getScreenHeight()};;density=${ScreenUtil.getDensity()}")
         switchFragment(R.id.button0)
         EventBus.getDefault().register(this)
     }

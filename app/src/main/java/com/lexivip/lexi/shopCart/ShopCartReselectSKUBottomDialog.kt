@@ -1,6 +1,8 @@
 package com.lexivip.lexi.shopCart
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.Gravity
@@ -11,6 +13,7 @@ import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
 import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.CustomImageSpan
 import com.lexivip.lexi.JsonUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
@@ -40,7 +43,6 @@ class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPrese
 
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_select_specification_bottom, null)
-        if (goods.is_free_postage) view.imageView.visibility = View.VISIBLE
         loadData()
         view.buttonConfirm.visibility = View.VISIBLE
         return view
@@ -140,7 +142,15 @@ class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPrese
             view.textViewPrice.text = "${goods.min_sale_price}"
         }
 
-        view.textViewName.text = goods.product_name
+        if (goods.is_free_postage){
+            val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
+            val span = CustomImageSpan(drawable)
+            val spannable = SpannableString("   " + goods.name)
+            spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            view.textViewName.text = spannable
+        }else{
+            view.textViewName.text = goods.name
+        }
 
         val marginRight = DimenUtil.getDimensionPixelSize(R.dimen.dp15)
         val marginBottom = DimenUtil.dp2px(10.0)

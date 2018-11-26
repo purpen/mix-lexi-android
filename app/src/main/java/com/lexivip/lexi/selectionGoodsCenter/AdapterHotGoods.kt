@@ -1,6 +1,8 @@
 package com.lexivip.lexi.selectionGoodsCenter
 import android.graphics.Paint
 import android.support.annotation.LayoutRes
+import android.text.Spannable
+import android.text.SpannableString
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -11,6 +13,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.CustomImageSpan
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
@@ -28,8 +31,6 @@ class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
 
     private val size4 = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
-        helper.setText(R.id.textView0, item.name)
-
         val textView2 = helper.getView<TextView>(R.id.textView2)
 
         if (item.real_sale_price == 0.0) { //折扣价为0,显示真实价格
@@ -52,18 +53,19 @@ class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
             imageViewStatus.visibility = View.GONE
         }
 
-        val imageViewFreeExpress = helper.getView<ImageView>(R.id.imageViewFreeExpress)
-        if (item.is_free_postage) {
-            imageViewFreeExpress.visibility = View.VISIBLE
-        } else {
-            imageViewFreeExpress.visibility = View.VISIBLE
+        val textViewTitle = helper.getView<TextView>(R.id.textView0)
+        if (item.is_free_postage){
+            val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
+            val span = CustomImageSpan(drawable)
+            val spannable = SpannableString("   " + item.name)
+            spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            textViewTitle.text = spannable
+        }else{
+            textViewTitle.text = item.name
         }
-
 
         val imageView = helper.getView<ImageView>(R.id.imageViewGoods)
         GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView, size4,dp100,dp100,ImageSizeConfig.SIZE_P30X2)
-
-
 
         //卖
         helper.addOnClickListener(R.id.textView4)

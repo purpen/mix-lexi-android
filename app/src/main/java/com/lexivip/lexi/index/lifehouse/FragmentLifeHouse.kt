@@ -382,10 +382,10 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }, recyclerView)
 
 
-        adapterWelcomeInWeek.setOnItemClickListener { adapter, _, position ->
-            val item = adapter.getItem(position) as ProductBean
+        adapterWelcomeInWeek.setOnItemClickListener { _, _, position ->
+            val item = adapterWelcomeInWeek.getItem(position)?:return@setOnItemClickListener
             val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.product)
             startActivity(intent)
         }
 

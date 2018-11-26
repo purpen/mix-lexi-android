@@ -162,7 +162,7 @@ object URL {
     /**
      * 精选->发现生活美学
      */
-    const val DISCOVER_LIFE_URL = "${BASE_URL}shop_windows/recommend"
+    const val DISCOVER_LIFE_URL = "${BASE_URL}shop_windows/handpick"
 
     /**
      * 精选->乐喜优选

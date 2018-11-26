@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.WaitingDialog;
 import com.lexivip.lexi.ImageSizeConfig;
+import com.lexivip.lexi.MainActivity;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.user.login.UserProfileUtil;
 import com.lexivip.lexi.welcome.WelcomeActivity;
 
 import java.util.List;
@@ -97,7 +99,11 @@ public class ViewPagerAdapter<T> extends RecyclingPagerAdapter {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    activity.startActivity(new Intent(activity, WelcomeActivity.class));
+                    if (UserProfileUtil.isLogin()) { //登录过且通过更新过来的
+                        activity.startActivity(new Intent(activity, MainActivity.class));
+                    } else {
+                        activity.startActivity(new Intent(activity, WelcomeActivity.class));
+                    }
                     activity.finish();
                 }
             });

@@ -19,7 +19,7 @@ import com.basemodule.tools.Util
 import com.lexivip.lexi.beans.ProductBean
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.style.ImageSpan
+import com.lexivip.lexi.CustomImageSpan
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.PageUtil
 
@@ -35,7 +35,7 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
         val textView0 = helper.getView<TextView>(R.id.textView0)
         if (item.is_free_postage) {
             val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, dp20, dp12)
-            val span = ImageSpan(drawable, ImageSpan.ALIGN_BASELINE)
+            val span = CustomImageSpan(drawable)
             val spannable = SpannableString("   " + item.name)
             spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
             textView0.text = spannable

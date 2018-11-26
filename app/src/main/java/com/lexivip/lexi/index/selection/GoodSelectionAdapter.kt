@@ -1,6 +1,8 @@
 package com.lexivip.lexi.index.selection
 
 import android.graphics.Paint
+import android.text.Spannable
+import android.text.SpannableString
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,8 +11,10 @@ import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ScreenUtil
+import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.CustomImageSpan
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
@@ -29,19 +33,21 @@ class GoodSelectionAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, Bas
             imageViewStatus.visibility = View.GONE
         }
 
-        val imageViewExpress = helper.getView<View>(R.id.imageViewExpress)
+        val textViewTitle = helper.getView<TextView>(R.id.textViewTitle)
 
         if (item.is_free_postage){
-            imageViewExpress.visibility = View.VISIBLE
+            val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
+            val span = CustomImageSpan(drawable)
+            val spannable = SpannableString("   " + item.name)
+            spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            textViewTitle.text = spannable
         }else{
-            imageViewExpress.visibility = View.GONE
+            textViewTitle.text = item.name
         }
 
         val textViewLike = helper.getView<TextView>(R.id.textViewLike)
         textViewLike.visibility = View.GONE
         textViewLike.text = "喜欢 +${item.like_count}"
-
-        helper.setText(R.id.textViewTitle,item.name)
 
         val textViewOldPrice =helper.getView<TextView>(R.id.textViewOldPrice)
 

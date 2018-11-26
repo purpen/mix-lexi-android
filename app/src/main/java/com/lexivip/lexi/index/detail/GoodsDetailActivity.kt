@@ -9,6 +9,8 @@ import android.net.http.SslError
 import android.os.Build
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextUtils
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -448,7 +450,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
 
-        headerView.textViewName.text = data.name
 
         headerView.textViewNowPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
         if (data.min_sale_price == 0.0) {
@@ -463,9 +464,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
         if (data.is_free_postage) {
-            headerView.imageViewFreeExpress.visibility = View.VISIBLE
+            val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
+            val span = CustomImageSpan(drawable)
+            val spannable = SpannableString("   " + data.name)
+            spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            headerView.textViewName.text = spannable
         } else {
-            headerView.imageViewFreeExpress.visibility = View.GONE
+            headerView.textViewName.text = data.name
         }
 
         //设置banner
