@@ -200,14 +200,13 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
 
             override fun onStart() {
                 v.isEnabled = false
-                view.updateFavoriteState(favorite)
             }
 
             override fun onSuccess(json: String) {
                 v.isEnabled = true
                 val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
                 if (favoriteBean.success) {
-//                    view.updateFavoriteState(favorite)
+                    view.updateFavoriteState(favorite)
                 } else {
                     view.showError(favoriteBean.status.message)
                 }

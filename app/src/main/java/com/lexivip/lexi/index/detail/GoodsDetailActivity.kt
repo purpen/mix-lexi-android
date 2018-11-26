@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.header_goods_detail.*
 import android.widget.TextView
 import com.basemodule.tools.*
 import com.lexivip.lexi.*
-import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.beans.*
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
