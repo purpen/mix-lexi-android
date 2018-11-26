@@ -369,4 +369,6 @@ public class CustomAutoScrollViewPager extends CustomViewPager {
     public void setBorderAnimation(boolean isBorderAnimation) {
         this.isBorderAnimation = isBorderAnimation;
     }
+
+
 }

@@ -80,7 +80,7 @@ class UserGuideActivity : BaseActivity() {
         list.add(R.mipmap.guide1)
         list.add(R.mipmap.guide2)
         list.add(R.mipmap.guide3)
-        scrollableView.setAdapter(ViewPagerAdapter(this, list))
+        scrollableView.setAdapter(ViewPagerAdapter(this, list),list.size)
         SPUtil.write(Constants.GUIDE_TAG, Constants.GUIDE_TAG)
     }
 

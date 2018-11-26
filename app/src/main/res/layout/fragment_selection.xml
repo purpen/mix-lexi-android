@@ -270,7 +270,23 @@
                     android:textColor="@color/color_999"
                     android:textSize="@dimen/sp14"
                     android:visibility="gone" />
+                <LinearLayout
+                    android:id="@+id/linearLayoutIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:paddingTop="@dimen/dp4"
+                    android:orientation="horizontal"
+                    >
+
+                </LinearLayout>
             </RelativeLayout>
+
+            <com.lexivip.lexi.view.autoScrollViewpager.ScrollableView
+                android:id="@+id/scrollableView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewHotRecommend"
@@ -279,7 +295,9 @@
                 android:layout_marginStart="@dimen/dp15"
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginBottom="@dimen/dp20"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                android:visibility="gone"
+                />
 
             <include
                 layout="@layout/line_color_eee"

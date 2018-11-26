@@ -510,7 +510,7 @@ public class ClientParamsAPI {
     @Nullable
     public static HashMap<String, Object> getHotRecommendParams() {
         HashMap<String, Object> params = generateCommonParams();
-        params.put("per_page", "5");
+        params.put("per_page", "15");
         return params;
     }
 

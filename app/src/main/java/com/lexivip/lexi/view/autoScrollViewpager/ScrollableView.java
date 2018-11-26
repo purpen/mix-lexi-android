@@ -46,9 +46,9 @@ public class ScrollableView extends RelativeLayout {
         initView();
     }
 
-    public void setAdapter(ViewPagerAdapter adapter) {
+    public void setAdapter(RecyclingPagerAdapter adapter,int size) {
         viewPager.setAdapter(adapter);
-        this.size=adapter.getSize();
+        this.size=size;
     }
 
     private void initView() {

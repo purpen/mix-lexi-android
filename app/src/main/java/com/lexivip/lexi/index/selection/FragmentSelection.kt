@@ -1,12 +1,17 @@
 package com.lexivip.lexi.index.selection
 
 import android.content.Intent
+import android.support.v4.view.ViewPager
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
@@ -23,6 +28,7 @@ import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.lexivip.lexi.view.autoScrollViewpager.RecyclerViewPagerAdapter
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
@@ -148,7 +154,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initHotRecommendBanner() {
         presenter.getHotRecommendBanner()
         val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
-        hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4, contentW, DimenUtil.dp2px(135.0),ImageSizeConfig.DEFAULT))
+        hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4, contentW, DimenUtil.dp2px(135.0), ImageSizeConfig.DEFAULT))
         hotBanner.setIndicatorGravity(BannerConfig.RIGHT)
     }
 
@@ -175,12 +181,50 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         val manager = CustomGridLayoutManager(AppApplication.getContext(), 6)
         manager.setScrollEnabled(false)
         recyclerViewHotRecommend.layoutManager = manager
+
     }
 
     /**
      * 设置人气推荐数据
      */
     override fun setHotRecommendData(products: List<ProductBean>) {
+        var pageSize = 0
+        val size = products.size
+        if (size % 5 == 0) {
+            pageSize = size / 5
+        } else {
+            pageSize = size / 5 + 1
+        }
+
+        val sizeSpan2 by lazy { (ScreenUtil.getScreenWidth() - DimenUtil.dp2px(40.0)) / 2 }
+        val span2Height by lazy { sizeSpan2*128/160}
+        val sizeSpan1 by lazy { (ScreenUtil.getScreenWidth() - DimenUtil.dp2px(48.0)) / 3 }
+        scrollableView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,span2Height+sizeSpan1+DimenUtil.dp2px(120.0))
+        scrollableView.setAdapter(RecyclerViewPagerAdapter<ProductBean>(activity, products).setInfiniteLoop(true), pageSize)
+
+
+
+        val llp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        llp.gravity = Gravity.CENTER_HORIZONTAL
+        val vlp = ViewGroup.LayoutParams(ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+        llp.setMargins(DimenUtil.dp2px(5.0), 0, 0, DimenUtil.dp2px(5.0))
+        var imageView: ImageView
+        for (i in 0 until pageSize) {
+            imageView = ImageView(context)
+            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            imageView.layoutParams = vlp
+            if (i == currentItem) {
+                imageView.setImageResource(R.drawable.bg_auto_scroll_viewpager_shape_oval_sel)
+            } else {
+                imageView.setImageResource(R.drawable.bg_auto_scroll_viewpager_shape_oval_unsel)
+            }
+            imageViews.add(imageView)
+            linearLayoutIndicator.addView(imageView, llp)
+        }
+
+        scrollableView.addOnPageChangeListener(CustomOnPageChangeListener(pageSize))
+
+
         val list = ArrayList<PeopleRecommendAdapter.MultipleItem>()
         for (i in products.indices) {
             if (i == 0 || i == 1) {//占3列宽
@@ -342,7 +386,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         textViewMoreZCManifest.setOnClickListener(this)
 
         adapterDiscoverLife.setOnItemClickListener { _, _, position ->
-            val item = adapterDiscoverLife.getItem(position)?:return@setOnItemClickListener
+            val item = adapterDiscoverLife.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2ShopWindowDetailActivity(item.rid)
         }
 
@@ -438,5 +482,32 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     override fun onStop() {
         super.onStop()
         hotBanner.stopAutoPlay()
+    }
+
+    private var currentItem =0
+    private val imageViews:ArrayList<ImageView> by lazy {ArrayList<ImageView>()}
+    private inner class CustomOnPageChangeListener(size: Int) : ViewPager.OnPageChangeListener {
+        private val size =size
+        override fun onPageSelected(position: Int) {
+            var pos = position
+            pos %= size
+            currentItem = pos
+            setCurFocus(pos)
+        }
+
+        private fun setCurFocus(position: Int) {
+            if (imageViews.size == 0) return
+            for (i in 0 until size) {
+                if (i == position) {
+                    imageViews[i].setImageResource(R.drawable.bg_auto_scroll_viewpager_shape_oval_sel)
+                } else {
+                    imageViews[i].setImageResource(R.drawable.bg_auto_scroll_viewpager_shape_oval_unsel)
+                }
+            }
+        }
+
+        override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+        override fun onPageScrollStateChanged(arg0: Int) {}
     }
 }
