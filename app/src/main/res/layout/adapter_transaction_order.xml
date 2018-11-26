@@ -16,7 +16,6 @@
         android:layout_height="@dimen/dp23"
         android:layout_marginTop="@dimen/dp2"
         android:layout_marginRight="@dimen/dp10"
-        android:background="@color/color_999"
         android:scaleType="centerCrop" />
 
     <TextView
@@ -25,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/iv_logo"
         android:includeFontPadding="false"
-        android:text="阿斯顿发送到"
         android:textColor="@color/color_333"
         android:textSize="@dimen/sp13" />
 
@@ -55,7 +53,6 @@
         android:layout_marginTop="@dimen/dp5"
         android:layout_toRightOf="@+id/iv_logo"
         android:includeFontPadding="false"
-        android:text="2016年10月26日 12:59:89"
         android:textColor="@color/color_b2b2b2"
         android:textSize="@dimen/sp11" />
 

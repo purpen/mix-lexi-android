@@ -10,6 +10,7 @@ import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ScreenUtil;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.search.AdapterSearchGoods;
@@ -46,7 +47,11 @@ public class AdapterBrandHouseGoods extends BaseMultiItemQuickAdapter<AdapterSea
             relativeLayout.setLayoutParams(new ViewGroup.LayoutParams(sizeSmall,ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         imageView.setLayoutParams(layoutParams);
-        GlideUtil.loadImageWithRadius(bean.cover, imageView,DimenUtil.dp2px(4.0));
+        if ((helper.getLayoutPosition()+1)%5==0){
+            GlideUtil.loadImageWithRadius(bean.cover + ImageSizeConfig.SIZE_P500, imageView, DimenUtil.dp2px(4.0));
+        }else {
+            GlideUtil.loadImageWithRadius(bean.cover + ImageSizeConfig.SIZE_P30X2, imageView, DimenUtil.dp2px(4.0));
+        }
         helper.setText(R.id.textViewTitle,bean.name);
         helper.setText(R.id.textViewPrice, String.valueOf(bean.min_price));
         helper.setText(R.id.textViewLike,"喜欢 +"+bean.like_count);

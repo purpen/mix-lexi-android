@@ -12,9 +12,11 @@ import com.basemodule.ui.BaseActivity;
 import com.basemodule.ui.BaseFragment;
 import com.basemodule.ui.CustomViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.lexivip.lexi.PageUtil;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.coupon.UserCouponActivity;
 import com.lexivip.lexi.orderList.OrderPagerAdapter;
+import com.lexivip.lexi.user.login.UserProfileUtil;
 import com.lexivip.lexi.view.CustomHeadView;
 
 import java.util.ArrayList;
@@ -60,7 +62,11 @@ public class ReceiveVoucherActivity extends BaseActivity implements ReceiveVouch
         ll_voucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ReceiveVoucherActivity.this,UserCouponActivity.class));
+                if (UserProfileUtil.isLogin()){
+                    startActivity(new Intent(ReceiveVoucherActivity.this,UserCouponActivity.class));
+                }else {
+                    PageUtil.jump2LoginActivity();
+                }
             }
         });
     }

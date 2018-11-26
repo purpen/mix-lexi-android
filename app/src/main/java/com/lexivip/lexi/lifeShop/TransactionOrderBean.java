@@ -170,7 +170,7 @@ public class TransactionOrderBean {
                 public String bgcover;
                 public String city;
                 public Object commission_price;
-                public int commission_rate;
+                public String commission_rate;
                 public String country;
                 public String cover;
                 public int cover_id;

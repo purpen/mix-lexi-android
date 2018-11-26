@@ -45,8 +45,8 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
     private DialogBottomFilter dialogBottomFilter;
     private int count;
     private RecyclerView recyclerView;
-    private LinearLayout ll_null;
     private LinearLayout ll_goods_list;
+    private View footer;
 
     @Override
     protected int getLayout() {
@@ -74,13 +74,13 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
         linearLayoutFilter = getView().findViewById(R.id.linearLayoutFilter);
         imageViewSortArrow2 = getView().findViewById(R.id.imageViewSortArrow2);
         ll_goods_list = getView().findViewById(R.id.ll_goods_list);
-        ll_null = getView().findViewById(R.id.ll_null);
         recyclerView = getView().findViewById(R.id.recyclerView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
         adapterBranHouseGoods = new AdapterBrandHouseGoods(adaperList);
         recyclerView.setAdapter(adapterBranHouseGoods);
+        footer = View.inflate(getContext(),R.layout.footer_brand_goods,null);
         presenter.loadGoodsData(rid, 0, "", "", "", "", "");
         adapterBranHouseGoods.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
@@ -157,15 +157,18 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
 
     @Override
     public void setNewData(List<ProductBean> data) {
-        ll_null.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
+        //ll_null.setVisibility(View.GONE);
+        //recyclerView.setVisibility(View.VISIBLE);
+        adapterBranHouseGoods.removeFooterView(footer);
         adapterBranHouseGoods.setNewData(formatData(data));
     }
 
     @Override
     public void showNull() {
-        ll_null.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
+        //ll_null.setVisibility(View.VISIBLE);
+        //recyclerView.setVisibility(View.GONE);
+        adapterBranHouseGoods.setNewData(null);
+        adapterBranHouseGoods.addFooterView(footer);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class AdapterReceiveVoucherBrandTwo extends BaseQuickAdapter<VoucherBrand
     @Override
     protected void convert(BaseViewHolder helper, VoucherBrandBean.DataBean.CouponsBean.ProductSkuBean item) {
         ImageView imageView=helper.getView(R.id.imageView);
-        GlideUtil.loadImageWithRadius(item.product_cover,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp2));
+        GlideUtil.loadImageWithRadius(item.product_cover+ImageSizeConfig.SIZE_P30X2,imageView,DimenUtil.getDimensionPixelSize(R.dimen.dp2));
         helper.setText(R.id.tv_name,item.product_name);
         helper.setText(R.id.tv_price,item.product_coupon_amount);
         TextView textView=helper.getView(R.id.tv_price_old);

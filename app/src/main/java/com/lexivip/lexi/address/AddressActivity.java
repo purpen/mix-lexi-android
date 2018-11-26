@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -99,6 +100,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private HashMap<String, ArrayList<CityBean.CityNameBean>> cityMap;
     private int countryID;
     private int newCountryID;
+    private byte[] data;
 
     @Override
     protected int getLayout() {
@@ -192,8 +194,13 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_save:
-                if (setDataBean())
-                    presenter.saveAddress(dataBean, isForeign, id_card, id_card_front, id_card_back);
+                if (setDataBean()){
+                    if (!isNew || isForeign) {
+                        presenter.saveAddress(dataBean,addressId, isForeign, id_card, id_card_front, id_card_back,0);
+                    }else {
+                        presenter.saveAddress(dataBean,addressId, isForeign, id_card, id_card_front, id_card_back,1);
+                    }
+                }
                 break;
             case R.id.bt_delete:
                 InquiryDialog inquiryDialog = new InquiryDialog(this,"确定删除地址？","确定","取消", new InquiryDialog.InquiryInterface() {
@@ -319,11 +326,11 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                             dataBean.setIs_default(isdefault);
                             return true;
                         } else {
+                            id_card = et_id.getText().toString();
                             if (id_card.isEmpty()) {
                                 ToastUtil.showInfo("请输入身份证号");
                             } else {
-                                id_card = et_id.getText().toString();
-                                if (!id_card_back.isEmpty() && !id_card_front.isEmpty()) {
+                                if (!TextUtils.isEmpty(id_card_back) && !TextUtils.isEmpty(id_card_front)) {
                                     return true;
                                 } else {
                                     ToastUtil.showInfo("请上传身份证照片");
@@ -371,6 +378,9 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             et_code.setText(data.getZipcode());
         et_detailed.setText(data.getStreet_address());
         tv_city.setText(data.getProvince() + data.getCity() + data.getTown());
+        provinceId=data.getProvince_id();
+        cityId=data.getCity_id();
+        areaId=data.getTown_id();
         dataBean = data;
     }
 
@@ -404,6 +414,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         } else {
             id_card_back = ids.getString(0);
         }
+        setImageUri(data);
     }
 
     @Override
@@ -500,9 +511,8 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onClipComplete(ImageCropActivity.MessageCropComplete cropComplete) {
         if (AddressActivity.class.getSimpleName().equals(cropComplete.getSimpleName())) {
-            byte[] data = ImageUtils.bitmap2ByteArray(cropComplete.getBitmap());
+            data = ImageUtils.bitmap2ByteArray(cropComplete.getBitmap());
             presenter.loadPhoto(bean, data);
-            setImageUri(data);
         }
     }
 

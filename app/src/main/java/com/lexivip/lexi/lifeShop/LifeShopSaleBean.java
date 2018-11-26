@@ -18,8 +18,8 @@ public class LifeShopSaleBean {
          * total_commission_price : 10.00
          */
 
-        public double pending_commission_price;
-        public double today_commission_price;
+        public String pending_commission_price;
+        public String today_commission_price;
         public String total_commission_price;
     }
 

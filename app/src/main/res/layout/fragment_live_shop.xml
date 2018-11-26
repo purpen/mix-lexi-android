@@ -470,6 +470,7 @@
             android:background="@drawable/bg_colorwhite_radiu4"
             android:text="@string/text_phone"
             android:textColor="@color/color_6ed7af"
-            android:textSize="@dimen/sp15" />
+            android:textSize="@dimen/sp15"
+            android:visibility="gone"/>
     </RelativeLayout>
 </ScrollView>

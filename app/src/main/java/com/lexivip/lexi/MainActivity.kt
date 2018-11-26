@@ -16,6 +16,7 @@ import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.register.RegisterActivity
 import com.lexivip.lexi.user.setting.SettingActivity
+import com.umeng.analytics.MobclickAgent
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -35,6 +36,16 @@ class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyP
 
     override fun onRationaleAccepted(requestCode: Int) {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MobclickAgent.onResume(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MobclickAgent.onPause(this)
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {

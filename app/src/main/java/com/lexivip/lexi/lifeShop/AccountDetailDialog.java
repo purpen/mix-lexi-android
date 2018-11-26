@@ -17,6 +17,9 @@ import android.widget.TextView;
 import com.basemodule.tools.DateUtil;
 import com.lexivip.lexi.R;
 
+/**
+ * 收益详情
+ */
 public class AccountDetailDialog extends Dialog {
     private AccountDetailOrderBean bean;
     private ImageView imageView;

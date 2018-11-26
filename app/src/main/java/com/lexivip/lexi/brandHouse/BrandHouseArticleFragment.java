@@ -60,10 +60,11 @@ public class BrandHouseArticleFragment extends BaseFragment implements BrandHous
         adapterBrandHouseArticle.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent=new Intent(getActivity(),ArticleDetailActivity.class);
+                /*Intent intent=new Intent(getActivity(),ArticleDetailActivity.class);
                 intent.putExtra(ArticleDetailActivity.class.getSimpleName(),adapterBrandHouseArticle.getData().get(position).rid);
                 intent.putExtra(ArticleDetailActivity.class.getName(),adapterBrandHouseArticle.getData().get(position).channel_name);
-                startActivity(intent);
+                startActivity(intent);*/
+                PageUtil.jump2ArticleDetailActivity(adapterBrandHouseArticle.getData().get(position));
             }
         });
     }

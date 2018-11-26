@@ -24,6 +24,7 @@ import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
@@ -106,10 +107,12 @@ public class AppApplication extends MultiDexApplication {
         //使用时才自动生成MyEventBusIndex
         EventBus.builder().addIndex(new MyEventBusIndex()).throwSubscriberException(BuildConfig.DEBUG).installDefaultEventBus();
         //Config.DEBUG = true;
-        //umeng分享
+        //umeng初始化
         UMConfigure.init(this,"5bc5c5f1b465f5c5a000007d"
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
         UMConfigure.setLogEnabled(true);
+        //umeng统计
+        MobclickAgent.setScenarioType(this,MobclickAgent.EScenarioType.E_UM_NORMAL);
 
         PlatformConfig.setWeixin(Constants.WX_ID, "8eddb55d39cbfdb9fee1afa93a495db1");
 

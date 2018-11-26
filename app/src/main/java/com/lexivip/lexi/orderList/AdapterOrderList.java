@@ -16,6 +16,7 @@ import com.basemodule.tools.Util;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lexivip.lexi.CustomLinearLayoutManager;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 
 import java.text.SimpleDateFormat;
@@ -38,7 +39,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
     @Override
     protected void convert(BaseViewHolder helper, final MyOrderListBean.DataBean.OrdersBean item) {
         helper.setText(R.id.tv_shop_name,item.getStore().getStore_name());
-        GlideUtil.loadImageWithFading(item.getStore().getStore_logo(),(ImageView)helper.getView(R.id.iv_shop));
+        GlideUtil.loadImageWithFading(item.getStore().getStore_logo()+ImageSizeConfig.SIZE_AVA50,(ImageView)helper.getView(R.id.iv_shop));
         helper.setText(R.id.tv_order_money, String.valueOf(item.getPay_amount()));
         long millions=new Long(item.getCreated_at()).longValue()*1000;
         c.setTimeInMillis(millions);
@@ -138,7 +139,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
         }
         RecyclerView recyclerView=helper.getView(R.id.recyclerView);
         recyclerView.setLayoutManager(new CustomLinearLayoutManager(activity));
-        AdapterOrderListTow adapterOrderListTow=new AdapterOrderListTow(R.layout.item_order_list_two,item.getItems(),item.getUser_order_status());
+        final AdapterOrderListTow adapterOrderListTow=new AdapterOrderListTow(R.layout.item_order_list_two,item.getItems(),item.getUser_order_status());
         recyclerView.setAdapter(adapterOrderListTow);
         helper.addOnClickListener(R.id.bt_confirm)
                 .addOnClickListener(R.id.bt_delete)
@@ -156,6 +157,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                         intent = new Intent(activity,LogisticsActivity.class);
                         intent.putExtra("logistic_code",String.valueOf(item.getItems().get(position).getExpress_no()));
                         intent.putExtra("kdn_company_code",String.valueOf(item.getItems().get(position).getExpress()));
+                        intent.putExtra("order_rid",item.getRid());
                         activity.startActivity(intent);
                         break;
                 }

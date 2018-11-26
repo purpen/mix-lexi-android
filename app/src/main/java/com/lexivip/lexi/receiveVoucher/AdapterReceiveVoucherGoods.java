@@ -13,6 +13,7 @@ import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.Util;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class AdapterReceiveVoucherGoods extends BaseQuickAdapter<VoucherGoodsBea
         helper.setText(R.id.tv_full,"满"+item.min_amount+"可用");
         Button button=helper.getView(R.id.button);
         ImageView imageView=helper.getView(R.id.imageView);
-        GlideUtil.loadImageWithRadius(item.product_cover,imageView,DimenUtil.dp2px(2.0));
+        GlideUtil.loadImageWithRadius(item.product_cover+ImageSizeConfig.SIZE_P30X2,imageView,DimenUtil.dp2px(2.0));
         helper.setText(R.id.tv_name,item.product_name);
         helper.setText(R.id.tv_price,item.product_amount);
         TextView price=helper.getView(R.id.tv_price_old);

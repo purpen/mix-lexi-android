@@ -100,6 +100,7 @@ public class EvaluateModel {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("添加评价："+json);
                 callBack.onSuccess(json);
             }
 

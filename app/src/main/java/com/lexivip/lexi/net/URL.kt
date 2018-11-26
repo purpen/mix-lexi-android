@@ -432,8 +432,6 @@ object URL {
      *  购物车移除商品SKU
      */
     const val REMOVE_FROM_SHOP_CART = "${BASE_URL}cart/remove"
-
-
     /**
      * 获取用户收货地址
      */

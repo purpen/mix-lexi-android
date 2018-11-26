@@ -17,6 +17,7 @@ import com.basemodule.tools.ScreenUtil;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.PageUtil;
 import com.lexivip.lexi.R;
 
@@ -42,7 +43,7 @@ public class AdapterReceiveVoucherBrand extends BaseMultiItemQuickAdapter<Multip
     protected void convert(BaseViewHolder helper, MultipleItem item) {
         LogUtil.e("几个："+item.getItemType()+"item:"+helper.getLayoutPosition());
         ImageView iv_logo=helper.getView(R.id.iv_logo);
-        GlideUtil.loadImageWithRadius(item.getBean().store_logo,iv_logo,DimenUtil.dp2px(5.0));
+        GlideUtil.loadImageWithTopRadius(item.getBean().store_logo+ImageSizeConfig.SIZE_AVA,iv_logo,DimenUtil.dp2px(15.0));
         helper.setText(R.id.tv_name,item.getBean().store_name);
         LogUtil.e("名字："+item.getBean().store_name);
         helper.setText(R.id.tv_full,"满"+item.getBean().min_amount+"可用");
@@ -68,7 +69,7 @@ public class AdapterReceiveVoucherBrand extends BaseMultiItemQuickAdapter<Multip
                 break;
             case MultipleItem.ITEM_TYPE_SPAN2:
                 ImageView imageView=helper.getView(R.id.imageView);
-                GlideUtil.loadImageWithRadius(item.getBean().store_bgcover,imageView,DimenUtil.dp2px(4.0));
+                GlideUtil.loadImageWithRadius(item.getBean().store_bgcover+ImageSizeConfig.SIZE_AVAL68,imageView,DimenUtil.dp2px(4.0));
                 LogUtil.e("上图："+item.getBean().store_bgcover);
                 //GlideUtil.loadImageWithTopRadius(item.getBean().store_bgcover,imageView,mContext.getResources().getDimensionPixelSize(R.dimen.dp4));
                 helper.setText(R.id.tv_amount,item.getBean().amount);

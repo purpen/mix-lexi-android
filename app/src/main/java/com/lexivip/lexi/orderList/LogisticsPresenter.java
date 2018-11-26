@@ -21,8 +21,8 @@ public class LogisticsPresenter implements LogisticsContract.Presenter {
     }
 
     @Override
-    public void getData(String logistic_code, String kdn_company_code) {
-        model.getData(logistic_code, kdn_company_code, new IDataSource.HttpRequestCallBack() {
+    public void getData(String logistic_code, String kdn_company_code,String order_rid) {
+        model.getData(logistic_code, kdn_company_code, order_rid, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 

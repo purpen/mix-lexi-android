@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.basemodule.tools.DateUtil;
 import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
@@ -19,6 +20,9 @@ import com.basemodule.ui.BaseActivity;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.view.CustomHeadView;
 
+/**
+ * 关于设计馆
+ */
 public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandHouseContract.View{
 
     private WaitingDialog dialog;
@@ -35,6 +39,8 @@ public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandH
     private BrandHouseBean houseBean;
     private AboutBrandHousePresenter presenter;
     private String rid;
+    private View footer;
+    private AdapterBrandHouseAbout adapterBrandHouseAbout;
 
     @Override
     protected int getLayout() {
@@ -61,7 +67,11 @@ public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandH
         tv_summary = findViewById(R.id.tv_summary);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ll_null = findViewById(R.id.ll_null);
+        //ll_null = findViewById(R.id.ll_null);
+        footer = View.inflate(this,R.layout.footer_about_brand_null,null);
+        adapterBrandHouseAbout = new AdapterBrandHouseAbout(R.layout.adapter_brand_house_about,null);
+        adapterBrandHouseAbout.addFooterView(footer);
+        recyclerView.setAdapter(adapterBrandHouseAbout);
     }
 
     @Override
@@ -118,15 +128,19 @@ public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandH
 
     @Override
     public void setDetailData(AboutBrandHouseDetailBean bean) {
+
         if (bean.data.content.isEmpty()){
-            ll_null.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
+            LogUtil.e("有数据");
+            //ll_null.setVisibility(View.VISIBLE);
+            //recyclerView.setVisibility(View.GONE);
+
         }else {
-            ll_null.setVisibility(View.GONE);
+            adapterBrandHouseAbout.removeFooterView(footer);
+            LogUtil.e("没有数据");
+            //ll_null.setVisibility(View.GONE);
             tv_summary.setText(bean.data.summary);
-            recyclerView.setVisibility(View.VISIBLE);
-            AdapterBrandHouseAbout adapterBrandHouseAbout=new AdapterBrandHouseAbout(R.layout.adapter_brand_house_about,bean.data.split_content);
-            recyclerView.setAdapter(adapterBrandHouseAbout);
+            //recyclerView.setVisibility(View.VISIBLE);
+            adapterBrandHouseAbout.addData(bean.data.split_content);
         }
     }
 

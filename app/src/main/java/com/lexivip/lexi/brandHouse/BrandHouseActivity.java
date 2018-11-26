@@ -46,6 +46,9 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 品牌馆页面
+ */
 public class BrandHouseActivity extends BaseActivity implements View.OnClickListener, BrandHouseContract.View {
 
     private WaitingDialog dialog;

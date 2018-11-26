@@ -999,8 +999,9 @@ public class ClientParamsAPI {
      * @return
      */
     @NotNull
-    public static HashMap<String,Object> getAddressParams(AddressBean.DataBean bean,boolean is_overseas,String id_card,String id_card_front,String id_card_back){
+    public static HashMap<String,Object> getAddressParams(AddressBean.DataBean bean,String rid,boolean is_overseas,String id_card,String id_card_front,String id_card_back){
         HashMap<String,Object> params=generateCommonParams();
+        params.put("rid",rid);
         params.put("first_name",bean.getFirst_name());
         params.put("phone",bean.getPhone());
         params.put("mobile",bean.getMobile());
@@ -1037,10 +1038,11 @@ public class ClientParamsAPI {
      * @param kdn_company_code
      * @return
      */
-    public static HashMap<String,Object> getLogistics(String logistic_code, String kdn_company_code){
+    public static HashMap<String,Object> getLogistics(String logistic_code, String kdn_company_code,String order_rid){
         HashMap<String,Object> params=generateCommonParams();
         params.put("logistic_code",logistic_code);
         params.put("kdn_company_code",kdn_company_code);
+        params.put("order_rid",order_rid);
         return params;
     }
 
