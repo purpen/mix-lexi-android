@@ -244,7 +244,9 @@
         android:includeFontPadding="false"
         android:text="@string/text_mine_order"
         android:textColor="@color/color_333"
-        android:textSize="@dimen/sp14" />
+        android:textSize="@dimen/sp14"
+        android:visibility="gone"
+        />
 
     <LinearLayout
         android:id="@+id/linearLayoutCoupon"
@@ -254,6 +256,7 @@
         android:layout_height="@dimen/dp30"
         android:background="@drawable/border_round_ededed"
         android:gravity="center"
+        android:visibility="gone"
         >
         <ImageView
             android:layout_width="15dp"

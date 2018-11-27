@@ -17,13 +17,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/linearLayoutViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:layerType="software"
+                android:orientation="vertical"
+                >
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:overScrollMode="never"
+                    android:layout_gravity="center_vertical"
+                    />
+            </LinearLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewBanner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp190"
                 android:overScrollMode="never"
                 android:paddingTop="@dimen/dp15"
-                android:paddingBottom="@dimen/dp20" />
+                android:paddingBottom="@dimen/dp20"
+                android:visibility="gone"
+                />
 
             <LinearLayout
                 android:id="@+id/linearLayoutOpenLifeHouseGuide"
@@ -200,10 +220,10 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/textViewCouponCenter"
                         android:layout_width="wrap_content"
@@ -270,15 +290,15 @@
                     android:textColor="@color/color_999"
                     android:textSize="@dimen/sp14"
                     android:visibility="gone" />
+
                 <LinearLayout
                     android:id="@+id/linearLayoutIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:paddingTop="@dimen/dp4"
+                    android:layout_centerVertical="true"
                     android:orientation="horizontal"
-                    >
+                    android:paddingTop="@dimen/dp4">
 
                 </LinearLayout>
             </RelativeLayout>
@@ -296,8 +316,7 @@
                 android:layout_marginEnd="@dimen/dp15"
                 android:layout_marginBottom="@dimen/dp20"
                 android:overScrollMode="never"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
             <include
                 layout="@layout/line_color_eee"

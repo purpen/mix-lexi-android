@@ -35,7 +35,7 @@ public class GlideUtil {
     private static final int DEFAULT_PLACE_HOLDER = R.drawable.default_load;
     private static final int DEFAULT_ERROR_HOLDER = R.drawable.default_load;
     //The duration of the cross fade animation in milliseconds.
-    private static final int FADING_DURING = 100;
+    private static final int FADING_DURING = 0;
 
 
     public static <T> void loadingImage(T t, ImageView imageView) {
@@ -120,7 +120,7 @@ public class GlideUtil {
                 .format(DecodeFormat.PREFER_RGB_565)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(placeHolder)
-                .placeholder(placeHolder);
+                .placeholder(placeHolder).disallowHardwareConfig();
         Context context = imageView.getContext();
 
         if (!isValidContextForGlide(context)) return;
@@ -320,15 +320,7 @@ public class GlideUtil {
     }
 
     public static <T> void loadCircleImageWidthDimen(@NotNull T t, @NotNull ImageView imageView, int size) {
-        RequestOptions requestOptions = bitmapTransform(new CircleCrop()).diskCacheStrategy(DiskCacheStrategy.ALL)
-                .override(size)
-                .skipMemoryCache(false)
-                .format(DecodeFormat.PREFER_RGB_565)
-                .error(DEFAULT_ERROR_HOLDER)
-                .placeholder(DEFAULT_PLACE_HOLDER);
-        Context context = imageView.getContext();
-        if (!isValidContextForGlide(context)) return;
-        Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
+        loadCircleImageWidthDimen(t,imageView,size,"");
     }
 
     public static <T> void loadCircleImageWidthDimen(@NotNull T t, @NotNull ImageView imageView, int size, String imageSizeConfig) {

@@ -34,7 +34,7 @@ public abstract class RecyclingPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public final Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, int position) {
         int viewType = getItemViewType(position);
         View view = null;
         if (viewType != IGNORE_ITEM_VIEW_TYPE) {
@@ -46,7 +46,7 @@ public abstract class RecyclingPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public final void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(ViewGroup container, int position, Object object) {
         View view = (View) object;
         container.removeView(view);
         int viewType = getItemViewType(position);

@@ -22,7 +22,7 @@ class AdapterSelectionBanner(@LayoutRes res: Int) : BaseQuickAdapter<String, Bas
 
     override fun convert(helper: BaseViewHolder, item: String) {
         val lp = helper.itemView.layoutParams as RecyclerView.LayoutParams
-        lp.width =  parent.width - DimenUtil.dp2px((2 * (mPagePadding + mShowLeftCardWidth)).toDouble())
+        lp.width =  parent.width - DimenUtil.dp2px((2*mPagePadding+mShowLeftCardWidth).toDouble())
         helper.itemView.layoutParams = lp
 
         val padding = DimenUtil.dp2px(mPagePadding.toDouble())
