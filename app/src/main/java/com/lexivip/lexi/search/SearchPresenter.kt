@@ -94,9 +94,11 @@ class SearchPresenter(view: SearchContract.View) : SearchContract.Presenter {
     override fun getFuzzyWordList(keyWord: String) {
         dataSource.getFuzzyWordList(keyWord,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
+                view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
+                view.dismissLoadingView()
                 val fuzzyWordMatchListBean = JsonUtil.fromJson(json, FuzzyWordMatchListBean::class.java)
                 if (fuzzyWordMatchListBean.success) {
                     view.setFuzzyWordListData(fuzzyWordMatchListBean.data.search_items)

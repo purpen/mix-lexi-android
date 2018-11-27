@@ -1,4 +1,5 @@
 package com.basemodule.tools;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -41,7 +42,7 @@ public class GlideUtil {
         RequestOptions requestOptions = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE);
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).asGif().load(t).apply(requestOptions).into(imageView);
     }
 
@@ -61,7 +62,7 @@ public class GlideUtil {
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
@@ -81,7 +82,7 @@ public class GlideUtil {
                 .placeholder(DEFAULT_PLACE_HOLDER);
 
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
@@ -97,7 +98,7 @@ public class GlideUtil {
         RequestOptions requestOptions = bitmapTransform(new RoundedCornersTransformation(radius, 0, RoundedCornersTransformation.CornerType.ALL));
         requestOptions.skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.ALL).error(DEFAULT_ERROR_HOLDER);
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
@@ -121,7 +122,8 @@ public class GlideUtil {
                 .error(placeHolder)
                 .placeholder(placeHolder);
         Context context = imageView.getContext();
-        if (context == null) return;
+
+        if (!isValidContextForGlide(context)) return;
 
         if (t instanceof String) {
             Glide.with(context).asDrawable().load(t + imageSizeConfig).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
@@ -150,7 +152,7 @@ public class GlideUtil {
                 .placeholder(DEFAULT_PLACE_HOLDER);
 
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).asDrawable().load(t).listener(new RequestListener<Drawable>() {
                                                               @Override
                                                               public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -238,7 +240,7 @@ public class GlideUtil {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
@@ -256,7 +258,7 @@ public class GlideUtil {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         if (t instanceof String) {
             Glide.with(context).asDrawable().load(t + imageSizeConfig).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
         } else {
@@ -281,7 +283,7 @@ public class GlideUtil {
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).asBitmap().apply(requestOptions).load(t).into(imageView);
     }
 
@@ -302,18 +304,18 @@ public class GlideUtil {
                 .placeholder(DEFAULT_PLACE_HOLDER)
                 .disallowHardwareConfig();
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).asBitmap().apply(requestOptions).load(t).into(imageView);
     }
 
 
     public static void resumeRequests(Context context) {
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).resumeRequests();
     }
 
     public static void pauseRequests(Context context) {
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).pauseRequests();
     }
 
@@ -325,7 +327,7 @@ public class GlideUtil {
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
     }
 
@@ -337,7 +339,7 @@ public class GlideUtil {
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         if (t instanceof String) {
             Glide.with(context).asDrawable().load(t+imageSizeConfig).apply(requestOptions).into(imageView);
         }else {
@@ -377,7 +379,7 @@ public class GlideUtil {
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER);
         Context context = imageView.getContext();
-        if (context == null) return;
+        if (!isValidContextForGlide(context)) return;
         Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
     }
 
@@ -397,11 +399,23 @@ public class GlideUtil {
      * @param imgUrl
      */
     public static Bitmap downLoadOriginalBitmap(String imgUrl, Context context) throws ExecutionException, InterruptedException {
+        if (!isValidContextForGlide(context)) return null;
         return Glide.with(context).asBitmap().load(imgUrl).submit().get();
     }
 
 
     public static RequestManager getInstance(Context context) {
         return Glide.with(context);
+    }
+
+    private static boolean isValidContextForGlide(final Context context) {
+        if (context == null) {
+            return false;
+        }
+        if (context instanceof Activity) {
+            final Activity activity = (Activity) context;
+            return !activity.isDestroyed() && !activity.isFinishing();
+        }
+        return true;
     }
 }

@@ -158,7 +158,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         if (count == 0) return
 
         headerLifeHouse.textViewLook.visibility = View.VISIBLE
-        val string = SpannableString("$count 人浏览过生活馆")
+        val string = SpannableString("${data.browse_number} 人浏览过生活馆")
         val end = count.toString().length
         string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)), 0, end + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         headerLifeHouse.textViewLook.text = string
