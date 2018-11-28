@@ -39,6 +39,7 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
     private int officialPosition;
     private int goodsPosition;
     private RecyclerView recyclerViewGoods;
+    private View handerGoods;
 
     @Override
     protected int getLayout() {
@@ -56,7 +57,7 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
         presenter = new ReceiveVoucherRecommendPresenter(this);
         hander = View.inflate(getContext(),R.layout.fragment_receive_voucher_recommend_header,null);
         View handerBrand=View.inflate(getContext(),R.layout.fragment_receive_voucher_recommend_header_brand,null);
-        View handerGoods=View.inflate(getContext(),R.layout.fragment_receive_voucher_recommend_header_goods,null);
+        handerGoods = View.inflate(getContext(),R.layout.fragment_receive_voucher_recommend_header_goods,null);
         View handerImage=View.inflate(getContext(),R.layout.fragment_receive_voucher_recommend_header_image,null);
         RecyclerView recyclerViewOfficial=hander.findViewById(R.id.recyclerViewOfficial);
         RecyclerView recyclerViewBrand=handerBrand.findViewById(R.id.recyclerViewBrand);
@@ -75,7 +76,7 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
         voucherGoods.addHeaderView(hander);
         //voucherGoods.addHeaderView(handerImage);
         voucherGoods.addHeaderView(handerBrand);
-        voucherGoods.addHeaderView(handerGoods);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerViewBrand.setLayoutManager(gridLayoutManager);
         voucherBrand.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
@@ -190,6 +191,9 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
 
     @Override
     public void getGoods(VoucherGoodsBean bean) {
+        if(bean.data.coupons.size()!=0){
+            voucherGoods.addHeaderView(handerGoods);
+        }
         if (page==1) {
             voucherGoods.setNewData(bean.data.coupons);
         }else {

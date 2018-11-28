@@ -25,12 +25,12 @@ public class DateUtil {
      *
      * @return
      */
-    public static String getSpecifiedDayBefore(Date date, int interval) {
+    public static String getSpecifiedDayBefore(Date date, int interval,String pattern) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         int day = c.get(Calendar.DATE);
         c.set(Calendar.DATE, day - interval);
-        return new SimpleDateFormat(PATTERN).format(c.getTime());
+        return new SimpleDateFormat(pattern).format(c.getTime());
     }
 
     /**
@@ -95,6 +95,11 @@ public class DateUtil {
      */
     public static String getDateString(Date date) {
         SimpleDateFormat format = new SimpleDateFormat(PATTERN, Locale.SIMPLIFIED_CHINESE);
+        return format.format(date);
+    }
+
+    public static String getDateString(Date date,String pattern){
+        SimpleDateFormat format = new SimpleDateFormat(pattern, Locale.SIMPLIFIED_CHINESE);
         return format.format(date);
     }
 

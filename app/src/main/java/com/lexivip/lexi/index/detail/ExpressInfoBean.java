@@ -53,7 +53,7 @@ public class ExpressInfoBean {
             public String express_code;
             public int express_id;
             public String express_name;
-            public int first_amount;
+            public String first_amount;
             public int first_item;
             public double first_weight;
             public boolean is_default;

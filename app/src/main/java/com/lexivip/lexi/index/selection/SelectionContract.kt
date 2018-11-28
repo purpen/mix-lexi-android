@@ -40,6 +40,7 @@ class SelectionContract {
         fun setHeadLineData(data: MutableList<HeadLineBean.DataBean.HeadlinesBean>) {
 
         }
+        fun setIsReceive(is_grant: Int)
     }
 
     interface Presenter : BasePresenter {
@@ -58,5 +59,6 @@ class SelectionContract {
         fun getZCManifest()
 
         fun getHeadLine()
+        fun getReceive()
     }
 }

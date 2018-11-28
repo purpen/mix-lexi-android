@@ -105,6 +105,11 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
         customHeadView.setGoBackListener { showConfirmDialog() }
     }
 
+    override fun onResume() {
+        super.onResume()
+        finish()
+    }
+
     override fun dismissLoadingView() {
         dialog.dismiss()
     }

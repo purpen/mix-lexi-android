@@ -16,6 +16,9 @@ import com.lexivip.lexi.index.selection.GoodsAdapter
 import kotlinx.android.synthetic.main.fragment_wish_order.*
 
 class WishOrderFragment : BaseFragment(), SelectionContract.View {
+    override fun setIsReceive(is_grant: Int) {
+    }
+
     private lateinit var headView: View
     private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_wish_order

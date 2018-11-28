@@ -11,6 +11,7 @@ import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.R
+import com.lexivip.lexi.index.selection.OpenLifeHouseActivity
 import com.lexivip.lexi.user.areacode.MessageAreaCode
 import com.lexivip.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.lexivip.lexi.user.login.LoginActivity
@@ -74,8 +75,16 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
             R.id.textViewGetCode -> {
                 presenter.sendCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString())
             }
-            R.id.textViewService -> ToastUtil.showInfo("服务条款")
-            R.id.textViewPrivate -> ToastUtil.showInfo("隐私条款")
+            R.id.textViewService -> {
+                val intent=Intent(this, OpenLifeHouseActivity::class.java)
+                intent.putExtra("url","https://h5.lexivip.com/site/service_agreement")
+                startActivity(intent)
+            }
+            R.id.textViewPrivate -> {
+                val intent=Intent(this, OpenLifeHouseActivity::class.java)
+                intent.putExtra("url","https://h5.lexivip.com/site/privacy")
+                startActivity(intent)
+            }
             R.id.textViewJump -> startActivity(Intent(this, LoginActivity::class.java))
         }
     }

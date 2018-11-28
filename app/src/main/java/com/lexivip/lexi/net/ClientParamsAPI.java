@@ -1579,4 +1579,30 @@ public class ClientParamsAPI {
         params.put("scene", scene);
         return params;
     }
+    /**
+     * 获取别人个人中心的粉丝或关注
+     * @param uid
+     * @param page
+     * @return
+     */
+    @Nullable
+    public static HashMap<String,Object> getOhterUsers(@NotNull String uid,int page){
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("uid",uid);
+        params.put("per_page",Constants.PAGE_SIZE);
+        params.put("page",String.valueOf(page));
+        return params;
+    }
+
+    /**
+     * 获取自己的粉丝或关注
+     * @param page
+     * @return
+     */
+    public static HashMap<String,Object> getUserFollow(@NotNull int page){
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("per_page",Constants.PAGE_SIZE);
+        params.put("page",String.valueOf(page));
+        return params;
+    }
 }

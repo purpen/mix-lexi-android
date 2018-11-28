@@ -17,6 +17,7 @@ import com.lexivip.lexi.orderList.OrderListActivity
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
 import com.lexivip.lexi.coupon.UserCouponActivity
+import com.lexivip.lexi.index.detail.FavoriteUserListActivity
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
@@ -65,8 +66,6 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
     override fun initView() {
         if (!UserProfileUtil.isLogin()) return
-        buttonOrder.visibility = View.VISIBLE
-        linearLayoutCoupon.visibility = View.VISIBLE
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
     }
@@ -122,6 +121,8 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         })
 
         buttonOrder.setOnClickListener(this)
+        linearLayoutFocus.setOnClickListener(this)
+        linearLayoutFans.setOnClickListener(this)
 
         linearLayoutLike.setOnClickListener {
             customViewPager.setCurrentItem(0, true)
@@ -164,6 +165,18 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
             }
             R.id.buttonOrder->startActivity(Intent(activity,OrderListActivity::class.java))
+            R.id.linearLayoutFocus->{
+                var intent=Intent(activity, FavoriteUserListActivity::class.java)
+                intent.putExtra("type",1)
+                intent.putExtra("title",Util.getString(R.string.text_focus))
+                startActivity(intent)
+            }
+            R.id.linearLayoutFans->{
+                var intent=Intent(activity, FavoriteUserListActivity::class.java)
+                intent.putExtra("type",2)
+                intent.putExtra("title",Util.getString(R.string.text_fans))
+                startActivity(intent)
+            }
         }
     }
 

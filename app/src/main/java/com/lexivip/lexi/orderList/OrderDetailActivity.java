@@ -111,8 +111,8 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             adapterOrderList.addHeaderView(headerView);
             adapterOrderList.addFooterView(footerView);
             if (0==bean.data.getUser_order_status()||5==bean.data.getUser_order_status()||!bean.data.isIs_many_express()){
-               // for (int i=0;i<bean.data.getItems().size();i++)
-               // bean.data.getItems().get(i).isShow=false;
+                // for (int i=0;i<bean.data.getItems().size();i++)
+                // bean.data.getItems().get(i).isShow=false;
             }else{
                 for (int i=0;i<bean.data.getItems().size();i++){
                     if (bean.data.getItems().get(i+1).getExpress()==bean.data.getItems().get(i).getExpress()) {
@@ -184,7 +184,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             adapterOrderList.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    PageUtil.jump2GoodsDetailActivity(adapterOrderList.getData().get(position).getRid());
+                    PageUtil.jump2GoodsDetailActivity(adapterOrderList.getData().get(position).getProduct_rid());
                 }
             });
         }else{

@@ -3,6 +3,7 @@ import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
+import com.lexivip.lexi.dialog.CouponBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendBean
 import com.lexivip.lexi.index.explore.ExploreBannerBean
 import java.io.IOException
@@ -12,6 +13,24 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     private var view: SelectionContract.View = checkNotNull(view)
 
     private val dataSource: SelectionModel by lazy { SelectionModel() }
+
+    override fun getReceive() {
+        dataSource.getReceive(object :IDataSource.HttpRequestCallBack{
+            override fun onSuccess(json: String) {
+                val couponBean=JsonUtil.fromJson(json, CouponBean::class.java)
+                if (couponBean.success){
+                    view.setIsReceive(couponBean.data.is_grant)
+                }else{
+                    view.showError(couponBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+
+        })
+    }
 
     override fun getBanners() {
         dataSource.getBanners( object : IDataSource.HttpRequestCallBack {
