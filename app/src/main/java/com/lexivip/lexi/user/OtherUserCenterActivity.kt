@@ -125,14 +125,6 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
             startActivity(Intent(this, DynamicActivity::class.java))
         }
 
-        imageView.setOnClickListener {
-            startActivity(Intent(this, EditUserDataActivity::class.java))
-        }
-
-        textViewName.setOnClickListener {
-            startActivity(Intent(this, EditUserDataActivity::class.java))
-        }
-
         //优惠券
         /*linearLayoutCoupon.setOnClickListener {
             startActivity(Intent(this, UserCouponActivity::class.java))
