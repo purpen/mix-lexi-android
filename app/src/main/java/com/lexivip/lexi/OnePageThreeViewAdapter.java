@@ -1,5 +1,7 @@
 package com.lexivip.lexi;
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.ScreenUtil;
 import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.view.autoScrollViewpager.RecyclingPagerAdapter;
+
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class OnePageThreeViewAdapter extends RecyclingPagerAdapter implements ViewPager.OnPageChangeListener {
@@ -32,6 +36,7 @@ public class OnePageThreeViewAdapter extends RecyclingPagerAdapter implements Vi
         }
         viewPager.setOffscreenPageLimit(list.size());
         mViewPager = viewPager;
+        handler = new MyHandler(this);
         viewPager.setAdapter(this);
         viewPager.addOnPageChangeListener(this);
         viewPager.setCurrentItem(1,false);
@@ -80,6 +85,9 @@ public class OnePageThreeViewAdapter extends RecyclingPagerAdapter implements Vi
 
     @Override
     public int getCount() {
+
+
+
         return list.size();
     }
 
@@ -112,5 +120,62 @@ public class OnePageThreeViewAdapter extends RecyclingPagerAdapter implements Vi
             }
         }
 
+    }
+
+
+    private static final int AUTO_SCROLL = 0x10;
+    private static final int TIME_INTERVAL = 2500;
+    private boolean isAutoScroll = false;
+    private Handler handler;
+
+    private static class MyHandler extends Handler {
+
+        private final WeakReference<OnePageThreeViewAdapter> adapter;
+
+        public MyHandler(OnePageThreeViewAdapter adapter) {
+            this.adapter = new WeakReference<>(adapter);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case AUTO_SCROLL:
+                    OnePageThreeViewAdapter adapter = this.adapter.get();
+                    if (adapter != null) {
+                        adapter.scrollOnce();
+                        adapter.sendScrollScrollMessage(TIME_INTERVAL);
+                    }
+                default:
+                    break;
+            }
+        }
+    }
+
+
+
+    private void scrollOnce() {
+        int size = list.size();
+        int position = currentPosition+1;
+        if (position == 0) {
+            mViewPager.setCurrentItem(size - 2, false);
+        } else if (position == size - 1) {
+//        若当前为倒数第一张，设置页面为第二张
+            mViewPager.setCurrentItem(1, false);
+        }else {
+            mViewPager.setCurrentItem(position, true);
+        }
+    }
+
+    private void sendScrollScrollMessage(int timeInterval) {
+        handler.removeMessages(AUTO_SCROLL);
+        handler.sendEmptyMessageDelayed(AUTO_SCROLL, timeInterval);
+    }
+
+
+    public void setAutoScroll(){
+        isAutoScroll = true;
+        sendScrollScrollMessage(TIME_INTERVAL);
     }
 }

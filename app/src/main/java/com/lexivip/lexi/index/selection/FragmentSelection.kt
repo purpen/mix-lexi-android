@@ -377,6 +377,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         banners.addAll(list)
 //        viewPager.offscreenPageLimit = list.size
         val adapterOnePageThreeView = OnePageThreeViewAdapter(activity,viewPager, banner_images)
+        adapterOnePageThreeView.setAutoScroll()
 //        viewPager.adapter = adapterOnePageThreeView
         viewPager.pageMargin = -bannerWidth / 8 + DimenUtil.dp2px(10.0)
         viewPager.setPageTransformer(true, OnePageThreeViewTransformer())
