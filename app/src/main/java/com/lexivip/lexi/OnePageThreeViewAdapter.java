@@ -1,4 +1,5 @@
 package com.lexivip.lexi;
+
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
@@ -7,66 +8,63 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ScreenUtil;
 import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.view.autoScrollViewpager.RecyclingPagerAdapter;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class OnePageThreeViewAdapter extends RecyclingPagerAdapter implements ViewPager.OnPageChangeListener {
+public class OnePageThreeViewAdapter extends RecyclingPagerAdapter{
     //    当前页面
-    private int currentPosition = 0;
     private Activity context;
-    private ViewPager mViewPager;
     private List<BannerImageBean> list;
-
+    private int size;
+    private boolean isInfiniteLoop;
 
     public OnePageThreeViewAdapter(Activity activity, ViewPager viewPager, List<BannerImageBean> urls) {
         this.context = activity;
         this.list = urls;
-        int size = urls.size();
-        if (size > 1) {
-//            添加最后一页到第一页
-            list.add(0, urls.get(size - 1));
-//            添加第一页(经过上行的添加已经是第二页了)到最后一页
-            list.add(urls.get(1));
-        }
-        viewPager.setOffscreenPageLimit(list.size());
-        mViewPager = viewPager;
-        handler = new MyHandler(this);
-        viewPager.setAdapter(this);
-        viewPager.addOnPageChangeListener(this);
-        viewPager.setCurrentItem(1,false);
+        this.size = (list == null ? 0 : list.size());
+        isInfiniteLoop = false;
+    }
+
+    public OnePageThreeViewAdapter(Activity activity, ViewPager viewPager, List<BannerImageBean> urls,boolean isInfiniteLoop) {
+        this.context = activity;
+        this.list = urls;
+        this.size = (list == null ? 0 : list.size());
+        viewPager.setOffscreenPageLimit(size);
+        this.isInfiniteLoop = isInfiniteLoop;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup container) {
         ViewHolder holder;
-        if (convertView==null){
+        if (convertView == null) {
             holder = new ViewHolder();
             convertView = holder.view = View.inflate(context, R.layout.adapter_one_page_three_item, null);
             holder.imageView = convertView.findViewById(R.id.imageView);
-            convertView.setTag(R.id.glide_image_tag,holder);
-        }else {
+            convertView.setTag(R.id.glide_image_tag, holder);
+        } else {
             holder = (ViewHolder) convertView.getTag(R.id.glide_image_tag);
         }
 
+        position = getPosition(position);
         holder.view.setTag(position);
-        if (position == 0) {
-            holder.view.setPadding(DimenUtil.dp2px(15.0), 0, 0, 0);
-        }
 
+        holder.view.setPadding(DimenUtil.dp2px(15.0), 0, 0, 0);
         int width = ScreenUtil.getScreenWidth() * 300 / 375;
         int height = width * 200 / 300;
         holder.imageView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         GlideUtil.loadImageWithDimenAndRadius(list.get(position).image, holder.imageView, DimenUtil.dp2px(4), width, height, ImageSizeConfig.DEFAULT);
-        convertView.setOnClickListener(new View.OnClickListener(){
+        final int finalPosition = position;
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PageUtil.banner2Page(list.get(currentPosition));
+                PageUtil.banner2Page(list.get(finalPosition));
             }
         });
         return convertView;
@@ -85,97 +83,16 @@ public class OnePageThreeViewAdapter extends RecyclingPagerAdapter implements Vi
 
     @Override
     public int getCount() {
-
-
-
-        return list.size();
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        int size = list.size();
-        if (currentPosition == 0) {
-            mViewPager.setCurrentItem(size - 2, false);
-        } else if (currentPosition == size - 1) {
-//        若当前为倒数第一张，设置页面为第二张
-            mViewPager.setCurrentItem(1, false);
+        if (size == 0) {
+            return 0;
         }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        currentPosition = position;
-        for (int i = 0; i < list.size(); i++) {
-            View viewWithTag = mViewPager.findViewWithTag(i);
-            if (viewWithTag==null) return;
-            if (i == position) {
-                viewWithTag.setPadding(DimenUtil.dp2px(15.0), 0, 0, 0);
-            } else {
-                viewWithTag.setPadding(0, 0, 0, 0);
-            }
+        if (size == 1) {
+            return 1;
         }
-
+        return isInfiniteLoop ? Integer.MAX_VALUE : size;
     }
 
-
-    private static final int AUTO_SCROLL = 0x10;
-    private static final int TIME_INTERVAL = 2500;
-    private boolean isAutoScroll = false;
-    private Handler handler;
-
-    private static class MyHandler extends Handler {
-
-        private final WeakReference<OnePageThreeViewAdapter> adapter;
-
-        public MyHandler(OnePageThreeViewAdapter adapter) {
-            this.adapter = new WeakReference<>(adapter);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            switch (msg.what) {
-                case AUTO_SCROLL:
-                    OnePageThreeViewAdapter adapter = this.adapter.get();
-                    if (adapter != null) {
-                        adapter.scrollOnce();
-                        adapter.sendScrollScrollMessage(TIME_INTERVAL);
-                    }
-                default:
-                    break;
-            }
-        }
-    }
-
-
-
-    private void scrollOnce() {
-        int size = list.size();
-        int position = currentPosition+1;
-        if (position == 0) {
-            mViewPager.setCurrentItem(size - 2, false);
-        } else if (position == size - 1) {
-//        若当前为倒数第一张，设置页面为第二张
-            mViewPager.setCurrentItem(1, false);
-        }else {
-            mViewPager.setCurrentItem(position, true);
-        }
-    }
-
-    private void sendScrollScrollMessage(int timeInterval) {
-        handler.removeMessages(AUTO_SCROLL);
-        handler.sendEmptyMessageDelayed(AUTO_SCROLL, timeInterval);
-    }
-
-
-    public void setAutoScroll(){
-        isAutoScroll = true;
-        sendScrollScrollMessage(TIME_INTERVAL);
+    private int getPosition(int position) {
+        return isInfiniteLoop ? position % size : position;
     }
 }

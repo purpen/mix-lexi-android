@@ -25,7 +25,7 @@
                 android:layerType="software"
                 android:orientation="vertical"
                 >
-                <android.support.v4.view.ViewPager
+                <com.lexivip.lexi.view.autoScrollViewpager.CustomAutoScrollViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

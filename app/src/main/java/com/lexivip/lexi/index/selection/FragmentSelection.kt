@@ -354,15 +354,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         adapterSelectionBanner = AdapterSelectionBanner(R.layout.adapter_selection_banner)
         recyclerViewBanner.adapter = adapterSelectionBanner
 
-//        linearLayoutViewPager.clipChildren = false
         val width = ScreenUtil.getScreenWidth() * 320 / 375
         val height = width * 200 / 320 + DimenUtil.dp2px(35.0)
         viewPager.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
         viewPager.setPadding(0,DimenUtil.dp2px(15.0),0,DimenUtil.dp2px(20.0))
-//        viewPager.clipChildren = false
-//        viewPager.adapter = adapterOnePageThreeView
-//        viewPager.setPageTransformer(true, OnePageThreeViewTransformer())
-
     }
 
     /**
@@ -375,34 +370,13 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         }
         banners.clear()
         banners.addAll(list)
-//        viewPager.offscreenPageLimit = list.size
-        val adapterOnePageThreeView = OnePageThreeViewAdapter(activity,viewPager, banner_images)
-        adapterOnePageThreeView.setAutoScroll()
-//        viewPager.adapter = adapterOnePageThreeView
-        viewPager.pageMargin = -bannerWidth / 8 + DimenUtil.dp2px(10.0)
+        val adapterOnePageThreeView = OnePageThreeViewAdapter(activity,viewPager, banner_images,true)
+        viewPager.adapter = adapterOnePageThreeView
+        viewPager.offscreenPageLimit = banner_images.size
+        viewPager.startAutoScroll()
+        viewPager.setAutoScrollDurationFactor(4.0)
+        viewPager.pageMargin = -bannerWidth / 8
         viewPager.setPageTransformer(true, OnePageThreeViewTransformer())
-
-//        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-//            override fun onPageSelected(position: Int) {
-//                for (i in 0 until adapterOnePageThreeView.count) {
-//                    val view = viewPager.findViewWithTag<View>(i)
-//                    if (i == position) {
-//                        view.setPadding(DimenUtil.dp2px(15.0), 0, 0, 0)
-//                    } else {
-//                        view.setPadding(0, 0, 0, 0)
-//                    }
-//                }
-//            }
-//
-//            override fun onPageScrollStateChanged(state: Int) {
-//
-//            }
-//
-//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-//
-//            }
-//        })
-
 
         adapterSelectionBanner.setNewData(list)
         val mCardScaleHelper = CardScaleHelper()
