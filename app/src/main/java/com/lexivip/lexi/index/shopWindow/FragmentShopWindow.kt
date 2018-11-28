@@ -1,9 +1,12 @@
 package com.lexivip.lexi.index.shopWindow
 
 import android.content.Intent
+import android.support.design.widget.CoordinatorLayout
 import android.support.v4.view.ViewPager
+import android.view.View
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
@@ -50,6 +53,10 @@ class FragmentShopWindow : BaseFragment() {
     }
 
     override fun installListener() {
+
+        val  layoutParams = coordinatorLayout.layoutParams as CoordinatorLayout.LayoutParams
+
+
 
         linearLayoutPublishWindow.setOnClickListener {
             //跳转拼接橱窗

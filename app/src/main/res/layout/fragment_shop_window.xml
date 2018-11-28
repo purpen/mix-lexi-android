@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout"
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,13 +23,14 @@
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
 
                 <RelativeLayout
+                    android:id="@+id/relativeLayoutBox"
                     android:layout_width="match_parent"
                     android:layout_height="255dp">
 
                     <ImageView
                         android:id="@+id/imageViewBg"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="255dp" />
 
                     <TextView
                         android:id="@+id/textViewTitle"

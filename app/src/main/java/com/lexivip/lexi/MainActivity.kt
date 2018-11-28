@@ -7,7 +7,6 @@ import android.view.KeyEvent
 import android.widget.Toast
 import com.basemodule.tools.AppManager
 import com.basemodule.tools.LogUtil
-import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.eventBusMessge.MessageChangePage
@@ -90,7 +89,6 @@ class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyP
     }
 
     override fun initView() {
-//        LogUtil.e("screenW=${ScreenUtil.getScreenWidth()};;screenHeight=${ScreenUtil.getScreenHeight()};;density=${ScreenUtil.getDensity()}")
         switchFragment(R.id.button0)
         EventBus.getDefault().register(this)
     }
@@ -128,11 +126,6 @@ class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyP
      */
     private fun initUserCenter() {
         fragment3 = MainFragmentUser.newInstance()
-        /*if (UserProfileUtil.isSmallB()) {
-
-        } else {
-            fragment3 = MainFragment3.newInstance()
-        }*/
     }
 
     override fun installListener() {

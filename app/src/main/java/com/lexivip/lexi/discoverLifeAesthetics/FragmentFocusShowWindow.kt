@@ -3,8 +3,10 @@ package com.lexivip.lexi.discoverLifeAesthetics
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -13,6 +15,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
+import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.user.login.LoginActivity
@@ -64,6 +67,24 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
             presenter.loadMoreFocusData()
         }, recyclerView)
 
+
+        //添加监听
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (recyclerView.scrollState == RecyclerView.SCROLL_STATE_SETTLING || recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) return
+                if (Math.abs(dy) < 20) return
+                if (dy > 0) {
+                    EventBus.getDefault().post(MessageUpDown(true))
+                } else {
+                    EventBus.getDefault().post(MessageUpDown(false))
+                }
+            }
+        })
 
         adapter.setOnItemChildClickListener { _, view, position ->
             val showWindowBean = adapter.getItem(position) ?: return@setOnItemChildClickListener

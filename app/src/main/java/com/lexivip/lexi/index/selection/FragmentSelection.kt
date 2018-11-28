@@ -2,6 +2,7 @@ package com.lexivip.lexi.index.selection
 
 import android.content.Intent
 import android.support.v4.view.ViewPager
+import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableString
@@ -20,6 +21,7 @@ import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
+import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
@@ -32,6 +34,7 @@ import com.lexivip.lexi.view.autoScrollViewpager.RecyclerViewPagerAdapter
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
+import org.greenrobot.eventbus.EventBus
 
 
 class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickListener {
@@ -68,8 +71,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         swipeRefreshLayout.isEnabled = false
 //        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
 //        swipeRefreshLayout.isRefreshing = false
-        textViewCouponCenter.setCompoundDrawables(null,Util.getDrawableWidthPxDimen(R.mipmap.icon_coupon_center,DimenUtil.dp2px(26.0),DimenUtil.dp2px(26.0)),null,null)
-        textViewExemptionMail.setCompoundDrawables(null,Util.getDrawableWidthPxDimen(R.mipmap.icon_exemption_mail,DimenUtil.dp2px(26.0),DimenUtil.dp2px(26.0)),null,null)
+        textViewCouponCenter.setCompoundDrawables(null, Util.getDrawableWidthPxDimen(R.mipmap.icon_coupon_center, DimenUtil.dp2px(26.0), DimenUtil.dp2px(26.0)), null, null)
+        textViewExemptionMail.setCompoundDrawables(null, Util.getDrawableWidthPxDimen(R.mipmap.icon_exemption_mail, DimenUtil.dp2px(26.0), DimenUtil.dp2px(26.0)), null, null)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -349,7 +352,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         val width = ScreenUtil.getScreenWidth() * 320 / 375
         val height = width * 200 / 320 + DimenUtil.dp2px(35.0)
         viewPager.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
-        viewPager.setPadding(0,DimenUtil.dp2px(15.0),0,DimenUtil.dp2px(20.0))
+        viewPager.setPadding(0, DimenUtil.dp2px(15.0), 0, DimenUtil.dp2px(20.0))
     }
 
     /**
@@ -377,6 +380,15 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     }
 
     override fun installListener() {
+        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
+            if (Math.abs(scrollY-oldScrollY)<20) return@OnScrollChangeListener
+            if (scrollY > oldScrollY) { //上滑
+                EventBus.getDefault().post(MessageUpDown(true))
+            } else {
+                EventBus.getDefault().post(MessageUpDown(false))
+            }
+        })
+
         buttonOpenShop.setOnClickListener(this)
         textViewGuessPic.setOnClickListener(this)
         textViewCouponCenter.setOnClickListener(this)
