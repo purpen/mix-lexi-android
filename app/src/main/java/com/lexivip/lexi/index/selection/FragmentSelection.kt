@@ -50,7 +50,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private lateinit var adapterZCManifest: ZCManifestAdapter
     private var views: ArrayList<View> = ArrayList()
     private var banners: ArrayList<String> = ArrayList()
-    private var adapterOnePageThreeView: OnePageTwoViewAdapter? = null
 
     private val bannerWidth: Int by lazy { ScreenUtil.getScreenWidth() * 300 / 375 }
 
