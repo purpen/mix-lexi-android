@@ -1,5 +1,4 @@
 package com.lexivip.lexi.user
-
 import android.content.Intent
 import android.support.v4.view.ViewPager
 import android.text.TextUtils
@@ -10,7 +9,6 @@ import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
-import com.lexivip.lexi.coupon.UserCouponActivity
 import com.lexivip.lexi.mine.MineContract
 import com.lexivip.lexi.mine.MineFavoritesAdapter
 import com.lexivip.lexi.mine.MinePresenter
@@ -19,8 +17,6 @@ import com.lexivip.lexi.mine.designPavilion.FavoriteShopFragment
 import com.lexivip.lexi.mine.dynamic.DynamicActivity
 import com.lexivip.lexi.mine.enshrine.EnshrineFragment
 import com.lexivip.lexi.mine.like.FavoriteFragment
-import com.lexivip.lexi.orderList.OrderListActivity
-import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
 import kotlinx.android.synthetic.main.activity_other_user_center.*
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
