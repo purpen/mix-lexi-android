@@ -107,7 +107,6 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
             }
         })
 
-        buttonOrder.setOnClickListener(this)
 
         linearLayoutLike.setOnClickListener {
             customViewPager.setCurrentItem(0, true)
@@ -124,19 +123,6 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
         buttonActivity.setOnClickListener {
             startActivity(Intent(this, DynamicActivity::class.java))
         }
-
-        imageView.setOnClickListener {
-            startActivity(Intent(this, EditUserDataActivity::class.java))
-        }
-
-        textViewName.setOnClickListener {
-            startActivity(Intent(this, EditUserDataActivity::class.java))
-        }
-
-        //优惠券
-        linearLayoutCoupon.setOnClickListener {
-            startActivity(Intent(this, UserCouponActivity::class.java))
-        }
     }
 
     override fun onClick(v: View) {
@@ -145,7 +131,6 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
             R.id.imageViewShare -> {
 
             }
-            R.id.buttonOrder->startActivity(Intent(this, OrderListActivity::class.java))
         }
     }
 
