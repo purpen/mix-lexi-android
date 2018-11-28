@@ -31,7 +31,6 @@ import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.view.autoScrollViewpager.RecyclerViewPagerAdapter
-import com.lexivip.lexi.view.autoScrollViewpager.ScrollableView
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
@@ -44,8 +43,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     private lateinit var adapterTodayRecommend: TodayRecommendAdapter
 
-    private lateinit var adapterSelectionBanner: AdapterSelectionBanner
-
     private lateinit var adapterDiscoverLife: DiscoverLifeAdapter
 
     private lateinit var adapterGoodSelection: GoodSelectionAdapter
@@ -53,7 +50,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private lateinit var adapterZCManifest: ZCManifestAdapter
     private var views: ArrayList<View> = ArrayList()
     private var banners: ArrayList<String> = ArrayList()
-    private var adapterOnePageThreeView: OnePageThreeViewAdapter? = null
 
     private val bannerWidth: Int by lazy { ScreenUtil.getScreenWidth() * 300 / 375 }
     private var couponDialog: CouponDialog?=null
@@ -80,6 +76,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         }else{
             setIsReceive(0)
         }
+        textViewCouponCenter.setCompoundDrawables(null,Util.getDrawableWidthPxDimen(R.mipmap.icon_coupon_center,DimenUtil.dp2px(26.0),DimenUtil.dp2px(26.0)),null,null)
+        textViewExemptionMail.setCompoundDrawables(null,Util.getDrawableWidthPxDimen(R.mipmap.icon_exemption_mail,DimenUtil.dp2px(26.0),DimenUtil.dp2px(26.0)),null,null)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -380,21 +378,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun initBanner() {
         presenter.getBanners()
-        val manager = LinearLayoutManager(context)
-        manager.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerViewBanner.layoutManager = manager
-        adapterSelectionBanner = AdapterSelectionBanner(R.layout.adapter_selection_banner)
-        recyclerViewBanner.adapter = adapterSelectionBanner
-
-//        linearLayoutViewPager.clipChildren = false
         val width = ScreenUtil.getScreenWidth() * 320 / 375
         val height = width * 200 / 320 + DimenUtil.dp2px(35.0)
         viewPager.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
         viewPager.setPadding(0,DimenUtil.dp2px(15.0),0,DimenUtil.dp2px(20.0))
-//        viewPager.clipChildren = false
-//        viewPager.adapter = adapterOnePageThreeView
-//        viewPager.setPageTransformer(true, OnePageThreeViewTransformer())
-
     }
 
     /**
@@ -407,51 +394,19 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         }
         banners.clear()
         banners.addAll(list)
-//        viewPager.offscreenPageLimit = list.size
-        val adapterOnePageThreeView = OnePageThreeViewAdapter(activity,viewPager, banner_images)
-//        viewPager.adapter = adapterOnePageThreeView
-        viewPager.pageMargin = -bannerWidth / 8 + DimenUtil.dp2px(10.0)
+        val adapterOnePageThreeView = OnePageTwoViewAdapter(activity, viewPager, banner_images, true)
+        viewPager.adapter = adapterOnePageThreeView
+        viewPager.offscreenPageLimit = banner_images.size
+        viewPager.startAutoScroll()
+        viewPager.setAutoScrollDurationFactor(4.0)
+        viewPager.pageMargin = -bannerWidth / 8
         viewPager.setPageTransformer(true, OnePageThreeViewTransformer())
-
-//        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-//            override fun onPageSelected(position: Int) {
-//                for (i in 0 until adapterOnePageThreeView.count) {
-//                    val view = viewPager.findViewWithTag<View>(i)
-//                    if (i == position) {
-//                        view.setPadding(DimenUtil.dp2px(15.0), 0, 0, 0)
-//                    } else {
-//                        view.setPadding(0, 0, 0, 0)
-//                    }
-//                }
-//            }
-//
-//            override fun onPageScrollStateChanged(state: Int) {
-//
-//            }
-//
-//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-//
-//            }
-//        })
-
-
-        adapterSelectionBanner.setNewData(list)
-        val mCardScaleHelper = CardScaleHelper()
-        mCardScaleHelper.currentItemPos = 0
-        mCardScaleHelper.attachToRecyclerView(recyclerViewBanner)
-        adapterSelectionBanner.notifyDataSetChanged()
-        //banner点击
-        adapterSelectionBanner.setOnItemClickListener { _, _, position ->
-            PageUtil.banner2Page(banner_images[position])
-        }
-
     }
 
 
     override fun setPresenter(presenter: SelectionContract.Presenter?) {
         setPresenter(presenter)
     }
-
 
     override fun installListener() {
         buttonOpenShop.setOnClickListener(this)
@@ -551,11 +506,13 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     }
 
     override fun onStart() {
+        viewPager.startAutoScroll()
         super.onStart()
         hotBanner.startAutoPlay()
     }
 
     override fun onStop() {
+        viewPager.stopAutoScroll()
         super.onStop()
         hotBanner.stopAutoPlay()
     }
