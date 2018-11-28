@@ -79,7 +79,7 @@ public class SubmitOrderBean {
             public Object customer_order_id;
             public String discount_amount;
             public int first_discount;
-            public int freight;
+            public String freight;
             public Object official_order_id;
             public String outside_target_id;
             public String pay_amount;

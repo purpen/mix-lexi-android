@@ -30,6 +30,22 @@ open class SelectionModel{
         })
     }
 
+    fun getReceive(callBack: IDataSource.HttpRequestCallBack){
+        val params=ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET,URL.IS_RECEIVE_COUPON,params,object :IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                callBack.onStart()
+            }
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+
+        })
+    }
 
     /**
      * 获取Banner

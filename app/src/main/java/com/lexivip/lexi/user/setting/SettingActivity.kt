@@ -11,9 +11,14 @@ import kotlinx.android.synthetic.main.activity_setting.*
 import android.net.Uri
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.eventBusMessge.MessageLogout
+import com.lexivip.lexi.index.selection.OpenLifeHouseActivity
 import com.lexivip.lexi.orderList.OrderListActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.setting.address.AddressListActivity
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
+import com.umeng.socialize.UMAuthListener
+import com.umeng.socialize.UMShareAPI
+import com.umeng.socialize.bean.SHARE_MEDIA
 import org.greenrobot.eventbus.EventBus
 
 
@@ -34,6 +39,11 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
         customItemLayout4.setTVStyle(R.mipmap.icon_apply_shop, R.string.text_open_life_house, R.color.color_333)
         customItemLayout5.setTVStyle(R.mipmap.icon_about_lexi, R.string.text_about_us, R.color.color_333)
         customItemLayout6.setTVStyle(R.mipmap.icon_service_phone,R.string.text_kf_phone,R.color.color_333)
+        if (UserProfileUtil.isSmallB()){
+            customItemLayout4.visibility=View.GONE
+        }else{
+            customItemLayout4.visibility=View.VISIBLE
+        }
 
     }
 
@@ -65,12 +75,23 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
                 var intent=Intent(this, EditUserDataActivity::class.java)
                 startActivityForResult(intent,1)
             }
-            R.id.customItemLayout0 -> ToastUtil.showInfo("邀请朋友")
+            R.id.customItemLayout0 -> {
+                //TODO 绑定微信待完成
+                UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN,umAuthListener)
+            }
             //R.id.customItemLayout1 -> ToastUtil.showInfo("找朋友")
             R.id.customItemLayout2 -> startActivity(Intent(this, OrderListActivity::class.java))
             R.id.customItemLayout3 -> startActivity(Intent(this,AddressListActivity::class.java))
-            R.id.customItemLayout4 -> ToastUtil.showInfo("申请开馆")
-            R.id.customItemLayout5 -> ToastUtil.showInfo("隐私条款")
+            R.id.customItemLayout4 -> {
+                val intent=Intent(this, OpenLifeHouseActivity::class.java)
+                intent.putExtra("url","https://h5.lexivip.com/shop/guide")
+                startActivity(intent)
+            }
+            R.id.customItemLayout5 -> {
+                val intent=Intent(this, OpenLifeHouseActivity::class.java)
+                intent.putExtra("url","https://h5.lexivip.com/site/privacy")
+                startActivity(intent)
+            }
             R.id.customItemLayout6 -> { //拨打客服电话
                 val phoneNumber = "400-2345-0000"
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
@@ -87,6 +108,24 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
                 finish()
             }
 
+        }
+    }
+
+    internal var umAuthListener: UMAuthListener = object : UMAuthListener {
+        override fun onStart(share_media: SHARE_MEDIA) {
+
+        }
+
+        override fun onComplete(share_media: SHARE_MEDIA, i: Int, map: Map<String, String>) {
+            LogUtil.e("授权回调成功了："+map.get("unionid"))
+        }
+
+        override fun onError(share_media: SHARE_MEDIA, i: Int, throwable: Throwable) {
+            LogUtil.e("授权回调失败："+throwable.message)
+        }
+
+        override fun onCancel(share_media: SHARE_MEDIA, i: Int) {
+            LogUtil.e("取消授权")
         }
     }
 

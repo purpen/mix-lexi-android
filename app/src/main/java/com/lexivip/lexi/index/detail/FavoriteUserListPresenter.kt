@@ -1,6 +1,7 @@
 package com.lexivip.lexi.index.detail
 
 import android.view.View
+import com.basemodule.tools.LogUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -27,14 +28,89 @@ class FavoriteUserListPresenter(view: FavoriteUserListContract.View) : FavoriteU
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
-
-
                 val favoriteGoodsUsersBean = JsonUtil.fromJson(json, FavoriteGoodsUsersBean::class.java)
                 if (favoriteGoodsUsersBean.success) {
                     view.setNewData(favoriteGoodsUsersBean.data.product_like_users)
                     ++page
                 } else {
                     view.showError(favoriteGoodsUsersBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    override fun loadOtherData(uid: String, isRefresh: Boolean, type: Int) {
+        if (isRefresh) this.page = 1
+
+        dataSource.loadOtherData(uid,page,type, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                if (!isRefresh) view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                LogUtil.e("毕尔巴鄂个人中心："+json)
+                view.dismissLoadingView()
+                if (type==3){
+                    val followBean=JsonUtil.fromJson(json,FollowBean::class.java)
+                    //val followBean = JsonUtil.fromJson(json, FollowBean::class.java)
+                    if (followBean.success) {
+                        view.setNewData(followBean.data.followed_users)
+                        ++page
+                    } else {
+                        view.showError(followBean.status.message)
+                    }
+                }else{
+                    val fansBean = JsonUtil.fromJson(json, FansBean::class.java)
+                    if (fansBean.success) {
+                        view.setNewData(fansBean.data.user_fans)
+                        ++page
+                    } else {
+                        view.showError(fansBean.status.message)
+                    }
+                }
+
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    override fun loadUserData(isRefresh: Boolean, type: Int) {
+        if (isRefresh) this.page = 1
+
+        dataSource.loadUserData(page,type, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                if (!isRefresh) view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                LogUtil.e("个人中心："+json)
+                view.dismissLoadingView()
+                if (type==1){
+                    val followBean=JsonUtil.fromJson(json,FollowBean::class.java)
+                    //val followBean = JsonUtil.fromJson(json, FollowBean::class.java)
+                    if (followBean.success) {
+                        view.setNewData(followBean.data.followed_users)
+                        ++page
+                    } else {
+                        view.showError(followBean.status.message)
+                    }
+                }else{
+                    val fansBean = JsonUtil.fromJson(json, FansBean::class.java)
+                    if (fansBean.success) {
+                        view.setNewData(fansBean.data.user_fans)
+                        ++page
+                    } else {
+                        view.showError(fansBean.status.message)
+                    }
                 }
             }
 
@@ -69,6 +145,95 @@ class FavoriteUserListPresenter(view: FavoriteUserListContract.View) : FavoriteU
             }
 
             override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+    override fun loadMoreOtherData(uid: String, type: Int) {
+        dataSource.loadOtherData(uid,page,type, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                LogUtil.e("毕尔巴鄂个人中心："+json)
+                if (type==3){
+                    val followBean=JsonUtil.fromJson(json,FollowBean::class.java)
+                    //val followBean = JsonUtil.fromJson(json, FollowBean::class.java)
+                    if (followBean.success) {
+                        val stores = followBean.data.followed_users
+                        if (stores.isEmpty()) {
+                            view.loadMoreEnd()
+                        } else {
+                            view.loadMoreComplete()
+                            view.addData(stores)
+                            ++page
+                        }
+                    } else {
+                        view.loadMoreFail()
+                        view.showError(followBean.status.message)
+                    }
+                }else{
+                    val fansBean = JsonUtil.fromJson(json, FansBean::class.java)
+                    if (fansBean.success) {
+                        val stores = fansBean.data.user_fans
+                        if (stores.isEmpty()) {
+                            view.loadMoreEnd()
+                        } else {
+                            view.loadMoreComplete()
+                            view.addData(stores)
+                            ++page
+                        }
+                    } else {
+                        view.loadMoreFail()
+                        view.showError(fansBean.status.message)
+                    }
+                }
+
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    override fun loadMoreUserData(type: Int) {
+        dataSource.loadUserData(page,type, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                if (type==1){
+                    val followBean=JsonUtil.fromJson(json,FollowBean::class.java)
+                    //val followBean = JsonUtil.fromJson(json, FollowBean::class.java)
+                    if (followBean.success) {
+                        val stores = followBean.data.followed_users
+                        if (stores.isEmpty()) {
+                            view.loadMoreEnd()
+                        } else {
+                            view.loadMoreComplete()
+                            view.addData(stores)
+                            ++page
+                        }
+                    } else {
+                        view.loadMoreFail()
+                        view.showError(followBean.status.message)
+                    }
+                }else{
+                    val fansBean = JsonUtil.fromJson(json, FansBean::class.java)
+                    if (fansBean.success) {
+                        val stores = fansBean.data.user_fans
+                        if (stores.isEmpty()) {
+                            view.loadMoreEnd()
+                        } else {
+                            view.loadMoreComplete()
+                            view.addData(stores)
+                            ++page
+                        }
+                    } else {
+                        view.loadMoreFail()
+                        view.showError(fansBean.status.message)
+                    }
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

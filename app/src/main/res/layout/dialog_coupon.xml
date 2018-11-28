@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+    <RelativeLayout
+        android:layout_width="@dimen/dp300"
+        android:layout_height="420dp"
+        android:background="@mipmap/icon_coupon">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="95dp"
+            android:layout_marginLeft="@dimen/dp18"
+            android:layout_marginRight="@dimen/dp18"
+            android:layout_marginBottom="130dp"></android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:background="@mipmap/icon_coupon_bottom"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:gravity="bottom|center_horizontal">
+            <Button
+                android:id="@+id/button"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="235dp"
+                android:layout_height="@dimen/dp60"
+                android:background="@mipmap/icon_coupon_button"
+                android:layout_marginBottom="@dimen/dp20"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="@dimen/dp32"
+        android:layout_height="@dimen/dp32"
+        android:background="@mipmap/icon_coupon_cancel"
+        android:layout_marginTop="@dimen/dp15"/>
+</LinearLayout>

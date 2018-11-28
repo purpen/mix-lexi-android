@@ -14,6 +14,9 @@ import com.lexivip.lexi.index.selection.GoodsAdapter
 import kotlinx.android.synthetic.main.fragment_activities.*
 
 class ActivitiesFragment : BaseFragment(), SelectionContract.View {
+    override fun setIsReceive(is_grant: Int) {
+    }
+
     private val dialog: WaitingDialog? by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_activities
     private lateinit var presenter: SelectionPresenter

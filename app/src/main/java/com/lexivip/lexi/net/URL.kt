@@ -847,4 +847,28 @@ object URL {
      * 保存支付方式
      */
     const val SAVE_PAY_WAY = "${BASE_URL}orders/pay_type"
+    /**
+     * 是否已经领取1000元红包
+     */
+    const val IS_RECEIVE_COUPON="${BASE_URL}market/is_new_user_bonus"
+    /**
+     * 领取1000元红包
+     */
+    const val RECEIVE_COUPON="${BASE_URL}market/grant_new_user_bonus"
+    /**
+     * 我的关注列表
+     */
+    const val USER_FOLLOW="${BASE_URL}users/followed_users"
+    /**
+     * 我的粉丝列表
+     */
+    const val USER_FANS="${BASE_URL}users/user_fans"
+    /**
+     * 别人主页的关注列表
+     */
+    const val OTHER_USER_FOLLOW="${BASE_URL}users/other_followed_users"
+    /**
+     * 别人主页的粉丝列表
+     */
+    const val OTHER_USER_FANS="${BASE_URL}users/other_user_fans"
 }

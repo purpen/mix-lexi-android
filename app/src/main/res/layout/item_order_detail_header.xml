@@ -164,7 +164,8 @@
         android:background="@android:color/white"
         android:paddingLeft="@dimen/dp15"
         android:paddingRight="@dimen/dp15"
-        android:paddingTop="@dimen/dp15">
+        android:paddingTop="@dimen/dp7"
+        android:paddingBottom="@dimen/dp7">
 
         <TextView
             android:id="@+id/tv_order_time"

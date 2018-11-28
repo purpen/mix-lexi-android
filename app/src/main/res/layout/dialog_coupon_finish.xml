@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginRight="@dimen/dp40"
+        android:background="@drawable/bg_colorwhite_radiu4"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dp30"
+                android:layout_height="@dimen/dp30"
+                android:background="@mipmap/icon_success_open_life_house" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp5"
+                android:text="领取成功"
+                android:textColor="@color/color_333"
+                android:textSize="@dimen/sp20" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp05"
+            android:background="@color/color_e9e9e9" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp45"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bt_left"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="去使用"
+                android:textColor="@color/color_333"
+                android:textSize="@dimen/sp16" />
+
+            <View
+                android:layout_width="@dimen/dp05"
+                android:layout_height="match_parent"
+                android:background="@color/color_e9e9e9" />
+
+            <Button
+                android:id="@+id/bt_right"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="查看优惠券"
+                android:textColor="@color/color_6ed7af"
+                android:textSize="@dimen/sp16" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

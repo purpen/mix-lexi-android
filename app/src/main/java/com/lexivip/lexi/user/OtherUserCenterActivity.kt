@@ -11,6 +11,7 @@ import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.coupon.UserCouponActivity
+import com.lexivip.lexi.index.detail.FavoriteUserListActivity
 import com.lexivip.lexi.mine.MineContract
 import com.lexivip.lexi.mine.MineFavoritesAdapter
 import com.lexivip.lexi.mine.MinePresenter
@@ -107,7 +108,9 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
             }
         })
 
-        buttonOrder.setOnClickListener(this)
+        buttonOrder.visibility=View.INVISIBLE
+        linearLayoutFocus.setOnClickListener(this)
+        linearLayoutFans.setOnClickListener(this)
 
         linearLayoutLike.setOnClickListener {
             customViewPager.setCurrentItem(0, true)
@@ -134,9 +137,10 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
         }
 
         //优惠券
-        linearLayoutCoupon.setOnClickListener {
+        /*linearLayoutCoupon.setOnClickListener {
             startActivity(Intent(this, UserCouponActivity::class.java))
-        }
+        }*/
+        linearLayoutCoupon.visibility=View.GONE
     }
 
     override fun onClick(v: View) {
@@ -145,7 +149,23 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
             R.id.imageViewShare -> {
 
             }
-            R.id.buttonOrder->startActivity(Intent(this, OrderListActivity::class.java))
+            //R.id.buttonOrder->startActivity(Intent(this, OrderListActivity::class.java))
+            R.id.linearLayoutFocus->{
+                LogUtil.e("别人的关注列表")
+                var intent=Intent(this, FavoriteUserListActivity::class.java)
+                intent.putExtra("type",3)
+                intent.putExtra("title",Util.getString(R.string.text_focus))
+                intent.putExtra("uid",userId)
+                startActivity(intent)
+            }
+            R.id.linearLayoutFans->{
+                LogUtil.e("别人粉丝的列表")
+                var intent=Intent(this, FavoriteUserListActivity::class.java)
+                intent.putExtra("type",4)
+                intent.putExtra("title",Util.getString(R.string.text_fans))
+                intent.putExtra("uid",userId)
+                startActivity(intent)
+            }
         }
     }
 

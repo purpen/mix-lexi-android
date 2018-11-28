@@ -44,7 +44,11 @@ class FavoriteUserListContract {
 
     interface Presenter : BasePresenter {
         fun loadData(goodsId:String,isRefresh:Boolean)
+        fun loadOtherData(uid: String,isRefresh: Boolean,type: Int)
+        fun loadUserData(isRefresh: Boolean,type: Int)
         fun loadMoreData(goodsId:String)
+        fun loadMoreOtherData(uid: String,type: Int)
+        fun loadMoreUserData(type: Int)
         fun focusUser(uid: String, v: android.view.View, focusState: Int, position: Int)
     }
 }

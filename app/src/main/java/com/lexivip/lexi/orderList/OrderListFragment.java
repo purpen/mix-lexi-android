@@ -67,7 +67,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
             }
         },recyclerView);
         if (isVisibleToUser)
-        presenter.getData(status,page);
+            presenter.getData(status,page);
         recyclerView.setLayoutManager(new CustomLinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapterOrderList);
 
@@ -99,7 +99,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         break;
                     case R.id.bt_confirm:
                         LogUtil.e("收货订单啊啊啊啊啊啊啊");
-                        inquiryDialog = new InquiryDialog(getContext(),"确认收货？","确定","取消", new InquiryDialog.InquiryInterface() {
+                        inquiryDialog = new InquiryDialog(getContext(),"请再次确认你的订单已收货？","确定","取消", new InquiryDialog.InquiryInterface() {
                             @Override
                             public void getCheck(boolean isCheck) {
                                 if (isCheck)
@@ -184,7 +184,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
         }else{
             adapterOrderList.addData(bean);
         }
-            page++;
+        page++;
     }
 
     @Override

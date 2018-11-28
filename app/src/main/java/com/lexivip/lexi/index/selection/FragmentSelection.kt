@@ -19,6 +19,8 @@ import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
+import com.lexivip.lexi.dialog.CouponDialog
+import com.lexivip.lexi.dialog.CouponFinishDialog
 import com.lexivip.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
@@ -54,6 +56,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private var adapterOnePageThreeView: OnePageThreeViewAdapter? = null
 
     private val bannerWidth: Int by lazy { ScreenUtil.getScreenWidth() * 300 / 375 }
+    private var couponDialog: CouponDialog?=null
 
     companion object {
         @JvmStatic
@@ -72,6 +75,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         swipeRefreshLayout.isEnabled = false
 //        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
 //        swipeRefreshLayout.isRefreshing = false
+        if(UserProfileUtil.isLogin()) {
+            presenter.getReceive()
+        }else{
+            setIsReceive(0)
+        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -83,6 +91,30 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         } else {
             if (upMarqueeView != null) {
                 upMarqueeView.stopFlipping()
+            }
+        }
+    }
+
+    /**
+     * 是否领取优惠券
+     */
+    override fun setIsReceive(is_grant: Int) {
+        LogUtil.e("是否领取："+is_grant)
+        if (is_grant==0) {
+            couponDialog = CouponDialog(context, object : CouponDialog.CouponInterface {
+                override fun getReceive(isReceive: Boolean) {
+                    if(isReceive){
+                        val finishDialog: CouponFinishDialog = CouponFinishDialog(context)
+                        finishDialog.show()
+                    }
+                }
+            })
+            couponDialog!!.show()
+        }else{
+            LogUtil.e("不显示")
+            if(couponDialog!=null){
+                LogUtil.e("dialog是否显示")
+                couponDialog!!.dismiss()
             }
         }
     }

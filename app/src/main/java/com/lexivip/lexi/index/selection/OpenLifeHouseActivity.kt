@@ -16,9 +16,13 @@ class OpenLifeHouseActivity : BaseActivity() {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     override val layout: Int = R.layout.acticity_open_life_house
     private var webView: WebView? = null
+    private lateinit var url:String
+    override fun getIntentData() {
+        url= intent.getStringArrayExtra("url").toString()
+    }
     override fun initView() {
         customHeadView.setHeadCenterTxtShow(true,R.string.title_open_life_house)
-        val url = "https://h5.lexivip.com/shop/guide"
+        //val url = "https://h5.lexivip.com/shop/guide"
         webView = WebView(AppApplication.getContext())
         webView?.overScrollMode = WebView.OVER_SCROLL_NEVER
         val settings = webView?.settings
