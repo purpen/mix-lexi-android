@@ -1,38 +1,33 @@
 package com.lexivip.lexi;
-
 import android.app.Activity;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
-import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ScreenUtil;
 import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.view.autoScrollViewpager.RecyclingPagerAdapter;
 
 import java.util.List;
 
-public class OnePageThreeViewAdapter extends RecyclingPagerAdapter{
+public class OnePageTwoViewAdapter extends RecyclingPagerAdapter{
     //    当前页面
     private Activity context;
     private List<BannerImageBean> list;
     private int size;
     private boolean isInfiniteLoop;
 
-    public OnePageThreeViewAdapter(Activity activity, ViewPager viewPager, List<BannerImageBean> urls) {
+    public OnePageTwoViewAdapter(Activity activity, ViewPager viewPager, List<BannerImageBean> urls) {
         this.context = activity;
         this.list = urls;
         this.size = (list == null ? 0 : list.size());
         isInfiniteLoop = false;
     }
 
-    public OnePageThreeViewAdapter(Activity activity, ViewPager viewPager, List<BannerImageBean> urls,boolean isInfiniteLoop) {
+    public OnePageTwoViewAdapter(Activity activity, ViewPager viewPager, List<BannerImageBean> urls, boolean isInfiniteLoop) {
         this.context = activity;
         this.list = urls;
         this.size = (list == null ? 0 : list.size());
@@ -53,8 +48,6 @@ public class OnePageThreeViewAdapter extends RecyclingPagerAdapter{
         }
 
         position = getPosition(position);
-        holder.view.setTag(position);
-
         holder.view.setPadding(DimenUtil.dp2px(15.0), 0, 0, 0);
         int width = ScreenUtil.getScreenWidth() * 300 / 375;
         int height = width * 200 / 300;
