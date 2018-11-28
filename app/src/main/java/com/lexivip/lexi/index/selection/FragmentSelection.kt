@@ -41,8 +41,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     private lateinit var adapterTodayRecommend: TodayRecommendAdapter
 
-    private lateinit var adapterSelectionBanner: AdapterSelectionBanner
-
     private lateinit var adapterDiscoverLife: DiscoverLifeAdapter
 
     private lateinit var adapterGoodSelection: GoodSelectionAdapter
@@ -348,12 +346,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun initBanner() {
         presenter.getBanners()
-        val manager = LinearLayoutManager(context)
-        manager.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerViewBanner.layoutManager = manager
-        adapterSelectionBanner = AdapterSelectionBanner(R.layout.adapter_selection_banner)
-        recyclerViewBanner.adapter = adapterSelectionBanner
-
         val width = ScreenUtil.getScreenWidth() * 320 / 375
         val height = width * 200 / 320 + DimenUtil.dp2px(35.0)
         viewPager.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
@@ -377,17 +369,6 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         viewPager.setAutoScrollDurationFactor(4.0)
         viewPager.pageMargin = -bannerWidth / 8
         viewPager.setPageTransformer(true, OnePageThreeViewTransformer())
-
-        adapterSelectionBanner.setNewData(list)
-        val mCardScaleHelper = CardScaleHelper()
-        mCardScaleHelper.currentItemPos = 0
-        mCardScaleHelper.attachToRecyclerView(recyclerViewBanner)
-        adapterSelectionBanner.notifyDataSetChanged()
-        //banner点击
-        adapterSelectionBanner.setOnItemClickListener { _, _, position ->
-            PageUtil.banner2Page(banner_images[position])
-        }
-
     }
 
 
