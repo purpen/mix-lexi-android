@@ -18,7 +18,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
 class EditorRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(layoutResId) {
-    private val pixelSize:Int by lazy { DimenUtil.dp2px(135.0) }
+    private val pixelSize:Int by lazy { DimenUtil.dp2px(134.0) }
     private val dp4:Int by lazy { DimenUtil.dp2px(4.0) }
     private val layoutParams:RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(pixelSize,RelativeLayout.LayoutParams.WRAP_CONTENT) }
 

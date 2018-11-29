@@ -221,6 +221,7 @@
         android:layout_marginTop="@dimen/dp15"
         android:layout_width="@dimen/dp30"
         android:layout_height="@dimen/dp30"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/bg_oval_red_packet"
         android:gravity="center"
         android:visibility="gone">
@@ -231,6 +232,23 @@
 
             />
     </LinearLayout>
+
+    <com.lexivip.lexi.view.ButtonDrawableCenter
+        android:id="@+id/buttonFocus"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="88dp"
+        android:layout_height="@dimen/dp30"
+        android:layout_below="@+id/textViewSignature"
+        android:layout_toEndOf="@+id/linearLayoutRedPacket"
+        android:layout_marginTop="@dimen/dp15"
+        android:background="@drawable/bg_round_color5fe4b1"
+        android:includeFontPadding="false"
+        android:text="@string/text_focus"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp14"
+        android:visibility="gone"
+        />
+
     <Button
         android:id="@+id/buttonOrder"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
@@ -238,13 +256,13 @@
         android:layout_height="@dimen/dp30"
         android:layout_below="@+id/textViewSignature"
         android:layout_toEndOf="@+id/linearLayoutRedPacket"
-        android:layout_marginStart="@dimen/dp15"
         android:layout_marginTop="@dimen/dp15"
         android:background="@drawable/border_round_ededed"
         android:includeFontPadding="false"
         android:text="@string/text_mine_order"
         android:textColor="@color/color_333"
         android:textSize="@dimen/sp14"
+        android:visibility="gone"
         />
 
     <LinearLayout

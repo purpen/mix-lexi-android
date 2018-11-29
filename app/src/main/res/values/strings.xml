@@ -342,9 +342,12 @@
     <string name="text_account_detail">账单详情</string>
     <string name="text_life">乐喜生活馆</string>
     <string name="text_wx_change">微信零钱包</string>
-    <string name="text_no_focus_life_house">你当前还未关注任何原创品牌设计馆</string>
-    <string name="text_no_favorite_goods">你当前还没有浏览和添加心愿单商品</string>
+    <string name="text_no_focus_life_house">你还未关注任何原创品牌设计馆</string>
+    <string name="text_other_no_focus_life_house">此用户未关注任何原创品牌设计馆</string>
+    <string name="text_no_favorite_goods">你还没有浏览和添加心愿单商品</string>
+    <string name="text_other_no_favorite_goods">此用户还没有浏览和添加心愿单商品</string>
     <string name="text_no_favorite_things">您还未喜欢过任何东西</string>
+    <string name="text_other_no_favorite_things">此用户未喜欢过任何东西</string>
     <string name="text_open_life_house">申请开馆</string>
     <string name="text_about_us">关于乐喜</string>
     <string name="text_kf_phone">客服电话&#160;&#160;&#160;400-2345-0000</string>

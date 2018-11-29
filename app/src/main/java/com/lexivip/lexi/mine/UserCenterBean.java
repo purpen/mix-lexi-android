@@ -29,9 +29,10 @@ public class UserCenterBean {
          * wish_list_counts : 0
          */
 
-        public String ID;
+        public String uid;
         public String about_me;
         public String avatar;
+        public int followed_status;
         public String followed_stores_counts;
         public String followed_users_counts;
         public String fans_counts;
@@ -40,30 +41,8 @@ public class UserCenterBean {
         public String username;
         public String wish_list_counts;
 
-        public DataBean(Parcel in) {
-            ID = in.readString();
-            about_me = in.readString();
-            avatar = in.readString();
-            followed_stores_counts = in.readString();
-            followed_users_counts = in.readString();
-            fans_counts = in.readString();
-            store_phases = in.readString();
-            user_like_counts = in.readString();
-            username = in.readString();
-            wish_list_counts = in.readString();
+        public DataBean() {
         }
-
-        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
-            @Override
-            public DataBean createFromParcel(Parcel in) {
-                return new DataBean(in);
-            }
-
-            @Override
-            public DataBean[] newArray(int size) {
-                return new DataBean[size];
-            }
-        };
 
         @Override
         public int describeContents() {
@@ -72,17 +51,44 @@ public class UserCenterBean {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(ID);
-            dest.writeString(about_me);
-            dest.writeString(avatar);
-            dest.writeString(followed_stores_counts);
-            dest.writeString(followed_users_counts);
-            dest.writeString(fans_counts);
-            dest.writeString(store_phases);
-            dest.writeString(user_like_counts);
-            dest.writeString(username);
-            dest.writeString(wish_list_counts);
+            dest.writeString(this.uid);
+            dest.writeString(this.about_me);
+            dest.writeString(this.avatar);
+            dest.writeInt(this.followed_status);
+            dest.writeString(this.followed_stores_counts);
+            dest.writeString(this.followed_users_counts);
+            dest.writeString(this.fans_counts);
+            dest.writeString(this.store_phases);
+            dest.writeString(this.user_like_counts);
+            dest.writeString(this.username);
+            dest.writeString(this.wish_list_counts);
         }
+
+        protected DataBean(Parcel in) {
+            this.uid = in.readString();
+            this.about_me = in.readString();
+            this.avatar = in.readString();
+            this.followed_status = in.readInt();
+            this.followed_stores_counts = in.readString();
+            this.followed_users_counts = in.readString();
+            this.fans_counts = in.readString();
+            this.store_phases = in.readString();
+            this.user_like_counts = in.readString();
+            this.username = in.readString();
+            this.wish_list_counts = in.readString();
+        }
+
+        public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
+            @Override
+            public DataBean createFromParcel(Parcel source) {
+                return new DataBean(source);
+            }
+
+            @Override
+            public DataBean[] newArray(int size) {
+                return new DataBean[size];
+            }
+        };
     }
 
     public static class StatusBean {

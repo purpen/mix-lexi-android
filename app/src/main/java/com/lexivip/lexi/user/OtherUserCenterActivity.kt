@@ -1,4 +1,5 @@
 package com.lexivip.lexi.user
+
 import android.content.Intent
 import android.support.v4.view.ViewPager
 import android.text.TextUtils
@@ -9,7 +10,6 @@ import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
-import com.lexivip.lexi.coupon.UserCouponActivity
 import com.lexivip.lexi.index.detail.FavoriteUserListActivity
 import com.lexivip.lexi.mine.MineContract
 import com.lexivip.lexi.mine.MineFavoritesAdapter
@@ -23,20 +23,21 @@ import kotlinx.android.synthetic.main.activity_other_user_center.*
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
 
-class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListener {
+class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickListener {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     private val presenter: MinePresenter by lazy { MinePresenter(this) }
     private lateinit var adapter0: MineFavoritesAdapter
     private lateinit var fragments: ArrayList<BaseFragment>
     override val layout: Int = R.layout.activity_other_user_center
-    private lateinit var userId:String
-
+    private lateinit var userId: String
+    private var followedStatus: Int = -1
     override fun getIntentData() {
         userId = intent.getStringExtra(TAG)
     }
 
     override fun initView() {
         customHeadView.setRightImgBtnShow(true)
+        buttonFocus.visibility = View.VISIBLE
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
     }
@@ -105,7 +106,10 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
             }
         })
 
-        buttonOrder.visibility=View.INVISIBLE
+        buttonOrder.visibility = View.GONE
+
+        buttonFocus.setOnClickListener(this)
+
         linearLayoutFocus.setOnClickListener(this)
         linearLayoutFans.setOnClickListener(this)
 
@@ -129,7 +133,7 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
         /*linearLayoutCoupon.setOnClickListener {
             startActivity(Intent(this, UserCouponActivity::class.java))
         }*/
-        linearLayoutCoupon.visibility=View.GONE
+        linearLayoutCoupon.visibility = View.GONE
     }
 
     override fun onClick(v: View) {
@@ -138,21 +142,22 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
             R.id.imageViewShare -> {
 
             }
-            //R.id.buttonOrder->startActivity(Intent(this, OrderListActivity::class.java))
-            R.id.linearLayoutFocus->{
-                LogUtil.e("别人的关注列表")
-                var intent=Intent(this, FavoriteUserListActivity::class.java)
-                intent.putExtra("type",3)
-                intent.putExtra("title",Util.getString(R.string.text_focus))
-                intent.putExtra("uid",userId)
+            R.id.buttonFocus -> {
+                if (followedStatus == -1) return
+                presenter.focusUser(userId, v, followedStatus)
+            }
+            R.id.linearLayoutFocus -> {
+                var intent = Intent(this, FavoriteUserListActivity::class.java)
+                intent.putExtra("type", 3)
+                intent.putExtra("title", Util.getString(R.string.text_focus))
+                intent.putExtra("uid", userId)
                 startActivity(intent)
             }
-            R.id.linearLayoutFans->{
-                LogUtil.e("别人粉丝的列表")
-                var intent=Intent(this, FavoriteUserListActivity::class.java)
-                intent.putExtra("type",4)
-                intent.putExtra("title",Util.getString(R.string.text_fans))
-                intent.putExtra("uid",userId)
+            R.id.linearLayoutFans -> {
+                var intent = Intent(this, FavoriteUserListActivity::class.java)
+                intent.putExtra("type", 4)
+                intent.putExtra("title", Util.getString(R.string.text_fans))
+                intent.putExtra("uid", userId)
                 startActivity(intent)
             }
         }
@@ -162,6 +167,7 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
     override fun requestNet() {
         presenter.loadData(userId)
     }
+
     /**
      * 设置用户数据
      */
@@ -172,13 +178,47 @@ class OtherUserCenterActivity:BaseActivity(),MineContract.View,View.OnClickListe
         textViewFocusNum.text = data.followed_users_counts
         textViewFansNum.text = data.fans_counts
         textViewName.text = data.username
+        setFocusState(data.followed_status)
         if (TextUtils.isEmpty(data.about_me)) {
             textViewSignature.visibility = View.GONE
         } else {
             textViewSignature.visibility = View.VISIBLE
             textViewSignature.text = data.about_me
         }
-        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70),ImageSizeConfig.SIZE_AVA)
+        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70), ImageSizeConfig.SIZE_AVA)
+    }
+
+    /**
+     * 设置关注状态
+     */
+    override fun setFocusState(followed_status: Int) {
+        followedStatus = followed_status
+        when (followed_status) {
+            0 -> { //未关注
+                buttonFocus.compoundDrawablePadding = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
+                buttonFocus.text = Util.getString(R.string.text_focus)
+                buttonFocus.setTextColor(Util.getColor(android.R.color.white))
+                buttonFocus.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
+                buttonFocus.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_add_white, R.dimen.dp10, R.dimen.dp10), null, null, null)
+            }
+
+            1 -> { //已关注
+                buttonFocus.text = Util.getString(R.string.text_focused)
+                buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+                buttonFocus.setPadding(DimenUtil.getDimensionPixelSize(R.dimen.dp4), 0, 0, 0)
+                buttonFocus.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
+                buttonFocus.setCompoundDrawables(null, null, null, null)
+            }
+
+            2 -> { //相互关注
+                buttonFocus.text = Util.getString(R.string.text_focused_each_other)
+                buttonFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+                buttonFocus.setPadding(DimenUtil.getDimensionPixelSize(R.dimen.dp4), 0, 0, 0)
+                buttonFocus.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
+                buttonFocus.setCompoundDrawables(null, null, null, null)
+            }
+
+        }
     }
 
     override fun showLoadingView() {

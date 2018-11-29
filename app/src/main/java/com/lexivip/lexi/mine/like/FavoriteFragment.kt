@@ -99,7 +99,11 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
      */
     override fun setShowWindowData(shop_windows: List<ShopWindowBean>) {
         adapterLikeShowWindow.setNewData(shop_windows)
-        if (shop_windows.isEmpty()) headerView.linearLayoutLikeWindow.visibility = View.GONE
+        if (shop_windows.isEmpty()) {
+            headerView.linearLayoutLikeWindow.visibility = View.GONE
+        }else{
+            headerView.linearLayoutLikeWindow.visibility = View.VISIBLE
+        }
     }
 
     override fun setPresenter(presenter: FavoriteContract.Presenter?) {
@@ -126,8 +130,14 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View {
         if (products.isEmpty()) {
             headerView.linearLayoutGoodsLike.visibility = View.GONE
             emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
-            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_things)
-            emptyHeaderView.textViewDesc1.visibility = View.VISIBLE
+            val emptyStr:String
+            if (TextUtils.equals(uid,UserProfileUtil.getUserId())){
+                emptyStr = getString(R.string.text_no_favorite_things)
+                emptyHeaderView.textViewDesc1.visibility = View.VISIBLE
+            }else{
+                emptyStr = getString(R.string.text_other_no_favorite_things)
+            }
+            emptyHeaderView.textViewDesc.text = emptyStr
             adapterMineFavorite.setHeaderView(emptyHeaderView)
         } else {
             headerView.linearLayoutGoodsLike.visibility = View.VISIBLE

@@ -66,6 +66,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
     override fun initView() {
         if (!UserProfileUtil.isLogin()) return
+        buttonOrder.visibility = View.VISIBLE
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
     }
