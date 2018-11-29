@@ -66,6 +66,51 @@ class GoodsClassifyPresenter(view: GoodsClassifyContract.View) : GoodsClassifyCo
         return this.id
     }
 
+
+    fun getMinPrice():String{
+        return minePrice
+    }
+
+    fun getMaxPrice():String{
+        return maxPrice
+    }
+
+    /**
+     * 新品
+     */
+    fun getSortNewest():String{
+        return sortNewest
+    }
+
+    /**
+     * 是否包邮
+     */
+    fun isFreePostage():String{
+        return isFreePostage
+    }
+
+    /**
+     * 是否特惠
+     */
+    fun isPreferential():String{
+        return isPreferential
+    }
+
+    /**
+     * 是否订制
+     */
+    fun isCustomMade():String{
+        return isCustomMade
+    }
+
+
+    /**
+     * 子分类筛选id
+     */
+    fun getCids():String{
+        return cids
+    }
+
     /**
      * 默认参数加载数据
      */

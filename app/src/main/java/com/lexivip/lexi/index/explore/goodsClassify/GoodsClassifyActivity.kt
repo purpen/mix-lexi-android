@@ -15,8 +15,8 @@ import com.lexivip.lexi.search.SearchActivity
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
-import kotlinx.android.synthetic.main.acticity_all_editor_recommend.*
-import kotlinx.android.synthetic.main.header_classify_goods.view.*
+import kotlinx.android.synthetic.main.activity_goods_classsify.*
+import kotlinx.android.synthetic.main.header_classify_goods.*
 
 
 class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
@@ -27,9 +27,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
     private var dialogBottomFilter: DialogBottomFilter? = null
-    override val layout: Int = R.layout.acticity_header_recyclerview
-
-    private lateinit var  headerView: View
+    override val layout: Int = R.layout.activity_goods_classsify
 
     private lateinit var categoriesBean:GoodsClassBean.DataBean.CategoriesBean
 
@@ -54,18 +52,10 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
             adapter.data[position].spanSize
         }
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-
-        initHeaderView()
-    }
-
-    /**
-     * 初始化头布局
-     */
-    private fun initHeaderView() {
-        headerView = View.inflate(this, R.layout.header_classify_goods, null)
-        headerView.editTextSearch.isFocusable = false
-        headerView.editTextSearch.isFocusableInTouchMode = false
-        adapter.setHeaderView(headerView)
+        textViewNewProductFilter.isSelected = false
+        val headerView = View(this)
+        headerView.setPadding(0,DimenUtil.dp2px(10.0),0,0)
+        adapter.addHeaderView(View(this))
     }
 
 
@@ -77,12 +67,38 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     override fun installListener() {
 
         //点击索框
-        headerView.editTextSearch.setOnClickListener {
+        editTextSearch.setOnClickListener {
             startActivity(Intent(this,SearchActivity::class.java))
         }
 
+        //新品
+        textViewNewProductFilter.setOnClickListener {
+            val sort_newest:String
+            if (textViewNewProductFilter.isSelected){
+                sort_newest = "0"
+                textViewNewProductFilter.isSelected = false
+                textViewNewProductFilter.setTextColor(Util.getColor(R.color.color_555))
+            }else{
+                sort_newest = "1"
+                textViewNewProductFilter.isSelected = true
+                textViewNewProductFilter.setTextColor(Util.getColor(R.color.color_6ed7af))
 
-        headerView.linearLayoutSort.setOnClickListener { _ ->
+            }
+            val page = 1
+            val sortType = presenter.getSortType()
+            val cids = presenter.getCids()
+            val minPrice = presenter.getMinPrice()
+            val maxPrice = presenter.getMaxPrice()
+            val id = presenter.getClassifyId()
+            val is_free_postage = presenter.isFreePostage()
+            val is_preferential = presenter.isPreferential()
+            val is_custom_made = presenter.isCustomMade()
+            presenter.loadData(page, sortType, minPrice, maxPrice, cids, is_free_postage, is_preferential, is_custom_made, sort_newest, id)
+
+        }
+
+        //排序
+        linearLayoutSort.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
             val dialog = DialogBottomSynthesiseSort(this, presenter)
             dialog.setOnDismissListener {
@@ -96,9 +112,9 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
             dialog.show()
         }
 
-        headerView.linearLayoutFilter.setOnClickListener { _ ->
+        linearLayoutFilter.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(this, presenter,categoriesBean.id)
+            if (dialogBottomFilter==null) dialogBottomFilter = DialogBottomFilter(this, presenter,categoriesBean.id)
             dialogBottomFilter?.show()
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)

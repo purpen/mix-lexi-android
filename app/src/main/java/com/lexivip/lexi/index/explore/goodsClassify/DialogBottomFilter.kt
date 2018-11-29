@@ -52,10 +52,14 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPre
                 maxPrice = list[rightPostion].substring(1)
             }
             //            LogUtil.e("minPrice==" + minPrice + ";maxPrice==" + maxPrice)
-            val sortType = ""
+            val sortType = present.getSortType()
             val cids = getSelectedItem()
             val id = present.getClassifyId()
-            present.loadData(page, sortType, minPrice, maxPrice, cids, "", "", "", "", id)
+            val sortNewest = present.getSortNewest()
+            val is_free_postage = present.isFreePostage()
+            val is_preferential = present.isPreferential()
+            val is_custom_made = present.isCustomMade()
+            present.loadData(page, sortType, minPrice, maxPrice, cids, is_free_postage, is_preferential, is_custom_made, sortNewest, id)
         }
 
         return view
@@ -116,7 +120,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPre
             adapter.notifyItemChanged(position)
             val page = 1
             val cids = getSelectedItem()
-            val sortType = ""
+            val sortType = present.getSortType()
             val categoriesBean0 = adapterRecommend.getItem(0) as GoodsClassifyBean.DataBean.CategoriesBean
             val isFreePostage = if (categoriesBean0.selected) "1" else "0"
 
@@ -137,7 +141,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPre
             adapterRecommend.notifyItemChanged(position)
             val page = 1
             val cids = getSelectedItem()
-            val sortType = ""
+            val sortType = present.getSortType()
             val categoriesBean0 = adapterRecommend.getItem(0) as GoodsClassifyBean.DataBean.CategoriesBean
             val isFreePostage = if (categoriesBean0.selected) "1" else "0"
 
@@ -148,7 +152,10 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPre
             val isCustomMade = if (categoriesBean2.selected) "1" else "0"
 
             val id = present.getClassifyId()
-            present.loadData(page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, "", id)
+
+            val sortNewest = present.getSortNewest()
+
+            present.loadData(page, sortType, minPrice, maxPrice, cids, isFreePostage, isPreferential, isCustomMade, sortNewest, id)
         }
     }
 

@@ -23,7 +23,9 @@
         android:paddingStart="10dp"
         android:textColor="@color/color_333"
         android:textColorHint="@color/color_555"
-        android:textSize="@dimen/sp12" />
+        android:textSize="@dimen/sp12"
+        android:visibility="gone"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp40"
@@ -54,13 +56,23 @@
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/icon_sort_arrow_down" />
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/textViewNewProductFilter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/text_new_product"
+            android:textColor="@color/color_555"
+            android:textSize="@dimen/sp14"
+            />
         <LinearLayout
             android:id="@+id/linearLayoutFilter"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            >
 
             <TextView
                 android:layout_width="wrap_content"

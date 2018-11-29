@@ -302,7 +302,6 @@ class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyP
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        LogUtil.e("$TAG====onSaveInstanceState")
         val fragments = supportFragmentManager.fragments
 
         if (fragment0 != null && fragments.contains(fragment0)) {

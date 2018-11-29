@@ -56,14 +56,18 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: GoodsCla
         view.imageViewClose.setOnClickListener { dismiss() }
 
         //综合排序
-        view.textViewSynthesis.setOnClickListener {
+        view.textViewSynthesis.setOnClickListener { //综合排序将价格清掉
             setSelection(GoodsClassifyPresenter.SORT_TYPE_SYNTHESISE)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val cids = ""
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
+            val cids = present.getCids()
             val id = present.getClassifyId()
-            present.loadData(page, GoodsClassifyPresenter.SORT_TYPE_SYNTHESISE, minPrice, maxPrice,cids,"","","","",id)
+            val sortNewest = present.getSortNewest()
+            val is_free_postage = present.isFreePostage()
+            val is_preferential = present.isPreferential()
+            val is_custom_made = present.isCustomMade()
+            present.loadData(page, GoodsClassifyPresenter.SORT_TYPE_SYNTHESISE, minPrice, maxPrice,cids,is_free_postage,is_preferential,is_custom_made,sortNewest,id)
             dismiss()
         }
 
@@ -71,11 +75,15 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: GoodsCla
         view.textViewLow2Up.setOnClickListener {
             setSelection(GoodsClassifyPresenter.SORT_TYPE_LOW_UP)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val cids = ""
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
+            val cids = present.getCids()
             val id = present.getClassifyId()
-            present.loadData(page, GoodsClassifyPresenter.SORT_TYPE_LOW_UP, minPrice, maxPrice,cids,"","","","",id)
+            val sortNewest = present.getSortNewest()
+            val is_free_postage = present.isFreePostage()
+            val is_preferential = present.isPreferential()
+            val is_custom_made = present.isCustomMade()
+            present.loadData(page, GoodsClassifyPresenter.SORT_TYPE_LOW_UP, minPrice, maxPrice,cids,is_free_postage,is_preferential,is_custom_made,sortNewest,id)
             dismiss()
         }
 
@@ -83,11 +91,15 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: GoodsCla
         view.textViewUp2Low.setOnClickListener {
             setSelection(GoodsClassifyPresenter.SORT_TYPE_UP_LOW)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val cids = ""
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
+            val cids = present.getCids()
             val id = present.getClassifyId()
-            present.loadData(page, GoodsClassifyPresenter.SORT_TYPE_UP_LOW, minPrice, maxPrice,cids,"","","","",id)
+            val sortNewest = present.getSortNewest()
+            val is_free_postage = present.isFreePostage()
+            val is_preferential = present.isPreferential()
+            val is_custom_made = present.isCustomMade()
+            present.loadData(page, GoodsClassifyPresenter.SORT_TYPE_UP_LOW, minPrice, maxPrice,cids,is_free_postage,is_preferential,is_custom_made,sortNewest,id)
             dismiss()
         }
     }

@@ -55,7 +55,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private var banners: ArrayList<String> = ArrayList()
 
     private val bannerWidth: Int by lazy { ScreenUtil.getScreenWidth() * 300 / 375 }
-    private var couponDialog: CouponDialog?=null
+    private var couponDialog: CouponDialog? = null
 
     companion object {
         @JvmStatic
@@ -74,13 +74,13 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         swipeRefreshLayout.isEnabled = false
 //        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
 //        swipeRefreshLayout.isRefreshing = false
-        if(UserProfileUtil.isLogin()) {
+        if (UserProfileUtil.isLogin()) {
             presenter.getReceive()
-        }else{
+        } else {
             setIsReceive(0)
         }
-        textViewCouponCenter.setCompoundDrawables(null,Util.getDrawableWidthPxDimen(R.mipmap.icon_coupon_center,DimenUtil.dp2px(26.0),DimenUtil.dp2px(26.0)),null,null)
-        textViewExemptionMail.setCompoundDrawables(null,Util.getDrawableWidthPxDimen(R.mipmap.icon_exemption_mail,DimenUtil.dp2px(26.0),DimenUtil.dp2px(26.0)),null,null)
+        textViewCouponCenter.setCompoundDrawables(null, Util.getDrawableWidthPxDimen(R.mipmap.icon_coupon_center, DimenUtil.dp2px(26.0), DimenUtil.dp2px(26.0)), null, null)
+        textViewExemptionMail.setCompoundDrawables(null, Util.getDrawableWidthPxDimen(R.mipmap.icon_exemption_mail, DimenUtil.dp2px(26.0), DimenUtil.dp2px(26.0)), null, null)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -100,20 +100,20 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      * 是否领取优惠券
      */
     override fun setIsReceive(is_grant: Int) {
-        LogUtil.e("是否领取："+is_grant)
-        if (is_grant==0) {
+        LogUtil.e("是否领取：" + is_grant)
+        if (is_grant == 0) {
             couponDialog = CouponDialog(context, object : CouponDialog.CouponInterface {
                 override fun getReceive(isReceive: Boolean) {
-                    if(isReceive){
+                    if (isReceive) {
                         val finishDialog: CouponFinishDialog = CouponFinishDialog(context)
                         finishDialog.show()
                     }
                 }
             })
             couponDialog!!.show()
-        }else{
+        } else {
             LogUtil.e("不显示")
-            if(couponDialog!=null){
+            if (couponDialog != null) {
                 LogUtil.e("dialog是否显示")
                 couponDialog!!.dismiss()
             }
@@ -130,6 +130,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         gridLayoutManager.setScrollEnabled(false)
         recyclerViewZCManifest.layoutManager = gridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
+        recyclerViewZCManifest.isNestedScrollingEnabled = false
         recyclerViewZCManifest.addItemDecoration(GridSpacingItemDecoration(2, DimenUtil.dp2px(10.0), DimenUtil.dp2px(20.0), false))
     }
 
@@ -413,7 +414,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     override fun installListener() {
         nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
-            if (Math.abs(scrollY-oldScrollY)<20) return@OnScrollChangeListener
+            if (Math.abs(scrollY - oldScrollY) < 20) return@OnScrollChangeListener
             if (scrollY > oldScrollY) { //上滑
                 EventBus.getDefault().post(MessageUpDown(true))
             } else {
