@@ -6,4 +6,5 @@ object WebUrl{
     const val GRADD="${BASE_URL}article/grass?rid="
     const val USER="${BASE_URL}user/home?uid="
     const val GOODS="${BASE_URL}product_view?rid="
+
 }
