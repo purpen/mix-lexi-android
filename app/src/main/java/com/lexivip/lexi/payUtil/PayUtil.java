@@ -107,6 +107,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
     }
 
     private void startPyaResult(){
+        activity.finish();
         Intent intent = new Intent(context, PayResultActivity.class);
         intent.putExtra(PayResultActivity.class.getSimpleName(), rid);
         intent.putExtra(PayResultActivity.class.getName(), pay_type);
@@ -114,6 +115,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
     }
 
     private void startOrder(){
+        activity.finish();
         Intent intent = new Intent(context, OrderListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
