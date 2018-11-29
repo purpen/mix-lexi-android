@@ -22,9 +22,26 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
 
     private var maxPrice: String = ""
 
-    private var cids:String = ""
+    private var cids: String = ""
 
     private var curPage: Int = 1
+
+    //分类编号
+    private var id: String = ""
+
+    private var isRefresh = false
+
+    //0=全部, 1=包邮
+    private var isFreePostage: String = "0"
+
+    //是否特惠: 0=全部, 1=特惠
+    private var isPreferential: String = "0"
+
+    //是否可定制: 0=全部, 1=可定制
+    private var isCustomMade: String = "0"
+
+    //是否按最新排序: 0=否, 1=是
+    private var sortNewest: String = "0"
 
     companion object {
         //默认排序
@@ -59,26 +76,72 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
     }
 
     /**
-     * 获取查询条件
+     * 获取分类Id
      */
-    fun getFilterCondition(): String {
-        return this.filterCondition
+    fun getClassifyId(): String {
+        return this.id
     }
+
+
+    fun getMinPrice(): String {
+        return minePrice
+    }
+
+    fun getMaxPrice(): String {
+        return maxPrice
+    }
+
+    /**
+     * 新品
+     */
+    fun getSortNewest(): String {
+        return sortNewest
+    }
+
+    /**
+     * 是否包邮
+     */
+    fun isFreePostage(): String {
+        return isFreePostage
+    }
+
+    /**
+     * 是否特惠
+     */
+    fun isPreferential(): String {
+        return isPreferential
+    }
+
+    /**
+     * 是否订制
+     */
+    fun isCustomMade(): String {
+        return isCustomMade
+    }
+
+
+    /**
+     * 子分类筛选id
+     */
+    fun getCids(): String {
+        return cids
+    }
+
     /**
      * 默认参数加载数据
      */
-    override fun loadData(isRefresh: Boolean,searchString:String) {
+    override fun loadData(isRefresh: Boolean, searchString: String) {
         if (isRefresh) this.curPage = 1
 
         this.filterCondition = searchString
 
-        loadData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice,cids)
+        loadData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice, cids)
     }
 
     /**
      * 根据用户选择条件搜索
      */
-    override fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids:String) {
+    override fun loadData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String, cids: String) {
         this.curPage = page
         this.sortType = sortType
         this.profitType = profitType
@@ -113,8 +176,8 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
     /**
      * 加载更多
      */
-    fun loadMoreData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String,cids: String) {
-        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice,cids, object : IDataSource.HttpRequestCallBack {
+    fun loadMoreData(page: Int, sortType: String, profitType: String, filterCondition: String, minePrice: String, maxPrice: String, cids: String) {
+        dataSource.loadData(page, sortType, profitType, filterCondition, minePrice, maxPrice, cids, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
                 val hotGoodsBean = JsonUtil.fromJson(json, HotGoodsBean::class.java)
@@ -142,9 +205,8 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
      * 默认条件加载更多
      */
     override fun loadMoreData() {
-        loadMoreData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice,cids)
+        loadMoreData(curPage, sortType, profitType, filterCondition, minePrice, maxPrice, cids)
     }
-
 
 
     /**
@@ -163,5 +225,11 @@ class SearchGoodsPresenter(view: SearchGoodsContract.View) : SearchGoodsContract
         })
     }
 
+    /**
+     * 获取搜索关键字
+     */
+    fun getFilterCondition(): String {
+        return filterCondition
+    }
 
 }

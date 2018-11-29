@@ -50,7 +50,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: SearchGoodsPrese
                 maxPrice = list[rightPostion].substring(1)
             }
             //            LogUtil.e("minPrice==" + minPrice + ";maxPrice==" + maxPrice)
-            val sortType = ""
+            val sortType = present.getSortType()
             val cids = getSelectedItem()
             present.loadData(page, sortType, SearchGoodsPresenter.PROFIT_TYPE_DEFAULT, filterCondition, minPrice, maxPrice, cids)
         }
@@ -91,7 +91,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: SearchGoodsPrese
             val page = 1
             val filterCondition = present.getFilterCondition()
             val cids = getSelectedItem()
-            val sortType = ""
+            val sortType = present.getSortType()
             present.loadData(page, sortType, SearchGoodsPresenter.PROFIT_TYPE_DEFAULT, filterCondition, minPrice, maxPrice, cids)
         }
     }
