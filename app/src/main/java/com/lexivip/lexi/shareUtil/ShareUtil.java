@@ -1,20 +1,24 @@
 package com.lexivip.lexi.shareUtil;
 
 import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
+import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BasePresenter;
 import com.lexivip.lexi.AppApplication;
+import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.net.URL;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMMin;
+import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
@@ -25,6 +29,10 @@ public class ShareUtil implements ShareContract.View{
     private int type;
     private SharePresenter presenter=new SharePresenter(this);
     private String scene;
+    private UMImage image;
+    private String url;
+    private String content;
+    private String pageUrl;
 
     public ShareUtil(Activity context, WaitingDialog dialog, String rid, int type) {
         this.context = context;
@@ -55,40 +63,52 @@ public class ShareUtil implements ShareContract.View{
         this.scene = scene;
         presenter.loadShareWindow(rid,scene);
     }
-    /*public ShareUtil() {
-        UMImage image = new UMImage(context, R.drawable.ic_camera);//资源文件
+    public ShareUtil(Activity context,String url,String content,String pageUrl,String imageURl) {
+        this.context = context;
+        this.url = url;
+        this.content=content;
+        this.pageUrl=pageUrl;
+        //资源文件
+        image = new UMImage(context, imageURl+ImageSizeConfig.SIZE_SM);
         new ShareAction(context)
-                .withText("hello")
-                .withMedia(image)
-                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE)
-                //.setShareContent()
-                //.setShareboardclickCallback(shareBoardlistener)
+                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ,SHARE_MEDIA.QZONE)
+                .setShareboardclickCallback(shareBoardlistener)
                 .setCallback(shareListener)
                 .open();
-    }*/
+    }
 
     private ShareBoardlistener shareBoardlistener=new ShareBoardlistener() {
         @Override
         public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
-            UMImage image = new UMImage(context, R.drawable.ic_camera);//资源文件
             if (share_media!=null){
+                UMMin umMin = new UMMin(url);//兼容低版本的网页链接
+                // 小程序消息封面图片
+                umMin.setThumb(image);
+                // 小程序消息title
+                umMin.setTitle(Util.getString(R.string.app_name));
+                // 小程序消息描述
+                umMin.setDescription(content);
+                //小程序页面路径
+                umMin.setPath(pageUrl);
+                // 小程序原始id,在微信平台查询
+                umMin.setUserName(Constants.AUTHAPPID);
+
                 if (share_media==SHARE_MEDIA.WEIXIN){
+                    LogUtil.e("微信好友");
                     new ShareAction(context)
-                            .withText("hello")
-                            //.withMedia(image)
-                            .withMedia(image)
-                            //.setShareboardclickCallback(shareBoardlistener)
+                            .withMedia(umMin)
+                            .setPlatform(share_media)
                             .share();
-                            //.setCallback(shareListener);
-                            //.open();
-                }else if (share_media==SHARE_MEDIA.WEIXIN_CIRCLE){
+                }else{
+                    LogUtil.e("微信朋友圈");
+                    UMWeb  web = new UMWeb("");
+                    web.setTitle(Util.getString(R.string.app_name));//标题
+                    web.setThumb(image);  //缩略图
+                    web.setDescription(content);//描述
                     new ShareAction(context)
-                            .withText("hello")
-                            //.withMedia(image)
-                            //.setShareboardclickCallback(shareBoardlistener)
+                            .withMedia(web)
+                            .setPlatform(share_media)
                             .share();
-                            //.setCallback(shareListener);
-                            //.open();
                 }
             }
         }

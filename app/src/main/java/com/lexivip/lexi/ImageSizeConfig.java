@@ -31,6 +31,9 @@ public class ImageSizeConfig {
     //领券中心品牌券头部
     public static final String SIZE_AVAL68 = "-ava168";
 
+    //分享的缩略图
+    public static final String SIZE_SM = "-sm";
+
     //默认大小
     public static final String DEFAULT = "";
 }

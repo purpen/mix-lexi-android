@@ -126,8 +126,9 @@ public class AppApplication extends MultiDexApplication {
 
     private void initUmeng(){
         //umeng初始化
-        UMConfigure.init(this,"5bc5c5f1b465f5c5a000007d"
-                ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"1325f645c927d2d3b6d627a5c0bb5c2e");
+        UMConfigure.init(this,Constants.UMENG_ID
+                ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,Constants.UMENG_PUSH);
+        //TODO umeng log记得关闭
         UMConfigure.setLogEnabled(true);
         //umeng统计
         MobclickAgent.setScenarioType(this,MobclickAgent.EScenarioType.E_UM_NORMAL);
@@ -197,13 +198,14 @@ public class AppApplication extends MultiDexApplication {
         mPushAgent.setMessageHandler(messageHandler);
 
         //小米通道
-        MiPushRegistar.register(this, "2882303761517900308", "5391790024308");
+        MiPushRegistar.register(this, Constants.MI_ID, Constants.MI_KEY);
         //华为通道
         HuaWeiRegister.register(this);
         //魅族通道
         //MeizuRegister.register(this, MEIZU_APPID, MEIZU_APPKEY);
 
-        PlatformConfig.setWeixin(Constants.WX_ID, "8eddb55d39cbfdb9fee1afa93a495db1");
+        PlatformConfig.setWeixin(Constants.WX_ID, Constants.WX_key);
+        PlatformConfig.setQQZone(Constants.QQ_ID,Constants.QQ_KEY);
 
         msgApi = WXAPIFactory.createWXAPI(this, Constants.WX_ID);
         msgApi.registerApp(Constants.WX_ID);
