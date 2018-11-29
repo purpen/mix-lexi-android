@@ -128,6 +128,9 @@ public class CustomHeadView extends RelativeLayout {
                     break;
 
                 case R.id.rl_head_shop:
+                    if (viewClickListener!=null){
+                        viewClickListener.onClick(v);
+                    }
 //                    if (UserProfileUtil.isLogin()){
 //                        activity.startActivity(new Intent(activity, UserShopCartActivity.class));
 //                    }else {
@@ -179,6 +182,10 @@ public class CustomHeadView extends RelativeLayout {
             relativeSearch.setVisibility(View.GONE);
         }
 
+    }
+
+    public RelativeLayout getHeadRightShop() {
+        return rl_head_shop;
     }
 
     public void setHeadShopShow(boolean isShow) {

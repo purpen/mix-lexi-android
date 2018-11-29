@@ -2,6 +2,7 @@ package com.lexivip.lexi.index.selection
 
 import android.content.Intent
 import android.support.v4.view.ViewPager
+import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableString
@@ -22,6 +23,7 @@ import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.dialog.CouponDialog
 import com.lexivip.lexi.dialog.CouponFinishDialog
 import com.lexivip.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
+import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
@@ -34,6 +36,7 @@ import com.lexivip.lexi.view.autoScrollViewpager.RecyclerViewPagerAdapter
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
+import org.greenrobot.eventbus.EventBus
 
 
 class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickListener {
@@ -52,7 +55,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private var banners: ArrayList<String> = ArrayList()
 
     private val bannerWidth: Int by lazy { ScreenUtil.getScreenWidth() * 300 / 375 }
-    private var couponDialog: CouponDialog?=null
+    private var couponDialog: CouponDialog? = null
 
     companion object {
         @JvmStatic
@@ -71,13 +74,13 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         swipeRefreshLayout.isEnabled = false
 //        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
 //        swipeRefreshLayout.isRefreshing = false
-        if(UserProfileUtil.isLogin()) {
+        if (UserProfileUtil.isLogin()) {
             presenter.getReceive()
-        }else{
+        } else {
             setIsReceive(0)
         }
-        textViewCouponCenter.setCompoundDrawables(null,Util.getDrawableWidthPxDimen(R.mipmap.icon_coupon_center,DimenUtil.dp2px(26.0),DimenUtil.dp2px(26.0)),null,null)
-        textViewExemptionMail.setCompoundDrawables(null,Util.getDrawableWidthPxDimen(R.mipmap.icon_exemption_mail,DimenUtil.dp2px(26.0),DimenUtil.dp2px(26.0)),null,null)
+        textViewCouponCenter.setCompoundDrawables(null, Util.getDrawableWidthPxDimen(R.mipmap.icon_coupon_center, DimenUtil.dp2px(26.0), DimenUtil.dp2px(26.0)), null, null)
+        textViewExemptionMail.setCompoundDrawables(null, Util.getDrawableWidthPxDimen(R.mipmap.icon_exemption_mail, DimenUtil.dp2px(26.0), DimenUtil.dp2px(26.0)), null, null)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -97,20 +100,20 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      * 是否领取优惠券
      */
     override fun setIsReceive(is_grant: Int) {
-        LogUtil.e("是否领取："+is_grant)
-        if (is_grant==0) {
+        LogUtil.e("是否领取：" + is_grant)
+        if (is_grant == 0) {
             couponDialog = CouponDialog(context, object : CouponDialog.CouponInterface {
                 override fun getReceive(isReceive: Boolean) {
-                    if(isReceive){
+                    if (isReceive) {
                         val finishDialog: CouponFinishDialog = CouponFinishDialog(context)
                         finishDialog.show()
                     }
                 }
             })
             couponDialog!!.show()
-        }else{
+        } else {
             LogUtil.e("不显示")
-            if(couponDialog!=null){
+            if (couponDialog != null) {
                 LogUtil.e("dialog是否显示")
                 couponDialog!!.dismiss()
             }
@@ -127,6 +130,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         gridLayoutManager.setScrollEnabled(false)
         recyclerViewZCManifest.layoutManager = gridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
+        recyclerViewZCManifest.isNestedScrollingEnabled = false
         recyclerViewZCManifest.addItemDecoration(GridSpacingItemDecoration(2, DimenUtil.dp2px(10.0), DimenUtil.dp2px(20.0), false))
     }
 
@@ -381,7 +385,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         val width = ScreenUtil.getScreenWidth() * 320 / 375
         val height = width * 200 / 320 + DimenUtil.dp2px(35.0)
         viewPager.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
-        viewPager.setPadding(0,DimenUtil.dp2px(15.0),0,DimenUtil.dp2px(20.0))
+        viewPager.setPadding(0, DimenUtil.dp2px(15.0), 0, DimenUtil.dp2px(20.0))
     }
 
     /**
@@ -409,6 +413,15 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     }
 
     override fun installListener() {
+        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
+            if (Math.abs(scrollY - oldScrollY) < 20) return@OnScrollChangeListener
+            if (scrollY > oldScrollY) { //上滑
+                EventBus.getDefault().post(MessageUpDown(true))
+            } else {
+                EventBus.getDefault().post(MessageUpDown(false))
+            }
+        })
+
         buttonOpenShop.setOnClickListener(this)
         textViewGuessPic.setOnClickListener(this)
         textViewCouponCenter.setOnClickListener(this)
@@ -478,7 +491,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
             R.id.textViewCouponCenter -> startActivity(Intent(activity, ReceiveVoucherActivity::class.java))
             R.id.textViewExemptionMail -> startActivity(Intent(activity, AllFreePostageActivity::class.java))
-            R.id.textViewMoreDiscoverLife -> startActivity(Intent(context, DiscoverLifeAestheticsActivity::class.java))
+//            R.id.textViewMoreDiscoverLife -> startActivity(Intent(context, DiscoverLifeAestheticsActivity::class.java))
 
         }
     }

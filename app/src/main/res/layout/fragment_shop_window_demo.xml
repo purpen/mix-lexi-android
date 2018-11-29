@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:fillViewport="true"
+        >
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
-
+                >
                 <RelativeLayout
                     android:id="@+id/relativeLayoutBox"
                     android:layout_width="match_parent"
@@ -59,43 +52,57 @@
 
                 </RelativeLayout>
 
-                <com.flyco.tablayout.SlidingTabLayout
-                    android:id="@+id/slidingTabLayout"
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutChangePage"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp40"
-                    android:background="@android:color/white"
-                    app:tl_indicator_height="0dp"
-                    app:tl_indicator_width="14dp"
-                    app:tl_textBold="SELECT"
-                    tl:tl_indicator_color="@color/color_6ed7af"
-                    tl:tl_tab_padding="@dimen/dp15"
-                    tl:tl_textAllCaps="true"
-                    tl:tl_textSelectColor="@color/color_6ed7af"
-                    tl:tl_textUnselectColor="@color/color_2d343a"
-                    tl:tl_textsize="@dimen/sp17" />
+                    android:layout_height="40dp"
+                    android:layout_below="@id/relativeLayoutBox"
+                    >
+                    <TextView
+                        android:id="@+id/textViewFocus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:text="关注"
+                        />
+                    <TextView
+                        android:id="@+id/textViewRecommend"
+                        android:layout_toEndOf="@id/textViewFocus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:gravity="center"
+                        android:text="推荐"
+                        />
+                    <include
+                        layout="@layout/line_color_eee"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp05"
+                        android:layout_alignParentBottom="true"
+                        />
+                </RelativeLayout>
 
-                <include
-                    layout="@layout/line_color_eee"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewFocus"
+                    android:layout_below="@id/relativeLayoutChangePage"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp05" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewRecommend"
+                    android:layout_below="@id/relativeLayoutChangePage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:overScrollMode="never"
+                    />
+            </RelativeLayout>
 
-        </android.support.design.widget.AppBarLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:scrollbars="none"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <com.basemodule.ui.CustomViewPager
-                android:id="@+id/customViewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 
     <LinearLayout

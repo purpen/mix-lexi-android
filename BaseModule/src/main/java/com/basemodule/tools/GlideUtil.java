@@ -410,4 +410,10 @@ public class GlideUtil {
         }
         return true;
     }
+
+    public static void clear(ImageView imageView) {
+        Context context = imageView.getContext();
+        if (!isValidContextForGlide(context)) return;
+        Glide.with(context).clear(imageView);
+    }
 }

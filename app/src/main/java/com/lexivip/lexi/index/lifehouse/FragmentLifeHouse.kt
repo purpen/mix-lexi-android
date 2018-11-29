@@ -33,6 +33,7 @@ import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.album.PicturePickerUtils
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.lexivip.lexi.search.AdapterSearchGoods
@@ -383,11 +384,30 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
 
         adapterWelcomeInWeek.setOnItemClickListener { _, _, position ->
-            val item = adapterWelcomeInWeek.getItem(position)?:return@setOnItemClickListener
+            val item = adapterWelcomeInWeek.getItem(position) ?: return@setOnItemClickListener
             val intent = Intent(activity, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, item.product)
             startActivity(intent)
         }
+
+
+        //添加监听
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (recyclerView.scrollState == RecyclerView.SCROLL_STATE_SETTLING || recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) return
+                if (Math.abs(dy) < 20) return
+                if (dy > 0) {
+                    EventBus.getDefault().post(MessageUpDown(true))
+                } else {
+                    EventBus.getDefault().post(MessageUpDown(false))
+                }
+            }
+        })
 
 
 //        swipeRefreshLayout.setOnRefreshListener {
@@ -610,7 +630,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                     if (item.product.isRight) {
                         divider = Y_DividerBuilder()
                                 .setBottomSideLine(true, color, height, 0f, 0f)
-                                .setLeftSideLine(true, color, 10f, 0f, 0f)
+                                .setLeftSideLine(true, color, 5f, 0f, 0f)
                                 .create()
                     } else {
                         divider = Y_DividerBuilder()

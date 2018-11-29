@@ -55,6 +55,8 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
 
     override fun setUiBeforShow() {
         view.textViewCancel.setOnClickListener {
+            GlideUtil.clear(view.imageView1)
+            GlideUtil.clear(view.imageView2)
             dismiss()
         }
         view.textViewWechatShare.setOnClickListener {

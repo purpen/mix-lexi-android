@@ -44,4 +44,28 @@ open class MineModel : IDataSource {
         })
     }
 
+    fun focusUser(uid: String, focusState: Int, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getFocusUserParams(uid)
+        val url:String?
+
+        if (focusState==0){
+            url = URL.FOCUS_USER_URL
+        }else{
+            url = URL.UNFOCUS_USER_URL
+        }
+
+        HttpRequest.sendRequest(HttpRequest.POST, url, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
 }

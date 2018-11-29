@@ -137,7 +137,13 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
             if (adapterRecent.data.isEmpty() && adapterWishOrder.data.isEmpty()) {
                 emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
-                emptyHeaderView.textViewDesc.text = getString(R.string.text_no_favorite_goods)
+                val emptyStr:String
+                if (TextUtils.equals(uid,UserProfileUtil.getUserId())){
+                    emptyStr = getString(R.string.text_no_favorite_goods)
+                }else{
+                    emptyStr = getString(R.string.text_other_no_favorite_goods)
+                }
+                emptyHeaderView.textViewDesc.text = emptyStr
                 adapterMineFavorite.setHeaderView(emptyHeaderView)
             }
         }

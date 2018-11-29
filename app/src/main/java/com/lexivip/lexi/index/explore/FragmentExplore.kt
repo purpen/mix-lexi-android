@@ -1,5 +1,7 @@
 package com.lexivip.lexi.index.explore
+
 import android.content.Intent
+import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SimpleItemAnimator
 import com.basemodule.tools.*
@@ -10,6 +12,7 @@ import com.lexivip.lexi.*
 import com.lexivip.lexi.brandPavilion.BrandPavilionListActivity
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
+import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.explore.collection.CollectionListActivity
@@ -22,8 +25,9 @@ import com.lexivip.lexi.index.explore.newGoods.AllNewGoodsActivity
 import com.lexivip.lexi.index.selection.GoodsData
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
+import org.greenrobot.eventbus.EventBus
 
-class FragmentExplore:BaseFragment(),ExploreContract.View {
+class FragmentExplore : BaseFragment(), ExploreContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: ExplorePresenter by lazy { ExplorePresenter(this) }
     override val layout: Int = R.layout.fragment_explore
@@ -36,8 +40,10 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     private lateinit var adapterGoodDesign: EditorRecommendAdapter
     private lateinit var adapterGood100: EditorRecommendAdapter
     private var isFirstLoad = true
+
     companion object {
-        @JvmStatic fun newInstance(): FragmentExplore = FragmentExplore()
+        @JvmStatic
+        fun newInstance(): FragmentExplore = FragmentExplore()
     }
 
     override fun initView() {
@@ -55,7 +61,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        if (isVisibleToUser && isFirstLoad){
+        if (isVisibleToUser && isFirstLoad) {
             isFirstLoad = false
             page = 1
             presenter.loadData("", page)
@@ -67,9 +73,9 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
             presenter.getFeatureNewGoods()
             presenter.getBrandPavilion()
             presenter.getEditorRecommend()
-            if (banner!=null) banner.startAutoPlay()
-        }else{
-            if (banner!=null) banner.stopAutoPlay()
+            if (banner != null) banner.startAutoPlay()
+        } else {
+            if (banner != null) banner.stopAutoPlay()
         }
         super.setUserVisibleHint(isVisibleToUser)
     }
@@ -80,7 +86,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      */
     private fun initGood100() {
         adapterGood100 = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
-        val linearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         recyclerViewGood100.setHasFixedSize(true)
         recyclerViewGood100.layoutManager = linearLayoutManager
         recyclerViewGood100.adapter = adapterGood100
@@ -98,7 +104,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     private fun initGoodDesign() {
 
         adapterGoodDesign = EditorRecommendAdapter(R.layout.adapter_editor_recommend)
-        val linearLayoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+        val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         recyclerViewGoodDesign.setHasFixedSize(true)
         recyclerViewGoodDesign.layoutManager = linearLayoutManager
         recyclerViewGoodDesign.adapter = adapterGoodDesign
@@ -221,10 +227,9 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      */
     private fun initBanner() {
         val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
-        banner.setImageLoader(GlideImageLoader(R.dimen.dp4,contentW,DimenUtil.dp2px(112.0),ImageSizeConfig.DEFAULT))
+        banner.setImageLoader(GlideImageLoader(R.dimen.dp4, contentW, DimenUtil.dp2px(112.0), ImageSizeConfig.DEFAULT))
         banner.setIndicatorGravity(BannerConfig.RIGHT)
     }
-
 
 
     /**
@@ -232,7 +237,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
      */
     override fun setBannerData(banner_images: List<BannerImageBean>) {
         val list = ArrayList<String>()
-        for (item in banner_images){
+        for (item in banner_images) {
             list.add(item.image)
         }
         banner.setImages(list)
@@ -258,6 +263,16 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
 
     override fun installListener() {
+
+        nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
+            if (Math.abs(scrollY - oldScrollY) < 20) return@OnScrollChangeListener
+            if (scrollY > oldScrollY) { //上滑
+                EventBus.getDefault().post(MessageUpDown(true))
+            } else {
+                EventBus.getDefault().post(MessageUpDown(false))
+            }
+        })
+
         //全部编辑推荐
         textViewAllRecommend.setOnClickListener {
             startActivity(Intent(activity, AllEditorRecommendActivity::class.java))
@@ -265,35 +280,35 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
         //全部特色品牌馆
         textViewAllBrand.setOnClickListener {
-            startActivity(Intent(activity,BrandPavilionListActivity::class.java))
+            startActivity(Intent(activity, BrandPavilionListActivity::class.java))
         }
 
         //优质新品
         textViewAllNewGoods.setOnClickListener {
-            startActivity(Intent(activity,AllNewGoodsActivity::class.java))
+            startActivity(Intent(activity, AllNewGoodsActivity::class.java))
         }
 
         //全部集合
         textViewCollection.setOnClickListener {
-            startActivity(Intent(activity,CollectionListActivity::class.java))
+            startActivity(Intent(activity, CollectionListActivity::class.java))
         }
 
         //特惠好设计
         textViewGoodDesign.setOnClickListener {
-            startActivity(Intent(activity,AllGoodDesignActivity::class.java))
+            startActivity(Intent(activity, AllGoodDesignActivity::class.java))
         }
 
         //百元好物
         textViewGood100.setOnClickListener {
-            startActivity(Intent(activity,AllGoodsIn100Activity::class.java))
+            startActivity(Intent(activity, AllGoodsIn100Activity::class.java))
         }
 
 
         //商品分类
         adapterGoodsClass.setOnItemClickListener { _, _, position ->
             val item = adapterGoodsClass.getItem(position)
-            val intent = Intent(activity,GoodsClassifyActivity::class.java)
-            intent.putExtra(GoodsClassifyActivity::class.java.simpleName,item)
+            val intent = Intent(activity, GoodsClassifyActivity::class.java)
+            intent.putExtra(GoodsClassifyActivity::class.java.simpleName, item)
             startActivity(intent)
         }
 
@@ -301,19 +316,19 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
         adapterBrandPavilion.setOnItemClickListener { _, _, position ->
             val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
             val intent = Intent(activity, BrandHouseActivity::class.java)
-            intent.putExtra("rid",item.rid)
+            intent.putExtra("rid", item.rid)
             startActivity(intent)
         }
 
 
         adapterBrandPavilion.setOnItemChildClickListener { _, view, position ->
             val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
-            when(view.id){
-                R.id.textViewFocus ->{ //关注品牌馆
+            when (view.id) {
+                R.id.textViewFocus -> { //关注品牌馆
                     if (item.is_followed) {
-                        presenter.unFocusBrandPavilion(item.rid,position)
+                        presenter.unFocusBrandPavilion(item.rid, position)
                     } else {
-                        presenter.focusBrandPavilion(item.rid,position)
+                        presenter.focusBrandPavilion(item.rid, position)
                     }
                 }
             }
@@ -321,7 +336,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
         //好货合集
         adapterGoodsCollection.setOnItemClickListener { _, _, position ->
-            val item = adapterGoodsCollection.getItem(position)?:return@setOnItemClickListener
+            val item = adapterGoodsCollection.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2CollectionDetailActivity(item.id)
 
 
@@ -333,15 +348,15 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
 
 
         adapterFeatureNewGoods.setOnItemClickListener { adapter, _, position ->
-            jump2GoodsDetail(adapter,position)
+            jump2GoodsDetail(adapter, position)
         }
 
         adapterGood100.setOnItemClickListener { adapter, _, position ->
-            jump2GoodsDetail(adapter,position)
+            jump2GoodsDetail(adapter, position)
         }
 
         adapterGoodDesign.setOnItemClickListener { adapter, _, position ->
-            jump2GoodsDetail(adapter,position)
+            jump2GoodsDetail(adapter, position)
         }
 
     }
@@ -384,6 +399,7 @@ class FragmentExplore:BaseFragment(),ExploreContract.View {
     override fun showError(string: String) {
         ToastUtil.showError(string)
     }
+
     override fun goPage() {
 
     }

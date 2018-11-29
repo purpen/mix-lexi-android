@@ -3,6 +3,7 @@ package com.lexivip.lexi.discoverLifeAesthetics
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
 import com.basemodule.tools.ToastUtil
@@ -13,6 +14,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
+import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.user.login.LoginActivity
@@ -54,6 +56,25 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
     }
 
     override fun installListener() {
+
+        //添加监听
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (recyclerView.scrollState == RecyclerView.SCROLL_STATE_SETTLING || recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) return
+                if (Math.abs(dy) < 20) return
+                if (dy > 0) {
+                    EventBus.getDefault().post(MessageUpDown(true))
+                } else {
+                    EventBus.getDefault().post(MessageUpDown(false))
+                }
+            }
+        })
+
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)

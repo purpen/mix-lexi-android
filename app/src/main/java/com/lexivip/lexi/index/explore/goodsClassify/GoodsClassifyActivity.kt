@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.explore.goodsClassify
+
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
@@ -15,23 +16,21 @@ import com.lexivip.lexi.search.SearchActivity
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
-import kotlinx.android.synthetic.main.acticity_all_editor_recommend.*
-import kotlinx.android.synthetic.main.header_classify_goods.view.*
+import kotlinx.android.synthetic.main.activity_goods_classsify.*
+import kotlinx.android.synthetic.main.header_classify_goods.*
 
 
 class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
-    private var goodsCount=0
+    private var goodsCount = 0
     private val presenter: GoodsClassifyPresenter by lazy { GoodsClassifyPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
     private var dialogBottomFilter: DialogBottomFilter? = null
-    override val layout: Int = R.layout.acticity_header_recyclerview
+    override val layout: Int = R.layout.activity_goods_classsify
 
-    private lateinit var  headerView: View
-
-    private lateinit var categoriesBean:GoodsClassBean.DataBean.CategoriesBean
+    private lateinit var categoriesBean: GoodsClassBean.DataBean.CategoriesBean
 
     override fun setPresenter(presenter: GoodsClassifyContract.Presenter?) {
         setPresenter(presenter)
@@ -43,7 +42,8 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
 
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        customHeadView.setHeadCenterTxtShow(true,categoriesBean.name)
+        customHeadView.setHeadCenterTxtShow(true, categoriesBean.name)
+        customHeadView.setHeadShopShow(true)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
@@ -54,35 +54,52 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
             adapter.data[position].spanSize
         }
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-
-        initHeaderView()
-    }
-
-    /**
-     * 初始化头布局
-     */
-    private fun initHeaderView() {
-        headerView = View.inflate(this, R.layout.header_classify_goods, null)
-        headerView.editTextSearch.isFocusable = false
-        headerView.editTextSearch.isFocusableInTouchMode = false
-        adapter.setHeaderView(headerView)
+        textViewNewProductFilter.isSelected = false
+        val headerView = View(this)
+        headerView.setPadding(0, DimenUtil.dp2px(10.0), 0, 0)
+        adapter.addHeaderView(View(this))
     }
 
 
     override fun setGoodsCount(count: Int) {
         goodsCount = count
-        if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
+        if (dialogBottomFilter != null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
 
     override fun installListener() {
-
-        //点击索框
-        headerView.editTextSearch.setOnClickListener {
-            startActivity(Intent(this,SearchActivity::class.java))
+        //点击搜索
+        customHeadView.headRightShop.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
         }
 
+        //新品
+        textViewNewProductFilter.setOnClickListener {
+            val sort_newest: String
+            if (textViewNewProductFilter.isSelected) {
+                sort_newest = "0"
+                textViewNewProductFilter.isSelected = false
+                textViewNewProductFilter.setTextColor(Util.getColor(R.color.color_555))
+            } else {
+                sort_newest = "1"
+                textViewNewProductFilter.isSelected = true
+                textViewNewProductFilter.setTextColor(Util.getColor(R.color.color_6ed7af))
 
-        headerView.linearLayoutSort.setOnClickListener { _ ->
+            }
+            val page = 1
+            val sortType = presenter.getSortType()
+            val cids = presenter.getCids()
+            val minPrice = presenter.getMinPrice()
+            val maxPrice = presenter.getMaxPrice()
+            val id = presenter.getClassifyId()
+            val is_free_postage = presenter.isFreePostage()
+            val is_preferential = presenter.isPreferential()
+            val is_custom_made = presenter.isCustomMade()
+            presenter.loadData(page, sortType, minPrice, maxPrice, cids, is_free_postage, is_preferential, is_custom_made, sort_newest, id)
+
+        }
+
+        //排序
+        linearLayoutSort.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
             val dialog = DialogBottomSynthesiseSort(this, presenter)
             dialog.setOnDismissListener {
@@ -96,9 +113,9 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
             dialog.show()
         }
 
-        headerView.linearLayoutFilter.setOnClickListener { _ ->
+        linearLayoutFilter.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(this, presenter,categoriesBean.id)
+            if (dialogBottomFilter == null) dialogBottomFilter = DialogBottomFilter(this, presenter, categoriesBean.id)
             dialogBottomFilter?.show()
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
@@ -109,7 +126,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            presenter.loadData(true,categoriesBean.id)
+            presenter.loadData(true, categoriesBean.id)
         }
 
         adapter.setOnLoadMoreListener({
@@ -126,7 +143,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     }
 
     override fun requestNet() {
-        presenter.loadData(false,categoriesBean.id)
+        presenter.loadData(false, categoriesBean.id)
     }
 
     /**

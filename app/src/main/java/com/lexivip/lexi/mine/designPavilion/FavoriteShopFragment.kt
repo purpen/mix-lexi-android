@@ -1,4 +1,5 @@
 package com.lexivip.lexi.mine.designPavilion
+
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -75,9 +76,9 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         adapter.setOnItemChildClickListener { _, v, position ->
             val pavilionBean = adapter.getItem(position) as DesignPavilionBean
             if (pavilionBean.followed_status == 1) { //点击取消关注
-                presenter.focusBrandPavilion(pavilionBean.rid, false, position,v)
+                presenter.focusBrandPavilion(pavilionBean.rid, false, position, v)
             } else {
-                presenter.focusBrandPavilion(pavilionBean.rid, true, position,v)
+                presenter.focusBrandPavilion(pavilionBean.rid, true, position, v)
             }
         }
 
@@ -85,7 +86,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         adapter.setOnItemClickListener { _, _, position ->
             val pavilionBean = adapter.getItem(position) as DesignPavilionBean
             val intent = Intent(activity, BrandHouseActivity::class.java)
-            intent.putExtra("rid",pavilionBean.rid)
+            intent.putExtra("rid", pavilionBean.rid)
             startActivity(intent)
         }
 
@@ -117,7 +118,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
 
     override fun loadData() {
         if (!TextUtils.isEmpty(uid)) {
-            presenter.loadData(true,uid!!)
+            presenter.loadData(true, uid!!)
         }
     }
 
@@ -127,7 +128,13 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         adapter.setEnableLoadMore(true)
         if (adapter.data.isEmpty()) {
             emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_life_house)
-            emptyHeaderView.textViewDesc.text = getString(R.string.text_no_focus_life_house)
+            val emptyStr: String
+            if (TextUtils.equals(uid, UserProfileUtil.getUserId())) {
+                emptyStr = getString(R.string.text_no_focus_life_house)
+            } else {
+                emptyStr = getString(R.string.text_other_no_focus_life_house)
+            }
+            emptyHeaderView.textViewDesc.text = emptyStr
             adapter.setHeaderView(emptyHeaderView)
         }
     }
