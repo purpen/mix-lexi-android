@@ -209,7 +209,7 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
                     if (item.product.isRight) {
                         divider = Y_DividerBuilder()
                                 .setBottomSideLine(true, color, height, 0f, 0f)
-                                .setLeftSideLine(true, color, 10f, 0f, 0f)
+                                .setLeftSideLine(true, color, 5f, 0f, 0f)
                                 .create()
                     } else {
                         divider = Y_DividerBuilder()

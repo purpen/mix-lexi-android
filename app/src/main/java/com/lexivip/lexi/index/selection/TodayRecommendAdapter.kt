@@ -11,7 +11,7 @@ import com.lexivip.lexi.R
 class TodayRecommendAdapter(layoutResId: Int) : BaseQuickAdapter<TodayRecommendBean.DataBean.DailyRecommendsBean, BaseViewHolder>(layoutResId) {
 
     private val dp150: Int by lazy { DimenUtil.dp2px(150.0) }
-    private val dp115: Int by lazy { DimenUtil.dp2px(115.0) }
+    private val dp115: Int by lazy { DimenUtil.dp2px(113.0) }
     private val dp4: Int by lazy { DimenUtil.dp2px(4.0) }
 
     override fun convert(helper: BaseViewHolder, item: TodayRecommendBean.DataBean.DailyRecommendsBean) {

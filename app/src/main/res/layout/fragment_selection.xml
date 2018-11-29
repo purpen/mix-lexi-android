@@ -164,7 +164,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewRecommend"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="175dp"
                 android:layout_marginStart="@dimen/dp15"
                 android:layout_marginTop="@dimen/dp15"
                 android:layout_marginBottom="@dimen/dp30"
