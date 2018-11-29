@@ -49,6 +49,21 @@ class AllLikeGoodsPresenter(view: AllLikeGoodsContract.View) : AllLikeGoodsContr
         const val SORT_TYPE_UP_LOW: String = "3"
     }
 
+    fun getMinPrice(): String {
+        return minePrice
+    }
+
+    fun getMaxPrice(): String {
+        return maxPrice
+    }
+
+    /**
+     * 子分类筛选id
+     */
+    fun getCids(): String {
+        return cids
+    }
+
     /**
      * 获取排序类型
      */
@@ -56,6 +71,33 @@ class AllLikeGoodsPresenter(view: AllLikeGoodsContract.View) : AllLikeGoodsContr
         return this.sortType
     }
 
+    /**
+     * 新品
+     */
+    fun getSortNewest(): String {
+        return sortNewest
+    }
+
+    /**
+     * 是否包邮
+     */
+    fun isFreePostage(): String {
+        return isFreePostage
+    }
+
+    /**
+     * 是否特惠
+     */
+    fun isPreferential(): String {
+        return isPreferential
+    }
+
+    /**
+     * 是否订制
+     */
+    fun isCustomMade(): String {
+        return isCustomMade
+    }
 
     /**
      * 默认参数加载数据

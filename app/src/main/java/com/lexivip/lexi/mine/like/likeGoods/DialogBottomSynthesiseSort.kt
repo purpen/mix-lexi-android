@@ -59,10 +59,14 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllLikeG
         view.textViewSynthesis.setOnClickListener {
             setSelection(AllLikeGoodsPresenter.SORT_TYPE_SYNTHESISE)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val cids = ""
-            present.loadData(page, AllLikeGoodsPresenter.SORT_TYPE_SYNTHESISE, minPrice, maxPrice,cids,"","","","")
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
+            val cids = present.getCids()
+            val sortNewest = present.getSortNewest()
+            val is_free_postage = present.isFreePostage()
+            val is_preferential = present.isPreferential()
+            val is_custom_made = present.isCustomMade()
+            present.loadData(page, AllLikeGoodsPresenter.SORT_TYPE_SYNTHESISE, minPrice, maxPrice,cids,is_free_postage,is_preferential,is_custom_made,sortNewest)
             dismiss()
         }
 
@@ -70,10 +74,14 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllLikeG
         view.textViewLow2Up.setOnClickListener {
             setSelection(AllLikeGoodsPresenter.SORT_TYPE_LOW_UP)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val cids = ""
-            present.loadData(page, AllLikeGoodsPresenter.SORT_TYPE_LOW_UP, minPrice, maxPrice,cids,"","","","")
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
+            val cids = present.getCids()
+            val sortNewest = present.getSortNewest()
+            val is_free_postage = present.isFreePostage()
+            val is_preferential = present.isPreferential()
+            val is_custom_made = present.isCustomMade()
+            present.loadData(page, AllLikeGoodsPresenter.SORT_TYPE_LOW_UP, minPrice, maxPrice,cids,is_free_postage,is_preferential,is_custom_made,sortNewest)
             dismiss()
         }
 
@@ -81,10 +89,14 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: AllLikeG
         view.textViewUp2Low.setOnClickListener {
             setSelection(AllLikeGoodsPresenter.SORT_TYPE_UP_LOW)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val cids = ""
-            present.loadData(page, AllLikeGoodsPresenter.SORT_TYPE_UP_LOW, minPrice, maxPrice,cids,"","","","")
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
+            val cids = present.getCids()
+            val sortNewest = present.getSortNewest()
+            val is_free_postage = present.isFreePostage()
+            val is_preferential = present.isPreferential()
+            val is_custom_made = present.isCustomMade()
+            present.loadData(page, AllLikeGoodsPresenter.SORT_TYPE_UP_LOW, minPrice, maxPrice,cids,is_free_postage,is_preferential,is_custom_made,sortNewest)
             dismiss()
         }
     }
