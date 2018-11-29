@@ -117,13 +117,6 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: SearchGoodsPrese
 
 
     /**
-     * 设置选中状态
-     */
-    private fun setSelection(sortType: String) {
-
-    }
-
-    /**
      * 重置选中状态
      */
     private fun resetSelectionStatus() {

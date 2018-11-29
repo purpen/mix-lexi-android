@@ -2,6 +2,8 @@ package com.lexivip.lexi.shopCart
 
 import android.graphics.Paint
 import android.support.annotation.LayoutRes
+import android.text.Spannable
+import android.text.SpannableString
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,6 +12,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.CustomImageSpan
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
@@ -19,8 +22,18 @@ class AdapterShopCartWishGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBe
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
 
         val imageView = helper.getView<ImageView>(R.id.imageView)
+
         GlideUtil.loadImageWithDimenAndRadius(item.cover, imageView,0,dp70,ImageSizeConfig.SIZE_P30X2)
-        helper.setText(R.id.textViewName, item.name)
+        val textViewTitle = helper.getView<TextView>(R.id.textViewName)
+        if (item.is_free_postage){
+            val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
+            val span = CustomImageSpan(drawable)
+            val spannable = SpannableString("   " + item.name)
+            spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            textViewTitle.text = spannable
+        }else{
+            textViewTitle.text = item.name
+        }
         val textViewPrice = helper.getView<TextView>(R.id.textViewPrice)
         val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)
         textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp8,R.dimen.dp10),null,null,null)

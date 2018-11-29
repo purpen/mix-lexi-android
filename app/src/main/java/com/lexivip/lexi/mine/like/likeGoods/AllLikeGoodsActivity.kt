@@ -8,7 +8,6 @@ import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.CustomLoadMoreView
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity

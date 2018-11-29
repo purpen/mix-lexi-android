@@ -100,7 +100,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:paddingStart="@dimen/dp20"
         android:paddingEnd="0dp"
         android:background="@android:color/white"
@@ -145,7 +145,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewRecommend"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
             android:paddingStart="@dimen/dp20"
             android:paddingEnd="0dp"
             android:background="@android:color/white"

@@ -60,9 +60,9 @@ class DialogBottomSynthesiseSort(whichPage:String,context: FragmentActivity?, pr
         view.textViewSynthesis.setOnClickListener {
             setSelection(AllGoodsSelectionPresenter.SORT_TYPE_SYNTHESISE)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val cids = ""
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
+            val cids = present.getCids()
             present.loadData(whichPage, page, AllGoodsSelectionPresenter.SORT_TYPE_SYNTHESISE, minPrice, maxPrice, cids, "", "", "", "")
             dismiss()
         }
@@ -71,9 +71,9 @@ class DialogBottomSynthesiseSort(whichPage:String,context: FragmentActivity?, pr
         view.textViewLow2Up.setOnClickListener {
             setSelection(AllGoodsSelectionPresenter.SORT_TYPE_LOW_UP)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val cids = ""
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
+            val cids = present.getCids()
             present.loadData(whichPage, page, AllGoodsSelectionPresenter.SORT_TYPE_LOW_UP, minPrice, maxPrice, cids, "", "", "", "")
             dismiss()
         }
