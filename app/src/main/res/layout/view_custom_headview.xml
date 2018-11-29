@@ -82,7 +82,8 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <ImageButton
             android:id="@+id/head_view_shop"
@@ -91,8 +92,9 @@
             android:background="@null"
             android:clickable="false"
             android:focusable="false"
+            android:src="@mipmap/icon_search_head"
             android:focusableInTouchMode="false"
-            android:padding="@dimen/dp16" />
+            android:padding="@dimen/dp15" />
 
         <TextView
             android:id="@+id/tv_tip_num"

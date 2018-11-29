@@ -23,7 +23,6 @@ class SearchPresenter(view: SearchContract.View) : SearchContract.Presenter {
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e("===="+json)
                 view.dismissLoadingView()
                 val recentLookGoodsBean = JsonUtil.fromJson(json, RecentLookGoodsBean::class.java)
                 if (recentLookGoodsBean.success) {

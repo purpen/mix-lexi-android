@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.explore.goodsClassify
+
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.header_classify_goods.*
 
 class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
-    private var goodsCount=0
+    private var goodsCount = 0
     private val presenter: GoodsClassifyPresenter by lazy { GoodsClassifyPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
@@ -29,7 +30,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     private var dialogBottomFilter: DialogBottomFilter? = null
     override val layout: Int = R.layout.activity_goods_classsify
 
-    private lateinit var categoriesBean:GoodsClassBean.DataBean.CategoriesBean
+    private lateinit var categoriesBean: GoodsClassBean.DataBean.CategoriesBean
 
     override fun setPresenter(presenter: GoodsClassifyContract.Presenter?) {
         setPresenter(presenter)
@@ -41,7 +42,8 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
 
     override fun initView() {
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        customHeadView.setHeadCenterTxtShow(true,categoriesBean.name)
+        customHeadView.setHeadCenterTxtShow(true, categoriesBean.name)
+        customHeadView.setHeadShopShow(true)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
@@ -54,31 +56,30 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
         textViewNewProductFilter.isSelected = false
         val headerView = View(this)
-        headerView.setPadding(0,DimenUtil.dp2px(10.0),0,0)
+        headerView.setPadding(0, DimenUtil.dp2px(10.0), 0, 0)
         adapter.addHeaderView(View(this))
     }
 
 
     override fun setGoodsCount(count: Int) {
         goodsCount = count
-        if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
+        if (dialogBottomFilter != null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
 
     override fun installListener() {
-
-        //点击索框
-        editTextSearch.setOnClickListener {
-            startActivity(Intent(this,SearchActivity::class.java))
+        //点击搜索
+        customHeadView.headRightShop.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
         }
 
         //新品
         textViewNewProductFilter.setOnClickListener {
-            val sort_newest:String
-            if (textViewNewProductFilter.isSelected){
+            val sort_newest: String
+            if (textViewNewProductFilter.isSelected) {
                 sort_newest = "0"
                 textViewNewProductFilter.isSelected = false
                 textViewNewProductFilter.setTextColor(Util.getColor(R.color.color_555))
-            }else{
+            } else {
                 sort_newest = "1"
                 textViewNewProductFilter.isSelected = true
                 textViewNewProductFilter.setTextColor(Util.getColor(R.color.color_6ed7af))
@@ -114,7 +115,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
 
         linearLayoutFilter.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            if (dialogBottomFilter==null) dialogBottomFilter = DialogBottomFilter(this, presenter,categoriesBean.id)
+            if (dialogBottomFilter == null) dialogBottomFilter = DialogBottomFilter(this, presenter, categoriesBean.id)
             dialogBottomFilter?.show()
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
@@ -125,7 +126,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            presenter.loadData(true,categoriesBean.id)
+            presenter.loadData(true, categoriesBean.id)
         }
 
         adapter.setOnLoadMoreListener({
@@ -142,7 +143,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     }
 
     override fun requestNet() {
-        presenter.loadData(false,categoriesBean.id)
+        presenter.loadData(false, categoriesBean.id)
     }
 
     /**
