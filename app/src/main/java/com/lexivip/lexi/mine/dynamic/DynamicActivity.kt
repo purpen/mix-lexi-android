@@ -1,5 +1,6 @@
 package com.lexivip.lexi.mine.dynamic
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SimpleItemAnimator
@@ -7,6 +8,7 @@ import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.flyco.dialog.listener.OnBtnClickL
@@ -18,6 +20,9 @@ import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailBean
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.yanyusong.y_divideritemdecoration.Y_Divider
+import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
+import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.activity_mine_dynamic.*
 import kotlinx.android.synthetic.main.empty_view_dynamic.view.*
 import kotlinx.android.synthetic.main.view_head_mine_dynamic.view.*
@@ -54,6 +59,7 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
         (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        recyclerView.addItemDecoration(DividerItemDecoration(this))
         headerView = LayoutInflater.from(this).inflate(R.layout.view_head_mine_dynamic, null)
         GlideUtil.loadImageWithDimen(R.mipmap.icon_bg_dynamic, headerView.imageViewHeader, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(147.0), ImageSizeConfig.DEFAULT)
         val emptyView = LayoutInflater.from(this).inflate(R.layout.empty_view_dynamic, null)
@@ -65,6 +71,9 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
             emptyView.textViewTips.text = getString(R.string.text_other_no_dynamic)
             headerView.buttonFocusUser.visibility = View.VISIBLE
         }
+
+
+        headerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,DimenUtil.dp2px(200.0))
 
         adapter.addHeaderView(headerView)
         adapter.setHeaderAndEmpty(true)
@@ -267,6 +276,36 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
 
     override fun goPage() {
 
+    }
+
+    internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
+        private val color: Int = Util.getColor(R.color.color_f5f7f9)
+        override fun getDivider(itemPosition: Int): Y_Divider? {
+            val count = adapter.itemCount
+            var divider: Y_Divider? = null
+            when (itemPosition) {
+                count - 2 -> {
+
+                    divider = Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+
+                count - 1 -> {
+                    divider = Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+
+                else -> {
+                    divider = Y_DividerBuilder()
+                            .setBottomSideLine(true, color, 10f, 0f, 0f)
+                            .create()
+                }
+            }
+
+            return divider
+        }
     }
 
 }
