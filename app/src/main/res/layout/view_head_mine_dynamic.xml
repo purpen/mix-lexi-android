@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ImageView
@@ -10,6 +11,19 @@
         android:layout_height="147dp"
         android:scaleType="fitXY"
         android:src="@drawable/default_load" />
+
+
+    <com.lexivip.lexi.view.ButtonDrawableCenter
+        android:id="@+id/buttonFocusUser"
+        android:layout_width="70dp"
+        android:layout_height="33dp"
+        android:background="@drawable/bg_round_color5fe4b1"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginEnd="@dimen/dp15"
+        android:layout_marginBottom="@dimen/dp11"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        />
 
 
     <LinearLayout
@@ -21,15 +35,19 @@
         android:layout_marginEnd="@dimen/dp15"
         android:layout_marginBottom="@dimen/dp11"
         android:layout_gravity="right"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone"
+        >
 
         <TextView
+            android:id="@+id/textViewPublishWindow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp5"
             android:text="@string/text_publish_window"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp12" />
+            android:textSize="@dimen/sp12"
+            />
 
         <ImageView
             android:layout_width="@dimen/dp15"
@@ -53,14 +71,15 @@
         android:layout_marginTop="-41dp"
         />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageViewAvatar"
         android:layout_width="@dimen/dp60"
         android:layout_height="@dimen/dp60"
         android:src="@drawable/default_load"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@android:color/white"
         android:layout_marginStart="@dimen/dp15"
         android:layout_marginTop="-49dp"
-        android:scaleType="fitXY"
         />
 
 </LinearLayout>

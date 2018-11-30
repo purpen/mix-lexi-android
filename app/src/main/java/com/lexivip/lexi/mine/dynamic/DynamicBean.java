@@ -1,5 +1,7 @@
 package com.lexivip.lexi.mine.dynamic;
 
+import com.lexivip.lexi.beans.ShopWindowBean;
+
 import java.util.List;
 
 public class DynamicBean {
@@ -29,7 +31,8 @@ public class DynamicBean {
         public int followed_status;
         public String user_avatar;
         public String username;
-        public List<?> lines;
+        public String uid;
+        public List<ShopWindowBean> lines;
     }
 
     public static class StatusBean {

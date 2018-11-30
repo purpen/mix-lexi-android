@@ -81,7 +81,7 @@ class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyP
             fragment0 = supportFragmentManager.getFragment(savedInstanceState, MainFragment0::class.java.simpleName) as BaseFragment
             fragment1 = supportFragmentManager.getFragment(savedInstanceState, MainFragment2::class.java.simpleName) as BaseFragment
             fragment2 = supportFragmentManager.getFragment(savedInstanceState, MainFragment1::class.java.simpleName) as BaseFragment
-            fragment3 = supportFragmentManager.getFragment(savedInstanceState, MainFragment3::class.java.simpleName) as BaseFragment
+            fragment3 = supportFragmentManager.getFragment(savedInstanceState, MainFragmentUser::class.java.simpleName) as BaseFragment
         } else {
             initFragments()
         }
@@ -316,7 +316,7 @@ class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyP
         }
 
         if (fragment3 != null &&fragments.contains(fragment3)) {
-            supportFragmentManager.putFragment(outState, MainFragment3::class.java.simpleName, fragment3)
+            supportFragmentManager.putFragment(outState, MainFragmentUser::class.java.simpleName, fragment3)
         }
         super.onSaveInstanceState(outState)
     }
