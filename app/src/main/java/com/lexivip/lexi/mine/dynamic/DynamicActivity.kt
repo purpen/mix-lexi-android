@@ -19,6 +19,7 @@ import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.activity_mine_dynamic.*
+import kotlinx.android.synthetic.main.empty_view_dynamic.view.*
 import kotlinx.android.synthetic.main.view_head_mine_dynamic.view.*
 
 
@@ -29,6 +30,8 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
     private val adapter: AdapterDynamicAdapter by lazy { AdapterDynamicAdapter(R.layout.adapter_mine_dynamic) }
 
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
+
+    private var data: DynamicBean.DataBean? = null
 
     override val layout: Int = R.layout.activity_mine_dynamic
 
@@ -52,16 +55,19 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
         recyclerView.adapter = adapter
         (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         headerView = LayoutInflater.from(this).inflate(R.layout.view_head_mine_dynamic, null)
-        GlideUtil.loadImageWithDimen(R.mipmap.icon_bg_dynamic,headerView.imageViewHeader,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(147.0),ImageSizeConfig.DEFAULT)
+        GlideUtil.loadImageWithDimen(R.mipmap.icon_bg_dynamic, headerView.imageViewHeader, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(147.0), ImageSizeConfig.DEFAULT)
+        val emptyView = LayoutInflater.from(this).inflate(R.layout.empty_view_dynamic, null)
+        adapter.emptyView = emptyView
         if (TextUtils.equals(uid, UserProfileUtil.getUserId())) {
+            emptyView.textViewTips.text = getString(R.string.text_no_dynamic)
             headerView.linearLayoutPublishWindow.visibility = View.VISIBLE
         } else {
-            headerView.buttonFocusUser.visibility = View.GONE
+            emptyView.textViewTips.text = getString(R.string.text_other_no_dynamic)
+            headerView.buttonFocusUser.visibility = View.VISIBLE
         }
 
         adapter.addHeaderView(headerView)
         adapter.setHeaderAndEmpty(true)
-        adapter.emptyView = LayoutInflater.from(this).inflate(R.layout.empty_view_dynamic, null)
     }
 
     override fun setPresenter(presenter: DynamicContract.Presenter?) {
@@ -69,7 +75,7 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
     }
 
     override fun onResume() {
-        if (!firstInPage) presenter.loadData(true,uid)
+        if (!firstInPage) presenter.loadData(true, uid)
         super.onResume()
     }
 
@@ -79,6 +85,8 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
 
 
     override fun setNewData(data: DynamicBean.DataBean) {
+        this.data = data
+        setUserFocusState(data.followed_status)
         firstInPage = false
         swipeRefreshLayout.isRefreshing = false
         GlideUtil.loadCircleImageWidthDimen(data.user_avatar, headerView.imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp60), ImageSizeConfig.SIZE_AVA)
@@ -90,6 +98,46 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
         adapter.addData(data.lines)
     }
 
+    /**
+     * 设置用户关注状态
+     */
+    override fun setUserFocusState(followed_status: Int) {
+        if (data != null) data!!.followed_status = followed_status
+        setFocusState(followed_status)
+    }
+
+    /**
+     * 设置用户关注状态
+     */
+    private fun setFocusState(followed_status: Int) {
+        when (followed_status) {
+            0 -> { //未关注
+                headerView.buttonFocusUser.text = Util.getString(R.string.text_focus)
+                headerView.buttonFocusUser.compoundDrawablePadding = DimenUtil.dp2px(4.0)
+                headerView.buttonFocusUser.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
+                headerView.buttonFocusUser.setTextColor(Util.getColor(android.R.color.white))
+                headerView.buttonFocusUser.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_add_white, R.dimen.dp10, R.dimen.dp10), null, null, null)
+            }
+
+            1 -> { //已关注
+                headerView.buttonFocusUser.text = Util.getString(R.string.text_focused)
+                headerView.buttonFocusUser.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
+                headerView.buttonFocusUser.setTextColor(Util.getColor(R.color.color_949ea6))
+                headerView.buttonFocusUser.setPadding(0, 0, 0, 0)
+                headerView.buttonFocusUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            }
+
+            2 -> { //相互关注
+                headerView.buttonFocusUser.text = Util.getString(R.string.text_focused_each_other)
+                headerView.buttonFocusUser.setTextColor(Util.getColor(R.color.color_949ea6))
+                headerView.buttonFocusUser.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
+                headerView.buttonFocusUser.setPadding(0, 0, 0, 0)
+                headerView.buttonFocusUser.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+            }
+
+        }
+    }
+
     override fun installListener() {
         headerView.linearLayoutPublishWindow.setOnClickListener {
             //跳转拼接橱窗
@@ -98,7 +146,7 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
 
         headerView.buttonFocusUser.setOnClickListener {
             if (UserProfileUtil.isLogin()) { //关注用户
-                ToastUtil.showInfo("关注用户")
+                presenter.focusUser(uid, headerView.buttonFocusUser, data!!.followed_status)
             } else {
                 startActivity(Intent(this, LoginActivity::class.java))
             }

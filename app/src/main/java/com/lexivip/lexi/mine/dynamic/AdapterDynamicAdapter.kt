@@ -23,8 +23,8 @@ class AdapterDynamicAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ShopWindowBe
 
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30), ImageSizeConfig.SIZE_AVA)
-        helper.setText(R.id.textViewName, UserProfileUtil.getUserName())
+        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30), ImageSizeConfig.SIZE_AVA)
+        helper.setText(R.id.textViewName, item.user_name)
         helper.setText(R.id.textViewTime, DateUtil.getDateByTimestamp(item.updated_at, "MM月dd日"))
 
         val imageViewMore = helper.getView<ImageView>(R.id.imageViewMore)

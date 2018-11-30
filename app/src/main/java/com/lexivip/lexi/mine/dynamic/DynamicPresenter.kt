@@ -5,6 +5,7 @@ import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
+import com.lexivip.lexi.discoverLifeAesthetics.UserFocusState
 import com.lexivip.lexi.net.NetStatusBean
 import com.lexivip.lexi.user.login.UserProfileUtil
 import java.io.IOException
@@ -114,6 +115,32 @@ class DynamicPresenter(view: DynamicContract.View) : DynamicContract.Presenter {
 
             override fun onFailure(e: IOException) {
                 view1.isEnabled = true
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 关注用户
+     */
+    override fun focusUser(uid: String, v: View, focusState: Int) {
+        dataSource.focusUser(uid,focusState, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                v.isEnabled = false
+            }
+
+            override fun onSuccess(json: String) {
+                v.isEnabled = true
+                val userFocusState = JsonUtil.fromJson(json, UserFocusState::class.java)
+                if (userFocusState.success) {
+                    view.setUserFocusState(userFocusState.data.followed_status)
+                } else {
+                    view.showError(userFocusState.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                v.isEnabled = true
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

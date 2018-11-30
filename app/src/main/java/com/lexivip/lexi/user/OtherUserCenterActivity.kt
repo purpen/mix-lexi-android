@@ -37,6 +37,7 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
 
     override fun initView() {
         customHeadView.setRightImgBtnShow(true)
+        buttonActivity.visibility = View.VISIBLE
         buttonFocus.visibility = View.VISIBLE
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
@@ -126,7 +127,9 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
         }
 
         buttonActivity.setOnClickListener {
-            startActivity(Intent(this, DynamicActivity::class.java))
+            val intent = Intent(this, DynamicActivity::class.java)
+            intent.putExtra(DynamicActivity::class.java.simpleName,userId)
+            startActivity(intent)
         }
 
         //优惠券

@@ -42,6 +42,10 @@ class DynamicContract {
 
         }
 
+        fun setUserFocusState(followed_status: Int) {
+
+        }
+
 
     }
 
@@ -49,5 +53,6 @@ class DynamicContract {
         fun loadData(isRefresh: Boolean,uid:String)
         fun loadMoreData()
         fun favoriteShowWindow(rid: String,isFavorite:Boolean,position: Int, view1: android.view.View)
+        fun focusUser(uid: String, v: android.view.View, focusState: Int)
     }
 }
