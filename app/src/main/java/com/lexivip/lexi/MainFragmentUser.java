@@ -7,12 +7,14 @@ import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.ui.BaseFragment;
 import com.basemodule.ui.CustomFragmentPagerAdapter;
 import com.basemodule.ui.CustomViewPager;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.lexivip.lexi.lifeShop.LifeShopFragment;
+import com.lexivip.lexi.net.WebUrl;
 import com.lexivip.lexi.shareUtil.ShareUtil;
 import com.lexivip.lexi.user.login.UserProfileUtil;
 import com.lexivip.lexi.user.setting.SettingActivity;
@@ -70,14 +72,10 @@ public class MainFragmentUser extends BaseFragment {
             public void onClick(View v) {
 
                 //分享
-                /*String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,
-                        Manifest.permission.READ_LOGS,Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,
-                        Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,
-                        Manifest.permission.WRITE_APN_SETTINGS};
-                ActivityCompat.requestPermissions(getActivity(),mPermissionList,123);*/
-//                ShareUtil shareUtil=new ShareUtil();
+
+                ActivityCompat.requestPermissions(getActivity(),Constants.PERMISSION_LIST_SHARE,Constants.REQUEST_CODE_SHARE);
+                ShareUtil shareUtil=new ShareUtil(getActivity(),WebUrl.USER+UserProfileUtil.getUserId(),"在#乐喜#悄悄收藏了一些原创精品好物快来看看吧"
+                        ,"",WebUrl.AUTH_PAGE+UserProfileUtil.getUserId());
 
             }
         });

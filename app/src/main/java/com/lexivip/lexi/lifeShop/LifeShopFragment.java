@@ -2,6 +2,9 @@ package com.lexivip.lexi.lifeShop;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -135,6 +138,8 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
         button = getView().findViewById(R.id.button);
         tv_status = getView().findViewById(R.id.tv_status);
         linearLayout1 = getView().findViewById(R.id.linearLayout1);
+        LinearLayout linearLayout6=getView().findViewById(R.id.linearLayout6);
+        linearLayout6.setOnClickListener(this);
         iv_money_show.setOnClickListener(this);
         iv_problem.setOnClickListener(this);
         iv_show_put.setOnClickListener(this);
@@ -229,6 +234,18 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                 inquiryDialog.show();
                 break;
             case R.id.ll_invite:
+
+                break;
+            case R.id.linearLayout6:
+                ClipboardManager clip = (ClipboardManager)getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    //clip.getText(); // 粘贴
+                //clip.setText("lexixiaoduo"); // 复制
+                //创建ClipData对象
+                ClipData clipData = ClipData.newPlainText("simple text copy", "lexixiaoduo");
+                //添加ClipData对象到剪切板中
+                clip.setPrimaryClip(clipData);
+                InquiryDialog inquiryDialog1=new InquiryDialog(getContext(),"已复制到粘贴板，请添加管理员加群：\nlexixiaoduo");
+                inquiryDialog1.show();
                 break;
             case R.id.ll_gross_earnings:
                 intent = new Intent(getContext(), TransactionRecordActivity.class);

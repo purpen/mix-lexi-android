@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.basemodule.tools.AppManager
 import com.basemodule.tools.LogUtil
+import com.umeng.message.PushAgent
 
 /**
  * Created by lilin on 2017/6/16.
@@ -20,6 +21,7 @@ abstract class BaseActivity : AppCompatActivity() {
         AppManager.getAppManager().addActivity(this)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         LogUtil.e("onCreate()$TAG")
+        PushAgent.getInstance(this).onAppStart()
         getIntentData()
         //        ShareSDK.initSDK(this);·
         setContentView(layout)

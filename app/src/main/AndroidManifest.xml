@@ -17,9 +17,12 @@
         android:name=".AppApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:largeHeap="true"
+
+        android:allowBackup="true"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
+        <!--android:largeHeap="true"android:alwaysRetainTaskState="true"-->
         <!--android8.0需要的配置，主要是调用相机-->
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -192,6 +195,9 @@
         <activity android:name=".publishShopWindow.ShopWindowTagsActivity" />
         <activity android:name=".publishShopWindow.SelectShopWindowGoodsImageActivity" />
         <activity android:name=".publishShopWindow.RelateShopWindowActivity" />
+        <activity android:name=".MipushTestActivity"
+            android:launchMode="singleTask"
+            android:exported="true"/>
     </application>
 
 </manifest>
