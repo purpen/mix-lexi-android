@@ -15,7 +15,7 @@ class DialogBottomSynthesiseSort(context: Activity, presenter: BrandHouseGoodsPr
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_synthesise_sort_bottom, null)
 
-        setSelection(present.getSortType())
+        setSelection(present.sortType)
 
         return view
     }
@@ -61,11 +61,11 @@ class DialogBottomSynthesiseSort(context: Activity, presenter: BrandHouseGoodsPr
         view.textViewSynthesis.setOnClickListener {
             setSelection(SearchGoodsPresenter.SORT_TYPE_SYNTHESISE)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val profitType = ""
-            val cids = ""
-            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,"1","")
+            val minPrice = present.minePrice
+            val maxPrice = present.maxPrice
+            val sortType = SearchGoodsPresenter.SORT_TYPE_SYNTHESISE
+            val cids = present.cids
+            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,sortType,"")
             dismiss()
         }
 
@@ -73,11 +73,11 @@ class DialogBottomSynthesiseSort(context: Activity, presenter: BrandHouseGoodsPr
         view.textViewLow2Up.setOnClickListener {
             setSelection(SearchGoodsPresenter.SORT_TYPE_LOW_UP)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val profitType = ""
-            val cids = ""
-            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,"2","")
+            val minPrice = present.minePrice
+            val maxPrice = present.maxPrice
+            val sortType = SearchGoodsPresenter.SORT_TYPE_LOW_UP
+            val cids = present.cids
+            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,sortType,"")
             dismiss()
         }
 
@@ -85,11 +85,11 @@ class DialogBottomSynthesiseSort(context: Activity, presenter: BrandHouseGoodsPr
         view.textViewUp2Low.setOnClickListener {
             setSelection(SearchGoodsPresenter.SORT_TYPE_UP_LOW)
             val page = 1
-            val minPrice = ""
-            val maxPrice = ""
-            val profitType = ""
-            val cids = ""
-            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,"3","")
+            val minPrice = present.minePrice
+            val maxPrice = present.maxPrice
+            val sortType = SearchGoodsPresenter.SORT_TYPE_UP_LOW
+            val cids = present.cids
+            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,sortType,"")
             dismiss()
         }
     }
