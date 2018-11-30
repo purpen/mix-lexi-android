@@ -43,6 +43,7 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
     private BrandHouseGoodsPresenter presenter;
     private String rid;
     private DialogBottomFilter dialogBottomFilter;
+    private DialogBottomSynthesiseSort dialogBottomSynthesiseSort;
     private int count;
     private RecyclerView recyclerView;
     private LinearLayout ll_goods_list;
@@ -80,7 +81,7 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
         recyclerView.setLayoutManager(gridLayoutManager);
         adapterBranHouseGoods = new AdapterBrandHouseGoods(adaperList);
         recyclerView.setAdapter(adapterBranHouseGoods);
-        footer = View.inflate(getContext(),R.layout.footer_brand_goods,null);
+        footer = View.inflate(getContext(), R.layout.footer_brand_goods, null);
         presenter.loadGoodsData(rid, 0, "", "", "", "", "");
         adapterBranHouseGoods.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
@@ -102,8 +103,8 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
         adapterBranHouseGoods.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent=new Intent(getActivity(),GoodsDetailActivity.class);
-                intent.putExtra(GoodsDetailActivity.class.getSimpleName(),adapterBranHouseGoods.getData().get(position).getProduct());
+                Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
+                intent.putExtra(GoodsDetailActivity.class.getSimpleName(), adapterBranHouseGoods.getData().get(position).getProduct());
                 startActivity(intent);
             }
         });
@@ -197,7 +198,8 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
         switch (v.getId()) {
             case R.id.linearLayoutFilter:
                 Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f);
-                dialogBottomFilter = new DialogBottomFilter(getActivity(), presenter, rid);
+                if (dialogBottomFilter == null)
+                    dialogBottomFilter = new DialogBottomFilter(getActivity(), presenter, rid);
                 dialogBottomFilter.show();
                 dialogBottomFilter.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
@@ -220,7 +222,8 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
                 break;
             case R.id.linearLayoutSort:
                 Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f);
-                DialogBottomSynthesiseSort dialogBottomSynthesiseSort = new DialogBottomSynthesiseSort(getActivity(), presenter, rid);
+                if (dialogBottomSynthesiseSort == null)
+                    dialogBottomSynthesiseSort = new DialogBottomSynthesiseSort(getActivity(), presenter, rid);
                 dialogBottomSynthesiseSort.show();
                 dialogBottomSynthesiseSort.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
@@ -253,7 +256,7 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
                 return divider;
             } else {
                 if (item.getProduct().isRight) {
-                    LogUtil.e("是否是右边：" + item.getProduct().isRight+itemPosition);
+                    LogUtil.e("是否是右边：" + item.getProduct().isRight + itemPosition);
                     divider = new Y_DividerBuilder()
                             .setTopSideLine(true, color, 20f, 0f, 0f)
                             .setLeftSideLine(true, color, 5f, 0f, 0f)

@@ -9,12 +9,12 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/imageViewLoading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/loading_image"
-            />
+        <!--<pl.droidsonroids.gif.GifImageView-->
+            <!--android:id="@+id/imageViewLoading"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@drawable/loading_image"-->
+            <!--/>-->
 
     </LinearLayout>
 
@@ -33,4 +33,13 @@
 
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/load_more_end"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 </FrameLayout>

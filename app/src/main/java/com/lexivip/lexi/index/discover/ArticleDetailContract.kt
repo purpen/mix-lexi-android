@@ -33,6 +33,10 @@ class ArticleDetailContract {
         fun setBrandPavilionFocusState(favorite: Boolean) {
 
         }
+
+        fun setHeadPavilionFocusState(favorite: Boolean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -40,6 +44,6 @@ class ArticleDetailContract {
         fun focusUser(uid: String, v: android.view.View, isFollow: Boolean)
         fun getRelateStories(rid: String)
         fun getRecommendProducts(rid: String)
-        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, v: android.view.View)
+        fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, v: android.view.View,isHeaderPavilion:Boolean)
     }
 }

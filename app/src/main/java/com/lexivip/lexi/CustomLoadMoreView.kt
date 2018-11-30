@@ -7,7 +7,7 @@ class CustomLoadMoreView: LoadMoreView() {
 
 
     override fun getLoadingViewId(): Int {
-        return R.id.imageViewLoading
+        return R.id.load_more_loading_view
     }
 
     override fun getLoadFailViewId(): Int {
@@ -15,6 +15,6 @@ class CustomLoadMoreView: LoadMoreView() {
     }
 
     override fun getLoadEndViewId(): Int {
-        return 0
+        return R.id.load_more_end
     }
 }

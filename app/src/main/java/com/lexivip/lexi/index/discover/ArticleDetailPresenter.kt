@@ -18,11 +18,11 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
 
     private val dataSource: ArticleDetailModel by lazy { ArticleDetailModel() }
 
-    private var rid:String=""
+    private var rid: String = ""
 
     override fun loadData(isRefresh: Boolean, rid: String) {
         this.rid = rid
-        dataSource.loadData(rid,object : IDataSource.HttpRequestCallBack {
+        dataSource.loadData(rid, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 if (!isRefresh) view.showLoadingView()
             }
@@ -52,7 +52,7 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
      * 关注用户
      */
     override fun focusUser(uid: String, v: View, isFollow: Boolean) {
-        dataSource.focusUser(uid,isFollow, object : IDataSource.HttpRequestCallBack {
+        dataSource.focusUser(uid, isFollow, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 v.isEnabled = false
             }
@@ -78,7 +78,7 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
      * 加载相关故事
      */
     override fun getRelateStories(rid: String) {
-        dataSource.getRelateStories(rid,object : IDataSource.HttpRequestCallBack {
+        dataSource.getRelateStories(rid, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -104,7 +104,7 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
      * 获取推荐商品
      */
     override fun getRecommendProducts(rid: String) {
-        dataSource.getRecommendProducts(rid,object : IDataSource.HttpRequestCallBack {
+        dataSource.getRecommendProducts(rid, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -129,11 +129,15 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
     /**
      * 关注/取消品牌馆
      */
-    override fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, v: View) {
+    override fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, v: View, isHeaderPavilion: Boolean) {
         dataSource.focusBrandPavilion(store_rid, isFavorite, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 v.isEnabled = false
-                view.setBrandPavilionFocusState(isFavorite)
+                if (isHeaderPavilion) {
+                    view.setHeadPavilionFocusState(isFavorite)
+                } else {
+                    view.setBrandPavilionFocusState(isFavorite)
+                }
             }
 
             override fun onSuccess(json: String) {

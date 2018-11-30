@@ -5,7 +5,9 @@ import android.view.View
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
+import com.chad.library.adapter.base.loadmore.LoadMoreView
 import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.CustomLoadMoreView
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
 import kotlinx.android.synthetic.main.acticity_select_country_area.*
@@ -24,11 +26,13 @@ class SelectCountryOrAreaActivity : BaseActivity(), SelectCountryAreaContract.Vi
         customHeadView.head_goback.visibility = View.GONE
         customHeadView.setHeadCenterTxtShow(true, R.string.title_select_country_area)
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
+        swipeRefreshLayout.isEnabled = false
         swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
+        adapter.setEnableLoadMore(false)
         recyclerView.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.VERTICAL, resources.getDimensionPixelSize(R.dimen.dp1), Util.getColor(R.color.color_d1d1d1)))
     }
 
@@ -40,7 +44,7 @@ class SelectCountryOrAreaActivity : BaseActivity(), SelectCountryAreaContract.Vi
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            requestNet()
+            presenter.loadData(1,true)
         }
 
         adapter.setOnLoadMoreListener({
@@ -57,7 +61,7 @@ class SelectCountryOrAreaActivity : BaseActivity(), SelectCountryAreaContract.Vi
 
     override fun requestNet() {
         page = 1
-        presenter.loadData(page)
+        presenter.loadData(page,false)
     }
 
 
@@ -76,6 +80,7 @@ class SelectCountryOrAreaActivity : BaseActivity(), SelectCountryAreaContract.Vi
 
     override fun loadMoreComplete() {
         adapter.loadMoreComplete()
+
     }
 
     override fun loadMoreEnd() {

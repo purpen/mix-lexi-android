@@ -24,7 +24,7 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
     override fun convert(helper: BaseViewHolder, item: ShopCartBean.DataBean.ItemsBean) {
         val product = item.product
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,0,dp70,ImageSizeConfig.SIZE_P30X2)
+        GlideUtil.loadImageWithDimen(product.cover, imageView,dp70,ImageSizeConfig.SIZE_P30X2)
         val textViewTitle = helper.getView<TextView>(R.id.textViewName)
         if (product.is_free_postage){
             val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
