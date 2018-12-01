@@ -33,6 +33,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
@@ -45,6 +46,7 @@ import org.android.agoo.xiaomi.MiPushRegistar;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class AppApplication extends MultiDexApplication {
 
@@ -54,6 +56,7 @@ public class AppApplication extends MultiDexApplication {
     private static Activity mActivity;
     private Handler handler;
     public static final String UPDATE_STATUS_ACTION = "com.umeng.message.example.action.UPDATE_STATUS";
+    public static PushAgent mPushAgent;
 
     public static Application getContext() {
         return instance;
@@ -133,7 +136,7 @@ public class AppApplication extends MultiDexApplication {
         //umeng统计
         MobclickAgent.setScenarioType(this,MobclickAgent.EScenarioType.E_UM_NORMAL);
         //umeng推送
-        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent = PushAgent.getInstance(this);
         handler = new Handler(getMainLooper());
         PushAgent.getInstance(this).onAppStart();
         //注册推送服务，每次调用register方法都会回调该接口
@@ -173,6 +176,12 @@ public class AppApplication extends MultiDexApplication {
             }
             @Override
             public Notification getNotification(Context context, UMessage msg) {
+                for (Map.Entry entry : msg.extra.entrySet()) {
+                    Object key = entry.getKey();
+                    Object value = entry.getValue();
+                    LogUtil.e("啦啦啦啦啦："+key.toString());
+                    LogUtil.e(value.toString());
+                }
                 switch (msg.builder_id) {
                     case 1:
                         Notification.Builder builder = new Notification.Builder(context);
@@ -209,6 +218,13 @@ public class AppApplication extends MultiDexApplication {
 
         msgApi = WXAPIFactory.createWXAPI(this, Constants.WX_ID);
         msgApi.registerApp(Constants.WX_ID);
+
+        mPushAgent.addAlias("19875603241", "lexi", new UTrack.ICallBack() {
+            @Override
+            public void onMessage(boolean isSuccess, String message) {
+                LogUtil.e("isSuccess:"+isSuccess+"    message:"+message);
+            }
+        });
 
         //豆瓣RENREN平台目前只能在服务器端配置
         //PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");

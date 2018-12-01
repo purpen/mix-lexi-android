@@ -118,6 +118,12 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
 
         override fun onComplete(share_media: SHARE_MEDIA, i: Int, map: Map<String, String>) {
             LogUtil.e("授权回调成功了："+map.get("unionid"))
+            for (entry in map.entries) {
+                val key = entry.key
+                val value = entry.value
+                LogUtil.e("啦啦啦啦啦：" + key.toString())
+                LogUtil.e(value.toString())
+            }
         }
 
         override fun onError(share_media: SHARE_MEDIA, i: Int, throwable: Throwable) {

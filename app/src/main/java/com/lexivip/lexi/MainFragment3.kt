@@ -207,6 +207,8 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
             textViewSignature.visibility = View.VISIBLE
             textViewSignature.text = data.about_me
         }
+        SPUtil.write(Constants.USER_IMAGE,data.avatar)
+        SPUtil.write(Constants.USER_NAME,data.username)
         GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70),ImageSizeConfig.SIZE_AVA)
     }
 

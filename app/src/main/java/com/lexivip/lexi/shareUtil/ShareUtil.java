@@ -33,6 +33,7 @@ public class ShareUtil implements ShareContract.View{
     private String url;
     private String content;
     private String pageUrl;
+    private String title;
 
     public ShareUtil(Activity context, WaitingDialog dialog, String rid, int type) {
         this.context = context;
@@ -63,13 +64,15 @@ public class ShareUtil implements ShareContract.View{
         this.scene = scene;
         presenter.loadShareWindow(rid,scene);
     }
-    public ShareUtil(Activity context,String url,String content,String pageUrl,String imageURl) {
+    public ShareUtil(Activity context,String url,String title,String content,String pageUrl,String imageURl) {
         this.context = context;
         this.url = url;
         this.content=content;
         this.pageUrl=pageUrl;
+        this.title=title;
         //资源文件
         image = new UMImage(context, imageURl+ImageSizeConfig.SIZE_SM);
+        LogUtil.e("图片链接地址"+imageURl);
         new ShareAction(context)
                 .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ,SHARE_MEDIA.QZONE)
                 .setShareboardclickCallback(shareBoardlistener)
@@ -85,7 +88,7 @@ public class ShareUtil implements ShareContract.View{
                 // 小程序消息封面图片
                 umMin.setThumb(image);
                 // 小程序消息title
-                umMin.setTitle(Util.getString(R.string.app_name));
+                umMin.setTitle(title);
                 // 小程序消息描述
                 umMin.setDescription(content);
                 //小程序页面路径
@@ -101,8 +104,8 @@ public class ShareUtil implements ShareContract.View{
                             .share();
                 }else{
                     LogUtil.e("微信朋友圈");
-                    UMWeb  web = new UMWeb("");
-                    web.setTitle(Util.getString(R.string.app_name));//标题
+                    UMWeb  web = new UMWeb(url);
+                    web.setTitle(title);//标题
                     web.setThumb(image);  //缩略图
                     web.setDescription(content);//描述
                     new ShareAction(context)

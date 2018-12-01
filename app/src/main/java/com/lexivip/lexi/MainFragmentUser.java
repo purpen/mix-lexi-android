@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
+import com.basemodule.tools.SPUtil;
 import com.basemodule.ui.BaseFragment;
 import com.basemodule.ui.CustomFragmentPagerAdapter;
 import com.basemodule.ui.CustomViewPager;
@@ -74,8 +75,7 @@ public class MainFragmentUser extends BaseFragment {
                 //分享
 
                 ActivityCompat.requestPermissions(getActivity(),Constants.PERMISSION_LIST_SHARE,Constants.REQUEST_CODE_SHARE);
-                ShareUtil shareUtil=new ShareUtil(getActivity(),WebUrl.USER+UserProfileUtil.getUserId(),"在#乐喜#悄悄收藏了一些原创精品好物快来看看吧"
-                        ,"",WebUrl.AUTH_PAGE+UserProfileUtil.getUserId());
+                share();
 
             }
         });
@@ -85,6 +85,11 @@ public class MainFragmentUser extends BaseFragment {
                 startActivity(new Intent(getActivity(),SettingActivity.class));
             }
         });
+    }
+
+    private void share(){
+        ShareUtil shareUtil=new ShareUtil(getActivity(),WebUrl.USER+UserProfileUtil.getUserId(),SPUtil.read(Constants.USER_NAME)+"在#乐喜#悄悄收藏了一些原创精品好物"
+                ,"快来看看吧",WebUrl.AUTH_PAGE+UserProfileUtil.getUserId(),SPUtil.read(Constants.USER_IMAGE));
     }
 
     public static BaseFragment newInstance(){
