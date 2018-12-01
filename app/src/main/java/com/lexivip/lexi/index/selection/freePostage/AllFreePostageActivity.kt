@@ -25,6 +25,7 @@ class AllFreePostageActivity : BaseActivity(), AllGoodsSelectionContract.View {
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
     private val dialogBottomFilter: DialogBottomFilter by lazy {DialogBottomFilter(TAG,this, presenter) }
+    private val dialogBottomSynthesiseSort: DialogBottomSynthesiseSort by lazy {DialogBottomSynthesiseSort(TAG,this, presenter) }
     override val layout: Int = R.layout.acticity_all_editor_recommend
     override fun setPresenter(presenter: AllGoodsSelectionContract.Presenter?) {
         setPresenter(presenter)
@@ -56,8 +57,7 @@ class AllFreePostageActivity : BaseActivity(), AllGoodsSelectionContract.View {
     override fun installListener() {
         linearLayoutSort.setOnClickListener { _ ->
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
-            val dialog = DialogBottomSynthesiseSort(TAG,this, presenter)
-            dialog.setOnDismissListener {
+            dialogBottomSynthesiseSort.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
                 when (presenter.getSortType()) {
                     AllGoodsSelectionPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
@@ -65,7 +65,7 @@ class AllFreePostageActivity : BaseActivity(), AllGoodsSelectionContract.View {
                     AllGoodsSelectionPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
                 }
             }
-            dialog.show()
+            dialogBottomSynthesiseSort.show()
         }
 
         linearLayoutFilter.setOnClickListener { _ ->

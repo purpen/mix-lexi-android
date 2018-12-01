@@ -23,7 +23,7 @@
         android:layout_marginEnd="82dp"
         android:includeFontPadding="false"
         android:text="@string/app_name"
-        android:maxLines="12"
+        android:maxLines="2"
         android:ellipsize="end"
         android:textStyle="bold"
         android:textSize="@dimen/sp13"

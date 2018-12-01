@@ -1,9 +1,9 @@
 package com.lexivip.lexi.mine.dynamic
 
 import android.support.annotation.NonNull
+import android.view.View
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
-import com.lexivip.lexi.mine.designPavilion.DesignPavilionBean
 
 class DynamicContract {
 
@@ -19,14 +19,14 @@ class DynamicContract {
         }
 
         fun loadMoreEnd() {
-            
+
         }
 
         fun loadMoreComplete() {
-            
+
         }
 
-        fun addData(stores: MutableList<DesignPavilionBean>) {
+        fun addData(data: DynamicBean.DataBean) {
 
         }
 
@@ -34,11 +34,25 @@ class DynamicContract {
 
         }
 
+        fun deleteShopWindow(position: Int) {
+
+        }
+
+        fun setFavorite(b: Boolean, position: Int) {
+
+        }
+
+        fun setUserFocusState(followed_status: Int) {
+
+        }
+
 
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(isRefresh:Boolean)
+        fun loadData(isRefresh: Boolean,uid:String)
         fun loadMoreData()
+        fun favoriteShowWindow(rid: String,isFavorite:Boolean,position: Int, view1: android.view.View)
+        fun focusUser(uid: String, v: android.view.View, focusState: Int)
     }
 }

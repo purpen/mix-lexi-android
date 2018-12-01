@@ -1,6 +1,8 @@
 package com.lexivip.lexi.search
 
 import android.graphics.Paint
+import android.text.Spannable
+import android.text.SpannableString
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,9 +11,11 @@ import android.widget.TextView
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ScreenUtil
+import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.lexivip.lexi.CustomImageSpan
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
@@ -54,12 +58,20 @@ class AdapterSearchGoods(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
             layoutParams = RelativeLayout.LayoutParams(sizeSmall, sizeSmall)
             imageView.layoutParams = layoutParams
             helper.itemView.layoutParams = ViewGroup.LayoutParams(sizeSmall,ViewGroup.LayoutParams.WRAP_CONTENT)
-//            helper.itemView.setBackgroundColor(Util.getColor(R.color.color_ff6666))
             GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,dp4,sizeSmall,ImageSizeConfig.SIZE_P30X2)
         }
 
+        val textViewTitle = helper.getView<TextView>(R.id.textViewTitle);
 
-        helper.setText(R.id.textViewTitle,product.name)
+        if (product.is_free_postage){
+            val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
+            val span = CustomImageSpan(drawable)
+            val spannable = SpannableString("   " + product.name)
+            spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            textViewTitle.text = spannable
+        }else{
+            textViewTitle.text = product.name
+        }
 
         val textViewOldPrice =helper.getView<TextView>(R.id.textViewOldPrice)
 

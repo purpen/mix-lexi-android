@@ -54,9 +54,6 @@ class FragmentShopWindow : BaseFragment() {
 
     override fun installListener() {
 
-        val  layoutParams = coordinatorLayout.layoutParams as CoordinatorLayout.LayoutParams
-
-
 
         linearLayoutPublishWindow.setOnClickListener {
             //跳转拼接橱窗

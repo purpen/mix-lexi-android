@@ -23,6 +23,7 @@ public class ShopWindowBean {
      */
 
     public int comment_count;
+    public long updated_at;
     public String description;
     public boolean is_expert;
     public boolean is_follow;

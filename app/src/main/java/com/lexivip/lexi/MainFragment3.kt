@@ -67,6 +67,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     override fun initView() {
         if (!UserProfileUtil.isLogin()) return
         buttonOrder.visibility = View.VISIBLE
+        buttonActivity.visibility = View.VISIBLE
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
     }
@@ -138,7 +139,9 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         }
 
         buttonActivity.setOnClickListener {
-            startActivity(Intent(activity, DynamicActivity::class.java))
+            val intent = Intent(activity, DynamicActivity::class.java)
+            intent.putExtra(DynamicActivity::class.java.simpleName,UserProfileUtil.getUserId())
+            startActivity(intent)
         }
 
         imageView.setOnClickListener {

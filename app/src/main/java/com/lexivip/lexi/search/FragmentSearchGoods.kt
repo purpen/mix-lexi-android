@@ -26,8 +26,10 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
     private val presenter: SearchGoodsPresenter by lazy { SearchGoodsPresenter(this) }
 
     private var dialogBottomFilter: DialogBottomFilter? = null
+    private var dialogBottomSynthesiseSort: DialogBottomSynthesiseSort? = null
 
-    private var goodsCount=0
+
+    private var goodsCount = 0
 
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
 
@@ -74,8 +76,10 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
     override fun installListener() {
         linearLayoutSort.setOnClickListener { _ ->
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
-            val dialog = DialogBottomSynthesiseSort(activity, presenter)
-            dialog.setOnDismissListener {
+            if (dialogBottomSynthesiseSort==null){
+                dialogBottomSynthesiseSort = DialogBottomSynthesiseSort(activity, presenter)
+            }
+            dialogBottomSynthesiseSort?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
                 when (presenter.getSortType()) {
                     SearchGoodsPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
@@ -83,12 +87,14 @@ class FragmentSearchGoods : BaseFragment(), SearchGoodsContract.View {
                     SearchGoodsPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
                 }
             }
-            dialog.show()
+            dialogBottomSynthesiseSort?.show()
         }
 
         linearLayoutFilter.setOnClickListener { _ ->
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(activity, presenter)
+            if (dialogBottomFilter == null) {
+                dialogBottomFilter = DialogBottomFilter(activity, presenter)
+            }
             dialogBottomFilter?.show()
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)

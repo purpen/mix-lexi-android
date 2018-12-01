@@ -43,6 +43,7 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
     private BrandHouseGoodsPresenter presenter;
     private String rid;
     private DialogBottomFilter dialogBottomFilter;
+    private DialogBottomSynthesiseSort dialogBottomSynthesiseSort;
     private int count;
     private RecyclerView recyclerView;
     private LinearLayout ll_goods_list;
@@ -81,7 +82,7 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
         adapterBranHouseGoods = new AdapterBrandHouseGoods(adaperList);
         recyclerView.setAdapter(adapterBranHouseGoods);
         footer = View.inflate(getContext(),R.layout.footer_brand_goods,null);
-        presenter.loadGoodsData(rid, 0, "", "", "", "", "");
+        presenter.loadGoodsData(rid, 0, presenter.getCids(), presenter.getMinePrice(), presenter.getMaxPrice(),presenter.getSortType() , "");
         adapterBranHouseGoods.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
@@ -92,7 +93,7 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
         adapterBranHouseGoods.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                presenter.loadGoodsData(rid, 0, "", "", "", "", "");
+                presenter.loadGoodsData(rid, 0, presenter.getCids(), presenter.getMinePrice(), presenter.getMaxPrice(),presenter.getSortType(), "");
             }
         }, recyclerView);
 
@@ -197,35 +198,36 @@ public class BrandHouseGoodsFragment extends BaseFragment implements BrandHouseG
         switch (v.getId()) {
             case R.id.linearLayoutFilter:
                 Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f);
-                dialogBottomFilter = new DialogBottomFilter(getActivity(), presenter, rid);
+                if (dialogBottomFilter==null) dialogBottomFilter = new DialogBottomFilter(getActivity(), presenter, rid);
                 dialogBottomFilter.show();
                 dialogBottomFilter.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f);
-                        switch (presenter.getSortType()) {
-                            case "1":
-                                textViewSort.setText(Util.getString(R.string.text_sort_synthesize));
-                                break;
-                            case "2":
-                                textViewSort.setText(Util.getString(R.string.text_price_low_up));
-                                break;
-                            case "3":
-                                textViewSort.setText(Util.getString(R.string.text_price_up_low));
-                                break;
-                        }
                     }
                 });
                 dialogBottomFilter.setGoodsCount(count);
                 break;
             case R.id.linearLayoutSort:
                 Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f);
-                DialogBottomSynthesiseSort dialogBottomSynthesiseSort = new DialogBottomSynthesiseSort(getActivity(), presenter, rid);
+                if (dialogBottomSynthesiseSort==null) dialogBottomSynthesiseSort = new DialogBottomSynthesiseSort(getActivity(), presenter, rid);
                 dialogBottomSynthesiseSort.show();
                 dialogBottomSynthesiseSort.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f);
+                        LogUtil.e("======sortType======"+presenter.getSortType());
+                        switch (presenter.getSortType()) {
+                            case BrandHouseGoodsPresenter.SORT_TYPE_SYNTHESISE:
+                                textViewSort.setText(Util.getString(R.string.text_sort_synthesize));
+                                break;
+                            case BrandHouseGoodsPresenter.SORT_TYPE_LOW_UP:
+                                textViewSort.setText(Util.getString(R.string.text_price_low_up));
+                                break;
+                            case BrandHouseGoodsPresenter.SORT_TYPE_UP_LOW:
+                                textViewSort.setText(Util.getString(R.string.text_price_up_low));
+                                break;
+                        }
                     }
                 });
                 break;

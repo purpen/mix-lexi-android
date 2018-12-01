@@ -61,4 +61,15 @@ public class UserProfileUtil {
         UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);
         return userProfileBean.data.profile.uid;
     }
+
+    /**
+     * 返回用户名
+     * @return
+     */
+    public static String getUserName() {
+        String read = SPUtil.read(Constants.USER_PROFILE);
+        if (TextUtils.isEmpty(read)) return "";
+        UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);
+        return userProfileBean.data.profile.username;
+    }
 }

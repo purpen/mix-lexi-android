@@ -346,6 +346,11 @@ object URL {
     const val USER_DYNAMIC_URL = "${BASE_URL}users/user_dynamic"
 
     /**
+     * 别人生活馆动态
+     */
+    const val OTHER_USER_DYNAMIC_URL = "${BASE_URL}users/other_user_dynamic"
+
+    /**
      * 每个SKU商品的快递列表
      */
     const val PRODUCT_EXPRESS = "${BASE_URL}logistics/product/express"
@@ -826,7 +831,7 @@ object URL {
     const val SELECT_GOODS_IMAGE = "${BASE_URL}products/images"
 
     /**
-     * 发布橱窗
+     * 发布/删除橱窗
      */
     const val PUBLISH_SHOP_WINDOW = "${BASE_URL}shop_windows"
 

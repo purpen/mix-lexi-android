@@ -50,9 +50,9 @@ class DialogBottomFilter(context: Activity, presenter: BrandHouseGoodsPresenter,
             } else {
                 maxPrice = list[rightPostion].substring(1)
             }
-            //            LogUtil.e("minPrice==" + minPrice + ";maxPrice==" + maxPrice)
             val cids = getSelectedItem()
-            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,"","")
+            val sortType = present.sortType
+            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,sortType,"")
         }
 
         return view
@@ -90,8 +90,8 @@ class DialogBottomFilter(context: Activity, presenter: BrandHouseGoodsPresenter,
             adapter.notifyItemChanged(position)
             val page = 1
             val cids = getSelectedItem()
-            LogUtil.e("选中的分类："+cids)
-            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,"","")
+            val sortType = present.sortType
+            present.loadGoodsData(rid,page,cids,minPrice,maxPrice,sortType,"")
         }
     }
 

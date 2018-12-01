@@ -34,12 +34,12 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private val adapterRecommend: EditorRecommendAdapter by lazy { EditorRecommendAdapter(R.layout.adapter_editor_recommend) }
     private lateinit var listDescription: ArrayList<AdapterArticleDetail.MultipleItem>
     private lateinit var adapter: AdapterArticleDetail
-    private var data:ArticleDetailBean.DataBean?=null
+    private var data: ArticleDetailBean.DataBean? = null
     private var rid: String? = null
     private lateinit var channelName: String
     private lateinit var headerView: View
     private lateinit var footerView: View
-    private var brandPavilionBean:BrandPavilionBean? = null
+    private var brandPavilionBean: BrandPavilionBean? = null
     override fun getIntentData() {
         rid = intent.getStringExtra(TAG)
         channelName = intent.getStringExtra(ArticleDetailActivity::class.java.name)
@@ -47,10 +47,10 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
 
 
     override fun initView() {
-        headerView = View.inflate(this,R.layout.header_view_article_detail,null)
-        headerView.textViewBrowserNum.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_show_password,R.dimen.dp14,R.dimen.dp14),null,null,null)
+        headerView = View.inflate(this, R.layout.header_view_article_detail, null)
+        headerView.textViewBrowserNum.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_show_password, R.dimen.dp14, R.dimen.dp14), null, null, null)
 
-        footerView = View.inflate(this,R.layout.footer_view_article_detail,null)
+        footerView = View.inflate(this, R.layout.footer_view_article_detail, null)
 
         listDescription = ArrayList()
         val linearLayoutManager = LinearLayoutManager(this)
@@ -58,13 +58,13 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         recyclerView.setHasFixedSize(false)
         recyclerView.layoutManager = linearLayoutManager
         (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-        adapter = AdapterArticleDetail(listDescription,channelName)
+        adapter = AdapterArticleDetail(listDescription, channelName)
         recyclerView.adapter = adapter
         initRecommendGoods()
         initRelateStories()
         adapter.setHeaderView(headerView)
         adapter.addFooterView(footerView)
-        adapter.setHeaderFooterEmpty(true,true)
+        adapter.setHeaderFooterEmpty(true, true)
     }
 
     /**
@@ -127,7 +127,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
      * 设置用户关注状态
      */
     private fun setUserFocusState() {
-        if(data==null) return
+        if (data == null) return
         if (data!!.is_follow) {
             headerView.textViewFocus.text = Util.getString(R.string.text_focused)
             headerView.textViewFocus.setBackgroundResource(R.drawable.bg_round_coloreff3f2)
@@ -148,6 +148,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         bean.is_follow = data.optBoolean("is_follow")
         bean.uid = data.optString("uid")
         bean.title = data.optString("title")
+        bean.is_user = data.optBoolean("is_user")
         this.data = bean
 
         val cover = data.optString("cover")
@@ -160,13 +161,13 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         val dealContent = data.optJSONArray("deal_content")
         val recommendStore = data.optJSONObject("recommend_store")
 
-        GlideUtil.loadImageWithDimenAndRadius(cover,headerView.imageViewCover,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(250.0),ImageSizeConfig.SIZE_AVABG)
+        GlideUtil.loadImageWithDimenAndRadius(cover, headerView.imageViewCover, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(250.0), ImageSizeConfig.SIZE_AVABG)
         headerView.textViewArticleType.text = channelName
 
         headerView.textViewArticleTitle.text = title
-        headerView.textViewDate.text = DateUtil.getDateByTimestamp(publishedAt,"yyyy.MM.dd")
+        headerView.textViewDate.text = DateUtil.getDateByTimestamp(publishedAt, "yyyy.MM.dd")
         headerView.textViewBrowserNum.text = "$browseCount"
-        GlideUtil.loadCircleImageWidthDimen(userAvatar,headerView.imageViewHeader,DimenUtil.dp2px(25.0),ImageSizeConfig.SIZE_AVA)
+        GlideUtil.loadCircleImageWidthDimen(userAvatar, headerView.imageViewHeader, DimenUtil.dp2px(25.0), ImageSizeConfig.SIZE_AVA)
         headerView.textViewName.text = userName
         setUserFocusState()
 
@@ -175,36 +176,38 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             val item = dealContent[i] as JSONObject
             val type = item.optString("type")
             val isBigProduct = item.optBoolean("big_picture")
-            when(type){
-                "text" ->{
+            when (type) {
+                "text" -> {
                     listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.TEXT_ITEM_TYPE))
                 }
-                "image" ->{
+                "image" -> {
                     listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.IMAGE_ITEM_TYPE))
                 }
-                "product" ->{
-                    if (isBigProduct){
+                "product" -> {
+                    if (isBigProduct) {
                         listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.LARGE_PRODUCT_ITEM_TYPE))
-                    }else{
+                    } else {
                         listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.SMALL_PRODUCT_ITEM_TYPE))
                     }
 
                 }
 
-                "blockquote" ->{
+                "blockquote" -> {
 
                 }
-                "ol" ->{
+                "ol" -> {
 
                 }
             }
         }
 
         adapter.setNewData(listDescription)
-        if(recommendStore==null){
+
+
+        if (recommendStore == null) {
             footerView.relativeLayoutLifeHouse.visibility = View.GONE
             return
-        }else{
+        } else {
             footerView.relativeLayoutLifeHouse.visibility = View.VISIBLE
         }
 
@@ -233,7 +236,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         }
 
         val dp60 = DimenUtil.dp2px(60.0)
-        GlideUtil.loadImageWithDimenAndRadius(storeLogo,footerView.imageView,0,dp60,ImageSizeConfig.SIZE_AVA)
+        GlideUtil.loadImageWithDimenAndRadius(storeLogo, footerView.imageView, 0, dp60, ImageSizeConfig.SIZE_AVA)
         footerView.textViewNum.text = "${productCount}件商品"
         footerView.textViewPavilionName.text = storeName
 
@@ -258,35 +261,46 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         brandPavilionBean?.is_followed = favorite
     }
 
+
+    override fun setHeadPavilionFocusState(favorite: Boolean) {
+        if (data == null) return
+        data!!.is_follow = favorite
+        setUserFocusState()
+    }
+
     override fun installListener() {
 
         footerView.buttonFocus.setOnClickListener { v ->
 
-            if (brandPavilionBean==null) return@setOnClickListener
+            if (brandPavilionBean == null) return@setOnClickListener
             if (UserProfileUtil.isLogin()) {
-                presenter.focusBrandPavilion(brandPavilionBean!!.rid, !brandPavilionBean!!.is_followed,v)
-            }else{
+                presenter.focusBrandPavilion(brandPavilionBean!!.rid, !brandPavilionBean!!.is_followed, v, false)
+            } else {
                 startActivity(Intent(this, LoginActivity::class.java))
             }
         }
 
         footerView.relativeLayoutLifeHouse.setOnClickListener {
-            if (brandPavilionBean==null) return@setOnClickListener
+            if (brandPavilionBean == null) return@setOnClickListener
             PageUtil.jump2BrandPavilionActivity(brandPavilionBean!!.rid)
         }
 
         imageViewBack.setOnClickListener { finish() }
 
-        imageViewShare.setOnClickListener{
+        imageViewShare.setOnClickListener {
             ToastUtil.showInfo("分享")
         }
 
         //关注用户
         headerView.textViewFocus.setOnClickListener {
-            if (UserProfileUtil.isLogin()){
+            if (UserProfileUtil.isLogin()) {
                 if (data == null) return@setOnClickListener
-                presenter.focusUser(data!!.uid, headerView.textViewFocus, data!!.is_follow)
-            }else{ //跳转登录
+                if (data!!.is_user) {
+                    presenter.focusUser(data!!.uid, headerView.textViewFocus, data!!.is_follow)
+                } else { //此时uid是店铺id
+                    presenter.focusBrandPavilion(data!!.uid, !data!!.is_follow, headerView.textViewFocus, true)
+                }
+            } else { //跳转登录
                 startActivity(Intent(this, LoginActivity::class.java))
             }
         }
@@ -303,7 +317,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
                     imageViewShare.setImageResource(R.mipmap.icon_share_white)
                     relativeLayoutHeader.setBackgroundResource(R.drawable.bg_gradient_color000)
                 } else if (dySum > dp250) {
-                  textViewTitle.text = data?.title
+                    textViewTitle.text = data?.title
                     imageViewBack.setImageResource(R.mipmap.icon_nav_back)
                     imageViewShare.setImageResource(R.mipmap.icon_click_share)
                     relativeLayoutHeader.setBackgroundColor(Util.getColor(android.R.color.white))
@@ -314,8 +328,8 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         //跳转商品详情
         adapterRecommend.setOnItemClickListener { _, _, position ->
             val item = adapterRecommend.getItem(position)
-            val intent = Intent(this,GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName,item)
+            val intent = Intent(this, GoodsDetailActivity::class.java)
+            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
             startActivity(intent)
         }
 
@@ -323,8 +337,8 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         adapterRelateStories.setOnItemClickListener { _, _, position ->
             val item = adapterRelateStories.getItem(position) ?: return@setOnItemClickListener
             val intent = Intent(this, ArticleDetailActivity::class.java)
-            intent.putExtra(ArticleDetailActivity::class.java.simpleName,item.rid)
-            intent.putExtra(ArticleDetailActivity::class.java.name,item.channel_name)
+            intent.putExtra(ArticleDetailActivity::class.java.simpleName, item.rid)
+            intent.putExtra(ArticleDetailActivity::class.java.name, item.channel_name)
             startActivity(intent)
         }
 

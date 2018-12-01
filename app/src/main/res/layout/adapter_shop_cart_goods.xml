@@ -25,6 +25,7 @@
         android:layout_height="@dimen/dp70"
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         />
     <TextView
         android:id="@+id/textViewName"

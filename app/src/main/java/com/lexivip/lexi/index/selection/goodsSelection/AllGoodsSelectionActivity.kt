@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.selection.goodsSelection
+
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.GridLayoutManager
@@ -18,23 +19,23 @@ import kotlinx.android.synthetic.main.acticity_all_editor_recommend.*
 
 class AllGoodsSelectionActivity : BaseActivity(), AllGoodsSelectionContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
-    private var goodsCount =0
+    private var goodsCount = 0
     private val presenter: AllGoodsSelectionPresenter by lazy { AllGoodsSelectionPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
     private var dialogBottomFilter: DialogBottomFilter? = null
+    private var dialogBottomSynthesiseSort: DialogBottomSynthesiseSort? = null
     override val layout: Int = R.layout.acticity_all_editor_recommend
-
-    private lateinit var  headerView: View
 
     override fun setPresenter(presenter: AllGoodsSelectionContract.Presenter?) {
         setPresenter(presenter)
     }
+
     override fun initView() {
         linearLayout.visibility = View.VISIBLE
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        customHeadView.setHeadCenterTxtShow(true,R.string.text_good_selection)
+        customHeadView.setHeadCenterTxtShow(true, R.string.text_good_selection)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
@@ -52,14 +53,16 @@ class AllGoodsSelectionActivity : BaseActivity(), AllGoodsSelectionContract.View
 
     override fun setGoodsCount(count: Int) {
         goodsCount = count
-        if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
+        if (dialogBottomFilter != null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
 
     override fun installListener() {
-        linearLayoutSort.setOnClickListener { _ ->
+        linearLayoutSort.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
-            val dialog = DialogBottomSynthesiseSort(TAG,this, presenter)
-            dialog.setOnDismissListener {
+            if (dialogBottomSynthesiseSort == null) {
+                dialogBottomSynthesiseSort = DialogBottomSynthesiseSort(TAG, this, presenter)
+            }
+            dialogBottomSynthesiseSort?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
                 when (presenter.getSortType()) {
                     AllGoodsSelectionPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
@@ -67,12 +70,14 @@ class AllGoodsSelectionActivity : BaseActivity(), AllGoodsSelectionContract.View
                     AllGoodsSelectionPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
                 }
             }
-            dialog.show()
+            dialogBottomSynthesiseSort?.show()
         }
 
-        linearLayoutFilter.setOnClickListener { _ ->
+        linearLayoutFilter.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(TAG,this, presenter)
+            if (dialogBottomFilter == null) {
+                dialogBottomFilter = DialogBottomFilter(TAG, this, presenter)
+            }
             dialogBottomFilter?.show()
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
@@ -83,7 +88,7 @@ class AllGoodsSelectionActivity : BaseActivity(), AllGoodsSelectionContract.View
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            presenter.loadData(TAG,true)
+            presenter.loadData(TAG, true)
         }
 
         adapter.setOnLoadMoreListener({
@@ -100,7 +105,7 @@ class AllGoodsSelectionActivity : BaseActivity(), AllGoodsSelectionContract.View
     }
 
     override fun requestNet() {
-        presenter.loadData(TAG,false)
+        presenter.loadData(TAG, false)
     }
 
     /**

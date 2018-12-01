@@ -60,10 +60,10 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: SearchGo
             setSelection(SearchGoodsPresenter.SORT_TYPE_SYNTHESISE)
             val page = 1
             val filterCondition = present.getFilterCondition()
-            val minPrice = ""
-            val maxPrice = ""
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
             val profitType = ""
-            val cids = ""
+            val cids = present.getCids()
             present.loadData(page, SearchGoodsPresenter.SORT_TYPE_SYNTHESISE, profitType, filterCondition, minPrice, maxPrice,cids)
             dismiss()
         }
@@ -73,10 +73,10 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: SearchGo
             setSelection(SearchGoodsPresenter.SORT_TYPE_LOW_UP)
             val page = 1
             val filterCondition = present.getFilterCondition()
-            val minPrice = ""
-            val maxPrice = ""
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
             val profitType = ""
-            val cids = ""
+            val cids = present.getCids()
             present.loadData(page, SearchGoodsPresenter.SORT_TYPE_LOW_UP, profitType, filterCondition, minPrice, maxPrice,cids)
             dismiss()
         }
@@ -86,10 +86,10 @@ class DialogBottomSynthesiseSort(context: FragmentActivity?, presenter: SearchGo
             setSelection(SearchGoodsPresenter.SORT_TYPE_UP_LOW)
             val page = 1
             val filterCondition = present.getFilterCondition()
-            val minPrice = ""
-            val maxPrice = ""
+            val minPrice = present.getMinPrice()
+            val maxPrice = present.getMaxPrice()
             val profitType = ""
-            val cids = ""
+            val cids = present.getCids()
             present.loadData(page, SearchGoodsPresenter.SORT_TYPE_UP_LOW, profitType, filterCondition, minPrice, maxPrice,cids)
             dismiss()
         }

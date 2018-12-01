@@ -31,12 +31,16 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
     override val layout: Int = R.layout.activity_other_user_center
     private lateinit var userId: String
     private var followedStatus: Int = -1
+
+    private var firstInPage = true
+
     override fun getIntentData() {
         userId = intent.getStringExtra(TAG)
     }
 
     override fun initView() {
         customHeadView.setRightImgBtnShow(true)
+        buttonActivity.visibility = View.VISIBLE
         buttonFocus.visibility = View.VISIBLE
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
@@ -126,7 +130,9 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
         }
 
         buttonActivity.setOnClickListener {
-            startActivity(Intent(this, DynamicActivity::class.java))
+            val intent = Intent(this, DynamicActivity::class.java)
+            intent.putExtra(DynamicActivity::class.java.simpleName,userId)
+            startActivity(intent)
         }
 
         //优惠券
@@ -163,6 +169,10 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
         }
     }
 
+    override fun onResume() {
+        if (!firstInPage) presenter.loadData(userId)
+        super.onResume()
+    }
 
     override fun requestNet() {
         presenter.loadData(userId)
@@ -172,6 +182,8 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
      * 设置用户数据
      */
     override fun setUserData(data: UserCenterBean.DataBean) {
+        firstInPage = false
+
         textViewLikeNum.text = data.user_like_counts
         textViewEnshrineNum.text = data.wish_list_counts
         textViewDesignNum.text = data.followed_stores_counts

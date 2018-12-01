@@ -2,6 +2,8 @@ package com.lexivip.lexi.shopCart
 
 import android.graphics.Paint
 import android.support.annotation.LayoutRes
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
@@ -10,6 +12,7 @@ import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.CustomImageSpan
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.eventBusMessge.MessageUpdate
 import com.lexivip.lexi.R
@@ -21,8 +24,18 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
     override fun convert(helper: BaseViewHolder, item: ShopCartBean.DataBean.ItemsBean) {
         val product = item.product
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithDimenAndRadius(product.cover, imageView,0,dp70,ImageSizeConfig.SIZE_P30X2)
-        helper.setText(R.id.textViewName, product.product_name)
+        GlideUtil.loadImageWithDimen(product.cover, imageView,dp70,ImageSizeConfig.SIZE_P30X2)
+        val textViewTitle = helper.getView<TextView>(R.id.textViewName)
+        if (product.is_free_postage){
+            val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
+            val span = CustomImageSpan(drawable)
+            val spannable = SpannableString("   " + product.name)
+            spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            textViewTitle.text = spannable
+        }else{
+            textViewTitle.text = product.name
+        }
+
         val textViewPrice = helper.getView<TextView>(R.id.textViewPrice)
         val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)
         textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp8, R.dimen.dp10), null, null, null)

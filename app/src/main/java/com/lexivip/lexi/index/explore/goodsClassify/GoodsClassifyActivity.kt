@@ -28,6 +28,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
     private var dialogBottomFilter: DialogBottomFilter? = null
+    private var dialogBottomSynthesiseSort: DialogBottomSynthesiseSort? = null
     override val layout: Int = R.layout.activity_goods_classsify
 
     private lateinit var categoriesBean: GoodsClassBean.DataBean.CategoriesBean
@@ -101,8 +102,8 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
         //排序
         linearLayoutSort.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
-            val dialog = DialogBottomSynthesiseSort(this, presenter)
-            dialog.setOnDismissListener {
+            if (dialogBottomSynthesiseSort == null) dialogBottomSynthesiseSort = DialogBottomSynthesiseSort(this, presenter)
+            dialogBottomSynthesiseSort?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
                 when (presenter.getSortType()) {
                     GoodsClassifyPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
@@ -110,7 +111,7 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
                     GoodsClassifyPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
                 }
             }
-            dialog.show()
+            dialogBottomSynthesiseSort?.show()
         }
 
         linearLayoutFilter.setOnClickListener {
