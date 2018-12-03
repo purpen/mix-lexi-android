@@ -499,6 +499,14 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             }
         }
 
+        //分享
+        textViewShare.setOnClickListener{
+            if(isGoods){
+                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE_GOODS+rid,cover)
+            }else{
+                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE+rid,cover)
+            }
+        }
 
         //用户点赞文章
         relativeLayoutPraise.setOnClickListener {
@@ -526,14 +534,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
 //        imageViewShare.setOnClickListener {
 //            ToastUtil.showInfo("分享")
 //        }
-        imageViewShare.setOnClickListener {
-            //ToastUtil.showInfo("分享")
-            if(isGoods){
-                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE_GOODS+rid,cover)
-            }else{
-                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE+rid,cover)
-            }
-        }
 
         //关注用户
         headerView.textViewFocus.setOnClickListener {
