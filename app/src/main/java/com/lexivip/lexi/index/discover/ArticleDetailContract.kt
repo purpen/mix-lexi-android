@@ -2,10 +2,14 @@ package com.lexivip.lexi.index.discover
 
 import android.support.annotation.NonNull
 import android.view.View
+import android.widget.Button
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
+import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.discoverLifeAesthetics.CommentSuccessBean
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListBean
 import org.json.JSONObject
 
 
@@ -37,6 +41,22 @@ class ArticleDetailContract {
         fun setHeadPavilionFocusState(favorite: Boolean) {
 
         }
+
+        fun setPraiseCommentState(b: Boolean, position: Int, subAdapter: Boolean) {
+
+        }
+
+        fun setCommentListData(data: ShowWindowCommentListBean.DataBean) {
+
+        }
+
+        fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+
+        }
+
+        fun praiseArticleSuccess(b: Boolean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -45,5 +65,10 @@ class ArticleDetailContract {
         fun getRelateStories(rid: String)
         fun getRecommendProducts(rid: String)
         fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, v: android.view.View,isHeaderPavilion:Boolean)
+        fun getArticleComments(rid: String)
+        fun praiseComment(view1: android.view.View, commentBean: CommentBean, adapter: ArticleSubCommentListAdapter)
+        fun praiseComment(comment_id: String, isPraise: Boolean, position: Int, view1: android.view.View, isSubAdapter: Boolean)
+        fun submitComment(rid: String, pid: String, content: String, sendButton: Button)
+        fun praiseArticle(rid: String,isPraise: Boolean, view1: android.view.View)
     }
 }

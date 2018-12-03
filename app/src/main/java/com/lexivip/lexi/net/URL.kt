@@ -876,6 +876,21 @@ object URL {
      * 别人主页的粉丝列表
      */
     const val OTHER_USER_FANS="${BASE_URL}users/other_user_fans"
+
+    /**
+     * 文章评论列表
+     */
+    const val ARTICLE_DETAIL_COMMENTS = "${BASE_URL}life_records/comments"
+
+    /**
+     * 对文章评论点赞
+     */
+    const val ARTICLE_COMMENTS_PRAISE = "${BASE_URL}life_records/comments/praises"
+
+    /**
+     * 对文章点赞
+     */
+    const val ARTICLE_PRAISE = "${BASE_URL}life_records/praises"
     /**
      * 微信登录
      */

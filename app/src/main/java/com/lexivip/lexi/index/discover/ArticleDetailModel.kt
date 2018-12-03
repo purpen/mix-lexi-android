@@ -112,4 +112,99 @@ class ArticleDetailModel : IDataSource {
             }
         })
     }
+
+    /**
+     * 获取三条评论
+     */
+    fun getArticleComments(rid: String,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["per_page"] = "3"
+        params["rid"] = rid
+        HttpRequest.sendRequest(HttpRequest.GET, URL.ARTICLE_DETAIL_COMMENTS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    /**
+     * 对文章评论点赞
+     */
+    fun praiseComment(comment_id: String,isPraise:Boolean,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getPraiseCommentParams(comment_id)
+        val method:String
+        if (isPraise){
+            method = HttpRequest.DELETE
+        }else{
+            method = HttpRequest.POST
+        }
+        HttpRequest.sendRequest(method, URL.ARTICLE_COMMENTS_PRAISE, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    /**
+     * 提交文章评论
+     */
+    fun submitComment(rid: String, pid: String, content: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getSubmitCommentsParams(rid,pid,content)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.ARTICLE_DETAIL_COMMENTS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    fun praiseArticle(rid: String, praise: Boolean, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["rid"] = rid
+        val method:String
+        if (praise){
+            method = HttpRequest.DELETE
+        }else{
+            method = HttpRequest.POST
+        }
+        HttpRequest.sendRequest(method, URL.ARTICLE_PRAISE, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
 }

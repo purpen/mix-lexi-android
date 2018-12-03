@@ -2,28 +2,37 @@ package com.lexivip.lexi.index.discover
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.text.TextUtils
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.BrandPavilionBean
+import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.discoverLifeAesthetics.CommentSuccessBean
+import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.lexivip.lexi.view.emotionkeyboardview.fragment.EmotionMainFragment
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.acticity_artical_detail.*
+import kotlinx.android.synthetic.main.footer_comment_count.view.*
 import kotlinx.android.synthetic.main.footer_view_article_detail.view.*
 import kotlinx.android.synthetic.main.header_view_article_detail.view.*
 import org.json.JSONObject
@@ -36,12 +45,16 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private val adapterRecommend: EditorRecommendAdapter by lazy { EditorRecommendAdapter(R.layout.adapter_editor_recommend) }
     private lateinit var listDescription: ArrayList<AdapterArticleDetail.MultipleItem>
     private lateinit var adapter: AdapterArticleDetail
+    private val adapterArticleCommentList: ArticleDetailCommentListAdapter by lazy { ArticleDetailCommentListAdapter(R.layout.adapter_comment_list, presenter) }
     private var data: ArticleDetailBean.DataBean? = null
     private var rid: String? = null
     private lateinit var channelName: String
     private lateinit var headerView: View
     private lateinit var footerView: View
     private var brandPavilionBean: BrandPavilionBean? = null
+    //父级评论id
+    private var pid: String = "0"
+    private var emotionMainFragment: EmotionMainFragment? = null
     private var isGoods:Boolean=false
     private var cover:String?=null
     private var title:String?=null
@@ -56,7 +69,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         headerView.textViewBrowserNum.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_show_password, R.dimen.dp14, R.dimen.dp14), null, null, null)
 
         footerView = View.inflate(this, R.layout.footer_view_article_detail, null)
-
+        initEmotionFragment()
         listDescription = ArrayList()
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -65,11 +78,78 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         adapter = AdapterArticleDetail(listDescription, channelName)
         recyclerView.adapter = adapter
+
+        initArticleComments()
         initRecommendGoods()
         initRelateStories()
         adapter.setHeaderView(headerView)
         adapter.addFooterView(footerView)
         adapter.setHeaderFooterEmpty(true, true)
+    }
+
+    /**
+     * 初始化EmotionMainFragment
+     */
+    private fun initEmotionFragment() {
+        //构建传递参数
+        val bundle = Bundle()
+        //绑定主内容编辑框
+        bundle.putBoolean(EmotionMainFragment.BIND_TO_EDITTEXT, true)
+        //隐藏控件
+        bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
+
+        if (data != null) {
+//        bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindowData.is_like)
+//        bundle.putInt(EmotionMainFragment.LIKE_COUNTS, shopWindowData.like_count)
+        }
+
+        emotionMainFragment = EmotionMainFragment.newInstance(bundle)
+        emotionMainFragment!!.bindToContentView(recyclerView)
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frameLayoutEmotion, emotionMainFragment)
+        transaction.addToBackStack(null)
+        //提交修改
+        transaction.commit()
+
+        emotionMainFragment!!.setOnSendCommentListener(object : IOnSendCommentListener {
+            override fun onSend(sendButton: Button, editText: EditText) {
+                if (UserProfileUtil.isLogin()) {
+                    val content = editText.text.trim().toString()
+                    if (TextUtils.isEmpty(content)) {
+                        ToastUtil.showInfo("请先输入评论")
+                        return
+                    }
+                    presenter.submitComment(data!!.rid, pid, content, sendButton)
+                    editText.text.clear()
+                    emotionMainFragment!!.hideKeyBoard()
+                    relativeLayoutBar.visibility = View.VISIBLE
+                } else {
+                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                }
+            }
+        })
+    }
+
+    /**
+     * 发布文章评论成功
+     */
+    override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+        if (this.data == null) return
+        textViewCommentCount.text = "${this.data!!.comment_count++}"
+    }
+
+
+    /**
+     * 初始化评论详情
+     */
+    private fun initArticleComments() {
+        val linearLayoutManager = CustomLinearLayoutManager(applicationContext)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        linearLayoutManager.setScrollEnabled(false)
+        footerView.recyclerViewComment.layoutManager = linearLayoutManager
+        footerView.recyclerViewComment.adapter = adapterArticleCommentList
+        footerView.recyclerViewComment.addItemDecoration(CommentDividerItemDecoration(applicationContext))
+        (footerView.recyclerViewComment.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     }
 
     /**
@@ -99,8 +179,35 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     override fun requestNet() {
         if (TextUtils.isEmpty(rid)) return
         presenter.loadData(false, rid!!)
+        presenter.getArticleComments(rid!!)
         presenter.getRelateStories(rid!!)
         presenter.getRecommendProducts(rid!!)
+    }
+
+    /**
+     * 设置评论列表
+     */
+    override fun setCommentListData(data: ShowWindowCommentListBean.DataBean) {
+        initEmotionFragment()
+        if (data.count > 0) {
+            textViewCommentCount.text = Util.getNumberString(data.count)
+            footerView.textViewCommentTitle.visibility = View.VISIBLE
+            footerView.recyclerViewComment.visibility = View.VISIBLE
+            footerView.line15Comment.visibility = View.VISIBLE
+            adapterArticleCommentList.setNewData(data.comments)
+            val view = View.inflate(this, R.layout.footer_comment_count, null)
+            view.textViewCommentCount.text = "查看全部" + data.count + "条评论"
+            adapterArticleCommentList.addFooterView(view)
+            view.setOnClickListener {
+                ToastUtil.showInfo("查看评论列表")
+                //            if (shopWindow == null) return@setOnClickListener
+                //            PageUtil.jump2ShopWindowCommentListActivity(shopWindow!!)
+            }
+        } else {
+            footerView.line15Comment.visibility = View.GONE
+            footerView.textViewCommentTitle.visibility = View.GONE
+            footerView.recyclerViewComment.visibility = View.GONE
+        }
     }
 
     /**
@@ -158,6 +265,10 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         bean.uid = data.optString("uid")
         bean.title = data.optString("title")
         bean.is_user = data.optBoolean("is_user")
+        bean.praise_count = data.optInt("praise_count")
+        bean.comment_count = data.optInt("comment_count")
+        bean.is_praise = data.optBoolean("is_praise")
+        bean.rid = data.optString("rid")
         this.data = bean
 
         cover = data.optString("cover")
@@ -170,6 +281,13 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         val dealContent = data.optJSONArray("deal_content")
         val recommendStore = data.optJSONObject("recommend_store")
 
+        if (bean.is_praise) {
+            imageViewPraise.setImageResource(R.mipmap.icon_paise_large_red)
+        } else {
+            imageViewPraise.setImageResource(R.mipmap.icon_praise_large_gray)
+        }
+
+        textViewPraiseCount.text = Util.getNumberString(bean.praise_count)
         GlideUtil.loadImageWithDimenAndRadius(cover, headerView.imageViewCover, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(250.0), ImageSizeConfig.SIZE_AVABG)
         headerView.textViewArticleType.text = channelName
 
@@ -277,7 +395,116 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         setUserFocusState()
     }
 
+    /**
+     * 设置
+     */
+    override fun setPraiseCommentState(b: Boolean, position: Int, subAdapter: Boolean) {
+        val commentsBean = adapterArticleCommentList.getItem(position) as CommentBean
+        if (b) {
+            commentsBean.is_praise = true
+            commentsBean.praise_count += 1
+        } else {
+            commentsBean.is_praise = false
+            if (commentsBean.praise_count > 0) {
+                commentsBean.praise_count -= 1
+            }
+        }
+        adapterArticleCommentList.notifyItemChanged(position)
+    }
+
+    /**
+     * 重置输入状态
+     */
+    private fun resetInputState() {
+        if (emotionMainFragment!!.isUserInputEmpty()) {
+            pid = "0"
+            emotionMainFragment!!.setEditTextHint(getString(R.string.text_add_comment))
+        }
+        emotionMainFragment!!.hideKeyBoard()
+    }
+
+    /**
+     * 设置用户文章点赞状态
+     */
+    override fun praiseArticleSuccess(b: Boolean) {
+        if (data == null) return
+        data!!.is_praise = b
+        if (b) {
+            data!!.praise_count++
+            textViewPraiseCount.text = Util.getNumberString(data!!.praise_count)
+            imageViewPraise.setImageResource(R.mipmap.icon_paise_large_red)
+        } else {
+            data!!.praise_count--
+            textViewPraiseCount.text = Util.getNumberString(data!!.praise_count)
+            imageViewPraise.setImageResource(R.mipmap.icon_praise_large_gray)
+        }
+    }
+
     override fun installListener() {
+
+        //点击输入框获取焦点
+        textViewInput.setOnClickListener {
+            emotionMainFragment!!.requestFocus()
+        }
+
+        val intArray = IntArray(2)
+        textViewInput.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            textViewInput.getLocationOnScreen(intArray)
+            if (intArray[1] > ScreenUtil.getScreenHeight() * 2 / 3) { //键盘被关闭
+                if (emotionMainFragment == null) return@addOnLayoutChangeListener
+                if (emotionMainFragment!!.isUserInputEmpty()) {
+                    relativeLayoutBar.visibility = View.VISIBLE
+                }
+            } else { //键盘打开
+                relativeLayoutBar.visibility = View.INVISIBLE
+                emotionMainFragment!!.requestFocus()
+
+            }
+        }
+
+        /**
+         * 外部点击重置输入状态
+         */
+        adapterArticleCommentList.setOnItemClickListener { _, _, _ ->
+            resetInputState()
+        }
+
+        /**
+         * 外部点击重置输入状态
+         */
+        relativeLayout.setOnClickListener {
+            resetInputState()
+        }
+
+
+        //评论子view点击
+        adapterArticleCommentList.setOnItemChildClickListener { _, view, position ->
+            val commentsBean = adapterArticleCommentList.getItem(position)
+                    ?: return@setOnItemChildClickListener
+
+            when (view.id) {
+                R.id.textViewReply -> { //将被回复的评论id最为pid
+                    emotionMainFragment!!.showKeyBoard()
+                    pid = commentsBean.comment_id
+                    emotionMainFragment!!.setEditTextHint("回复${commentsBean.user_name}:")
+                }
+
+                R.id.textViewPraise -> { //点赞
+                    if (UserProfileUtil.isLogin()) {
+                        presenter.praiseComment(commentsBean.comment_id, commentsBean.is_praise, position, view, false)
+                    } else {
+                        PageUtil.jump2LoginActivity()
+                    }
+                }
+            }
+        }
+
+
+        //用户点赞文章
+        relativeLayoutPraise.setOnClickListener {
+            if (data == null) return@setOnClickListener
+            presenter.praiseArticle(data!!.rid, data!!.is_praise, relativeLayoutPraise)
+        }
 
         footerView.buttonFocus.setOnClickListener { v ->
 
@@ -296,6 +523,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
 
         imageViewBack.setOnClickListener { finish() }
 
+//        imageViewShare.setOnClickListener {
+//            ToastUtil.showInfo("分享")
+//        }
         imageViewShare.setOnClickListener {
             //ToastUtil.showInfo("分享")
             if(isGoods){
@@ -328,12 +558,12 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
                 if (dySum < dp250) {
                     textViewTitle.text = ""
                     imageViewBack.setImageResource(R.mipmap.icon_return_white)
-                    imageViewShare.setImageResource(R.mipmap.icon_share_white)
+//                    imageViewShare.setImageResource(R.mipmap.icon_share_white)
                     relativeLayoutHeader.setBackgroundResource(R.drawable.bg_gradient_color000)
                 } else if (dySum > dp250) {
                     textViewTitle.text = data?.title
                     imageViewBack.setImageResource(R.mipmap.icon_nav_back)
-                    imageViewShare.setImageResource(R.mipmap.icon_click_share)
+//                    imageViewShare.setImageResource(R.mipmap.icon_click_share)
                     relativeLayoutHeader.setBackgroundColor(Util.getColor(android.R.color.white))
                 }
             }
@@ -390,6 +620,35 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
                         .setBottomSideLine(true, color, height, 0f, 0f)
                         .create()
             }
+            return divider
+        }
+    }
+
+
+    internal inner class CommentDividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
+        private val color: Int = Util.getColor(R.color.color_eee)
+        override fun getDivider(itemPosition: Int): Y_Divider? {
+            val count = adapter.itemCount
+            val divider: Y_Divider?
+            divider = when (itemPosition) {
+                count - 2 -> {
+                    Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+                count - 1 -> {
+                    Y_DividerBuilder()
+                            .setBottomSideLine(false, color, 0f, 0f, 0f)
+                            .create()
+                }
+
+                else -> {
+                    Y_DividerBuilder()
+                            .setBottomSideLine(true, color, 0.5f, 15f, 0f)
+                            .create()
+                }
+            }
+
             return divider
         }
     }
