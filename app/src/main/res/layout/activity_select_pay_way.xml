@@ -437,7 +437,6 @@
             android:id="@+id/relativeLayoutAntPay"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:visibility="gone"
             android:background="@android:color/white">
 
             <LinearLayout

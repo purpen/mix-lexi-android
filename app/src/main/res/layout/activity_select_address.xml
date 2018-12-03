@@ -241,6 +241,7 @@
                     android:layout_height="@dimen/dp30"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/dp15"
+                    android:checked="true"
                     android:thumb="@drawable/switch_thumb"
                     android:track="@drawable/switch_track"/>
             </LinearLayout>

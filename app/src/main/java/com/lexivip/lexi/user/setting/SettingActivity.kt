@@ -3,16 +3,14 @@ import android.content.Intent
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
-import com.lexivip.lexi.MainActivity
-import com.lexivip.lexi.MainFragment0
-import com.lexivip.lexi.R
 import com.lexivip.lexi.mine.UserCenterBean
 import kotlinx.android.synthetic.main.activity_setting.*
 import android.net.Uri
-import com.lexivip.lexi.ImageSizeConfig
+import com.lexivip.lexi.*
 import com.lexivip.lexi.eventBusMessge.MessageLogout
 import com.lexivip.lexi.index.selection.OpenLifeHouseActivity
 import com.lexivip.lexi.orderList.OrderListActivity
+import com.lexivip.lexi.user.login.UserProfileBean
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.setting.address.AddressListActivity
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
@@ -30,8 +28,8 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
     override fun initView() {
         presenter = SettingPresenter(this)
         customHeadView.setHeadCenterTxtShow(true, R.string.title_setting)
-        customItemLayout0.setTVStyle(R.mipmap.icon_wx_bind, R.string.text_bind_wx, R.color.color_333)
-        customItemLayout0.setTvArrowLeftStrle(true,"未绑定",R.color.color_ff6666,12)
+        //customItemLayout0.setTVStyle(R.mipmap.icon_wx_bind, R.string.text_bind_wx, R.color.color_333)
+        //customItemLayout0.setTvArrowLeftStrle(true,"未绑定",R.color.color_ff6666,12)
 //        customItemLayout1.setTVStyle(R.mipmap.icon_find_freind, R.string.text_find_freinds, R.color.color_333)
         customItemLayout2.setTVStyle(R.mipmap.icon_my_orders, R.string.text_my_orders, R.color.color_333)
         customItemLayout3.setTVStyle(R.mipmap.icon_order_address, R.string.text_order_address, R.color.color_333)
@@ -43,6 +41,12 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
             customItemLayout4.visibility=View.GONE
         }else{
             customItemLayout4.visibility=View.VISIBLE
+        }
+        LogUtil.e("是否绑定："+UserProfileUtil.isBindWX())
+        if (UserProfileUtil.isBindWX()){
+            customItemLayout0.setTvArrowLeftStrle(true,"已绑定",R.color.color_999,12)
+        }else{
+            customItemLayout0.setTvArrowLeftStrle(true,"未绑定",R.color.color_ff6666,12)
         }
 
     }
@@ -76,8 +80,10 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
                 startActivityForResult(intent,1)
             }
             R.id.customItemLayout0 -> {
-                //TODO 绑定微信待完成
-                UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN,umAuthListener)
+                if (!UserProfileUtil.isBindWX()){
+                    //TODO 微信绑定待完成
+                    //UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN,umAuthListener)
+                }
             }
             //R.id.customItemLayout1 -> ToastUtil.showInfo("找朋友")
             R.id.customItemLayout2 -> startActivity(Intent(this, OrderListActivity::class.java))
@@ -118,20 +124,17 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
 
         override fun onComplete(share_media: SHARE_MEDIA, i: Int, map: Map<String, String>) {
             LogUtil.e("授权回调成功了："+map.get("unionid"))
-            for (entry in map.entries) {
-                val key = entry.key
-                val value = entry.value
-                LogUtil.e("啦啦啦啦啦：" + key.toString())
-                LogUtil.e(value.toString())
-            }
+            presenter.bindWX(map.get("unionid")!!)
         }
 
         override fun onError(share_media: SHARE_MEDIA, i: Int, throwable: Throwable) {
             LogUtil.e("授权回调失败："+throwable.message)
+            ToastUtil.showError("授权回调失败")
         }
 
         override fun onCancel(share_media: SHARE_MEDIA, i: Int) {
             LogUtil.e("取消授权")
+            ToastUtil.showError("取消授权")
         }
     }
 
@@ -144,6 +147,13 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
                 }
 
             }
+        }
+    }
+
+    override fun setBind(success: Boolean) {
+        if(success){
+            customItemLayout0.setTvArrowLeftStrle(true,"已绑定",R.color.color_999,12)
+            UserProfileUtil.setBindWX(success)
         }
     }
 

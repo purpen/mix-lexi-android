@@ -19,6 +19,10 @@ object WebUrl{
      */
     const val GOODS="${BASE_URL}product_view?rid="
     /**
+     * 橱窗链接
+     */
+    const val window="${BASE_URL}"
+    /**
      * 小程序分享商品
      */
     const val AUTH_GOODS="pages/product/product?rid="
@@ -35,7 +39,7 @@ object WebUrl{
      */
     const val AUTH_WINDOW="pages/windowDetail/windowDetail?windowRid="
     /**
-     * 别人的主页
+     * 小程序别人的主页
      */
     const val AUTH_PAGE="pages/people/people?uid="
     /**

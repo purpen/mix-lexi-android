@@ -561,6 +561,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         textViewShare.setOnClickListener { view ->
             //val dialog = DistributeShareDialog(this)
             //dialog.show()
+            //TODO 橱窗分享待完成
             share()
         }
 

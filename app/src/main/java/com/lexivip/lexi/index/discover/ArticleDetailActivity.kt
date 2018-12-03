@@ -16,6 +16,8 @@ import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
+import com.lexivip.lexi.net.WebUrl
+import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.yanyusong.y_divideritemdecoration.Y_Divider
@@ -40,6 +42,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     private lateinit var headerView: View
     private lateinit var footerView: View
     private var brandPavilionBean: BrandPavilionBean? = null
+    private var isGoods:Boolean=false
+    private var cover:String?=null
+    private var title:String?=null
     override fun getIntentData() {
         rid = intent.getStringExtra(TAG)
         channelName = intent.getStringExtra(ArticleDetailActivity::class.java.name)
@@ -102,7 +107,11 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
      * 设置推荐商品
      */
     override fun setRecommendProductsData(products: List<ProductBean>) {
-        if (products.isEmpty()) footerView.linearLayoutRecommendProduct.visibility = View.GONE
+        if (products.isEmpty()) {
+            footerView.linearLayoutRecommendProduct.visibility = View.GONE
+        }else{
+            isGoods=true
+        }
         adapterRecommend.setNewData(products)
     }
 
@@ -151,9 +160,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         bean.is_user = data.optBoolean("is_user")
         this.data = bean
 
-        val cover = data.optString("cover")
+        cover = data.optString("cover")
         val channelName = data.optString("channel_name")
-        val title = data.optString("title")
+        title = data.optString("title")
         val publishedAt = data.optLong("published_at")
         val browseCount = data.optInt("browse_count")
         val userAvatar = data.optString("user_avator")
@@ -288,7 +297,12 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         imageViewBack.setOnClickListener { finish() }
 
         imageViewShare.setOnClickListener {
-            ToastUtil.showInfo("分享")
+            //ToastUtil.showInfo("分享")
+            if(isGoods){
+                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE_GOODS+rid,cover)
+            }else{
+                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE+rid,cover)
+            }
         }
 
         //关注用户

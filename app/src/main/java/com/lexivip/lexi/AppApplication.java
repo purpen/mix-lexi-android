@@ -132,7 +132,7 @@ public class AppApplication extends MultiDexApplication {
         UMConfigure.init(this,Constants.UMENG_ID
                 ,"umeng",UMConfigure.DEVICE_TYPE_PHONE,Constants.UMENG_PUSH);
         //TODO umeng log记得关闭
-        UMConfigure.setLogEnabled(true);
+        UMConfigure.setLogEnabled(false);
         //umeng统计
         MobclickAgent.setScenarioType(this,MobclickAgent.EScenarioType.E_UM_NORMAL);
         //umeng推送
@@ -155,6 +155,12 @@ public class AppApplication extends MultiDexApplication {
         UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
             @Override
             public void dealWithCustomAction(Context context, UMessage msg) {
+                for (Map.Entry entry : msg.extra.entrySet()) {
+                    Object key = entry.getKey();
+                    Object value = entry.getValue();
+                    LogUtil.e("啦啦啦啦啦11111111："+key.toString());
+                    LogUtil.e(value.toString());
+                }
                 LogUtil.e("umeng推送："+msg.custom);
                 Intent intent=new Intent(context,LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -182,7 +188,7 @@ public class AppApplication extends MultiDexApplication {
                     LogUtil.e("啦啦啦啦啦："+key.toString());
                     LogUtil.e(value.toString());
                 }
-                switch (msg.builder_id) {
+                /*switch (msg.builder_id) {
                     case 1:
                         Notification.Builder builder = new Notification.Builder(context);
 //                        RemoteViews myNotificationView = new RemoteViews(context.getPackageName(),
@@ -198,10 +204,10 @@ public class AppApplication extends MultiDexApplication {
 //                                .setTicker(msg.ticker)
 //                                .setAutoCancel(true);
                         return builder.getNotification();
-                    default:
+                    default:*/
                         //默认为0，若填写的builder_id并不存在，也使用默认。
                         return super.getNotification(context, msg);
-                }
+                //}
             }
         };
         mPushAgent.setMessageHandler(messageHandler);
@@ -219,12 +225,7 @@ public class AppApplication extends MultiDexApplication {
         msgApi = WXAPIFactory.createWXAPI(this, Constants.WX_ID);
         msgApi.registerApp(Constants.WX_ID);
 
-        mPushAgent.addAlias("19875603241", "lexi", new UTrack.ICallBack() {
-            @Override
-            public void onMessage(boolean isSuccess, String message) {
-                LogUtil.e("isSuccess:"+isSuccess+"    message:"+message);
-            }
-        });
+
 
         //豆瓣RENREN平台目前只能在服务器端配置
         //PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");

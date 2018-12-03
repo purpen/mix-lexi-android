@@ -24,6 +24,7 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
     @Override
     public void getData(int status, int page) {
+        LogUtil.e("第几页的数据："+page);
         model.getData(status, page, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {

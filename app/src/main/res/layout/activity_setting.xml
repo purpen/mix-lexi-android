@@ -35,7 +35,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_333"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/imageView"/>
 
                 <TextView
                     android:id="@+id/textView1"
@@ -123,7 +125,7 @@
                 android:id="@+id/customItemLayout6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/button"

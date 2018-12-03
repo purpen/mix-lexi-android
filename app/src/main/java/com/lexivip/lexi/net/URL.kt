@@ -876,4 +876,8 @@ object URL {
      * 别人主页的粉丝列表
      */
     const val OTHER_USER_FANS="${BASE_URL}users/other_user_fans"
+    /**
+     * 微信登录
+     */
+    const val WX_LOGIN="${BASE_URL}auth/app_bind_wx"
 }

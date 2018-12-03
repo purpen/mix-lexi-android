@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.detail
+import android.app.Activity
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
@@ -11,6 +12,12 @@ import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.JsonUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.album.ImageUtils
+import com.lexivip.lexi.net.WebUrl
+import com.lexivip.lexi.shareUtil.ShareUtil
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.bean.SHARE_MEDIA
+import com.umeng.socialize.media.UMImage
+import com.umeng.socialize.media.UMMin
 import kotlinx.android.synthetic.main.dialog_share_goods_bottom.view.*
 import java.io.File
 import java.io.IOException
@@ -60,7 +67,23 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
             dismiss()
         }
         view.textViewWechatShare.setOnClickListener {
-            ToastUtil.showInfo("微信分享")
+            val image=UMImage(context,product!!.assets.get(0).view_url)
+            val umMin = UMMin(WebUrl.GOODS+product!!.rid)//兼容低版本的网页链接
+            // 小程序消息封面图片
+            umMin.setThumb(image)
+            // 小程序消息title
+            umMin.title = product.name
+            // 小程序消息描述
+            umMin.description = ""
+            //小程序页面路径
+            umMin.path = WebUrl.AUTH_GOODS
+            // 小程序原始id,在微信平台查询
+            umMin.userName = Constants.AUTHAPPID
+            ShareAction(context as Activity?)
+                    .withMedia(umMin)
+                    .setPlatform(SHARE_MEDIA.WEIXIN)
+                    .share()
+            //ToastUtil.showInfo("微信分享")
         }
 
         view.textViewSavePoster.setOnClickListener { //保存海报到相册

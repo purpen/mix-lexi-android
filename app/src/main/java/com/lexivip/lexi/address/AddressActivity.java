@@ -95,7 +95,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private int provinceId;
     private int cityId;
     private int areaId;
-    private boolean isdefault;
+    private boolean isdefault=true;
     private String id_card = null;
     private HashMap<String, ArrayList<CityBean.CityNameBean>> cityMap;
     private int countryID;
@@ -324,6 +324,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
                             //dataBean.setCountry_id(Integer.valueOf(rid));
                             dataBean.setZipcode(et_code.getText().toString());
                             dataBean.setIs_default(isdefault);
+                            LogUtil.e("是否默认选中："+isdefault);
                             return true;
                         } else {
                             id_card = et_id.getText().toString();

@@ -1605,4 +1605,15 @@ public class ClientParamsAPI {
         params.put("page",String.valueOf(page));
         return params;
     }
+
+    /**
+     * 绑定微信
+     * @param openid
+     * @return
+     */
+    public static HashMap<String,Object> getBindWX(@NotNull String openid){
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("openid",openid);
+        return params;
+    }
 }
