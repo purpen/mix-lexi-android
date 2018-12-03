@@ -691,7 +691,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
 
                 else -> {
                     Y_DividerBuilder()
-                            .setBottomSideLine(true, color, 1f, 20f, 0f)
+                            .setBottomSideLine(true, color, 0.5f, 20f, 0f)
                             .create()
                 }
             }
