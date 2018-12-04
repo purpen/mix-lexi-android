@@ -202,12 +202,14 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headImageAdapter.setNewData(urlList)
-        val size = data.users.size
-        headImageAdapter.setOnItemClickListener { _, _, position ->
-            val uid = data.users[size - position - 1].uid
-            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(), uid)) return@setOnItemClickListener
-            PageUtil.jump2OtherUserCenterActivity(uid)
-        }
+
+        //这部分头像不需要点击
+//        val size = data.users.size
+//        headImageAdapter.setOnItemClickListener { _, _, position ->
+//            val uid = data.users[size - position - 1].uid
+//            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(), uid)) return@setOnItemClickListener
+//            PageUtil.jump2OtherUserCenterActivity(uid)
+//        }
     }
 
     /**
