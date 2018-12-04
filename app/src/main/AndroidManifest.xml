@@ -197,6 +197,7 @@
         <activity android:name=".MipushTestActivity"
             android:launchMode="singleTask"
             android:exported="true"/>
+        <activity android:name=".index.discover.ArticleCommentListActivity" />
     </application>
 
 </manifest>

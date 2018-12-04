@@ -703,7 +703,7 @@ public class ClientParamsAPI {
     public static HashMap<String, Object> getMoreSubCommentsParams(int page,@NotNull String comment_id) {
         HashMap<String, Object> params = generateCommonParams();
         params.put("pid",comment_id);
-        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("per_page", "5");
         params.put("page", String.valueOf(page));
         return params;
     }

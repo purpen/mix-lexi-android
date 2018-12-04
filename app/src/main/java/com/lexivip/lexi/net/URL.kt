@@ -891,4 +891,9 @@ object URL {
      * 对文章点赞
      */
     const val ARTICLE_PRAISE = "${BASE_URL}life_records/praises"
+
+    /**
+     * 获取文章子评论
+     */
+    const val ARTICLE_SUB_COMMENTS = "${BASE_URL}life_records/child_comments"
 }

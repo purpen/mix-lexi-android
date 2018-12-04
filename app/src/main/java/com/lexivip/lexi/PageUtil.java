@@ -16,6 +16,7 @@ import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailActivity;
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailBean;
 import com.lexivip.lexi.index.bean.BannerImageBean;
 import com.lexivip.lexi.index.detail.GoodsDetailActivity;
+import com.lexivip.lexi.index.discover.ArticleCommentListActivity;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
 import com.lexivip.lexi.index.explore.collection.CollectionDetailActivity;
 import com.lexivip.lexi.publishShopWindow.RelateShopWindowActivity;
@@ -198,6 +199,18 @@ public class PageUtil {
         Application context = AppApplication.getContext();
         Intent intent = new Intent(context, RelateShopWindowActivity.class);
         intent.putExtra(RelateShopWindowActivity.class.getSimpleName(), tag);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 跳转文章评论列表
+     * @param rid
+     */
+    public static void jump2ShopArticleCommentListActivity(@NotNull String rid) {
+        Application context = AppApplication.getContext();
+        Intent intent = new Intent(context, ArticleCommentListActivity.class);
+        intent.putExtra(ArticleCommentListActivity.class.getSimpleName(), rid);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
