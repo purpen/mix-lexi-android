@@ -5,18 +5,20 @@ import android.support.annotation.LayoutRes
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 
 class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseViewHolder>(res) {
-
+    private val dp65:Int by lazy { DimenUtil.dp2px(65.0) }
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
         val imageView = helper.getView<ImageView>(R.id.imageView)
-        GlideUtil.loadImageWithFading(item.cover, imageView)
+        GlideUtil.loadImageWithDimen(item.cover, imageView,dp65,ImageSizeConfig.SIZE_P30X2)
 
         helper.setText(R.id.textViewName, item.product_name)
         val textViewPrice = helper.getView<TextView>(R.id.textViewPrice)

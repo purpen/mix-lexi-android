@@ -368,6 +368,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             goods.delivery_province = product.delivery_province
             goods.delivery_city = product.delivery_city
             goods.cover = selectedSKU.cover
+            goods.store_name = product.store_name
             goods.product_name = selectedSKU.product_name
             goods.s_color  = selectedSKU.s_color
             goods.s_model = selectedSKU.s_model
