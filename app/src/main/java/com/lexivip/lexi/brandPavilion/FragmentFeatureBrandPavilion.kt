@@ -1,9 +1,5 @@
 package com.lexivip.lexi.brandPavilion
-
-import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import com.basemodule.tools.GlideUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -12,7 +8,6 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
-import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.index.explore.BrandPavilionListBean
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 

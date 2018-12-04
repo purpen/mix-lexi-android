@@ -29,11 +29,11 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
         if (product.is_free_postage){
             val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
             val span = CustomImageSpan(drawable)
-            val spannable = SpannableString("   " + product.name)
+            val spannable = SpannableString("   " + product.product_name)
             spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
             textViewTitle.text = spannable
         }else{
-            textViewTitle.text = product.name
+            textViewTitle.text = product.product_name
         }
 
         val textViewPrice = helper.getView<TextView>(R.id.textViewPrice)
