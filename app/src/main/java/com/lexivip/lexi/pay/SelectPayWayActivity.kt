@@ -27,7 +27,7 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
         //支付宝
         const val ALI_PAY: Int = 2
         //蚂蚁支付
-        const val ANT_PAY: Int = 3
+        const val ANT_PAY: Int = 4
     }
 
     override fun initView() {

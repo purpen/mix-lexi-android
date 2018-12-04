@@ -35,6 +35,7 @@ import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.index.detail.CouponBottomDialog;
 import com.lexivip.lexi.index.detail.ShopCouponListBean;
 import com.lexivip.lexi.lifeShop.MyFragmentPageAdapter;
+import com.lexivip.lexi.net.WebUrl;
 import com.lexivip.lexi.search.AdapterSearchGoods;
 import com.lexivip.lexi.shareUtil.ShareUtil;
 import com.lexivip.lexi.user.login.LoginActivity;
@@ -226,8 +227,8 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
                     startActivity(new Intent(this, LoginActivity.class));
                 }
                 break;
-            case R.id.imageViewShare://todo 分享待完成
-                ShareUtil shareUtil=new ShareUtil(this,dialog,rid,0);
+            case R.id.imageViewShare:
+                ShareUtil shareUtil=new ShareUtil(this,WebUrl.LIFE+rid,dataBean.data.name,dataBean.data.tag_line,WebUrl.AUTH_BRAND+rid,dataBean.data.logo);
                 break;
         }
     }

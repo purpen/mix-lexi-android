@@ -91,6 +91,7 @@ class RelateShopWindowActivity:BaseActivity(), ShowWindowContract.View {
                 }
 
                 R.id.textViewShare -> {
+                    //todo 橱窗分享落地页待完成
                     val dialog = DistributeShareDialog(this)
                     dialog.show()
                 }

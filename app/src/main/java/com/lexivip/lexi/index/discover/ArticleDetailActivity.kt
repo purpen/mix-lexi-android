@@ -23,6 +23,8 @@ import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
+import com.lexivip.lexi.net.WebUrl
+import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.view.emotionkeyboardview.fragment.EmotionMainFragment
@@ -53,6 +55,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
     //父级评论id
     private var pid: String = "0"
     private var emotionMainFragment: EmotionMainFragment? = null
+    private var isGoods:Boolean=false
+    private var cover:String?=null
+    private var title:String?=null
     override fun getIntentData() {
         rid = intent.getStringExtra(TAG)
         channelName = intent.getStringExtra(ArticleDetailActivity::class.java.name)
@@ -209,7 +214,11 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
      * 设置推荐商品
      */
     override fun setRecommendProductsData(products: List<ProductBean>) {
-        if (products.isEmpty()) footerView.linearLayoutRecommendProduct.visibility = View.GONE
+        if (products.isEmpty()) {
+            footerView.linearLayoutRecommendProduct.visibility = View.GONE
+        }else{
+            isGoods=true
+        }
         adapterRecommend.setNewData(products)
     }
 
@@ -262,9 +271,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         bean.rid = data.optString("rid")
         this.data = bean
 
-        val cover = data.optString("cover")
+        cover = data.optString("cover")
         val channelName = data.optString("channel_name")
-        val title = data.optString("title")
+        title = data.optString("title")
         val publishedAt = data.optLong("published_at")
         val browseCount = data.optInt("browse_count")
         val userAvatar = data.optString("user_avator")
@@ -494,6 +503,14 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             }
         }
 
+        //分享
+        textViewShare.setOnClickListener{
+            if(isGoods){
+                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE_GOODS+rid,cover)
+            }else{
+                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE+rid,cover)
+            }
+        }
 
         //用户点赞文章
         relativeLayoutPraise.setOnClickListener {

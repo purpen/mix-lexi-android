@@ -8,6 +8,7 @@ import com.lexivip.lexi.mine.UserCenterBean
 import java.io.IOException
 
 class SettingPresenter(view: SettingContract.View) : SettingContract.Presenter {
+
     private var view: SettingContract.View = checkNotNull(view)
 
     private val dataSource: SettingModel by lazy { SettingModel() }
@@ -28,6 +29,26 @@ class SettingPresenter(view: SettingContract.View) : SettingContract.Presenter {
                 }
             }
 
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                ToastUtil.showError(R.string.text_net_error)
+            }
+        })
+    }
+    override fun bindWX(openid: String) {
+        dataSource.bindWX(openid,object :IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                view.showLoadingView()
+            }
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val userCenterBean = JsonUtil.fromJson(json, UserCenterBean::class.java)
+                if (userCenterBean.success) {
+                    view.setBind(userCenterBean.success)
+                } else {
+                    view.showError(userCenterBean.status.message)
+                }
+            }
             override fun onFailure(e: IOException) {
                 view.dismissLoadingView()
                 ToastUtil.showError(R.string.text_net_error)

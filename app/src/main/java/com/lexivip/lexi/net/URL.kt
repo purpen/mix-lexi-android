@@ -891,6 +891,10 @@ object URL {
      * 对文章点赞
      */
     const val ARTICLE_PRAISE = "${BASE_URL}life_records/praises"
+    /**
+     * 微信登录
+     */
+    const val WX_LOGIN="${BASE_URL}auth/app_bind_wx"
 
     /**
      * 获取文章子评论

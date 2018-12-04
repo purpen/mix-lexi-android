@@ -6,6 +6,7 @@ import com.lexivip.lexi.JsonUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.net.ClientParamsAPI
 import com.lexivip.lexi.user.password.VerifyCodeBean
+import com.umeng.message.UTrack
 import java.io.IOException
 
 class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
@@ -25,11 +26,17 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
+                LogUtil.e("正常登录状态："+json)
                 view.dismissLoadingView()
                 val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
                 if (loginBean.success) {
                     SPUtil.write(Constants.AUTHORIZATION,ClientParamsAPI.getAuthorization(loginBean.data.token))
+                    AppApplication.mPushAgent.addAlias(loginBean.data.uid,"lexi",object :UTrack.ICallBack{
+                        override fun onMessage(p0: Boolean, p1: String?) {
+
+                        }
+
+                    })
                     getUserProfile(loginBean.data.is_first_login)
                 } else {
                     view.showError(loginBean.status.message)
@@ -92,11 +99,18 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e("登录的结果："+json)
                 view.dismissLoadingView()
                 val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
                 if (loginBean.success) {
                     val authorization = ClientParamsAPI.getAuthorization(loginBean.data.token)
                     SPUtil.write(Constants.AUTHORIZATION,authorization)
+                    AppApplication.mPushAgent.addAlias(loginBean.data.uid,"lexi",object :UTrack.ICallBack{
+                        override fun onMessage(p0: Boolean, p1: String?) {
+
+                        }
+
+                    })
                     getUserProfile(loginBean.data.is_first_login)
                 } else {
                     view.showInfo(loginBean.status.message)

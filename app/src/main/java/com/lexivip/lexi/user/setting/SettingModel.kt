@@ -26,5 +26,21 @@ open class SettingModel {
             }
         })
     }
+    fun bindWX(openid: String,callback: IDataSource.HttpRequestCallBack){
+        val params=ClientParamsAPI.getDefaultParams()
+        /*HttpRequest.sendRequest(HttpRequest.POST,URL.BIND_WX,params,object :IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                callback.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callback.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callback.onFailure(e)
+            }
+        })*/
+    }
 }
 

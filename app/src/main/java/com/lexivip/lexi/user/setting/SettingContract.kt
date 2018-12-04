@@ -10,8 +10,10 @@ class SettingContract {
         fun showError(s: String)
         fun dismissLoadingView()
         fun setUserInfo(data: UserCenterBean.DataBean)
+        fun setBind(success:Boolean)
     }
     interface Presenter : BasePresenter {
         fun loadData()
+        fun bindWX(openid: String)
     }
 }

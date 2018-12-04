@@ -20,7 +20,7 @@ public class AdapterOrderListTow extends BaseQuickAdapter<MyOrderListBean.DataBe
 
     @Override
     protected void convert(BaseViewHolder helper, MyOrderListBean.DataBean.OrdersBean.ItemsBean item) {
-        GlideUtil.loadImageWithFading(item.getStore_logo()+ImageSizeConfig.SIZE_P30X2,(ImageView) helper.getView(R.id.iv_order_shoping));
+        GlideUtil.loadImageWithFading(item.getCover()+ImageSizeConfig.SIZE_P30X2,(ImageView) helper.getView(R.id.iv_order_shoping));
         helper.setText(R.id.tv_order_shoping_name, item.getProduct_name());
         helper.setText(R.id.tv_order_shoping_num,"x"+item.getQuantity());
         if (status==2||status==3){

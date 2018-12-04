@@ -28,6 +28,7 @@ import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.*
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.shopCart.ShopCartActivity
 import com.lexivip.lexi.user.login.LoginActivity
@@ -793,7 +794,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
             R.id.imageViewShare -> {
                 //ToastUtil.showInfo("分享产品")
-                share()
+                //share()
+                val shareUtil=ShareUtil(this,WebUrl.GOODS+productId,goodsData!!.name,"",WebUrl.AUTH_GOODS+productId,goodsData!!.assets.get(0).view_url)
             }
 
             R.id.imageButton -> { //喜欢用户列表

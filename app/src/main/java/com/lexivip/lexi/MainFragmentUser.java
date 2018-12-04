@@ -74,7 +74,7 @@ public class MainFragmentUser extends BaseFragment {
 
                 //分享
 
-                ActivityCompat.requestPermissions(getActivity(),Constants.PERMISSION_LIST_SHARE,Constants.REQUEST_CODE_SHARE);
+                //ActivityCompat.requestPermissions(getActivity(),Constants.PERMISSION_LIST_SHARE,Constants.REQUEST_CODE_SHARE);
                 share();
 
             }

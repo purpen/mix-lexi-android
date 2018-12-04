@@ -36,8 +36,10 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.search.AdapterSearchGoods
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
+import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
@@ -336,7 +338,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     override fun installListener() {
         textViewShare.setOnClickListener {
             //
-            ToastUtil.showInfo("分享生活馆")
+            //ToastUtil.showInfo("分享生活馆")
+            //val share=ShareUtil(activity,WebUrl.)
+            //TODO 分享生活馆
         }
 
         headerLifeHouse.imageViewEdit.setOnClickListener(this)
@@ -371,8 +375,12 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                     }
                 }
                 R.id.textView5 -> {
-                    val dialog = DistributeShareDialog(activity)
-                    dialog.show()
+                    /*val dialog = DistributeShareDialog(activity)
+                    dialog.show()*/
+                    val share=ShareUtil(activity,WebUrl.GOODS+this.adapter.data.get(position).product_rid,
+                            this.adapter.data.get(position).name,
+                            "",WebUrl.AUTH_GOODS+this.adapter.data.get(position).product_rid,
+                            this.adapter.data.get(position).cover)
                 }
             }
         }
