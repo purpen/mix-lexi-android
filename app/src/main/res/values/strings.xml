@@ -411,4 +411,6 @@
     <string name="load_failed">加载更多失败</string>
     <string name="text_new_product">新品</string>
     <string name="text_delete_shop_window_confirm">确认删除本条动态？</string>
+    <string name="text_copy_wechat_num">复制微信号</string>
+    <string name="text_wechat_num" >lexixiaoduo</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.basemodule.tools;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -150,5 +153,14 @@ public class Util {
             return df.format(num/10000.0)+"w";
         }
 
+    }
+
+    /**
+     * 将内容添加到剪切板
+     */
+    public static void setContent2ClipBoard(String content){
+        ClipboardManager clipboardManager = (ClipboardManager)BaseModuleContext.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("text", content);
+        if (clipboardManager!=null) clipboardManager.setPrimaryClip(clipData);
     }
 }
