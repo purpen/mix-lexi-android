@@ -48,5 +48,44 @@ open class RegisterModel {
         })
     }
 
+    /**
+     * 微信绑定手机号
+     */
+    fun bindPhoneCode(openid:String,areaCode: String, phone: String, checkCode: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getBindPhoneCode(openid,areaCode,phone,checkCode)
+        HttpRequest.sendRequest(HttpRequest.POST,URL.LOGIN_WITH_CHECKCODE,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    /**
+     * 获取个人信息
+     */
+    fun getUserProfile(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET, URL.USER_PROFILE_URL,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
 }
 

@@ -18,6 +18,7 @@ import com.lexivip.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import com.lexivip.lexi.user.password.ForgetPasswordActivity
 import com.lexivip.lexi.user.register.RegisterActivity
+import com.umeng.socialize.UMAuthListener
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.bean.SHARE_MEDIA
 import kotlinx.android.synthetic.main.acticity_login.*
@@ -36,6 +37,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
 
     private lateinit var timeCount: CustomCountDownTimer
     private var showPassword:Boolean = false
+    private var openid:String?=null
 
     override val layout: Int = R.layout.acticity_login
 
@@ -130,13 +132,42 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
                 }
             }
 
-            R.id.linearLayoutWeChat -> presenter.wechatLogin()
+            R.id.linearLayoutWeChat -> UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN,umAuthListener)
                 //UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, umAuthListener)
 
 //            R.id.linearLayoutQQ -> presenter.qqLogin()
 //
 //            R.id.linearLayoutSina -> presenter.sinaLogin()
         }
+    }
+
+    internal var umAuthListener: UMAuthListener = object : UMAuthListener {
+        override fun onStart(share_media: SHARE_MEDIA) {
+
+        }
+
+        override fun onComplete(share_media: SHARE_MEDIA, i: Int, map: Map<String, String>) {
+            LogUtil.e("授权回调成功了："+map.get("unionid"))
+            openid=map.get("unionid")
+            presenter.wechatLogin(map)
+        }
+
+        override fun onError(share_media: SHARE_MEDIA, i: Int, throwable: Throwable) {
+            LogUtil.e("授权回调失败："+throwable.message)
+            ToastUtil.showError("授权回调失败")
+        }
+
+        override fun onCancel(share_media: SHARE_MEDIA, i: Int) {
+            LogUtil.e("取消授权")
+            ToastUtil.showError("取消授权")
+        }
+    }
+
+    override fun setBind() {
+        val intent=Intent(this, RegisterActivity::class.java)
+        intent.putExtra("type",1)
+        intent.putExtra("openid",openid)
+        startActivity(intent)
     }
 
     override fun startCountDown() {

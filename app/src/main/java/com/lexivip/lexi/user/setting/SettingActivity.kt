@@ -10,6 +10,7 @@ import com.lexivip.lexi.*
 import com.lexivip.lexi.eventBusMessge.MessageLogout
 import com.lexivip.lexi.index.selection.OpenLifeHouseActivity
 import com.lexivip.lexi.orderList.OrderListActivity
+import com.lexivip.lexi.user.LoginWXBean
 import com.lexivip.lexi.user.login.UserProfileBean
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.setting.address.AddressListActivity
@@ -81,8 +82,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
             }
             R.id.customItemLayout0 -> {
                 if (!UserProfileUtil.isBindWX()){
-                    //TODO 微信绑定待完成
-                    //UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN,umAuthListener)
+                    UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN,umAuthListener)
                 }
             }
             //R.id.customItemLayout1 -> ToastUtil.showInfo("找朋友")
@@ -124,7 +124,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
 
         override fun onComplete(share_media: SHARE_MEDIA, i: Int, map: Map<String, String>) {
             LogUtil.e("授权回调成功了："+map.get("unionid"))
-            presenter.bindWX(map.get("unionid")!!)
+            presenter.bindWX(map)
         }
 
         override fun onError(share_media: SHARE_MEDIA, i: Int, throwable: Throwable) {
@@ -150,10 +150,10 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
         }
     }
 
-    override fun setBind(success: Boolean) {
-        if(success){
+    override fun setBind(bean: LoginWXBean) {
+        if(bean.data.is_bind){
             customItemLayout0.setTvArrowLeftStrle(true,"已绑定",R.color.color_999,12)
-            UserProfileUtil.setBindWX(success)
+            UserProfileUtil.setBindWX(bean.data.is_bind)
         }
     }
 

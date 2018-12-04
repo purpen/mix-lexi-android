@@ -6,8 +6,10 @@ import android.view.View
 import android.widget.TextView
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
+import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.R
@@ -25,17 +27,28 @@ import java.lang.ref.WeakReference
  * 注册
  */
 class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.View {
-
     private val dialog: WaitingDialog? by lazy { WaitingDialog(this) }
 
     private lateinit var presenter: RegisterPresenter
     override val layout: Int = R.layout.acticity_register
     private lateinit var timeCount: TimeCount
+    private var type:Int=0
+    private var openid:String?=null
+
+    override fun getIntentData() {
+        type=intent.getIntExtra("type",0)
+        openid=intent.getStringExtra("openid")
+    }
 
     override fun initView() {
         EventBus.getDefault().register(this)
         presenter = RegisterPresenter(this)
-        customHeadView.setRightTxt(getString(R.string.text_skip), R.color.color_666)
+        if (type==0) {
+            customHeadView.setRightTxt(getString(R.string.text_skip), R.color.color_666)
+        }else{
+            textViewTitle.setText(AppApplication.getContext().getString(R.string.text_bind))
+            button.setText(AppApplication.getContext().getString(R.string.text_bind))
+        }
         timeCount = TimeCount(textViewGetCode, 60000, 1000)
     }
 
@@ -67,7 +80,11 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
                 finish()
             }
             R.id.button -> {
-                presenter.verifyCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString(), etCheckCode.text.toString())
+                if(type==0) {
+                    presenter.verifyCheckCode(textViewCountryCode.text.toString(), etPhone.text.toString(), etCheckCode.text.toString())
+                }else{
+                    presenter.bindPhoneCode(openid!!,textViewCountryCode.text.toString(), etPhone.text.toString(), etCheckCode.text.toString())
+                }
             }
 
             R.id.textViewCountryCode -> startActivity(Intent(this,SelectCountryOrAreaActivity::class.java))
@@ -132,7 +149,10 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
         finish()
     }
 
-
+    override fun setBindPhoneCode() {
+        startActivity(Intent(this,MainActivity::class.java))
+        EventBus.getDefault().post(MessageClose())
+    }
 
 
     class TimeCount(view: TextView, millisInFuture: Long, countDownInterval: Long) : CountDownTimer(millisInFuture, countDownInterval) {

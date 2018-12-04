@@ -26,8 +26,21 @@ open class LoginModel{
         })
     }
 
-    open fun weChatLogin(){
+    open fun weChatLogin(map: Map<String, String>,httpRequestCallBack: IDataSource.HttpRequestCallBack){
+        val params= ClientParamsAPI.getBindWX(map)
+        HttpRequest.sendRequest(HttpRequest.POST, URL.WX_LOGIN,params,object : IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
 
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
     }
 
     open fun qqLogin(){

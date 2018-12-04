@@ -27,11 +27,11 @@ import java.util.TreeMap;
 
 public class ClientParamsAPI {
     //测试
-//    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
-//    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
+    public static final String app_key = "zXIPN0ftRj6dlrKFOZpH";
+    public static final String app_secret = "4d8ebaf52b76603a158b67f525a1b9e5f80677da";
 //    正式
-    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
-    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
+//    public static final String app_key = "PmVOkj4Un6dfKCqQryMR";
+//    public static final String app_secret = "e238bf64d77e5be7284686aaacd0232e7248254a";
     /**
      * 获取登录后的authorization
      * @param token
@@ -1608,12 +1608,31 @@ public class ClientParamsAPI {
 
     /**
      * 绑定微信
-     * @param openid
+     * @param
      * @return
      */
-    public static HashMap<String,Object> getBindWX(@NotNull String openid){
+    public static HashMap<String,Object> getBindWX(@NotNull Map<String,String> map){
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("openid",map.get("unionid"));
+        params.put("nick_name",map.get("name"));
+        params.put("avatar_url",map.get("iconurl"));
+        params.put("gender",map.get("gender"));
+        params.put("country",map.get("country"));
+        params.put("province",map.get("province"));
+        params.put("city",map.get("city"));
+        return params;
+    }
+
+    /**
+     * 微信绑定手机号
+     * @return
+     */
+    public static HashMap<String,Object> getBindPhoneCode(@NotNull String openid,@NotNull String areaCode, @NotNull String phone, @NotNull String checkCode) {
         HashMap<String, Object> params = generateCommonParams();
         params.put("openid",openid);
+        params.put("areacode", areaCode);
+        params.put("email", phone);
+        params.put("verify_code", checkCode);
         return params;
     }
 }

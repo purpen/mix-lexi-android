@@ -5,6 +5,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.JsonUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.net.ClientParamsAPI
+import com.lexivip.lexi.user.LoginWXBean
 import com.lexivip.lexi.user.password.VerifyCodeBean
 import com.umeng.message.UTrack
 import java.io.IOException
@@ -52,8 +53,38 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
     }
 
 
-    override fun wechatLogin() {
-        dataSource.weChatLogin()
+    override fun wechatLogin(map: Map<String, String>) {
+        dataSource.weChatLogin(map,object :IDataSource.HttpRequestCallBack{
+            override fun onStart() {
+                view.showLoadingView()
+            }
+            override fun onSuccess(json: String) {
+                LogUtil.e("绑定微信："+json)
+
+                val loginWXBean= JsonUtil.fromJson(json, LoginWXBean::class.java)
+                if (loginWXBean.success) {
+                    if (loginWXBean.data.is_bind){
+                        AppApplication.mPushAgent.addAlias(loginWXBean.data.uid,"lexi",object : UTrack.ICallBack{
+                            override fun onMessage(p0: Boolean, p1: String?) {
+
+                            }
+
+                        })
+                        SPUtil.write(Constants.AUTHORIZATION, ClientParamsAPI.getAuthorization(loginWXBean.data.token))
+                        getUserProfile(false)
+                    }else {
+                        view.dismissLoadingView()
+                        view.setBind()
+                    }
+                } else {
+                    view.showError(loginWXBean.status.message)
+                }
+            }
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                ToastUtil.showError(R.string.text_net_error)
+            }
+        })
     }
 
     override fun qqLogin() {

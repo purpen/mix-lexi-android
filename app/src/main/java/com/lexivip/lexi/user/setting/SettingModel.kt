@@ -26,9 +26,9 @@ open class SettingModel {
             }
         })
     }
-    fun bindWX(openid: String,callback: IDataSource.HttpRequestCallBack){
-        val params=ClientParamsAPI.getDefaultParams()
-        /*HttpRequest.sendRequest(HttpRequest.POST,URL.BIND_WX,params,object :IDataSource.HttpRequestCallBack{
+    fun bindWX(map: Map<String,String>,callback: IDataSource.HttpRequestCallBack){
+        val params=ClientParamsAPI.getBindWX(map)
+        HttpRequest.sendRequest(HttpRequest.POST,URL.WX_LOGIN,params,object :IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 callback.onStart()
             }
@@ -40,7 +40,7 @@ open class SettingModel {
             override fun onFailure(e: IOException) {
                 callback.onFailure(e)
             }
-        })*/
+        })
     }
 }
 
