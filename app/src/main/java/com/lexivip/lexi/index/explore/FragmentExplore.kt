@@ -23,6 +23,7 @@ import com.lexivip.lexi.index.explore.goodsClassify.GoodsClassifyActivity
 import com.lexivip.lexi.index.explore.goodsIn100.AllGoodsIn100Activity
 import com.lexivip.lexi.index.explore.newGoods.AllNewGoodsActivity
 import com.lexivip.lexi.index.selection.GoodsData
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
 import org.greenrobot.eventbus.EventBus
@@ -325,10 +326,14 @@ class FragmentExplore : BaseFragment(), ExploreContract.View {
             val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
             when (view.id) {
                 R.id.textViewFocus -> { //关注品牌馆
-                    if (item.is_followed) {
-                        presenter.unFocusBrandPavilion(item.rid, position)
-                    } else {
-                        presenter.focusBrandPavilion(item.rid, position)
+                    if (UserProfileUtil.isLogin()){
+                        if (item.is_followed) {
+                            presenter.unFocusBrandPavilion(item.rid, position)
+                        } else {
+                            presenter.focusBrandPavilion(item.rid, position)
+                        }
+                    }else{
+                        PageUtil.jump2LoginActivity()
                     }
                 }
             }

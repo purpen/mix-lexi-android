@@ -3,6 +3,7 @@ package com.lexivip.lexi.index.discover
 import android.content.Context
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -22,7 +23,7 @@ class ArticleDetailCommentListAdapter(res: Int, presenter: ArticleDetailPresente
     private var footerView: View? = null
     private val size30 by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp30) }
     private val dp13 by lazy { DimenUtil.dp2px(13.0) }
-    private var shopWindowData:ArticleDetailBean.DataBean?=null
+    private var articleId:String?=null
     override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, size30,ImageSizeConfig.SIZE_AVA)
@@ -84,10 +85,8 @@ class ArticleDetailCommentListAdapter(res: Int, presenter: ArticleDetailPresente
                 if (adapter!!.footerLayoutCount == 0) adapter!!.addFooterView(footerView)
 
                 textViewReplyNum.setOnClickListener { //跳转评论列表
-                    if (shopWindowData==null) return@setOnClickListener
-
-                    //TODO 跳转文章评论列表
-//                    PageUtil.jump2ShopWindowCommentListActivity(shopWindowData!!)
+                    if (TextUtils.isEmpty(articleId)) return@setOnClickListener
+                    PageUtil.jump2ShopArticleCommentListActivity(articleId!!)
                 }
             } else {
 
@@ -99,11 +98,11 @@ class ArticleDetailCommentListAdapter(res: Int, presenter: ArticleDetailPresente
     }
 
     /**
-     * 设置橱窗数据
+     * 设置文章id
      */
 
-    fun setArticleData(data: ArticleDetailBean.DataBean) {
-        shopWindowData = data
+    fun setArticleData(articleId: String) {
+        this.articleId = articleId
     }
 
 

@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -136,6 +135,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
+
+        LogUtil.e("${data.phases};;;;"+data.phases_description)
+
         when (data.phases) {
             1 -> {//实习馆主
                 headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_practice_life_house, 0, 0, 0)
@@ -144,10 +146,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             }
 
             2 -> { //正式馆主
-
                 headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_success_open_life_house, 0, 0, 0)
                 headerLifeHouse.textViewName.text = "恭喜你拥有生活馆"
-                headerLifeHouse.textViewContent.text = data.phases_description
+                headerLifeHouse.textViewContent.text = "如何快速成交订单获取攻略，请搜索关注乐喜官网公众号，添加乐喜辅导员微信，加入生活馆店主群。"
             }
         }
     }
@@ -202,12 +203,14 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headImageAdapter.setNewData(urlList)
-        val size = data.users.size
-        headImageAdapter.setOnItemClickListener { _, _, position ->
-            val uid = data.users[size - position - 1].uid
-            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(), uid)) return@setOnItemClickListener
-            PageUtil.jump2OtherUserCenterActivity(uid)
-        }
+
+        //这部分头像不需要点击
+//        val size = data.users.size
+//        headImageAdapter.setOnItemClickListener { _, _, position ->
+//            val uid = data.users[size - position - 1].uid
+//            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(), uid)) return@setOnItemClickListener
+//            PageUtil.jump2OtherUserCenterActivity(uid)
+//        }
     }
 
     /**
@@ -341,6 +344,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             //ToastUtil.showInfo("分享生活馆")
             //val share=ShareUtil(activity,WebUrl.)
             //TODO 分享生活馆
+        }
+
+        headerLifeHouse.buttonCpyNum.setOnClickListener {
+            Util.setContent2ClipBoard(getString(R.string.text_wechat_num))
+            ToastUtil.showInfo("复制成功去添加微信")
         }
 
         headerLifeHouse.imageViewEdit.setOnClickListener(this)

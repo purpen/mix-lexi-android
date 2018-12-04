@@ -53,7 +53,6 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:includeFontPadding="false"
-            android:maxLines="1"
             android:text="@string/text_loading"
             android:textColor="@color/color_333"
             android:textSize="14sp" />
@@ -67,7 +66,9 @@
             android:includeFontPadding="false"
             android:text="@string/text_loading"
             android:textColor="@color/color_333"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 
     <include layout="@layout/line_color_eee" />

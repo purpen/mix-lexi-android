@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dp160"
     android:layout_height="wrap_content"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -53,6 +53,8 @@
             android:id="@+id/imageViewAvatar"
             android:layout_width="@dimen/dp25"
             android:layout_height="@dimen/dp25"
+            app:civ_border_color="@color/color_f5f7f9"
+            app:civ_border_width="0.5dp"
             />
 
         <TextView

@@ -513,7 +513,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 totalPrice += product.sale_price * item.quantity
             }
         }
-        textViewNum.text = "${count}件礼品"
+        textViewNum.text = "${count}件商品"
         textViewTotalPrice.text = "$totalPrice"
     }
 

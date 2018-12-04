@@ -136,7 +136,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayoutOpenTips"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="92dp"
         android:layout_marginTop="-2dp"
         android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
@@ -175,8 +175,23 @@
             android:text="成功在30天内销售3笔订单即可正式成为达人馆主"
             android:textColor="@color/color_333"
             android:textSize="@dimen/sp11"
-            android:lineSpacingMultiplier="1.2"
+            android:lineSpacingMultiplier="1.5"
             />
+
+        <Button
+            android:id="@+id/buttonCpyNum"
+            android:layout_width="67dp"
+            android:layout_height="17dp"
+            android:background="@drawable/border5fe4b1_bg_transparent"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:text="@string/text_copy_wechat_num"
+            android:textColor="@color/color_6ed7af"
+            android:textSize="11sp"
+            android:layout_marginEnd="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            />
+
     </RelativeLayout>
 
     <RelativeLayout

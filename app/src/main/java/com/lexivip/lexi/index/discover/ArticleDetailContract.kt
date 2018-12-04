@@ -57,6 +57,22 @@ class ArticleDetailContract {
         fun praiseArticleSuccess(b: Boolean) {
 
         }
+
+        fun loadMoreEnd() {
+
+        }
+
+        fun loadMoreComplete() {
+
+        }
+
+        fun addData(comments: List<CommentBean>) {
+
+        }
+
+        fun loadMoreFail() {
+
+        }
     }
 
     interface Presenter : BasePresenter {
@@ -65,10 +81,29 @@ class ArticleDetailContract {
         fun getRelateStories(rid: String)
         fun getRecommendProducts(rid: String)
         fun focusBrandPavilion(store_rid: String, isFavorite: Boolean, v: android.view.View,isHeaderPavilion:Boolean)
+
         fun getArticleComments(rid: String)
+
+        fun getArticleComments(rid: String,isRefresh: Boolean)
+        /**
+         * 加载更多评论
+         */
+        fun loadMoreArticleComments()
+
+        /**
+         * 评论点赞
+         */
         fun praiseComment(view1: android.view.View, commentBean: CommentBean, adapter: ArticleSubCommentListAdapter)
         fun praiseComment(comment_id: String, isPraise: Boolean, position: Int, view1: android.view.View, isSubAdapter: Boolean)
+
+        /**
+         * 提交评论
+         */
         fun submitComment(rid: String, pid: String, content: String, sendButton: Button)
+
+        /**
+         * 文章点赞
+         */
         fun praiseArticle(rid: String,isPraise: Boolean, view1: android.view.View)
     }
 }

@@ -116,11 +116,32 @@ class ArticleDetailModel : IDataSource {
     /**
      * 获取三条评论
      */
-    fun getArticleComments(rid: String,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+    fun getArticleComments(page:Int,rid: String,pageSize:String,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        params["per_page"] = "3"
+        params["page"] = "$page"
+        params["per_page"] = pageSize
         params["rid"] = rid
         HttpRequest.sendRequest(HttpRequest.GET, URL.ARTICLE_DETAIL_COMMENTS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    /**
+     * 加载文章子评论
+     */
+    fun loadMoreSubComments(page: Int,comment_id: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getMoreSubCommentsParams(page,comment_id)
+        HttpRequest.sendRequest(HttpRequest.GET, URL.ARTICLE_SUB_COMMENTS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }

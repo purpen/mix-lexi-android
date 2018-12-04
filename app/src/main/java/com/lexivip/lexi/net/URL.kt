@@ -895,4 +895,9 @@ object URL {
      * 微信登录
      */
     const val WX_LOGIN="${BASE_URL}auth/app_bind_wx"
+
+    /**
+     * 获取文章子评论
+     */
+    const val ARTICLE_SUB_COMMENTS = "${BASE_URL}life_records/child_comments"
 }

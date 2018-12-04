@@ -1,60 +1,68 @@
-package com.lexivip.lexi.discoverLifeAesthetics
+package com.lexivip.lexi.index.discover
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
+import android.view.View
 import android.widget.*
+import com.basemodule.tools.ScreenUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
+import com.lexivip.lexi.discoverLifeAesthetics.CommentSuccessBean
+import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListBean
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.view.emotionkeyboardview.fragment.EmotionMainFragment
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
-import kotlinx.android.synthetic.main.activity_show_window_comment_list.*
+import kotlinx.android.synthetic.main.activity_article_comment_list.*
 
 
-class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.View {
+class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
 
-    override val layout: Int = R.layout.activity_show_window_comment_list
+    override val layout: Int = R.layout.activity_article_comment_list
 
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
 
-    private val presenter: ShowWindowCommentPresenter by lazy { ShowWindowCommentPresenter(this) }
+    private val presenter: ArticleDetailPresenter by lazy { ArticleDetailPresenter(this) }
 
-    private val adapter: ShowWindowCommentListAdapter by lazy { ShowWindowCommentListAdapter(R.layout.adapter_comment_list, presenter) }
+    private val adapter: ArticleCommentListAdapter by lazy { ArticleCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
-    private lateinit var shopWindowData: ShowWindowDetailBean.DataBean
+    private lateinit var articleId: String
     private lateinit var emotionMainFragment: EmotionMainFragment
+
+    private var commentCount = 0
 
     //父级评论id
     private var pid: String = "0"
 
-    override fun setPresenter(presenter: ShowWindowCommentContract.Presenter?) {
+    override fun setPresenter(presenter: ArticleDetailContract.Presenter?) {
         setPresenter(presenter)
     }
 
     override fun getIntentData() {
         if (intent.hasExtra(TAG)) {
-            shopWindowData = intent.getParcelableExtra(TAG)
+            articleId = intent.getStringExtra(TAG)
         }
     }
 
     override fun initView() {
         swipeRefreshLayout.isEnabled = false
-        customHeadView.setHeadCenterTxtShow(true, "${shopWindowData.comment_count}条评论")
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val linearLayoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(DividerItemDecoration(applicationContext))
+        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         initEmotionFragment()
     }
 
@@ -69,8 +77,8 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         //隐藏控件
         bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
 
-        bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindowData.is_like)
-        bundle.putInt(EmotionMainFragment.LIKE_COUNTS, shopWindowData.like_count)
+//        bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindowData.is_like)
+//        bundle.putInt(EmotionMainFragment.LIKE_COUNTS, shopWindowData.like_count)
 
         emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment.bindToContentView(swipeRefreshLayout)
@@ -83,16 +91,24 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
     override fun installListener() {
 
-//        imageViewChangeInput.setOnClickListener{
-//            if (showEmojiKeyBoard){ //关闭表情键盘
-//                showEmojiKeyBoard = false
-//                imageViewChangeInput.setImageResource(R.mipmap.icon_open_emoji)
-//            }else{
-//                imageViewChangeInput.setImageResource(R.mipmap.icon_text_input)
-//                showEmojiKeyBoard = true
-//            }
-//        }
+        //点击输入框获取焦点
+        textViewInput.setOnClickListener {
+            emotionMainFragment.requestFocus()
+        }
 
+        val intArray = IntArray(2)
+        textViewInput.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            textViewInput.getLocationOnScreen(intArray)
+            if (intArray[1] > ScreenUtil.getScreenHeight() * 2 / 3) { //键盘被关闭
+                if (emotionMainFragment.isUserInputEmpty()) {
+                    relativeLayoutBar.visibility = View.VISIBLE
+                }
+            } else { //键盘打开
+                relativeLayoutBar.visibility = View.INVISIBLE
+                emotionMainFragment.requestFocus()
+
+            }
+        }
 
 
         emotionMainFragment.setOnSendCommentListener(object : IOnSendCommentListener {
@@ -103,20 +119,9 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
                         ToastUtil.showInfo("请先输入评论")
                         return
                     }
-                    presenter.submitComment(shopWindowData.rid, pid, content, sendButton)
+                    presenter.submitComment(articleId, pid, content, sendButton)
                     editText.text.clear()
                     emotionMainFragment.hideKeyBoard()
-                } else {
-                    startActivity(Intent(applicationContext, LoginActivity::class.java))
-                }
-            }
-        })
-
-
-        emotionMainFragment.setOnFavoriteClickListener(object : IOnFavoriteClickListener {
-            override fun onClick(imageViewLike: ImageView, textViewLikeCount: TextView) {
-                if (UserProfileUtil.isLogin()) {
-                    presenter.favoriteShowWindow(shopWindowData.rid, imageViewLike, shopWindowData.is_like, textViewLikeCount)
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
                 }
@@ -135,11 +140,11 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
-            presenter.loadData(shopWindowData.rid, true)
+            presenter.loadData(true, articleId)
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData(shopWindowData.rid)
+            presenter.loadMoreArticleComments()
         }, recyclerView)
 
 
@@ -169,10 +174,13 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         emotionMainFragment.resetInputBarState()
     }
 
+
     /**
      * 当评论提交成功
      */
-    override fun noticeCommentSucess(data: CommentSuccessBean.DataBean) {
+    override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+        commentCount++
+        customHeadView.setHeadCenterTxtShow(true, "${commentCount}条评论")
         resetInputBarState()
         //当前提交成功的评论内容
         val commentBean = CommentBean()
@@ -203,9 +211,9 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     /**
      * 更新评论点赞状态
      */
-    override fun setPraiseCommentState(doPraise: Boolean, position: Int, isSubAdapter: Boolean) {
+    override fun setPraiseCommentState(b: Boolean, position: Int, subAdapter: Boolean) {
         val commentsBean = adapter.getItem(position) as CommentBean
-        if (doPraise) {
+        if (b) {
             commentsBean.is_praise = true
             commentsBean.praise_count += 1
         } else {
@@ -218,34 +226,20 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
     }
 
-    /**
-     * 设置喜欢状态
-     */
-    override fun setFavorite(b: Boolean, view1: ImageView, textViewLikeCount: TextView) {
-        if (b) {
-            shopWindowData.is_like = true
-            view1.setImageResource(R.mipmap.icon_click_favorite_selected)
-            shopWindowData.like_count += 1
-            textViewLikeCount.text = "${shopWindowData.like_count}"
-        } else {
-            shopWindowData.is_like = false
-            view1.setImageResource(R.mipmap.icon_click_favorite_normal)
-            shopWindowData.like_count -= 1
-            textViewLikeCount.text = "${shopWindowData.like_count}"
-        }
-    }
-
-    override fun setNewData(comments: MutableList<CommentBean>) {
+    override fun setCommentListData(data: ShowWindowCommentListBean.DataBean) {
+        commentCount = data.count
+        customHeadView.setHeadCenterTxtShow(true, "${commentCount}条评论")
         emotionMainFragment.requestFocus()
-        adapter.setNewData(comments)
+        adapter.setNewData(data.comments)
     }
 
-    override fun addData(comments: MutableList<CommentBean>) {
+
+    override fun addData(comments: List<CommentBean>) {
         adapter.addData(comments)
     }
 
     override fun requestNet() {
-        presenter.loadData(shopWindowData.rid, false)
+        presenter.getArticleComments(articleId, false)
     }
 
     override fun loadMoreComplete() {
@@ -270,10 +264,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 
     override fun showError(string: String) {
         ToastUtil.showError(string)
-    }
-
-    override fun goPage() {
-
     }
 
     internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {

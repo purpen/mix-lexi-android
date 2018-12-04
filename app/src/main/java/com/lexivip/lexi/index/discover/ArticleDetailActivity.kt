@@ -98,10 +98,10 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         //隐藏控件
         bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
 
-        if (data != null) {
+//        if (data != null) {
 //        bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindowData.is_like)
 //        bundle.putInt(EmotionMainFragment.LIKE_COUNTS, shopWindowData.like_count)
-        }
+//        }
 
         emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment!!.bindToContentView(recyclerView)
@@ -198,10 +198,10 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             val view = View.inflate(this, R.layout.footer_comment_count, null)
             view.textViewCommentCount.text = "查看全部" + data.count + "条评论"
             adapterArticleCommentList.addFooterView(view)
+            adapterArticleCommentList.setArticleData(rid!!)
             view.setOnClickListener {
-                ToastUtil.showInfo("查看评论列表")
-                //            if (shopWindow == null) return@setOnClickListener
-                //            PageUtil.jump2ShopWindowCommentListActivity(shopWindow!!)
+                if (TextUtils.isEmpty(rid)) return@setOnClickListener
+                PageUtil.jump2ShopArticleCommentListActivity(rid!!)
             }
         } else {
             footerView.line15Comment.visibility = View.GONE
@@ -469,6 +469,10 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             resetInputState()
         }
 
+        adapter.setOnItemClickListener { _, _, _ ->
+            resetInputState()
+        }
+
         /**
          * 外部点击重置输入状态
          */
@@ -586,6 +590,12 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             startActivity(intent)
         }
 
+
+        relativeLayoutComment.setOnClickListener {
+            if (TextUtils.isEmpty(rid)) return@setOnClickListener
+            PageUtil.jump2ShopArticleCommentListActivity(rid!!)
+        }
+
     }
 
     override fun showLoadingView() {
@@ -650,6 +660,16 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
             }
 
             return divider
+        }
+    }
+
+    override fun onBackPressed() {
+        if (emotionMainFragment == null) return
+        /**
+         * 判断是否拦截返回键操作
+         */
+        if (!emotionMainFragment!!.isInterceptBackPress()) {
+            finish()
         }
     }
 }
