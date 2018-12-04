@@ -99,7 +99,11 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         headerView.textViewName.text = createOrderBean.consigneeInfo.full_name
         headerView.textViewPhone.text = createOrderBean.consigneeInfo.mobile
         headerView.textViewAddress.text = createOrderBean.consigneeInfo.full_address
-        headerView.textViewZip.text = createOrderBean.consigneeInfo.zipcode
+
+        if (!TextUtils.isEmpty(createOrderBean.consigneeInfo.zipcode)) {
+            headerView.textViewZip.visibility = View.VISIBLE
+            headerView.textViewZip.text = createOrderBean.consigneeInfo.zipcode
+        }
 
         headerView.textViewSubtotalPrice.text = "${createOrderBean.orderTotalPrice}"
 
