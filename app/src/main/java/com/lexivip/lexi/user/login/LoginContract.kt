@@ -18,11 +18,12 @@ class LoginContract {
         fun startCountDown() {
 
         }
+        fun setBind()
     }
 
     interface Presenter : BasePresenter {
         fun loginUser(toString: String, toString1: String)
-        fun wechatLogin()
+        fun wechatLogin(map: Map<String, String>)
         fun qqLogin()
         fun sinaLogin()
         fun sendCheckCode(areaCode: String, phone: String)

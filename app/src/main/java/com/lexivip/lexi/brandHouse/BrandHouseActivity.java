@@ -89,6 +89,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     private Intent intent;
     private CustomViewPager viewPager;
     private ArrayList<BaseFragment> fragments;
+    private int fansCount;
 
     @Override
     protected int getLayout() {
@@ -260,6 +261,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         tv_name.setText(bean.data.name);
         tv_location.setText(bean.data.delivery_province + "." + bean.data.city);
         tv_fans.setText(String.valueOf(bean.data.fans_count));
+        fansCount = bean.data.fans_count;
         tv_description.setText(bean.data.tag_line);
         isFollow = bean.data.is_followed;
         if (isFollow) {
@@ -394,14 +396,15 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void setIsFollow(BrandHouseFollowBean bean) {
-        tv_fans.setText(String.valueOf(bean.data.fans_count));
         isFollow = !isFollow;
         if (isFollow) {
+            tv_fans.setText(String.valueOf(fansCount+1));
             ll_follow.setBackgroundResource(R.drawable.bg_radius_round_f5f7f9);
             tv_focus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             tv_focus.setTextColor(Util.getColor(R.color.color_949ea6));
             tv_focus.setText(Util.getString(R.string.text_focused));
         } else {
+            tv_fans.setText(fansCount);
             ll_follow.setBackgroundResource(R.drawable.switch_noselect);
             tv_focus.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_focus_pavilion, 0, 0, 0);
             tv_focus.setTextColor(Util.getColor(android.R.color.white));

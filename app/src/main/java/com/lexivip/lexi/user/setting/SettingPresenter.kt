@@ -1,10 +1,12 @@
 package com.lexivip.lexi.user.setting
 
+import com.basemodule.tools.LogUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.R
 import com.lexivip.lexi.mine.UserCenterBean
+import com.lexivip.lexi.user.LoginWXBean
 import java.io.IOException
 
 class SettingPresenter(view: SettingContract.View) : SettingContract.Presenter {
@@ -35,18 +37,19 @@ class SettingPresenter(view: SettingContract.View) : SettingContract.Presenter {
             }
         })
     }
-    override fun bindWX(openid: String) {
-        dataSource.bindWX(openid,object :IDataSource.HttpRequestCallBack{
+    override fun bindWX(map: Map<String,String>) {
+        dataSource.bindWX(map,object :IDataSource.HttpRequestCallBack{
             override fun onStart() {
                 view.showLoadingView()
             }
             override fun onSuccess(json: String) {
+                LogUtil.e("绑定微信："+json)
                 view.dismissLoadingView()
-                val userCenterBean = JsonUtil.fromJson(json, UserCenterBean::class.java)
-                if (userCenterBean.success) {
-                    view.setBind(userCenterBean.success)
+                val loginWXBean=JsonUtil.fromJson(json,LoginWXBean::class.java)
+                if (loginWXBean.success) {
+                    view.setBind(loginWXBean)
                 } else {
-                    view.showError(userCenterBean.status.message)
+                    view.showError(loginWXBean.status.message)
                 }
             }
             override fun onFailure(e: IOException) {

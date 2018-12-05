@@ -1,20 +1,19 @@
-package com.lexivip.lexi.user.setting
+package com.lexivip.lexi.welcome
 
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.mine.UserCenterBean
 import com.lexivip.lexi.user.LoginWXBean
 
-class SettingContract {
+class WelcomeContract{
     interface View : BaseView<Presenter> {
         fun showLoadingView()
         fun showError(s: String)
         fun dismissLoadingView()
-        fun setUserInfo(data: UserCenterBean.DataBean)
-        fun setBind(bean: LoginWXBean)
+        fun setBind()
+        fun setFinish()
     }
     interface Presenter : BasePresenter {
-        fun loadData()
         fun bindWX(map:Map<String,String>)
     }
 }
