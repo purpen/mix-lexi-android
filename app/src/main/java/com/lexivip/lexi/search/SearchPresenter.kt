@@ -87,17 +87,19 @@ class SearchPresenter(view: SearchContract.View) : SearchContract.Presenter {
         })
     }
 
+
+
     /**
      * 模糊匹配
      */
     override fun getFuzzyWordList(keyWord: String) {
         dataSource.getFuzzyWordList(keyWord,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                view.showFuzzyLoadingView()
             }
 
             override fun onSuccess(json: String) {
-                view.dismissLoadingView()
+                view.dismissFuzzyLoadingView()
                 val fuzzyWordMatchListBean = JsonUtil.fromJson(json, FuzzyWordMatchListBean::class.java)
                 if (fuzzyWordMatchListBean.success) {
                     view.setFuzzyWordListData(fuzzyWordMatchListBean.data.search_items)
@@ -107,7 +109,7 @@ class SearchPresenter(view: SearchContract.View) : SearchContract.Presenter {
             }
 
             override fun onFailure(e: IOException) {
-                view.dismissLoadingView()
+                view.dismissFuzzyLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

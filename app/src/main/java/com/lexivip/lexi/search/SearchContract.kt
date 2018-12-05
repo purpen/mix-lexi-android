@@ -32,6 +32,14 @@ class SearchContract {
         fun setFuzzyWordListData(search_items: List<FuzzyWordMatchListBean.DataBean.SearchItemsBean>) {
 
         }
+
+        fun showFuzzyLoadingView() {
+
+        }
+
+        fun dismissFuzzyLoadingView() {
+
+        }
     }
 
     interface Presenter : BasePresenter {

@@ -16,16 +16,16 @@
             android:layout_height="@dimen/dp30"
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
-            android:paddingEnd="38dp"
             android:layout_toStartOf="@id/textViewCancel"
             android:background="@drawable/bg_radius_round_eaedf0"
-            android:drawablePadding="10dp"
             android:drawableStart="@mipmap/icon_search_head"
+            android:drawablePadding="10dp"
             android:hint="@string/text_search_hint"
             android:imeOptions="actionSend"
             android:maxLength="50"
             android:maxLines="1"
             android:paddingStart="10dp"
+            android:paddingEnd="38dp"
             android:textColor="@color/color_333"
             android:textColorHint="@color/color_555"
             android:textSize="@dimen/sp12" />
@@ -37,8 +37,8 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="68dp"
-            android:visibility="gone"
-            android:background="@mipmap/icon_clear_search_box" />
+            android:background="@mipmap/icon_clear_search_box"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textViewCancel"
@@ -50,13 +50,24 @@
             android:textColor="@color/color_333" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewFuzzyMatch"
-        android:visibility="gone"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        />
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewFuzzyMatch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/loadingView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -72,8 +83,8 @@
                 android:id="@+id/relativeLayoutSearchHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="0dp"
                 android:paddingStart="15dp"
+                android:paddingEnd="0dp"
                 android:visibility="gone">
 
                 <TextView
@@ -107,8 +118,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical"
-                android:paddingEnd="0dp"
                 android:paddingStart="@dimen/dp15"
+                android:paddingEnd="0dp"
                 android:visibility="gone">
 
                 <TextView
@@ -134,8 +145,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:orientation="vertical"
-                android:paddingEnd="0dp"
-                android:paddingStart="@dimen/dp15">
+                android:paddingStart="@dimen/dp15"
+                android:paddingEnd="0dp">
 
                 <TextView
                     android:id="@+id/textViewHotRecommendTitle"
@@ -162,8 +173,7 @@
                 android:layout_marginTop="30dp"
                 android:orientation="vertical"
                 android:paddingStart="15dp"
-                android:paddingEnd="0dp"
-                >
+                android:paddingEnd="0dp">
 
                 <TextView
                     android:id="@+id/textViewHotSearchTitle"
