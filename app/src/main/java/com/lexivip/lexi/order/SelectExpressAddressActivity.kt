@@ -4,10 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
+import com.flyco.dialog.listener.OnBtnClickL
+import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.eventBusMessge.MessageOrderSuccess
@@ -147,6 +150,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
      * 去确认订单界面
      */
     private fun jump2ConfirmOrder(){
+
         val intent = Intent(this, ConfirmOrderActivity::class.java)
         intent.putExtra(ConfirmOrderActivity::class.java.simpleName, createOrderBean)
         startActivity(intent)
@@ -158,14 +162,47 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
     override fun setUserIndentityInfo(data: JSONObject, selectedItem: UserAddressListBean.DataBean) {
         val identify = data.optString("id_card")
         if (TextUtils.isEmpty(identify)){ //未上传身份信息
-            val intent = Intent(this, AddressActivity::class.java)
-            intent.putExtra("isForeign", true)
-            intent.putExtra(AddressActivity::class.java.simpleName, selectedItem.rid)
-            startActivityForResult(intent,Constants.REQUEST_CODE_REFRESH_ADDRESS)
+            showEditAddressDialog(selectedItem.rid)
         }else{ //已上传身份信息
             jump2ConfirmOrder()
         }
     }
+
+
+    private fun showEditAddressDialog(rid: String) {
+        val color333 = Util.getColor(R.color.color_333)
+        val color007aaf = Util.getColor(R.color.color_007aaf)
+        val white = Util.getColor(android.R.color.white)
+        val dialog = NormalDialog(this)
+        dialog.isTitleShow(true)
+                .style(NormalDialog.STYLE_TWO)
+                .titleTextColor(Util.getColor(android.R.color.black))
+                .titleTextSize(17f)
+                .title(getString(R.string.text_tips))
+                .bgColor(white)
+                .cornerRadius(4f)
+                .content(Util.getString(R.string.text_no_identify_info))
+                .contentGravity(Gravity.CENTER)
+                .contentTextColor(color333)
+                .contentTextSize(13f)
+                .dividerColor(Util.getColor(R.color.color_ccc))
+                .btnText(Util.getString(R.string.text_cancel),Util.getString(R.string.text_go_add))
+                .btnTextSize(17f, 17f)
+                .btnTextColor(color007aaf, color007aaf)
+                .btnPressColor(white)
+                .widthScale(0.85f)
+                .show()
+        dialog.setOnBtnClickL(OnBtnClickL {
+            dialog.dismiss()
+        }, OnBtnClickL {
+            val intent = Intent(this, AddressActivity::class.java)
+            intent.putExtra("isForeign", true)
+            intent.putExtra(AddressActivity::class.java.simpleName,rid)
+            startActivityForResult(intent,Constants.REQUEST_CODE_REFRESH_ADDRESS)
+            dialog.dismiss()
+        })
+    }
+
 
     override fun setNewData(addresses: MutableList<UserAddressListBean.DataBean>) {
         swipeRefreshLayout.isRefreshing = false
