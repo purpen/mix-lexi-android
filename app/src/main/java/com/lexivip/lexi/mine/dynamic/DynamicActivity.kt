@@ -239,7 +239,7 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
                 .contentGravity(Gravity.CENTER)
                 .contentTextColor(color333)
                 .contentTextSize(16f)
-                .dividerColor(Util.getColor(R.color.color_ccc))
+                .dividerColor(Util.getColor(R.color.color_eee))
                 .btnText(Util.getString(R.string.text_qd), Util.getString(R.string.text_cancel))
                 .btnTextSize(15f, 15f)
                 .btnTextColor(color333, Util.getColor(R.color.color_6ed7af))

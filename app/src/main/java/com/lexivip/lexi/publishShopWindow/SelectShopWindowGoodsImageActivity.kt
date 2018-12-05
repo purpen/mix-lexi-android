@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
 import android.util.SparseArray
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -27,6 +28,9 @@ class SelectShopWindowGoodsImageActivity : BaseActivity(), SelectShopWindowGoods
     override val layout: Int = R.layout.acticity_select_shop_window_goods_image
     private var pos: Int = 0
     private lateinit var productsMap: SparseArray<ProductBean>
+    //设计馆rid
+    private var storeRid: String = ""
+    //商品rid
     private var rid: String = ""
     private var selectedProductImage: SelectGoodsImageBean.DataBean.ImagesBean? = null
 
@@ -64,6 +68,7 @@ class SelectShopWindowGoodsImageActivity : BaseActivity(), SelectShopWindowGoods
     //当选择图片
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onChangeGoods(message: MessageRequestGoodsImages) {
+        storeRid = message.storeRid
         rid = message.rid
         presenter.loadGoodsImageById(message.rid)
     }
@@ -74,7 +79,7 @@ class SelectShopWindowGoodsImageActivity : BaseActivity(), SelectShopWindowGoods
     override fun setNewData(images: List<SelectGoodsImageBean.DataBean.ImagesBean>) {
         if (!images.isEmpty()) {
             images[0].selected = true
-            images[0].store_rid = rid
+            images[0].store_rid = storeRid
             selectedProductImage = images[0]
         }
         adapterSelectedImage.setNewData(images)
@@ -86,25 +91,26 @@ class SelectShopWindowGoodsImageActivity : BaseActivity(), SelectShopWindowGoods
         //点击确定
         button.setOnClickListener {
             if (selectedProductImage == null) return@setOnClickListener
-            var sameRidCount = 0
+            var sameStoreRidCount = 0
             for (i in 0..6) {//橱窗该位置已有图且选图不重复则执行替换操作
                 val bean = productsMap[i] ?: break
                 if (i != pos) {
-                    if (TextUtils.equals(bean.rid, rid)) {
-                        sameRidCount++
+                    if (TextUtils.equals(bean.rid,rid)){
+                        ToastUtil.showInfo("商品已添加至橱窗")
+                        return@setOnClickListener
                     }
-                    if (sameRidCount == 2) {
+
+                    if (TextUtils.equals(bean.store_rid,storeRid)) {
+                        sameStoreRidCount++
+                    }
+                    if (sameStoreRidCount == 2) {
                         ToastUtil.showInfo("一个橱窗最多添加一个品牌馆两件商品")
                         return@setOnClickListener
                     }
                 }
-                if (TextUtils.equals(bean.cover_id, selectedProductImage!!.id)) {
-                    ToastUtil.showInfo("该图已添加至橱窗")
-                    return@setOnClickListener
-                }
             }
 
-            EventBus.getDefault().post(MessageAddGoodsImages(pos, selectedProductImage!!.view_url, selectedProductImage!!.id, rid))
+            EventBus.getDefault().post(MessageAddGoodsImages(pos, selectedProductImage!!.view_url, rid,storeRid))
             finish()
         }
 
@@ -114,7 +120,7 @@ class SelectShopWindowGoodsImageActivity : BaseActivity(), SelectShopWindowGoods
             val item = adapterSelectedImage.getItem(position) ?: return@setOnItemClickListener
             for (imageBean in data) {
                 imageBean.selected = false
-                imageBean.store_rid = rid
+                imageBean.store_rid = storeRid
             }
             item.selected = true
             selectedProductImage = item
