@@ -541,7 +541,11 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.textViewMaterial.text = "材质：${data.material_name}"
         }
 
-        headerView.textViewCount.text = "数量：${data.total_stock}件"
+        if (data.total_stock <= 10){
+            headerView.textViewCount.visibility = View.VISIBLE
+            headerView.textViewCount.text = "数量：${data.total_stock}件"
+        }
+
 
         headerView.textViewSendAddress.text = data.delivery_country
 

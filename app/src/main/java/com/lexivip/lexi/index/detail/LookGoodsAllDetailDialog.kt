@@ -59,7 +59,11 @@ class LookGoodsAllDetailDialog(context: FragmentActivity?, goodsData: GoodsAllDe
             view.textViewMaterial.text = "材质：${data.material_name}"
         }
 
-        view.textViewCount.text = "数量：${data.total_stock}件"
+        if (data.total_stock <= 10){
+            view.textViewCount.visibility = View.VISIBLE
+            view.textViewCount.text = "数量：${data.total_stock}件"
+        }
+
 
         view.textViewSendAddress.text = data.delivery_country
 
