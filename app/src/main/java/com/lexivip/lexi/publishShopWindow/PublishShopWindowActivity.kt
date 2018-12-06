@@ -547,6 +547,7 @@ class PublishShopWindowActivity : BaseActivity(), PublishShopWindowContract.View
         bean.store_rid = message.store_rid
         bean.rid = message.rid
         bean.cover = message.url
+        bean.cover_id = message.id
         productsMap.put(message.position, bean)
         setImageForGridView(publishCount)
 

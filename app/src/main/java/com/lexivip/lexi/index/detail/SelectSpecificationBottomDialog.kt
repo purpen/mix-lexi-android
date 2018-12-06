@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.basemodule.tools.*
-import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.CustomImageSpan
 import com.lexivip.lexi.JsonUtil
@@ -19,6 +18,7 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.order.CreateOrderBean
 import com.lexivip.lexi.order.SelectExpressAddressActivity
 import com.lexivip.lexi.order.StoreItemBean
+import com.smart.dialog.widget.base.BottomBaseDialog
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.dialog_select_specification_bottom.view.*

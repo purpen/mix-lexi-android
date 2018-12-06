@@ -7,13 +7,12 @@ import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.IDataSource
-import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.JsonUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.net.WebUrl
-import com.lexivip.lexi.shareUtil.ShareUtil
+import com.smart.dialog.widget.base.BottomBaseDialog
 import com.umeng.socialize.ShareAction
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage

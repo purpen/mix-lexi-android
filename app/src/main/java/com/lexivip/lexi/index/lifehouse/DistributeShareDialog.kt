@@ -3,11 +3,11 @@ package com.lexivip.lexi.index.lifehouse
 import android.graphics.Color
 import android.support.v4.app.FragmentActivity
 import android.view.View
-import com.flyco.dialog.widget.base.BaseDialog
 import com.basemodule.tools.DimenUtil
-import com.flyco.dialog.utils.CornerUtils
 import com.lexivip.lexi.R
 import com.lexivip.lexi.view.CenterShareView
+import com.smart.dialog.utils.CornerUtils
+import com.smart.dialog.widget.base.BaseDialog
 
 
 class DistributeShareDialog(context: FragmentActivity?) : BaseDialog<DistributeShareDialog>(context) {

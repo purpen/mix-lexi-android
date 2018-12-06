@@ -3,8 +3,8 @@ package com.lexivip.lexi.selectionGoodsCenter
 import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.basemodule.tools.Util
-import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.R
+import com.smart.dialog.widget.base.BottomBaseDialog
 import kotlinx.android.synthetic.main.dialog_profit_sort_bottom.view.*
 
 class DialogBottomProfit(context: FragmentActivity?, presenter: AllGoodsPresenter) : BottomBaseDialog<DialogBottomProfit>(context) {

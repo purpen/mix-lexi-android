@@ -8,9 +8,9 @@ import com.basemodule.tools.Constants
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.ui.IDataSource
-import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
+import com.smart.dialog.widget.base.BottomBaseDialog
 import kotlinx.android.synthetic.main.dialog_filter_sort_bottom.view.*
 import java.io.IOException
 

@@ -8,8 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
-import com.flyco.dialog.listener.OnBtnClickL
-import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.eventBusMessge.MessageChangePage
 import com.lexivip.lexi.eventBusMessge.MessageOrderSuccess
@@ -19,6 +17,8 @@ import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.order.*
 import com.lexivip.lexi.shopCart.*
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.smart.dialog.listener.OnBtnClickL
+import com.smart.dialog.widget.NormalDialog
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*
 import kotlinx.android.synthetic.main.fragment_main1.*
 import kotlinx.android.synthetic.main.header_empty_shop_cart.view.*
@@ -427,18 +427,19 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 .content(Util.getString(R.string.text_remove_selected_goods))
                 .contentGravity(Gravity.CENTER)
                 .contentTextColor(color333)
-                .contentTextSize(16f)
+                .contentTextSize(14f)
                 .dividerColor(Util.getColor(R.color.color_ccc))
-                .btnText(Util.getString(R.string.text_qd), Util.getString(R.string.text_cancel))
-                .btnTextSize(15f, 15f)
-                .btnTextColor(color333, Util.getColor(R.color.color_6ed7af))
+                .btnText(Util.getString(R.string.text_cancel),Util.getString(R.string.text_qd))
+                .btnTextSize(18f, 18f)
+                .setRightBtnBgColor(Util.getColor(R.color.color_6ed7af))
+                .btnTextColor(color333, white)
                 .btnPressColor(white)
                 .widthScale(0.85f)
                 .show()
         dialog.setOnBtnClickL(OnBtnClickL {
-            presenter.removeProductFromShopCart(list)
             dialog.dismiss()
         }, OnBtnClickL {
+            presenter.removeProductFromShopCart(list)
             dialog.dismiss()
         })
     }

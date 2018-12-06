@@ -21,14 +21,14 @@ import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseActivity;
-import com.flyco.dialog.listener.OnOperItemClickL;
-import com.flyco.dialog.widget.ActionSheetDialog;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.album.ImageCropActivity;
 import com.lexivip.lexi.album.ImageUtils;
 import com.lexivip.lexi.album.PicturePickerUtils;
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean;
 import com.lexivip.lexi.view.CustomHeadView;
+import com.smart.dialog.listener.OnOperItemClickL;
+import com.smart.dialog.widget.ActionSheetDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

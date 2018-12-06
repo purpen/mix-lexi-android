@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.flyco.dialog.widget.base.BaseDialog;
 import com.lexivip.lexi.R;
+import com.smart.dialog.widget.base.BaseDialog;
 
 public class InquiryDialog extends BaseDialog<InquiryDialog> {
     private Context context;

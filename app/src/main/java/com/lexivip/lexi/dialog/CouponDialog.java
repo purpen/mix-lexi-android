@@ -14,11 +14,11 @@ import android.widget.ImageView;
 import com.basemodule.tools.DateUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.flyco.dialog.widget.base.BaseDialog;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.receiveVoucher.VoucherOfficialBean;
 import com.lexivip.lexi.user.login.LoginActivity;
 import com.lexivip.lexi.user.login.UserProfileUtil;
+import com.smart.dialog.widget.base.BaseDialog;
 
 import java.util.ArrayList;
 import java.util.Date;

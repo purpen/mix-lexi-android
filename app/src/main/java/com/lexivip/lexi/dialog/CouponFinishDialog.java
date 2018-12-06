@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
-import com.flyco.dialog.widget.base.BaseDialog;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.coupon.UserCouponActivity;
+import com.smart.dialog.widget.base.BaseDialog;
 
 public class CouponFinishDialog extends BaseDialog<CouponFinishDialog> {
 

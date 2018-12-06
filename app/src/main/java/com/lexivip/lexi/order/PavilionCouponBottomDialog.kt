@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.Util
-import com.flyco.dialog.widget.base.BottomBaseDialog
 import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.eventBusMessge.MessageUpdate
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CouponBean
+import com.smart.dialog.widget.base.BottomBaseDialog
 import kotlinx.android.synthetic.main.dialog_pavilion_coupon_bottom.view.*
 import kotlinx.android.synthetic.main.header_coupon_bottom_dialog.view.*
 import org.greenrobot.eventbus.EventBus

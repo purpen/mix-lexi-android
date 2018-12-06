@@ -24,9 +24,6 @@ import android.view.animation.TranslateAnimation
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.flyco.dialog.listener.OnBtnClickL
-import com.flyco.dialog.widget.ActionSheetDialog
-import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.*
 import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
@@ -40,6 +37,9 @@ import com.lexivip.lexi.search.AdapterSearchGoods
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.smart.dialog.listener.OnBtnClickL
+import com.smart.dialog.widget.ActionSheetDialog
+import com.smart.dialog.widget.NormalDialog
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -293,7 +293,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 dialog.layoutAnimation(LayoutAnimationController(animation, 0f))
                 dialog.isTitleShow(false).show()
 
-                dialog.setOnOperItemClickL { parent, view, position, id ->
+                dialog.setOnOperItemClickL { _, _, position, _ ->
                     when (position) {
                         0 -> cameraTask()
 
@@ -447,18 +447,19 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 .content(Util.getString(R.string.text_unshelve_confirm))
                 .contentGravity(Gravity.CENTER)
                 .contentTextColor(color333)
-                .contentTextSize(16f)
+                .contentTextSize(14f)
                 .dividerColor(Util.getColor(R.color.color_ccc))
-                .btnText(Util.getString(R.string.text_qd), Util.getString(R.string.text_cancel))
-                .btnTextSize(15f, 15f)
-                .btnTextColor(color333, Util.getColor(R.color.color_6ed7af))
+                .btnText(Util.getString(R.string.text_cancel),Util.getString(R.string.text_qd))
+                .btnTextSize(18f, 18f)
+                .setRightBtnBgColor(Util.getColor(R.color.color_6ed7af))
+                .btnTextColor(color333, white)
                 .btnPressColor(white)
                 .widthScale(0.85f)
                 .show()
         dialog.setOnBtnClickL(OnBtnClickL {
             dialog.dismiss()
-            presenter.deleteDistributeGoods(rid, position)
         }, OnBtnClickL {
+            presenter.deleteDistributeGoods(rid, position)
             dialog.dismiss()
         })
     }

@@ -9,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
-import com.flyco.dialog.listener.OnBtnClickL
-import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.eventBusMessge.MessageOrderSuccess
 import com.lexivip.lexi.R
 import com.lexivip.lexi.address.AddressActivity
+import com.smart.dialog.listener.OnBtnClickL
+import com.smart.dialog.widget.NormalDialog
 import kotlinx.android.synthetic.main.acticity_select_express_address.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

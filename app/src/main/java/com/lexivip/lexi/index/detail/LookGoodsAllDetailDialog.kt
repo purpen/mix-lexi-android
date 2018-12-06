@@ -4,12 +4,12 @@ import android.graphics.Color
 import android.support.v4.app.FragmentActivity
 import android.text.TextUtils
 import android.view.View
-import com.flyco.dialog.widget.base.BaseDialog
 import com.basemodule.tools.Util
-import com.flyco.animation.SlideEnter.SlideBottomEnter
-import com.flyco.animation.SlideExit.SlideBottomExit
-import com.flyco.dialog.utils.CornerUtils
 import com.lexivip.lexi.R
+import com.smart.animation.SlideEnter.SlideBottomEnter
+import com.smart.animation.SlideExit.SlideBottomExit
+import com.smart.dialog.utils.CornerUtils
+import com.smart.dialog.widget.base.BaseDialog
 import kotlinx.android.synthetic.main.dialog_look_goods_all_detail.view.*
 import kotlinx.android.synthetic.main.view_goods_description.view.*
 
