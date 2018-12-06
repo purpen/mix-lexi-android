@@ -22,7 +22,6 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.dialog.CouponDialog
 import com.lexivip.lexi.dialog.CouponFinishDialog
-import com.lexivip.lexi.discoverLifeAesthetics.DiscoverLifeAestheticsActivity
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
@@ -382,8 +381,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
      */
     private fun initBanner() {
         presenter.getBanners()
-        val width = ScreenUtil.getScreenWidth() * 320 / 375
-        val height = width * 200 / 320 + DimenUtil.dp2px(35.0)
+        val height = ScreenUtil.getScreenWidth() * 200 / 375 + DimenUtil.dp2px(35.0)
         viewPager.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
         viewPager.setPadding(0, DimenUtil.dp2px(15.0), 0, DimenUtil.dp2px(20.0))
     }
