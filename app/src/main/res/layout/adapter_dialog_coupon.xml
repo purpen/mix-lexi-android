@@ -5,8 +5,25 @@
     android:layout_height="@dimen/dp75"
     android:layout_marginStart="@dimen/dp15"
     android:layout_marginEnd="@dimen/dp15"
-    android:background="@mipmap/icon_coupon_enable"
+    android:background="@android:color/white"
     >
+    <ImageView
+        android:id="@+id/imageViewCouponRight"
+        android:layout_width="68dp"
+        android:layout_height="75dp"
+        android:src="@mipmap/icon_bg_coupon_goods_detail_enable"
+        android:scaleType="fitXY"
+        android:layout_alignParentEnd="true"
+        android:background="@color/color_f7f9fb"
+        />
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="75dp"
+        android:src="@mipmap/icon_bg_coupon_goods_detail_left"
+        android:scaleType="fitXY"
+        android:layout_alignParentStart="true"
+        android:background="@color/color_f7f9fb"
+        />
     <TextView
         android:id="@+id/textViewUnit"
         android:layout_width="wrap_content"

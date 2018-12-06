@@ -1,7 +1,6 @@
 package com.lexivip.lexi.index.detail
-
 import android.support.annotation.LayoutRes
-import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.basemodule.tools.DateUtil
 import com.basemodule.tools.Util
@@ -12,7 +11,7 @@ import com.lexivip.lexi.beans.CouponBean
 
 class AdapterDialogCoupon(@LayoutRes res: Int): BaseQuickAdapter<CouponBean, BaseViewHolder>(res) {
     override fun convert(helper: BaseViewHolder, item: CouponBean) {
-        val view = helper.getView<View>(R.id.relativeLayout)
+        val imageViewCouponRight = helper.getView<ImageView>(R.id.imageViewCouponRight)
         val textViewUnit = helper.getView<TextView>(R.id.textViewUnit)
         val textViewValue = helper.getView<TextView>(R.id.textViewValue)
         val textViewContent = helper.getView<TextView>(R.id.textViewContent)
@@ -26,7 +25,7 @@ class AdapterDialogCoupon(@LayoutRes res: Int): BaseQuickAdapter<CouponBean, Bas
                 textViewContent.setTextColor(Util.getColor(R.color.color_6ed7af))
                 textViewTime.setTextColor(Util.getColor(R.color.color_666))
                 textViewStatus.text = Util.getString(R.string.text_share_get)
-                view.setBackgroundResource(R.mipmap.icon_coupon_enable)
+                imageViewCouponRight.setImageResource(R.mipmap.icon_bg_coupon_goods_detail_enable)
             }
             1 ->{//已领取
                 textViewUnit.setTextColor(Util.getColor(R.color.color_999))
@@ -34,7 +33,7 @@ class AdapterDialogCoupon(@LayoutRes res: Int): BaseQuickAdapter<CouponBean, Bas
                 textViewContent.setTextColor(Util.getColor(R.color.color_999))
                 textViewTime.setTextColor(Util.getColor(R.color.color_b2b2b2))
                 textViewStatus.text = Util.getString(R.string.text_already_get_coupon)
-                view.setBackgroundResource(R.mipmap.icon_coupon_disable)
+                imageViewCouponRight.setImageResource(R.mipmap.icon_bg_coupon_goods_detail_disable)
             }
         }
         textViewValue.text = "${item.amount}"

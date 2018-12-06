@@ -4,13 +4,31 @@
     android:layout_height="@dimen/dp75"
     android:layout_marginStart="@dimen/dp15"
     android:layout_marginEnd="@dimen/dp15"
-    android:background="@mipmap/icon_bg_official_coupon"
+    android:background="@android:color/white"
     >
+    <ImageView
+        android:layout_width="115dp"
+        android:layout_height="75dp"
+        android:scaleType="fitXY"
+        android:layout_alignParentStart="true"
+        android:src="@mipmap/icon_official_coupon_left"
+        android:background="@color/color_f7f9fb"
+        />
+
+    <ImageView
+        android:id="@+id/imageViewCouponRight"
+        android:layout_width="15dp"
+        android:layout_height="75dp"
+        android:src="@mipmap/icon_pavilion_coupon_right"
+        android:scaleType="fitXY"
+        android:layout_alignParentEnd="true"
+        android:background="@color/color_f7f9fb"
+        />
     <TextView
         android:id="@+id/textViewUnit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp15"
+        android:layout_marginStart="18dp"
         android:includeFontPadding="false"
         android:layout_alignTop="@+id/textViewValue"
         android:layout_marginTop="5dp"

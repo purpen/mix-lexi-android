@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
 import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
 import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.DividerItemDecoration
