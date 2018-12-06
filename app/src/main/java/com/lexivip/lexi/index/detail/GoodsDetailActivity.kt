@@ -547,7 +547,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         }
 
 
-        headerView.textViewSendAddress.text = data.delivery_country
+        headerView.textViewSendAddress.text = data.delivery_country+data.delivery_province+data.delivery_city
 
         if (TextUtils.isEmpty(data.return_policy_title)) {
             headerView.textViewReturnPolicy.visibility = View.GONE
