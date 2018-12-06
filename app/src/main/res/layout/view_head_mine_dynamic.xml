@@ -56,7 +56,7 @@
         <ImageView
             android:layout_width="@dimen/dp15"
             android:layout_height="@dimen/dp15"
-            android:src="@mipmap/icon_add_white" />
+            android:src="@mipmap/icon_add_shop_window_white" />
 
     </LinearLayout>
 

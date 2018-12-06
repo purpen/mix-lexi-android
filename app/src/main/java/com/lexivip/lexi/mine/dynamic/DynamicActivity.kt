@@ -231,6 +231,7 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
     private fun showDeleteDialog(rid: String, position: Int) {
         val color333 = Util.getColor(R.color.color_333)
         val white = Util.getColor(android.R.color.white)
+        val color6ed7af = Util.getColor(R.color.color_6ed7af)
         val dialog = NormalDialog(this)
         dialog.isTitleShow(false)
                 .bgColor(white)
@@ -242,9 +243,8 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
                 .dividerColor(Util.getColor(R.color.color_eee))
                 .btnText(Util.getString(R.string.text_cancel),Util.getString(R.string.text_qd))
                 .btnTextSize(18f, 18f)
-                .setRightBtnBgColor(Util.getColor(R.color.color_6ed7af))
+                .setRightBtnBgColor(color6ed7af)
                 .btnTextColor(color333, white)
-                .btnPressColor(white)
                 .widthScale(0.85f)
                 .show()
         dialog.setOnBtnClickL(OnBtnClickL {

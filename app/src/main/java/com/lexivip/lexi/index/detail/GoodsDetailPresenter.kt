@@ -74,7 +74,8 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
                 if (expressInfoBean.success) {
                     if (expressInfoBean.data != null) view.setExpressData(expressInfoBean)
                 } else {
-                    view.showError(expressInfoBean.status.message)
+                    LogUtil.e(expressInfoBean.status.message)
+//                    view.showError(expressInfoBean.status.message)
                 }
             }
 

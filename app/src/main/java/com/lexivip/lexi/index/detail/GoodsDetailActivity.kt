@@ -13,6 +13,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,8 @@ import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.shopCart.ShopCartActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.smart.dialog.listener.OnBtnClickL
+import com.smart.dialog.widget.NormalDialog
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 import kotlinx.android.synthetic.main.header_goods_detail.view.*
@@ -45,7 +48,7 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
 
-class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
+class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     private val showTagCount: Int = 5
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
@@ -106,7 +109,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         adapter.setHeaderFooterEmpty(true, true)
 
-        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(336.0),ImageSizeConfig.SIZE_P50))
+        headerView.banner.setImageLoader(GlideImageLoader(R.dimen.dp0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(336.0), ImageSizeConfig.SIZE_P50))
         headerView.banner.setBannerStyle(BannerConfig.NUM_INDICATOR_TITLE)
         headerView.banner.isAutoPlay(false)
         this.presenter = GoodsDetailPresenter(this)
@@ -249,7 +252,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             imgUrls.add(product.cover)
         }
 
-        GlideUtil.loadImageWithDimenAndRadius(data.logo, headerView.imageViewLogo, 0, DimenUtil.dp2px(45.0),ImageSizeConfig.SIZE_AVA)
+        GlideUtil.loadImageWithDimenAndRadius(data.logo, headerView.imageViewLogo, 0, DimenUtil.dp2px(45.0), ImageSizeConfig.SIZE_AVA)
 
         headerView.textViewShopName.text = data.name
 
@@ -385,37 +388,61 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         lookGoodsAllDetailDialog?.setExpressTime(expressTime)
     }
 
+    /**
+     * 显示下架提示对话框
+     */
+    private fun showGoodsOffLineDialog() {
+        val color333 = Util.getColor(R.color.color_333)
+        val color6ed7af = Util.getColor(R.color.color_6ed7af)
+        val white = Util.getColor(android.R.color.white)
+        val dialog = NormalDialog(this)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.isTitleShow(true)
+                .titleTextSize(16f)
+                .titleTextColor(color333)
+                .btnNum(1)
+                .style(NormalDialog.STYLE_TWO)
+                .title(getString(R.string.text_sorry))
+                .bgColor(white)
+                .cornerRadius(4f)
+                .content(Util.getString(R.string.text_goods_offline))
+                .contentGravity(Gravity.CENTER)
+                .contentTextColor(color333)
+                .contentTextSize(14f)
+                .dividerColor(Util.getColor(R.color.color_eee))
+                .btnTextSize(18f)
+                .btnText(Util.getString(R.string.text_qd))
+                .btnTextColor(color6ed7af)
+                .btnPressColor(white)
+                .widthScale(0.85f)
+                .show()
+        dialog.setOnBtnClickL(OnBtnClickL {
+            dialog.dismiss()
+            finish()
+        })
+    }
+
 
     /**
      * 设置商品信息
      */
     override fun setData(data: GoodsAllDetailBean.DataBean) {
-
         goodsData = data
 
-        if (TextUtils.isEmpty(data.store_rid)) {
-            LogUtil.e("店铺store_id不存在goodsId=$productId")
-            return
+        if (data.status == 2) { //商品已下架
+            showGoodsOffLineDialog()
+            linearLayoutButtonBox.visibility = View.GONE
+        } else {
+            linearLayoutButtonBox.visibility = View.VISIBLE
         }
 
         webView.loadData(Util.createPageByHtmlBodyContent(data.content), "text/html;charset=utf-8", "utf-8");
 
-        // 获取交货时间
-        presenter.getExpressTime(data.fid, data.store_rid, productId)
-
-        //获取优惠券
-        presenter.getCouponsByStoreId(data.store_rid)
-
-        //获取商品所在品牌馆信息
-        presenter.loadBrandPavilionInfo(data.store_rid)
-
-
-
         if (data.is_distributed) { //分销商品
-            if (UserProfileUtil.isSmallB()){
+            if (UserProfileUtil.isSmallB()) {
                 buttonPurchase.visibility = View.VISIBLE
                 buttonSaleDistribution.visibility = View.VISIBLE
-            }else{
+            } else {
                 buttonAddShopCart.visibility = View.VISIBLE
                 buttonGoOrderConfirm.visibility = View.VISIBLE
             }
@@ -541,13 +568,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.textViewMaterial.text = "材质：${data.material_name}"
         }
 
-        if (data.total_stock <= 10){
+        if (data.total_stock <= 10) {
             headerView.textViewCount.visibility = View.VISIBLE
             headerView.textViewCount.text = "数量：${data.total_stock}件"
         }
 
 
-        headerView.textViewSendAddress.text = data.delivery_country+data.delivery_province+data.delivery_city
+        headerView.textViewSendAddress.text = data.delivery_country + data.delivery_province + data.delivery_city
 
         if (TextUtils.isEmpty(data.return_policy_title)) {
             headerView.textViewReturnPolicy.visibility = View.GONE
@@ -559,6 +586,20 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.textViewProductReturnPolicy.text = data.product_return_policy
 
         textViewEarn.text = "赚￥${goodsData?.commission_price}"
+
+        if (TextUtils.isEmpty(data.store_rid)) {
+            LogUtil.e("店铺store_id不存在goodsId=$productId")
+            return
+        }
+
+        // 获取交货时间
+        presenter.getExpressTime(data.fid, data.store_rid, productId)
+
+        //获取优惠券
+        presenter.getCouponsByStoreId(data.store_rid)
+
+        //获取商品所在品牌馆信息
+        presenter.loadBrandPavilionInfo(data.store_rid)
     }
 
     /**
@@ -601,7 +642,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         headImageAdapter.setOnItemClickListener { _, _, position ->
             val uid = product_like_users[count - position - 1].uid
-            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(),uid)) return@setOnItemClickListener
+            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(), uid)) return@setOnItemClickListener
             PageUtil.jump2OtherUserCenterActivity(uid)
         }
 
@@ -799,7 +840,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             R.id.imageViewShare -> {
                 //ToastUtil.showInfo("分享产品")
                 //share()
-                val shareUtil=ShareUtil(this,WebUrl.GOODS+productId,goodsData!!.name,"",WebUrl.AUTH_GOODS+productId,goodsData!!.assets.get(0).view_url)
+                val shareUtil = ShareUtil(this, WebUrl.GOODS + productId, goodsData!!.name, "", WebUrl.AUTH_GOODS + productId, goodsData!!.assets.get(0).view_url)
             }
 
             R.id.imageButton -> { //喜欢用户列表
@@ -892,9 +933,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     }
 
     @AfterPermissionGranted(Constants.REQUEST_CODE_PICK_IMAGE)
-    private fun share(){
+    private fun share() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            val share=ShareUtil(this,dialog,productId,4,goodsData!!.rid+"-"+goodsData!!.store_rid)
+            val share = ShareUtil(this, dialog, productId, 4, goodsData!!.rid + "-" + goodsData!!.store_rid)
         } else {
             // 申请权限。
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo),
