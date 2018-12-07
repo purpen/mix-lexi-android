@@ -1,5 +1,7 @@
 package com.lexivip.lexi.brandPavilion
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -12,7 +14,6 @@ import com.lexivip.lexi.index.explore.BrandPavilionListBean
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 
 class FragmentFeatureBrandPavilion : BaseFragment(), FeatrueBrandPavilionContract.View {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_swipe_refresh_recyclerview
     private val presenter: FeatureBrandPavilionPresenter by lazy { FeatureBrandPavilionPresenter(this) }
     private val adapter: AdapterFeatureBrandPavilion by lazy { AdapterFeatureBrandPavilion(R.layout.adapter_feature_brand_pavilion) }
@@ -27,6 +28,8 @@ class FragmentFeatureBrandPavilion : BaseFragment(), FeatrueBrandPavilionContrac
     }
 
     override fun initView() {
+        loadingView.visibility = View.VISIBLE
+        loadingView.setOffsetTop(DimenUtil.dp2px(90.0))
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -81,11 +84,11 @@ class FragmentFeatureBrandPavilion : BaseFragment(), FeatrueBrandPavilionContrac
     }
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
     }
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showError(string: String) {

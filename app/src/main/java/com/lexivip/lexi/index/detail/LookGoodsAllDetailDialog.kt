@@ -4,12 +4,12 @@ import android.graphics.Color
 import android.support.v4.app.FragmentActivity
 import android.text.TextUtils
 import android.view.View
-import com.flyco.dialog.widget.base.BaseDialog
 import com.basemodule.tools.Util
-import com.flyco.animation.SlideEnter.SlideBottomEnter
-import com.flyco.animation.SlideExit.SlideBottomExit
-import com.flyco.dialog.utils.CornerUtils
 import com.lexivip.lexi.R
+import com.smart.animation.SlideEnter.SlideBottomEnter
+import com.smart.animation.SlideExit.SlideBottomExit
+import com.smart.dialog.utils.CornerUtils
+import com.smart.dialog.widget.base.BaseDialog
 import kotlinx.android.synthetic.main.dialog_look_goods_all_detail.view.*
 import kotlinx.android.synthetic.main.view_goods_description.view.*
 
@@ -59,9 +59,13 @@ class LookGoodsAllDetailDialog(context: FragmentActivity?, goodsData: GoodsAllDe
             view.textViewMaterial.text = "材质：${data.material_name}"
         }
 
-        view.textViewCount.text = "数量：${data.total_stock}件"
+        if (data.total_stock <= 10) {
+            view.textViewCount.visibility = View.VISIBLE
+            view.textViewCount.text = "数量：${data.total_stock}件"
+        }
 
-        view.textViewSendAddress.text = data.delivery_country
+
+        view.textViewSendAddress.text = data.delivery_country + data.delivery_province + data.delivery_city
 
         if (TextUtils.isEmpty(data.return_policy_title)) {
             view.textViewReturnPolicy.visibility = View.GONE

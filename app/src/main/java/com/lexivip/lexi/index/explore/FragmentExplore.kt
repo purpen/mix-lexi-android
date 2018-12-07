@@ -29,7 +29,6 @@ import kotlinx.android.synthetic.main.fragment_explore.*
 import org.greenrobot.eventbus.EventBus
 
 class FragmentExplore : BaseFragment(), ExploreContract.View {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: ExplorePresenter by lazy { ExplorePresenter(this) }
     override val layout: Int = R.layout.fragment_explore
     private var page: Int = 1
@@ -48,6 +47,7 @@ class FragmentExplore : BaseFragment(), ExploreContract.View {
     }
 
     override fun initView() {
+        loadingView.setOffsetTop(DimenUtil.dp2px(103.0))
         initBanner()
         initGoodsClass()
         initEditorRecommend()
@@ -394,15 +394,16 @@ class FragmentExplore : BaseFragment(), ExploreContract.View {
     }
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
     }
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showError(string: String) {
-        ToastUtil.showError(string)
+        LogUtil.e(string)
+//        ToastUtil.showError(string)
     }
 
     override fun goPage() {

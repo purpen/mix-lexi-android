@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.header_selection_brand_pavilion.view.*
 
 
 class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionContract.View {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_swipe_refresh_recyclerview
     private val presenter: SelectionBrandPavilionPresenter by lazy { SelectionBrandPavilionPresenter(this) }
     private val adapter: AdapterFeatureBrandPavilion by lazy { AdapterFeatureBrandPavilion(R.layout.adapter_show_window) }
@@ -30,6 +29,8 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
     }
 
     override fun initView() {
+        loadingView.visibility = View.VISIBLE
+        loadingView.setOffsetTop(DimenUtil.dp2px(90.0))
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         swipeRefreshLayout.isEnabled = false
         val linearLayoutManager = LinearLayoutManager(activity)
@@ -93,15 +94,15 @@ class FragmentSelectionBrandPavilion : BaseFragment(), SelectionBrandPavilionCon
     }
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
     }
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showError(string: String) {
-        ToastUtil.showError(string)
+        loadingView.showError()
     }
 
     override fun goPage() {

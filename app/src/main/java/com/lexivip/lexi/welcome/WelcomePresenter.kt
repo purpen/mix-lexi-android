@@ -11,6 +11,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.net.ClientParamsAPI
 import com.lexivip.lexi.user.LoginWXBean
 import com.lexivip.lexi.user.login.UserProfileBean
+import com.umeng.message.PushAgent
 import com.umeng.message.UTrack
 import java.io.IOException
 
@@ -28,7 +29,7 @@ class WelcomePresenter(view: WelcomeContract.View) :WelcomeContract.Presenter{
                 val loginWXBean= JsonUtil.fromJson(json, LoginWXBean::class.java)
                 if (loginWXBean.success) {
                     if (loginWXBean.data.is_bind){
-                        AppApplication.mPushAgent.addAlias(loginWXBean.data.uid,"lexi",object : UTrack.ICallBack{
+                        PushAgent.getInstance(AppApplication.getContext()).addAlias(loginWXBean.data.uid,"lexi",object : UTrack.ICallBack{
                             override fun onMessage(p0: Boolean, p1: String?) {
 
                             }

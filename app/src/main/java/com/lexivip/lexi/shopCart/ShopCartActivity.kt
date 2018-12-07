@@ -11,8 +11,6 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
-import com.flyco.dialog.listener.OnBtnClickL
-import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.MainFragment0
@@ -27,6 +25,8 @@ import com.lexivip.lexi.order.CreateOrderBean
 import com.lexivip.lexi.order.SelectExpressAddressActivity
 import com.lexivip.lexi.order.StoreItemBean
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.smart.dialog.listener.OnBtnClickL
+import com.smart.dialog.widget.NormalDialog
 import kotlinx.android.synthetic.main.fragment_main1.*
 import kotlinx.android.synthetic.main.header_empty_shop_cart.view.*
 import kotlinx.android.synthetic.main.header_shop_cart_goods.view.*

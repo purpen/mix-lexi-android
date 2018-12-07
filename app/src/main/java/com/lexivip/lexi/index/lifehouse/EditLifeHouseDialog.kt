@@ -7,12 +7,12 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
-import com.flyco.dialog.widget.base.BaseDialog
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
-import com.flyco.dialog.utils.CornerUtils
 import com.lexivip.lexi.R
+import com.smart.dialog.utils.CornerUtils
+import com.smart.dialog.widget.base.BaseDialog
 import kotlinx.android.synthetic.main.dialog_edit_life_house.view.*
 
 

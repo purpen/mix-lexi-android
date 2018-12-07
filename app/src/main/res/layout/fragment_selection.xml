@@ -6,480 +6,493 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:overScrollMode="never"
-        android:scrollbars="none">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
 
             <LinearLayout
-                android:id="@+id/linearLayoutViewPager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipChildren="false"
-                android:layerType="software"
-                android:orientation="vertical"
-                >
-                <com.lexivip.lexi.view.autoScrollViewpager.CustomAutoScrollViewPager
-                    android:id="@+id/viewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:focusableInTouchMode="true"
-                    android:focusable="true"
-                    android:clipChildren="false"
-                    android:overScrollMode="never"
-                    android:layout_gravity="center_vertical"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayoutOpenLifeHouseGuide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp3"
-                android:layout_marginEnd="@dimen/dp3"
-                android:background="@drawable/bg_search_box"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/linearLayoutViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:layerType="software"
+                    android:orientation="vertical">
+
+                    <com.lexivip.lexi.view.autoScrollViewpager.CustomAutoScrollViewPager
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:clipChildren="false"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:overScrollMode="never" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutOpenLifeHouseGuide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp3"
+                    android:layout_marginEnd="@dimen/dp3"
+                    android:background="@drawable/bg_search_box"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textViewTitle0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dp85"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="分享好物挣钱，为自己购买省钱"
+                            android:textColor="@color/color_333"
+                            android:textSize="@dimen/sp14"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textViewTitle1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textViewTitle0"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_marginEnd="@dimen/dp85"
+                            android:layout_marginBottom="@dimen/dp15"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="没钱没货均可拥有设计馆了"
+                            android:textColor="@color/color_999"
+                            android:textSize="@dimen/sp12"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/buttonOpenShop"
+                            style="@style/Base.Widget.AppCompat.Button.Borderless"
+                            android:layout_width="@dimen/dp75"
+                            android:layout_height="@dimen/dp30"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="6dp"
+                            android:background="@drawable/bg_color5fe4b1_radius4"
+                            android:text="@string/text_open_store_guide"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/sp15" />
+
+                        <include
+                            layout="@layout/line_color_eee"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_alignParentBottom="true" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp">
+
+                        <TextView
+                            android:id="@+id/textViewIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableTop="@mipmap/icon_tou_tiao"
+                            android:drawablePadding="@dimen/dp4"
+                            android:text="@string/text_tou_tiao"
+                            android:textColor="@color/color_333"
+                            android:textSize="@dimen/sp12" />
+
+                        <ImageView
+                            android:id="@+id/imageViewSeparate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="38dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/dp15"
+                            android:layout_marginEnd="@dimen/dp10"
+                            android:layout_toEndOf="@+id/textViewIcon"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/icon_seprate_tt" />
+
+                        <com.lexivip.lexi.view.UPMarqueeView
+                            android:id="@+id/upMarqueeView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/imageViewSeparate" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <!--今日推荐-->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15">
 
                     <TextView
-                        android:id="@+id/textViewTitle0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/dp85"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="分享好物挣钱，为自己购买省钱"
+                        android:text="@string/text_today_recommend"
                         android:textColor="@color/color_333"
-                        android:textSize="@dimen/sp14"
+                        android:textSize="@dimen/sp16"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textViewTitle1"
+                        android:id="@+id/textViewMoreRecommend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewTitle0"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:layout_marginEnd="@dimen/dp85"
-                        android:layout_marginBottom="@dimen/dp15"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="没钱没货均可拥有设计馆了"
-                        android:textColor="@color/color_999"
-                        android:textSize="@dimen/sp12"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/buttonOpenShop"
-                        style="@style/Base.Widget.AppCompat.Button.Borderless"
-                        android:layout_width="@dimen/dp75"
-                        android:layout_height="@dimen/dp30"
                         android:layout_alignParentEnd="true"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/bg_color5fe4b1_radius4"
-                        android:text="@string/text_open_store_guide"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/sp15" />
-
-                    <include
-                        layout="@layout/line_color_eee"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:drawablePadding="@dimen/dp5"
+                        android:text="@string/text_look_all"
+                        android:textColor="@color/color_999"
+                        android:textSize="@dimen/sp14"
+                        android:visibility="gone" />
                 </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewRecommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="175dp"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp30"
+                    android:overScrollMode="never" />
+
+                <include
+                    layout="@layout/line_color_eee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp05"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp">
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginBottom="@dimen/dp20">
 
                     <TextView
-                        android:id="@+id/textViewIcon"
+                        android:id="@+id/textViewSlogan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@mipmap/icon_tou_tiao"
-                        android:drawablePadding="@dimen/dp4"
-                        android:text="@string/text_tou_tiao"
-                        android:textColor="@color/color_333"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/text_free_slogan"
+                        android:textColor="@color/color_999"
                         android:textSize="@dimen/sp12" />
 
-                    <ImageView
-                        android:id="@+id/imageViewSeparate"
+                    <TextView
+                        android:id="@+id/textViewGuessPic"
                         android:layout_width="wrap_content"
-                        android:layout_height="38dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/dp15"
-                        android:layout_marginEnd="@dimen/dp10"
-                        android:layout_toEndOf="@+id/textViewIcon"
-                        android:scaleType="fitXY"
-                        android:src="@mipmap/icon_seprate_tt" />
-
-                    <com.lexivip.lexi.view.UPMarqueeView
-                        android:id="@+id/upMarqueeView"
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/imageViewSeparate" />
+                        android:layout_below="@+id/textViewSlogan"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/dp35"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:drawableTop="@mipmap/icon_guess_win_money"
+                        android:drawablePadding="@dimen/dp10"
+                        android:text="@string/text_guess_win_money"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp12"
+                        android:visibility="gone" />
+                    <!--TODO android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/textViewSlogan"
+                            android:layout_alignTop="@+id/textViewGuessPic"
+                    -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:id="@+id/textViewCouponCenter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:drawableTop="@mipmap/icon_coupon_center"
+                            android:drawablePadding="@dimen/dp10"
+                            android:text="@string/text_coupon_center"
+                            android:textColor="@color/color_333"
+                            android:textSize="@dimen/sp12" />
+                        <!--TODO android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/textViewSlogan"
+                            android:layout_alignTop="@+id/textViewGuessPic"
+                            android:layout_marginEnd="@dimen/dp35"
+                        -->
+                        <TextView
+                            android:id="@+id/textViewExemptionMail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="93dp"
+                            android:layout_marginTop="10dp"
+                            android:drawableTop="@mipmap/icon_exemption_mail"
+                            android:drawablePadding="@dimen/dp10"
+                            android:text="@string/text_exemption_mail"
+                            android:textColor="@color/color_333"
+                            android:textSize="@dimen/sp12" />
+                    </LinearLayout>
                 </RelativeLayout>
+
+                <include
+                    layout="@layout/line_color_eee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp05"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15" />
+
+                <!--人气推荐-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_people_recommend"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewMorePeopleRecommend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:drawablePadding="@dimen/dp5"
+                        android:text="@string/text_look_all"
+                        android:textColor="@color/color_999"
+                        android:textSize="@dimen/sp14"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/dp4">
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <com.lexivip.lexi.view.autoScrollViewpager.ScrollableView
+                    android:id="@+id/scrollableView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewHotRecommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:overScrollMode="never"
+                    android:visibility="gone" />
+
+                <include
+                    layout="@layout/line_color_eee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp05"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15" />
+
+                <com.youth.banner.Banner
+                    android:id="@+id/hotBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp135"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp15"
+                    app:image_scale_type="fit_xy"
+                    app:indicator_drawable_selected="@drawable/banner_indicator_selected"
+                    app:indicator_drawable_unselected="@drawable/banner_indicator_normal"
+                    app:indicator_height="7dp"
+                    app:indicator_margin="5dp"
+                    app:indicator_width="7dp" />
+
+                <include
+                    layout="@layout/line_color_eee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp05"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15" />
+
+                <!--发现生活美学-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_discover_life"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewMoreDiscoverLife"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:drawablePadding="@dimen/dp5"
+                        android:text="@string/text_look_all"
+                        android:textColor="@color/color_999"
+                        android:textSize="@dimen/sp14"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewDiscoverLife"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp30"
+                    android:overScrollMode="never" />
+
+                <include
+                    layout="@layout/line_color_eee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp05"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15" />
+
+                <!--乐喜优选-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp15"
+
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp15"
+                        android:text="@string/text_good_selection"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewMoreGoodSelection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:drawablePadding="@dimen/dp5"
+                        android:paddingTop="15dp"
+                        android:text="@string/text_look_all"
+                        android:textColor="@color/color_999"
+                        android:textSize="@dimen/sp14" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewGoodSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:overScrollMode="never" />
+
+                <include
+                    layout="@layout/line_color_eee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp05"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15" />
+
+                <!--种草清单-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_zc_manifest"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp16"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewMoreZCManifest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@mipmap/icon_arrow_more"
+                        android:drawablePadding="@dimen/dp5"
+                        android:text="@string/text_look_all"
+                        android:textColor="@color/color_999"
+                        android:textSize="@dimen/sp14" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewZCManifest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15"
+                    android:layout_marginBottom="@dimen/dp30"
+                    android:overScrollMode="never" />
+
+                <include
+                    layout="@layout/line_color_eee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp05"
+                    android:layout_marginStart="@dimen/dp15"
+                    android:layout_marginEnd="@dimen/dp15" />
             </LinearLayout>
 
-            <!--今日推荐-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_today_recommend"
-                    android:textColor="@color/color_333"
-                    android:textSize="@dimen/sp16"
-                    android:textStyle="bold" />
+        </android.support.v4.widget.NestedScrollView>
 
-                <TextView
-                    android:id="@+id/textViewMoreRecommend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:drawableEnd="@mipmap/icon_arrow_more"
-                    android:drawablePadding="@dimen/dp5"
-                    android:text="@string/text_look_all"
-                    android:textColor="@color/color_999"
-                    android:textSize="@dimen/sp14"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewRecommend"
-                android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp30"
-                android:overScrollMode="never" />
-
-            <include
-                layout="@layout/line_color_eee"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp05"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp20"
-                android:layout_marginBottom="@dimen/dp20">
-
-                <TextView
-                    android:id="@+id/textViewSlogan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/text_free_slogan"
-                    android:textColor="@color/color_999"
-                    android:textSize="@dimen/sp12" />
-
-                <TextView
-                    android:id="@+id/textViewGuessPic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/textViewSlogan"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="@dimen/dp35"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:drawableTop="@mipmap/icon_guess_win_money"
-                    android:drawablePadding="@dimen/dp10"
-                    android:text="@string/text_guess_win_money"
-                    android:textColor="@color/color_333"
-                    android:textSize="@dimen/sp12"
-                    android:visibility="gone" />
-                <!--TODO android:layout_centerHorizontal="true"
-                android:layout_below="@+id/textViewSlogan"
-                        android:layout_alignTop="@+id/textViewGuessPic"
-                -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textViewCouponCenter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:drawableTop="@mipmap/icon_coupon_center"
-                        android:drawablePadding="@dimen/dp10"
-                        android:text="@string/text_coupon_center"
-                        android:textColor="@color/color_333"
-                        android:textSize="@dimen/sp12" />
-                    <!--TODO android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/textViewSlogan"
-                        android:layout_alignTop="@+id/textViewGuessPic"
-                        android:layout_marginEnd="@dimen/dp35"
-                    -->
-                    <TextView
-                        android:id="@+id/textViewExemptionMail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="93dp"
-                        android:layout_marginTop="10dp"
-                        android:drawableTop="@mipmap/icon_exemption_mail"
-                        android:drawablePadding="@dimen/dp10"
-                        android:text="@string/text_exemption_mail"
-                        android:textColor="@color/color_333"
-                        android:textSize="@dimen/sp12" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <include
-                layout="@layout/line_color_eee"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp05"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15" />
-
-            <!--人气推荐-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp20"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp15">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_people_recommend"
-                    android:textColor="@color/color_333"
-                    android:textSize="@dimen/sp16"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewMorePeopleRecommend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:drawableEnd="@mipmap/icon_arrow_more"
-                    android:drawablePadding="@dimen/dp5"
-                    android:text="@string/text_look_all"
-                    android:textColor="@color/color_999"
-                    android:textSize="@dimen/sp14"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutIndicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:orientation="horizontal"
-                    android:paddingTop="@dimen/dp4">
-
-                </LinearLayout>
-            </RelativeLayout>
-
-            <com.lexivip.lexi.view.autoScrollViewpager.ScrollableView
-                android:id="@+id/scrollableView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewHotRecommend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp20"
-                android:overScrollMode="never"
-                android:visibility="gone" />
-
-            <include
-                layout="@layout/line_color_eee"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp05"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15" />
-
-            <com.youth.banner.Banner
-                android:id="@+id/hotBanner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp135"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp15"
-                app:image_scale_type="fit_xy"
-                app:indicator_drawable_selected="@drawable/banner_indicator_selected"
-                app:indicator_drawable_unselected="@drawable/banner_indicator_normal"
-                app:indicator_height="7dp"
-                app:indicator_margin="5dp"
-                app:indicator_width="7dp" />
-
-            <include
-                layout="@layout/line_color_eee"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp05"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15" />
-
-            <!--发现生活美学-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp20"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp15">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_discover_life"
-                    android:textColor="@color/color_333"
-                    android:textSize="@dimen/sp16"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewMoreDiscoverLife"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:drawableEnd="@mipmap/icon_arrow_more"
-                    android:drawablePadding="@dimen/dp5"
-                    android:text="@string/text_look_all"
-                    android:textColor="@color/color_999"
-                    android:textSize="@dimen/sp14"
-                    android:visibility="gone" />
-            </RelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewDiscoverLife"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp30"
-                android:overScrollMode="never" />
-
-            <include
-                layout="@layout/line_color_eee"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp05"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15" />
-
-            <!--乐喜优选-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp15"
-
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp15"
-                    android:text="@string/text_good_selection"
-                    android:textColor="@color/color_333"
-                    android:textSize="@dimen/sp16"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewMoreGoodSelection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:drawableEnd="@mipmap/icon_arrow_more"
-                    android:drawablePadding="@dimen/dp5"
-                    android:paddingTop="15dp"
-                    android:text="@string/text_look_all"
-                    android:textColor="@color/color_999"
-                    android:textSize="@dimen/sp14" />
-            </RelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewGoodSelection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp10"
-                android:overScrollMode="never" />
-
-            <include
-                layout="@layout/line_color_eee"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp05"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15" />
-
-            <!--种草清单-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp15">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_zc_manifest"
-                    android:textColor="@color/color_333"
-                    android:textSize="@dimen/sp16"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewMoreZCManifest"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:drawableEnd="@mipmap/icon_arrow_more"
-                    android:drawablePadding="@dimen/dp5"
-                    android:text="@string/text_look_all"
-                    android:textColor="@color/color_999"
-                    android:textSize="@dimen/sp14" />
-            </RelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewZCManifest"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginBottom="@dimen/dp30"
-                android:overScrollMode="never" />
-
-            <include
-                layout="@layout/line_color_eee"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp05"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginEnd="@dimen/dp15" />
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+        <com.basemodule.ui.LoadingView
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </FrameLayout>
 </com.lexivip.lexi.view.VCSwipeRefreshView>

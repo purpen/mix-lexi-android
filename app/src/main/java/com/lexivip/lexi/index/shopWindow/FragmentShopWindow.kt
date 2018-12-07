@@ -25,15 +25,23 @@ class FragmentShopWindow : BaseFragment() {
     private val fragment1: BaseFragment by lazy { FragmentRecommendShowWindow.newInstance() }
 
     private val fragments: ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
-
+    private var isFirstLoad = true
     override fun initView() {
         GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_shop_window, imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(255.0), ImageSizeConfig.DEFAULT)
-        setUpViewPager()
+
     }
 
     companion object {
         @JvmStatic
         fun newInstance(): FragmentShopWindow = FragmentShopWindow()
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (isVisibleToUser && isFirstLoad) {
+            setUpViewPager()
+            isFirstLoad = false
+        }
+        super.setUserVisibleHint(isVisibleToUser)
     }
 
     private fun setUpViewPager() {

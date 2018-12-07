@@ -16,11 +16,11 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 import android.view.animation.*
 import com.basemodule.tools.*
-import com.flyco.dialog.widget.ActionSheetDialog
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.album.PicturePickerUtils
+import com.smart.dialog.widget.ActionSheetDialog
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONArray
@@ -73,7 +73,7 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
                 dialog.layoutAnimation(LayoutAnimationController(animation, 0.12f))
                 dialog.isTitleShow(false).show()
 
-                dialog.setOnOperItemClickL { parent, view, position, id ->
+                dialog.setOnOperItemClickL { _, _, position, _ ->
                     when (position) {
                         0 -> cameraTask()
 

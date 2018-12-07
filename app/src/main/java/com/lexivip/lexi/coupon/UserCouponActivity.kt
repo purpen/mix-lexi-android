@@ -1,5 +1,6 @@
 package com.lexivip.lexi.coupon
 
+import android.text.TextUtils
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
@@ -10,7 +11,13 @@ class UserCouponActivity:BaseActivity() {
     private lateinit var adapter:CustomFragmentPagerAdapter
     override val layout: Int = R.layout.acticity_user_coupon
 
+    private var whichPage:String = ""
 
+    override fun getIntentData() {
+        if(intent.hasExtra(TAG)){
+            whichPage = intent.getStringExtra(TAG)
+        }
+    }
 
     override fun initView() {
         customHeadView.setHeadCenterTxtShow(true,R.string.title_user_coupon)
@@ -25,5 +32,9 @@ class UserCouponActivity:BaseActivity() {
         customViewPager.offscreenPageLimit = fragments.size
         customViewPager.setPagingEnabled(false)
         slidingTabLayout.setViewPager(customViewPager)
+
+        if (TextUtils.equals(whichPage,FragmentUserCoupon.PAGE_LX)){//显示乐喜券
+            slidingTabLayout.currentTab = 1
+        }
     }
 }

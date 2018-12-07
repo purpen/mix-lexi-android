@@ -23,7 +23,6 @@ abstract class BaseActivity : AppCompatActivity() {
         LogUtil.e("onCreate()$TAG")
         PushAgent.getInstance(this).onAppStart()
         getIntentData()
-        //        ShareSDK.initSDK(this);·
         setContentView(layout)
         initView()
         requestNet()

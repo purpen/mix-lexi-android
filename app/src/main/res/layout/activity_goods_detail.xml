@@ -61,7 +61,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp50"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        >
 
         <RelativeLayout
             android:id="@+id/relativeLayoutShopCart"
@@ -98,11 +99,13 @@
 
         <!--按钮-->
         <LinearLayout
+            android:id="@+id/linearLayoutButtonBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginEnd="@dimen/dp15"
             android:layout_gravity="center_vertical"
+            android:visibility="gone"
             >
             <!--添加购物车-->
             <Button
@@ -186,4 +189,10 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <com.basemodule.ui.LoadingView
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativeLayoutHeader"
+        />
 </RelativeLayout>

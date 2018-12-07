@@ -356,7 +356,7 @@
     <string name="text_kf_phone">客服电话&#160;&#160;&#160;400-2345-0000</string>
     <string name="text_goods">商品</string>
     <string name="text_article">文章</string>
-    <string name="text_design">关于设计馆</string>
+    <string name="text_design">关于品牌馆</string>
     <string name="text_voucher">领取设计馆优惠红包</string>
     <string name="text_receive">领取</string>
     <string name="text_brand_notice">设计馆公告</string>
@@ -419,6 +419,8 @@
     <string name="text_tips">提示</string>
     <string name="text_no_identify_info">您的收货地址还没有设置身份证信息哦！</string>
     <string name="text_go_add">去添加</string>
+    <string name="text_sorry">很抱歉</string>
+    <string name="text_goods_offline">该商品已下架</string>
     <string name="text_select_put_money">选择提现金额</string>
     <string name="text_select_put_type">选择提现方式</string>
     <string name="text_put_type">提现方式</string>

@@ -30,8 +30,6 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.flyco.dialog.listener.OnOperItemClickL;
-import com.flyco.dialog.widget.ActionSheetDialog;
 import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.address.AddressActivity;
@@ -43,6 +41,8 @@ import com.lexivip.lexi.album.PicturePickerUtils;
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean;
 import com.lexivip.lexi.user.login.UserProfileBean;
 import com.lexivip.lexi.view.CustomHeadView;
+import com.smart.dialog.listener.OnOperItemClickL;
+import com.smart.dialog.widget.ActionSheetDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

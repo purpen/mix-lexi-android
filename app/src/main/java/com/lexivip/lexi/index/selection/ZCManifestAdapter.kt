@@ -32,7 +32,7 @@ class ZCManifestAdapter(layoutResId: Int) : BaseQuickAdapter<LifeWillBean, BaseV
         textViewName.setTextColor(Util.getColor(R.color.color_666))
         textViewName.text = item.user_name
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.cover, imageViewAvatar, dp20,ImageSizeConfig.SIZE_AVA)
+        GlideUtil.loadCircleImageWidthDimen(item.user_avator, imageViewAvatar, dp20,ImageSizeConfig.SIZE_AVA)
 
 
     }

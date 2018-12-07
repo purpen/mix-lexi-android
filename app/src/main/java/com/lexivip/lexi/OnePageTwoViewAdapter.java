@@ -71,7 +71,7 @@ public class OnePageTwoViewAdapter extends RecyclingPagerAdapter{
 
     @Override
     public float getPageWidth(int position) {
-        return 320 / 375f;
+        return 315 / 375f;
     }
 
     @Override

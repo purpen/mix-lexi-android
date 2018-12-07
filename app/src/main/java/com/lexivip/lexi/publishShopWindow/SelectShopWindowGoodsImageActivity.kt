@@ -110,7 +110,7 @@ class SelectShopWindowGoodsImageActivity : BaseActivity(), SelectShopWindowGoods
                 }
             }
 
-            EventBus.getDefault().post(MessageAddGoodsImages(pos, selectedProductImage!!.view_url, rid,storeRid))
+            EventBus.getDefault().post(MessageAddGoodsImages(pos, selectedProductImage!!.view_url, selectedProductImage!!.id, rid,storeRid))
             finish()
         }
 

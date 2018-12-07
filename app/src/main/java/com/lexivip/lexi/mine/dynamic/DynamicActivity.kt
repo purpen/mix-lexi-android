@@ -11,8 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
-import com.flyco.dialog.listener.OnBtnClickL
-import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
@@ -21,6 +19,8 @@ import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailBean
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.smart.dialog.listener.OnBtnClickL
+import com.smart.dialog.widget.NormalDialog
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -231,6 +231,7 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
     private fun showDeleteDialog(rid: String, position: Int) {
         val color333 = Util.getColor(R.color.color_333)
         val white = Util.getColor(android.R.color.white)
+        val color6ed7af = Util.getColor(R.color.color_6ed7af)
         val dialog = NormalDialog(this)
         dialog.isTitleShow(false)
                 .bgColor(white)
@@ -238,19 +239,19 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
                 .content(Util.getString(R.string.text_delete_shop_window_confirm))
                 .contentGravity(Gravity.CENTER)
                 .contentTextColor(color333)
-                .contentTextSize(16f)
+                .contentTextSize(14f)
                 .dividerColor(Util.getColor(R.color.color_eee))
-                .btnText(Util.getString(R.string.text_qd), Util.getString(R.string.text_cancel))
-                .btnTextSize(15f, 15f)
-                .btnTextColor(color333, Util.getColor(R.color.color_6ed7af))
-                .btnPressColor(white)
+                .btnText(Util.getString(R.string.text_cancel),Util.getString(R.string.text_qd))
+                .btnTextSize(18f, 18f)
+                .setRightBtnBgColor(color6ed7af)
+                .btnTextColor(color333, white)
                 .widthScale(0.85f)
                 .show()
         dialog.setOnBtnClickL(OnBtnClickL {
             dialog.dismiss()
-            presenter.deleteShopWindow(rid, position)
         }, OnBtnClickL {
             dialog.dismiss()
+            presenter.deleteShopWindow(rid, position)
         })
     }
 

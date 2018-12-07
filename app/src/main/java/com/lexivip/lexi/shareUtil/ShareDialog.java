@@ -16,9 +16,9 @@ import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ScreenUtil;
 import com.basemodule.tools.ToastUtil;
-import com.flyco.dialog.widget.base.BottomBaseDialog;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.album.ImageUtils;
+import com.smart.dialog.widget.base.BottomBaseDialog;
 
 import java.util.concurrent.ExecutionException;
 

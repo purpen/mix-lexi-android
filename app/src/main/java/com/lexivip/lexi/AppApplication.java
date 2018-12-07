@@ -1,24 +1,16 @@
 package com.lexivip.lexi;
-
 import android.app.Activity;
 import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
 import android.support.multidex.MultiDex;
-//import com.qiniu.android.storage.UploadManager;
-//import com.squareup.leakcanary.LeakCanary;
-//import com.thn.erp.common.constant.THNZone;
-//import com.uuzuche.lib_zxing.activity.ZXingLibrary;
-
 import com.basemodule.tools.AppManager;
 import com.basemodule.tools.BaseModuleContext;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
-
 import com.example.myapp.MyEventBusIndex;
 import com.lexivip.lexi.user.login.LoginActivity;
 import com.qiniu.android.common.AutoZone;
@@ -34,32 +26,19 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 import com.umeng.socialize.PlatformConfig;
-
-
 import org.android.agoo.huawei.HuaWeiRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.Map;
 
 public class AppApplication extends MultiDexApplication {
-
-
     private static Application instance;
     public static IWXAPI msgApi;
-    private static Activity mActivity;
-    private Handler handler;
     public static final String UPDATE_STATUS_ACTION = "com.umeng.message.example.action.UPDATE_STATUS";
-    public static PushAgent mPushAgent;
 
     public static Application getContext() {
         return instance;
     }
-
-    public static Activity getActivity(){
-        return mActivity;
-    }
-
 
     @Override
     public void onCreate() {
@@ -68,44 +47,6 @@ public class AppApplication extends MultiDexApplication {
             Thread.setDefaultUncaughtExceptionHandler(restartHandler);
         }
         instance = this;
-
-        this.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-                mActivity=activity;
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-
-            }
-        });
-//        initPush();
 //        if (BuildConfig.LOG_DEBUG) {
 //            if (LeakCanary.isInAnalyzerProcess(this)) {
 //                return;
@@ -130,8 +71,7 @@ public class AppApplication extends MultiDexApplication {
         //umeng统计
         MobclickAgent.setScenarioType(this,MobclickAgent.EScenarioType.E_UM_NORMAL);
         //umeng推送
-        mPushAgent = PushAgent.getInstance(this);
-        handler = new Handler(getMainLooper());
+        PushAgent mPushAgent = PushAgent.getInstance(this);
         PushAgent.getInstance(this).onAppStart();
         //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {

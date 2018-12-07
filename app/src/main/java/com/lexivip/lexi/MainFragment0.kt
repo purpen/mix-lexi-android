@@ -2,13 +2,10 @@ package com.lexivip.lexi
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.support.v4.view.ViewPager
 import android.text.TextUtils
-import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.basemodule.tools.Util
 import com.basemodule.ui.BaseFragment
@@ -18,7 +15,6 @@ import com.lexivip.lexi.index.explore.FragmentExplore
 import com.lexivip.lexi.index.lifehouse.FragmentLifeHouse
 import com.lexivip.lexi.index.selection.FragmentSelection
 import com.lexivip.lexi.index.shopWindow.FragmentShopWindow
-import com.lexivip.lexi.index.shopWindow.FragmentShopWindowDemo
 import com.lexivip.lexi.search.SearchActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_main0.*

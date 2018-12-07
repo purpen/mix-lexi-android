@@ -12,7 +12,6 @@ import com.lexivip.lexi.beans.CouponBean
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
 
 class FragmentUserCoupon : BaseFragment(), UserCouponContract.View {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_swipe_refresh_recyclerview
 
     private var whichPage: String? = null
@@ -51,6 +50,8 @@ class FragmentUserCoupon : BaseFragment(), UserCouponContract.View {
     }
 
     override fun initView() {
+        loadingView.visibility = View.VISIBLE
+        loadingView.setOffsetTop(DimenUtil.dp2px(90.0))
         swipeRefreshLayout.setBackgroundColor(Util.getColor(R.color.color_f5f7f9))
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val linearLayoutManager = LinearLayoutManager(activity)
@@ -155,12 +156,12 @@ class FragmentUserCoupon : BaseFragment(), UserCouponContract.View {
 
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
     }
 
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showError(string: String) {

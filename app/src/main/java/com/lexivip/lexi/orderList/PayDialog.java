@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.basemodule.tools.DateUtil;
-import com.flyco.dialog.widget.base.BottomBaseDialog;
 import com.lexivip.lexi.R;
+import com.smart.dialog.widget.base.BottomBaseDialog;
 
 //TODO 支付dialog待完成
 public class PayDialog extends BottomBaseDialog<PayDialog> {
