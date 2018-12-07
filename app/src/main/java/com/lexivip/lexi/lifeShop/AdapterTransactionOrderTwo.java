@@ -1,6 +1,7 @@
 package com.lexivip.lexi.lifeShop;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.basemodule.tools.GlideUtil;
@@ -22,11 +23,11 @@ public class AdapterTransactionOrderTwo extends BaseQuickAdapter<TransactionOrde
         GlideUtil.loadImageWithFading(item.store_logo+ImageSizeConfig.SIZE_P30X2,imageView);
         helper.setText(R.id.tv_goods_name,item.store_name);
         StringBuilder stringBuilder=new StringBuilder("");
-        if(!item.s_color.isEmpty())
+        if(!TextUtils.isEmpty(item.s_color))
             stringBuilder.append(item.s_color+"/");
-        if (!item.s_model.isEmpty())
+        if (!TextUtils.isEmpty(item.s_model))
             stringBuilder.append(item.s_model+"/");
-        if (0!=item.s_weight)
+        if (!TextUtils.isEmpty(item.s_weight))
             stringBuilder.append(String.valueOf(item.s_weight));
         helper.setText(R.id.tv_goods_parm,stringBuilder);
         helper.setText(R.id.tv_goods_num,"x"+item.quantity);

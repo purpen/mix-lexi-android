@@ -80,8 +80,8 @@ public class TransactionOrderBean {
             public int created_at;
             public int current_time;
             public Object customer_order_id;
-            public int discount_amount;
-            public int first_discount;
+            public String discount_amount;
+            public String first_discount;
             public int freight;
             public boolean is_many_express;
             public int life_order_status;
@@ -99,8 +99,8 @@ public class TransactionOrderBean {
             public int signed_at;
             public int status;
             public StoreBean store;
-            public int total_amount;
-            public int total_quantity;
+            public String total_amount;
+            public String total_quantity;
             public List<ItemsBean> items;
             public UserBean user_info;
 
@@ -199,8 +199,8 @@ public class TransactionOrderBean {
                 public String rid;
                 public String s_color;
                 public String s_model;
-                public int s_weight;
-                public int sale_price;
+                public String s_weight;
+                public String sale_price;
                 public int stock_count;
                 public int stock_quantity;
                 public String store_logo;

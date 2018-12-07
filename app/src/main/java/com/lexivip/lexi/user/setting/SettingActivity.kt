@@ -9,6 +9,7 @@ import android.net.Uri
 import com.lexivip.lexi.*
 import com.lexivip.lexi.eventBusMessge.MessageLogout
 import com.lexivip.lexi.index.selection.OpenLifeHouseActivity
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.orderList.OrderListActivity
 import com.lexivip.lexi.user.LoginWXBean
 import com.lexivip.lexi.user.login.UserProfileBean
@@ -90,12 +91,14 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
             R.id.customItemLayout3 -> startActivity(Intent(this,AddressListActivity::class.java))
             R.id.customItemLayout4 -> {
                 val intent=Intent(this, OpenLifeHouseActivity::class.java)
-                intent.putExtra("url","https://h5.lexivip.com/shop/guide")
+                intent.putExtra("url",WebUrl.OPEN_SHOP)
+                intent.putExtra("title",R.string.text_open_life_house)
                 startActivity(intent)
             }
             R.id.customItemLayout5 -> {
                 val intent=Intent(this, OpenLifeHouseActivity::class.java)
-                intent.putExtra("url","https://h5.lexivip.com/site/privacy")
+                intent.putExtra("url",WebUrl.PRIVACY)
+                intent.putExtra("title",R.string.text_about_us)
                 startActivity(intent)
             }
             R.id.customItemLayout6 -> { //拨打客服电话

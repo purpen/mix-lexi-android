@@ -3,12 +3,18 @@ package com.lexivip.lexi.shareUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
+import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
+import com.basemodule.tools.ScreenUtil;
 import com.basemodule.tools.ToastUtil;
 import com.flyco.dialog.widget.base.BottomBaseDialog;
 import com.lexivip.lexi.R;
@@ -36,22 +42,23 @@ public class ShareDialog extends BottomBaseDialog<ShareDialog> {
 
     @Override
     public void setUiBeforShow() {
-        ImageView cancel=view.findViewById(R.id.iv_cancel);
         ImageView imageView=view.findViewById(R.id.imageView);
+        int w=ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp60);
+        int h= (int) (w*1.53);
+        ViewGroup.LayoutParams layoutParams=new RelativeLayout.LayoutParams(w,h);
+        imageView.setLayoutParams(layoutParams);
         Button button=view.findViewById(R.id.button);
-        cancel.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(runnable).start();
-            }
-        });
         GlideUtil.loadImageWithFading(url,imageView);
+        RecyclerView recyclerView=view.findViewById(R.id.recyclerView);
+        LinearLayoutManager manager=new LinearLayoutManager(context);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(manager);//new Thread(runnable).start();
     }
 
     Runnable runnable=new Runnable() {

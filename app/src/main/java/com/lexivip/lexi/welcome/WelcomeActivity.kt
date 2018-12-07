@@ -8,6 +8,7 @@ import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.R
+import com.lexivip.lexi.cashMoney.CashMoneyActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
@@ -51,7 +52,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, WelcomeContract.Vi
     override fun onClick(v: View) {
         when (v.id) {
             R.id.textViewSkip -> {
-                startActivity(Intent(applicationContext, MainActivity::class.java))
+                startActivity(Intent(applicationContext, CashMoneyActivity::class.java))
                 finish()
             }
             R.id.button0 -> startActivity(Intent(this, RegisterActivity::class.java))

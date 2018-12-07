@@ -5,13 +5,10 @@ import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
 import android.support.multidex.MultiDex;
-import android.widget.RemoteViews;
-import android.widget.Toast;
 //import com.qiniu.android.storage.UploadManager;
 //import com.squareup.leakcanary.LeakCanary;
 //import com.thn.erp.common.constant.THNZone;
@@ -33,11 +30,9 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
-import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 
 
@@ -45,7 +40,6 @@ import org.android.agoo.huawei.HuaWeiRegister;
 import org.android.agoo.xiaomi.MiPushRegistar;
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Arrays;
 import java.util.Map;
 
 public class AppApplication extends MultiDexApplication {
@@ -219,8 +213,10 @@ public class AppApplication extends MultiDexApplication {
         //魅族通道
         //MeizuRegister.register(this, MEIZU_APPID, MEIZU_APPKEY);
 
-        PlatformConfig.setWeixin(Constants.WX_ID, Constants.WX_key);
+        //分享配置
+        PlatformConfig.setWeixin(Constants.WX_ID, Constants.WX_KEY);
         PlatformConfig.setQQZone(Constants.QQ_ID,Constants.QQ_KEY);
+        PlatformConfig.setSinaWeibo(Constants.SINA_ID,Constants.SINA_KEY,"");
 
         msgApi = WXAPIFactory.createWXAPI(this, Constants.WX_ID);
         msgApi.registerApp(Constants.WX_ID);

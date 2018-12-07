@@ -197,6 +197,9 @@
             android:launchMode="singleTask"
             android:exported="true"/>
         <activity android:name=".index.discover.ArticleCommentListActivity" />
+        <activity android:name=".cashMoney.CashMoneyActivity"/>
+        <activity android:name=".cashMoney.CashAlipayActivity"/>
+        <activity android:name=".cashMoney.CashTimeActivity"/>
     </application>
 
 </manifest>

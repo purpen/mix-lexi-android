@@ -900,4 +900,8 @@ object URL {
      * 获取文章子评论
      */
     const val ARTICLE_SUB_COMMENTS = "${BASE_URL}life_records/child_comments"
+    /**
+     * 生活馆提现
+     */
+    const val LIFE_CASH="${BASE_URL}pay_account/life_cash_money"
 }

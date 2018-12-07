@@ -1,4 +1,10 @@
 package com.lexivip.lexi.cashMoney;
 
-public class CashTimeActivity {
+import com.basemodule.ui.BaseActivity;
+
+public class CashTimeActivity extends BaseActivity {
+    @Override
+    protected int getLayout() {
+        return 0;
+    }
 }
