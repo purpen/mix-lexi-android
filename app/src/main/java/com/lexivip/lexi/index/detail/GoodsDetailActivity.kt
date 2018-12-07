@@ -416,7 +416,10 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 .btnPressColor(white)
                 .widthScale(0.85f)
                 .show()
+        dialog.setCancelable(false)
         dialog.setOnBtnClickL(OnBtnClickL {
+
+            //TODO 移除心愿单 在我的心愿单并且下架，调接口移出我的心愿单
             dialog.dismiss()
             finish()
         })

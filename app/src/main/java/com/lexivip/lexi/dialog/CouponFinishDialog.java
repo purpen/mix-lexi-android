@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.coupon.FragmentUserCoupon;
 import com.lexivip.lexi.coupon.UserCouponActivity;
 import com.smart.dialog.widget.base.BaseDialog;
 
@@ -37,7 +38,9 @@ public class CouponFinishDialog extends BaseDialog<CouponFinishDialog> {
         bt_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getContext().startActivity(new Intent(getContext(),UserCouponActivity.class));
+                Intent intent = new Intent(getContext(), UserCouponActivity.class);
+                intent.putExtra(UserCouponActivity.class.getSimpleName(), FragmentUserCoupon.PAGE_LX);
+                getContext().startActivity(intent);
             }
         });
     }
