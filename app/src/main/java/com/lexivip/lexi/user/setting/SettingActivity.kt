@@ -90,10 +90,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
             R.id.customItemLayout2 -> startActivity(Intent(this, OrderListActivity::class.java))
             R.id.customItemLayout3 -> startActivity(Intent(this,AddressListActivity::class.java))
             R.id.customItemLayout4 -> {
-                val intent=Intent(this, OpenLifeHouseActivity::class.java)
-                intent.putExtra("url",WebUrl.OPEN_SHOP)
-                intent.putExtra("title",R.string.text_open_life_house)
-                startActivity(intent)
+                PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide",R.string.title_open_life_house)
             }
             R.id.customItemLayout5 -> {
                 val intent=Intent(this, OpenLifeHouseActivity::class.java)

@@ -415,7 +415,7 @@
     <string name="text_delete_shop_window_confirm">确认删除本条动态？</string>
     <string name="text_bind">立即绑定</string>
     <string name="text_copy_wechat_num">复制微信号</string>
-    <string name="text_wechat_num" >lexixiaoduo</string>
+    <string name="text_wechat_num">lexixiaoduo</string>
     <string name="text_tips">提示</string>
     <string name="text_no_identify_info">您的收货地址还没有设置身份证信息哦！</string>
     <string name="text_go_add">去添加</string>
@@ -441,4 +441,5 @@
     <string name="text_put_immediately">立即提现</string>
     <string name="text_cash_detail">提现详情</string>
     <string name="text_save_poster">保存海报</string>
+    <string name="text_apply_for_life_house">申请开通生活馆</string>
 </resources>

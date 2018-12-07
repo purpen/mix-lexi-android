@@ -1,7 +1,9 @@
 package com.lexivip.lexi.index.selection
+
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Build
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.RelativeLayout
@@ -17,17 +19,14 @@ class OpenLifeHouseActivity : BaseActivity() {
     override val layout: Int = R.layout.acticity_open_life_house
     private lateinit var webView: WebView
     private lateinit var url: String
-    private var title:Int? = 0
+    private var titleId: Int = 0
     override fun getIntentData() {
-        url= intent.getStringExtra("url")
-        title=intent.getIntExtra("title",R.string.title_open_life_house)
+        url = intent.getStringExtra("url")
+        titleId = intent.getIntExtra("title", R.string.title_open_life_house)
     }
 
     override fun initView() {
-        customHeadView.setHeadCenterTxtShow(true, R.string.title_open_life_house)
-        //customHeadView.setHeadCenterTxtShow(true,R.string.title_open_life_house)
-        customHeadView.setHeadCenterTxtShow(true,title!!)
-        //val url = "https://h5.lexivip.com/shop/guide"
+        customHeadView.setHeadCenterTxtShow(true, titleId)
         webView = WebView(AppApplication.getContext())
         webView.overScrollMode = WebView.OVER_SCROLL_NEVER
         val settings = webView.settings
@@ -43,15 +42,18 @@ class OpenLifeHouseActivity : BaseActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
-
         val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
+        if (titleId == R.string.title_open_life_house) {
+            relativeLayoutBottom.visibility = View.VISIBLE
+            layoutParams.addRule(RelativeLayout.ABOVE, R.id.relativeLayoutBottom)
+        }
         layoutParams.addRule(RelativeLayout.BELOW, R.id.customHeadView)
         webView.layoutParams = layoutParams
         relativeLayout.addView(webView)
         webView.webViewClient = object : WebViewClient() {
 
             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-                LogUtil.e("=================")
+                LogUtil.e("onReceivedSslError=================")
                 handler?.proceed()
                 super.onReceivedSslError(view, handler, error)
             }
@@ -63,7 +65,7 @@ class OpenLifeHouseActivity : BaseActivity() {
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 dialog.show()
-                LogUtil.e("=================$url")
+                LogUtil.e("onPageStarted=================$url")
                 super.onPageStarted(view, url, favicon)
             }
 

@@ -3,6 +3,7 @@ package com.lexivip.lexi;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.util.SparseArray;
 
 import com.basemodule.tools.LogUtil;
@@ -219,11 +220,13 @@ public class PageUtil {
     /**
      * 加载WebView
      * @param url
+     * @param titleId
      */
-    public static void jump2OpenLifeHouseActivity(@NotNull String url) {
+    public static void jump2OpenLifeHouseActivity(@NotNull String url,int titleId) {
         Application context = AppApplication.getContext();
         Intent intent = new Intent(context, OpenLifeHouseActivity.class);
         intent.putExtra("url", url);
+        intent.putExtra("title", titleId);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

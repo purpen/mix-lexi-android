@@ -41,7 +41,7 @@ object WebUrl{
     /**
      * 开馆指引
      */
-    const val OPEN_SHOP="${BASE_URL}shop/guide"
+    const val OPEN_SHOP="https://h5.lexivip.com/shop/guide"
     /**
      * 小程序分享商品
      */

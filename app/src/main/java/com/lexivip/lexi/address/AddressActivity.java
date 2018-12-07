@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
@@ -31,8 +30,6 @@ import com.basemodule.ui.BaseActivity;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.flyco.dialog.listener.OnOperItemClickL;
-import com.flyco.dialog.widget.ActionSheetDialog;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.album.ImageCropActivity;
 import com.lexivip.lexi.album.ImageUtils;
@@ -42,6 +39,8 @@ import com.lexivip.lexi.user.areacode.CountryAreaCodeBean;
 import com.lexivip.lexi.user.areacode.MessageAreaCode;
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean;
 import com.lexivip.lexi.view.CustomHeadView;
+import com.smart.dialog.listener.OnOperItemClickL;
+import com.smart.dialog.widget.ActionSheetDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
