@@ -1,14 +1,10 @@
 package com.lexivip.lexi.payUtil;
-
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-
-
 import com.alipay.sdk.app.PayTask;
 import com.basemodule.tools.AppManager;
 import com.basemodule.tools.Constants;
@@ -20,30 +16,26 @@ import com.lexivip.lexi.orderList.OrderListActivity;
 import com.lexivip.lexi.pay.PayResultActivity;
 import com.lexivip.lexi.wxapi.WXPayEntryActivity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.Map;
 
-public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View{
+public class PayUtil implements WXPayEntryActivity.PayLinstener, PayContract.View {
     private PayWXBean bean;
     private WaitingDialog dialog;
     private final int WECHATPAY = 1;
     private final int ALIPAY = 2;
     private PayPresenter presenter;
-    private Application context = AppApplication.getContext();
-    private Activity activity=AppManager.getAppManager().currentActivity();
+    private Activity activity = AppManager.getAppManager().currentActivity();
     private String rid;
     private int pay_type;
-    Handler handler=new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what==WECHATPAY){
+            if (msg.what == WECHATPAY) {
                 LogUtil.e("调起微信");
                 PayReq request = new PayReq();
-                request.appId =Constants.WX_ID; // 公众账号ID
-                request.partnerId =bean.data.mch_id;// 商户号
+                request.appId = Constants.WX_ID; // 公众账号ID
+                request.partnerId = bean.data.mch_id;// 商户号
                 request.prepayId = bean.data.prepay_id; // 预支付交易会话ID
                 request.packageValue = "Sign=WXPay"; // 扩展字段 暂填写固定值Sign=WXPay
                 request.nonceStr = bean.data.nonce_str; // 随机字符串
@@ -51,7 +43,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
                 request.sign = bean.data.sign; // 签名sign
                 AppApplication.msgApi.sendReq(request);
                 WXPayEntryActivity.registerPayResultListener(PayUtil.this);
-            }else if (ALIPAY==msg.what){
+            } else if (ALIPAY == msg.what) {
                 /**
                  对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
                  返回码:
@@ -67,18 +59,18 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
                 PayResult payResult = new PayResult((Map<String, String>) msg.obj);
                 String resultInfo = payResult.getResult();// 同步返回需要验证的信息
                 String resultStatus = payResult.getResultStatus();
-                LogUtil.e("返回的支付结果："+resultStatus);
-                if (TextUtils.equals(resultStatus, "9000")||TextUtils.equals(resultStatus, "6004")) {
+                LogUtil.e("返回的支付结果：" + resultStatus);
+                if (TextUtils.equals(resultStatus, "9000") || TextUtils.equals(resultStatus, "6004")) {
                     //ToastUtil.showError("支付成功");
                     // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                     startPyaResult();
-                }else if (TextUtils.equals(resultStatus, "6001")){
+                } else if (TextUtils.equals(resultStatus, "6001")) {
                     ToastUtil.showError("取消支付");
                     startOrder();
-                }else if (TextUtils.equals(resultStatus, "4000")){
+                } else if (TextUtils.equals(resultStatus, "4000")) {
                     ToastUtil.showError("支付失败");
                     startOrder();
-                }else {
+                } else {
                     ToastUtil.showError("支付异常");
                     startOrder();
                 }
@@ -88,38 +80,38 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
 
     public PayUtil(WaitingDialog dialog, String rid, int pay_type, int type) {
         this.dialog = dialog;
-        this.rid=rid;
-        this.pay_type=pay_type;//1.微信支付 2.支付宝支付
-        presenter=new PayPresenter(this);
-        presenter.loadWXPayOrder(rid,pay_type,type);//type字段：0.订单支付 1.订单列表支付
+        this.rid = rid;
+        this.pay_type = pay_type;//1.微信支付 2.支付宝支付
+        presenter = new PayPresenter(this);
+        presenter.loadWXPayOrder(rid, pay_type, type);//type字段：0.订单支付 1.订单列表支付
     }
 
     @Override
     public void paySuccess(int code) {
-        if (-1==code){
+        if (-1 == code) {
             ToastUtil.showError("支付异常");
             startOrder();
-        }else if (-2==code){
+        } else if (-2 == code) {
             ToastUtil.showError("取消支付");
             startOrder();
-        }else {
+        } else {
             startPyaResult();
         }
     }
 
-    private void startPyaResult(){
+    private void startPyaResult() {
         activity.finish();
-        Intent intent = new Intent(context, PayResultActivity.class);
+        Intent intent = new Intent(activity, PayResultActivity.class);
         intent.putExtra(PayResultActivity.class.getSimpleName(), rid);
         intent.putExtra(PayResultActivity.class.getName(), pay_type);
-        context.startActivity(intent);
+        activity.startActivity(intent);
     }
 
-    private void startOrder(){
+    private void startOrder() {
         activity.finish();
-        Intent intent = new Intent(context, OrderListActivity.class);
+        Intent intent = new Intent(activity, OrderListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        activity.startActivity(intent);
     }
 
     @Override
@@ -134,7 +126,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
 
     @Override
     public void showError(@NonNull String error) {
-        if (dialog!=null){
+        if (dialog != null) {
             dialog.dismiss();
         }
         ToastUtil.showError(error);
@@ -142,10 +134,10 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
 
     @Override
     public void getPayOrder(final PayWXBean bean) {
-        this.bean=bean;
-        if (1==pay_type) {
+        this.bean = bean;
+        if (1 == pay_type) {
             handler.sendEmptyMessage(WECHATPAY);
-        }else {
+        } else {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
