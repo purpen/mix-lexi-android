@@ -19,7 +19,7 @@ class OpenLifeHouseActivity : BaseActivity() {
     private lateinit var webView: WebView
     private lateinit var url: String
     override fun getIntentData() {
-        url = intent.getStringArrayExtra("url").toString()
+        url = intent.getStringExtra("url")
     }
 
     override fun initView() {
@@ -49,7 +49,7 @@ class OpenLifeHouseActivity : BaseActivity() {
             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
                 LogUtil.e("=================")
                 handler?.proceed()
-                super.onReceivedSslError(view, handler, error);
+                super.onReceivedSslError(view, handler, error)
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
