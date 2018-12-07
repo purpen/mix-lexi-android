@@ -34,9 +34,6 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
 class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
-
-    private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
-
     private val presenter: ShowWindowDetailPresenter by lazy { ShowWindowDetailPresenter(this) }
 
     private lateinit var rid: String
@@ -65,6 +62,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     }
 
     override fun initView() {
+        loadingView.setOffsetTop(DimenUtil.dp2px(50.0))
 //        EventBus.getDefault().register(this)
         customHeadView.setHeadCenterTxtShow(true, R.string.title_show_case)
         initGuessLike()
@@ -661,15 +659,15 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     }
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
     }
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showError(string: String) {
-        ToastUtil.showError(string)
+        loadingView.showError()
     }
 
     internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {

@@ -86,7 +86,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     }
 
     override fun initView() {
-
+        loadingView.setOffsetTop(DimenUtil.dp2px(50.0))
         listDescription = ArrayList()
 
         couponList = ArrayList()
