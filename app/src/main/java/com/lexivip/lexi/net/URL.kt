@@ -710,7 +710,7 @@ object URL {
     /**
      * 全部分类
      */
-    const val ALL_CLASS="${BASE_URL}official/categories"
+    const val ALL_CLASS = "${BASE_URL}official/categories"
     /**
      * 领券中心头条动态
      */
@@ -723,41 +723,41 @@ object URL {
     /**
      * 领券中心-同享券-精品品牌券
      */
-    const val VOUCHER_SHARE="${BASE_URL}market/coupon_center_shared"
+    const val VOUCHER_SHARE = "${BASE_URL}market/coupon_center_shared"
     /**
      * 领券中心-单享券-精选商品券
      */
-    const val VOUCHER_SINGLE="${BASE_URL}market/coupon_center_single"
+    const val VOUCHER_SINGLE = "${BASE_URL}market/coupon_center_single"
     /**
      * 领券中心活动图片
      */
-    const val VOUCHER_IMAGE="${BASE_URL}coupon_ad"
+    const val VOUCHER_IMAGE = "${BASE_URL}coupon_ad"
     /**
      * 领取官方优惠券
      */
-    const val VOUCHER_OFFICIAL_RECEIVE="${BASE_URL}market/official_coupons/grant"
+    const val VOUCHER_OFFICIAL_RECEIVE = "${BASE_URL}market/official_coupons/grant"
     /**
      * 微信支付签名
      */
-    const val WX_PAY="${BASE_URL}orders/app_pay"
+    const val WX_PAY = "${BASE_URL}orders/app_pay"
     /**
      * 微信订单支付签名
      */
-    const val WX_PAY_ORDER="${BASE_URL}orders/wx_pay/app"
+    const val WX_PAY_ORDER = "${BASE_URL}orders/wx_pay/app"
     /**
      * 订单是否合并支付
      */
-    const val IS_MERGE="${BASE_URL}orders/app_pay/is_merge"
+    const val IS_MERGE = "${BASE_URL}orders/app_pay/is_merge"
 
     /**
      * 别人喜欢的商品
      */
-   const val OTHERS_FAVORITE_GOODS = "${BASE_URL}other_userlike"
+    const val OTHERS_FAVORITE_GOODS = "${BASE_URL}other_userlike"
 
     /**
      * 别人喜欢的橱窗
      */
-   const val OTHERS_FAVORITE_SHOW_WINDOW = "${BASE_URL}shop_windows/other_user_likes"
+    const val OTHERS_FAVORITE_SHOW_WINDOW = "${BASE_URL}shop_windows/other_user_likes"
 
     /**
      * 别人的心愿单
@@ -777,7 +777,7 @@ object URL {
     /**
      * 别人的个人中心
      */
-    const val OTHERS_USER_CENTER="${BASE_URL}users/get_other_user_center"
+    const val OTHERS_USER_CENTER = "${BASE_URL}users/get_other_user_center"
 
     /**
      * 别人喜欢商品列表
@@ -791,19 +791,19 @@ object URL {
     /**
      * 分享品牌馆
      */
-    const val SHARE_BRAND="${BASE_URL}market/share/store"
+    const val SHARE_BRAND = "${BASE_URL}market/share/store"
     /**
      * 分享生活馆
      */
-    const val SHARE_LIFE="${BASE_URL}market/share/life_store"
+    const val SHARE_LIFE = "${BASE_URL}market/share/life_store"
     /**
      * 邀请好友开馆卡片
      */
-    const val SHARE_INVITE="${BASE_URL}market/share/invite_carde"
+    const val SHARE_INVITE = "${BASE_URL}market/share/invite_carde"
     /**
      * 分享优惠券
      */
-    const val SHARE_VOUCHER="${BASE_URL}market/share/coupons"
+    const val SHARE_VOUCHER = "${BASE_URL}market/share/coupons"
 
     /**
      * 包邮专区
@@ -842,11 +842,11 @@ object URL {
     /**
      * 分享海报
      */
-    const val SHARE_POSTER="${BASE_URL}market/wxa_poster"
+    const val SHARE_POSTER = "${BASE_URL}market/wxa_poster"
     /**
      * 橱窗分享海报
      */
-    const val SHARE_WINDOW="${BASE_URL}market/share/shop_window_poster"
+    const val SHARE_WINDOW = "${BASE_URL}market/share/shop_window_poster"
 
     /**
      * 保存支付方式
@@ -855,27 +855,27 @@ object URL {
     /**
      * 是否已经领取1000元红包
      */
-    const val IS_RECEIVE_COUPON="${BASE_URL}market/is_new_user_bonus"
+    const val IS_RECEIVE_COUPON = "${BASE_URL}market/is_new_user_bonus"
     /**
      * 领取1000元红包
      */
-    const val RECEIVE_COUPON="${BASE_URL}market/grant_new_user_bonus"
+    const val RECEIVE_COUPON = "${BASE_URL}market/grant_new_user_bonus"
     /**
      * 我的关注列表
      */
-    const val USER_FOLLOW="${BASE_URL}users/followed_users"
+    const val USER_FOLLOW = "${BASE_URL}users/followed_users"
     /**
      * 我的粉丝列表
      */
-    const val USER_FANS="${BASE_URL}users/user_fans"
+    const val USER_FANS = "${BASE_URL}users/user_fans"
     /**
      * 别人主页的关注列表
      */
-    const val OTHER_USER_FOLLOW="${BASE_URL}users/other_followed_users"
+    const val OTHER_USER_FOLLOW = "${BASE_URL}users/other_followed_users"
     /**
      * 别人主页的粉丝列表
      */
-    const val OTHER_USER_FANS="${BASE_URL}users/other_user_fans"
+    const val OTHER_USER_FANS = "${BASE_URL}users/other_user_fans"
 
     /**
      * 文章评论列表
@@ -894,7 +894,7 @@ object URL {
     /**
      * 微信登录
      */
-    const val WX_LOGIN="${BASE_URL}auth/app_bind_wx"
+    const val WX_LOGIN = "${BASE_URL}auth/app_bind_wx"
 
     /**
      * 获取文章子评论
@@ -903,5 +903,10 @@ object URL {
     /**
      * 生活馆提现
      */
-    const val LIFE_CASH="${BASE_URL}pay_account/life_cash_money"
+    const val LIFE_CASH = "${BASE_URL}pay_account/life_cash_money"
+
+    /**
+     * 申请生活馆
+     */
+    const val APPLY_LIFE_HOUSE = "${BASE_URL}store/apply_life_store"
 }

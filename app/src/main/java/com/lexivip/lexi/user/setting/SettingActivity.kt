@@ -8,11 +8,10 @@ import kotlinx.android.synthetic.main.activity_setting.*
 import android.net.Uri
 import com.lexivip.lexi.*
 import com.lexivip.lexi.eventBusMessge.MessageLogout
-import com.lexivip.lexi.index.selection.OpenLifeHouseActivity
+import com.lexivip.lexi.index.selection.applyForLifeHouse.OpenLifeHouseActivity
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.orderList.OrderListActivity
 import com.lexivip.lexi.user.LoginWXBean
-import com.lexivip.lexi.user.login.UserProfileBean
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.setting.address.AddressListActivity
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity

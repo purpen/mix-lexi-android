@@ -3,7 +3,6 @@ package com.lexivip.lexi;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.util.SparseArray;
 
 import com.basemodule.tools.LogUtil;
@@ -20,7 +19,7 @@ import com.lexivip.lexi.index.detail.GoodsDetailActivity;
 import com.lexivip.lexi.index.discover.ArticleCommentListActivity;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
 import com.lexivip.lexi.index.explore.collection.CollectionDetailActivity;
-import com.lexivip.lexi.index.selection.OpenLifeHouseActivity;
+import com.lexivip.lexi.index.selection.applyForLifeHouse.OpenLifeHouseActivity;
 import com.lexivip.lexi.publishShopWindow.RelateShopWindowActivity;
 import com.lexivip.lexi.publishShopWindow.SelectShopWindowGoodsImageActivity;
 import com.lexivip.lexi.user.OtherUserCenterActivity;

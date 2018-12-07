@@ -6,14 +6,13 @@ import android.view.View
 import android.widget.TextView
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.R
-import com.lexivip.lexi.index.selection.OpenLifeHouseActivity
+import com.lexivip.lexi.index.selection.applyForLifeHouse.OpenLifeHouseActivity
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.user.areacode.MessageAreaCode
 import com.lexivip.lexi.user.areacode.SelectCountryOrAreaActivity

@@ -10,6 +10,7 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.eventBusMessge.MessageChangePage
+import com.lexivip.lexi.index.selection.applyForLifeHouse.ApplyForLifeHouseSuccessActivity
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
@@ -25,6 +26,11 @@ import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
 
 class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
+    /**
+     * 是否切换到生活馆界面
+     */
+    private var showLifeHouseTab:Boolean= false
+
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
 
     }
@@ -148,17 +154,28 @@ class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyP
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    /**
+     * 是否展示生活馆
+     */
+    fun switch2LifeHouseTab():Boolean{
+        return showLifeHouseTab
+    }
 
+    override fun onNewIntent(intent: Intent?) {
         if (intent == null) return
         var str = ""
+
         if (intent.hasExtra(TAG)) {
             str = intent.getStringExtra(TAG)
         }
 
+//        LogUtil.e("TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName)=="+TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName))
+        if (TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName)) showLifeHouseTab = true
+
         when (str) { //MainActivity存在时刷新fragment
             LoginActivity::class.java.simpleName, CompleteInfoActivity::class.java.simpleName,
-            RegisterActivity::class.java.simpleName, SettingActivity::class.java.simpleName -> {
+            RegisterActivity::class.java.simpleName, SettingActivity::class.java.simpleName,
+            ApplyForLifeHouseSuccessActivity::class.java.simpleName -> {
                 hideFragments()
                 initFragments()
                 showIndexPage()

@@ -61,6 +61,24 @@ public final class AppManager {
         }
     }
 
+
+    /**
+     * 查找某个activity
+     * @param cls
+     * @return
+     */
+    public Activity getActivity(Class<?> cls) {
+        if (activityStack == null) return null;
+        Activity currentActivity = null;
+        for (Activity activity : activityStack) {
+            if (activity.getClass().equals(cls)) {
+                currentActivity = activity;
+                break;
+            }
+        }
+        return currentActivity;
+    }
+
     /**
      * 结束指定类名的Activity
      */
@@ -86,7 +104,7 @@ public final class AppManager {
      * 结束所有Activity
      */
     public void finishAllActivity() {
-        if (activityStack==null) return;
+        if (activityStack == null) return;
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
                 activityStack.get(i).finish();

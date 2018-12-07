@@ -31,7 +31,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
 
-    private val dialog:WaitingDialog? by lazy { WaitingDialog(this) }
+    private val dialog:WaitingDialog by lazy { WaitingDialog(this) }
 
     private lateinit var presenter: LoginPresenter
 
@@ -175,7 +175,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
     }
 
     override fun showLoadingView() {
-        dialog?.show()
+        dialog.show()
     }
 
     override fun showError(string: String) {
@@ -183,7 +183,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
     }
 
     override fun dismissLoadingView() {
-        dialog?.dismiss()
+        dialog.dismiss()
     }
 
     override fun goPage(vararg args: Boolean) {
