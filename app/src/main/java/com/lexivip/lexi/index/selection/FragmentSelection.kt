@@ -11,6 +11,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -39,7 +40,6 @@ import org.greenrobot.eventbus.EventBus
 
 
 class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickListener {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_selection
     private val presenter: SelectionPresenter by lazy { SelectionPresenter(this) }
 
@@ -62,6 +62,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     }
 
     override fun initView() {
+        loadingView.setOffsetTop(DimenUtil.dp2px(103.0))
         initBanner()
         initNotice()
         initRecommend()
@@ -130,6 +131,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         recyclerViewZCManifest.layoutManager = gridLayoutManager
         recyclerViewZCManifest.adapter = adapterZCManifest
         recyclerViewZCManifest.isNestedScrollingEnabled = false
+        recyclerViewZCManifest.setHasFixedSize(true)
         recyclerViewZCManifest.addItemDecoration(GridSpacingItemDecoration(2, DimenUtil.dp2px(10.0), DimenUtil.dp2px(20.0), false))
     }
 
@@ -219,7 +221,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         val manager = CustomGridLayoutManager(AppApplication.getContext(), 6)
         manager.setScrollEnabled(false)
         recyclerViewHotRecommend.layoutManager = manager
-
+        recyclerViewHotRecommend.isNestedScrollingEnabled = false
+        recyclerViewHotRecommend.setHasFixedSize(true)
     }
 
     /**
@@ -501,15 +504,16 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
     }
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showError(string: String) {
-        ToastUtil.showError(string)
+        LogUtil.e(string)
+//        ToastUtil.showError(string)
     }
 
     override fun goPage() {
