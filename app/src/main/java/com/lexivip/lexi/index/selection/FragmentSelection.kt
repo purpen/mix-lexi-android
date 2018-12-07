@@ -173,8 +173,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initDiscoverLife() {
         presenter.getDiscoverLife()
         adapterDiscoverLife = DiscoverLifeAdapter(R.layout.adapter_discover_life)
-        val linearLayoutManager = LinearLayoutManager(activity)
+        val linearLayoutManager = CustomLinearLayoutManager(AppApplication.getContext())
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        linearLayoutManager.setScrollEnabled(false)
+        recyclerViewDiscoverLife.isNestedScrollingEnabled = false
         recyclerViewDiscoverLife.setHasFixedSize(true)
         recyclerViewDiscoverLife.layoutManager = linearLayoutManager
         recyclerViewDiscoverLife.adapter = adapterDiscoverLife
@@ -220,6 +222,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         presenter.getHotRecommend()
         val manager = CustomGridLayoutManager(AppApplication.getContext(), 6)
         manager.setScrollEnabled(false)
+        recyclerViewHotRecommend.isNestedScrollingEnabled = false
         recyclerViewHotRecommend.layoutManager = manager
         recyclerViewHotRecommend.isNestedScrollingEnabled = false
         recyclerViewHotRecommend.setHasFixedSize(true)
