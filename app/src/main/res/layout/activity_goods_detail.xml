@@ -189,4 +189,10 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <com.basemodule.ui.LoadingView
+        android:id="@+id/loadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativeLayoutHeader"
+        />
 </RelativeLayout>

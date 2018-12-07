@@ -7,6 +7,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.net.ClientParamsAPI
 import com.lexivip.lexi.user.LoginWXBean
 import com.lexivip.lexi.user.password.VerifyCodeBean
+import com.umeng.message.PushAgent
 import com.umeng.message.UTrack
 import java.io.IOException
 
@@ -32,7 +33,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 val loginBean = JsonUtil.fromJson(json, LoginBean::class.java)
                 if (loginBean.success) {
                     SPUtil.write(Constants.AUTHORIZATION,ClientParamsAPI.getAuthorization(loginBean.data.token))
-                    AppApplication.mPushAgent.addAlias(loginBean.data.uid,"lexi",object :UTrack.ICallBack{
+                    PushAgent.getInstance(AppApplication.getContext()).addAlias(loginBean.data.uid,"lexi",object :UTrack.ICallBack{
                         override fun onMessage(p0: Boolean, p1: String?) {
 
                         }
@@ -64,7 +65,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 val loginWXBean= JsonUtil.fromJson(json, LoginWXBean::class.java)
                 if (loginWXBean.success) {
                     if (loginWXBean.data.is_bind){
-                        AppApplication.mPushAgent.addAlias(loginWXBean.data.uid,"lexi",object : UTrack.ICallBack{
+                        PushAgent.getInstance(AppApplication.getContext()).addAlias(loginWXBean.data.uid,"lexi",object : UTrack.ICallBack{
                             override fun onMessage(p0: Boolean, p1: String?) {
 
                             }
@@ -136,7 +137,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
                 if (loginBean.success) {
                     val authorization = ClientParamsAPI.getAuthorization(loginBean.data.token)
                     SPUtil.write(Constants.AUTHORIZATION,authorization)
-                    AppApplication.mPushAgent.addAlias(loginBean.data.uid,"lexi",object :UTrack.ICallBack{
+                    PushAgent.getInstance(AppApplication.getContext()).addAlias(loginBean.data.uid,"lexi",object :UTrack.ICallBack{
                         override fun onMessage(p0: Boolean, p1: String?) {
 
                         }

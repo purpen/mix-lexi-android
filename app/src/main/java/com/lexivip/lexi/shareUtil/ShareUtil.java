@@ -1,18 +1,13 @@
 package com.lexivip.lexi.shareUtil;
-
 import android.app.Activity;
 import android.support.annotation.NonNull;
-
+import com.basemodule.tools.AppManager;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
-import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BasePresenter;
-import com.lexivip.lexi.AppApplication;
 import com.lexivip.lexi.ImageSizeConfig;
-import com.lexivip.lexi.R;
-import com.lexivip.lexi.net.URL;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -23,8 +18,8 @@ import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
 public class ShareUtil implements ShareContract.View{
-    private Activity context = AppApplication.getActivity();
-    private WaitingDialog dialog;
+    private WaitingDialog dialog = new WaitingDialog(AppManager.getAppManager().currentActivity());
+    private Activity context;
     private String rid;
     private int type;
     private SharePresenter presenter=new SharePresenter(this);
@@ -35,31 +30,27 @@ public class ShareUtil implements ShareContract.View{
     private String pageUrl;
     private String title;
 
-    public ShareUtil(Activity context, WaitingDialog dialog, String rid, int type) {
+    public ShareUtil(Activity context,String rid, int type) {
         this.context = context;
-        this.dialog = dialog;
         this.rid = rid;
         this.type = type;
     }
 
-    public ShareUtil(Activity context, WaitingDialog dialog, int type) {
+    public ShareUtil(Activity context,int type) {
         this.context = context;
-        this.dialog = dialog;
         this.type = type;
     }
 
-    public ShareUtil(Activity context, WaitingDialog dialog, String rid, int type, String scene) {
+    public ShareUtil(Activity context,String rid, int type, String scene) {
         this.context = context;
-        this.dialog = dialog;
         this.rid = rid;
         this.type = type;// 1=品牌馆, 2=生活馆, 4=分享商品
         this.scene = scene;
         presenter.loadShareImage(type,rid,scene);
     }
 
-    public ShareUtil(Activity context, WaitingDialog dialog, String rid, String scene) {
+    public ShareUtil(Activity context,String rid, String scene) {
         this.context = context;
-        this.dialog = dialog;
         this.rid = rid;
         this.scene = scene;
         presenter.loadShareWindow(rid,scene);

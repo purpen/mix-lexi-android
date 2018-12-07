@@ -15,7 +15,6 @@ import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
-import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.index.selection.DiscoverLifeAdapter
 import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.LoginActivity
@@ -718,7 +717,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     @AfterPermissionGranted(Constants.REQUEST_CODE_PICK_IMAGE)
     private fun share(){
         if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            val share= ShareUtil(this,dialog,rid,rid)
+            val share= ShareUtil(this,rid,rid)
         } else {
             // 申请权限。
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo),

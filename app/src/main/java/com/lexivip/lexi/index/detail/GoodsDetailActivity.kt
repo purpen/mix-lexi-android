@@ -51,7 +51,6 @@ import pub.devrel.easypermissions.EasyPermissions
 class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnClickListener, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     private val showTagCount: Int = 5
-    private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
 
     private lateinit var presenter: GoodsDetailPresenter
 
@@ -911,15 +910,18 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     }
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
+//        dialog.show()
     }
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+//        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showError(string: String) {
-        ToastUtil.showError(string)
+        LogUtil.e(string)
+//        ToastUtil.showError(string)
     }
 
     override fun goPage() {
@@ -938,7 +940,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     @AfterPermissionGranted(Constants.REQUEST_CODE_PICK_IMAGE)
     private fun share() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            val share = ShareUtil(this, dialog, productId, 4, goodsData!!.rid + "-" + goodsData!!.store_rid)
+            val share = ShareUtil(this,productId, 4, goodsData!!.rid + "-" + goodsData!!.store_rid)
         } else {
             // 申请权限。
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo),

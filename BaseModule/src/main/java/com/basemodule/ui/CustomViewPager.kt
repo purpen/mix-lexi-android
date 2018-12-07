@@ -30,4 +30,11 @@ class CustomViewPager : ViewPager {
         this.isPagingEnabled = b
     }
 
+    override fun setCurrentItem(item: Int) {
+        super.setCurrentItem(item)
+    }
+
+    override fun setCurrentItem(item: Int, smoothScroll: Boolean) {
+        super.setCurrentItem(item, smoothScroll)
+    }
 }

@@ -227,6 +227,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.setScrollEnabled(false)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
+        recyclerViewWelcome.setHasFixedSize(true)
         recyclerViewWelcome.layoutManager = gridLayoutManager
         recyclerViewWelcome.adapter = adapterWelcomeInWeek
         val colorWhite = Util.getColor(android.R.color.white)

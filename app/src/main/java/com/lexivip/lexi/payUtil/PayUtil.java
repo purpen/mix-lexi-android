@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 
 import com.alipay.sdk.app.PayTask;
+import com.basemodule.tools.AppManager;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
@@ -31,7 +32,7 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener,PayContract.View
     private final int ALIPAY = 2;
     private PayPresenter presenter;
     private Application context = AppApplication.getContext();
-    private Activity activity=AppApplication.getActivity();
+    private Activity activity=AppManager.getAppManager().currentActivity();
     private String rid;
     private int pay_type;
     Handler handler=new Handler(){
