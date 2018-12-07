@@ -484,7 +484,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         when (v.id) {
             R.id.buttonOpenShop -> { //开馆指引 https://h5.lexivip.com/shop/guide
                 if (UserProfileUtil.isLogin()) {
-                    startActivity(Intent(activity, OpenLifeHouseActivity::class.java))
+                    PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide")
                 } else {
                     startActivity(Intent(activity, LoginActivity::class.java))
                 }

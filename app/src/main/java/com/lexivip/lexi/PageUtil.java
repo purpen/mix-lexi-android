@@ -19,6 +19,7 @@ import com.lexivip.lexi.index.detail.GoodsDetailActivity;
 import com.lexivip.lexi.index.discover.ArticleCommentListActivity;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
 import com.lexivip.lexi.index.explore.collection.CollectionDetailActivity;
+import com.lexivip.lexi.index.selection.OpenLifeHouseActivity;
 import com.lexivip.lexi.publishShopWindow.RelateShopWindowActivity;
 import com.lexivip.lexi.publishShopWindow.SelectShopWindowGoodsImageActivity;
 import com.lexivip.lexi.user.OtherUserCenterActivity;
@@ -211,6 +212,18 @@ public class PageUtil {
         Application context = AppApplication.getContext();
         Intent intent = new Intent(context, ArticleCommentListActivity.class);
         intent.putExtra(ArticleCommentListActivity.class.getSimpleName(), rid);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 加载WebView
+     * @param url
+     */
+    public static void jump2OpenLifeHouseActivity(@NotNull String url) {
+        Application context = AppApplication.getContext();
+        Intent intent = new Intent(context, OpenLifeHouseActivity.class);
+        intent.putExtra("url", url);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
