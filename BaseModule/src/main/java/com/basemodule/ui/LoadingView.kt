@@ -36,7 +36,7 @@ class LoadingView : RelativeLayout {
         val view = LayoutInflater.from(context).inflate(R.layout.view_loading, this)
         mRelativeLayoutLoading = view.findViewById(R.id.relativeLayoutLoading)
         mRelativeLayoutFail = view.findViewById(R.id.relativeLayoutFail)
-        imageViewLoading = view.findViewById<ImageView>(R.id.imageViewLoading)
+        imageViewLoading = view.findViewById(R.id.imageViewLoading)
         setLoadingImageLayoutParams()
         GlideUtil.loadingImage(R.drawable.loading_image, imageViewLoading)
         mRelativeLayoutFail.setOnClickListener {

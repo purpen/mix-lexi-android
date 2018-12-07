@@ -6,10 +6,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
-import com.basemodule.tools.AppManager
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import android.view.View
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.PageUtil
@@ -30,7 +28,6 @@ import org.greenrobot.eventbus.ThreadMode
 
 
 class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(AppManager.getAppManager().currentActivity()) }
     override val layout: Int = R.layout.fragment_swipe_refresh_recyclerview
     private val presenter: ShowWindowPresenter by lazy { ShowWindowPresenter(this) }
     private val adapter: AdapterRecommendShowWindow by lazy { AdapterRecommendShowWindow(R.layout.adapter_show_window) }
@@ -45,6 +42,8 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
     }
 
     override fun initView() {
+        loadingView.visibility = View.VISIBLE
+        loadingView.setOffsetTop((ScreenUtil.getScreenHeight() - DimenUtil.dp2px(64.0)) / 2 - DimenUtil.dp2px(10.0))
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         EventBus.getDefault().register(this)
         swipeRefreshLayout.isEnabled = false
@@ -208,7 +207,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
     }
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
     }
 
     override fun loadMoreFail() {
@@ -224,11 +223,11 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
     }
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showError(string: String) {
-        ToastUtil.showError(string)
+        loadingView.showError()
     }
 
     override fun goPage() {

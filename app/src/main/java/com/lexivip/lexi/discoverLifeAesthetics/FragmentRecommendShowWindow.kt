@@ -6,10 +6,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
-import com.basemodule.tools.AppManager
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import android.view.View
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.PageUtil
@@ -30,11 +28,11 @@ import org.greenrobot.eventbus.ThreadMode
 
 
 class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(AppManager.getAppManager().currentActivity()) }
     override val layout: Int = R.layout.fragment_swipe_refresh_recyclerview
     private val presenter: ShowWindowPresenter by lazy { ShowWindowPresenter(this) }
     private val adapter: AdapterRecommendShowWindow by lazy { AdapterRecommendShowWindow(R.layout.adapter_show_window) }
     private var isFirstLoad = true
+
     companion object {
         @JvmStatic
         fun newInstance(): FragmentRecommendShowWindow = FragmentRecommendShowWindow()
@@ -45,6 +43,8 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
     }
 
     override fun initView() {
+        loadingView.visibility = View.VISIBLE
+        loadingView.setOffsetTop((ScreenUtil.getScreenHeight() - DimenUtil.dp2px(64.0)) / 2 - DimenUtil.dp2px(10.0))
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         EventBus.getDefault().register(this)
         swipeRefreshLayout.isEnabled = false
@@ -118,7 +118,7 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
                     val dialog = DistributeShareDialog(activity)
                     dialog.show()
                 }
-                R.id.textViewFocus ->{ //关注用户
+                R.id.textViewFocus -> { //关注用户
                     if (UserProfileUtil.isLogin()) {
                         presenter.focusUser(showWindowBean.uid, view, showWindowBean.is_follow, position)
                     } else {
@@ -150,12 +150,12 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onOuterPageShopWindow(message:ShopWindowBean) {
-        if (TextUtils.equals(PublishShopWindowActivity::class.java.simpleName,message.PAGE_TAG)) return
-        if (TextUtils.equals(TAG,message.PAGE_TAG)) return
+    fun onOuterPageShopWindow(message: ShopWindowBean) {
+        if (TextUtils.equals(PublishShopWindowActivity::class.java.simpleName, message.PAGE_TAG)) return
+        if (TextUtils.equals(TAG, message.PAGE_TAG)) return
         val data = adapter.data
-        for (item in data){
-            if (TextUtils.equals(item.rid,message.rid)){
+        for (item in data) {
+            if (TextUtils.equals(item.rid, message.rid)) {
                 item.is_follow = message.is_follow
                 item.is_expert = message.is_expert
                 item.is_official = message.is_official
@@ -172,7 +172,7 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
      * 设置用户关注状态
      */
     override fun setFocusState(isFollowed: Boolean, position: Int) {
-        val item = adapter.getItem(position)?:return
+        val item = adapter.getItem(position) ?: return
         item.is_follow = isFollowed
         adapter.notifyItemChanged(position)
         item.PAGE_TAG = TAG
@@ -209,15 +209,15 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View {
     }
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
     }
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showError(string: String) {
-        ToastUtil.showError(string)
+        loadingView.showError()
     }
 
     override fun goPage() {

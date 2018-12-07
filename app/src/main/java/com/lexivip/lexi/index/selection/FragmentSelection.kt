@@ -299,9 +299,11 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     private fun initRecommend() {
         presenter.getTodayRecommend()
         adapterTodayRecommend = TodayRecommendAdapter(R.layout.adapter_today_recommend)
-        val linearLayoutManager = LinearLayoutManager(activity)
+        val linearLayoutManager = CustomLinearLayoutManager(AppApplication.getContext())
+        linearLayoutManager.setScrollEnabled(false)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         recyclerViewRecommend.setHasFixedSize(true)
+        recyclerViewRecommend.isNestedScrollingEnabled = false
         recyclerViewRecommend.layoutManager = linearLayoutManager
         recyclerViewRecommend.adapter = adapterTodayRecommend
         recyclerViewRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
