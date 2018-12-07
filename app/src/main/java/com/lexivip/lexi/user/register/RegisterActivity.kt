@@ -14,6 +14,7 @@ import com.lexivip.lexi.MainActivity
 import com.lexivip.lexi.eventBusMessge.MessageClose
 import com.lexivip.lexi.R
 import com.lexivip.lexi.index.selection.OpenLifeHouseActivity
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.user.areacode.MessageAreaCode
 import com.lexivip.lexi.user.areacode.SelectCountryOrAreaActivity
 import com.lexivip.lexi.user.login.LoginActivity
@@ -48,6 +49,7 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
         }else{
             textViewTitle.setText(AppApplication.getContext().getString(R.string.text_bind))
             button.setText(AppApplication.getContext().getString(R.string.text_bind))
+            linearLayoutJump.visibility=View.GONE
         }
         timeCount = TimeCount(textViewGetCode, 60000, 1000)
     }
@@ -94,12 +96,14 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
             }
             R.id.textViewService -> {
                 val intent=Intent(this, OpenLifeHouseActivity::class.java)
-                intent.putExtra("url","https://h5.lexivip.com/site/service_agreement")
+                intent.putExtra("url",WebUrl.SERVICE)
+                intent.putExtra("title",R.string.text_service)
                 startActivity(intent)
             }
             R.id.textViewPrivate -> {
                 val intent=Intent(this, OpenLifeHouseActivity::class.java)
-                intent.putExtra("url","https://h5.lexivip.com/site/privacy")
+                intent.putExtra("url",WebUrl.PRIVACY)
+                intent.putExtra("title",R.string.text_privacy)
                 startActivity(intent)
             }
             R.id.textViewJump -> startActivity(Intent(this, LoginActivity::class.java))

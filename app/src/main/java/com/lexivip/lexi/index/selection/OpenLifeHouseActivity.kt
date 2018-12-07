@@ -1,5 +1,4 @@
 package com.lexivip.lexi.index.selection
-
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Build
@@ -18,12 +17,17 @@ class OpenLifeHouseActivity : BaseActivity() {
     override val layout: Int = R.layout.acticity_open_life_house
     private lateinit var webView: WebView
     private lateinit var url: String
+    private var title:Int? = 0
     override fun getIntentData() {
-        url = intent.getStringExtra("url")
+        url= intent.getStringExtra("url")
+        title=intent.getIntExtra("title",R.string.title_open_life_house)
     }
 
     override fun initView() {
         customHeadView.setHeadCenterTxtShow(true, R.string.title_open_life_house)
+        //customHeadView.setHeadCenterTxtShow(true,R.string.title_open_life_house)
+        customHeadView.setHeadCenterTxtShow(true,title!!)
+        //val url = "https://h5.lexivip.com/shop/guide"
         webView = WebView(AppApplication.getContext())
         webView.overScrollMode = WebView.OVER_SCROLL_NEVER
         val settings = webView.settings

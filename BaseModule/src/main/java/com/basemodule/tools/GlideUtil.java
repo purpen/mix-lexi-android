@@ -323,6 +323,14 @@ public class GlideUtil {
         loadCircleImageWidthDimen(t,imageView,size,"");
     }
 
+    /**
+     * 加载圆形图片
+     * @param t
+     * @param imageView
+     * @param size
+     * @param imageSizeConfig
+     * @param <T>
+     */
     public static <T> void loadCircleImageWidthDimen(@NotNull T t, @NotNull ImageView imageView, int size, String imageSizeConfig) {
         RequestOptions requestOptions = bitmapTransform(new CircleCrop()).diskCacheStrategy(DiskCacheStrategy.ALL)
                 .override(size)

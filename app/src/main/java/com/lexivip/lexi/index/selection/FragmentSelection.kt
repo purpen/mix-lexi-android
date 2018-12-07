@@ -29,6 +29,7 @@ import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.discover.ComposerStoryActivity
 import com.lexivip.lexi.index.selection.freePostage.AllFreePostageActivity
 import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
@@ -484,6 +485,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         when (v.id) {
             R.id.buttonOpenShop -> { //开馆指引 https://h5.lexivip.com/shop/guide
                 if (UserProfileUtil.isLogin()) {
+                    val intent=Intent(activity, OpenLifeHouseActivity::class.java)
+                    intent.putExtra("url", WebUrl.OPEN_SHOP)
+                    intent.putExtra("title",R.string.title_open_life_house)
+                    startActivity(intent)
                     PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide")
                 } else {
                     startActivity(Intent(activity, LoginActivity::class.java))

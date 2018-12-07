@@ -153,8 +153,10 @@ public class AppApplication extends MultiDexApplication {
         //魅族通道
         //MeizuRegister.register(this, MEIZU_APPID, MEIZU_APPKEY);
 
-        PlatformConfig.setWeixin(Constants.WX_ID, Constants.WX_key);
+        //分享配置
+        PlatformConfig.setWeixin(Constants.WX_ID, Constants.WX_KEY);
         PlatformConfig.setQQZone(Constants.QQ_ID,Constants.QQ_KEY);
+        PlatformConfig.setSinaWeibo(Constants.SINA_ID,Constants.SINA_KEY,"");
 
         msgApi = WXAPIFactory.createWXAPI(this, Constants.WX_ID);
         msgApi.registerApp(Constants.WX_ID);

@@ -21,7 +21,27 @@ object WebUrl{
     /**
      * 橱窗链接
      */
-    const val window="${BASE_URL}"
+    const val WINDOW="${BASE_URL}shop/window?rid="
+    /**
+     * 品牌馆链接
+     */
+    const val BRAND_HOUSE="${BASE_URL}brand_pavilion?rid="
+    /**
+     *集合链接
+     */
+    const val COLLECTION="${BASE_URL}collection?id="
+    /**
+     * 隐私条款
+     */
+    const val PRIVACY="${BASE_URL}site/privacy"
+    /**
+     * 服务条款
+     */
+    const val SERVICE="${BASE_URL}site/service_agreement"
+    /**
+     * 开馆指引
+     */
+    const val OPEN_SHOP="${BASE_URL}shop/guide"
     /**
      * 小程序分享商品
      */

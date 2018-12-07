@@ -77,6 +77,8 @@
     <string name="text_click_login">点击登录</string>
     <string name="text_service_items"><![CDATA[<<服务条款>>]]></string>
     <string name="text_private_item"><![CDATA[<<隐私条款>>]]></string>
+    <string name="text_service">服务条款</string>
+    <string name="text_privacy">隐私条款</string>
     <string name="title_welcome_to">欢迎来到乐喜</string>
     <string name="text_add_header_pic_hint">有个真实头像，会增加辨识度哦！</string>
     <string name="hint_input_user_name">输入用户名</string>
@@ -419,4 +421,24 @@
     <string name="text_go_add">去添加</string>
     <string name="text_sorry">很抱歉</string>
     <string name="text_goods_offline">该商品已下架</string>
+    <string name="text_select_put_money">选择提现金额</string>
+    <string name="text_select_put_type">选择提现方式</string>
+    <string name="text_put_type">提现方式</string>
+    <string name="text_put_account">提现账号</string>
+    <string name="text_wx">微信</string>
+    <string name="text_alipay">支付宝</string>
+    <string name="text_put">我要提现</string>
+    <string name="text_need_attention">注意事项</string>
+    <string name="text_need_one">提现申请将在1-3小时内审批到账；如遇高峰期，可能延迟到账，烦请耐心等待</string>
+    <string name="text_need_two">请及时关注提现记录，查看提现状态</string>
+    <string name="text_need_three">提现到账查询：支付宝 > 我的 > 账单，如果有名称为“乐喜提现成功”的数据，即提现成功到账</string>
+    <string name="text_put_alipay_query">支付宝：我的 > 账单</string>
+    <string name="text_put_wx_query">微信：我 > 钱包 > 零钱 > 零钱明细</string>
+    <string name="text_roger">我知道了</string>
+    <string name="text_put_query">到账查询</string>
+    <string name="text_alipay_account">支付宝账号</string>
+    <string name="text_alipay_name">支付宝姓名</string>
+    <string name="text_put_immediately">立即提现</string>
+    <string name="text_cash_detail">提现详情</string>
+    <string name="text_save_poster">保存海报</string>
 </resources>

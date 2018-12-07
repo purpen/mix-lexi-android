@@ -151,7 +151,7 @@ public class AccountDetailOrderBean {
             public String rid;
             public String s_color;
             public String s_model;
-            public int s_weight;
+            public String s_weight;
             public String sale_price;
             public String stock_count;
             public int stock_quantity;

@@ -65,7 +65,8 @@ public class ShareUtil implements ShareContract.View{
         image = new UMImage(context, imageURl+ImageSizeConfig.SIZE_SM);
         LogUtil.e("图片链接地址"+imageURl);
         new ShareAction(context)
-                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ,SHARE_MEDIA.QZONE)
+                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ,SHARE_MEDIA.QZONE,SHARE_MEDIA.SINA)
+                .addButton(Util.getString(R.string.text_save_poster),"save","icon_goods_image_save","icon_goods_image_save")
                 .setShareboardclickCallback(shareBoardlistener)
                 .setCallback(shareListener)
                 .open();
@@ -87,14 +88,14 @@ public class ShareUtil implements ShareContract.View{
                 // 小程序原始id,在微信平台查询
                 umMin.setUserName(Constants.AUTHAPPID);
 
-                if (share_media==SHARE_MEDIA.WEIXIN){
+                /*if (share_media==SHARE_MEDIA.WEIXIN){
                     LogUtil.e("微信好友");
                     new ShareAction(context)
                             .withMedia(umMin)
                             .setPlatform(share_media)
                             .share();
-                }else{
-                    LogUtil.e("微信朋友圈");
+                }else{*/
+                    LogUtil.e("微信朋友圈"+share_media.toString());
                     UMWeb  web = new UMWeb(url);
                     web.setTitle(title);//标题
                     web.setThumb(image);  //缩略图
@@ -103,6 +104,10 @@ public class ShareUtil implements ShareContract.View{
                             .withMedia(web)
                             .setPlatform(share_media)
                             .share();
+                //}
+            }else {
+                if (snsPlatform.mKeyword.equals("save")){
+
                 }
             }
         }
