@@ -16,6 +16,7 @@ import com.flyco.dialog.widget.NormalDialog
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
+import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailBean
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.user.login.LoginActivity
@@ -100,11 +101,21 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
         swipeRefreshLayout.isRefreshing = false
         GlideUtil.loadCircleImageWidthDimen(data.user_avatar, headerView.imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp60), ImageSizeConfig.SIZE_AVA)
         headerView.textViewName.text = data.username
-        adapter.setNewData(data.lines)
+        adapter.setNewData(setUserHeadImage(data.lines,data.user_avatar))
+    }
+
+    /**
+     * 设置用户头像
+     */
+    fun setUserHeadImage(shopWindows:List<ShopWindowBean>,url:String):List<ShopWindowBean>{
+        for (item in shopWindows){
+            item.user_avatar = url
+        }
+        return shopWindows
     }
 
     override fun addData(data: DynamicBean.DataBean) {
-        adapter.addData(data.lines)
+        adapter.addData(setUserHeadImage(data.lines,data.user_avatar))
     }
 
     /**
@@ -228,7 +239,7 @@ class DynamicActivity : BaseActivity(), DynamicContract.View {
                 .contentGravity(Gravity.CENTER)
                 .contentTextColor(color333)
                 .contentTextSize(16f)
-                .dividerColor(Util.getColor(R.color.color_ccc))
+                .dividerColor(Util.getColor(R.color.color_eee))
                 .btnText(Util.getString(R.string.text_qd), Util.getString(R.string.text_cancel))
                 .btnTextSize(15f, 15f)
                 .btnTextColor(color333, Util.getColor(R.color.color_6ed7af))

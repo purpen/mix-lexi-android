@@ -174,6 +174,15 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         presenter.getHotSearch()
     }
 
+    override fun showFuzzyLoadingView() {
+        loadingView.visibility = View.VISIBLE
+        GlideUtil.loadingImage(com.lexivip.basemodule.R.drawable.loading_image, loadingView)
+    }
+
+    override fun dismissFuzzyLoadingView() {
+        loadingView.visibility = View.GONE
+    }
+
     /**
      * 设置最近查看数据
      */

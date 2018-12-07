@@ -414,4 +414,7 @@
     <string name="text_bind">立即绑定</string>
     <string name="text_copy_wechat_num">复制微信号</string>
     <string name="text_wechat_num" >lexixiaoduo</string>
+    <string name="text_tips">提示</string>
+    <string name="text_no_identify_info">您的收货地址还没有设置身份证信息哦！</string>
+    <string name="text_go_add">去添加</string>
 </resources>
