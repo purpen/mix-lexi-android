@@ -13,9 +13,8 @@ public class ShareContract {
         void showError(@NonNull String error);
     }
     interface Presenter extends BasePresenter{
-        void loadImageUrl(int type);
-        void loadImageRidUrl(int type, String rid);
         void loadShareImage(int type,String rid,String scene);
         void loadShareWindow(String rid,String scene);
+        void loadShareInvitation(String scene);
     }
 }

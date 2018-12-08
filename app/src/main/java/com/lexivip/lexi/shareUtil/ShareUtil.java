@@ -5,9 +5,11 @@ import com.basemodule.tools.AppManager;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
+import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BasePresenter;
 import com.lexivip.lexi.ImageSizeConfig;
+import com.lexivip.lexi.R;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -29,11 +31,12 @@ public class ShareUtil implements ShareContract.View{
     private String content;
     private String pageUrl;
     private String title;
+    private UMMin umMin;
+    private UMWeb web;
+    private int types;
 
-    public ShareUtil(Activity context,String rid, int type) {
+    public ShareUtil(Activity context) {
         this.context = context;
-        this.rid = rid;
-        this.type = type;
     }
 
     public ShareUtil(Activity context,int type) {
@@ -62,11 +65,76 @@ public class ShareUtil implements ShareContract.View{
         this.pageUrl=pageUrl;
         this.title=title;
         //资源文件
+
+    }
+
+    public void shareWindow(String weburl,String pageUrl,String imageURl,String title,String content,String rid ,String scene){
+        this.rid = rid;
+        this.scene = scene;
+        type=1;
         image = new UMImage(context, imageURl+ImageSizeConfig.SIZE_SM);
+        setUmMin(weburl,pageUrl,title,content);
+        setUmWeb(weburl,title,content);
         LogUtil.e("图片链接地址"+imageURl);
+        setSaveImage();
+    }
+
+    public void shareInvitation(String weburl,String pageUrl,int imageURl,String title,String content,String scene){
+        this.scene = scene;
+        type=2;
+        image = new UMImage(context, imageURl);
+        setUmMin(weburl,pageUrl,title,content);
+        setUmWeb(weburl,title,content);
+        LogUtil.e("图片链接地址"+imageURl);
+        setSaveImage();
+    }
+
+    public void shareGoods(String weburl,String pageUrl,String imageURl,String title,String content,String rid ,String scene,int types){
+        this.rid = rid;
+        this.types = types;// 1=品牌馆, 2=生活馆, 4=分享商品
+        this.scene = scene;
+        type=3;
+        image = new UMImage(context, imageURl+ImageSizeConfig.SIZE_SM);
+        setUmMin(weburl,pageUrl,title,content);
+        setUmWeb(weburl,title,content);
+        LogUtil.e("图片链接地址"+imageURl);
+        setSaveImage();
+    }
+
+
+    private void setUmMin(String weburl,String pageUrl,String title,String content){
+        //兼容低版本的网页链接
+        umMin = new UMMin(weburl);
+        // 小程序消息封面图片
+        umMin.setThumb(image);
+        // 小程序消息title
+        umMin.setTitle(title);
+        // 小程序消息描述
+        umMin.setDescription(content);
+        //小程序页面路径
+        umMin.setPath(pageUrl);
+        // 小程序原始id,在微信平台查询
+        umMin.setUserName(Constants.AUTHAPPID);
+    }
+
+    private void setUmWeb(String weburl,String title,String content){
+        web = new UMWeb(weburl);
+        web.setTitle(title);//标题
+        web.setThumb(image);  //缩略图
+        web.setDescription(content);//描述
+    }
+
+    private void setSaveImage(){
         new ShareAction(context)
                 .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ,SHARE_MEDIA.QZONE,SHARE_MEDIA.SINA)
                 .addButton(Util.getString(R.string.text_save_poster),"save","icon_goods_image_save","icon_goods_image_save")
+                .setShareboardclickCallback(shareBoardlistener)
+                .setCallback(shareListener)
+                .open();
+    }
+    private void setUmShare(){
+        new ShareAction(context)
+                .setDisplayList(SHARE_MEDIA.WEIXIN,SHARE_MEDIA.WEIXIN_CIRCLE,SHARE_MEDIA.QQ,SHARE_MEDIA.QZONE,SHARE_MEDIA.SINA)
                 .setShareboardclickCallback(shareBoardlistener)
                 .setCallback(shareListener)
                 .open();
@@ -76,18 +144,6 @@ public class ShareUtil implements ShareContract.View{
         @Override
         public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
             if (share_media!=null){
-                UMMin umMin = new UMMin(url);//兼容低版本的网页链接
-                // 小程序消息封面图片
-                umMin.setThumb(image);
-                // 小程序消息title
-                umMin.setTitle(title);
-                // 小程序消息描述
-                umMin.setDescription(content);
-                //小程序页面路径
-                umMin.setPath(pageUrl);
-                // 小程序原始id,在微信平台查询
-                umMin.setUserName(Constants.AUTHAPPID);
-
                 /*if (share_media==SHARE_MEDIA.WEIXIN){
                     LogUtil.e("微信好友");
                     new ShareAction(context)
@@ -96,10 +152,6 @@ public class ShareUtil implements ShareContract.View{
                             .share();
                 }else{*/
                     LogUtil.e("微信朋友圈"+share_media.toString());
-                    UMWeb  web = new UMWeb(url);
-                    web.setTitle(title);//标题
-                    web.setThumb(image);  //缩略图
-                    web.setDescription(content);//描述
                     new ShareAction(context)
                             .withMedia(web)
                             .setPlatform(share_media)
@@ -107,7 +159,16 @@ public class ShareUtil implements ShareContract.View{
                 //}
             }else {
                 if (snsPlatform.mKeyword.equals("save")){
-
+                    switch (type){
+                        case 1:
+                            presenter.loadShareWindow(rid,scene);
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            presenter.loadShareImage(type,rid,scene);
+                            break;
+                    }
                 }
             }
         }

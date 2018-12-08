@@ -81,6 +81,7 @@ public class BrandHouseBean implements Parcelable{
         public String rid;
         public String tag_line;
         public long created_at;
+        public boolean has_qualification;
 
         protected DataBean(Parcel in) {
             city = in.readString();
@@ -100,6 +101,7 @@ public class BrandHouseBean implements Parcelable{
             rid = in.readString();
             tag_line = in.readString();
             created_at = in.readLong();
+            has_qualification=in.readByte() != 0;
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
@@ -138,6 +140,7 @@ public class BrandHouseBean implements Parcelable{
             dest.writeString(rid);
             dest.writeString(tag_line);
             dest.writeLong(created_at);
+            dest.writeByte((byte) (has_qualification ? 1 : 0));
         }
     }
 

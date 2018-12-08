@@ -70,7 +70,8 @@
         <activity android:name=".user.setting.SettingActivity" />
         <activity
             android:name=".MainActivity"
-            android:alwaysRetainTaskState="true" /><!--android:launchMode="singleTask"-->
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask"/><!--android:launchMode="singleTask"-->
         <activity android:name=".user.password.SetNewPasswordActivity" />
         <activity android:name=".user.areacode.SelectCountryOrAreaActivity" />
         <activity android:name=".user.register.SetPasswordActivity" />

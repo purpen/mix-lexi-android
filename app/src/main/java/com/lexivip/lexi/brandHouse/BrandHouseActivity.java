@@ -34,6 +34,7 @@ import com.lexivip.lexi.beans.CouponBean;
 import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.index.detail.CouponBottomDialog;
 import com.lexivip.lexi.index.detail.ShopCouponListBean;
+import com.lexivip.lexi.index.selection.OpenLifeHouseActivity;
 import com.lexivip.lexi.lifeShop.MyFragmentPageAdapter;
 import com.lexivip.lexi.net.WebUrl;
 import com.lexivip.lexi.search.AdapterSearchGoods;
@@ -90,6 +91,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     private CustomViewPager viewPager;
     private ArrayList<BaseFragment> fragments;
     private int fansCount;
+    private TextView tv_qualification;
 
     @Override
     protected int getLayout() {
@@ -121,6 +123,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         tv_design = findViewById(R.id.tv_design);
         ll_follow = findViewById(R.id.ll_follow);
         tv_focus = findViewById(R.id.tv_focus);
+        tv_qualification = findViewById(R.id.tv_qualification);
 
         rl_close = findViewById(R.id.rl_close);
         tv_close_time = findViewById(R.id.tv_close_time);
@@ -170,6 +173,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         head_goback.setOnClickListener(this);
         tv_look.setOnClickListener(this);
         imageViewShare.setOnClickListener(this);
+        tv_qualification.setOnClickListener(this);
 
         presenter.loadData(rid);
         presenter.loadNoticeData(rid);
@@ -231,6 +235,12 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
             case R.id.imageViewShare:
                 ShareUtil shareUtil=new ShareUtil(this,WebUrl.LIFE+rid,dataBean.data.name,dataBean.data.tag_line,WebUrl.AUTH_BRAND+rid,dataBean.data.logo);
                 break;
+            case R.id.tv_qualification:
+                Intent intent1=new Intent(this,OpenLifeHouseActivity.class);
+                intent1.putExtra("url",WebUrl.QUALIFICAIONS+rid);
+                intent1.putExtra("title",R.string.text_qualification);
+                startActivity(intent1);
+                break;
         }
     }
 
@@ -269,6 +279,11 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
             tv_focus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             tv_focus.setTextColor(Util.getColor(R.color.color_949ea6));
             tv_focus.setText(Util.getString(R.string.text_focused));
+        }
+        if (bean.data.has_qualification){
+            tv_qualification.setVisibility(View.VISIBLE);
+        }else {
+            tv_qualification.setVisibility(View.GONE);
         }
     }
 

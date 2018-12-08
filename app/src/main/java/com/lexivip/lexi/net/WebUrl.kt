@@ -27,7 +27,7 @@ object WebUrl{
      */
     const val BRAND_HOUSE="${BASE_URL}brand_pavilion?rid="
     /**
-     *集合链接
+     * 集合链接
      */
     const val COLLECTION="${BASE_URL}collection?id="
     /**
@@ -39,9 +39,13 @@ object WebUrl{
      */
     const val SERVICE="${BASE_URL}site/service_agreement"
     /**
-     * 开馆指引
+     * 开馆指引（邀请好友开馆）
      */
     const val OPEN_SHOP="${BASE_URL}shop/guide"
+    /**
+     * 资质信息
+     */
+    const val QUALIFICAIONS="${BASE_URL}shop/qualification_validation?rid="
     /**
      * 小程序分享商品
      */
@@ -70,4 +74,8 @@ object WebUrl{
      * 小程序集合
      */
     const val AUTH_GATHER="pages/gatherInfo/gatherInfo?rid="
+    /**
+     * 小程序开馆指引
+     */
+    const val AUTH_GUIDE="lifeStore/pages/lifeStoreGuide/lifeStoreGuide"
 }

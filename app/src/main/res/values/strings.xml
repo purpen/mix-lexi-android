@@ -441,4 +441,7 @@
     <string name="text_put_immediately">立即提现</string>
     <string name="text_cash_detail">提现详情</string>
     <string name="text_save_poster">保存海报</string>
+    <string name="text_time_line">朋友圈</string>
+    <string name="text_qq_space">QQ空间</string>
+    <string name="text_qualification">资质信息</string>
 </resources>

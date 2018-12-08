@@ -30,6 +30,8 @@ import com.lexivip.lexi.R;
 import com.lexivip.lexi.address.AddressActivity;
 import com.lexivip.lexi.dialog.InquiryDialog;
 import com.lexivip.lexi.index.lifehouse.LifeHouseBean;
+import com.lexivip.lexi.net.WebUrl;
+import com.lexivip.lexi.shareUtil.ShareUtil;
 import com.lexivip.lexi.user.login.UserProfileUtil;
 
 import java.util.Date;
@@ -234,7 +236,8 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                 inquiryDialog.show();
                 break;
             case R.id.ll_invite:
-
+                ShareUtil shareUtil=new ShareUtil(getActivity());
+                //shareUtil.shareInvitation(WebUrl.OPEN_SHOP,WebUrl.AUTH_GUIDE,R.mipmap.ic_launcher,"","");
                 break;
             case R.id.linearLayout6:
                 ClipboardManager clip = (ClipboardManager)getContext().getSystemService(Context.CLIPBOARD_SERVICE);
