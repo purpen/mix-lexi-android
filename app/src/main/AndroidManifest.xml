@@ -15,11 +15,11 @@
 
     <application
         android:name=".AppApplication"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:allowBackup="true"
-        android:supportsRtl="true"
         android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--android:largeHeap="true"android:alwaysRetainTaskState="true"-->
         <!--android8.0需要的配置，主要是调用相机-->
@@ -35,8 +35,8 @@
 
         <activity
             android:name=".UserGuideActivity"
-            android:label="@string/app_name"
             android:alwaysRetainTaskState="true"
+            android:label="@string/app_name"
             android:theme="@style/NoTitleFullscreen"><!--android:launchMode="singleInstance"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,7 +45,7 @@
             </intent-filter>
             <intent-filter>
 
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
@@ -53,7 +53,7 @@
 
                 <data
                     android:host="splash"
-                    android:scheme="test"/>
+                    android:scheme="test" />
 
             </intent-filter>
         </activity>
@@ -71,7 +71,7 @@
         <activity
             android:name=".MainActivity"
             android:alwaysRetainTaskState="true"
-            android:launchMode="singleTask"/><!--android:launchMode="singleTask"-->
+            android:launchMode="singleTask" /><!--android:launchMode="singleTask"-->
         <activity android:name=".user.password.SetNewPasswordActivity" />
         <activity android:name=".user.areacode.SelectCountryOrAreaActivity" />
         <activity android:name=".user.register.SetPasswordActivity" />
@@ -127,7 +127,7 @@
         <activity android:name=".selectionGoodsCenter.PutAwayActivity" />
         <activity android:name=".brandHouse.AboutBrandHouseActivity" />
         <activity android:name=".index.detail.GoodsImageViewActivity" />
-        <activity android:name=".index.selection.OpenLifeHouseActivity" />
+        <activity android:name=".index.selection.applyForLifeHouse.OpenLifeHouseActivity" />
         <activity android:name=".index.discover.ComposerStoryActivity" />
         <activity android:name=".index.discover.ArticleDetailActivity" />
         <activity
@@ -195,13 +195,16 @@
         <activity android:name=".publishShopWindow.ShopWindowTagsActivity" />
         <activity android:name=".publishShopWindow.SelectShopWindowGoodsImageActivity" />
         <activity android:name=".publishShopWindow.RelateShopWindowActivity" />
-        <activity android:name=".MipushTestActivity"
-            android:launchMode="singleTask"
-            android:exported="true"/>
+        <activity
+            android:name=".MipushTestActivity"
+            android:exported="true"
+            android:launchMode="singleTask" />
         <activity android:name=".index.discover.ArticleCommentListActivity" />
-        <activity android:name=".cashMoney.CashMoneyActivity"/>
-        <activity android:name=".cashMoney.CashAlipayActivity"/>
-        <activity android:name=".cashMoney.CashTimeActivity"/>
+        <activity android:name=".cashMoney.CashMoneyActivity" />
+        <activity android:name=".cashMoney.CashAlipayActivity" />
+        <activity android:name=".cashMoney.CashTimeActivity" />
+        <activity android:name=".index.selection.applyForLifeHouse.ApplyForLifeHouseActivity" />
+        <activity android:name=".index.selection.applyForLifeHouse.ApplyForLifeHouseSuccessActivity" />
     </application>
 
 </manifest>

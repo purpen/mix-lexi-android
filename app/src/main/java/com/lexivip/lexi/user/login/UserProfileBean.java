@@ -25,7 +25,6 @@ public class UserProfileBean {
         public boolean is_supplier;
         public ProfileBean profile;
         public String store_rid;
-
         public static class ProfileBean {
             /**
              * about_me : 好人

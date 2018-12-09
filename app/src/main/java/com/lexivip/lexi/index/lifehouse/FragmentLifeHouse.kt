@@ -36,7 +36,6 @@ import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.search.AdapterSearchGoods
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
-import com.lexivip.lexi.user.login.UserProfileUtil
 import com.smart.dialog.listener.OnBtnClickL
 import com.smart.dialog.widget.ActionSheetDialog
 import com.smart.dialog.widget.NormalDialog

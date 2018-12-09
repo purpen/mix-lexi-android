@@ -1659,4 +1659,24 @@ public class ClientParamsAPI {
         params.put("verify_code", checkCode);
         return params;
     }
+
+    /**
+     * 申请生活馆参数
+     * @param name
+     * @param job
+     * @param countryCode
+     * @param phone
+     * @param checkCode
+     * @return
+     */
+    @NotNull
+    public static HashMap<String,Object> getApplyForLifeHouseParams(@NotNull String name, @NotNull String job, @NotNull String countryCode, @NotNull String phone, @NotNull String checkCode) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("name",name);
+        params.put("profession", job);
+        params.put("areacode", countryCode);
+        params.put("mobile", phone);
+        params.put("verify_code", checkCode);
+        return params;
+    }
 }

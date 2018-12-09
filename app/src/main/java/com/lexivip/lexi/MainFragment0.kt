@@ -7,6 +7,8 @@ import android.content.Intent
 import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.widget.FrameLayout
+import com.basemodule.tools.AppManager
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
@@ -63,11 +65,14 @@ class MainFragment0 : BaseFragment() {
         customViewPager.setPagingEnabled(false)
         slidingTabLayout.setViewPager(customViewPager)
 
+        val currentActivity = AppManager.getAppManager().getActivity(MainActivity::class.java) as MainActivity
 
-        if (UserProfileUtil.isSmallB()) {
+//        LogUtil.e("currentActivity.switch2LifeHouseTab()"+currentActivity.switch2LifeHouseTab())
+
+        if (UserProfileUtil.isSmallB() && !currentActivity.switch2LifeHouseTab()) {//不是刚开生活馆显示精选
             slidingTabLayout.currentTab = 1
             slidingTabLayout.getTitleView(1).textSize = 19f
-        } else {
+        } else { //显示精选或生活馆
             slidingTabLayout.currentTab = 0
             slidingTabLayout.getTitleView(0).textSize = 19f
         }
@@ -131,7 +136,7 @@ class MainFragment0 : BaseFragment() {
     private var isAnimmating = false
     private var isShowing = true
     private var relativeLayoutHeight = 0
-    private var viewHeight=0
+    private var viewHeight = 0
 
     /**
      * 接受动画消息
@@ -143,7 +148,7 @@ class MainFragment0 : BaseFragment() {
             if (!isShowing) return
             relativeLayoutHeight = relativeLayout.height
             viewHeight = view!!.height
-            if (view != null) view!!.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,  viewHeight+ relativeLayoutHeight)
+            if (view != null) view!!.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, viewHeight + relativeLayoutHeight)
             val animator = ObjectAnimator.ofFloat(linearLayoutBox, "translationY", 0f, -relativeLayoutHeight.toFloat())
             animator.duration = 300
             animator.addListener(object : AnimatorListenerAdapter() {
@@ -174,7 +179,7 @@ class MainFragment0 : BaseFragment() {
                     isAnimmating = false
                     animation.removeAllListeners()
                     isShowing = true
-                    if (view != null) view!!.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,viewHeight)
+                    if (view != null) view!!.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, viewHeight)
                 }
 
                 override fun onAnimationStart(animation: Animator) {

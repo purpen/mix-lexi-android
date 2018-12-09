@@ -8,11 +8,10 @@ import kotlinx.android.synthetic.main.activity_setting.*
 import android.net.Uri
 import com.lexivip.lexi.*
 import com.lexivip.lexi.eventBusMessge.MessageLogout
-import com.lexivip.lexi.index.selection.OpenLifeHouseActivity
+import com.lexivip.lexi.index.selection.applyForLifeHouse.OpenLifeHouseActivity
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.orderList.OrderListActivity
 import com.lexivip.lexi.user.LoginWXBean
-import com.lexivip.lexi.user.login.UserProfileBean
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.setting.address.AddressListActivity
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
@@ -90,10 +89,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
             R.id.customItemLayout2 -> startActivity(Intent(this, OrderListActivity::class.java))
             R.id.customItemLayout3 -> startActivity(Intent(this,AddressListActivity::class.java))
             R.id.customItemLayout4 -> {
-                val intent=Intent(this, OpenLifeHouseActivity::class.java)
-                intent.putExtra("url",WebUrl.OPEN_SHOP)
-                intent.putExtra("title",R.string.text_open_life_house)
-                startActivity(intent)
+                PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide",R.string.title_open_life_house)
             }
             R.id.customItemLayout5 -> {
                 val intent=Intent(this, OpenLifeHouseActivity::class.java)

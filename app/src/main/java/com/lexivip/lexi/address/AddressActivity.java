@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
