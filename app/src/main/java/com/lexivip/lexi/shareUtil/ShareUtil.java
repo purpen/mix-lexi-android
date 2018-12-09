@@ -34,38 +34,12 @@ public class ShareUtil implements ShareContract.View{
     private UMMin umMin;
     private UMWeb web;
     private int types;
+    private String shareImageUrl;
+    private String marketUrl;
+    private String price=null;
 
     public ShareUtil(Activity context) {
         this.context = context;
-    }
-
-    public ShareUtil(Activity context,int type) {
-        this.context = context;
-        this.type = type;
-    }
-
-    public ShareUtil(Activity context,String rid, int type, String scene) {
-        this.context = context;
-        this.rid = rid;
-        this.type = type;// 1=品牌馆, 2=生活馆, 4=分享商品
-        this.scene = scene;
-        presenter.loadShareImage(type,rid,scene);
-    }
-
-    public ShareUtil(Activity context,String rid, String scene) {
-        this.context = context;
-        this.rid = rid;
-        this.scene = scene;
-        presenter.loadShareWindow(rid,scene);
-    }
-    public ShareUtil(Activity context,String url,String title,String content,String pageUrl,String imageURl) {
-        this.context = context;
-        this.url = url;
-        this.content=content;
-        this.pageUrl=pageUrl;
-        this.title=title;
-        //资源文件
-
     }
 
     public void shareWindow(String weburl,String pageUrl,String imageURl,String title,String content,String rid ,String scene){
@@ -73,8 +47,8 @@ public class ShareUtil implements ShareContract.View{
         this.scene = scene;
         type=1;
         image = new UMImage(context, imageURl+ImageSizeConfig.SIZE_SM);
-        setUmMin(weburl,pageUrl,title,content);
-        setUmWeb(weburl,title,content);
+        setUmMin(weburl+rid,pageUrl+"?rid="+rid,title,content);
+        setUmWeb(weburl+rid,title,content);
         LogUtil.e("图片链接地址"+imageURl);
         setSaveImage();
     }
@@ -82,15 +56,29 @@ public class ShareUtil implements ShareContract.View{
     public void shareInvitation(String weburl,String pageUrl,int imageURl,String title,String content,String scene){
         this.scene = scene;
         type=2;
+        this.pageUrl=pageUrl;
         image = new UMImage(context, imageURl);
-        setUmMin(weburl,pageUrl,title,content);
-        setUmWeb(weburl,title,content);
+        setUmMin(weburl+rid,pageUrl+rid,title,content);
+        setUmWeb(weburl+rid,title,content);
+        LogUtil.e("图片链接地址"+imageURl);
+        setSaveImage();
+        //presenter.loadShareInvitation(scene);
+    }
+
+    public void shareGoods(String weburl,String pageUrl,String imageURl,String title,String content,String rid ,String scene,int types){
+        this.scene = scene;
+        this.rid=rid;
+        type=types;
+        this.pageUrl=pageUrl;
+        image = new UMImage(context, imageURl);
+        setUmMin(weburl+rid,pageUrl+rid,title,content);
+        setUmWeb(weburl+rid,title,content);
         LogUtil.e("图片链接地址"+imageURl);
         setSaveImage();
     }
 
-    public void shareGoods(String weburl,String pageUrl,String imageURl,String title,String content,String rid ,String scene,int types){
-        this.rid = rid;
+    public void shareGoods(String pageUrl,String rid ,String scene,String price,int types){
+        /*this.rid = rid;
         this.types = types;// 1=品牌馆, 2=生活馆, 4=分享商品
         this.scene = scene;
         type=3;
@@ -98,9 +86,30 @@ public class ShareUtil implements ShareContract.View{
         setUmMin(weburl,pageUrl,title,content);
         setUmWeb(weburl,title,content);
         LogUtil.e("图片链接地址"+imageURl);
-        setSaveImage();
+        setSaveImage();*/
+        this.price=price;
+        presenter.loadShareImage(pageUrl,types,rid,scene);
+        presenter.loadShareMarket(rid,2);
     }
 
+    public void shareLife(String pageUrl,String rid ,String scene,int types){
+        presenter.loadShareImage(pageUrl,types,rid,scene);
+        presenter.loadShareMarket(rid,1);
+    }
+
+    public void shareBrand(String pageUrl,String rid ,String scene,int types){
+        presenter.loadShareImage(pageUrl,types,rid,scene);
+        presenter.loadShareMarket(rid,4);
+    }
+
+    public void shareNoImage(String weburl,String pageUrl,String imageURl,String title,String content){
+        LogUtil.e("分享链接："+weburl);
+        image = new UMImage(context, imageURl+ImageSizeConfig.SIZE_SM);
+        setUmMin(weburl,pageUrl,title,content);
+        setUmWeb(weburl,title,content);
+        LogUtil.e("图片链接地址"+imageURl);
+        setUmShare();
+    }
 
     private void setUmMin(String weburl,String pageUrl,String title,String content){
         //兼容低版本的网页链接
@@ -164,9 +173,10 @@ public class ShareUtil implements ShareContract.View{
                             presenter.loadShareWindow(rid,scene);
                             break;
                         case 2:
+                            presenter.loadShareInvitation(scene);
                             break;
-                        case 3:
-                            presenter.loadShareImage(type,rid,scene);
+                        case 4:
+                            presenter.loadShareImage(pageUrl,type,rid,scene);
                             break;
                     }
                 }
@@ -213,8 +223,15 @@ public class ShareUtil implements ShareContract.View{
     @Override
     public void setImage(String imageUrl) {
         LogUtil.e("图片地址："+imageUrl);
-        ShareDialog shareDialog=new ShareDialog(context,imageUrl);
-        shareDialog.show();
+        shareImageUrl=imageUrl;
+        if (type==1||type==2||type==4) {
+            ShareDialog shareDialog = new ShareDialog(context, imageUrl);
+            shareDialog.show();
+        }
+        if (marketUrl!=null){
+            ShareImageDialog imageDialog = new ShareImageDialog(context, marketUrl, shareImageUrl,price);
+            imageDialog.show();
+        }
     }
 
     @Override
@@ -233,6 +250,15 @@ public class ShareUtil implements ShareContract.View{
             dialog.dismiss();
         }
         ToastUtil.showError(error);
+    }
+
+    @Override
+    public void setMarket(String marketUrl) {
+        this.marketUrl=marketUrl;
+        if (shareImageUrl!=null) {
+            ShareImageDialog imageDialog = new ShareImageDialog(context, marketUrl, shareImageUrl,price);
+            imageDialog.show();
+        }
     }
 
     @Override

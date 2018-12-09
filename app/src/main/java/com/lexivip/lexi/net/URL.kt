@@ -842,6 +842,10 @@ object URL {
      */
     const val SHARE_MARKET_OPEN_SHOP="${BASE_URL}market/share/invite_carde"
     /**
+     * 分享商品卡片
+     */
+    const val SHARE_MARKET_GOODS="${BASE_URL}market/share/product_card"
+    /**
      * 保存支付方式
      */
     const val SAVE_PAY_WAY = "${BASE_URL}orders/pay_type"

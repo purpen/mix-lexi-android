@@ -36,6 +36,7 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("神火锅："+json);
                 view.dismissLoadingView();
                 switch (type){
                     case 0:

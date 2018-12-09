@@ -276,7 +276,7 @@
     <string name="text_wechat_pay_desc">微信钱包快捷付款，需5.0以上版本</string>
     <string name="text_alipay_desc">推荐有支付宝账号的用户使用</string>
     <string name="text_ant_pay">蚂蚁花呗支付</string>
-    <string name="text_ant_pay_desc">储蓄卡快捷付款，支持多家银行</string>
+    <string name="text_ant_pay_desc">支付宝蚂蚁花呗支付</string>
     <string name="title_pay_now">立即支付</string>
     <string name="title_select_pay_way">选择支付方式</string>
     <string name="hint_please_select_payway">请选择支付方式</string>

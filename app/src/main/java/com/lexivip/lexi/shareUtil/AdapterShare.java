@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.Util;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -19,7 +20,8 @@ public class AdapterShare extends BaseQuickAdapter<ShareTypeBean,BaseViewHolder>
 
     @Override
     protected void convert(BaseViewHolder helper, ShareTypeBean item) {
-        helper.setText(R.id.tv_name,Util.getString(item.name));
+        LogUtil.e("                "+item.name);
+        helper.setText(R.id.tv_name,item.name);
         ImageView imageView=helper.getView(R.id.iv_logo);
         GlideUtil.loadCircleImageWidthDimen(item.image,imageView,DimenUtil.dp2px(50.0));
     }

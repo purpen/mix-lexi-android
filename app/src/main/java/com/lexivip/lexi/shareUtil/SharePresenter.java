@@ -2,6 +2,7 @@ package com.lexivip.lexi.shareUtil;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.JsonUtil;
@@ -20,8 +21,8 @@ public class SharePresenter implements ShareContract.Presenter  {
     }
 
     @Override
-    public void loadShareImage(int type, String rid, String scene) {
-        model.loadShareImage(type, rid, scene, new IDataSource.HttpRequestCallBack() {
+    public void loadShareImage(String pageUrl,int type, String rid, String scene) {
+        model.loadShareImage(pageUrl,type, rid, scene, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
@@ -34,6 +35,7 @@ public class SharePresenter implements ShareContract.Presenter  {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("分享的缇欧："+json);
                 ShareBean shareBean=JsonUtil.fromJson(json,ShareBean.class);
                 if (shareBean.success){
                     view.setImage(shareBean.data.image_url);
@@ -100,6 +102,37 @@ public class SharePresenter implements ShareContract.Presenter  {
                 ShareBean shareBean=JsonUtil.fromJson(json,ShareBean.class);
                 if (shareBean.success){
                     view.setImage(shareBean.data.image_url);
+                    view.dismissLoadingView();
+                }else {
+                    view.dismissLoadingView();
+                    view.showError(shareBean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.showError(Util.getString(R.string.text_net_error));
+            }
+        });
+    }
+
+    @Override
+    public void loadShareMarket(String rid, int type) {
+        model.loadShareMarket(rid, type, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+            @Override
+            public void onSuccess(@NotNull String json) {
+                ShareBean shareBean=JsonUtil.fromJson(json,ShareBean.class);
+                if (shareBean.success){
+                    view.setMarket(shareBean.data.image_url);
                     view.dismissLoadingView();
                 }else {
                     view.dismissLoadingView();

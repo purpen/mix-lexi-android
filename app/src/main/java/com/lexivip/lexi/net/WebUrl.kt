@@ -49,7 +49,7 @@ object WebUrl{
     /**
      * 小程序分享商品
      */
-    const val AUTH_GOODS="pages/product/product?rid="
+    const val AUTH_GOODS="pages/product/product"//?rid=
     /**
      * 小程序分享生活志的文章
      */
@@ -62,6 +62,10 @@ object WebUrl{
      * 小程序分享橱窗
      */
     const val AUTH_WINDOW="pages/windowDetail/windowDetail?windowRid="
+    /**
+     * 小程序生活馆
+     */
+    const val AUTH_LIFE="pages/index/index"
     /**
      * 小程序别人的主页
      */

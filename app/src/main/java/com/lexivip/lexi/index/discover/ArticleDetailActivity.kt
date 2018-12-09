@@ -1,5 +1,6 @@
 package com.lexivip.lexi.index.discover
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -36,8 +37,11 @@ import kotlinx.android.synthetic.main.footer_comment_count.view.*
 import kotlinx.android.synthetic.main.footer_view_article_detail.view.*
 import kotlinx.android.synthetic.main.header_view_article_detail.view.*
 import org.json.JSONObject
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
-class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
+class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     override val layout: Int = R.layout.acticity_artical_detail
     private val presenter: ArticleDetailPresenter by lazy { ArticleDetailPresenter(this) }
@@ -505,11 +509,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
 
         //分享
         textViewShare.setOnClickListener{
-            if(isGoods){
-                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE_GOODS+rid,cover)
-            }else{
-                val shareUtil=ShareUtil(this,WebUrl.GRASS+rid,title,"",WebUrl.AUTH_ARTICLE+rid,cover)
-            }
+            share()
         }
 
         //用户点赞文章
@@ -598,6 +598,21 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
 
     }
 
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
+    private fun share() {
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            val shareUtil=ShareUtil(this)
+            if(isGoods){
+                shareUtil.shareNoImage(WebUrl.GRASS+rid,WebUrl.AUTH_ARTICLE+rid,cover,title,"")
+            }else{
+                shareUtil.shareNoImage(WebUrl.GRASS+rid,WebUrl.AUTH_ARTICLE_GOODS+rid,cover,title,"")
+            }
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
+        }
+    }
+
     override fun showLoadingView() {
         dialog.show()
     }
@@ -671,5 +686,28 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View {
         if (!emotionMainFragment!!.isInterceptBackPress()) {
             finish()
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onRationaleAccepted(requestCode: Int) {
+
+    }
+
+    override fun onRationaleDenied(requestCode: Int) {
+
     }
 }

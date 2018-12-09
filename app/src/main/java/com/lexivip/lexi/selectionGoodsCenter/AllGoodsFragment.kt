@@ -1,5 +1,6 @@
 package com.lexivip.lexi.selectionGoodsCenter
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
@@ -7,20 +8,24 @@ import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
+import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
+import com.lexivip.lexi.net.WebUrl
+import com.lexivip.lexi.shareUtil.ShareUtil
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_all_goods.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
-class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
+class AllGoodsFragment : BaseFragment(), AllGoodsContract.View, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
 
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
 
@@ -33,6 +38,9 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
     private var firstLoadData: Boolean = true
     private var goodsCount=0
     private val adapter: AdapterAllGoods by lazy { AdapterAllGoods(R.layout.adapter_all_goods) }
+    private var price:String?=null
+    private var goodsId:String?=null
+    private var storeId:String?=null
 
     companion object {
         @JvmStatic
@@ -154,7 +162,12 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         adapter.setOnItemChildClickListener { _, view, position ->
             val productsBean = adapter.getItem(position) as ProductBean
             when (view.id) {
-                R.id.textView4 -> ToastUtil.showInfo("卖")
+                R.id.textView4 -> {
+                    goodsId=adapter.data[position].rid
+                    price=adapter.data[position].commission_price
+                    storeId=adapter.data[position].store_rid
+                    share()
+                }
                 R.id.textView5 -> {
                     val intent = Intent(activity,PutAwayActivity::class.java)
                     intent.putExtra(PutAwayActivity::class.java.simpleName,productsBean)
@@ -164,7 +177,16 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
         }
     }
 
-
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
+    private fun share() {
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
+            val shareUtil: ShareUtil = ShareUtil(activity)
+            shareUtil.shareGoods(WebUrl.AUTH_GOODS, goodsId, goodsId+"-"+ storeId,price,4)
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
+        }
+    }
 
     override fun showLoadingView() {
         if (firstLoadData) dialog.show()
@@ -206,5 +228,22 @@ class AllGoodsFragment : BaseFragment(), AllGoodsContract.View {
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
         super.onDestroy()
+    }
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+
+    }
+
+    override fun onRationaleDenied(requestCode: Int) {
+
+    }
+
+    override fun onRationaleAccepted(requestCode: Int) {
+
     }
 }

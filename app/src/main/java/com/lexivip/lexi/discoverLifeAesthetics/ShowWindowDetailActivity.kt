@@ -16,6 +16,7 @@ import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
 import com.lexivip.lexi.index.selection.DiscoverLifeAdapter
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
@@ -48,6 +49,9 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     private var emotionMainFragment: EmotionMainFragment? = null
     //父级评论id
     private var pid: String = "0"
+
+    private var imagrUrl:String?=null
+    private var title:String?=null
 
     override val layout: Int = R.layout.activity_show_window_detail
 
@@ -176,6 +180,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         }
 
         textViewTitle1.text = data.title
+        this.title=data.title
 
         textViewTitle2.text = data.description
 
@@ -224,7 +229,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         for (product in products) {
             list.add(product.cover)
         }
-
+        imagrUrl=list[0]
         val screenW = ScreenUtil.getScreenWidth()
         val dp2: Int by lazy { DimenUtil.dp2px(2.0) }
         when (size) {
@@ -558,7 +563,6 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         textViewShare.setOnClickListener { view ->
             //val dialog = DistributeShareDialog(this)
             //dialog.show()
-            //TODO 橱窗分享待完成
             share()
         }
 
@@ -712,14 +716,15 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         super.onDestroy()
     }
 
-    @AfterPermissionGranted(Constants.REQUEST_CODE_PICK_IMAGE)
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
     private fun share(){
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            val share= ShareUtil(this,rid,rid)
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
+            LogUtil.e("有么有调用塞")
+            val share= ShareUtil(this)
+            share.shareWindow(WebUrl.WINDOW,WebUrl.AUTH_WINDOW,imagrUrl,title,"",rid,rid)
         } else {
-            // 申请权限。
-            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo),
-                    Constants.REQUEST_CODE_PICK_IMAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }
     }
 

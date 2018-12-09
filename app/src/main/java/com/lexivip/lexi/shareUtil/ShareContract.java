@@ -11,10 +11,12 @@ public class ShareContract {
         void showLoadingView();
         void dismissLoadingView();
         void showError(@NonNull String error);
+        void setMarket(String marketUrl);
     }
     interface Presenter extends BasePresenter{
-        void loadShareImage(int type,String rid,String scene);
+        void loadShareImage(String pageUrl,int type,String rid,String scene);
         void loadShareWindow(String rid,String scene);
         void loadShareInvitation(String scene);
+        void loadShareMarket(String rid,int type);
     }
 }

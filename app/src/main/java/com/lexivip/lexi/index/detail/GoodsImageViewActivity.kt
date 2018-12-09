@@ -1,18 +1,21 @@
 package com.lexivip.lexi.index.detail
 
+import android.Manifest
 import android.content.Intent
 import android.support.v4.view.ViewPager
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.R
+import com.lexivip.lexi.net.WebUrl
+import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.activity_goods_image_view.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
-class GoodsImageViewActivity : BaseActivity(), GoodsDetailContract.View {
+class GoodsImageViewActivity : BaseActivity(), GoodsDetailContract.View , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
 
     override val layout: Int = R.layout.activity_goods_image_view
 
@@ -79,7 +82,7 @@ class GoodsImageViewActivity : BaseActivity(), GoodsDetailContract.View {
         }
 
         linearLayoutShare.setOnClickListener {
-            ToastUtil.showInfo("分享")
+            share()
         }
 
     }
@@ -102,6 +105,18 @@ class GoodsImageViewActivity : BaseActivity(), GoodsDetailContract.View {
         }
     }
 
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
+    private fun share() {
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            val shareUtil = ShareUtil(this)
+            shareUtil.shareGoods(WebUrl.GOODS, WebUrl.AUTH_GOODS,goodsData!!.assets[0].view_url,
+                    goodsData!!.name,"",goodsData.rid, goodsData.rid+"-"+ goodsData!!.store_rid,4)
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
+        }
+    }
+
     override fun showLoadingView() {
         dialog.show()
     }
@@ -120,5 +135,28 @@ class GoodsImageViewActivity : BaseActivity(), GoodsDetailContract.View {
 
     override fun setPresenter(presenter: GoodsDetailContract.Presenter?) {
         setPresenter(presenter)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+
+    }
+
+    override fun onRationaleDenied(requestCode: Int) {
+
+    }
+
+    override fun onRationaleAccepted(requestCode: Int) {
+
     }
 }

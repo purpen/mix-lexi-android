@@ -36,6 +36,7 @@ import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.search.AdapterSearchGoods
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.smart.dialog.listener.OnBtnClickL
 import com.smart.dialog.widget.ActionSheetDialog
 import com.smart.dialog.widget.NormalDialog
@@ -61,7 +62,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private val adapter: LifeHouseAdapter by lazy { LifeHouseAdapter(R.layout.adapter_curator_recommend) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapterWelcomeInWeek: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
-
+    private var price:String?=null
+    private var goodsId:String?=null
+    private var storeId:String?=null
     private lateinit var headerLifeHouse: View
 
     companion object {
@@ -343,7 +346,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             //
             //ToastUtil.showInfo("分享生活馆")
             //val share=ShareUtil(activity,WebUrl.)
-            //TODO 分享生活馆
+            share()
         }
 
         headerLifeHouse.buttonCpyNum.setOnClickListener {
@@ -385,10 +388,14 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 R.id.textView5 -> {
                     /*val dialog = DistributeShareDialog(activity)
                     dialog.show()*/
-                    val share=ShareUtil(activity,WebUrl.GOODS+this.adapter.data.get(position).product_rid,
+                    /*val share=ShareUtil(activity,WebUrl.GOODS+this.adapter.data.get(position).product_rid,
                             this.adapter.data.get(position).name,
                             "",WebUrl.AUTH_GOODS+this.adapter.data.get(position).product_rid,
-                            this.adapter.data.get(position).cover)
+                            this.adapter.data.get(position).cover)*/
+                    goodsId=this.adapter.data[position].rid
+                    storeId=this.adapter.data[position].store_rid
+                    price=this.adapter.data[position].commission_price
+                    shareGoods()
                 }
             }
         }
@@ -533,6 +540,33 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
     }
 
+    /**
+     * 邀请好友开馆
+     */
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
+    private fun share() {
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
+            val shareUtil:ShareUtil= ShareUtil(activity)
+            shareUtil.shareLife(WebUrl.AUTH_LIFE, UserProfileUtil.storeId(),UserProfileUtil.storeId(),2)
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
+        }
+    }
+
+    /**
+     * 分享商品
+     */
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE_GOODS)
+    private fun shareGoods(){
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
+            val shareUtil:ShareUtil= ShareUtil(activity)
+            shareUtil.shareGoods(WebUrl.AUTH_GOODS, goodsId, goodsId+"-"+ storeId,price,4)
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_GOODS, *perms)
+        }
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

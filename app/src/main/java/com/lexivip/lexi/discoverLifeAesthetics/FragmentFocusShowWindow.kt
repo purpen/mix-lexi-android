@@ -1,5 +1,6 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
@@ -15,7 +16,9 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
+import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_swipe_refresh_recyclerview.*
@@ -25,13 +28,18 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
 
-class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
+class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
     override val layout: Int = R.layout.fragment_swipe_refresh_recyclerview
     private val presenter: ShowWindowPresenter by lazy { ShowWindowPresenter(this) }
     private val adapter: AdapterRecommendShowWindow by lazy { AdapterRecommendShowWindow(R.layout.adapter_show_window) }
-
+    private var imagrUrl:String?=null
+    private var title:String?=null
+    private var rid:String?=null
     companion object {
         @JvmStatic
         fun newInstance(): FragmentFocusShowWindow = FragmentFocusShowWindow()
@@ -108,8 +116,12 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
                 }
 
                 R.id.textViewShare -> {
-                    val dialog = DistributeShareDialog(activity)
-                    dialog.show()
+                    /*val dialog = DistributeShareDialog(activity)
+                    dialog.show()*/
+                    rid=adapter.data[position].rid
+                    title=adapter.data[position].title
+                    imagrUrl=adapter.data[position].products[0].cover
+                    share()
                 }
                 R.id.textViewFocus -> { //关注用户
                     if (UserProfileUtil.isLogin()) {
@@ -139,6 +151,17 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
         adapter.setOnItemClickListener { _, _, position ->
             val showWindowBean = adapter.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2ShopWindowDetailActivity(showWindowBean.rid)
+        }
+    }
+
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
+    private fun share() {
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
+            val shareUtil = ShareUtil(activity)
+            shareUtil.shareWindow(WebUrl.WINDOW, WebUrl.AUTH_WINDOW,imagrUrl,title,"",rid,rid)
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }
     }
 
@@ -267,5 +290,28 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View {
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
         super.onDestroy()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(this).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+
+    }
+
+    override fun onRationaleDenied(requestCode: Int) {
+
+    }
+
+    override fun onRationaleAccepted(requestCode: Int) {
+
     }
 }

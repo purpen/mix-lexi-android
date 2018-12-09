@@ -44,7 +44,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * 生活馆管理
  */
-public class LifeShopFragment extends BaseFragment implements View.OnClickListener, LifeShopContract.View {
+public class LifeShopFragment extends BaseFragment implements View.OnClickListener, LifeShopContract.View, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
 
     private ImageView logo;
     private TextView name;
@@ -76,6 +76,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     private boolean isShowCash = true;
     private String saleMoney;
     private String cashMoney;
+    private String scene;
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -236,8 +237,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                 inquiryDialog.show();
                 break;
             case R.id.ll_invite:
-                ShareUtil shareUtil=new ShareUtil(getActivity());
-                //shareUtil.shareInvitation(WebUrl.OPEN_SHOP,WebUrl.AUTH_GUIDE,R.mipmap.ic_launcher,"","");
+                share();
                 break;
             case R.id.linearLayout6:
                 ClipboardManager clip = (ClipboardManager)getContext().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -259,6 +259,20 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     }
 
     /**
+     * 邀请好友开馆
+     */
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
+    private void share(){
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(getActivity(), perms)) {
+            ShareUtil shareUtil=new ShareUtil(getActivity());
+            shareUtil.shareInvitation(WebUrl.OPEN_SHOP,WebUrl.AUTH_GUIDE,R.mipmap.ic_launcher,"邀请你开馆","",scene);
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, perms);
+        }
+    }
+
+    /**
      * 保存图片到图库
      */
     @AfterPermissionGranted(Constants.REQUEST_CODE_SAVE_IMAGE)
@@ -268,7 +282,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
             PreserveImageDialog imageDialog = new PreserveImageDialog(getContext(), getActivity());
             imageDialog.show();
         } else {
-            EasyPermissions.requestPermissions(getActivity(), getString(R.string.rationale_camera), Constants.REQUEST_CODE_SAVE_IMAGE, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SAVE_IMAGE, perms);
         }
     }
 
@@ -300,6 +314,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
             endTime = bean.data.created_at + 2592000;
             handler.sendEmptyMessage(0);
         }
+        scene=bean.data.ID;
         tv_live_id.setText("ID：" + bean.data.ID);
 
         //calendar = Calendar.getInstance();
@@ -344,7 +359,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-    /*@Override
+    @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
 
     }
@@ -352,7 +367,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(getActivity()).build().show();
+            new AppSettingsDialog.Builder(this).build().show();
         }
     }
 
@@ -364,5 +379,5 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onRationaleDenied(int requestCode) {
 
-    }*/
+    }
 }

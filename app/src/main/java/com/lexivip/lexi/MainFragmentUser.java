@@ -88,8 +88,12 @@ public class MainFragmentUser extends BaseFragment {
     }
 
     private void share(){
-        ShareUtil shareUtil=new ShareUtil(getActivity(),WebUrl.USER+UserProfileUtil.getUserId(),SPUtil.read(Constants.USER_NAME)+"在#乐喜#悄悄收藏了一些原创精品好物"
-                ,"快来看看吧",WebUrl.AUTH_PAGE+UserProfileUtil.getUserId(),SPUtil.read(Constants.USER_IMAGE));
+       /* ShareUtil shareUtil=new ShareUtil(getActivity(),WebUrl.USER+UserProfileUtil.getUserId(),SPUtil.read(Constants.USER_NAME)+"在#乐喜#悄悄收藏了一些原创精品好物"
+                ,"快来看看吧",WebUrl.AUTH_PAGE+UserProfileUtil.getUserId(),SPUtil.read(Constants.USER_IMAGE));*/
+        ShareUtil shareUtil=new ShareUtil(getActivity());
+        shareUtil.shareNoImage(WebUrl.USER+UserProfileUtil.getUserId(),WebUrl.AUTH_PAGE+UserProfileUtil.getUserId()
+                ,SPUtil.read(Constants.USER_IMAGE),"在#乐喜#悄悄收藏了一些原创精品好物"
+                ,"快来看看吧");
     }
 
     public static BaseFragment newInstance(){
@@ -97,7 +101,7 @@ public class MainFragmentUser extends BaseFragment {
         return mainFragmentUser;
     }
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         LogUtil.e("外层的fragment");
@@ -109,5 +113,5 @@ public class MainFragmentUser extends BaseFragment {
                 fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
             }
         }
-    }
+    }*/
 }

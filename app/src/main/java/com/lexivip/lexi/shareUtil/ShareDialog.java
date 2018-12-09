@@ -17,6 +17,7 @@ import com.basemodule.tools.GlideUtil;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ScreenUtil;
 import com.basemodule.tools.ToastUtil;
+import com.basemodule.tools.Util;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.album.ImageUtils;
@@ -160,27 +161,27 @@ public class ShareDialog extends BottomBaseDialog<ShareDialog> {
         list=new ArrayList<>();
         ShareTypeBean shareTypeBean0=new ShareTypeBean();
         shareTypeBean0.image=R.mipmap.icon_share_save;
-        shareTypeBean0.name=R.string.text_preserve_image;
+        shareTypeBean0.name=Util.getString(R.string.text_preserve_image);
         list.add(shareTypeBean0);
         ShareTypeBean shareTypeBean1=new ShareTypeBean();
-        shareTypeBean0.image=R.mipmap.icon_share_wechat;
-        shareTypeBean0.name=R.string.text_wx;
+        shareTypeBean1.image=R.mipmap.icon_share_wechat;
+        shareTypeBean1.name=Util.getString(R.string.text_wx);
         list.add(shareTypeBean1);
         ShareTypeBean shareTypeBean2=new ShareTypeBean();
-        shareTypeBean0.image=R.mipmap.icon_share_timeline;
-        shareTypeBean0.name=R.string.text_time_line;
+        shareTypeBean2.image=R.mipmap.icon_share_timeline;
+        shareTypeBean2.name=Util.getString(R.string.text_time_line);
         list.add(shareTypeBean2);
         ShareTypeBean shareTypeBean3=new ShareTypeBean();
-        shareTypeBean0.image=R.mipmap.icon_share_weibo;
-        shareTypeBean0.name=R.string.text_login_sina;
+        shareTypeBean3.image=R.mipmap.icon_share_weibo;
+        shareTypeBean3.name=Util.getString(R.string.text_login_sina);
         list.add(shareTypeBean3);
         ShareTypeBean shareTypeBean4=new ShareTypeBean();
-        shareTypeBean0.image=R.mipmap.icon_share_qq;
-        shareTypeBean0.name=R.string.text_login_qq;
+        shareTypeBean4.image=R.mipmap.icon_share_qq;
+        shareTypeBean4.name=Util.getString(R.string.text_login_qq);
         list.add(shareTypeBean4);
         ShareTypeBean shareTypeBean5=new ShareTypeBean();
-        shareTypeBean0.image=R.mipmap.icon_share_qq_space;
-        shareTypeBean0.name=R.string.text_qq_space;
+        shareTypeBean5.image=R.mipmap.icon_share_qq_space;
+        shareTypeBean5.name=Util.getString(R.string.text_qq_space);
         list.add(shareTypeBean5);
     }
 
@@ -208,7 +209,9 @@ public class ShareDialog extends BottomBaseDialog<ShareDialog> {
 
     @Override
     public void setOnDismissListener(@Nullable OnDismissListener listener) {
+        LogUtil.e("保存图片了");
         super.setOnDismissListener(listener);
+        LogUtil.e("保存图片"+isSave);
         if (isSave){
             ToastUtil.showInfo("保存图片成功！");
         }
