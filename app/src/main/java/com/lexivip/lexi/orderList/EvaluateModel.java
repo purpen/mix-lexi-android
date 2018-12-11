@@ -74,10 +74,11 @@ public class EvaluateModel {
                     }
                     LogUtil.i("CompleteInfoModel", "qiniu Upload Success");
                 } else {
+                    callBack.onComplete(null);
                     LogUtil.i("CompleteInfoModel", "qiniu Upload Fail");
                     //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                     LogUtil.e(info.error.toString());
-                    ToastUtil.showInfo("网络异常，上传图片失败！");
+                    ToastUtil.showInfo("上传图片失败！");
                 }
 
                 LogUtil.i("CompleteInfoModel", "$key,\r\n $info,\r\n $res");

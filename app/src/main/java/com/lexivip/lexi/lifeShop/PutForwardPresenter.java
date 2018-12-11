@@ -10,6 +10,7 @@ import com.lexivip.lexi.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class PutForwardPresenter implements PutForwardContract.Presenter{
     private PutForwardModel model=new PutForwardModel();
@@ -79,5 +80,15 @@ public class PutForwardPresenter implements PutForwardContract.Presenter{
                 view.showError(Util.getString(R.string.text_net_error));
             }
         });
+    }
+
+    @Override
+    public void loadCash() {
+
+    }
+
+    @Override
+    public void bindWX(Map<String, String> data) {
+
     }
 }

@@ -3,6 +3,7 @@ package com.lexivip.lexi.user.setting.userData;
 import android.graphics.Bitmap;
 
 import com.basemodule.tools.LogUtil;
+import com.basemodule.tools.ToastUtil;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.AppApplication;
 import com.lexivip.lexi.net.ClientParamsAPI;
@@ -11,6 +12,7 @@ import com.lexivip.lexi.net.URL;
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadOptions;
 
 import org.jetbrains.annotations.NotNull;
@@ -94,13 +96,18 @@ public class EditUserDataModel {
             }
         });
     }
-    public void uploadImage(UploadTokenBean bean, byte[] data,final IDataSource.UpLoadCallBack callBack){
+    public void uploadImage(UploadTokenBean bean, byte[] data, final IDataSource.UpLoadCallBack callBack, final UpProgressHandler handler){
         LogUtil.e("上传图片开始");
         String token = bean.data.up_token;
         HashMap<String, String> map = new HashMap<>();
         map.put("x:user_id", bean.data.user_id);
         map.put("x:directory_id", bean.data.directory_id);
-        UploadOptions uploadOptions = new UploadOptions(map, "image/jpeg", false, null, null);
+        UploadOptions uploadOptions = new UploadOptions(map, "image/jpeg", false, new UpProgressHandler() {
+            @Override
+            public void progress(String key, double percent) {
+                handler.progress(key,percent);
+            }
+        }, null);
         LogUtil.e("文件大小："+data.length);
         AppApplication.getUploadManager().put(data, null, token, new UpCompletionHandler() {
             @Override
@@ -115,8 +122,10 @@ public class EditUserDataModel {
                     }
                     LogUtil.e("CompleteInfoModel", "qiniu Upload Success");
                 } else {
+                    callBack.onComplete(null);
                     LogUtil.e("CompleteInfoModel", "qiniu Upload Fail");
                     //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                    ToastUtil.showError("上传图片失败！");
                 }
 
 

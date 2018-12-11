@@ -17,6 +17,7 @@ import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.register.RegisterActivity
 import com.lexivip.lexi.user.setting.SettingActivity
 import com.umeng.analytics.MobclickAgent
+import com.umeng.message.PushAgent
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -77,6 +78,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initView() {
+        PushAgent.getInstance(this).onAppStart()
         switchFragment(R.id.button0)
         EventBus.getDefault().register(this)
     }

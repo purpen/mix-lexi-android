@@ -1,5 +1,6 @@
 package com.lexivip.lexi.welcome
 
+import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.net.ClientParamsAPI
 import com.lexivip.lexi.net.HttpRequest

@@ -308,7 +308,12 @@ public class EditUserDataActivity extends BaseActivity implements EditUserDataCo
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button:
+                userBean.data.profile.about_me=et_slogan.getText().toString();
+                userBean.data.profile.area_id=areaId;
+                userBean.data.profile.province_id=provinceId;
+                userBean.data.profile.city_id=cityId;
                 if (!et_name.getText().toString().isEmpty()) {
+                    LogUtil.e("头像id："+userBean.data.profile.avatar_id);
                     presenter.updateData(et_name.getText().toString(), String.valueOf(userBean.data.profile.avatar_id)
                             , String.valueOf(userBean.data.profile.about_me), String.valueOf(userBean.data.profile.gender), String.valueOf(userBean.data.profile.area_id)
                             , String.valueOf(userBean.data.profile.province_id), String.valueOf(userBean.data.profile.city_id), et_email.getText().toString()

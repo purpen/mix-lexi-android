@@ -19,12 +19,8 @@ public class AdapterAddressList extends BaseQuickAdapter<UserAddressListBean.Dat
     protected void convert(BaseViewHolder helper, UserAddressListBean.DataBean item) {
         helper.setText(R.id.textViewName,item.first_name);
         helper.setText(R.id.textViewFullAddress,item.full_address);
-        helper.setText(R.id.textViewProvinceCity,item.province+"，"+item.city);
-        if (TextUtils.isEmpty(item.zipcode)){
-            helper.setGone(R.id.textViewZip,false);
-        }else {
-            helper.setVisible(R.id.textViewZip,true);
-            helper.setText(R.id.textViewZip,item.zipcode);
+        if (!TextUtils.isEmpty(item.zipcode)) {
+            helper.setText(R.id.textViewProvinceCity, item.province + "，" + item.city + "   " + item.zipcode);
         }
         helper.setText(R.id.textViewPhone,item.mobile);
     }

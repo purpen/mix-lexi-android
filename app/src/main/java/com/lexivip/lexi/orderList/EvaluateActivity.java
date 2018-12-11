@@ -288,15 +288,22 @@ public class EvaluateActivity extends BaseActivity implements EasyPermissions.Pe
         }else{
             if(itemPosition!=0) {
                 LogUtil.e("是否是中间的一个");
-                adapterEvaluate.getData().get(position).asset_image.remove(itemPosition - 1);
-                adapterEvaluate.getData().get(position).asset_image.add(itemPosition - 1, imageData);
-                adapterEvaluate.getData().get(position).asset_ids.remove(itemPosition - 1);
-                adapterEvaluate.getData().get(position).asset_ids.add(itemPosition - 1, ids.getString(0));
+                if (adapterEvaluate.getData().get(position).asset_image.get(itemPosition)!=null) {
+                    adapterEvaluate.getData().get(position).asset_image.remove(itemPosition);
+                    adapterEvaluate.getData().get(position).asset_ids.remove(itemPosition);
+                    adapterEvaluate.getData().get(position).asset_image.add(itemPosition , imageData);
+                    adapterEvaluate.getData().get(position).asset_ids.add(itemPosition , ids.getString(0));
+                }else {
+                    adapterEvaluate.getData().get(position).asset_image.add(itemPosition , imageData);
+                    adapterEvaluate.getData().get(position).asset_ids.add(itemPosition , ids.getString(0));
+                    adapterEvaluate.getData().get(position).asset_ids.add(null);
+                }
                 adapterEvaluate.notifyDataSetChanged();
             }else {
                 LogUtil.e("是否是第一个");
                 adapterEvaluate.getData().get(position).asset_image=new ArrayList<>();
-                adapterEvaluate.getData().get(position).asset_image.add(imageData);
+                adapterEvaluate.getData().get(position).asset_image.add(0,imageData);
+                adapterEvaluate.getData().get(position).asset_image.add(null);
                 adapterEvaluate.getData().get(position).asset_ids=new ArrayList<>();
                 adapterEvaluate.getData().get(position).asset_ids.add(ids.getString(0));
                 adapterEvaluate.notifyDataSetChanged();
