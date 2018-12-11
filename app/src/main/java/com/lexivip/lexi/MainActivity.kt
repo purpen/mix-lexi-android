@@ -25,23 +25,11 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
 
-class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
+class MainActivity : BaseActivity() {
     /**
      * 是否切换到生活馆界面
      */
     private var showLifeHouseTab:Boolean= false
-
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-
-    }
-
-    override fun onRationaleDenied(requestCode: Int) {
-
-    }
-
-    override fun onRationaleAccepted(requestCode: Int) {
-
-    }
 
     override fun onResume() {
         super.onResume()
@@ -51,12 +39,6 @@ class MainActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyP
     override fun onPause() {
         super.onPause()
         MobclickAgent.onPause(this)
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            AppSettingsDialog.Builder(this).build().show()
-        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

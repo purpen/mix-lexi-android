@@ -44,6 +44,9 @@ public class Constants {
 
     //保存图片到本地的所需的权限
     public static final int REQUEST_CODE_SAVE_IMAGE = 0x000100;
+    //分享所需权限
+    public static final int REQUEST_CODE_SHARE=0x000110;
+    public static final int REQUEST_CODE_SHARE_GOODS=0x000111;
 
     //添加新地址
     public static final int REQUEST_CODE_REFRESH_ADDRESS = 0x0000012;
@@ -54,7 +57,7 @@ public class Constants {
             Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.SET_DEBUG_APP,
             Manifest.permission.SYSTEM_ALERT_WINDOW,Manifest.permission.GET_ACCOUNTS,
             Manifest.permission.WRITE_APN_SETTINGS};
-    public static final int REQUEST_CODE_SHARE=0x0001000;
+    //public static final int REQUEST_CODE_SHARE=0x0001000;
 
 
     public static final int SUCCESS = 200;

@@ -571,8 +571,6 @@ object URL {
      * 获取小程序海报
      */
     const val MARKET_WXA_POSTER = "${BASE_URL}market/wxa_poster"
-
-
     /**
      * 生活馆订单统计
      */
@@ -757,7 +755,7 @@ object URL {
     /**
      * 别人喜欢的橱窗
      */
-    const val OTHERS_FAVORITE_SHOW_WINDOW = "${BASE_URL}shop_windows/other_user_likes"
+   const val OTHERS_FAVORITE_SHOW_WINDOW = "${BASE_URL}shop_windows/other_user_likes"
 
     /**
      * 别人的心愿单
@@ -788,22 +786,6 @@ object URL {
      * 别人最近查看商品列表
      */
     const val OTHERS_RECENT_LOOK_GOODS = "${BASE_URL}other_user_browses"
-    /**
-     * 分享品牌馆
-     */
-    const val SHARE_BRAND = "${BASE_URL}market/share/store"
-    /**
-     * 分享生活馆
-     */
-    const val SHARE_LIFE = "${BASE_URL}market/share/life_store"
-    /**
-     * 邀请好友开馆卡片
-     */
-    const val SHARE_INVITE = "${BASE_URL}market/share/invite_carde"
-    /**
-     * 分享优惠券
-     */
-    const val SHARE_VOUCHER = "${BASE_URL}market/share/coupons"
 
     /**
      * 包邮专区
@@ -847,7 +829,22 @@ object URL {
      * 橱窗分享海报
      */
     const val SHARE_WINDOW = "${BASE_URL}market/share/shop_window_poster"
-
+    /**
+     * 品牌馆卡片
+     */
+    const val SHARE_MARKET_BRADN="${BASE_URL}market/share/store"
+    /**
+     * 生活馆卡片
+     */
+    const val SHARE_MARKET_LIFE="${BASE_URL}market/share/life_store"
+    /**
+     * 邀请好友开馆卡片
+     */
+    const val SHARE_MARKET_OPEN_SHOP="${BASE_URL}market/share/invite_carde"
+    /**
+     * 分享商品卡片
+     */
+    const val SHARE_MARKET_GOODS="${BASE_URL}market/share/product_card"
     /**
      * 保存支付方式
      */
@@ -895,7 +892,10 @@ object URL {
      * 微信登录
      */
     const val WX_LOGIN = "${BASE_URL}auth/app_bind_wx"
-
+    /**
+     * 微信绑定
+     */
+    const val WX_BIND="${BASE_URL}users/user_info_bind_wx"
     /**
      * 获取文章子评论
      */
@@ -909,4 +909,8 @@ object URL {
      * 申请生活馆
      */
     const val APPLY_LIFE_HOUSE = "${BASE_URL}store/apply_life_store"
+    /**
+     * 邀请好友开馆海报
+     */
+    const val SHARE_INVITATION="${BASE_URL}market/share/invite_poster"
 }

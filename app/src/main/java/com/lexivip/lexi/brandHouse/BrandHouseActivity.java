@@ -1,5 +1,6 @@
 package com.lexivip.lexi.brandHouse;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.basemodule.tools.Constants;
 import com.basemodule.tools.DateUtil;
 import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
@@ -34,6 +36,7 @@ import com.lexivip.lexi.beans.CouponBean;
 import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.index.detail.CouponBottomDialog;
 import com.lexivip.lexi.index.detail.ShopCouponListBean;
+import com.lexivip.lexi.index.selection.applyForLifeHouse.OpenLifeHouseActivity;
 import com.lexivip.lexi.lifeShop.MyFragmentPageAdapter;
 import com.lexivip.lexi.net.WebUrl;
 import com.lexivip.lexi.search.AdapterSearchGoods;
@@ -47,10 +50,14 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
 /**
  * 品牌馆页面
  */
-public class BrandHouseActivity extends BaseActivity implements View.OnClickListener, BrandHouseContract.View {
+public class BrandHouseActivity extends BaseActivity implements View.OnClickListener, BrandHouseContract.View ,EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
 
     private WaitingDialog dialog;
     private String rid;
@@ -90,6 +97,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
     private CustomViewPager viewPager;
     private ArrayList<BaseFragment> fragments;
     private int fansCount;
+    private TextView tv_qualification;
 
     @Override
     protected int getLayout() {
@@ -121,6 +129,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         tv_design = findViewById(R.id.tv_design);
         ll_follow = findViewById(R.id.ll_follow);
         tv_focus = findViewById(R.id.tv_focus);
+        tv_qualification = findViewById(R.id.tv_qualification);
 
         rl_close = findViewById(R.id.rl_close);
         tv_close_time = findViewById(R.id.tv_close_time);
@@ -170,6 +179,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         head_goback.setOnClickListener(this);
         tv_look.setOnClickListener(this);
         imageViewShare.setOnClickListener(this);
+        tv_qualification.setOnClickListener(this);
 
         presenter.loadData(rid);
         presenter.loadNoticeData(rid);
@@ -229,8 +239,29 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
                 }
                 break;
             case R.id.imageViewShare:
-                ShareUtil shareUtil=new ShareUtil(this,WebUrl.LIFE+rid,dataBean.data.name,dataBean.data.tag_line,WebUrl.AUTH_BRAND+rid,dataBean.data.logo);
+                share();
                 break;
+            case R.id.tv_qualification:
+                Intent intent1=new Intent(this,OpenLifeHouseActivity.class);
+                intent1.putExtra("url",WebUrl.QUALIFICAIONS+rid);
+                intent1.putExtra("title",R.string.text_qualification);
+                startActivity(intent1);
+                break;
+        }
+    }
+
+    /*private void share(){
+        ShareUtil shareUtil=new ShareUtil(this,WebUrl.LIFE+rid,dataBean.data.name,dataBean.data.tag_line,WebUrl.AUTH_BRAND+rid,dataBean.data.logo);
+    }*/
+
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
+    private void share(){
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            ShareUtil shareUtil=new ShareUtil(this);
+            shareUtil.shareBrand(WebUrl.AUTH_LIFE,rid,rid,1);
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, perms);
         }
     }
 
@@ -269,6 +300,11 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
             tv_focus.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
             tv_focus.setTextColor(Util.getColor(R.color.color_949ea6));
             tv_focus.setText(Util.getString(R.string.text_focused));
+        }
+        if (bean.data.has_qualification){
+            tv_qualification.setVisibility(View.VISIBLE);
+        }else {
+            tv_qualification.setVisibility(View.GONE);
         }
     }
 
@@ -417,4 +453,31 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         setPresenter(presenter);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
+    }
+
+    @Override
+    public void onRationaleAccepted(int requestCode) {
+
+    }
+
+    @Override
+    public void onRationaleDenied(int requestCode) {
+
+    }
 }

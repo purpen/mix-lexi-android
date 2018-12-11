@@ -38,6 +38,7 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("资质信息："+json);
                 BrandHouseBean bean=JsonUtil.fromJson(json,BrandHouseBean.class);
                 if (bean.success){
                     view.setData(bean);

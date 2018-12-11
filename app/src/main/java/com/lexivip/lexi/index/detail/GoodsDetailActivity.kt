@@ -438,7 +438,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             linearLayoutButtonBox.visibility = View.VISIBLE
         }
 
-        webView.loadData(Util.createPageByHtmlBodyContent(data.content), "text/html;charset=utf-8", "utf-8");
+        webView.loadData(Util.createPageByHtmlBodyContent(data.content), "text/html;charset=utf-8", "utf-8")
 
         if (data.is_distributed) { //分销商品
             if (UserProfileUtil.isSmallB()) {
@@ -841,8 +841,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
             R.id.imageViewShare -> {
                 //ToastUtil.showInfo("分享产品")
-                //share()
-                val shareUtil = ShareUtil(this, WebUrl.GOODS + productId, goodsData!!.name, "", WebUrl.AUTH_GOODS + productId, goodsData!!.assets.get(0).view_url)
+                share()
+
             }
 
             R.id.imageButton -> { //喜欢用户列表
@@ -937,14 +937,15 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         super.onDestroy()
     }
 
-    @AfterPermissionGranted(Constants.REQUEST_CODE_PICK_IMAGE)
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
     private fun share() {
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            val share = ShareUtil(this,productId, 4, goodsData!!.rid + "-" + goodsData!!.store_rid)
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            val shareUtil = ShareUtil(this)
+            shareUtil.shareGoods(WebUrl.GOODS,WebUrl.AUTH_GOODS,goodsData!!.assets[0].view_url,
+                    goodsData!!.name,"",productId, productId+"-"+ goodsData!!.store_rid,4)
         } else {
-            // 申请权限。
-            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo),
-                    Constants.REQUEST_CODE_PICK_IMAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }
     }
 

@@ -1571,11 +1571,34 @@ public class ClientParamsAPI {
         return params;
     }
 
+    /**
+     * 分享橱窗海报
+     * @param auth_app_id
+     * @param path
+     * @param rid
+     * @param scene
+     * @return
+     */
     public static HashMap<String,Object> getShareWindow(String auth_app_id,String path,String rid,String scene){
         HashMap<String,Object> params=generateCommonParams();
         params.put("auth_app_id", auth_app_id);
         params.put("path", path);
         params.put("rid", rid);
+        params.put("scene", scene);
+        return params;
+    }
+
+    /**
+     * 邀请好友开馆海报
+     * @param auth_app_id
+     * @param path
+     * @param scene
+     * @return
+     */
+    public static HashMap<String,Object> getShareInvitation(String auth_app_id,String path,String scene){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("auth_app_id", auth_app_id);
+        params.put("path", path);
         params.put("scene", scene);
         return params;
     }
@@ -1607,7 +1630,7 @@ public class ClientParamsAPI {
     }
 
     /**
-     * 绑定微信
+     * 绑定微信&微信登录
      * @param
      * @return
      */
@@ -1620,6 +1643,7 @@ public class ClientParamsAPI {
         params.put("country",map.get("country"));
         params.put("province",map.get("province"));
         params.put("city",map.get("city"));
+        params.put("app_id",Constants.WX_ID);
         return params;
     }
 
