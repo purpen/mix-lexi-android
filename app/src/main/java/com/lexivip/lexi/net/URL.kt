@@ -107,7 +107,7 @@ object URL {
     /**
      * 探索->商品分类
      */
-    const val GOODS_CLASS_URL = "${BASE_URL}categories"
+    const val GOODS_CLASS_URL = "${BASE_URL}official/categories"
 
     /**
      * 探索Banner图

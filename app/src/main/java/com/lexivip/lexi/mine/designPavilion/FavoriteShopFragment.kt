@@ -6,18 +6,21 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
+import com.basemodule.ui.WrapContentViewPager
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.R
+import com.lexivip.lexi.ScrollableHelper
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.empty_user_center.view.*
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
 
-class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
+class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, ScrollableHelper.ScrollableContainer {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     override val layout: Int = R.layout.fragment_recyclerview
     private lateinit var presenter: FavoriteDesignPresenter
@@ -31,6 +34,13 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
         uid = arguments?.getString(FavoriteShopFragment::class.java.simpleName)
     }
 
+//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//        val rootView = super.onCreateView(inflater, container, savedInstanceState)
+//        if (container is WrapContentViewPager){
+//            container.setObjectForPosition(2,rootView)
+//        }
+//        return rootView
+//    }
 
     companion object {
         @JvmStatic
@@ -159,6 +169,10 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View {
 
     override fun dismissLoadingView() {
         dialog.dismiss()
+    }
+
+    override fun getScrollableView(): View {
+        return recyclerView
     }
 
     override fun showError(string: String) {

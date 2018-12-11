@@ -164,7 +164,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
             override fun onSuccess(json: String) {
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
-                    view.deleteDistributeGoods(position)
+//                    view.deleteDistributeGoods(position)
                 } else {
                     view.showError(netStatusBean.status.message)
                 }

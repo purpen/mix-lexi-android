@@ -61,6 +61,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         customViewPager.setPagingEnabled(false)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
+        scrollableLayout.helper.setCurrentScrollableContainer(fragments[0] as ScrollableHelper.ScrollableContainer)
     }
 
 
@@ -89,6 +90,8 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     override fun installListener() {
         customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
+                scrollableLayout.helper.setCurrentScrollableContainer(fragments[position] as ScrollableHelper.ScrollableContainer)
+
                 when (position) {
                     0 -> {
                         val color = Util.getColor(R.color.color_6ed7af)

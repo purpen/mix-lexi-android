@@ -231,13 +231,13 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     override fun setAddWishOrderStatus(b: Boolean) {
         goodsData?.is_wish = b
         if (b) {
-            buttonAddWish.setCompoundDrawables(null, null, null, null)
-            buttonAddWish.setPadding(DimenUtil.getDimensionPixelSize(R.dimen.dp4), 0, 0, 0)
-            buttonAddWish.text = Util.getString(R.string.text_already_add)
+            headerView.buttonAddWish.setCompoundDrawables(null, null, null, null)
+            headerView.buttonAddWish.setPadding(DimenUtil.getDimensionPixelSize(R.dimen.dp4), 0, 0, 0)
+            headerView.buttonAddWish.text = Util.getString(R.string.text_already_add)
         } else {
-            buttonAddWish.compoundDrawablePadding = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
-            buttonAddWish.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_add_wish_order, R.dimen.dp10, R.dimen.dp10), null, null, null)
-            buttonAddWish.text = Util.getString(R.string.text_wish_order)
+            headerView.buttonAddWish.compoundDrawablePadding = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
+            headerView.buttonAddWish.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_add_wish_order, R.dimen.dp10, R.dimen.dp10), null, null, null)
+            headerView.buttonAddWish.text = Util.getString(R.string.text_wish_order)
         }
     }
 
@@ -469,12 +469,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         //设置心愿单状态
         if (data.is_wish) {
-            buttonAddWish.setCompoundDrawables(null, null, null, null)
-            buttonAddWish.text = Util.getString(R.string.text_already_add)
+            headerView.buttonAddWish.setCompoundDrawables(null, null, null, null)
+            headerView.buttonAddWish.text = Util.getString(R.string.text_already_add)
         } else {
-            buttonAddWish.compoundDrawablePadding = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
-            buttonAddWish.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_add_wish_order, R.dimen.dp10, R.dimen.dp10), null, null, null)
-            buttonAddWish.text = Util.getString(R.string.text_wish_order)
+            headerView.buttonAddWish.compoundDrawablePadding = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
+            headerView.buttonAddWish.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_add_wish_order, R.dimen.dp10, R.dimen.dp10), null, null, null)
+            headerView.buttonAddWish.text = Util.getString(R.string.text_wish_order)
         }
 
 

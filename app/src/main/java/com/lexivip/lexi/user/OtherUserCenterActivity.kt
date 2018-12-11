@@ -56,7 +56,7 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
         val titles = resources.getStringArray(R.array.strings_mine_titles)
 
         val adapter = CustomFragmentPagerAdapter(supportFragmentManager, fragments, titles.asList())
-        customViewPager.setPagingEnabled(false)
+//        customViewPager.setPagingEnabled(false)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
     }

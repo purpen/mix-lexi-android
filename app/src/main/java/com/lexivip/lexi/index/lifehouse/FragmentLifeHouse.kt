@@ -317,12 +317,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     }
 
-    /**
-     * 删除分销商品
-     */
-    override fun deleteDistributeGoods(position: Int) {
-        adapter.remove(position)
-    }
 
     /**
      * 设置是否喜欢
@@ -460,6 +454,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             dialog.dismiss()
         }, OnBtnClickL {
             presenter.deleteDistributeGoods(rid, position)
+            //删除分销商品
+            adapter.remove(position)
             dialog.dismiss()
         })
     }

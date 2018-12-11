@@ -97,7 +97,7 @@ class RelateShopWindowActivity:BaseActivity(), ShowWindowContract.View {
                 }
                 R.id.textViewFocus -> { //关注用户
                     if (UserProfileUtil.isLogin()) {
-                        presenter.focusUser(showWindowBean.uid, view, showWindowBean.is_follow, position)
+                        presenter.focusUser(showWindowBean.uid, view, showWindowBean.followed_status, position)
                     } else {
                         startActivity(Intent(this, LoginActivity::class.java))
                     }
@@ -109,9 +109,9 @@ class RelateShopWindowActivity:BaseActivity(), ShowWindowContract.View {
     /**
      * 设置用户关注状态
      */
-    override fun setFocusState(isFollowed: Boolean, position: Int) {
+    override fun setFocusState(followed_status: Int, position: Int) {
         val item = adapter.getItem(position) ?: return
-        item.is_follow = isFollowed
+        item.followed_status = followed_status
         adapter.notifyItemChanged(position)
         item.PAGE_TAG = TAG
         EventBus.getDefault().post(item)

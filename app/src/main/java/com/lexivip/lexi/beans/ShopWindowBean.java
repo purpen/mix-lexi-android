@@ -26,7 +26,7 @@ public class ShopWindowBean {
     public long updated_at;
     public String description;
     public boolean is_expert;
-    public boolean is_follow;
+    public int followed_status;
     public boolean is_like;
     public boolean is_official;
     public int like_count;

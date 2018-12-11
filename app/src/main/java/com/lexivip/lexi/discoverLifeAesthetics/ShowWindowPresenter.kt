@@ -161,8 +161,8 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
     /**
      * 关注用户
      */
-    override fun focusUser(uid: String, v:View,isFollowed: Boolean, position: Int) {
-        dataSource.focusUser(uid,isFollowed, object : IDataSource.HttpRequestCallBack {
+    override fun focusUser(uid: String, v:View,followState: Int, position: Int) {
+        dataSource.focusUser(uid,followState, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 v.isEnabled = false
             }
@@ -171,7 +171,7 @@ class ShowWindowPresenter(view: ShowWindowContract.View) : ShowWindowContract.Pr
                 v.isEnabled = true
                 val userFocusState = JsonUtil.fromJson(json, UserFocusState::class.java)
                 if (userFocusState.success) {
-                    view.setFocusState(!isFollowed,position)
+                    view.setFocusState(userFocusState.data.followed_status,position)
                 } else {
                     view.showError(userFocusState.status.message)
                 }

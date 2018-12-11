@@ -6,13 +6,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
+import com.basemodule.ui.WrapContentViewPager
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.RecyclerViewDivider
+import com.lexivip.lexi.ScrollableHelper
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.mine.like.AdapterLikeGoods
@@ -20,10 +23,9 @@ import com.lexivip.lexi.mine.AdapterMineFavorite
 import com.lexivip.lexi.mine.enshrine.recentLook.AllRecentLookGoodsActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.empty_user_center.view.*
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
-import kotlinx.android.synthetic.main.view_head_mine_enshrine.view.*
+import kotlinx.android.synthetic.main.fragment_user_enshrine.*
 
-class EnshrineFragment : BaseFragment(), EnshrineContract.View {
+class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper.ScrollableContainer {
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
 
     private val adapterRecent: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
@@ -32,9 +34,8 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
     private val adapterWishOrder: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
 
-    private lateinit var headerView: View
 
-    override val layout: Int = R.layout.fragment_recyclerview
+    override val layout: Int = R.layout.fragment_user_enshrine
     private lateinit var presenter: EnshrinePresenter
 
     private lateinit var emptyHeaderView: View
@@ -45,6 +46,14 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         uid = arguments?.getString(EnshrineFragment::class.java.simpleName)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = super.onCreateView(inflater, container, savedInstanceState)
+        if (container is WrapContentViewPager){
+            container.setObjectForPosition(1,rootView)
+        }
+        return rootView
     }
 
     companion object {
@@ -62,17 +71,9 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
     override fun initView() {
         presenter = EnshrinePresenter(this)
-
-        val linearLayoutManager = LinearLayoutManager(activity)
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapterMineFavorite
-
-        headerView = LayoutInflater.from(context).inflate(R.layout.view_head_mine_enshrine, null)
         emptyHeaderView = LayoutInflater.from(context).inflate(R.layout.empty_user_center, null)
         initRecentLook()
         initWishOrder()
-        adapterMineFavorite.addHeaderView(headerView)
 
         adapterMineFavorite.setHeaderAndEmpty(true)
 
@@ -84,10 +85,10 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     private fun initRecentLook() {
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        headerView.recyclerViewRecent.setHasFixedSize(true)
-        headerView.recyclerViewRecent.layoutManager = linearLayoutManager
-        headerView.recyclerViewRecent.adapter = adapterRecent
-        headerView.recyclerViewRecent.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
+        recyclerViewRecent.setHasFixedSize(true)
+        recyclerViewRecent.layoutManager = linearLayoutManager
+        recyclerViewRecent.adapter = adapterRecent
+        recyclerViewRecent.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
     /**
@@ -96,7 +97,7 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     override fun setRecentLookData(products: List<ProductBean>) {
         isRecentLookLoaded = true
         adapterRecent.setNewData(products)
-        if (products.isEmpty()) headerView.relativeLayoutRecentLook.visibility = View.GONE
+        if (products.isEmpty()) relativeLayoutRecentLook.visibility = View.GONE
         setEmptyView()
     }
 
@@ -111,10 +112,10 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     private fun initWishOrder() {
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        headerView.recyclerViewWishOrder.setHasFixedSize(true)
-        headerView.recyclerViewWishOrder.layoutManager = linearLayoutManager
-        headerView.recyclerViewWishOrder.adapter = adapterWishOrder
-        headerView.recyclerViewWishOrder.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
+        recyclerViewWishOrder.setHasFixedSize(true)
+        recyclerViewWishOrder.layoutManager = linearLayoutManager
+        recyclerViewWishOrder.adapter = adapterWishOrder
+        recyclerViewWishOrder.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, resources.getDimensionPixelSize(R.dimen.dp10), Util.getColor(android.R.color.transparent)))
     }
 
 
@@ -124,7 +125,7 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     override fun setWishOrderData(products: List<ProductBean>) {
         isWishOrderLoaded = true
         adapterWishOrder.setNewData(products)
-        if (products.isEmpty()) headerView.relativeLayoutWishOrder.visibility = View.GONE
+        if (products.isEmpty()) relativeLayoutWishOrder.visibility = View.GONE
 
         setEmptyView()
     }
@@ -144,7 +145,7 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
                     emptyStr = getString(R.string.text_other_no_favorite_goods)
                 }
                 emptyHeaderView.textViewDesc.text = emptyStr
-                adapterMineFavorite.setHeaderView(emptyHeaderView)
+//                adapterMineFavorite.setHeaderView(emptyHeaderView)
             }
         }
     }
@@ -152,7 +153,7 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
     override fun installListener() {
 
         //查看最近全部
-        headerView.textViewMoreRecent.setOnClickListener {
+        textViewMoreRecent.setOnClickListener {
            val intent = Intent(activity, AllRecentLookGoodsActivity::class.java)
             intent.putExtra(AllRecentLookGoodsActivity::class.java.simpleName,uid)
             startActivity(intent)
@@ -168,7 +169,7 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
 
         //心愿单item点击
         adapterWishOrder.setOnItemClickListener { _, _, position ->
-            val item = adapterRecent.getItem(position)
+            val item = adapterWishOrder.getItem(position)
             val intent = Intent(activity, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
             startActivity(intent)
@@ -194,6 +195,10 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View {
         }
     }
 
+
+    override fun getScrollableView(): View {
+        return nestedScrollView
+    }
 
     override fun showLoadingView() {
         dialog.show()
