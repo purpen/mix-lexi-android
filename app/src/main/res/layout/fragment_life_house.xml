@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_f5f7f9"
-        android:descendantFocusability="blocksDescendants">
+        >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -17,25 +17,24 @@
             android:focusableInTouchMode="true"
             android:overScrollMode="never" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <TextView
         android:id="@+id/textViewShare"
         android:layout_width="wrap_content"
         android:layout_height="39dp"
-        android:drawableStart="@mipmap/icon_share_life_house"
-        android:text="@string/text_share"
-        android:textColor="@color/color_333"
-        android:textStyle="bold"
-        android:textSize="12sp"
-        android:background="@mipmap/icon_bg_share_life_house"
-        android:includeFontPadding="false"
-        android:gravity="center_vertical"
-        android:paddingBottom="5dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="91dp"
+        android:background="@mipmap/icon_bg_share_life_house"
+        android:drawableStart="@mipmap/icon_share_life_house"
         android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
         android:paddingStart="8dp"
         android:paddingEnd="4dp"
-        />
+        android:paddingBottom="5dp"
+        android:text="@string/text_share"
+        android:textColor="@color/color_333"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 </RelativeLayout>

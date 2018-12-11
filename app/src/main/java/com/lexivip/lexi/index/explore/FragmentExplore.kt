@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SimpleItemAnimator
+import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -24,6 +25,7 @@ import com.lexivip.lexi.index.explore.goodsIn100.AllGoodsIn100Activity
 import com.lexivip.lexi.index.explore.newGoods.AllNewGoodsActivity
 import com.lexivip.lexi.index.selection.GoodsData
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_explore.*
 import org.greenrobot.eventbus.EventBus
@@ -56,16 +58,12 @@ class FragmentExplore : BaseFragment(), ExploreContract.View {
         initGoodsCollection()
         initGoodDesign()
         initGood100()
-        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        swipeRefreshLayout.isRefreshing = false
-        swipeRefreshLayout.isEnabled = false
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         if (isVisibleToUser && isFirstLoad) {
             isFirstLoad = false
-            page = 1
-            presenter.loadData("", page)
+            presenter.loadData(false)
             presenter.getBanners()
             presenter.getGoodsClass()
             presenter.getGood100()
@@ -265,6 +263,33 @@ class FragmentExplore : BaseFragment(), ExploreContract.View {
 
     override fun installListener() {
 
+        refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
+        refreshLayout.setEnableOverScrollDrag(false)
+        refreshLayout.isEnableLoadMore = false
+        refreshLayout.setOnRefreshListener {
+            presenter.loadData(true)
+            presenter.getBanners()
+            presenter.getGoodsClass()
+            presenter.getGood100()
+            presenter.getGoodDesign()
+            presenter.getGoodsCollection()
+            presenter.getFeatureNewGoods()
+            presenter.getBrandPavilion()
+            presenter.getEditorRecommend()
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+        }
+
+        refreshLayout.setScrollBoundaryDecider(object : ScrollBoundaryDecider {
+            override fun canRefresh(content: View?): Boolean {
+                if (nestedScrollView.scrollY > 0) return false
+                return true
+            }
+
+            override fun canLoadMore(content: View?): Boolean {
+                return false
+            }
+        })
+
         nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, oldScrollY ->
             if (Math.abs(scrollY - oldScrollY) < 20) return@OnScrollChangeListener
             if (scrollY > oldScrollY) { //上滑
@@ -326,13 +351,13 @@ class FragmentExplore : BaseFragment(), ExploreContract.View {
             val item = adapterBrandPavilion.getItem(position) as BrandPavilionListBean.DataBean.StoresBean
             when (view.id) {
                 R.id.textViewFocus -> { //关注品牌馆
-                    if (UserProfileUtil.isLogin()){
+                    if (UserProfileUtil.isLogin()) {
                         if (item.is_followed) {
                             presenter.unFocusBrandPavilion(item.rid, position)
                         } else {
                             presenter.focusBrandPavilion(item.rid, position)
                         }
-                    }else{
+                    } else {
                         PageUtil.jump2LoginActivity()
                     }
                 }
@@ -374,7 +399,6 @@ class FragmentExplore : BaseFragment(), ExploreContract.View {
     }
 
     override fun setNewData(data: List<GoodsData.DataBean.ProductsBean>) {
-        swipeRefreshLayout.isRefreshing = false
 //        adapter.setNewData(data)
 //        adapter.setEnableLoadMore(true)
         ++page
@@ -403,7 +427,6 @@ class FragmentExplore : BaseFragment(), ExploreContract.View {
 
     override fun showError(string: String) {
         LogUtil.e(string)
-//        ToastUtil.showError(string)
     }
 
     override fun goPage() {

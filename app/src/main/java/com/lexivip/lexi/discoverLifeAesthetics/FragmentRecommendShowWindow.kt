@@ -15,7 +15,6 @@ import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
-import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
@@ -33,14 +32,14 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
 
-class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
+class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
     override val layout: Int = R.layout.fragment_swipe_refresh_recyclerview
     private val presenter: ShowWindowPresenter by lazy { ShowWindowPresenter(this) }
     private val adapter: AdapterRecommendShowWindow by lazy { AdapterRecommendShowWindow(R.layout.adapter_show_window) }
     private var isFirstLoad = true
-    private var imagrUrl:String?=null
-    private var title:String?=null
-    private var rid:String?=null
+    private var imagrUrl: String? = null
+    private var title: String? = null
+    private var rid: String? = null
 
     companion object {
         @JvmStatic
@@ -65,8 +64,16 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View , Ea
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
     }
 
+    /**
+     * 刷新数据
+     */
+    fun refreshData(){
+        adapter.setEnableLoadMore(false)
+        presenter.loadData(true)
+    }
+
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        if (isVisibleToUser && isFirstLoad) {
+        if (isVisibleToUser && isFirstLoad && UserProfileUtil.isLogin()) {
             presenter.loadData(false)
             isFirstLoad = false
         }
@@ -126,9 +133,9 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View , Ea
                 R.id.textViewShare -> {
                     /*val dialog = DistributeShareDialog(activity)
                     dialog.show()*/
-                    rid=adapter.data[position].rid
-                    title=adapter.data[position].title
-                    imagrUrl=adapter.data[position].products[0].cover
+                    rid = adapter.data[position].rid
+                    title = adapter.data[position].title
+                    imagrUrl = adapter.data[position].products[0].cover
                     share()
                 }
                 R.id.textViewFocus -> { //关注用户
@@ -186,7 +193,7 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View , Ea
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
             val shareUtil = ShareUtil(activity)
-            shareUtil.shareWindow(WebUrl.WINDOW, WebUrl.AUTH_WINDOW,imagrUrl,title,"",rid,rid)
+            shareUtil.shareWindow(WebUrl.WINDOW, WebUrl.AUTH_WINDOW, imagrUrl, title, "", rid, rid)
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }
@@ -228,8 +235,8 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View , Ea
         adapter.setEnableLoadMore(true)
     }
 
-    override fun loadData() {
-
+    override fun loadData() { //用户未登录使用下面接口加载数据
+        if (!UserProfileUtil.isLogin()) presenter.loadData(false)
     }
 
     override fun showLoadingView() {

@@ -32,6 +32,7 @@ import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.view.autoScrollViewpager.RecyclerViewPagerAdapter
+import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_selection.*
 import kotlinx.android.synthetic.main.view_notice_item_view.view.*
@@ -62,17 +63,14 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
 
     override fun initView() {
         loadingView.setOffsetTop(DimenUtil.dp2px(103.0))
-        initBanner()
+        initBanner(false)
         initNotice()
-        initRecommend()
-        initHotRecommend()
-        initHotRecommendBanner()
-        initDiscoverLife()
-        initGoodSelection()
-        initZCManifest()
-        swipeRefreshLayout.isEnabled = false
-//        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-//        swipeRefreshLayout.isRefreshing = false
+        initRecommend(false)
+        initHotRecommend(false)
+        initHotRecommendBanner(false)
+        initDiscoverLife(false)
+        initGoodSelection(false)
+        initZCManifest(false)
         if (UserProfileUtil.isLogin()) {
             presenter.getReceive()
         } else {
@@ -122,8 +120,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 初始化种草清单
      */
-    private fun initZCManifest() {
+    private fun initZCManifest(isRefresh: Boolean) {
         presenter.getZCManifest()
+        if (isRefresh) return
         adapterZCManifest = ZCManifestAdapter(R.layout.adapter_zc_manifest)
         val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.setScrollEnabled(false)
@@ -145,8 +144,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 乐喜优选
      */
-    private fun initGoodSelection() {
+    private fun initGoodSelection(isRefresh: Boolean) {
         presenter.getGoodSelection()
+        if (isRefresh) return
         adapterGoodSelection = GoodSelectionAdapter(R.layout.adapter_editor_recommend)
         val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.setScrollEnabled(false)
@@ -169,8 +169,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 发现生活美学
      */
-    private fun initDiscoverLife() {
+    private fun initDiscoverLife(isRefresh: Boolean) {
         presenter.getDiscoverLife()
+        if (isRefresh) return
         adapterDiscoverLife = DiscoverLifeAdapter(R.layout.adapter_discover_life)
         val linearLayoutManager = CustomLinearLayoutManager(AppApplication.getContext())
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
@@ -192,8 +193,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 初始化人气推荐banner
      */
-    private fun initHotRecommendBanner() {
+    private fun initHotRecommendBanner(isRefresh: Boolean) {
         presenter.getHotRecommendBanner()
+        if (isRefresh) return
         val contentW = ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0)
         hotBanner.setImageLoader(GlideImageLoader(R.dimen.dp4, contentW, DimenUtil.dp2px(135.0), ImageSizeConfig.DEFAULT))
         hotBanner.setIndicatorGravity(BannerConfig.RIGHT)
@@ -217,8 +219,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 人气推荐
      */
-    private fun initHotRecommend() {
-        presenter.getHotRecommend()
+    private fun initHotRecommend(isRefresh: Boolean) {
+        presenter.getHotRecommend(isRefresh)
+        if (isRefresh) return
         val manager = CustomGridLayoutManager(AppApplication.getContext(), 6)
         manager.setScrollEnabled(false)
         recyclerViewHotRecommend.isNestedScrollingEnabled = false
@@ -251,6 +254,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         val vlp = ViewGroup.LayoutParams(ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         llp.setMargins(DimenUtil.dp2px(5.0), 0, 0, DimenUtil.dp2px(5.0))
         var imageView: ImageView
+
+        linearLayoutIndicator.removeAllViews()
+        imageViews.clear()
+
         for (i in 0 until pageSize) {
             imageView = ImageView(context)
             imageView.scaleType = ImageView.ScaleType.CENTER_CROP
@@ -298,8 +305,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      *  今日推荐
      */
-    private fun initRecommend() {
-        presenter.getTodayRecommend()
+    private fun initRecommend(isRefresh: Boolean) {
+        presenter.getTodayRecommend(isRefresh)
+        if (isRefresh) return
         adapterTodayRecommend = TodayRecommendAdapter(R.layout.adapter_today_recommend)
         val linearLayoutManager = CustomLinearLayoutManager(AppApplication.getContext())
         linearLayoutManager.setScrollEnabled(false)
@@ -322,8 +330,8 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         if (UserProfileUtil.isSmallB() || UserProfileUtil.isBigB()) {
             linearLayoutOpenLifeHouseGuide.visibility = View.GONE
         } else {
-            linearLayoutOpenLifeHouseGuide.visibility = View.VISIBLE
             presenter.getHeadLine()
+            linearLayoutOpenLifeHouseGuide.visibility = View.VISIBLE
         }
     }
 
@@ -386,8 +394,9 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
     /**
      * 初始化banner
      */
-    private fun initBanner() {
+    private fun initBanner(isRefresh: Boolean) {
         presenter.getBanners()
+        if (isRefresh) return
         val height = ScreenUtil.getScreenWidth() * 200 / 375 + DimenUtil.dp2px(35.0)
         viewPager.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
         viewPager.setPadding(0, DimenUtil.dp2px(15.0), 0, DimenUtil.dp2px(20.0))
@@ -424,6 +433,32 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
                 EventBus.getDefault().post(MessageUpDown(true))
             } else {
                 EventBus.getDefault().post(MessageUpDown(false))
+            }
+        })
+
+        refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
+        refreshLayout.setEnableOverScrollDrag(false)
+        refreshLayout.isEnableLoadMore = false
+        refreshLayout.setOnRefreshListener {
+            initBanner(true)
+            initNotice()
+            initRecommend(true)
+            initHotRecommend(true)
+            initHotRecommendBanner(true)
+            initDiscoverLife(true)
+            initGoodSelection(true)
+            initZCManifest(true)
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+        }
+
+        refreshLayout.setScrollBoundaryDecider(object : ScrollBoundaryDecider {
+            override fun canRefresh(content: View?): Boolean {
+                if (nestedScrollView.scrollY > 0) return false
+                return true
+            }
+
+            override fun canLoadMore(content: View?): Boolean {
+                return false
             }
         })
 
@@ -483,7 +518,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         when (v.id) {
             R.id.buttonOpenShop -> { //开馆指引 https://h5.lexivip.com/shop/guide
                 if (UserProfileUtil.isLogin()) {
-                    PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide",R.string.title_open_life_house)
+                    PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide", R.string.title_open_life_house)
                 } else {
                     startActivity(Intent(activity, LoginActivity::class.java))
                 }

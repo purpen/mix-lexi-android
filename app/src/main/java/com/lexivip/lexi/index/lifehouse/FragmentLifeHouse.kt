@@ -73,7 +73,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun initView() {
-        swipeRefreshLayout.isEnabled = false
         EventBus.getDefault().register(this)
         adapter.setEmptyView(R.layout.empty_view_distribute_goods, recyclerView.parent as ViewGroup)
         adapter.setHeaderFooterEmpty(true, true)
@@ -83,23 +82,23 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = linearLayoutManager
         recyclerView.adapter = adapter
-        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        swipeRefreshLayout.isRefreshing = false
-        initLifeHouseHeader()
-        initWelcomeInWeek()
+        initLifeHouseHeader(false)
+        initWelcomeInWeek(false)
     }
 
 
     /**
      * 初始化生活馆Header
      */
-    private fun initLifeHouseHeader() {
+    private fun initLifeHouseHeader(isRefresh:Boolean) {
 
         presenter.getLifeHouse()
 
         presenter.getLookPeople()
 
-        presenter.getNewPublishProducts()
+        presenter.getNewPublishProducts(isRefresh)
+
+        if (isRefresh) return
 
         headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week, null)
 
@@ -218,9 +217,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     /**
      * 初始化本周最受欢迎
      */
-    private fun initWelcomeInWeek() {
+    private fun initWelcomeInWeek(isRefresh:Boolean) {
 
         presenter.getWelcomeInWeek()
+
+        if (isRefresh) return
 
         val footerWelcome = LayoutInflater.from(context).inflate(R.layout.footer_welcome_in_week, null)
 
@@ -238,12 +239,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             adapterWelcomeInWeek.data[position].spanSize
         }
         recyclerViewWelcome.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-
-//        val headerView = View(activity)
-//        adapterWelcomeInWeek.setHeaderView(headerView)
-
         adapter.addFooterView(footerWelcome)
-
     }
 
     /**
@@ -336,6 +332,16 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun installListener() {
+
+        refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
+        refreshLayout.setEnableOverScrollDrag(false)
+        refreshLayout.isEnableLoadMore = false
+        refreshLayout.setOnRefreshListener {
+            initLifeHouseHeader(true)
+            initWelcomeInWeek(true)
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+        }
+
         textViewShare.setOnClickListener {
             //
             //ToastUtil.showInfo("分享生活馆")
@@ -473,7 +479,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
 
     override fun setNewData(data: List<ProductBean>) {
-        swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(data)
         adapter.setEnableLoadMore(true)
     }
@@ -492,7 +497,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun showLoadingView() {
-        if (!swipeRefreshLayout.isRefreshing) dialog.show()
+        dialog.show()
     }
 
     override fun dismissLoadingView() {
@@ -505,7 +510,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun showError(string: String) {
         ToastUtil.showInfo(string)
-        swipeRefreshLayout.isRefreshing = false
         adapter.loadMoreFail()
     }
 

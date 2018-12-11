@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.lifehouse
+
 import android.text.TextUtils
 import android.view.View
 import com.lexivip.lexi.JsonUtil
@@ -22,15 +23,14 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
     private val dataSource: LifeHouseModel by lazy { LifeHouseModel() }
 
-    override fun loadData(isRefresh:Boolean) {
+    override fun loadData(isRefresh: Boolean) {
         if (isRefresh) page = 1
-        dataSource.loadData(page,object : IDataSource.HttpRequestCallBack {
+        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
-//                LogUtil.e(json)
                 view.dismissLoadingView()
                 val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
                 if (distributionGoodsBean.success) {
@@ -55,9 +55,9 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                 val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
                 if (distributionGoodsBean.success) {
                     val products = distributionGoodsBean.data.products
-                    if (products.isEmpty() ){
+                    if (products.isEmpty()) {
                         view.loadMoreEnd()
-                    }else{
+                    } else {
                         view.loadMoreComplete()
                         view.addData(products)
                         page++
@@ -77,7 +77,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
      * 获取本周最受欢迎
      */
     fun getWelcomeInWeek() {
-        dataSource.getWelcomeInWeek( object : IDataSource.HttpRequestCallBack {
+        dataSource.getWelcomeInWeek(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
                 if (editorRecommendBean.success) {
@@ -97,7 +97,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
      * 获取生活馆浏览人数
      */
     fun getLookPeople() {
-        dataSource.getLookPeople( object : IDataSource.HttpRequestCallBack {
+        dataSource.getLookPeople(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val lookPeopleBean = JsonUtil.fromJson(json, LookPeopleBean::class.java)
                 if (lookPeopleBean.success) {
@@ -137,9 +137,9 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     /**
      * 编辑生活馆
      */
-    fun editLifeHouse(title: String, description: String){
+    fun editLifeHouse(title: String, description: String) {
 
-        dataSource.editLifeHouse(title,description,object : IDataSource.HttpRequestCallBack {
+        dataSource.editLifeHouse(title, description, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val lifeHouseBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
                 if (lifeHouseBean.success) {
@@ -160,7 +160,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
      * 删除分销商品
      */
     fun deleteDistributeGoods(rid: String, position: Int) {
-        dataSource.deleteDistributeGoods(rid,object : IDataSource.HttpRequestCallBack {
+        dataSource.deleteDistributeGoods(rid, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
@@ -185,7 +185,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
             override fun onStart() {
                 viewClicked.isEnabled = false
-                view.setFavorite(false,position)
+                view.setFavorite(false, position)
             }
 
             override fun onSuccess(json: String) {
@@ -213,8 +213,9 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
             override fun onStart() {
                 viewClicked.isEnabled = false
-                view.setFavorite(true,position)
+                view.setFavorite(true, position)
             }
+
             override fun onSuccess(json: String) {
                 viewClicked.isEnabled = true
                 val favoriteBean = JsonUtil.fromJson(json, FavoriteBean::class.java)
@@ -245,7 +246,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                 view.dismissLoadingView()
                 val uploadTokenBean = JsonUtil.fromJson(json, UploadTokenBean::class.java)
                 if (uploadTokenBean.success) {
-                    uploadLifeHouseLogo(uploadTokenBean,byteArray)
+                    uploadLifeHouseLogo(uploadTokenBean, byteArray)
                 } else {
                     view.showInfo(uploadTokenBean.status.message)
                 }
@@ -263,12 +264,12 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
      * 上传生活馆logo
      */
     fun uploadLifeHouseLogo(uploadTokenBean: UploadTokenBean?, byteArray: ByteArray) {
-        if (uploadTokenBean==null) {
+        if (uploadTokenBean == null) {
             ToastUtil.showInfo(R.string.text_net_error)
             return
         }
 
-        dataSource.uploadLifeHouseLogo(byteArray,uploadTokenBean,object : IDataSource.UpLoadCallBack {
+        dataSource.uploadLifeHouseLogo(byteArray, uploadTokenBean, object : IDataSource.UpLoadCallBack {
             override fun onComplete(ids: JSONArray) {
                 LogUtil.e("uploadAvatar===上传完成，图片id=${ids[0]}")
                 view.setLifeHouseLogoData(ids)
@@ -280,12 +281,12 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
      * 上传logoId
      */
     fun uploadLifeHouseLogoId(logoId: String) {
-        if (TextUtils.isEmpty(logoId)){
+        if (TextUtils.isEmpty(logoId)) {
             ToastUtil.showInfo(AppApplication.getContext().getString(R.string.hint_text_upload_avatar))
             return
         }
 
-        dataSource.uploadLifeHouseLogoId(logoId,object : IDataSource.HttpRequestCallBack {
+        dataSource.uploadLifeHouseLogoId(logoId, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
@@ -306,10 +307,10 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     /**
      * 获取新发布的产品
      */
-    override fun getNewPublishProducts() {
+    override fun getNewPublishProducts(isRefresh: Boolean) {
         dataSource.getNewPublishProducts(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {

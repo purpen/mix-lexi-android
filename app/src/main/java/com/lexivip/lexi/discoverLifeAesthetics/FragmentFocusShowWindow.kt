@@ -15,7 +15,6 @@ import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
-import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
@@ -63,7 +62,13 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPe
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
     }
 
-
+    /**
+     * 刷新数据
+     */
+    fun refreshData(){
+        adapter.setEnableLoadMore(false)
+        presenter.loadFocusData(true)
+    }
 
     override fun installListener() {
         swipeRefreshLayout.setOnRefreshListener {

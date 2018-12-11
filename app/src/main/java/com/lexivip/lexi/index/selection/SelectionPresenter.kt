@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.selection
+
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -15,12 +16,12 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     private val dataSource: SelectionModel by lazy { SelectionModel() }
 
     override fun getReceive() {
-        dataSource.getReceive(object :IDataSource.HttpRequestCallBack{
+        dataSource.getReceive(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                val couponBean=JsonUtil.fromJson(json, CouponBean::class.java)
-                if (couponBean.success){
+                val couponBean = JsonUtil.fromJson(json, CouponBean::class.java)
+                if (couponBean.success) {
                     view.setIsReceive(couponBean.data.is_grant)
-                }else{
+                } else {
                     view.showError(couponBean.status.message)
                 }
             }
@@ -33,7 +34,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     }
 
     override fun getBanners() {
-        dataSource.getBanners( object : IDataSource.HttpRequestCallBack {
+        dataSource.getBanners(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val exploreBannerBean = JsonUtil.fromJson(json, ExploreBannerBean::class.java)
                 if (exploreBannerBean.success) {
@@ -52,11 +53,12 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     /**
      * 获得今日推荐
      */
-    override fun getTodayRecommend() {
-        dataSource.getTodayRecommend( object : IDataSource.HttpRequestCallBack {
+    override fun getTodayRecommend(refresh: Boolean) {
+        dataSource.getTodayRecommend(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!refresh) view.showLoadingView()
             }
+
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
                 val todayRecommendBean = JsonUtil.fromJson(json, TodayRecommendBean::class.java)
@@ -77,11 +79,12 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
     /**
      * 获取人气推荐
      */
-    override fun getHotRecommend() {
-        dataSource.getHotRecommend( object : IDataSource.HttpRequestCallBack {
+    override fun getHotRecommend(refresh: Boolean) {
+        dataSource.getHotRecommend(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!refresh) view.showLoadingView()
             }
+
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
@@ -103,7 +106,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
      * 人气推荐banner
      */
     override fun getHotRecommendBanner() {
-        dataSource.getHotRecommendBanner( object : IDataSource.HttpRequestCallBack {
+        dataSource.getHotRecommendBanner(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val selectionHotRecommendBannerBean = JsonUtil.fromJson(json, SelectionHotRecommendBannerBean::class.java)
                 if (selectionHotRecommendBannerBean.success) {
@@ -123,7 +126,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
      * 发现生活美学
      */
     override fun getDiscoverLife() {
-        dataSource.getDiscoverLife( object : IDataSource.HttpRequestCallBack {
+        dataSource.getDiscoverLife(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val discoverLifeBean = JsonUtil.fromJson(json, DiscoverLifeBean::class.java)
                 if (discoverLifeBean.success) {
@@ -143,7 +146,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
      * 优选
      */
     override fun getGoodSelection() {
-        dataSource.getGoodSelection( object : IDataSource.HttpRequestCallBack {
+        dataSource.getGoodSelection(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
                 if (editorRecommendBean.success) {
@@ -164,7 +167,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
      * 种草清单
      */
     override fun getZCManifest() {
-        dataSource.getZCManifest( object : IDataSource.HttpRequestCallBack {
+        dataSource.getZCManifest(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val zcManifestBean = JsonUtil.fromJson(json, ZCManifestBean::class.java)
                 if (zcManifestBean.success) {
@@ -184,7 +187,7 @@ class SelectionPresenter(view: SelectionContract.View) : SelectionContract.Prese
      * 获取头条
      */
     override fun getHeadLine() {
-        dataSource.getHeadLine( object : IDataSource.HttpRequestCallBack {
+        dataSource.getHeadLine(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val headLineBean = JsonUtil.fromJson(json, HeadLineBean::class.java)
                 if (headLineBean.success) {

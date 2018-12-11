@@ -6,15 +6,11 @@ import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import com.basemodule.tools.AppManager
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
-import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.CustomLinearLayoutManager
-import com.lexivip.lexi.MainFragment0
-import com.lexivip.lexi.R
+import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.eventBusMessge.MessageChangePage
 import com.lexivip.lexi.eventBusMessge.MessageOrderSuccess
@@ -97,8 +93,7 @@ class ShopCartActivity : BaseActivity(), ShopCartContract.View {
         val shopCartEmpty = View.inflate(this, R.layout.header_empty_shop_cart, null)
         shopCartEmpty.textViewLookAround.setOnClickListener {
             //跳转首页
-            EventBus.getDefault().post(MessageChangePage(MainFragment0::class.java.simpleName))
-            AppManager.getAppManager().finishActivity(GoodsDetailActivity::class.java)
+            startActivity(Intent(this,MainActivity::class.java))
             finish()
         }
         adapterOrder.emptyView = shopCartEmpty
