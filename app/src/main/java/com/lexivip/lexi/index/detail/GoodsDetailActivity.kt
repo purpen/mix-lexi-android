@@ -678,7 +678,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      */
     private fun setTags(labels: List<String>?, isShowAll: Boolean) {
         if (labels == null || labels.isEmpty()) {
-            linearLayoutTags.visibility = View.GONE
+            headerView.linearLayoutTags.visibility = View.GONE
         } else {
             val size = labels.size
             val subLabels: List<String>

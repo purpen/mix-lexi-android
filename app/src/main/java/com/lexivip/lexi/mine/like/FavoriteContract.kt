@@ -27,9 +27,9 @@ class FavoriteContract {
     }
 
     interface Presenter : BasePresenter {
-        fun getUserGoodsLike()
-        fun getOtherUserGoodsLike(uid:String)
-        fun getShowWindowLike()
-        fun getOtherUserShowWindowLike(uid:String)
+        fun getUserGoodsLike(isRefresh:Boolean)
+        fun getOtherUserGoodsLike(uid:String,isRefresh:Boolean)
+        fun getShowWindowLike(isRefresh:Boolean)
+        fun getOtherUserShowWindowLike(uid:String,isRefresh:Boolean)
     }
 }

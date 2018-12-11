@@ -6,11 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
-import com.basemodule.ui.WrapContentViewPager
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.R
@@ -34,14 +32,6 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
         uid = arguments?.getString(FavoriteShopFragment::class.java.simpleName)
     }
 
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val rootView = super.onCreateView(inflater, container, savedInstanceState)
-//        if (container is WrapContentViewPager){
-//            container.setObjectForPosition(2,rootView)
-//        }
-//        return rootView
-//    }
-
     companion object {
         @JvmStatic
         fun newInstance(): FavoriteShopFragment = FavoriteShopFragment()
@@ -57,8 +47,6 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
 
     override fun initView() {
         presenter = FavoriteDesignPresenter(this)
-//        swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-//        swipeRefreshLayout.isRefreshing = false
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.setHasFixedSize(true)
@@ -66,6 +54,7 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
         recyclerView.adapter = adapter
         val view = View(activity)
         emptyHeaderView = LayoutInflater.from(context).inflate(R.layout.empty_user_center, null)
+        emptyHeaderView.visibility = View.VISIBLE
         adapter.addHeaderView(view)
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext(), R.color.color_f5f7f9, recyclerView))
     }
@@ -76,11 +65,6 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
 
 
     override fun installListener() {
-
-//        swipeRefreshLayout.setOnRefreshListener {
-//            adapter.setEnableLoadMore(false)
-//            loadData()
-//        }
 
         //关注品牌馆
         adapter.setOnItemChildClickListener { _, v, position ->
@@ -119,6 +103,14 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
         adapter.notifyDataSetChanged()
     }
 
+    fun refreshData() {
+        if (TextUtils.isEmpty(uid)){
+            presenter.loadData(true)
+        }else{
+            presenter.loadData(true, uid!!)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         //没登录或者不是自己都不执行后面代码
@@ -137,14 +129,14 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
         adapter.setNewData(data)
         adapter.setEnableLoadMore(true)
         if (adapter.data.isEmpty()) {
-            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_life_house)
+            emptyHeaderView.imageViewEmptyView.setImageResource(R.mipmap.icon_no_life_house)
             val emptyStr: String
             if (TextUtils.equals(uid, UserProfileUtil.getUserId())) {
                 emptyStr = getString(R.string.text_no_focus_life_house)
             } else {
                 emptyStr = getString(R.string.text_other_no_focus_life_house)
             }
-            emptyHeaderView.textViewDesc.text = emptyStr
+            emptyHeaderView.textViewEmptyDesc.text = emptyStr
             adapter.setHeaderView(emptyHeaderView)
         }
     }
@@ -177,11 +169,12 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
 
     override fun showError(string: String) {
         adapter.loadMoreFail()
-//        swipeRefreshLayout.isRefreshing = false
         ToastUtil.showError(string)
     }
 
     override fun goPage() {
 
     }
+
+
 }

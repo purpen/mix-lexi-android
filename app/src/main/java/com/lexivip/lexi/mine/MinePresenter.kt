@@ -14,10 +14,10 @@ class MinePresenter(view: MineContract.View) : MineContract.Presenter {
 
     private val dataSource: MineModel by lazy { MineModel() }
 
-    override fun loadData() {
+    override fun loadData(isRefresh: Boolean) {
         dataSource.loadData(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+              if (!isRefresh)  view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
@@ -37,10 +37,10 @@ class MinePresenter(view: MineContract.View) : MineContract.Presenter {
         })
     }
 
-    override fun loadData(uid:String) {
+    override fun loadData(uid:String,isRefresh:Boolean) {
         dataSource.loadData(uid,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+               if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {

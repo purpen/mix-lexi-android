@@ -14,10 +14,10 @@ class EnshrinePresenter(view: EnshrineContract.View) : EnshrineContract.Presente
     /**
      * 获取最近查看
      */
-    override fun getUserRecentLook() {
+    override fun getUserRecentLook(isRefresh:Boolean) {
         dataSource.getUserRecentLook(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+               if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
@@ -40,10 +40,10 @@ class EnshrinePresenter(view: EnshrineContract.View) : EnshrineContract.Presente
     /**
      * 查看心愿单
      */
-    override fun getWishOrder() {
+    override fun getWishOrder(isRefresh:Boolean) {
         dataSource.getWishOrder(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
@@ -66,10 +66,10 @@ class EnshrinePresenter(view: EnshrineContract.View) : EnshrineContract.Presente
     /**
      * 获取别人最近查看
      */
-    fun getOtherUserRecentLook(uid: String) {
+    fun getOtherUserRecentLook(uid: String,isRefresh:Boolean) {
         dataSource.getOtherUserRecentLook(uid,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
@@ -92,10 +92,10 @@ class EnshrinePresenter(view: EnshrineContract.View) : EnshrineContract.Presente
     /**
      * 获取别人的心愿单
      */
-    fun getOtherUserWishOrder(uid: String) {
+    fun getOtherUserWishOrder(uid: String,isRefresh:Boolean) {
         dataSource.getOtherUserWishOrder(uid,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {

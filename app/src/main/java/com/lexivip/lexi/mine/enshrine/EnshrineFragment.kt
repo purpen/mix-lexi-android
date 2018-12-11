@@ -19,10 +19,9 @@ import com.lexivip.lexi.ScrollableHelper
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.mine.like.AdapterLikeGoods
-import com.lexivip.lexi.mine.AdapterMineFavorite
 import com.lexivip.lexi.mine.enshrine.recentLook.AllRecentLookGoodsActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
-import kotlinx.android.synthetic.main.empty_user_center.view.*
+import kotlinx.android.synthetic.main.empty_user_center.*
 import kotlinx.android.synthetic.main.fragment_user_enshrine.*
 
 class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper.ScrollableContainer {
@@ -30,7 +29,6 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper
 
     private val adapterRecent: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
 
-    private val adapterMineFavorite: AdapterMineFavorite by lazy { AdapterMineFavorite(R.layout.adapter_pure_imageview) }
 
     private val adapterWishOrder: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
 
@@ -38,7 +36,6 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper
     override val layout: Int = R.layout.fragment_user_enshrine
     private lateinit var presenter: EnshrinePresenter
 
-    private lateinit var emptyHeaderView: View
     private var isWishOrderLoaded: Boolean = false
     private var isRecentLookLoaded: Boolean = false
     private var uid: String? = null
@@ -50,8 +47,8 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = super.onCreateView(inflater, container, savedInstanceState)
-        if (container is WrapContentViewPager){
-            container.setObjectForPosition(1,rootView)
+        if (container is WrapContentViewPager) {
+            container.setObjectForPosition(1, rootView)
         }
         return rootView
     }
@@ -71,12 +68,8 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper
 
     override fun initView() {
         presenter = EnshrinePresenter(this)
-        emptyHeaderView = LayoutInflater.from(context).inflate(R.layout.empty_user_center, null)
         initRecentLook()
         initWishOrder()
-
-        adapterMineFavorite.setHeaderAndEmpty(true)
-
     }
 
     /**
@@ -137,15 +130,15 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper
         if (isRecentLookLoaded && isWishOrderLoaded) {
 
             if (adapterRecent.data.isEmpty() && adapterWishOrder.data.isEmpty()) {
-                emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
-                val emptyStr:String
-                if (TextUtils.equals(uid,UserProfileUtil.getUserId())){
+                linearLayoutEmpty.visibility = View.VISIBLE
+                imageViewEmptyView.setImageResource(R.mipmap.icon_no_favorite_goods)
+                val emptyStr: String
+                if (TextUtils.equals(uid, UserProfileUtil.getUserId())) {
                     emptyStr = getString(R.string.text_no_favorite_goods)
-                }else{
+                } else {
                     emptyStr = getString(R.string.text_other_no_favorite_goods)
                 }
-                emptyHeaderView.textViewDesc.text = emptyStr
-//                adapterMineFavorite.setHeaderView(emptyHeaderView)
+                textViewEmptyDesc.text = emptyStr
             }
         }
     }
@@ -154,8 +147,8 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper
 
         //查看最近全部
         textViewMoreRecent.setOnClickListener {
-           val intent = Intent(activity, AllRecentLookGoodsActivity::class.java)
-            intent.putExtra(AllRecentLookGoodsActivity::class.java.simpleName,uid)
+            val intent = Intent(activity, AllRecentLookGoodsActivity::class.java)
+            intent.putExtra(AllRecentLookGoodsActivity::class.java.simpleName, uid)
             startActivity(intent)
         }
 
@@ -177,21 +170,32 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper
 
     }
 
+    fun refreshData() {
+        if (TextUtils.isEmpty(uid)) {
+            presenter.getUserRecentLook(true)
+            presenter.getWishOrder(true)
+        } else {
+            presenter.getOtherUserRecentLook(uid!!, true)
+            presenter.getOtherUserWishOrder(uid!!, true)
+        }
+
+    }
+
     override fun onResume() { //自己需要每次都更新
         super.onResume()
         //没登录或者不是自己都不执行后面代码
         if (!UserProfileUtil.isLogin() || !TextUtils.isEmpty(uid)) return
-        presenter.getUserRecentLook()
+        presenter.getUserRecentLook(false)
 
-        presenter.getWishOrder()
+        presenter.getWishOrder(false)
     }
 
 
     override fun loadData() { //别人只需加载一次
         if (!TextUtils.isEmpty(uid)) {
-            presenter.getOtherUserRecentLook(uid!!)
+            presenter.getOtherUserRecentLook(uid!!, false)
 
-            presenter.getOtherUserWishOrder(uid!!)
+            presenter.getOtherUserWishOrder(uid!!, false)
         }
     }
 
@@ -215,5 +219,6 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper
     override fun goPage() {
 
     }
+
 
 }

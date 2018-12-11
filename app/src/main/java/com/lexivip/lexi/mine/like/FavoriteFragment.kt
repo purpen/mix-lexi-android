@@ -12,12 +12,12 @@ import com.basemodule.ui.WrapContentViewPager
 import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.ShopWindowBean
-import com.lexivip.lexi.mine.*
 import com.lexivip.lexi.mine.like.likeGoods.AllLikeGoodsActivity
 import com.lexivip.lexi.mine.like.likeShopWindow.LikeShopWindowActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.adapter_goods_like.*
 import kotlinx.android.synthetic.main.adapter_item_show_window.*
+import kotlinx.android.synthetic.main.empty_user_center.*
 import kotlinx.android.synthetic.main.fragment_user_favorite.*
 
 class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper.ScrollableContainer {
@@ -25,13 +25,9 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper
 
     private val adapterLikeGoods: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
 
-    private val adapterMineFavorite: AdapterMineFavorite by lazy { AdapterMineFavorite(R.layout.adapter_pure_imageview) }
-
     private val adapterLikeShowWindow: AdapterLikeShowWindow by lazy { AdapterLikeShowWindow(R.layout.adapter_show_window_like) }
 
     private val presenter: FavoritePresenter by lazy { FavoritePresenter(this) }
-
-    private lateinit var emptyHeaderView: View
 
     private var uid: String? = null
 
@@ -65,29 +61,29 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper
     }
 
     override fun initView() {
-
-//        val linearLayoutManager = LinearLayoutManager(activity)
-//        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-//        recyclerView.layoutManager = linearLayoutManager
-//        recyclerView.adapter = adapterMineFavorite
-
-//        headerView = LayoutInflater.from(context).inflate(R.layout.view_head_mine_favorite, null)
-        emptyHeaderView = LayoutInflater.from(context).inflate(R.layout.empty_user_center, null)
-
         initGoodsLike()
         initShowWindowLike()
+    }
 
-//        adapterMineFavorite.addHeaderView(headerView)
-//        adapterMineFavorite.setHeaderAndEmpty(true)
-
+    /**
+     * 刷新数据
+     */
+    fun refreshData() {
+        if (TextUtils.isEmpty(uid)){
+            presenter.getUserGoodsLike(true)
+            presenter.getShowWindowLike(true)
+        }else{
+            presenter.getOtherUserGoodsLike(uid!!,true)
+            presenter.getOtherUserShowWindowLike(uid!!,true)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         //没登录或者不是自己都不执行后面代码
         if (!UserProfileUtil.isLogin() || !TextUtils.isEmpty(uid)) return
-        presenter.getUserGoodsLike()
-        presenter.getShowWindowLike()
+        presenter.getUserGoodsLike(false)
+        presenter.getShowWindowLike(false)
     }
 
     private fun initShowWindowLike() {
@@ -105,9 +101,9 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper
     override fun setShowWindowData(shop_windows: List<ShopWindowBean>) {
         adapterLikeShowWindow.setNewData(shop_windows)
         if (shop_windows.isEmpty()) {
-            linearLayoutLikeWindow.visibility = View.GONE
+            includeLikeWindow.visibility = View.GONE
         }else{
-            linearLayoutLikeWindow.visibility = View.VISIBLE
+            includeLikeWindow.visibility = View.VISIBLE
         }
     }
 
@@ -133,19 +129,19 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper
     override fun setGoodsLikeData(products: List<ProductBean>) {
         adapterLikeGoods.setNewData(products)
         if (products.isEmpty()) {
-            linearLayoutGoodsLike.visibility = View.GONE
-//            emptyHeaderView.imageView.setImageResource(R.mipmap.icon_no_favorite_goods)
+            linearLayoutEmpty.visibility = View.VISIBLE
+            includeLikeGoods.visibility = View.GONE
+            imageViewEmptyView.setImageResource(R.mipmap.icon_no_favorite_goods)
             val emptyStr:String
             if (TextUtils.equals(uid,UserProfileUtil.getUserId())){
                 emptyStr = getString(R.string.text_no_favorite_things)
-//                emptyHeaderView.textViewDesc1.visibility = View.VISIBLE
+                textViewEmptyDesc1.visibility = View.VISIBLE
             }else{
                 emptyStr = getString(R.string.text_other_no_favorite_things)
             }
-//            emptyHeaderView.textViewDesc.text = emptyStr
-//            adapterMineFavorite.setHeaderView(emptyHeaderView)
+            textViewEmptyDesc.text = emptyStr
         } else {
-            linearLayoutGoodsLike.visibility = View.VISIBLE
+            includeLikeGoods.visibility = View.VISIBLE
         }
     }
 
@@ -172,8 +168,8 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper
 
     override fun loadData() {//不是自己走下面代码
         if (!TextUtils.isEmpty(uid)) {
-            presenter.getOtherUserGoodsLike(uid!!)
-            presenter.getOtherUserShowWindowLike(uid!!)
+            presenter.getOtherUserGoodsLike(uid!!,false)
+            presenter.getOtherUserShowWindowLike(uid!!,false)
         }
     }
 
@@ -197,5 +193,4 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper
     override fun goPage() {
 
     }
-
 }

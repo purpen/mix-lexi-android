@@ -2,6 +2,8 @@ package com.lexivip.lexi
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CoordinatorLayout
 import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.view.View
@@ -61,7 +63,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         customViewPager.setPagingEnabled(false)
         customViewPager.adapter = adapter
         customViewPager.offscreenPageLimit = fragments.size
-        scrollableLayout.helper.setCurrentScrollableContainer(fragments[0] as ScrollableHelper.ScrollableContainer)
+//        scrollableLayout.helper.setCurrentScrollableContainer(fragments[0] as ScrollableHelper.ScrollableContainer)
     }
 
 
@@ -71,6 +73,16 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         buttonActivity.visibility = View.VISIBLE
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
+
+        appBarLayout.post {
+            val behavior = (appBarLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior as AppBarLayout.Behavior
+            behavior.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
+                override fun canDrag(appBarLayout: AppBarLayout): Boolean {
+                    return true
+                }
+            })
+        }
+
     }
 
 
@@ -88,9 +100,26 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     }
 
     override fun installListener() {
+        refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
+        refreshLayout.isEnableOverScrollBounce = false
+        refreshLayout.setEnableOverScrollDrag(false)
+        refreshLayout.isEnableLoadMore = false
+        refreshLayout.setOnRefreshListener {
+            presenter.loadData(true)
+            val fragment = fragments[customViewPager.currentItem]
+            if (fragment is FavoriteFragment){
+                fragment.refreshData()
+            }else if (fragment is EnshrineFragment){
+                fragment.refreshData()
+            }else if (fragment is FavoriteShopFragment){
+                fragment.refreshData()
+            }
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+        }
+
         customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
-                scrollableLayout.helper.setCurrentScrollableContainer(fragments[position] as ScrollableHelper.ScrollableContainer)
+//                scrollableLayout.helper.setCurrentScrollableContainer(fragments[position] as ScrollableHelper.ScrollableContainer)
 
                 when (position) {
                     0 -> {
@@ -143,16 +172,16 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
 
         buttonActivity.setOnClickListener {
             val intent = Intent(activity, DynamicActivity::class.java)
-            intent.putExtra(DynamicActivity::class.java.simpleName,UserProfileUtil.getUserId())
+            intent.putExtra(DynamicActivity::class.java.simpleName, UserProfileUtil.getUserId())
             startActivity(intent)
         }
 
         imageView.setOnClickListener {
-            startActivity(Intent(activity,EditUserDataActivity::class.java))
+            startActivity(Intent(activity, EditUserDataActivity::class.java))
         }
 
         textViewName.setOnClickListener {
-            startActivity(Intent(activity,EditUserDataActivity::class.java))
+            startActivity(Intent(activity, EditUserDataActivity::class.java))
         }
 
         //优惠券
@@ -161,7 +190,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         }
 
         textViewLTest.setOnClickListener {
-            startActivity(Intent(activity,CompleteInfoActivity::class.java))
+            startActivity(Intent(activity, CompleteInfoActivity::class.java))
         }
     }
 
@@ -171,17 +200,17 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
             R.id.imageViewShare -> {
 
             }
-            R.id.buttonOrder->startActivity(Intent(activity,OrderListActivity::class.java))
-            R.id.linearLayoutFocus->{
-                var intent=Intent(activity, FavoriteUserListActivity::class.java)
-                intent.putExtra("type",1)
-                intent.putExtra("title",Util.getString(R.string.text_focus))
+            R.id.buttonOrder -> startActivity(Intent(activity, OrderListActivity::class.java))
+            R.id.linearLayoutFocus -> {
+                var intent = Intent(activity, FavoriteUserListActivity::class.java)
+                intent.putExtra("type", 1)
+                intent.putExtra("title", Util.getString(R.string.text_focus))
                 startActivity(intent)
             }
-            R.id.linearLayoutFans->{
-                var intent=Intent(activity, FavoriteUserListActivity::class.java)
-                intent.putExtra("type",2)
-                intent.putExtra("title",Util.getString(R.string.text_fans))
+            R.id.linearLayoutFans -> {
+                var intent = Intent(activity, FavoriteUserListActivity::class.java)
+                intent.putExtra("type", 2)
+                intent.putExtra("title", Util.getString(R.string.text_fans))
                 startActivity(intent)
             }
         }
@@ -190,7 +219,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     override fun onResume() {
         super.onResume()
         if (!UserProfileUtil.isLogin()) return
-        presenter.loadData()
+        presenter.loadData(false)
     }
 
 //    override fun loadData() {
@@ -213,9 +242,9 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
             textViewSignature.visibility = View.VISIBLE
             textViewSignature.text = data.about_me
         }
-        SPUtil.write(Constants.USER_IMAGE,data.avatar)
-        SPUtil.write(Constants.USER_NAME,data.username)
-        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70),ImageSizeConfig.SIZE_AVA)
+        SPUtil.write(Constants.USER_IMAGE, data.avatar)
+        SPUtil.write(Constants.USER_NAME, data.username)
+        GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70), ImageSizeConfig.SIZE_AVA)
     }
 
     override fun showLoadingView() {
