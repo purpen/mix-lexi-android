@@ -511,7 +511,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.textViewOriginalPrice.visibility = View.VISIBLE
             headerView.textViewNowPrice.text = data.min_sale_price.toString()
             headerView.textViewOriginalPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            headerView.textViewOriginalPrice.text = data.min_price.toString()
+            headerView.textViewOriginalPrice.text = "¥${data.min_price}"
         }
 
 
