@@ -7,23 +7,23 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.index.explore.ExploreBannerBean
 import java.io.IOException
 
-class DiscoverPresenter(view: DiscoverContract.View):DiscoverContract.Presenter {
+class DiscoverPresenter(view: DiscoverContract.View) : DiscoverContract.Presenter {
 
-    private var view:DiscoverContract.View = checkNotNull(view)
+    private var view: DiscoverContract.View = checkNotNull(view)
 
     private val dataSource: DiscoverModel by lazy { DiscoverModel() }
 
-    override fun getBanner(){
-        dataSource.getBanner(object: IDataSource.HttpRequestCallBack{
+    override fun getBanner(isRefresh: Boolean) {
+        dataSource.getBanner(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
                 val exploreBannerBean = JsonUtil.fromJson(json, ExploreBannerBean::class.java)
                 if (exploreBannerBean.success) {
-                    if (exploreBannerBean.data!=null) view.setBannerData(exploreBannerBean.data.banner_images)
+                    if (exploreBannerBean.data != null) view.setBannerData(exploreBannerBean.data.banner_images)
                 } else {
                     view.showError(exploreBannerBean.status.message)
                 }
@@ -39,10 +39,10 @@ class DiscoverPresenter(view: DiscoverContract.View):DiscoverContract.Presenter 
     /**
      * 获取生活志
      */
-    override fun getLifeWill() {
-        dataSource.getLifeWill(object: IDataSource.HttpRequestCallBack{
+    override fun getLifeWill(isRefresh: Boolean) {
+        dataSource.getLifeWill(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
@@ -65,17 +65,17 @@ class DiscoverPresenter(view: DiscoverContract.View):DiscoverContract.Presenter 
     /**
      * 猜你喜欢
      */
-    override fun getGuessLike() {
-        dataSource.getGuessLike(object: IDataSource.HttpRequestCallBack{
+    override fun getGuessLike(isRefresh: Boolean) {
+        dataSource.getGuessLike(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
                 val storyListBean = JsonUtil.fromJson(json, StoryListBean::class.java)
                 if (storyListBean.success) {
-                    if (storyListBean.data!=null) view.setGuessLikeData(storyListBean.data.life_records)
+                    if (storyListBean.data != null) view.setGuessLikeData(storyListBean.data.life_records)
                 } else {
                     view.showError(storyListBean.status.message)
                 }
@@ -91,17 +91,17 @@ class DiscoverPresenter(view: DiscoverContract.View):DiscoverContract.Presenter 
     /**
      * 获取精彩故事
      */
-    override fun getWonderfulStory() {
-        dataSource.getWonderfulStory(object: IDataSource.HttpRequestCallBack{
+    override fun getWonderfulStory(isRefresh: Boolean) {
+        dataSource.getWonderfulStory(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
                 val storyListBean = JsonUtil.fromJson(json, StoryListBean::class.java)
                 if (storyListBean.success) {
-                    if (storyListBean.data!=null) view.setWonderfulStoryData(storyListBean.data.life_records)
+                    if (storyListBean.data != null) view.setWonderfulStoryData(storyListBean.data.life_records)
                 } else {
                     view.showError(storyListBean.status.message)
                 }

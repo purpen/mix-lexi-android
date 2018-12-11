@@ -7,6 +7,7 @@ import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.discover.*
+import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider
 import com.youth.banner.BannerConfig
 import kotlinx.android.synthetic.main.fragment_main2.*
 import kotlinx.android.synthetic.main.view_custom_headview.view.*
@@ -95,10 +96,15 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
     }
 
     override fun loadData() {
-        presenter.getBanner()
-        presenter.getLifeWill()
-        presenter.getGuessLike()
-        presenter.getWonderfulStory()
+       requestNet(false)
+    }
+
+
+    fun requestNet(isRefresh:Boolean){
+        presenter.getBanner(isRefresh)
+        presenter.getLifeWill(isRefresh)
+        presenter.getGuessLike(isRefresh)
+        presenter.getWonderfulStory(isRefresh)
     }
 
     /**
@@ -144,6 +150,26 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
     }
 
     override fun installListener() {
+
+        refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
+        refreshLayout.setEnableOverScrollDrag(false)
+        refreshLayout.isEnableLoadMore = false
+        refreshLayout.setOnRefreshListener {
+            requestNet(true)
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+        }
+
+        refreshLayout.setScrollBoundaryDecider(object : ScrollBoundaryDecider {
+            override fun canRefresh(content: View?): Boolean {
+                if (nestedScrollView.scrollY > 0) return false
+                return true
+            }
+
+            override fun canLoadMore(content: View?): Boolean {
+                return false
+            }
+        })
+
         //生活主题
         adapterLifeWillSubject.setOnItemClickListener { _, _, position ->
             val item = adapterLifeWillSubject.getItem(position) ?: return@setOnItemClickListener
