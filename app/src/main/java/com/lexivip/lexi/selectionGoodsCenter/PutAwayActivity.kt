@@ -31,17 +31,17 @@ class PutAwayActivity : BaseActivity(), PutAwayActivityContract.View {
     private fun setGoodsData() {
         textView0.text = goods.name
         if (goods.real_sale_price == 0.0) { //折扣价为0,显示真实价格
-            textView1.text = "￥${goods.real_price}"
+            textView1.text = "¥${goods.real_price}"
         } else { //折扣价不为0显示折扣价格和带划线的真实价格
-            textView1.text = "￥${goods.real_sale_price}"
+            textView1.text = "¥${goods.real_sale_price}"
             textView2.visibility = View.VISIBLE
             textView2.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textView2.text = "￥${goods.real_price}"
+            textView2.text = "¥${goods.real_price}"
         }
 
         textView3.text = "喜欢 +${goods.like_count}"
 
-        textViewEarn.text = "赚 ￥${goods.commission_price}"
+        textViewEarn.text = "赚 ¥${goods.commission_price}"
 
         if (goods.is_sold_out) {
             imageViewStatus.visibility = View.VISIBLE

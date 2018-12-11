@@ -44,7 +44,7 @@ class AdapterShopCartWishGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBe
             textViewOldPrice.visibility = View.VISIBLE
             textViewPrice.text = "${item.min_sale_price}"
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥${item.min_price}"
+            textViewOldPrice.text = "¥${item.min_price}"
         }
 
         val textViewSoldOut = helper.getView<TextView>(R.id.textViewSoldOut)

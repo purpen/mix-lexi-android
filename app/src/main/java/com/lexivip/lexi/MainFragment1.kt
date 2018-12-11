@@ -238,7 +238,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         //商品点击进入详情
-        adapterOrder.setOnItemClickListener { adapter, view, position ->
+        adapterOrder.setOnItemClickListener { adapter, _, position ->
             val itemBean = adapter.getItem(position) as ShopCartBean.DataBean.ItemsBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
             itemBean.product.rid = itemBean.product.product_rid
@@ -255,7 +255,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         // 心愿单添加购物车
-        adapterWish.setOnItemChildClickListener { adapter, view, position ->
+        adapterWish.setOnItemChildClickListener { adapter, _, position ->
             val productBean = adapter.getItem(position) as ProductBean
             val addShopCartBottomDialog = AddShopCartBottomDialog(activity!!, presenter, productBean)
             addShopCartBottomDialog.show()

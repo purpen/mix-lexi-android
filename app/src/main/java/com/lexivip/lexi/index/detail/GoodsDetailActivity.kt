@@ -5,13 +5,17 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Paint
 import android.graphics.Rect
+import android.graphics.Typeface
 import android.net.http.SslError
 import android.os.Build
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextUtils
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.StyleSpan
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -30,6 +34,7 @@ import com.lexivip.lexi.beans.*
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
 import com.lexivip.lexi.mine.designPavilion.DesignPavilionProductAdapter
 import com.lexivip.lexi.net.WebUrl
+import com.lexivip.lexi.selectionGoodsCenter.PutAwayActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.shopCart.ShopCartActivity
 import com.lexivip.lexi.user.login.LoginActivity
@@ -467,6 +472,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 //            }
 //        }
 
+
         //设置心愿单状态
         if (data.is_wish) {
             headerView.buttonAddWish.setCompoundDrawables(null, null, null, null)
@@ -477,8 +483,25 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.buttonAddWish.text = Util.getString(R.string.text_wish_order)
         }
 
+        //是分销商品同时是小B
+        if (data.is_distributed && UserProfileUtil.isSmallB()) {
+            val spannableString = SpannableString("赚 ¥${data.commission_price}")
+            val normalSpan = StyleSpan(Typeface.NORMAL)
+            val boldSpan = StyleSpan(Typeface.BOLD)
+            val size12Span = AbsoluteSizeSpan(12, true)
+            val size14Span = AbsoluteSizeSpan(14, true)
+            spannableString.setSpan(size12Span, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+            spannableString.setSpan(normalSpan, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
 
+            spannableString.setSpan(size14Span, 1, spannableString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+            spannableString.setSpan(boldSpan, 1, spannableString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+            headerView.textViewEarnMoney.text = spannableString
+            headerView.textViewEarnMoney.visibility = View.VISIBLE
 
+            headerView.buttonPutAway.visibility = View.VISIBLE
+            headerView.buttonPutAway.compoundDrawablePadding = DimenUtil.getDimensionPixelSize(R.dimen.dp5)
+            headerView.buttonPutAway.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_putaway, R.dimen.dp10, R.dimen.dp10), null, null, null)
+        }
 
         headerView.textViewNowPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
         if (data.min_sale_price == 0.0) {
@@ -587,7 +610,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
         headerView.textViewProductReturnPolicy.text = data.product_return_policy
 
-        textViewEarn.text = "赚￥${goodsData?.commission_price}"
+        textViewEarn.text = "赚¥${goodsData?.commission_price}"
 
         if (TextUtils.isEmpty(data.store_rid)) {
             LogUtil.e("店铺store_id不存在goodsId=$productId")
@@ -757,7 +780,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         headerView.buttonLike.setOnClickListener(this)
 
         headerView.buttonAddWish.setOnClickListener(this)
-
+        headerView.buttonPutAway.setOnClickListener(this)
         headerView.buttonGetDiscount.setOnClickListener(this)
 
         headerView.textViewSelectSpec.setOnClickListener(this)
@@ -887,6 +910,23 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
+
+            R.id.buttonPutAway -> { //上架
+                if (goodsData == null) return
+                val intent = Intent(this, PutAwayActivity::class.java)
+                product.name = goodsData!!.name
+                product.is_sold_out = goodsData!!.is_sold_out
+                product.real_sale_price = goodsData!!.real_sale_price
+                product.real_price = goodsData!!.real_price
+                product.like_count = goodsData!!.like_count
+                product.commission_price = "" + goodsData!!.commission_price
+                product.is_free_postage = goodsData!!.is_free_postage
+                product.cover = goodsData!!.cover
+                product.rid = goodsData!!.rid
+                intent.putExtra(PutAwayActivity::class.java.simpleName, product)
+                startActivity(intent)
+            }
+
             R.id.buttonGetDiscount -> { //获取优惠券
                 if (UserProfileUtil.isLogin()) {
                     if (brandPavilionData == null) return

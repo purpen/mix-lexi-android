@@ -46,13 +46,13 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
         val textView2 = helper.getView<TextView>(R.id.textView2)
 
         if (item.min_sale_price == 0.0) { //折扣价为0,显示真实价格
-            helper.setText(R.id.textView1, "￥${item.min_price}")
+            helper.setText(R.id.textView1, "¥${item.min_price}")
             textView2.visibility = View.GONE
         } else { //折扣价不为0显示折扣价格和带划线的真实价格
             textView2.visibility = View.VISIBLE
-            helper.setText(R.id.textView1, "￥${item.min_sale_price}")
+            helper.setText(R.id.textView1, "¥${item.min_sale_price}")
             textView2.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textView2.text = "￥" + item.min_price
+            textView2.text = "¥" + item.min_price
         }
 
         helper.setText(R.id.textView3, "喜欢 +${item.like_count}")
