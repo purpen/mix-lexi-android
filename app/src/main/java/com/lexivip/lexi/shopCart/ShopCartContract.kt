@@ -59,7 +59,7 @@ class ShopCartContract {
     interface Presenter : BasePresenter {
         fun loadData(isRefresh: Boolean)
         fun loadMoreData()
-        fun getShopCartGoods()
+        fun getShopCartGoods(isRefresh: Boolean)
         fun getGoodsSKUs(rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack)
         fun updateReselectSKU(newSKU: String, oldSKU: String, quantity: Int)
         fun addShopCart(rid: String, quantity: Int)
