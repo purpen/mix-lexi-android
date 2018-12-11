@@ -35,7 +35,7 @@ class ShowWindowContract {
 
         }
 
-        fun setFocusState(isFollowed: Boolean, position: Int) {
+        fun setFocusState(followed_status: Int, position: Int) {
 
         }
 
@@ -48,6 +48,6 @@ class ShowWindowContract {
         fun loadData(isRefresh:Boolean)
         fun loadMoreData()
         fun favoriteShowWindow(rid: String,isFavorite:Boolean,position: Int, view1: android.view.View)
-        fun focusUser(uid: String, v: android.view.View, isFollowed: Boolean, position: Int)
+        fun focusUser(uid: String, v: android.view.View, followState: Int, position: Int)
     }
 }

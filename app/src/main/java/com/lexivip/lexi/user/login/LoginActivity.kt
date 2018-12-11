@@ -44,7 +44,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
     override fun initView() {
         EventBus.getDefault().register(this)
         this.presenter = LoginPresenter(this)
-        customHeadView.setRightTxt(getString(R.string.text_skip),R.color.color_666)
+        customHeadView.setRightTxt(getString(R.string.text_skip),Util.getColor(R.color.color_666))
         timeCount = CustomCountDownTimer(60000,1000,textViewGetCode)
     }
 

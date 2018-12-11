@@ -17,17 +17,16 @@
         app:indicator_margin="5dp"
         app:indicator_width="7dp"
         app:title_background="#00000000"
-        app:title_textcolor = "#fcfcfc"
-        app:title_textsize="14sp"
-        />
+        app:title_textcolor="#fcfcfc"
+        app:title_textsize="14sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/dp20"
-        android:paddingEnd="@dimen/dp15"
         android:paddingStart="@dimen/dp15"
-        android:paddingTop="@dimen/dp15">
+        android:paddingTop="@dimen/dp15"
+        android:paddingEnd="@dimen/dp15"
+        android:paddingBottom="@dimen/dp20">
 
         <TextView
             android:id="@+id/textViewName"
@@ -45,29 +44,49 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewName"
-            android:layout_marginEnd="@dimen/dp5"
             android:layout_marginTop="@dimen/dp10"
-            android:drawablePadding="@dimen/dp3"
             android:drawableStart="@mipmap/icon_price_unit"
+            android:drawablePadding="@dimen/dp3"
             android:includeFontPadding="false"
             android:text="@string/text_loading"
             android:textColor="@color/color_333"
             android:textSize="@dimen/sp17"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textViewOriginalPrice"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_alignBottom="@id/textViewNowPrice"
-            android:layout_marginBottom="@dimen/dp1"
             android:layout_toEndOf="@id/textViewNowPrice"
-            android:gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:text="0"
-            android:textColor="@color/color_999"
-            android:textSize="@dimen/sp14"
-            android:visibility="gone" />
+            >
+            <TextView
+                android:id="@+id/textViewOriginalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="@dimen/dp1"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:text="0"
+                android:textColor="@color/color_999"
+                android:textSize="@dimen/sp14"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textViewEarnMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="@dimen/dp1"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:text="¥0"
+                android:textColor="@color/color_ff6666"
+                android:visibility="gone"
+                />
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/linearLayoutTags"
@@ -93,8 +112,8 @@
                 android:drawablePadding="@dimen/dp4"
                 android:includeFontPadding="false"
                 android:padding="@dimen/dp2"
-                android:paddingEnd="@dimen/dp4"
                 android:paddingStart="@dimen/dp4"
+                android:paddingEnd="@dimen/dp4"
                 android:text="+3"
                 android:textColor="@color/color_6ed7af"
                 android:textSize="@dimen/sp11"
@@ -117,43 +136,62 @@
             android:textColor="@color/color_949ea6"
             android:textSize="@dimen/sp12" />
 
-        <com.lexivip.lexi.view.ButtonDrawableCenter
-            android:id="@+id/buttonAddWish"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="74dp"
-            android:layout_height="29dp"
-            android:layout_alignParentEnd="true"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_alignTop="@+id/buttonLike"
-            android:background="@drawable/border_round_ededed"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/text_wish_order"
-            android:textColor="@color/color_949ea6"
-            android:textSize="@dimen/sp13" />
+            android:layout_alignParentEnd="true"
+            >
+            <com.lexivip.lexi.view.ButtonDrawableCenter
+                android:id="@+id/buttonAddWish"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="74dp"
+                android:layout_height="29dp"
+                android:background="@drawable/border_round_ededed"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/text_wish_order"
+                android:textColor="@color/color_949ea6"
+                android:textSize="@dimen/sp13" />
+
+            <com.lexivip.lexi.view.ButtonDrawableCenter
+                android:id="@+id/buttonPutAway"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="63dp"
+                android:layout_height="29dp"
+                android:background="@drawable/border_round_ededed"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/text_putaway"
+                android:visibility="gone"
+                android:textColor="@color/color_949ea6"
+                android:textSize="@dimen/sp13" />
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relativeLayoutCoupon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp15"
-        android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
+        android:layout_marginEnd="@dimen/dp15"
+        android:layout_marginBottom="@dimen/dp15"
+        android:background="@drawable/bg_colord4af86_radius4"
         android:paddingTop="@dimen/dp10"
         android:paddingBottom="@dimen/dp10"
-        android:background="@drawable/bg_colord4af86_radius4"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/textViewCoupon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp10"
-            android:drawablePadding="6dp"
             android:layout_marginTop="@dimen/dp5"
             android:layout_marginBottom="@dimen/dp5"
             android:drawableStart="@mipmap/icon_get_coupon"
+            android:drawablePadding="6dp"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
             android:text="领取设计馆优惠红包"
@@ -168,8 +206,8 @@
             android:layout_alignStart="@+id/textViewCoupon"
             android:layout_marginTop="@dimen/dp5"
             android:layout_marginEnd="@dimen/dp10"
-            android:drawablePadding="6dp"
             android:drawableStart="@mipmap/icon_full_reduction"
+            android:drawablePadding="6dp"
             android:gravity="center_vertical"
             android:includeFontPadding="false"
             android:text="满减"
@@ -193,15 +231,15 @@
         android:id="@+id/textViewSelectSpec"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginBottom="@dimen/dp15"
-        android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
+        android:layout_marginEnd="@dimen/dp15"
+        android:layout_marginBottom="@dimen/dp15"
         android:background="@drawable/bg_coloref0f4f7_radius4"
         android:drawableEnd="@mipmap/icon_spec_size_arrow_down"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:paddingEnd="@dimen/dp15"
         android:paddingStart="@dimen/dp0"
+        android:paddingEnd="@dimen/dp15"
         android:text="@string/text_select_spec_size"
         android:textColor="@color/color_555"
         android:textSize="@dimen/sp14" />
@@ -210,15 +248,14 @@
         android:id="@+id/textViewCustomDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp16"
-        android:layout_marginEnd="@dimen/dp15"
         android:layout_marginStart="@dimen/dp15"
+        android:layout_marginEnd="@dimen/dp15"
+        android:layout_marginBottom="@dimen/dp16"
         android:includeFontPadding="false"
         android:text="“接单订制”在付款后开始制作，需5个制作天(不含节假日)"
         android:textColor="@color/color_555"
         android:textSize="@dimen/sp11"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
     <include
         android:id="@+id/line"
@@ -230,16 +267,15 @@
         android:id="@+id/relativeLayoutFavoriteGoodsUser"
         android:layout_width="match_parent"
         android:layout_height="51dp"
-        android:paddingEnd="@dimen/dp15"
-        android:paddingStart="@dimen/dp20">
+        android:paddingStart="@dimen/dp20"
+        android:paddingEnd="@dimen/dp15">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerViewHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:overScrollMode="never"
-            />
+            android:overScrollMode="never" />
 
         <ImageButton
             android:id="@+id/imageButton"

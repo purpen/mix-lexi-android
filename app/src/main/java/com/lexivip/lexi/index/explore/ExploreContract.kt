@@ -46,7 +46,7 @@ class ExploreContract {
     }
 
     interface Presenter : BasePresenter {
-        fun loadData(cid: String, page: Int)
+        fun loadData(isRefresh:Boolean)
 
         fun loadMoreData(cid: String, page: Int)
     }

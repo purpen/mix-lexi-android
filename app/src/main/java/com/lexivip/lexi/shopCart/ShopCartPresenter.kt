@@ -1,4 +1,5 @@
 package com.lexivip.lexi.shopCart
+
 import com.basemodule.tools.ToastUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
@@ -25,7 +26,7 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
         dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
 
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
@@ -79,17 +80,17 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
     /**
      * 获取购物车商品
      */
-    override fun getShopCartGoods() {
+    override fun getShopCartGoods(isRefresh: Boolean) {
         dataSource.getShopCartGoods(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+                if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
                 val shopCartBean = JsonUtil.fromJson(json, ShopCartBean::class.java)
                 if (shopCartBean.success) {
-                    if (shopCartBean.data!=null) view.setShopCartGoodsData(shopCartBean.data)
+                    if (shopCartBean.data != null) view.setShopCartGoodsData(shopCartBean.data)
                 } else {
                     view.showError(shopCartBean.status.message)
                 }
@@ -123,16 +124,15 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
     }
 
 
-
     /**
      * 添加购物车
      */
     override fun addShopCart(rid: String, quantity: Int) {
-        dataSource.addShopCart(rid,quantity,object : IDataSource.HttpRequestCallBack {
+        dataSource.addShopCart(rid, quantity, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val addShopCartBean = JsonUtil.fromJson(json, AddShopCartBean::class.java)
                 if (addShopCartBean.success) {
-                    if (addShopCartBean.data.cart!=null) view.setAddShopCartSuccess(addShopCartBean.data.cart)
+                    if (addShopCartBean.data.cart != null) view.setAddShopCartSuccess(addShopCartBean.data.cart)
                 } else {
                     view.showError(addShopCartBean.status.message)
                 }
@@ -170,7 +170,7 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
      * 从购物车移除
      */
     override fun removeProductFromShopCart(list: ArrayList<String>) {
-        dataSource.removeProductFromShopCart(list,object : IDataSource.HttpRequestCallBack {
+        dataSource.removeProductFromShopCart(list, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }
@@ -179,7 +179,7 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
                 view.dismissLoadingView()
                 val removeShopCartBean = JsonUtil.fromJson(json, RemoveShopCartBean::class.java)
                 if (removeShopCartBean.success) {
-                    if (removeShopCartBean.data!=null) view.removeShopCartSuccess()
+                    if (removeShopCartBean.data != null) view.removeShopCartSuccess()
                 } else {
                     view.showError(removeShopCartBean.status.message)
                 }
@@ -196,7 +196,7 @@ class ShopCartPresenter(view: ShopCartContract.View) : ShopCartContract.Presente
      * 更新SKU
      */
     override fun updateReselectSKU(newSKU: String, oldSKU: String, quantity: Int) {
-        dataSource.updateReselectSKU(newSKU,oldSKU,quantity, object : IDataSource.HttpRequestCallBack {
+        dataSource.updateReselectSKU(newSKU, oldSKU, quantity, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {

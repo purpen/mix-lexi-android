@@ -69,6 +69,6 @@ class LifeHouseContract {
 
         fun loadMoreData()
 
-        fun getNewPublishProducts()
+        fun getNewPublishProducts(isRefresh: Boolean)
     }
 }

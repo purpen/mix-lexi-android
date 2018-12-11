@@ -153,6 +153,11 @@ class MainActivity : BaseActivity() {
             str = intent.getStringExtra(TAG)
         }
 
+        if (TextUtils.isEmpty(str)) { //跳转首页
+            showIndexPage()
+            return
+        }
+
 //        LogUtil.e("TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName)=="+TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName))
         if (TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName)) showLifeHouseTab = true
 
@@ -166,10 +171,6 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        if (TextUtils.isEmpty(str)) { //跳转首页
-            showIndexPage()
-            return
-        }
 
         when (str) {
             MainFragment1::class.java.simpleName -> { //购物车

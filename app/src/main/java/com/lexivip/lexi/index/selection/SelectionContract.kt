@@ -46,9 +46,9 @@ class SelectionContract {
     interface Presenter : BasePresenter {
         fun getBanners()
 
-        fun getTodayRecommend()
+        fun getTodayRecommend(refresh: Boolean)
 
-        fun getHotRecommend()
+        fun getHotRecommend(refresh: Boolean)
 
         fun getHotRecommendBanner()
 

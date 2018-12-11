@@ -123,7 +123,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
      * 心愿单添加购物车成功
      */
     override fun setAddShopCartSuccess(cartBean: AddShopCartBean.DataBean.CartBean) {
-        presenter.getShopCartGoods()
+        presenter.getShopCartGoods(false)
     }
 
     /**
@@ -193,10 +193,19 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
      * 重新选择SKU后更新购物车
      */
     override fun updateShopCart() {
-        presenter.getShopCartGoods()
+        presenter.getShopCartGoods(false)
     }
 
     override fun installListener() {
+        refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
+        refreshLayout.isEnableOverScrollBounce = false
+        refreshLayout.setEnableOverScrollDrag(false)
+        refreshLayout.isEnableLoadMore = false
+        refreshLayout.setOnRefreshListener {
+            presenter.getShopCartGoods(true)
+            presenter.loadData(true)
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+        }
 
         buttonSettleAccount.setOnClickListener {
             //点击结算
@@ -238,7 +247,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         //商品点击进入详情
-        adapterOrder.setOnItemClickListener { adapter, view, position ->
+        adapterOrder.setOnItemClickListener { adapter, _, position ->
             val itemBean = adapter.getItem(position) as ShopCartBean.DataBean.ItemsBean
             val intent = Intent(activity, GoodsDetailActivity::class.java)
             itemBean.product.rid = itemBean.product.product_rid
@@ -255,14 +264,13 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         // 心愿单添加购物车
-        adapterWish.setOnItemChildClickListener { adapter, view, position ->
+        adapterWish.setOnItemChildClickListener { adapter, _, position ->
             val productBean = adapter.getItem(position) as ProductBean
             val addShopCartBottomDialog = AddShopCartBottomDialog(activity!!, presenter, productBean)
             addShopCartBottomDialog.show()
         }
 
         customHeadView.headRightTV.setOnClickListener {
-
             val data = adapterEditShopCartGoods.data
 
             if (!data.isEmpty()) {
@@ -272,6 +280,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
             }
 
             if (swipeRefreshLayout.isShown) { //编辑状态
+                refreshLayout.isEnabled = false
                 swipeRefreshLayout.visibility = View.GONE
                 recyclerViewEditShopCart.visibility = View.VISIBLE
                 customHeadView.setRightTxt(Util.getString(R.string.text_complete), color6e)
@@ -281,6 +290,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 buttonDelete.visibility = View.VISIBLE
                 buttonAddWish.visibility = View.VISIBLE
             } else { //点击完成
+                refreshLayout.isEnabled = true
                 swipeRefreshLayout.visibility = View.VISIBLE
                 recyclerViewEditShopCart.visibility = View.GONE
                 customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
@@ -468,10 +478,10 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         if (!hidden){
             if (UserProfileUtil.isLogin()) {
                 //        加载心愿单
-                presenter.loadData(true)
+                presenter.loadData(false)
 
                 //        获取购物车商品
-                presenter.getShopCartGoods()
+                presenter.getShopCartGoods(false)
             }
         }
         super.onHiddenChanged(hidden)
@@ -549,7 +559,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     //订单提交成功清空购物车
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onOrderSubmitSuccess(message: MessageOrderSuccess) {
-        presenter.getShopCartGoods()
+        presenter.getShopCartGoods(false)
         adapterOrder.data.clear()
         adapterOrder.notifyDataSetChanged()
     }
@@ -557,7 +567,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onJumpShopCart(message: String) {
-        presenter.getShopCartGoods()
+        presenter.getShopCartGoods(false)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

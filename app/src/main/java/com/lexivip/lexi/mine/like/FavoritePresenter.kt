@@ -16,10 +16,10 @@ class FavoritePresenter(view: FavoriteContract.View) : FavoriteContract.Presente
     /**
      * 获取用户喜欢的商品
      */
-    override fun getUserGoodsLike() {
+    override fun getUserGoodsLike(isRefresh:Boolean) {
         dataSource.getUserGoodsLike(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+               if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
@@ -42,7 +42,7 @@ class FavoritePresenter(view: FavoriteContract.View) : FavoriteContract.Presente
     /**
      * 获取喜欢的橱窗
      */
-    override fun getShowWindowLike() {
+    override fun getShowWindowLike(isRefresh: Boolean) {
         dataSource.getShowWindowLike(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val discoverLifeBean = JsonUtil.fromJson(json, DiscoverLifeBean::class.java)
@@ -62,10 +62,10 @@ class FavoritePresenter(view: FavoriteContract.View) : FavoriteContract.Presente
     /**
      * 获取用户喜欢的商品
      */
-    override fun getOtherUserGoodsLike(uid:String) {
+    override fun getOtherUserGoodsLike(uid:String,isRefresh: Boolean) {
         dataSource.getOtherUserGoodsLike(uid,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+              if (!isRefresh)  view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {
@@ -88,7 +88,7 @@ class FavoritePresenter(view: FavoriteContract.View) : FavoriteContract.Presente
     /**
      * 获取其他用户喜欢的橱窗
      */
-    override fun getOtherUserShowWindowLike(uid: String) {
+    override fun getOtherUserShowWindowLike(uid: String,isRefresh: Boolean) {
         dataSource.getOtherUserShowWindowLike(uid,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val discoverLifeBean = JsonUtil.fromJson(json, DiscoverLifeBean::class.java)

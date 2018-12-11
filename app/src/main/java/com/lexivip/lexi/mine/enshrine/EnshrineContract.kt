@@ -24,7 +24,7 @@ class EnshrineContract {
     }
 
     interface Presenter : BasePresenter {
-        fun getUserRecentLook()
-        fun getWishOrder()
+        fun getUserRecentLook(isRefresh:Boolean)
+        fun getWishOrder(isRefresh:Boolean)
     }
 }

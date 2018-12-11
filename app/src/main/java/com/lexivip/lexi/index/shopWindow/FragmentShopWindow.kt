@@ -1,15 +1,13 @@
 package com.lexivip.lexi.index.shopWindow
-
 import android.content.Intent
-import android.support.design.widget.CoordinatorLayout
 import android.support.v4.view.ViewPager
-import android.view.View
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ScreenUtil
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
+import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.CustomRefreshHeader
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.discoverLifeAesthetics.FragmentFocusShowWindow
@@ -61,7 +59,19 @@ class FragmentShopWindow : BaseFragment() {
     }
 
     override fun installListener() {
-
+        refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
+        refreshLayout.isEnableOverScrollBounce = false
+        refreshLayout.setEnableOverScrollDrag(false)
+        refreshLayout.isEnableLoadMore = false
+        refreshLayout.setOnRefreshListener {
+            val fragment = fragments[customViewPager.currentItem]
+            if (fragment is FragmentFocusShowWindow){
+                fragment.refreshData()
+            }else if (fragment is FragmentRecommendShowWindow){
+                fragment.refreshData()
+            }
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+        }
 
         linearLayoutPublishWindow.setOnClickListener {
             //跳转拼接橱窗

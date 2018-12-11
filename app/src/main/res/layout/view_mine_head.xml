@@ -3,8 +3,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dp15"
-    android:layout_marginBottom="6dp"
+    android:layout_marginBottom="10dp"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -12,13 +11,18 @@
         android:layout_width="@dimen/dp70"
         android:layout_height="@dimen/dp70"
         android:layout_marginEnd="49dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
         android:src="@mipmap/icon_default_user_head" />
 
     <RelativeLayout
         android:layout_width="205dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/dp1">
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="15dp"
+        >
 
         <LinearLayout
             android:id="@+id/linearLayoutLike"
@@ -140,6 +144,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
         android:layout_marginTop="@dimen/dp15"
+        android:layout_marginStart="15dp"
         android:includeFontPadding="false"
         android:text="@string/app_name"
         android:textColor="@color/color_333"
@@ -150,6 +155,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewName"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="@dimen/dp15">
 
         <TextView
@@ -211,6 +217,7 @@
         android:textColor="@color/color_555"
         android:includeFontPadding="false"
         android:textSize="13sp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="@dimen/dp15"
         android:visibility="gone"
         />
@@ -241,10 +248,12 @@
         android:layout_below="@+id/textViewSignature"
         android:layout_toEndOf="@+id/linearLayoutRedPacket"
         android:layout_marginTop="@dimen/dp15"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/bg_round_color5fe4b1"
         android:includeFontPadding="false"
         android:text="@string/text_focus"
         android:textColor="@android:color/white"
+        android:layout_marginStart="15dp"
         android:textSize="@dimen/sp14"
         android:visibility="gone"
         />
@@ -260,6 +269,8 @@
         android:background="@drawable/border_round_ededed"
         android:includeFontPadding="false"
         android:text="@string/text_mine_order"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="20dp"
         android:textColor="@color/color_333"
         android:textSize="@dimen/sp14"
         android:visibility="gone"
@@ -273,6 +284,7 @@
         android:layout_height="@dimen/dp30"
         android:background="@drawable/border_round_ededed"
         android:gravity="center"
+        android:layout_marginEnd="15dp"
         >
         <ImageView
             android:layout_width="15dp"
@@ -297,7 +309,12 @@
             android:src="@mipmap/icon_mine_service"
             />
     </LinearLayout>
-
+    <include
+        layout="@layout/line_color_eee"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp05"
+        android:layout_alignParentBottom="true"
+        />
 </RelativeLayout>
 
 

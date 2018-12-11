@@ -17,10 +17,12 @@ class ExplorePresenter(view: ExploreContract.View) : ExploreContract.Presenter {
 
     private val dataSource: ExploreModel by lazy { ExploreModel() }
 
-    override fun loadData(cid: String, page: Int) {
-        dataSource.loadData(cid, page,object : IDataSource.HttpRequestCallBack {
+    private var page:Int =1
+
+    override fun loadData(isRefresh:Boolean) {
+        dataSource.loadData("", page,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.showLoadingView()
+               if (!isRefresh) view.showLoadingView()
             }
 
             override fun onSuccess(json: String) {

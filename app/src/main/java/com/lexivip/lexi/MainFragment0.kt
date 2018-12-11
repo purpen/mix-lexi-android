@@ -1,5 +1,4 @@
 package com.lexivip.lexi
-
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
@@ -8,7 +7,6 @@ import android.support.v4.view.ViewPager
 import android.text.TextUtils
 import android.widget.FrameLayout
 import com.basemodule.tools.AppManager
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.Util
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter

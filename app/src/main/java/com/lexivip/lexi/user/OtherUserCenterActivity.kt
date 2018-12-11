@@ -8,6 +8,8 @@ import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
+import com.lexivip.lexi.AppApplication
+import com.lexivip.lexi.CustomRefreshHeader
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.index.detail.FavoriteUserListActivity
@@ -75,6 +77,25 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
     }
 
     override fun installListener() {
+        refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
+        refreshLayout.isEnableOverScrollBounce = false
+        refreshLayout.setEnableOverScrollDrag(false)
+        refreshLayout.isEnableLoadMore = false
+        refreshLayout.setOnRefreshListener {
+
+            presenter.loadData(userId,true)
+
+            val fragment = fragments[customViewPager.currentItem]
+            if (fragment is FavoriteFragment){
+                fragment.refreshData()
+            }else if (fragment is EnshrineFragment){
+                fragment.refreshData()
+            }else if (fragment is FavoriteShopFragment){
+                fragment.refreshData()
+            }
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+        }
+
         customViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageSelected(position: Int) {
                 when (position) {
@@ -170,12 +191,12 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
     }
 
     override fun onResume() {
-        if (!firstInPage) presenter.loadData(userId)
+        if (!firstInPage) presenter.loadData(userId,false)
         super.onResume()
     }
 
     override fun requestNet() {
-        presenter.loadData(userId)
+        presenter.loadData(userId,false)
     }
 
     /**

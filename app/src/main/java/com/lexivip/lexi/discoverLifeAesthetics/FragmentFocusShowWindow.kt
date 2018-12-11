@@ -15,7 +15,6 @@ import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
-import com.lexivip.lexi.index.lifehouse.DistributeShareDialog
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.publishShopWindow.PublishShopWindowActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
@@ -63,7 +62,13 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPe
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
     }
 
-
+    /**
+     * 刷新数据
+     */
+    fun refreshData(){
+        adapter.setEnableLoadMore(false)
+        presenter.loadFocusData(true)
+    }
 
     override fun installListener() {
         swipeRefreshLayout.setOnRefreshListener {
@@ -125,7 +130,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPe
                 }
                 R.id.textViewFocus -> { //关注用户
                     if (UserProfileUtil.isLogin()) {
-                        presenter.focusUser(showWindowBean.uid, view, showWindowBean.is_follow, position)
+                        presenter.focusUser(showWindowBean.uid, view, showWindowBean.followed_status, position)
                     } else {
                         startActivity(Intent(activity, LoginActivity::class.java))
                     }
@@ -168,9 +173,9 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPe
     /**
      * 设置用户关注状态
      */
-    override fun setFocusState(isFollowed: Boolean, position: Int) {
+    override fun setFocusState(followed_status:Int, position: Int) {
         val item = adapter.getItem(position) ?: return
-        item.is_follow = isFollowed
+        item.followed_status = followed_status
         adapter.notifyItemChanged(position)
         item.PAGE_TAG = TAG
         EventBus.getDefault().post(item)
@@ -188,7 +193,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPe
         val data = adapter.data
         for (item in data){
             if (TextUtils.equals(item.rid,message.rid)){
-                item.is_follow = message.is_follow
+                item.followed_status = message.followed_status
                 item.is_expert = message.is_expert
                 item.is_official = message.is_official
                 item.like_count = message.like_count
@@ -261,7 +266,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPe
         private val color: Int = Util.getColor(R.color.color_f5f7f9)
         override fun getDivider(itemPosition: Int): Y_Divider? {
             val count = adapter.itemCount
-            var divider: Y_Divider? = null
+            val divider: Y_Divider?
             when (itemPosition) {
                 count - 2 -> {
 

@@ -28,9 +28,9 @@ class DiscoverContract {
     }
 
     interface Presenter : BasePresenter {
-        fun getBanner()
-        fun getLifeWill()
-        fun getGuessLike()
-        fun getWonderfulStory()
+        fun getBanner(isRefresh:Boolean)
+        fun getLifeWill(isRefresh:Boolean)
+        fun getGuessLike(isRefresh:Boolean)
+        fun getWonderfulStory(isRefresh:Boolean)
     }
 }

@@ -28,7 +28,7 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
 
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
-        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30),ImageSizeConfig.SIZE_AVA)
+        GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30), ImageSizeConfig.SIZE_AVA)
 
         val textViewName = helper.getView<TextView>(R.id.textViewName)
         textViewName.text = item.user_name
@@ -100,13 +100,24 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
             textViewFocus.visibility = View.GONE
         } else {
             textViewFocus.visibility = View.VISIBLE
-            if (item.is_follow) {
-                textViewFocus.text = Util.getString(R.string.text_focused)
-                textViewFocus.setTextColor(Util.getColor(R.color.color_999))
-            } else {
-                textViewFocus.text = Util.getString(R.string.text_focus)
-                textViewFocus.setTextColor(Util.getColor(R.color.color_6ed7af))
+            when (item.followed_status) {
+                0 -> { //未关注
+                    textViewFocus.text = Util.getString(R.string.text_focus)
+                    textViewFocus.setTextColor(Util.getColor(R.color.color_6ed7af))
+
+                }
+
+                1 -> {//已关注
+                    textViewFocus.text = Util.getString(R.string.text_focused)
+                    textViewFocus.setTextColor(Util.getColor(R.color.color_999))
+                }
+
+                2 -> { //互相关注
+                    textViewFocus.text = Util.getString(R.string.text_focused_each_other)
+                    textViewFocus.setTextColor(Util.getColor(R.color.color_949ea6))
+                }
             }
+
         }
 
 
@@ -148,9 +159,9 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         layoutParams32.topMargin = dp2 / 2
         relativeLayoutImage32.layoutParams = layoutParams32
 
-        GlideUtil.loadImageWithDimenAndRadius(list[0], imageView30, 0, dp250, dp250,ImageSizeConfig.SIZE_P500)
-        GlideUtil.loadImageWithDimenAndRadius(list[1], imageView31, 0, dp124,ImageSizeConfig.SIZE_P30X2)
-        GlideUtil.loadImageWithDimenAndRadius(list[2], imageView32, 0, dp124,ImageSizeConfig.SIZE_P30X2)
+        GlideUtil.loadImageWithDimenAndRadius(list[0], imageView30, 0, dp250, dp250, ImageSizeConfig.SIZE_P500)
+        GlideUtil.loadImageWithDimenAndRadius(list[1], imageView31, 0, dp124, ImageSizeConfig.SIZE_P30X2)
+        GlideUtil.loadImageWithDimenAndRadius(list[2], imageView32, 0, dp124, ImageSizeConfig.SIZE_P30X2)
 
 //        helper.addOnClickListener(R.id.imageView30)
 //        helper.addOnClickListener(R.id.imageView31)
@@ -168,7 +179,7 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
             arrayList.add("#$word")
         }
         mTagGroup.setTags(arrayList)
-        mTagGroup.setOnTagClickListener {tag->
+        mTagGroup.setOnTagClickListener { tag ->
             PageUtil.jump2RelateShopWindowActivity(tag.removePrefix("#"))
         }
     }
