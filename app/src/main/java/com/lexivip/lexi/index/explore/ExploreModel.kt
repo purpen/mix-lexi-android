@@ -1,5 +1,6 @@
 package com.lexivip.lexi.index.explore
 
+import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.net.ClientParamsAPI
 import com.lexivip.lexi.net.HttpRequest
@@ -39,6 +40,7 @@ open class ExploreModel {
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e("探索："+json)
                 httpRequestCallBack.onSuccess(json)
             }
 

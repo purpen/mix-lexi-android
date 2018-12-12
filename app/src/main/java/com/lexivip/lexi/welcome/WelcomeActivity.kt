@@ -52,7 +52,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, WelcomeContract.Vi
     override fun onClick(v: View) {
         when (v.id) {
             R.id.textViewSkip -> {
-                startActivity(Intent(applicationContext, CashMoneyActivity::class.java))
+                startActivity(Intent(applicationContext, MainActivity::class.java))
                 finish()
             }
             R.id.button0 -> startActivity(Intent(this, RegisterActivity::class.java))

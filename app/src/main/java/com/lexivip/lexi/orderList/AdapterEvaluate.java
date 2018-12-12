@@ -37,7 +37,7 @@ public class AdapterEvaluate extends BaseQuickAdapter<MyOrderListBean.DataBean.O
     @Override
 
     protected void convert(final BaseViewHolder helper, final MyOrderListBean.DataBean.OrdersBean.ItemsBean item) {
-        GlideUtil.loadImageWithFading(item.getStore_logo()+ImageSizeConfig.SIZE_P30X2,(ImageView) helper.getView(R.id.iv_goods));
+        GlideUtil.loadImageWithFading(item.getCover()+ImageSizeConfig.SIZE_P30X2,(ImageView) helper.getView(R.id.iv_goods));
         helper.setText(R.id.tv_sale_price,"¥"+item.getDeal_price());
         TextView price=helper.getView(R.id.tv_goods_price);
         price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -75,7 +75,7 @@ public class AdapterEvaluate extends BaseQuickAdapter<MyOrderListBean.DataBean.O
         editText.addTextChangedListener(textWatcher);
         RecyclerView recyclerView=helper.getView(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(context,4));
-        if (item.asset_image.size()<9){
+        if (item.asset_image.size()==0){
             item.asset_image.add(null);
         }
         final AdapterEvaluateImage adapterEvaluateImage=new AdapterEvaluateImage(R.layout.item_evaluate_image,item.asset_image);

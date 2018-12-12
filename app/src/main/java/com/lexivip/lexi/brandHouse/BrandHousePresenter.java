@@ -134,9 +134,9 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
-                view.dismissLoadingView();
                 BrandHouseFollowBean bean=JsonUtil.fromJson(json,BrandHouseFollowBean.class);
                 if (bean.success){
+                    view.dismissLoadingView();
                     view.setIsFollow(bean);
                 }else {
                     view.showError(bean.status.message);
@@ -166,9 +166,9 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
-                view.dismissLoadingView();
                 BrandHouseFollowBean bean=JsonUtil.fromJson(json,BrandHouseFollowBean.class);
                 if (bean.success){
+                    view.dismissLoadingView();
                     view.setIsFollow(bean);
                 }else {
                     view.showError(bean.status.message);
@@ -200,8 +200,8 @@ public class BrandHousePresenter implements BrandHouseContract.Presenter {
                 GetCouponBean bean=JsonUtil.fromJson(json,GetCouponBean.class);
                 if (bean.success){
                     callBack.onSuccess(json);
-                    ToastUtil.showInfo(R.string.text_get_coupon_success);
                     view.dismissLoadingView();
+                    ToastUtil.showInfo(R.string.text_get_coupon_success);
                 }else{
                     view.showError(bean.status.message);
                 }

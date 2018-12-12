@@ -6,16 +6,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/color_white"
+        android:background="@color/color_f6f5f5"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/sex_cancle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
             android:layout_marginLeft="10dp"
             android:padding="10dp"
-            android:visibility="gone"
+            android:textColor="#057dff"
+            android:textSize="@dimen/sp17"
             android:layout_gravity="center_vertical"
             android:text="取消"/>
         <View
@@ -26,11 +26,11 @@
             android:id="@+id/sex_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="@color/color_949ea6"
             android:padding="10dp"
             android:layout_marginRight="10dp"
             android:layout_gravity="center_vertical"
+            android:textColor="#057dff"
+            android:textSize="@dimen/sp17"
             android:text="确定"/>
     </LinearLayout>
     <com.lexivip.lexi.address.CityPicker

@@ -6,6 +6,7 @@ import com.basemodule.tools.LogUtil;
 import com.basemodule.ui.IDataSource;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadOptions;
 import com.lexivip.lexi.AppApplication;
 import com.lexivip.lexi.net.ClientParamsAPI;
@@ -88,12 +89,17 @@ public class AddressModel implements IDataSource {
         });
     }
 
-    public void uploadPhoto(byte[] data, UploadTokenBean bean, final IDataSource.UpLoadCallBack callBack) {
+    public void uploadPhoto(byte[] data, UploadTokenBean bean, final IDataSource.UpLoadCallBack callBack, final UpProgressHandler handler) {
         String token = bean.data.up_token;
         HashMap<String, String> map = new HashMap<>();
         map.put("x:user_id", bean.data.user_id);
         map.put("x:directory_id", bean.data.directory_id);
-        UploadOptions uploadOptions = new UploadOptions(map, "image/jpeg", false, null, null);
+        UploadOptions uploadOptions = new UploadOptions(map, "image/jpeg", false,  new UpProgressHandler() {
+            @Override
+            public void progress(String key, double percent) {
+                handler.progress(key,percent);
+            }
+        }, null);
         LogUtil.e("文件大小："+data.length);
         AppApplication.getUploadManager().put(data, null, token, new UpCompletionHandler() {
             @Override
@@ -108,6 +114,7 @@ public class AddressModel implements IDataSource {
                     }
                     LogUtil.i("CompleteInfoModel", "qiniu Upload Success");
                 } else {
+                    callBack.onComplete(null);
                     LogUtil.i("CompleteInfoModel", "qiniu Upload Fail");
                     //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
                 }

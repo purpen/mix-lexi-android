@@ -29,19 +29,28 @@ public class EvaluatePresenter implements EvaluateContract.Presenter {
 
     @Override
     public void loadImage(UploadTokenBean bean, byte[] data) {
+        view.showLoadingView();
         model.uploadImage(data, bean, new IDataSource.UpLoadCallBack() {
             @Override
             public void onComplete(@NotNull JSONArray ids) {
-                try {
-                    view.setImageId(ids);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                view.dismissLoadingView();
+                if (ids==null){
+                    ToastUtil.showError("上传图片失败！");
+                }else {
+                    try {
+                        view.setImageId(ids);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ToastUtil.showError("上传图片失败！");
+                    }
                 }
             }
         }, new UpProgressHandler() {
             @Override
             public void progress(String key, double percent) {
-                LogUtil.e("key："+key+"   percent："+percent);
+                if (percent==1){
+                    view.dismissLoadingView();
+                }
             }
         });
     }

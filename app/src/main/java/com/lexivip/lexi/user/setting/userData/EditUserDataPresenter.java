@@ -13,9 +13,11 @@ import com.lexivip.lexi.R;
 import com.lexivip.lexi.address.CityBean;
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean;
 import com.lexivip.lexi.user.login.UserProfileBean;
+import com.qiniu.android.storage.UpProgressHandler;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -98,10 +100,24 @@ public class EditUserDataPresenter implements EditUserDataContract.Presenter{
 
     @Override
     public void loadPhoto(UploadTokenBean bean, byte[] data) {
+        view.showLoadingView();
         model.uploadImage(bean, data, new IDataSource.UpLoadCallBack() {
             @Override
-            public void onComplete(@NotNull JSONArray ids) {
-                view.getImage(ids);
+            public void onComplete(JSONArray ids) {
+                view.dismissLoadingView();
+                if (ids==null){
+                    ToastUtil.showError("上传图片失败！");
+                }else {
+                    view.getImage(ids);
+                }
+            }
+        }, new UpProgressHandler() {
+            @Override
+            public void progress(String key, double percent) {
+
+                if (percent==1){
+                    view.dismissLoadingView();
+                }
             }
         });
     }

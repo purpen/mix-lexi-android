@@ -31,8 +31,9 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     private WaitingDialog dialog;
     private RecyclerView recyclerView;
     private AdapterOrderList adapterOrderList;
-    private boolean isVisibleToUser;
+    private boolean isVisibleToUser=true;
     private boolean isInit;
+    private boolean isData;
     private int positions;
     private Intent intent;
     private String rid;
@@ -63,11 +64,13 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
         adapterOrderList.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                presenter.getData(status,page);
+                presenter.getData(status,page,dialog);
             }
         },recyclerView);
-        if (isVisibleToUser)
-            presenter.getData(status,page);
+        if (!isData&&isVisibleToUser) {
+            LogUtil.e("第一次创建："+status);
+            presenter.getData(status, page,dialog);
+        }
         recyclerView.setLayoutManager(new CustomLinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapterOrderList);
 
@@ -130,17 +133,40 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     }
 
     @Override
+    public boolean getUserVisibleHint() {
+        return super.getUserVisibleHint();
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser=isVisibleToUser;
+        LogUtil.e("当前页面的：" + status + "      页码：" + page+"isInit:"+isInit);
         if (isVisibleToUser) {
             if (isInit) {
                 page=1;
                 LogUtil.e("当前页面的：" + status + "      页码：" + page);
-                presenter.getData(status, page);
+                isData=true;
+                presenter.getData(status, page,dialog);
             }
         }
     }
+
+    /*@Override
+    public void onHiddenChanged(boolean hidden) {
+        LogUtil.e("啦啦啦啦啦啦啦hidden："+hidden);
+        super.onHiddenChanged(hidden);
+        this.isVisibleToUser=hidden;
+        LogUtil.e("当前页面的：" + status + "      页码：" + page+"isInit:"+isInit+"         isVisibleToUser："+isVisibleToUser);
+        if (isVisibleToUser) {
+            if (isInit) {
+                page=1;
+                LogUtil.e("当前页面的：" + status + "      页码：" + page);
+                isData=true;
+                presenter.getData(status, page);
+            }
+        }
+    }*/
 
     @Override
     public void loadData() {
@@ -149,11 +175,13 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
 
     @Override
     public void showLoadingView() {
+        LogUtil.e("loading显示");
         dialog.show();
     }
 
     @Override
     public void dismissLoadingView() {
+        LogUtil.e("loading销毁");
         dialog.dismiss();
     }
 
@@ -164,6 +192,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
 
     @Override
     public void loadMoreEnd() {
+        dismissLoadingView();
         adapterOrderList.loadMoreEnd();
     }
 
@@ -179,6 +208,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
 
     @Override
     public void addData(List<MyOrderListBean.DataBean.OrdersBean> bean) {
+        dismissLoadingView();
         if (1==page) {
             adapterOrderList.setNewData(bean);
         }else{

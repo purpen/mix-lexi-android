@@ -36,15 +36,15 @@ public class WaitingDialog extends Dialog {
 
 
 
-    @Override
+    /*@Override
     public void show() {
         super.show();
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void dismiss() {
         super.dismiss();
-    }
+    }*/
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

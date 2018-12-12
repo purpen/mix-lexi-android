@@ -1,5 +1,6 @@
 package com.lexivip.lexi.orderList;
 
+import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BasePresenter;
 import com.basemodule.ui.BaseView;
 
@@ -19,7 +20,7 @@ public class OrderListContract {
         void getMerge(MergeBean bean);
     }
     interface Presenter extends BasePresenter {
-        void getData(int status,int page);
+        void getData(int status,int page,WaitingDialog dialog);
         void deleteOrder(String rid);
         void finishOrder(String rid);
         void isMerge(String rid);

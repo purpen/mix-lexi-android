@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.multidex.MultiDexApplication;
 import android.support.multidex.MultiDex;
 import com.basemodule.tools.AppManager;
@@ -12,6 +13,9 @@ import com.basemodule.tools.BaseModuleContext;
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.example.myapp.MyEventBusIndex;
+import com.lexivip.lexi.brandHouse.BrandHouseActivity;
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailActivity;
+import com.lexivip.lexi.orderList.LogisticsActivity;
 import com.lexivip.lexi.user.login.LoginActivity;
 import com.qiniu.android.common.AutoZone;
 import com.qiniu.android.storage.Configuration;
@@ -87,18 +91,39 @@ public class AppApplication extends MultiDexApplication {
         });
         //推送点击状态栏到指定页面
         UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
+
             @Override
-            public void dealWithCustomAction(Context context, UMessage msg) {
+            public void launchApp(Context context, UMessage msg) {
+                super.launchApp(context, msg);
                 for (Map.Entry entry : msg.extra.entrySet()) {
                     Object key = entry.getKey();
                     Object value = entry.getValue();
-                    LogUtil.e("啦啦啦啦啦11111111："+key.toString());
+                    LogUtil.e("啦啦啦啦啦22222222222："+key.toString());
                     LogUtil.e(value.toString());
                 }
-                LogUtil.e("umeng推送："+msg.custom);
-                Intent intent=new Intent(context,LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                Map<String, String> map=msg.extra;
+                switch (map.get("type")){
+                    case "1":
+                        Intent intent1=new Intent(context,LogisticsActivity.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent1.putExtra("logistic_code",map.get("express_no"));
+                        intent1.putExtra("kdn_company_code",map.get("express_code"));
+                        intent1.putExtra("order_rid",map.get("order_rid"));
+                        startActivity(intent1);
+                        break;
+                    case "2":
+                        Intent intent2=new Intent(context,BrandHouseActivity.class);
+                        intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent2.putExtra("rid",map.get("store_rid"));
+                        startActivity(intent2);
+                        break;
+                    case "3":
+                        Intent intent3=new Intent(context,ShowWindowDetailActivity.class);
+                        intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent3.putExtra(ShowWindowDetailActivity.class.getSimpleName(),map.get("shop_window_id"));
+                        startActivity(intent3);
+                        break;
+                }
             }
         };
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
@@ -119,7 +144,7 @@ public class AppApplication extends MultiDexApplication {
                 for (Map.Entry entry : msg.extra.entrySet()) {
                     Object key = entry.getKey();
                     Object value = entry.getValue();
-                    LogUtil.e("啦啦啦啦啦："+key.toString());
+                    LogUtil.e("111啦啦啦啦啦："+key.toString());
                     LogUtil.e(value.toString());
                 }
                 /*switch (msg.builder_id) {

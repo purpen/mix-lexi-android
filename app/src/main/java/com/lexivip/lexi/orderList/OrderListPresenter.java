@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
+import com.basemodule.tools.WaitingDialog;
 import com.lexivip.lexi.JsonUtil;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.AppApplication;
@@ -23,8 +24,8 @@ public class OrderListPresenter implements OrderListContract.Presenter {
     }
 
     @Override
-    public void getData(int status, int page) {
-        LogUtil.e("第几页的数据："+page);
+    public void getData(int status, int page, final WaitingDialog dialog) {
+        LogUtil.e("现在调用："+status+"页面："+page);
         model.getData(status, page, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
@@ -33,14 +34,14 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
             @Override
             public void onStart() {
-                view.showLoadingView();
+                dialog.show();
             }
 
             @Override
             public void onSuccess(@NotNull String json) {
-                LogUtil.e("当前数据："+json);
                 MyOrderListBean bean= JsonUtil.fromJson(json,MyOrderListBean.class);
-                view.dismissLoadingView();
+                //view.dismissLoadingView();
+                dialog.dismiss();
                 if (bean.isSuccess()){
                     if (bean.getData().getOrders().isEmpty()){
                         view.loadMoreEnd();
@@ -49,6 +50,7 @@ public class OrderListPresenter implements OrderListContract.Presenter {
                         view.addData(bean.getData().getOrders());
                     }
                 }else{
+                    //view.dismissLoadingView();
                     view.showError(bean.getStatus().getMessage());
                 }
             }
@@ -56,7 +58,8 @@ public class OrderListPresenter implements OrderListContract.Presenter {
             @Override
             public void onFailure(@NotNull IOException e) {
                 view.loadMoreFail();
-                view.dismissLoadingView();
+                //view.dismissLoadingView();
+                dialog.dismiss();
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error));
             }
         });
@@ -141,11 +144,10 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
-                LogUtil.e("合并"+json);
+                view.dismissLoadingView();
                 MergeBean bean=JsonUtil.fromJson(json,MergeBean.class);
                 if (bean.success){
                     view.getMerge(bean);
-                    view.dismissLoadingView();
                 }else {
                     ToastUtil.showError(bean.status.message);
                 }
@@ -153,6 +155,7 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
             @Override
             public void onFailure(@NotNull IOException e) {
+                view.dismissLoadingView();
                 ToastUtil.showError(Util.getString(R.string.text_net_error));
             }
         });

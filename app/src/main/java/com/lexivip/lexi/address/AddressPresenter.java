@@ -11,6 +11,7 @@ import com.lexivip.lexi.AppApplication;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.user.areacode.CountryAreaCodeBean;
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean;
+import com.qiniu.android.storage.UpProgressHandler;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -86,17 +87,31 @@ public class AddressPresenter implements AddressContract.Presenter {
 
     @Override
     public void loadPhoto(UploadTokenBean bean, byte[] data) {
+        view.showLoadingView();
         if (bean==null){
             ToastUtil.showInfo(R.string.text_net_error);
             return;
         }
         model.uploadPhoto(data, bean, new IDataSource.UpLoadCallBack() {
             @Override
-            public void onComplete(@NotNull JSONArray ids) {
-                try {
-                    view.setImageId(ids);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            public void onComplete(JSONArray ids) {
+                view.dismissLoadingView();
+                if (ids==null){
+                    ToastUtil.showError("上传图片失败！");
+                }else {
+                    try {
+                        view.setImageId(ids);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        ToastUtil.showError("上传图片失败！");
+                    }
+                }
+            }
+        }, new UpProgressHandler() {
+            @Override
+            public void progress(String key, double percent) {
+                if (percent==1){
+                    view.dismissLoadingView();
                 }
             }
         });
