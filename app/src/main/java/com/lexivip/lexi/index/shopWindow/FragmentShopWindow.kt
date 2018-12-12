@@ -1,5 +1,7 @@
 package com.lexivip.lexi.index.shopWindow
 import android.content.Intent
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CoordinatorLayout
 import android.support.v4.view.ViewPager
 import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.GlideUtil
@@ -26,7 +28,14 @@ class FragmentShopWindow : BaseFragment() {
     private var isFirstLoad = true
     override fun initView() {
         GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_shop_window, imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(255.0), ImageSizeConfig.DEFAULT)
-
+        appBarLayout.post {
+            val behavior = (appBarLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior as AppBarLayout.Behavior
+            behavior.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
+                override fun canDrag(appBarLayout: AppBarLayout): Boolean {
+                    return true
+                }
+            })
+        }
     }
 
     companion object {
