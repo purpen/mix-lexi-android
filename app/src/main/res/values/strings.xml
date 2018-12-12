@@ -452,4 +452,5 @@
     <string name="text_input_check_code">输入验证码</string>
     <string name="text_commit_success">提交成功</string>
     <string name="text_go_life_house">进入生活馆</string>
+    <string name="text_lifehouse_theme">我们用贴近生活的文字带你观察与体验平凡日子里</string>
 </resources>

@@ -35,6 +35,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="@dimen/dp15"
                     android:layout_marginBottom="@dimen/dp30"
+                    android:focusableInTouchMode="true"
+                    android:focusable="true"
                     app:image_scale_type="fit_xy"
                     app:indicator_drawable_selected="@drawable/banner_indicator_selected"
                     app:indicator_drawable_unselected="@drawable/banner_indicator_normal"
@@ -61,7 +63,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:includeFontPadding="false"
-                    android:text="我们用贴近生活的文字带你观察与体验平凡日子里"
+                    android:text="@string/text_lifehouse_theme"
                     android:textColor="@color/color_555"
                     android:textSize="12sp" />
 
