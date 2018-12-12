@@ -24,11 +24,14 @@
         android:layout_marginTop="@dimen/dp40"
         android:background="@drawable/bg_colorf5f7f9_oval"
         >
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:background="@drawable/bg_colorf5f7f9_oval"
+            android:padding="@dimen/dp05"
             android:src="@mipmap/icon_default_register_header" />
 
         <ImageView

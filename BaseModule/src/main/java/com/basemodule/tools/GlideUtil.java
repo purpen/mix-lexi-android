@@ -299,7 +299,6 @@ public class GlideUtil {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .skipMemoryCache(true)
                 .format(DecodeFormat.PREFER_RGB_565)
-                .centerCrop()
                 .error(DEFAULT_ERROR_HOLDER)
                 .placeholder(DEFAULT_PLACE_HOLDER)
                 .disallowHardwareConfig();

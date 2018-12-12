@@ -309,6 +309,13 @@
             android:src="@mipmap/icon_mine_service"
             />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonTest"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        />
     <include
         layout="@layout/line_color_eee"
         android:layout_width="match_parent"
