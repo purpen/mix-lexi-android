@@ -210,10 +210,10 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
             list.add(item.image)
         }
         hotBanner.setImages(list)
-        hotBanner.start()
         hotBanner.setOnBannerListener { position ->
             PageUtil.banner2Page(banner_images[position])
         }
+        hotBanner.start()
     }
 
     /**
