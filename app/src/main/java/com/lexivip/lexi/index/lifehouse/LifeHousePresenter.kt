@@ -103,7 +103,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     /**
      * 获取生活馆浏览人数
      */
-    fun getLookPeople() {
+    fun getLookPeople(isRefresh: Boolean) {
         dataSource.getLookPeople(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val lookPeopleBean = JsonUtil.fromJson(json, LookPeopleBean::class.java)
@@ -123,7 +123,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     /**
      * 获取小b生活馆信息
      */
-    fun getLifeHouse() {
+    fun getLifeHouse(isRefresh: Boolean) {
         dataSource.getLifeHouse(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val lifeHouseBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
@@ -340,7 +340,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     /**
      * 获取新品速递
      */
-    fun getNewProducts() {
+    fun getNewProducts(isRefresh: Boolean) {
         dataSource.getNewProducts(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()

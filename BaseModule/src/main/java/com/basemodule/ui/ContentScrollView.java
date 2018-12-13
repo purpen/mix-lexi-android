@@ -44,28 +44,27 @@ public class ContentScrollView extends LinearLayout {
     public void setData(List<ItemBean> list) {
         if (list == null || list.size() == 0) LogUtil.e("list is null or size is zero");
         handler = new MyHandler(this, list);
-        start();
     }
 
     /**
      * 开始滚动
      */
     public void start() {
-        handler.sendEmptyMessage(0);
+        if (handler!=null) handler.sendEmptyMessage(0);
     }
 
     /**
      * 停止滚动
      */
     public void stop() {
-        handler.removeMessages(0);
+        if (handler!=null) handler.removeMessages(0);
     }
 
     /**
      * 移除所有消息
      */
     public void destroy() {
-        handler.removeCallbacksAndMessages(null);
+        if (handler!=null) handler.removeCallbacksAndMessages(null);
     }
 
     private void initViews() {

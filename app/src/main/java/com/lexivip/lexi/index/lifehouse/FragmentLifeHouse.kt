@@ -1,9 +1,11 @@
 package com.lexivip.lexi.index.lifehouse
+
 import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.graphics.Typeface
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -12,7 +14,7 @@ import android.support.v7.widget.SimpleItemAnimator
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
-import android.view.Gravity
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +22,7 @@ import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LayoutAnimationController
 import android.view.animation.TranslateAnimation
+import android.widget.RelativeLayout
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.ItemBean
@@ -36,14 +39,13 @@ import com.lexivip.lexi.search.AdapterSearchGoods
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.UserProfileUtil
-import com.smart.dialog.listener.OnBtnClickL
 import com.smart.dialog.widget.ActionSheetDialog
-import com.smart.dialog.widget.NormalDialog
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
+import kotlinx.android.synthetic.main.view_no_lifehouse.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -89,31 +91,16 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             adapterWelcomeInWeek.data[position].spanSize
         }
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-        initLifeHouseHeader(false)
-        initWelcomeInWeek(false)
+        initLifeHouseHeader()
     }
 
 
     /**
      * 初始化生活馆Header
      */
-    private fun initLifeHouseHeader(isRefresh: Boolean) {
-
-        presenter.getLifeHouse()
-
-        presenter.getLookPeople()
-
-
-        presenter.getNewPublishProducts(isRefresh)
-
-        //新品速递
-        presenter.getNewProducts()
-
-        if (isRefresh) return
-
+    private fun initLifeHouseHeader() {
         headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week, null)
         adapterWelcomeInWeek.setHeaderView(headerLifeHouse)
-
         //馆长推荐/分销商品
         headerLifeHouse.recyclerViewSmallBRecommend.setHasFixedSize(true)
         val linearLayoutManager0 = LinearLayoutManager(activity)
@@ -149,6 +136,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 list.add(item)
             }
             headerLifeHouse.linearLayoutNotice.setData(list)
+        } else {
+            headerLifeHouse.recyclerViewSmallBRecommend.visibility = View.VISIBLE
+            headerLifeHouse.linearLayoutSmallB.visibility = View.VISIBLE
         }
 
         if (SPUtil.readBool(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE)) {
@@ -189,25 +179,34 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置生活馆信息
      */
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
-        GlideUtil.loadCircleImageWidthDimen(data.logo, headerLifeHouse.circleImageView, DimenUtil.dp2px(28.0),ImageSizeConfig.SIZE_AVA)
+        GlideUtil.loadCircleImageWidthDimen(data.logo, headerLifeHouse.circleImageView, DimenUtil.dp2px(28.0), ImageSizeConfig.SIZE_AVA)
 
         GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
 
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
 
-        LogUtil.e("${data.phases};;;;" + data.phases_description)
+//        LogUtil.e("${data.phases};;;;" + data.phases_description)
 
+        val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+        layoutParams.leftMargin = DimenUtil.dp2px(13.0)
+        layoutParams.rightMargin = DimenUtil.dp2px(13.0)
         when (data.phases) {
             1 -> {//实习馆主
-                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_practice_life_house, 0, 0, 0)
-                headerLifeHouse.textViewName.text = "当前为实习馆主"
-                headerLifeHouse.textViewContent.text = data.phases_description
+                headerLifeHouse.imageViewPractice.visibility = View.VISIBLE
+                layoutParams.topMargin = DimenUtil.dp2px(25.0)
+                headerLifeHouse.textViewContent.layoutParams = layoutParams
+                headerLifeHouse.textViewContent.text = "成功在30天内销售3笔订单即可成为正式的达人馆主哦，如一个月内未达标准生活馆将被关闭，如重新申请需单独联系乐喜辅导员申请。"
             }
 
             2 -> { //正式馆主
+                headerLifeHouse.buttonCpyNum.visibility = View.VISIBLE
+                headerLifeHouse.textViewName.visibility = View.VISIBLE
+                headerLifeHouse.imageViewPractice.visibility = View.GONE
+                layoutParams.topMargin = DimenUtil.dp2px(36.0)
                 headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_success_open_life_house, 0, 0, 0)
                 headerLifeHouse.textViewName.text = "恭喜你拥有生活馆"
+                headerLifeHouse.textViewContent.layoutParams = layoutParams
                 headerLifeHouse.textViewContent.text = "如何快速成交订单获取攻略，请搜索关注乐喜官网公众号，添加乐喜辅导员微信，加入生活馆店主群。"
             }
         }
@@ -218,26 +217,22 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      */
     override fun setLookPeopleData(data: LookPeopleBean.DataBean) {
         val count = data.count
-
         if (count == 0) return
-
         headerLifeHouse.textViewLook.visibility = View.VISIBLE
-        val string = SpannableString("${data.browse_number} 人浏览过生活馆")
-        val end = count.toString().length
-        string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)), 0, end + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val string = SpannableString("生活馆被浏览过 ${data.browse_number} 次 ")
+        val boldSpan = StyleSpan(Typeface.BOLD)
+        string.setSpan(boldSpan, 8, string.length - 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)), 8, string.length - 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         headerLifeHouse.textViewLook.text = string
 
 
         headerLifeHouse.relativeLayoutHeaders.visibility = View.VISIBLE
-        if (count < 999) {
-            headerLifeHouse.textViewHeaders.text = "$count"
-        } else {
-            headerLifeHouse.textViewHeaders.text = "+999"
-        }
+
 
         val urlList = ArrayList<String>()
         for (item in data.users) {
             urlList.add(item.avatar)
+            if (urlList.size == 13) break
         }
 
         //反转头像
@@ -266,17 +261,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     /**
-     * 初始化本周最受欢迎
-     */
-    private fun initWelcomeInWeek(isRefresh: Boolean) {
-
-
-
-
-    }
-
-
-    /**
      * 根据角标整理数据
      */
     private fun formatData(data: List<ProductBean>): ArrayList<AdapterSearchGoods.MultipleItem> {
@@ -295,7 +279,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
         return curList
     }
-
 
 
     /**
@@ -374,15 +357,34 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         refreshLayout.setEnableOverScrollDrag(false)
         refreshLayout.isEnableLoadMore = false
         refreshLayout.setOnRefreshListener {
-            initLifeHouseHeader(true)
-            initWelcomeInWeek(true)
             refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+            presenter.getWelcomeInWeek(true)
+            presenter.getNewProducts(true)
+            if (UserProfileUtil.isLogin()) {
+                presenter.loadData(true)
+                presenter.getLifeHouse(true)
+                presenter.getLookPeople(true)
+                presenter.getNewPublishProducts(true)
+            }
+            //新品速递
         }
 
+        adapterSmallBRecommend.setOnItemClickListener { _, _, position ->
+            LogUtil.e("adapterSmallBRecommend=======$position======")
+            val item = adapterSmallBRecommend.getItem(position) ?: return@setOnItemClickListener
+            PageUtil.jump2GoodsDetailActivity(item.rid)
+        }
 
-        adapterWelcomeInWeek.setOnLoadMoreListener({// 加载更多本周最受欢迎
+        adapterNewGoodsExpress.setOnItemClickListener { _, _, position ->
+            LogUtil.e("adapterNewGoodsExpress=======$position")
+            val item = adapterNewGoodsExpress.getItem(position) ?: return@setOnItemClickListener
+            PageUtil.jump2GoodsDetailActivity(item.rid)
+        }
+
+        adapterWelcomeInWeek.setOnLoadMoreListener({
+            // 加载更多本周最受欢迎
             presenter.loadMoreData()
-        },recyclerView)
+        }, recyclerView)
 
         textViewShare.setOnClickListener {
             share()
@@ -456,11 +458,16 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         //添加监听
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.start()
+                }
                 super.onScrollStateChanged(recyclerView, newState)
             }
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+                LogUtil.e("${recyclerView.scrollState}onScrolled===================$dy")
+                if (!UserProfileUtil.isLogin() && recyclerView.scrollState != RecyclerView.SCROLL_STATE_IDLE) headerLifeHouse.linearLayoutNotice.stop()
                 if (recyclerView.scrollState == RecyclerView.SCROLL_STATE_SETTLING || recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) return
                 if (Math.abs(dy) < 20) return
                 if (dy > 0) {
@@ -503,11 +510,19 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun loadData() {
         presenter.getWelcomeInWeek(false)
-        presenter.loadData(false)
+        presenter.getNewProducts(false)
+        if (UserProfileUtil.isLogin()) {
+            presenter.loadData(false)
+            presenter.getLifeHouse(false)
+            presenter.getLookPeople(false)
+            presenter.getNewPublishProducts(false)
+        }
+
     }
 
 
     override fun setNewData(data: List<ProductBean>) {
+        if (data.isNotEmpty()) headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
         adapterSmallBRecommend.setNewData(data)
     }
 
@@ -686,7 +701,18 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         presenter.loadData(true)
     }
 
+    override fun onResume() {
+        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.start()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.stop()
+        super.onPause()
+    }
+
     override fun onDestroy() {
+        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.destroy()
         EventBus.getDefault().unregister(this)
         super.onDestroy()
     }

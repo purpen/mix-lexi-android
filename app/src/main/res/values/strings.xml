@@ -102,7 +102,7 @@
     <string name="rationale_camera">需要获取相机与文件权限</string>
     <string name="hint_text_upload_avatar">请先上传头像</string>
     <string name="tex_hint_new_password_again">请再次输入新密码</string>
-    <string name="text_open_store_guide">开馆指引</string>
+    <string name="text_open_store_guide">我要开馆</string>
     <string name="text_tou_tiao">开馆\n头条</string>
     <string name="text_guess_win_money">猜图赢现金</string>
     <string name="text_free_slogan">免运，奖励，优惠生活</string>
@@ -403,7 +403,7 @@
     <string name="text_not_use_coupon">不使用优惠券</string>
     <string name="title_add_tag">添加标签</string>
     <string name="text_hot_tags">热门标签</string>
-    <string name="text_curator_recommend">馆长极力推荐</string>
+    <string name="text_curator_recommend">馆主极力推荐</string>
     <string name="title_relate_shop_window">相关的橱窗</string>
     <string name="text_confirm_exit_payway_page">确认离开付款页面？</string>
     <string name="text_order_will_cancel_in_ten_minute">订单在10分钟内如仍未支付将被取消。</string>
