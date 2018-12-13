@@ -1,5 +1,6 @@
 package com.lexivip.lexi.index.lifehouse
 
+import com.basemodule.tools.Constants
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.IDataSource
 import com.qiniu.android.storage.UploadOptions
@@ -24,12 +25,12 @@ open class LifeHouseModel {
     /**
      * 获取小B分销商品
      */
-    fun loadData(page: Int, callBack: IDataSource.HttpRequestCallBack) {
+    fun loadData(callBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
         params["sid"] = UserProfileUtil.storeId()
         params["is_distributed"] = "2"
         params["user_record"] = USER_RECORD
-        params["page"] = "$page"
+        params["page"] = "1"
         HttpRequest.sendRequest(HttpRequest.GET, URL.DISTRIBUTION_GOODS_LIST, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callBack.onStart()
@@ -46,9 +47,10 @@ open class LifeHouseModel {
     }
 
 
-    fun getWelcomeInWeek(httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+    fun getWelcomeInWeek(page: Int,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        params["per_page"] = "20"
+        params["per_page"] = Constants.PAGE_SIZE
+        params["page"] = "$page"
         HttpRequest.sendRequest(HttpRequest.GET, URL.WELCOME_IN_WEEK, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
@@ -261,6 +263,26 @@ open class LifeHouseModel {
 
             override fun onFailure(e: IOException) {
                 callback.onFailure(e)
+            }
+        })
+    }
+
+
+    fun getNewProducts(callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["page"] = "1"
+        params["per_page"] = Constants.PAGE_SIZE
+        HttpRequest.sendRequest(HttpRequest.GET,URL.NEW_PRODUCTS_EXPRESS,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
             }
         })
     }

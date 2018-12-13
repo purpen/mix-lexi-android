@@ -1,5 +1,4 @@
 package com.lexivip.lexi.index.lifehouse
-
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -23,7 +22,7 @@ import android.view.animation.LayoutAnimationController
 import android.view.animation.TranslateAnimation
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
-import com.chad.library.adapter.base.BaseQuickAdapter
+import com.basemodule.ui.ItemBean
 import com.lexivip.lexi.*
 import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
@@ -43,7 +42,6 @@ import com.smart.dialog.widget.NormalDialog
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
-import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
 import org.greenrobot.eventbus.EventBus
@@ -59,12 +57,18 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
-    private val adapter: LifeHouseAdapter by lazy { LifeHouseAdapter(R.layout.adapter_curator_recommend) }
+    private val adapterNewGoodsExpress: NewGoodsExpressAdapter by lazy { NewGoodsExpressAdapter(R.layout.adapter_editor_recommend) }
+    private val adapterSmallBRecommend: SmallBRecommendAdapter by lazy { SmallBRecommendAdapter(R.layout.adapter_editor_recommend) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
+
+    /**
+     * 本周最受欢迎加载更多
+     */
     private val adapterWelcomeInWeek: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
-    private var price:String?=null
-    private var goodsId:String?=null
-    private var storeId:String?=null
+
+    private var price: String? = null
+    private var goodsId: String? = null
+    private var storeId: String? = null
     private lateinit var headerLifeHouse: View
 
     companion object {
@@ -74,14 +78,17 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun initView() {
         EventBus.getDefault().register(this)
-        adapter.setEmptyView(R.layout.empty_view_distribute_goods, recyclerView.parent as ViewGroup)
-        adapter.setHeaderFooterEmpty(true, true)
-        val linearLayoutManager = LinearLayoutManager(activity)
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
+        gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapter
+        recyclerView.layoutManager = gridLayoutManager
+        recyclerView.adapter = adapterWelcomeInWeek
+        val colorWhite = Util.getColor(android.R.color.white)
+        recyclerView.setBackgroundColor(colorWhite)
+        adapterWelcomeInWeek.setSpanSizeLookup { _, position ->
+            adapterWelcomeInWeek.data[position].spanSize
+        }
+        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
         initLifeHouseHeader(false)
         initWelcomeInWeek(false)
     }
@@ -90,27 +97,78 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     /**
      * 初始化生活馆Header
      */
-    private fun initLifeHouseHeader(isRefresh:Boolean) {
+    private fun initLifeHouseHeader(isRefresh: Boolean) {
 
         presenter.getLifeHouse()
 
         presenter.getLookPeople()
 
+
         presenter.getNewPublishProducts(isRefresh)
+
+        //新品速递
+        presenter.getNewProducts()
 
         if (isRefresh) return
 
         headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week, null)
+        adapterWelcomeInWeek.setHeaderView(headerLifeHouse)
 
+        //馆长推荐/分销商品
+        headerLifeHouse.recyclerViewSmallBRecommend.setHasFixedSize(true)
+        val linearLayoutManager0 = LinearLayoutManager(activity)
+        linearLayoutManager0.orientation = LinearLayoutManager.HORIZONTAL
+        (headerLifeHouse.recyclerViewSmallBRecommend.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        headerLifeHouse.recyclerViewSmallBRecommend.setHasFixedSize(true)
+        headerLifeHouse.recyclerViewSmallBRecommend.layoutManager = linearLayoutManager0
+        headerLifeHouse.recyclerViewSmallBRecommend.adapter = adapterSmallBRecommend
+        headerLifeHouse.recyclerViewSmallBRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(10.0), Util.getColor(android.R.color.transparent)))
+        adapterSmallBRecommend.setHeaderAndEmpty(true)
+        adapterSmallBRecommend.setEmptyView(R.layout.empty_view_distribute_goods, recyclerView.parent as ViewGroup)
+
+        //新品速递
+        headerLifeHouse.recyclerViewNewGoodsExpress.setHasFixedSize(true)
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        (headerLifeHouse.recyclerViewNewGoodsExpress.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        headerLifeHouse.recyclerViewNewGoodsExpress.setHasFixedSize(true)
+        headerLifeHouse.recyclerViewNewGoodsExpress.layoutManager = linearLayoutManager
+        headerLifeHouse.recyclerViewNewGoodsExpress.adapter = adapterNewGoodsExpress
+        headerLifeHouse.recyclerViewNewGoodsExpress.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(10.0), Util.getColor(android.R.color.transparent)))
+
+        if (!UserProfileUtil.isLogin() || !UserProfileUtil.isSmallB()) {//没有登录或者不是小B
+            headerLifeHouse.relativeLayoutNoLifeHouse.visibility = View.VISIBLE
+            GlideUtil.loadImageWithDimen(R.mipmap.icon_bg_no_lifehouse, headerLifeHouse.imageViewBgNoLifeHouse, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(215.0), ImageSizeConfig.DEFAULT)
+            GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_tou_tiao, headerLifeHouse.imageViewOpenHouseGuide, DimenUtil.dp2px(4.0), ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0), DimenUtil.dp2px(100.0), ImageSizeConfig.DEFAULT)
+
+            val list = ArrayList<ItemBean>()
+            for (i in 0..5) {
+                val item = ItemBean()
+                item.avatar = "http://pic24.nipic.com/20121010/3798632_184253198370_2.jpg"
+                item.content = "测试fsadf$i"
+                list.add(item)
+            }
+            headerLifeHouse.linearLayoutNotice.setData(list)
+        }
 
         if (SPUtil.readBool(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE)) {
             headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
         }
 
-        adapter.setHeaderView(headerLifeHouse)
+
     }
 
-    override fun setNewPublishProductsData(products: List<ProductBean>) {
+    /**
+     * 设置新品速递
+     */
+    override fun setNewProductsExpressData(products: List<ProductBean>) {
+        adapterNewGoodsExpress.setNewData(products)
+    }
+
+    /**
+     * 设置新上架数据
+     */
+    override fun setNewPublishProductsData(products: List<ProductBean>) { //选品中心三张图
         if (products.isEmpty()) return
         val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
         GlideUtil.loadImageWithRadius(products[0].cover, headerLifeHouse.imageView0, size)
@@ -131,13 +189,14 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置生活馆信息
      */
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
-        adapter.setBrandLogo(data.logo)
+        GlideUtil.loadCircleImageWidthDimen(data.logo, headerLifeHouse.circleImageView, DimenUtil.dp2px(28.0),ImageSizeConfig.SIZE_AVA)
+
         GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
 
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
 
-        LogUtil.e("${data.phases};;;;"+data.phases_description)
+        LogUtil.e("${data.phases};;;;" + data.phases_description)
 
         when (data.phases) {
             1 -> {//实习馆主
@@ -204,43 +263,18 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headImageAdapter.setNewData(urlList)
-
-        //这部分头像不需要点击
-//        val size = data.users.size
-//        headImageAdapter.setOnItemClickListener { _, _, position ->
-//            val uid = data.users[size - position - 1].uid
-//            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(), uid)) return@setOnItemClickListener
-//            PageUtil.jump2OtherUserCenterActivity(uid)
-//        }
     }
 
     /**
      * 初始化本周最受欢迎
      */
-    private fun initWelcomeInWeek(isRefresh:Boolean) {
+    private fun initWelcomeInWeek(isRefresh: Boolean) {
 
-        presenter.getWelcomeInWeek()
 
-        if (isRefresh) return
 
-        val footerWelcome = LayoutInflater.from(context).inflate(R.layout.footer_welcome_in_week, null)
 
-        val recyclerViewWelcome = footerWelcome.recyclerViewWelcome
-
-        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
-        gridLayoutManager.setScrollEnabled(false)
-        gridLayoutManager.orientation = GridLayoutManager.VERTICAL
-        recyclerViewWelcome.setHasFixedSize(true)
-        recyclerViewWelcome.layoutManager = gridLayoutManager
-        recyclerViewWelcome.adapter = adapterWelcomeInWeek
-        val colorWhite = Util.getColor(android.R.color.white)
-        recyclerViewWelcome.setBackgroundColor(colorWhite)
-        adapterWelcomeInWeek.setSpanSizeLookup { _, position ->
-            adapterWelcomeInWeek.data[position].spanSize
-        }
-        recyclerViewWelcome.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-        adapter.addFooterView(footerWelcome)
     }
+
 
     /**
      * 根据角标整理数据
@@ -249,16 +283,19 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         val curList = ArrayList<AdapterSearchGoods.MultipleItem>()
         val size = data.size - 1
         for (i in 0..size) {
-            if (i % 10 == 4 || i % 10 == 9) {
+            if (i == 4 || i == 9) {
                 curList.add(AdapterSearchGoods.MultipleItem(data[i], AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN2, AdapterSearchGoods.MultipleItem.ITEM_SPAN2_SIZE))
             } else {
-                data[i].isRight = (i % 10 == 1 || i % 10 == 3 || i % 10 == 6 || i % 10 == 8)
+                if (i < 4 && i % 2 == 1 || i in 5..8 && i % 2 == 0) {
+                    data[i].isRight = true
+                }
                 curList.add(AdapterSearchGoods.MultipleItem(data[i], AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN1, AdapterSearchGoods.MultipleItem.ITEM_SPAN1_SIZE))
             }
 
         }
         return curList
     }
+
 
 
     /**
@@ -321,14 +358,14 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置是否喜欢
      */
     override fun setFavorite(b: Boolean, position: Int) {
-        val item = adapter.getItem(position) as ProductBean
-        if (b) {
-            item.like_count += 1
-        } else {
-            item.like_count -= 1
-        }
-        item.is_like = b
-        adapter.notifyItemChanged(position + 1)
+//        val item = adapter.getItem(position) as ProductBean
+//        if (b) {
+//            item.like_count += 1
+//        } else {
+//            item.like_count -= 1
+//        }
+//        item.is_like = b
+//        adapter.notifyItemChanged(position + 1)
     }
 
     override fun installListener() {
@@ -342,10 +379,12 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
         }
 
+
+        adapterWelcomeInWeek.setOnLoadMoreListener({// 加载更多本周最受欢迎
+            presenter.loadMoreData()
+        },recyclerView)
+
         textViewShare.setOnClickListener {
-            //
-            //ToastUtil.showInfo("分享生活馆")
-            //val share=ShareUtil(activity,WebUrl.)
             share()
         }
 
@@ -363,47 +402,47 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         headerLifeHouse.textViewSelectGoodsCenter.setOnClickListener(this)
 
-        adapter.setOnItemClickListener { adapter, _, position ->
-            val item = adapter.getItem(position) as ProductBean
-            val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
-            startActivity(intent)
-        }
+//        adapter.setOnItemClickListener { adapter, _, position ->
+//            val item = adapter.getItem(position) as ProductBean
+//            val intent = Intent(activity, GoodsDetailActivity::class.java)
+//            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
+//            startActivity(intent)
+//        }
 
 
-        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, viewClicked, position ->
-            val productsBean = adapter.getItem(position) as ProductBean
-            when (viewClicked.id) {
-                R.id.imageViewDelete -> {
-                    showDeleteDialog(productsBean.rid, position)
-                }
-
-                R.id.textView4 -> {
-                    if (productsBean.is_like) {
-                        presenter.unfavoriteGoods(productsBean.rid, position, viewClicked)
-                    } else {
-                        presenter.favoriteGoods(productsBean.rid, position, viewClicked)
-                    }
-                }
-                R.id.textView5 -> {
-                    /*val dialog = DistributeShareDialog(activity)
-                    dialog.show()*/
-                    /*val share=ShareUtil(activity,WebUrl.GOODS+this.adapter.data.get(position).product_rid,
-                            this.adapter.data.get(position).name,
-                            "",WebUrl.AUTH_GOODS+this.adapter.data.get(position).product_rid,
-                            this.adapter.data.get(position).cover)*/
-                    goodsId=this.adapter.data[position].rid
-                    storeId=this.adapter.data[position].store_rid
-                    price=this.adapter.data[position].commission_price
-                    shareGoods()
-                }
-            }
-        }
+//        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, viewClicked, position ->
+//            val productsBean = adapter.getItem(position) as ProductBean
+//            when (viewClicked.id) {
+//                R.id.imageViewDelete -> {
+//                    showDeleteDialog(productsBean.rid, position)
+//                }
+//
+//                R.id.textView4 -> {
+//                    if (productsBean.is_like) {
+//                        presenter.unfavoriteGoods(productsBean.rid, position, viewClicked)
+//                    } else {
+//                        presenter.favoriteGoods(productsBean.rid, position, viewClicked)
+//                    }
+//                }
+//                R.id.textView5 -> {
+//                    /*val dialog = DistributeShareDialog(activity)
+//                    dialog.show()*/
+//                    /*val share=ShareUtil(activity,WebUrl.GOODS+this.adapter.data.get(position).product_rid,
+//                            this.adapter.data.get(position).name,
+//                            "",WebUrl.AUTH_GOODS+this.adapter.data.get(position).product_rid,
+//                            this.adapter.data.get(position).cover)*/
+//                    goodsId = this.adapter.data[position].rid
+//                    storeId = this.adapter.data[position].store_rid
+//                    price = this.adapter.data[position].commission_price
+//                    shareGoods()
+//                }
+//            }
+//        }
 
         //加载更多生活馆分销商品
-        adapter.setOnLoadMoreListener({
-            presenter.loadMoreData()
-        }, recyclerView)
+//        adapter.setOnLoadMoreListener({
+//            presenter.loadMoreData()
+//        }, recyclerView)
 
 
         adapterWelcomeInWeek.setOnItemClickListener { _, _, position ->
@@ -431,69 +470,58 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 }
             }
         })
-
-
-//        swipeRefreshLayout.setOnRefreshListener {
-//            swipeRefreshLayout.isRefreshing = true
-//            adapter.setEnableLoadMore(false)
-//            loadData()
-//        }
-
-//        adapter.setOnLoadMoreListener({
-//            presenter.loadMoreData("", page)
-//        }, recyclerView)
     }
 
-    private fun showDeleteDialog(rid: String, position: Int) {
-        val color333 = Util.getColor(R.color.color_333)
-        val white = Util.getColor(android.R.color.white)
-        val dialog = NormalDialog(activity)
-        dialog.isTitleShow(false)
-                .bgColor(white)
-                .cornerRadius(4f)
-                .content(Util.getString(R.string.text_unshelve_confirm))
-                .contentGravity(Gravity.CENTER)
-                .contentTextColor(color333)
-                .contentTextSize(14f)
-                .dividerColor(Util.getColor(R.color.color_ccc))
-                .btnText(Util.getString(R.string.text_cancel),Util.getString(R.string.text_qd))
-                .btnTextSize(18f, 18f)
-                .setRightBtnBgColor(Util.getColor(R.color.color_6ed7af))
-                .btnTextColor(color333, white)
-                .btnPressColor(white)
-                .widthScale(0.85f)
-                .show()
-        dialog.setOnBtnClickL(OnBtnClickL {
-            dialog.dismiss()
-        }, OnBtnClickL {
-            presenter.deleteDistributeGoods(rid, position)
-            //删除分销商品
-            adapter.remove(position)
-            dialog.dismiss()
-        })
-    }
+//    private fun showDeleteDialog(rid: String, position: Int) {
+//        val color333 = Util.getColor(R.color.color_333)
+//        val white = Util.getColor(android.R.color.white)
+//        val dialog = NormalDialog(activity)
+//        dialog.isTitleShow(false)
+//                .bgColor(white)
+//                .cornerRadius(4f)
+//                .content(Util.getString(R.string.text_unshelve_confirm))
+//                .contentGravity(Gravity.CENTER)
+//                .contentTextColor(color333)
+//                .contentTextSize(14f)
+//                .dividerColor(Util.getColor(R.color.color_ccc))
+//                .btnText(Util.getString(R.string.text_cancel), Util.getString(R.string.text_qd))
+//                .btnTextSize(18f, 18f)
+//                .setRightBtnBgColor(Util.getColor(R.color.color_6ed7af))
+//                .btnTextColor(color333, white)
+//                .btnPressColor(white)
+//                .widthScale(0.85f)
+//                .show()
+//        dialog.setOnBtnClickL(OnBtnClickL {
+//            dialog.dismiss()
+//        }, OnBtnClickL {
+//            presenter.deleteDistributeGoods(rid, position)
+//            //删除分销商品
+////            adapter.remove(position)
+//            dialog.dismiss()
+//        })
+//    }
 
     override fun loadData() {
+        presenter.getWelcomeInWeek(false)
         presenter.loadData(false)
     }
 
 
     override fun setNewData(data: List<ProductBean>) {
-        adapter.setNewData(data)
-        adapter.setEnableLoadMore(true)
+        adapterSmallBRecommend.setNewData(data)
     }
 
 
     override fun addData(products: List<ProductBean>) {
-        adapter.addData(products)
+        adapterWelcomeInWeek.addData(formatData(products))
     }
 
     override fun loadMoreComplete() {
-        adapter.loadMoreComplete()
+        adapterWelcomeInWeek.loadMoreComplete()
     }
 
     override fun loadMoreEnd() {
-        adapter.loadMoreEnd()
+        adapterWelcomeInWeek.loadMoreEnd()
     }
 
     override fun showLoadingView() {
@@ -510,7 +538,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun showError(string: String) {
         ToastUtil.showInfo(string)
-        adapter.loadMoreFail()
+//        adapter.loadMoreFail()
     }
 
     override fun goPage() {
@@ -547,8 +575,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private fun share() {
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
-            val shareUtil:ShareUtil= ShareUtil(activity)
-            shareUtil.shareLife(WebUrl.AUTH_LIFE, UserProfileUtil.storeId(),UserProfileUtil.storeId(),2)
+            val shareUtil: ShareUtil = ShareUtil(activity)
+            shareUtil.shareLife(WebUrl.AUTH_LIFE, UserProfileUtil.storeId(), UserProfileUtil.storeId(), 2)
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }
@@ -558,11 +586,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 分享商品
      */
     @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE_GOODS)
-    private fun shareGoods(){
+    private fun shareGoods() {
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
-            val shareUtil:ShareUtil= ShareUtil(activity)
-            shareUtil.shareGoods(WebUrl.AUTH_GOODS, goodsId, goodsId+"-"+ storeId,price,4)
+            val shareUtil: ShareUtil = ShareUtil(activity)
+            shareUtil.shareGoods(WebUrl.AUTH_GOODS, goodsId, goodsId + "-" + storeId, price, 4)
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_GOODS, *perms)
         }
@@ -663,7 +691,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         super.onDestroy()
     }
 
-
     private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
         private val color: Int = Util.getColor(android.R.color.white)
         private val height = 20f
@@ -671,21 +698,29 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             val count = adapterWelcomeInWeek.itemCount
             val divider: Y_Divider
             when (itemPosition) {
+                0 -> {
+                    divider = Y_DividerBuilder()
+                            .setBottomSideLine(true, color, 10f, 0f, 0f)
+                            .create()
+                    return divider
+                }
+
                 count - 1 -> {
                     divider = Y_DividerBuilder()
                             .setBottomSideLine(true, color, height, 0f, 0f)
                             .create()
                 }
                 else -> {
-                    val item = adapterWelcomeInWeek.getItem(itemPosition) as AdapterSearchGoods.MultipleItem
+                    val item = adapterWelcomeInWeek.getItem(itemPosition - 1) as AdapterSearchGoods.MultipleItem
                     if (item.product.isRight) {
                         divider = Y_DividerBuilder()
                                 .setBottomSideLine(true, color, height, 0f, 0f)
-                                .setLeftSideLine(true, color, 5f, 0f, 0f)
+                                .setLeftSideLine(true, color, 10f, 0f, 0f)
                                 .create()
                     } else {
                         divider = Y_DividerBuilder()
                                 .setBottomSideLine(true, color, height, 0f, 0f)
+                                .setLeftSideLine(true, color, 15f, 0f, 0f)
                                 .create()
                     }
                 }

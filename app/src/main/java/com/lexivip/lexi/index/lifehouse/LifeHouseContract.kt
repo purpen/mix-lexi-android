@@ -61,6 +61,10 @@ class LifeHouseContract {
 
         }
 
+        fun setNewProductsExpressData(products: List<ProductBean>) {
+
+        }
+
 
     }
 

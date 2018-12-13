@@ -913,4 +913,9 @@ object URL {
      * 邀请好友开馆海报
      */
     const val SHARE_INVITATION="${BASE_URL}market/share/invite_poster"
+
+    /**
+     * 新品速递
+     */
+    const val NEW_PRODUCTS_EXPRESS = "${BASE_URL}column/handpick_new_express"
 }

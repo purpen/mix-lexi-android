@@ -23,9 +23,11 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
     private val dataSource: LifeHouseModel by lazy { LifeHouseModel() }
 
+    /**
+     * 加载馆主推荐数据
+     */
     override fun loadData(isRefresh: Boolean) {
-        if (isRefresh) page = 1
-        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
+        dataSource.loadData(object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 if (!isRefresh) view.showLoadingView()
             }
@@ -35,7 +37,6 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                 val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
                 if (distributionGoodsBean.success) {
                     view.setNewData(distributionGoodsBean.data.products)
-                    page++
                 } else {
                     view.showError(distributionGoodsBean.status.message)
                 }
@@ -48,13 +49,17 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
         })
     }
 
+
+    /**
+     * 加载更多本周最受欢迎
+     */
     override fun loadMoreData() {
-        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
+        dataSource.getWelcomeInWeek(page, object : IDataSource.HttpRequestCallBack {
 
             override fun onSuccess(json: String) {
-                val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
-                if (distributionGoodsBean.success) {
-                    val products = distributionGoodsBean.data.products
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    val products = editorRecommendBean.data.products
                     if (products.isEmpty()) {
                         view.loadMoreEnd()
                     } else {
@@ -63,7 +68,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                         page++
                     }
                 } else {
-                    view.showError(distributionGoodsBean.status.message)
+                    view.showError(editorRecommendBean.status.message)
                 }
             }
 
@@ -76,12 +81,14 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     /**
      * 获取本周最受欢迎
      */
-    fun getWelcomeInWeek() {
-        dataSource.getWelcomeInWeek(object : IDataSource.HttpRequestCallBack {
+    fun getWelcomeInWeek(isRefresh: Boolean) {
+        if (isRefresh) page =1
+        dataSource.getWelcomeInWeek(page,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
                 if (editorRecommendBean.success) {
                     view.setWelcomeInWeekData(editorRecommendBean.data.products)
+                    page++
                 } else {
                     view.showError(editorRecommendBean.status.message)
                 }
@@ -320,6 +327,28 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                     view.setNewPublishProductsData(newPublishProductsBean.data.products)
                 } else {
                     view.showInfo(newPublishProductsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取新品速递
+     */
+    fun getNewProducts() {
+        dataSource.getNewProducts(object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setNewProductsExpressData(editorRecommendBean.data.products)
+                } else {
+                    view.showInfo(editorRecommendBean.status.message)
                 }
             }
 

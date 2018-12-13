@@ -1,5 +1,4 @@
 package com.lexivip.lexi.index.explore.editorRecommend
-import com.basemodule.tools.LogUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
@@ -168,7 +167,7 @@ class AllEditorRecommendPresenter(view: AllEditorRecommendContract.View) : AllEd
             override fun onSuccess(json: String) {
                 val lookPeopleBean = JsonUtil.fromJson(json, LookPeopleBean::class.java)
                 if (lookPeopleBean.success) {
-                    view.setLookPeopleData(lookPeopleBean.data.users)
+                    view.setLookPeopleData(lookPeopleBean.data)
                 } else {
                     view.showError(lookPeopleBean.status.message)
                 }
