@@ -47,11 +47,7 @@ class MainFragment0 : BaseFragment() {
         val titles = resources.getStringArray(R.array.strings_main_titles)
         listTitle = titles.toMutableList()
 
-        if (UserProfileUtil.isSmallB()) { //添加生活馆
-            fragments.add(fragmentLifeHouse)
-            listTitle.add(0, Util.getString(R.string.text_life_pavilion))
-        }
-
+        fragments.add(FragmentLifeHouse.newInstance())
         fragments.add(FragmentSelection.newInstance())
         fragments.add(FragmentExplore.newInstance())
         fragments.add(FragmentShopWindow.newInstance())
@@ -67,13 +63,15 @@ class MainFragment0 : BaseFragment() {
 
 //        LogUtil.e("currentActivity.switch2LifeHouseTab()"+currentActivity.switch2LifeHouseTab())
 
-        if (UserProfileUtil.isSmallB() && !currentActivity.switch2LifeHouseTab()) {//不是刚开生活馆显示精选
-            slidingTabLayout.currentTab = 1
-            slidingTabLayout.getTitleView(1).textSize = 19f
-        } else { //显示精选或生活馆
-            slidingTabLayout.currentTab = 0
-            slidingTabLayout.getTitleView(0).textSize = 19f
-        }
+        slidingTabLayout.currentTab = 0
+        slidingTabLayout.getTitleView(0).textSize = 19f
+//        if (!currentActivity.switch2LifeHouseTab()) {//不是刚开生活馆显示精选
+//            slidingTabLayout.currentTab = 0
+//            slidingTabLayout.getTitleView(0).textSize = 19f
+//        } else { //默认显示生活馆
+//            slidingTabLayout.currentTab = 1
+//            slidingTabLayout.getTitleView(1).textSize = 19f
+//        }
 
     }
 

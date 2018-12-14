@@ -100,6 +100,10 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
     }
 
     override fun installListener() {
+//        buttonTest.setOnClickListener {
+//            startActivity(Intent(activity, CompleteInfoActivity::class.java))
+//        }
+
         refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
         refreshLayout.isEnableOverScrollBounce = false
         refreshLayout.setEnableOverScrollDrag(false)

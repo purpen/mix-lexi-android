@@ -707,7 +707,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                     val tv = TextView(AppApplication.getContext())
                     if (position == 0) {
                         tv.setTextColor(colorf5a43c)
-                        tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.bg_oval_f5a43c, 0)
+                        if (size > 1) tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.bg_oval_f5a43c, 0)
                     } else if (position == size - 1) {
                         tv.setTextColor(color777)
                         tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
@@ -982,8 +982,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(this, *perms)) {
             val shareUtil = ShareUtil(this)
-            shareUtil.shareGoods(WebUrl.GOODS,WebUrl.AUTH_GOODS,goodsData!!.assets[0].view_url,
-                    goodsData!!.name,"",productId, productId+"-"+ goodsData!!.store_rid,4)
+            shareUtil.shareGoods(WebUrl.GOODS, WebUrl.AUTH_GOODS, goodsData!!.assets[0].view_url,
+                    goodsData!!.name, "", productId, productId + "-" + goodsData!!.store_rid, 4)
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }

@@ -63,14 +63,8 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     }
 
     override fun initView() {
-
         isFragmentInitiate = true
-
         EventBus.getDefault().register(this)
-        swipeRefreshLayout.isEnabled = false
-        swipeRefreshLayout.setColorSchemeColors(color6e)
-        swipeRefreshLayout.isRefreshing = false
-
         customHeadView.head_goback.visibility = View.GONE
         customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
         customHeadView.headRightTV.visibility = View.GONE
@@ -136,7 +130,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         while (iterator.hasNext()) {
             val itemsBean = iterator.next()
             if (list.contains(itemsBean.product.product_rid)) {
-                if (itemsBean.isChecked){
+                if (itemsBean.isChecked) {
                     addWishOrderList.add(itemsBean.product.rid)
                     iterator.remove()
                 }
@@ -202,9 +196,12 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         refreshLayout.setEnableOverScrollDrag(false)
         refreshLayout.isEnableLoadMore = false
         refreshLayout.setOnRefreshListener {
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+            if (!UserProfileUtil.isLogin()) {
+                return@setOnRefreshListener
+            }
             presenter.getShopCartGoods(true)
             presenter.loadData(true)
-            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
         }
 
         buttonSettleAccount.setOnClickListener {
@@ -279,9 +276,9 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 }
             }
 
-            if (swipeRefreshLayout.isShown) { //编辑状态
+            if (recyclerView.isShown) { //编辑状态
                 refreshLayout.isEnabled = false
-                swipeRefreshLayout.visibility = View.GONE
+                recyclerView.visibility = View.GONE
                 recyclerViewEditShopCart.visibility = View.VISIBLE
                 customHeadView.setRightTxt(Util.getString(R.string.text_complete), color6e)
                 textViewTotal.visibility = View.GONE
@@ -291,7 +288,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 buttonAddWish.visibility = View.VISIBLE
             } else { //点击完成
                 refreshLayout.isEnabled = true
-                swipeRefreshLayout.visibility = View.VISIBLE
+                recyclerView.visibility = View.VISIBLE
                 recyclerViewEditShopCart.visibility = View.GONE
                 customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
                 buttonDelete.visibility = View.GONE
@@ -439,7 +436,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
                 .contentTextColor(color333)
                 .contentTextSize(14f)
                 .dividerColor(Util.getColor(R.color.color_ccc))
-                .btnText(Util.getString(R.string.text_cancel),Util.getString(R.string.text_qd))
+                .btnText(Util.getString(R.string.text_cancel), Util.getString(R.string.text_qd))
                 .btnTextSize(18f, 18f)
                 .setRightBtnBgColor(Util.getColor(R.color.color_6ed7af))
                 .btnTextColor(color333, white)
@@ -475,13 +472,13 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
      * 可见状态发生变化时
      */
     override fun onHiddenChanged(hidden: Boolean) {
-        if (!hidden){
-            if (UserProfileUtil.isLogin()) {
+        if (!hidden) {
+            if (UserProfileUtil.isLogin() && !recyclerViewEditShopCart.isShown) { //未登录和编辑状态不刷新
                 //        加载心愿单
-                presenter.loadData(false)
+                presenter.loadData(true)
 
                 //        获取购物车商品
-                presenter.getShopCartGoods(false)
+                presenter.getShopCartGoods(true)
             }
         }
         super.onHiddenChanged(hidden)

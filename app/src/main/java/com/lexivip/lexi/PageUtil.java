@@ -1,10 +1,8 @@
 package com.lexivip.lexi;
-
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
-
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
@@ -24,7 +22,6 @@ import com.lexivip.lexi.publishShopWindow.RelateShopWindowActivity;
 import com.lexivip.lexi.publishShopWindow.SelectShopWindowGoodsImageActivity;
 import com.lexivip.lexi.user.OtherUserCenterActivity;
 import com.lexivip.lexi.user.login.LoginActivity;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -143,10 +143,10 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
             list.add(item.image)
         }
         banner.setImages(list)
-        banner.start()
         banner.setOnBannerListener { position ->
             PageUtil.banner2Page(banner_images[position])
         }
+        banner.start()
     }
 
     override fun installListener() {

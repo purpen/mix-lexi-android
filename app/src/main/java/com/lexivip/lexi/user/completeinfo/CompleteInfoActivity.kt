@@ -49,7 +49,7 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
         relativeLayoutOval.setOnClickListener(this)
         textViewBirth.setOnClickListener(this)
         button.setOnClickListener(this)
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radioButton0 -> gender = "0"
                 R.id.radioButton1 -> gender = "1"
@@ -214,7 +214,7 @@ class CompleteInfoActivity : BaseActivity(), CompleteInfoContract.View, View.OnC
      * 显示头像
      */
     private fun setUserAvatar(byteArray: ByteArray) {
-        GlideUtil.loadImageWithDimen(byteArray, imageView, resources.getDimensionPixelSize(R.dimen.dp90),ImageSizeConfig.DEFAULT)
+        GlideUtil.loadCircleImageWidthDimen(byteArray, imageView, resources.getDimensionPixelSize(R.dimen.dp90),ImageSizeConfig.DEFAULT)
         imageViewBottom.visibility = View.VISIBLE
     }
 

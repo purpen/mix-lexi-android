@@ -54,13 +54,8 @@ class ShopCartActivity : BaseActivity(), ShopCartContract.View {
     }
 
     override fun initView() {
-
         isFragmentInitiate = true
-
         EventBus.getDefault().register(this)
-        swipeRefreshLayout.isEnabled = false
-        swipeRefreshLayout.setColorSchemeColors(color6e)
-        swipeRefreshLayout.isRefreshing = false
         customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
         customHeadView.headRightTV.visibility = View.GONE
         customHeadView.setHeadCenterTxtShow(true, R.string.title_shopcart)
@@ -92,7 +87,7 @@ class ShopCartActivity : BaseActivity(), ShopCartContract.View {
         val shopCartEmpty = View.inflate(this, R.layout.header_empty_shop_cart, null)
         shopCartEmpty.textViewLookAround.setOnClickListener {
             //跳转首页
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
         adapterOrder.emptyView = shopCartEmpty
@@ -184,9 +179,12 @@ class ShopCartActivity : BaseActivity(), ShopCartContract.View {
         refreshLayout.setEnableOverScrollDrag(false)
         refreshLayout.isEnableLoadMore = false
         refreshLayout.setOnRefreshListener {
+            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+            if (!UserProfileUtil.isLogin()) {
+                return@setOnRefreshListener
+            }
             presenter.getShopCartGoods(true)
             presenter.loadData(true)
-            refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
         }
 
         buttonSettleAccount.setOnClickListener {
@@ -262,9 +260,9 @@ class ShopCartActivity : BaseActivity(), ShopCartContract.View {
                 }
             }
 
-            if (swipeRefreshLayout.isShown) { //编辑状态
+            if (recyclerView.isShown) { //编辑状态
                 refreshLayout.isEnabled = false
-                swipeRefreshLayout.visibility = View.GONE
+                recyclerView.visibility = View.GONE
                 recyclerViewEditShopCart.visibility = View.VISIBLE
                 customHeadView.setRightTxt(Util.getString(R.string.text_complete), color6e)
                 textViewTotal.visibility = View.GONE
@@ -274,7 +272,7 @@ class ShopCartActivity : BaseActivity(), ShopCartContract.View {
                 buttonAddWish.visibility = View.VISIBLE
             } else { //点击完成
                 refreshLayout.isEnabled = true
-                swipeRefreshLayout.visibility = View.VISIBLE
+                recyclerView.visibility = View.VISIBLE
                 recyclerViewEditShopCart.visibility = View.GONE
                 customHeadView.setRightTxt(Util.getString(R.string.text_edit), color6e)
                 buttonDelete.visibility = View.GONE
