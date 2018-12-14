@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
+import android.graphics.Typeface
 import android.net.Uri
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -13,7 +14,7 @@ import android.support.v7.widget.SimpleItemAnimator
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
-import android.view.Gravity
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +22,9 @@ import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LayoutAnimationController
 import android.view.animation.TranslateAnimation
+import android.widget.RelativeLayout
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.lexivip.lexi.*
 import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
@@ -31,21 +32,23 @@ import com.lexivip.lexi.album.PicturePickerUtils
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
+import com.lexivip.lexi.index.lifehouse.newProductExpress.NewProductExpressActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
+import com.lexivip.lexi.index.selection.HeadLineBean
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.search.AdapterSearchGoods
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
+import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
-import com.smart.dialog.listener.OnBtnClickL
+import com.lexivip.lexi.view.AutoScrollAdapter
 import com.smart.dialog.widget.ActionSheetDialog
-import com.smart.dialog.widget.NormalDialog
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
-import kotlinx.android.synthetic.main.footer_welcome_in_week.view.*
 import kotlinx.android.synthetic.main.fragment_life_house.*
 import kotlinx.android.synthetic.main.header_welcome_in_week.view.*
+import kotlinx.android.synthetic.main.view_no_lifehouse.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -59,12 +62,26 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
-    private val adapter: LifeHouseAdapter by lazy { LifeHouseAdapter(R.layout.adapter_curator_recommend) }
+    private val listNotice: ArrayList<HeadLineBean.DataBean.HeadlinesBean> by lazy { ArrayList<HeadLineBean.DataBean.HeadlinesBean>() }
+
+    private val adapterNewGoodsExpress: NewGoodsExpressAdapter by lazy { NewGoodsExpressAdapter(R.layout.adapter_editor_recommend) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
+    private val listRecommend: ArrayList<SmallBRecommendAdapter.MultipleItem> by lazy { ArrayList<SmallBRecommendAdapter.MultipleItem>() }
+
+    /**
+     * 本周最受欢迎加载更多
+     */
     private val adapterWelcomeInWeek: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
-    private var price:String?=null
-    private var goodsId:String?=null
-    private var storeId:String?=null
+
+    /**
+     * 小B推荐
+     */
+    private val adapterSmallBRecommend: SmallBRecommendAdapter by lazy { SmallBRecommendAdapter(listRecommend) }
+
+    private var price: String? = null
+    private var goodsId: String? = null
+    private var storeId: String? = null
+    private var logo: String = ""
     private lateinit var headerLifeHouse: View
 
     companion object {
@@ -74,43 +91,110 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun initView() {
         EventBus.getDefault().register(this)
-        adapter.setEmptyView(R.layout.empty_view_distribute_goods, recyclerView.parent as ViewGroup)
-        adapter.setHeaderFooterEmpty(true, true)
-        val linearLayoutManager = LinearLayoutManager(activity)
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        (recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
+        gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.adapter = adapter
-        initLifeHouseHeader(false)
-        initWelcomeInWeek(false)
+        recyclerView.layoutManager = gridLayoutManager
+        recyclerView.adapter = adapterWelcomeInWeek
+        val colorWhite = Util.getColor(android.R.color.white)
+        recyclerView.setBackgroundColor(colorWhite)
+        adapterWelcomeInWeek.setSpanSizeLookup { _, position ->
+            adapterWelcomeInWeek.data[position].spanSize
+        }
+        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        initLifeHouseHeader()
     }
 
 
     /**
      * 初始化生活馆Header
      */
-    private fun initLifeHouseHeader(isRefresh:Boolean) {
-
-        presenter.getLifeHouse()
-
-        presenter.getLookPeople()
-
-        presenter.getNewPublishProducts(isRefresh)
-
-        if (isRefresh) return
-
+    private fun initLifeHouseHeader() {
         headerLifeHouse = LayoutInflater.from(context).inflate(R.layout.header_welcome_in_week, null)
+        adapterWelcomeInWeek.setHeaderView(headerLifeHouse)
+        //馆长推荐/分销商品
+        headerLifeHouse.recyclerViewSmallBRecommend.setHasFixedSize(true)
+        val linearLayoutManager0 = LinearLayoutManager(activity)
+        linearLayoutManager0.orientation = LinearLayoutManager.HORIZONTAL
+        (headerLifeHouse.recyclerViewSmallBRecommend.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        headerLifeHouse.recyclerViewSmallBRecommend.setHasFixedSize(true)
+        headerLifeHouse.recyclerViewSmallBRecommend.layoutManager = linearLayoutManager0
+        headerLifeHouse.recyclerViewSmallBRecommend.adapter = adapterSmallBRecommend
+        headerLifeHouse.recyclerViewSmallBRecommend.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(10.0), Util.getColor(android.R.color.transparent)))
+        adapterSmallBRecommend.setHeaderAndEmpty(true)
+        adapterSmallBRecommend.setEmptyView(R.layout.empty_view_distribute_goods, recyclerView.parent as ViewGroup)
 
+        //新品速递
+        headerLifeHouse.recyclerViewNewGoodsExpress.setHasFixedSize(true)
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        (headerLifeHouse.recyclerViewNewGoodsExpress.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        headerLifeHouse.recyclerViewNewGoodsExpress.setHasFixedSize(true)
+        headerLifeHouse.recyclerViewNewGoodsExpress.layoutManager = linearLayoutManager
+        headerLifeHouse.recyclerViewNewGoodsExpress.adapter = adapterNewGoodsExpress
+        headerLifeHouse.recyclerViewNewGoodsExpress.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(10.0), Util.getColor(android.R.color.transparent)))
+
+        if (!UserProfileUtil.isLogin() || !UserProfileUtil.isSmallB()) {//没有登录或者不是小B
+            presenter.getHeadLine()
+            headerLifeHouse.relativeLayoutNoLifeHouse.visibility = View.VISIBLE
+            headerLifeHouse.autoScrollRecyclerView.visibility = View.VISIBLE
+            val linearLayoutManager = LinearLayoutManager(activity)
+            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+            headerLifeHouse.autoScrollRecyclerView.setHasFixedSize(true)
+            headerLifeHouse.autoScrollRecyclerView.layoutManager = linearLayoutManager
+            GlideUtil.loadImageWithDimen(R.mipmap.icon_bg_no_lifehouse, headerLifeHouse.imageViewBgNoLifeHouse, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(215.0), ImageSizeConfig.DEFAULT)
+            GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_tou_tiao, headerLifeHouse.imageViewOpenHouseGuide, DimenUtil.dp2px(4.0), ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0), DimenUtil.dp2px(100.0), ImageSizeConfig.DEFAULT)
+            //添加
+//            headerLifeHouse.autoScrollRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+//                    super.onScrollStateChanged(recyclerView, newState)
+//                }
+//
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    LogUtil.e("==============$dy")
+//                    val position = linearLayoutManager.findLastVisibleItemPosition()
+//                    for (i in 0 until recyclerView.layoutManager.childCount) {
+//                        val childAt = recyclerView.layoutManager.findViewByPosition(position);
+//                        if (i == position) {
+//                            childAt.setBackgroundResource(R.drawable.bg_colorccff5f9ce6_round)
+//                        } else {
+//                            childAt.setBackgroundResource(R.drawable.bg_colorcc000000_round)
+//                        }
+//                    }
+//                }
+//            })
+        } else {
+            headerLifeHouse.recyclerViewSmallBRecommend.visibility = View.VISIBLE
+            headerLifeHouse.linearLayoutSmallB.visibility = View.VISIBLE
+        }
 
         if (SPUtil.readBool(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE)) {
             headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
         }
-
-        adapter.setHeaderView(headerLifeHouse)
     }
 
-    override fun setNewPublishProductsData(products: List<ProductBean>) {
+    /**
+     * 设置通知数据
+     */
+    override fun setHeadLineData(headlines: List<HeadLineBean.DataBean.HeadlinesBean>) {
+        listNotice.clear()
+        listNotice.addAll(headlines)
+        if (headlines.isEmpty()) return
+        headerLifeHouse.autoScrollRecyclerView.adapter = AutoScrollAdapter(listNotice, headerLifeHouse.autoScrollRecyclerView)
+        headerLifeHouse.autoScrollRecyclerView.start()
+    }
+
+    /**
+     * 设置新品速递
+     */
+    override fun setNewProductsExpressData(products: List<ProductBean>) {
+        adapterNewGoodsExpress.setNewData(products)
+    }
+
+    /**
+     * 设置新上架数据
+     */
+    override fun setNewPublishProductsData(products: List<ProductBean>) { //选品中心三张图
         if (products.isEmpty()) return
         val size = DimenUtil.getDimensionPixelSize(R.dimen.dp4)
         GlideUtil.loadImageWithRadius(products[0].cover, headerLifeHouse.imageView0, size)
@@ -131,24 +215,35 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置生活馆信息
      */
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
-        adapter.setBrandLogo(data.logo)
+        logo = data.logo
+        GlideUtil.loadCircleImageWidthDimen(data.logo, headerLifeHouse.circleImageView, DimenUtil.dp2px(28.0), ImageSizeConfig.SIZE_AVA)
+
         GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
 
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
 
-        LogUtil.e("${data.phases};;;;"+data.phases_description)
+//        LogUtil.e("${data.phases};;;;" + data.phases_description)
 
+        val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+        layoutParams.leftMargin = DimenUtil.dp2px(13.0)
+        layoutParams.rightMargin = DimenUtil.dp2px(13.0)
         when (data.phases) {
             1 -> {//实习馆主
-                headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_practice_life_house, 0, 0, 0)
-                headerLifeHouse.textViewName.text = "当前为实习馆主"
-                headerLifeHouse.textViewContent.text = data.phases_description
+                headerLifeHouse.imageViewPractice.visibility = View.VISIBLE
+                layoutParams.topMargin = DimenUtil.dp2px(25.0)
+                headerLifeHouse.textViewContent.layoutParams = layoutParams
+                headerLifeHouse.textViewContent.text = "成功在30天内销售3笔订单即可成为正式的达人馆主哦，如一个月内未达标准生活馆将被关闭，如重新申请需单独联系乐喜辅导员申请。"
             }
 
             2 -> { //正式馆主
+                headerLifeHouse.buttonCpyNum.visibility = View.VISIBLE
+                headerLifeHouse.textViewName.visibility = View.VISIBLE
+                headerLifeHouse.imageViewPractice.visibility = View.GONE
+                layoutParams.topMargin = DimenUtil.dp2px(36.0)
                 headerLifeHouse.textViewName.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_success_open_life_house, 0, 0, 0)
                 headerLifeHouse.textViewName.text = "恭喜你拥有生活馆"
+                headerLifeHouse.textViewContent.layoutParams = layoutParams
                 headerLifeHouse.textViewContent.text = "如何快速成交订单获取攻略，请搜索关注乐喜官网公众号，添加乐喜辅导员微信，加入生活馆店主群。"
             }
         }
@@ -159,26 +254,22 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      */
     override fun setLookPeopleData(data: LookPeopleBean.DataBean) {
         val count = data.count
-
         if (count == 0) return
-
         headerLifeHouse.textViewLook.visibility = View.VISIBLE
-        val string = SpannableString("${data.browse_number} 人浏览过生活馆")
-        val end = count.toString().length
-        string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)), 0, end + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val string = SpannableString("生活馆被浏览过 ${data.browse_number} 次 ")
+        val boldSpan = StyleSpan(Typeface.BOLD)
+        string.setSpan(boldSpan, 8, string.length - 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)), 8, string.length - 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         headerLifeHouse.textViewLook.text = string
 
 
         headerLifeHouse.relativeLayoutHeaders.visibility = View.VISIBLE
-        if (count < 999) {
-            headerLifeHouse.textViewHeaders.text = "$count"
-        } else {
-            headerLifeHouse.textViewHeaders.text = "+999"
-        }
+
 
         val urlList = ArrayList<String>()
         for (item in data.users) {
             urlList.add(item.avatar)
+            if (urlList.size == 13) break
         }
 
         //反转头像
@@ -204,42 +295,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headImageAdapter.setNewData(urlList)
-
-        //这部分头像不需要点击
-//        val size = data.users.size
-//        headImageAdapter.setOnItemClickListener { _, _, position ->
-//            val uid = data.users[size - position - 1].uid
-//            if (TextUtils.isEmpty(uid) || TextUtils.equals(UserProfileUtil.getUserId(), uid)) return@setOnItemClickListener
-//            PageUtil.jump2OtherUserCenterActivity(uid)
-//        }
-    }
-
-    /**
-     * 初始化本周最受欢迎
-     */
-    private fun initWelcomeInWeek(isRefresh:Boolean) {
-
-        presenter.getWelcomeInWeek()
-
-        if (isRefresh) return
-
-        val footerWelcome = LayoutInflater.from(context).inflate(R.layout.footer_welcome_in_week, null)
-
-        val recyclerViewWelcome = footerWelcome.recyclerViewWelcome
-
-        val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
-        gridLayoutManager.setScrollEnabled(false)
-        gridLayoutManager.orientation = GridLayoutManager.VERTICAL
-        recyclerViewWelcome.setHasFixedSize(true)
-        recyclerViewWelcome.layoutManager = gridLayoutManager
-        recyclerViewWelcome.adapter = adapterWelcomeInWeek
-        val colorWhite = Util.getColor(android.R.color.white)
-        recyclerViewWelcome.setBackgroundColor(colorWhite)
-        adapterWelcomeInWeek.setSpanSizeLookup { _, position ->
-            adapterWelcomeInWeek.data[position].spanSize
-        }
-        recyclerViewWelcome.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-        adapter.addFooterView(footerWelcome)
     }
 
     /**
@@ -249,10 +304,12 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         val curList = ArrayList<AdapterSearchGoods.MultipleItem>()
         val size = data.size - 1
         for (i in 0..size) {
-            if (i % 10 == 4 || i % 10 == 9) {
+            if (i == 4 || i == 9) {
                 curList.add(AdapterSearchGoods.MultipleItem(data[i], AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN2, AdapterSearchGoods.MultipleItem.ITEM_SPAN2_SIZE))
             } else {
-                data[i].isRight = (i % 10 == 1 || i % 10 == 3 || i % 10 == 6 || i % 10 == 8)
+                if (i < 4 && i % 2 == 1 || i in 5..8 && i % 2 == 0) {
+                    data[i].isRight = true
+                }
                 curList.add(AdapterSearchGoods.MultipleItem(data[i], AdapterSearchGoods.MultipleItem.ITEM_TYPE_SPAN1, AdapterSearchGoods.MultipleItem.ITEM_SPAN1_SIZE))
             }
 
@@ -321,37 +378,88 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置是否喜欢
      */
     override fun setFavorite(b: Boolean, position: Int) {
-        val item = adapter.getItem(position) as ProductBean
-        if (b) {
-            item.like_count += 1
-        } else {
-            item.like_count -= 1
-        }
-        item.is_like = b
-        adapter.notifyItemChanged(position + 1)
+//        val item = adapter.getItem(position) as ProductBean
+//        if (b) {
+//            item.like_count += 1
+//        } else {
+//            item.like_count -= 1
+//        }
+//        item.is_like = b
+//        adapter.notifyItemChanged(position + 1)
     }
 
     override fun installListener() {
+
+        headerLifeHouse.textViewAllNewGoodsExpress.setOnClickListener {
+            //新品速递列表
+            startActivity(Intent(activity, NewProductExpressActivity::class.java))
+        }
+
+        headerLifeHouse.textViewAllRecommend.setOnClickListener {
+            //馆主推荐列表
+            val intent = Intent(activity, SmallBRecommendGoodsListActivity::class.java)
+            intent.putExtra(SmallBRecommendGoodsListActivity::class.java.simpleName, logo)
+            startActivity(intent)
+        }
 
         refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
         refreshLayout.setEnableOverScrollDrag(false)
         refreshLayout.isEnableLoadMore = false
         refreshLayout.setOnRefreshListener {
-            initLifeHouseHeader(true)
-            initWelcomeInWeek(true)
             refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
+            presenter.getWelcomeInWeek(true)
+            presenter.getNewProducts(true)
+            if (UserProfileUtil.isLogin()) {
+                presenter.loadData(true)
+                presenter.getLifeHouse(true)
+                presenter.getLookPeople(true)
+                presenter.getNewPublishProducts(true)
+            }
+            //新品速递
         }
 
+        //小B推荐
+        adapterSmallBRecommend.setOnItemClickListener { _, _, position ->
+            val size = adapterSmallBRecommend.data.size
+            if (size <= 10 && position == size - 1) return@setOnItemClickListener
+            if (size > 10 && position == size - 1) {
+                val intent = Intent(activity, SmallBRecommendGoodsListActivity::class.java)
+                intent.putExtra(SmallBRecommendGoodsListActivity::class.java.simpleName, logo)
+                startActivity(intent)
+                return@setOnItemClickListener
+            }
+            val item = adapterSmallBRecommend.getItem(position) ?: return@setOnItemClickListener
+            PageUtil.jump2GoodsDetailActivity(item.product.rid)
+        }
+
+        adapterNewGoodsExpress.setOnItemClickListener { _, _, position ->
+            val item = adapterNewGoodsExpress.getItem(position) ?: return@setOnItemClickListener
+            PageUtil.jump2GoodsDetailActivity(item.rid)
+        }
+
+        adapterWelcomeInWeek.setOnLoadMoreListener({
+            // 加载更多本周最受欢迎
+            presenter.loadMoreData()
+        }, recyclerView)
+
         textViewShare.setOnClickListener {
-            //
-            //ToastUtil.showInfo("分享生活馆")
-            //val share=ShareUtil(activity,WebUrl.)
             share()
         }
 
         headerLifeHouse.buttonCpyNum.setOnClickListener {
+            //复制微信
             Util.setContent2ClipBoard(getString(R.string.text_wechat_num))
             ToastUtil.showInfo("复制成功去添加微信")
+        }
+
+        headerLifeHouse.buttonOpenShop.setOnClickListener {
+            LogUtil.e("=================")
+            //我要开馆
+            if (UserProfileUtil.isLogin()) {
+                PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide", R.string.title_open_life_house)
+            } else {
+                startActivity(Intent(activity, LoginActivity::class.java))
+            }
         }
 
         headerLifeHouse.imageViewEdit.setOnClickListener(this)
@@ -363,47 +471,47 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         headerLifeHouse.textViewSelectGoodsCenter.setOnClickListener(this)
 
-        adapter.setOnItemClickListener { adapter, _, position ->
-            val item = adapter.getItem(position) as ProductBean
-            val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
-            startActivity(intent)
-        }
+//        adapter.setOnItemClickListener { adapter, _, position ->
+//            val item = adapter.getItem(position) as ProductBean
+//            val intent = Intent(activity, GoodsDetailActivity::class.java)
+//            intent.putExtra(GoodsDetailActivity::class.java.simpleName, item)
+//            startActivity(intent)
+//        }
 
 
-        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, viewClicked, position ->
-            val productsBean = adapter.getItem(position) as ProductBean
-            when (viewClicked.id) {
-                R.id.imageViewDelete -> {
-                    showDeleteDialog(productsBean.rid, position)
-                }
-
-                R.id.textView4 -> {
-                    if (productsBean.is_like) {
-                        presenter.unfavoriteGoods(productsBean.rid, position, viewClicked)
-                    } else {
-                        presenter.favoriteGoods(productsBean.rid, position, viewClicked)
-                    }
-                }
-                R.id.textView5 -> {
-                    /*val dialog = DistributeShareDialog(activity)
-                    dialog.show()*/
-                    /*val share=ShareUtil(activity,WebUrl.GOODS+this.adapter.data.get(position).product_rid,
-                            this.adapter.data.get(position).name,
-                            "",WebUrl.AUTH_GOODS+this.adapter.data.get(position).product_rid,
-                            this.adapter.data.get(position).cover)*/
-                    goodsId=this.adapter.data[position].rid
-                    storeId=this.adapter.data[position].store_rid
-                    price=this.adapter.data[position].commission_price
-                    shareGoods()
-                }
-            }
-        }
+//        adapter.onItemChildClickListener = BaseQuickAdapter.OnItemChildClickListener { adapter, viewClicked, position ->
+//            val productsBean = adapter.getItem(position) as ProductBean
+//            when (viewClicked.id) {
+//                R.id.imageViewDelete -> {
+//                    showDeleteDialog(productsBean.rid, position)
+//                }
+//
+//                R.id.textView4 -> {
+//                    if (productsBean.is_like) {
+//                        presenter.unfavoriteGoods(productsBean.rid, position, viewClicked)
+//                    } else {
+//                        presenter.favoriteGoods(productsBean.rid, position, viewClicked)
+//                    }
+//                }
+//                R.id.textView5 -> {
+//                    /*val dialog = DistributeShareDialog(activity)
+//                    dialog.show()*/
+//                    /*val share=ShareUtil(activity,WebUrl.GOODS+this.adapter.data.get(position).product_rid,
+//                            this.adapter.data.get(position).name,
+//                            "",WebUrl.AUTH_GOODS+this.adapter.data.get(position).product_rid,
+//                            this.adapter.data.get(position).cover)*/
+//                    goodsId = this.adapter.data[position].rid
+//                    storeId = this.adapter.data[position].store_rid
+//                    price = this.adapter.data[position].commission_price
+//                    shareGoods()
+//                }
+//            }
+//        }
 
         //加载更多生活馆分销商品
-        adapter.setOnLoadMoreListener({
-            presenter.loadMoreData()
-        }, recyclerView)
+//        adapter.setOnLoadMoreListener({
+//            presenter.loadMoreData()
+//        }, recyclerView)
 
 
         adapterWelcomeInWeek.setOnItemClickListener { _, _, position ->
@@ -417,11 +525,15 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         //添加监听
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.start()
+                }
                 super.onScrollStateChanged(recyclerView, newState)
             }
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+                if (!UserProfileUtil.isLogin() && recyclerView.scrollState != RecyclerView.SCROLL_STATE_IDLE) headerLifeHouse.autoScrollRecyclerView.stop()
                 if (recyclerView.scrollState == RecyclerView.SCROLL_STATE_SETTLING || recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) return
                 if (Math.abs(dy) < 20) return
                 if (dy > 0) {
@@ -431,69 +543,46 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 }
             }
         })
-
-
-//        swipeRefreshLayout.setOnRefreshListener {
-//            swipeRefreshLayout.isRefreshing = true
-//            adapter.setEnableLoadMore(false)
-//            loadData()
-//        }
-
-//        adapter.setOnLoadMoreListener({
-//            presenter.loadMoreData("", page)
-//        }, recyclerView)
     }
 
-    private fun showDeleteDialog(rid: String, position: Int) {
-        val color333 = Util.getColor(R.color.color_333)
-        val white = Util.getColor(android.R.color.white)
-        val dialog = NormalDialog(activity)
-        dialog.isTitleShow(false)
-                .bgColor(white)
-                .cornerRadius(4f)
-                .content(Util.getString(R.string.text_unshelve_confirm))
-                .contentGravity(Gravity.CENTER)
-                .contentTextColor(color333)
-                .contentTextSize(14f)
-                .dividerColor(Util.getColor(R.color.color_ccc))
-                .btnText(Util.getString(R.string.text_cancel),Util.getString(R.string.text_qd))
-                .btnTextSize(18f, 18f)
-                .setRightBtnBgColor(Util.getColor(R.color.color_6ed7af))
-                .btnTextColor(color333, white)
-                .btnPressColor(white)
-                .widthScale(0.85f)
-                .show()
-        dialog.setOnBtnClickL(OnBtnClickL {
-            dialog.dismiss()
-        }, OnBtnClickL {
-            presenter.deleteDistributeGoods(rid, position)
-            //删除分销商品
-            adapter.remove(position)
-            dialog.dismiss()
-        })
-    }
 
     override fun loadData() {
-        presenter.loadData(false)
+        presenter.getWelcomeInWeek(false)
+        presenter.getNewProducts(false)
+        if (UserProfileUtil.isLogin()) {
+            presenter.loadData(false)
+            presenter.getLifeHouse(false)
+            presenter.getLookPeople(false)
+            presenter.getNewPublishProducts(false)
+        }
+
     }
 
 
-    override fun setNewData(data: List<ProductBean>) {
-        adapter.setNewData(data)
-        adapter.setEnableLoadMore(true)
+    override fun setNewData(data: List<ProductBean>) {//设置小B推荐数据
+        if (data.isNotEmpty()) headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
+        listRecommend.clear()
+        for (item in data) {
+            listRecommend.add(SmallBRecommendAdapter.MultipleItem(item, SmallBRecommendAdapter.MultipleItem.ITEM_TYPE_GOODS))
+        }
+
+        //如果没有数据则不加没有更多
+        if (listRecommend.isNotEmpty()) listRecommend.add(SmallBRecommendAdapter.MultipleItem(ProductBean(), SmallBRecommendAdapter.MultipleItem.ITEM_TYPE_END))
+
+        adapterSmallBRecommend.setNewData(listRecommend)
     }
 
 
     override fun addData(products: List<ProductBean>) {
-        adapter.addData(products)
+        adapterWelcomeInWeek.addData(formatData(products))
     }
 
     override fun loadMoreComplete() {
-        adapter.loadMoreComplete()
+        adapterWelcomeInWeek.loadMoreComplete()
     }
 
     override fun loadMoreEnd() {
-        adapter.loadMoreEnd()
+        adapterWelcomeInWeek.loadMoreEnd()
     }
 
     override fun showLoadingView() {
@@ -510,7 +599,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun showError(string: String) {
         ToastUtil.showInfo(string)
-        adapter.loadMoreFail()
+//        adapter.loadMoreFail()
     }
 
     override fun goPage() {
@@ -547,8 +636,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private fun share() {
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
-            val shareUtil:ShareUtil= ShareUtil(activity)
-            shareUtil.shareLife(WebUrl.AUTH_LIFE, UserProfileUtil.storeId(),UserProfileUtil.storeId(),2)
+            val shareUtil: ShareUtil = ShareUtil(activity)
+            shareUtil.shareLife(WebUrl.AUTH_LIFE, UserProfileUtil.storeId(), UserProfileUtil.storeId(), 2)
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }
@@ -558,11 +647,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 分享商品
      */
     @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE_GOODS)
-    private fun shareGoods(){
+    private fun shareGoods() {
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
-            val shareUtil:ShareUtil= ShareUtil(activity)
-            shareUtil.shareGoods(WebUrl.AUTH_GOODS, goodsId, goodsId+"-"+ storeId,price,4)
+            val shareUtil: ShareUtil = ShareUtil(activity)
+            shareUtil.shareGoods(WebUrl.AUTH_GOODS, goodsId, goodsId + "-" + storeId, price, 4)
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_GOODS, *perms)
         }
@@ -658,11 +747,23 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         presenter.loadData(true)
     }
 
+    override fun onResume() {
+//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.start()
+        if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.start()
+        super.onResume()
+    }
+
+    override fun onPause() {
+//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.stop()
+        if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.stop()
+        super.onPause()
+    }
+
     override fun onDestroy() {
+//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.destroy()
         EventBus.getDefault().unregister(this)
         super.onDestroy()
     }
-
 
     private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
         private val color: Int = Util.getColor(android.R.color.white)
@@ -671,21 +772,29 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             val count = adapterWelcomeInWeek.itemCount
             val divider: Y_Divider
             when (itemPosition) {
+                0 -> {
+                    divider = Y_DividerBuilder()
+                            .setBottomSideLine(true, color, 10f, 0f, 0f)
+                            .create()
+                    return divider
+                }
+
                 count - 1 -> {
                     divider = Y_DividerBuilder()
                             .setBottomSideLine(true, color, height, 0f, 0f)
                             .create()
                 }
                 else -> {
-                    val item = adapterWelcomeInWeek.getItem(itemPosition) as AdapterSearchGoods.MultipleItem
+                    val item = adapterWelcomeInWeek.getItem(itemPosition - 1) as AdapterSearchGoods.MultipleItem
                     if (item.product.isRight) {
                         divider = Y_DividerBuilder()
                                 .setBottomSideLine(true, color, height, 0f, 0f)
-                                .setLeftSideLine(true, color, 5f, 0f, 0f)
+                                .setLeftSideLine(true, color, 10f, 0f, 0f)
                                 .create()
                     } else {
                         divider = Y_DividerBuilder()
                                 .setBottomSideLine(true, color, height, 0f, 0f)
+                                .setLeftSideLine(true, color, 15f, 0f, 0f)
                                 .create()
                     }
                 }

@@ -50,6 +50,9 @@ public class Constants {
 
     //添加新地址
     public static final int REQUEST_CODE_REFRESH_ADDRESS = 0x0000012;
+    //编辑地址
+    public static final int REQUEST_CODE_EDIT_ADDRESS = 0x0000013;
+
     //分享权限
     public static final String[] PERMISSION_LIST_SHARE = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.CALL_PHONE,
@@ -87,5 +90,4 @@ public class Constants {
      */
     @Nullable
     public static final String ADD_TAG_HISTORY = "ADD_TAG_HISTORY";
-
 }

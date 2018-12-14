@@ -1698,4 +1698,34 @@ public class ClientParamsAPI {
         params.put("amount", amount);
         return params;
     }
+
+    /**
+     * 获取新品速递列表
+     * @param page
+     * @param sortType
+     * @param minePrice
+     * @param maxPrice
+     * @param cids
+     * @param is_free_postage
+     * @param is_preferential
+     * @param is_custom_made
+     * @param sort_newest
+     * @return
+     */
+    @Nullable
+    public static HashMap<String, Object> getNewProductExpressParams(int page, @NotNull String sortType, @NotNull String minePrice, @NotNull String maxPrice, @NotNull String cids, @NotNull String is_free_postage, @NotNull String is_preferential, @NotNull String is_custom_made, @NotNull String sort_newest) {
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("page", String.valueOf(page));
+        params.put("per_page", Constants.PAGE_SIZE);
+        params.put("view_more", "1");
+        params.put("cids", cids);
+        params.put("sort_type", sortType);
+        params.put("min_price", minePrice);
+        params.put("max_price", maxPrice);
+        params.put("is_free_postage", is_free_postage);
+        params.put("is_preferential", is_preferential);
+        params.put("is_custom_made", is_custom_made);
+        params.put("sort_newest", sort_newest);
+        return params;
+    }
 }

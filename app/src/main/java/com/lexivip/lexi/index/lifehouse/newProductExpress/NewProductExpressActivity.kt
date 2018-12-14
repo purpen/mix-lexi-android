@@ -1,49 +1,40 @@
-package com.lexivip.lexi.index.explore.editorRecommend
+package com.lexivip.lexi.index.lifehouse.newProductExpress
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.AppApplication
-import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
-import com.lexivip.lexi.index.lifehouse.LookPeopleBean
-import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.lexivip.lexi.search.AdapterSearchGoods
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.acticity_all_editor_recommend.*
-import kotlinx.android.synthetic.main.header_all_editor_recommend.view.*
 
 
-class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.View {
+class NewProductExpressActivity : BaseActivity(), NewProductExpressContract.View {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
-
-    private val presenter: AllEditorRecommendPresenter by lazy { AllEditorRecommendPresenter(this) }
+    private var goodsCount = 0
+    private val presenter: NewProductExpressPresenter by lazy { NewProductExpressPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
-    private var dialogBottomSynthesiseSort: DialogBottomSynthesiseSort? = null
     private var dialogBottomFilter: DialogBottomFilter? = null
+    private var dialogBottomSynthesiseSort: DialogBottomSynthesiseSort? = null
     override val layout: Int = R.layout.acticity_all_editor_recommend
 
-    private lateinit var headerView: View
-    private var goodsCount = 0
-    override fun setPresenter(presenter: AllEditorRecommendContract.Presenter?) {
+    override fun setPresenter(presenter: NewProductExpressContract.Presenter?) {
         setPresenter(presenter)
     }
 
     override fun initView() {
         linearLayout.visibility = View.VISIBLE
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        customHeadView.setHeadCenterTxtShow(true, R.string.text_editor_recommend)
+        customHeadView.setHeadCenterTxtShow(true, R.string.text_new_product_recommend)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
@@ -54,60 +45,11 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
             adapter.data[position].spanSize
         }
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-
-        initHeaderView()
+        val headerView = View(this)
+        headerView.setPadding(0, DimenUtil.dp2px(10.0), 0, 0)
+        adapter.addHeaderView(View(this))
     }
 
-    /**
-     * 初始化头布局
-     */
-    private fun initHeaderView() {
-        presenter.getLookPeople()
-        headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
-        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_editor_recommend, headerView.imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(153.0), ImageSizeConfig.DEFAULT)
-        adapter.setHeaderView(headerView)
-    }
-
-    /**
-     * 设置看过的用户信息
-     */
-    override fun setLookPeopleData(data: LookPeopleBean.DataBean) {
-        if (data.count < 999) {
-            headerView.textViewHeaders.text = "${data.count}"
-        } else {
-            headerView.textViewHeaders.textViewHeaders.text = "+999"
-        }
-
-        val urlList = ArrayList<String>()
-        for (item in data.users) {
-            urlList.add(item.avatar)
-        }
-
-        //反转头像
-        urlList.reverse()
-
-        val recyclerView = headerView.recyclerViewHeader
-
-        //反转布局
-        val linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
-        recyclerView.layoutManager = linearLayoutManager
-        recyclerView.setHasFixedSize(true)
-        val headImageAdapter = HeadImageAdapter(R.layout.item_head_imageview)
-        recyclerView.adapter = headImageAdapter
-        if (recyclerView.itemDecorationCount == 0) {
-            recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration() {
-                private val dp5 = DimenUtil.dp2px(5.0)
-                override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-                    super.getItemOffsets(outRect, view, parent, state)
-                    if (parent.getChildAdapterPosition(view) >= 0 && parent.getChildAdapterPosition(view) != urlList.size - 1) {
-                        outRect.left = -dp5
-                    }
-                }
-            })
-        }
-
-        headImageAdapter.setNewData(urlList)
-    }
 
     override fun setGoodsCount(count: Int) {
         goodsCount = count
@@ -115,15 +57,17 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
     }
 
     override fun installListener() {
+
+        //排序
         linearLayoutSort.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
             if (dialogBottomSynthesiseSort == null) dialogBottomSynthesiseSort = DialogBottomSynthesiseSort(this, presenter)
             dialogBottomSynthesiseSort?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
                 when (presenter.getSortType()) {
-                    AllEditorRecommendPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
-                    AllEditorRecommendPresenter.SORT_TYPE_LOW_UP -> textViewSort.text = Util.getString(R.string.text_price_low_up)
-                    AllEditorRecommendPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
+                    NewProductExpressPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
+                    NewProductExpressPresenter.SORT_TYPE_LOW_UP -> textViewSort.text = Util.getString(R.string.text_price_low_up)
+                    NewProductExpressPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
                 }
             }
             dialogBottomSynthesiseSort?.show()
@@ -224,7 +168,7 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
         private val height = 20f
         override fun getDivider(itemPosition: Int): Y_Divider? {
             val count = adapter.itemCount
-            var divider: Y_Divider? = null
+            val divider: Y_Divider
             when (itemPosition) {
                 0 -> {
                     divider = Y_DividerBuilder()

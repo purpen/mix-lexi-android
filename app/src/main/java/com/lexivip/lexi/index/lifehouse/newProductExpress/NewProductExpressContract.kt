@@ -1,13 +1,12 @@
-package com.lexivip.lexi.index.explore.editorRecommend
+package com.lexivip.lexi.index.lifehouse.newProductExpress
 
 import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.beans.ProductBean
-import com.lexivip.lexi.index.lifehouse.LookPeopleBean
 
-class AllEditorRecommendContract {
+class NewProductExpressContract {
     interface View : BaseView<Presenter> {
         fun showLoadingView()
         fun dismissLoadingView()
@@ -22,15 +21,12 @@ class AllEditorRecommendContract {
         fun loadMoreEnd() {}
         fun loadMoreComplete() {}
         fun loadMoreFail() {}
-
-        fun setLookPeopleData(data: LookPeopleBean.DataBean)
         fun setGoodsCount(count: Int) {
 
         }
     }
 
     interface Presenter : BasePresenter {
-        fun getLookPeople()
         fun loadData(isRefresh: Boolean)
         fun loadData(page: Int, sortType: String,minePrice: String, maxPrice: String,cids:String, is_free_postage: String, is_preferential: String,is_custom_made: String,sort_newest: String)
         fun loadMoreData()

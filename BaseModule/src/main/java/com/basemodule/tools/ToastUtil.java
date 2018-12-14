@@ -24,7 +24,7 @@ public class ToastUtil {
     private static ToastHolder initToastHolder() {
         ToastHolder toastHolder = new ToastHolder();
 
-        Toast toast = new Toast(BaseModuleContext.getContext());
+        Toast toast = Toast.makeText(BaseModuleContext.getContext(),null,Toast.LENGTH_SHORT);
         View view = View.inflate(BaseModuleContext.getContext(), R.layout.view_svprogress, null);
         toast.setView(view);
 
@@ -45,8 +45,9 @@ public class ToastUtil {
     }
 
     public static void showSuccess(String message) {
-            Toast.makeText(BaseModuleContext.getContext(), message, Toast.LENGTH_SHORT).show();
-//        showSuccess(message, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(BaseModuleContext.getContext(), null, Toast.LENGTH_SHORT);
+        toast.setText(message);
+        toast.show();
     }
 
     public static void showSuccess(int resid) {
@@ -70,13 +71,15 @@ public class ToastUtil {
     }
 
     public static void showError(String message) {
-        Toast.makeText(BaseModuleContext.getContext(), message, Toast.LENGTH_SHORT).show();
-//        showError(message, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(BaseModuleContext.getContext(),null,Toast.LENGTH_SHORT);
+        toast.setText(message);
+        toast.show();
     }
 
     public static void showError(int resid) {
-        Toast.makeText(BaseModuleContext.getContext(), Util.getString(resid), Toast.LENGTH_SHORT).show();
-//        showError(resid, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(BaseModuleContext.getContext(),null,Toast.LENGTH_SHORT);
+        toast.setText(resid);
+        toast.show();
     }
 
     public static void showError(String message, int duration) {
@@ -96,13 +99,15 @@ public class ToastUtil {
     }
 
     public static void showInfo(String message) {
-        Toast.makeText(BaseModuleContext.getContext(), message, Toast.LENGTH_SHORT).show();
-//        showInfo(message, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(BaseModuleContext.getContext(),null,Toast.LENGTH_SHORT);
+        toast.setText(message);
+        toast.show();
     }
 
     public static void showInfo(int resid) {
-        Toast.makeText(BaseModuleContext.getContext(), Util.getString(resid), Toast.LENGTH_SHORT).show();
-//        showInfo(resid, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(BaseModuleContext.getContext(),null,Toast.LENGTH_SHORT);
+        toast.setText(resid);
+        toast.show();
     }
 
     public static void showInfo(String message, int duration) {

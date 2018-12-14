@@ -107,7 +107,6 @@
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@id/textViewFreightTitle"
-        android:drawableStart="@mipmap/icon_price_unit"
         android:gravity="center_vertical"
         android:includeFontPadding="false"
         android:paddingEnd="15dp"

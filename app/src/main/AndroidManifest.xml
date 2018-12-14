@@ -114,7 +114,7 @@
         <activity android:name=".index.selection.goodsSelection.AllGoodsSelectionActivity" />
         <activity android:name=".mine.like.likeGoods.AllLikeGoodsActivity" />
         <activity android:name=".mine.enshrine.recentLook.AllRecentLookGoodsActivity" />
-        <activity android:name=".index.explore.goodsClassify.GoodsClassifyActivity" />
+        <activity android:name=".index.lifehouse.newProductExpress.NewProductExpressActivity" />
         <activity android:name=".pay.SelectPayWayActivity" />
         <activity android:name=".pay.PayResultActivity" />
         <activity android:name=".lifeShop.AccountDetailActivity" />
@@ -205,6 +205,8 @@
         <activity android:name=".cashMoney.CashTimeActivity" />
         <activity android:name=".index.selection.applyForLifeHouse.ApplyForLifeHouseActivity" />
         <activity android:name=".index.selection.applyForLifeHouse.ApplyForLifeHouseSuccessActivity" />
+        <activity android:name=".index.lifehouse.SmallBRecommendGoodsListActivity" />
+        <activity android:name=".index.explore.goodsClassify.GoodsClassifyActivity" />
         <activity android:name=".lifeShop.MyFriendActivity"/>
         <activity android:name=".lifeShop.RewardActivity"/>
     </application>

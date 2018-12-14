@@ -4,6 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.index.selection.HeadLineBean
 import org.json.JSONArray
 
 class LifeHouseContract {
@@ -61,10 +62,21 @@ class LifeHouseContract {
 
         }
 
+        fun setNewProductsExpressData(products: List<ProductBean>) {
 
+        }
+
+        fun loadMoreFail() {
+
+        }
+
+        fun setHeadLineData(headlines: List<HeadLineBean.DataBean.HeadlinesBean>) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
+        fun getHeadLine()
         fun loadData(isRefresh:Boolean)
 
         fun loadMoreData()

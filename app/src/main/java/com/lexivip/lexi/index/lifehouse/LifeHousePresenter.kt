@@ -10,6 +10,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.index.bean.FavoriteBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendBean
+import com.lexivip.lexi.index.selection.HeadLineBean
 import com.lexivip.lexi.net.NetStatusBean
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean
 import org.json.JSONArray
@@ -23,6 +24,9 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
     private val dataSource: LifeHouseModel by lazy { LifeHouseModel() }
 
+    /**
+     * 加载馆主推荐数据
+     */
     override fun loadData(isRefresh: Boolean) {
         if (isRefresh) page = 1
         dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
@@ -48,9 +52,31 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
         })
     }
 
-    override fun loadMoreData() {
-        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
+    /**
+     * 获取头条
+     */
+    override fun getHeadLine() {
+        dataSource.getHeadLine(object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val headLineBean = JsonUtil.fromJson(json, HeadLineBean::class.java)
+                if (headLineBean.success) {
+                    view.setHeadLineData(headLineBean.data.headlines)
+                } else {
+                    view.showError(headLineBean.status.message)
+                }
+            }
 
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 加载更多分销商品
+     */
+    fun loadMoreOwnerGoodsData() {
+        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
                 if (distributionGoodsBean.success) {
@@ -63,7 +89,37 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                         page++
                     }
                 } else {
+                    view.loadMoreFail()
                     view.showError(distributionGoodsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+
+    /**
+     * 加载更多本周最受欢迎
+     */
+    override fun loadMoreData() {
+        dataSource.getWelcomeInWeek(page, object : IDataSource.HttpRequestCallBack {
+
+            override fun onSuccess(json: String) {
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    val products = editorRecommendBean.data.products
+                    if (products.isEmpty()) {
+                        view.loadMoreEnd()
+                    } else {
+                        view.loadMoreComplete()
+                        view.addData(products)
+                        page++
+                    }
+                } else {
+                    view.showError(editorRecommendBean.status.message)
                 }
             }
 
@@ -76,12 +132,14 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     /**
      * 获取本周最受欢迎
      */
-    fun getWelcomeInWeek() {
-        dataSource.getWelcomeInWeek(object : IDataSource.HttpRequestCallBack {
+    fun getWelcomeInWeek(isRefresh: Boolean) {
+        if (isRefresh) page = 1
+        dataSource.getWelcomeInWeek(page, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
                 if (editorRecommendBean.success) {
                     view.setWelcomeInWeekData(editorRecommendBean.data.products)
+                    page++
                 } else {
                     view.showError(editorRecommendBean.status.message)
                 }
@@ -96,7 +154,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     /**
      * 获取生活馆浏览人数
      */
-    fun getLookPeople() {
+    fun getLookPeople(isRefresh: Boolean) {
         dataSource.getLookPeople(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val lookPeopleBean = JsonUtil.fromJson(json, LookPeopleBean::class.java)
@@ -116,7 +174,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     /**
      * 获取小b生活馆信息
      */
-    fun getLifeHouse() {
+    fun getLifeHouse(isRefresh: Boolean) {
         dataSource.getLifeHouse(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val lifeHouseBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
@@ -320,6 +378,28 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                     view.setNewPublishProductsData(newPublishProductsBean.data.products)
                 } else {
                     view.showInfo(newPublishProductsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取新品速递
+     */
+    fun getNewProducts(isRefresh: Boolean) {
+        dataSource.getNewProducts(object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
+                if (editorRecommendBean.success) {
+                    view.setNewProductsExpressData(editorRecommendBean.data.products)
+                } else {
+                    view.showInfo(editorRecommendBean.status.message)
                 }
             }
 

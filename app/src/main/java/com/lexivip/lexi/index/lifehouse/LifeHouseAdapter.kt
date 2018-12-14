@@ -31,6 +31,12 @@ class LifeHouseAdapter(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Base
     private var logo: String = ""
     private val textTitle: String by lazy { Util.getString(R.string.text_curator_recommend) }
     override fun convert(helper: BaseViewHolder, item: ProductBean) {
+        val viewLine = helper.getView<View>(R.id.viewLine)
+        if (data.size-1 == helper.adapterPosition){
+            viewLine.visibility = View.GONE
+        }else{
+            viewLine.visibility = View.VISIBLE
+        }
         helper.setText(R.id.textViewName, textTitle)
         val textView0 = helper.getView<TextView>(R.id.textView0)
         if (item.is_free_postage) {

@@ -184,14 +184,11 @@
 
     <include layout="@layout/line_color_eee"/>
 
-    <include
-        android:id="@+id/linearLayoutLoadMore"
-        android:visibility="gone"
-        layout="@layout/footer_life_house_loadmore" />
-
     <View
+        android:id="@+id/viewLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp15"
         android:background="@color/color_f5f7f9"
+        android:visibility="gone"
         />
 </LinearLayout>

@@ -1,15 +1,15 @@
-package com.lexivip.lexi.index.explore.editorRecommend
+package com.lexivip.lexi.index.lifehouse.newProductExpress
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
-import com.lexivip.lexi.index.lifehouse.LookPeopleBean
+import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendBean
 import java.io.IOException
 
-class AllEditorRecommendPresenter(view: AllEditorRecommendContract.View) : AllEditorRecommendContract.Presenter {
-    private var view: AllEditorRecommendContract.View = checkNotNull(view)
+class NewProductExpressPresenter(view: NewProductExpressContract.View) : NewProductExpressContract.Presenter {
+    private var view: NewProductExpressContract.View = checkNotNull(view)
 
-    private val dataSource: AllEditorRecommendModel by lazy { AllEditorRecommendModel() }
+    private val dataSource: NewProductExpressModel by lazy { NewProductExpressModel() }
 
     private var sortType: String = SORT_TYPE_SYNTHESISE
 
@@ -57,13 +57,56 @@ class AllEditorRecommendPresenter(view: AllEditorRecommendContract.View) : AllEd
     }
 
 
+    fun getMinPrice():String{
+        return minePrice
+    }
+
+    fun getMaxPrice():String{
+        return maxPrice
+    }
+
+    /**
+     * 新品
+     */
+    fun getSortNewest():String{
+        return sortNewest
+    }
+
+    /**
+     * 是否包邮
+     */
+    fun isFreePostage():String{
+        return isFreePostage
+    }
+
+    /**
+     * 是否特惠
+     */
+    fun isPreferential():String{
+        return isPreferential
+    }
+
+    /**
+     * 是否订制
+     */
+    fun isCustomMade():String{
+        return isCustomMade
+    }
+
+
+    /**
+     * 子分类筛选id
+     */
+    fun getCids():String{
+        return cids
+    }
+
     /**
      * 默认参数加载数据
      */
     override fun loadData(isRefresh: Boolean) {
         this.isRefresh = isRefresh
         if (isRefresh) this.curPage = 1
-
         loadData(curPage, sortType,minePrice, maxPrice,cids,isFreePostage,isPreferential,isCustomMade,sortNewest)
     }
 
@@ -80,7 +123,6 @@ class AllEditorRecommendPresenter(view: AllEditorRecommendContract.View) : AllEd
         this.isPreferential = is_preferential
         this.isCustomMade = is_custom_made
         this.sortNewest = sort_newest
-
         dataSource.loadData(page, sortType, minePrice, maxPrice, cids, is_free_postage, is_preferential,is_custom_made,sort_newest,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                if (!isRefresh) view.showLoadingView()
@@ -158,26 +200,5 @@ class AllEditorRecommendPresenter(view: AllEditorRecommendContract.View) : AllEd
             }
         })
     }
-
-    /**
-     * 获取浏览人数
-     */
-    override fun getLookPeople() {
-        dataSource.getLookPeople( object : IDataSource.HttpRequestCallBack {
-            override fun onSuccess(json: String) {
-                val lookPeopleBean = JsonUtil.fromJson(json, LookPeopleBean::class.java)
-                if (lookPeopleBean.success) {
-                    view.setLookPeopleData(lookPeopleBean.data)
-                } else {
-                    view.showError(lookPeopleBean.status.message)
-                }
-            }
-
-            override fun onFailure(e: IOException) {
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
-            }
-        })
-    }
-
 
 }
