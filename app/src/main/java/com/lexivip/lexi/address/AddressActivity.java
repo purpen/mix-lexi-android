@@ -35,6 +35,7 @@ import com.lexivip.lexi.album.ImageCropActivity;
 import com.lexivip.lexi.album.ImageUtils;
 import com.lexivip.lexi.album.PicturePickerUtils;
 import com.lexivip.lexi.dialog.InquiryDialog;
+import com.lexivip.lexi.order.UserAddressListBean;
 import com.lexivip.lexi.user.areacode.CountryAreaCodeBean;
 import com.lexivip.lexi.user.areacode.MessageAreaCode;
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean;
@@ -437,10 +438,38 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void finishActivity() {
+    public void finishActivity(AddressBean.DataBean data) {
+        UserAddressListBean.DataBean dataBean=new UserAddressListBean.DataBean();
+        dataBean.city=data.getCity();
+        dataBean.area=data.getArea().toString();
+        dataBean.area_id=data.getArea_id().toString();
+        dataBean.city_id=data.getCity_id();
+        dataBean.country_id=data.getCountry_id();
+        dataBean.first_name=data.getFirst_name();
+        dataBean.full_address=data.getFull_address();
+        dataBean.is_default=data.isIs_default();
+        dataBean.is_from_wx=data.isIs_from_wx();
+        dataBean.last_name=data.getLast_name().toString();
+        dataBean.mobile=data.getMobile();
+        dataBean.phone=data.getPhone().toString();
+        dataBean.full_name=data.getFull_name();
+        dataBean.province=data.getProvince();
+        dataBean.province_id=data.getProvince_id();
+        dataBean.rid=data.getRid();
+        dataBean.street_address=data.getStreet_address();
+        dataBean.street_address_two=data.getStreet_address();
+        dataBean.town=data.getTown().toString();
+        dataBean.town_id=data.getTown_id();
+        dataBean.zipcode=data.getZipcode();
         Intent intent = new Intent();
-        intent.putExtra("isRefresh", true);
-        setResult(RESULT_OK, intent);
+        intent.putExtra(AddressActivity.class.getSimpleName(),dataBean);
+        if (isNew){
+            setResult(Constants.REQUEST_CODE_REFRESH_ADDRESS, intent);
+        }else {
+            setResult(Constants.REQUEST_CODE_EDIT_ADDRESS, intent);
+            //intent.putExtra(Constants.REQUEST_CODE_EDIT_ADDRESS,dataBean);
+        }
+        //intent.putExtra("isRefresh", true);
         finish();
     }
 

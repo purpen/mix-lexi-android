@@ -21,7 +21,7 @@ public class AddressContract {
         void setToken(UploadTokenBean bean);
         void setImageId(JSONArray ids) throws JSONException;
         void setCountry(CountryAreaCodeBean bean);
-        void finishActivity();
+        void finishActivity(AddressBean.DataBean data);
     }
     interface Presenter extends BasePresenter{
         void loadData(String rid);

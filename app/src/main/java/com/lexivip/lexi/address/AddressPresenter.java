@@ -164,7 +164,7 @@ public class AddressPresenter implements AddressContract.Presenter {
                 view.dismissLoadingView();
                 AddressBean bean= JsonUtil.fromJson(json,AddressBean.class);
                 if (bean.isSuccess()){
-                    view.finishActivity();
+                    view.finishActivity(bean.getData());
                 }
             }
 
@@ -194,7 +194,7 @@ public class AddressPresenter implements AddressContract.Presenter {
                 LogUtil.e("返回的："+json);
                 AddressBean bean= JsonUtil.fromJson(json,AddressBean.class);
                 if (bean.isSuccess()){
-                    view.finishActivity();
+                    view.finishActivity(bean.getData());
                     view.dismissLoadingView();
                 }else {
                     view.dismissLoadingView();
