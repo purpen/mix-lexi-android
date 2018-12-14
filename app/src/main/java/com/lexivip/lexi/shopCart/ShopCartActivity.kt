@@ -537,7 +537,7 @@ class ShopCartActivity : BaseActivity(), ShopCartContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onJumpShopCart(message: String) {
-        presenter.getShopCartGoods(false)
+        if (UserProfileUtil.isLogin()) presenter.getShopCartGoods(false)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

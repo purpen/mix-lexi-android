@@ -70,7 +70,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     override fun installListener() {
 
-        footerView.setOnClickListener {
+        footerView.setOnClickListener { //添加新地址
             val intent = Intent(this, AddressActivity::class.java)
             intent.putExtra(AddressActivity::class.java.simpleName, createOrderBean.address_rid)
             startActivityForResult(intent,Constants.REQUEST_CODE_REFRESH_ADDRESS)
@@ -82,7 +82,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
             val intent = Intent(this, AddressActivity::class.java)
             intent.putExtra("isNew", false)
             intent.putExtra(AddressActivity::class.java.simpleName, item.rid)
-            startActivityForResult(intent,Constants.REQUEST_CODE_REFRESH_ADDRESS)
+            startActivityForResult(intent,Constants.REQUEST_CODE_EDIT_ADDRESS)
         }
 
         //checkBox点击
@@ -264,7 +264,10 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_OK) return
-        presenter.loadData()
+        if (requestCode == Constants.REQUEST_CODE_REFRESH_ADDRESS){ //添加成功新地址
+
+        }
+//        presenter.loadData()
     }
 
     override fun onDestroy() {
