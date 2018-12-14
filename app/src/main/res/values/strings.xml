@@ -287,7 +287,8 @@
     <string name="text_pay_ant">蚂蚁花呗支付</string>
     <string name="text_has_selected_goods">选好了</string>
     <string name="text_internship_countdown">实习倒计时</string>
-    <string name="text_live_cumulative_income">生活馆累计收益</string>
+    <string name="text_live_cumulative_income">累计收益</string>
+    <string name="text_life_sales_volume">生活馆销售额</string>
     <string name="text_live_yuan">（元）</string>
     <string name="text_live_pen">（笔）</string>
     <string name="text_live_all_order">总计成交订单</string>
@@ -456,4 +457,14 @@
     <string name="text_new_product_recommend">新品速递</string>
     <string name="text_look_goods_more">查看更多</string>
     <string name="title_owner_recommend">馆主推荐</string>
+    <string name="text_cash_record">提现记录</string>
+    <string name="text_invitation">邀请</string>
+    <string name="text_day_invitation">今日邀请：</string>
+    <string name="text_reward">奖励</string>
+    <string name="text_internship">实习</string>
+    <string name="text_my_reward">我的奖励</string>
+    <string name="text_pending_reward">待结算奖励为好友销售订单还未完成交易，完成后即可入账，如交易失败奖励金额退还。</string>
+    <string name="text_my_friend">我的朋友</string>
+    <string name="text_daren">达人</string>
+    <string name="text_return">交易失败，已退款</string>
 </resources>

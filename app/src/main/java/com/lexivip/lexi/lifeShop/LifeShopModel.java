@@ -36,6 +36,14 @@ public class LifeShopModel {
                 url=URL.LIFE_CASH_COLLECT;
                 params = ClientParamsAPI.getStoreRidParams(rid);
                 break;
+            case 4:
+                url=URL.LIFE_FRIEND;
+                params=ClientParamsAPI.getDefaultParams();
+                break;
+            case 5:
+                url=URL.LIFE_REWARD;
+                params=ClientParamsAPI.getDefaultParams();
+                break;
         }
 
         HttpRequest.sendRequest(HttpRequest.GET, url, params, new IDataSource.HttpRequestCallBack() {

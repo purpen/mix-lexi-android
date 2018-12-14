@@ -8,7 +8,10 @@ import android.text.TextUtils;
 import com.basemodule.tools.LogUtil;
 import com.lexivip.lexi.brandHouse.BrandHouseActivity;
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailActivity;
+import com.lexivip.lexi.lifeShop.TransactionOrderActivity;
 import com.lexivip.lexi.orderList.LogisticsActivity;
+import com.lexivip.lexi.orderList.OrderListActivity;
+import com.lexivip.lexi.user.login.UserProfileUtil;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.UmengNotifyClickActivity;
@@ -30,7 +33,7 @@ public class MipushTestActivity extends UmengNotifyClickActivity {
     }
 
     @Override
-    public void onMessage(Intent intent) {
+    public void onMessage(final Intent intent) {
         super.onMessage(intent);
         final String body = intent.getStringExtra(AgooConstants.MESSAGE_BODY);
         LogUtil.e("华为的body："+body);
@@ -48,19 +51,32 @@ public class MipushTestActivity extends UmengNotifyClickActivity {
                             intent1.putExtra("kdn_company_code",map.get("express_code"));
                             intent1.putExtra("order_rid",map.get("order_rid"));
                             startActivity(intent1);
+                            finish();
                             break;
                         case "2":
                             Intent intent2=new Intent(MipushTestActivity.this,BrandHouseActivity.class);
                             intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent2.putExtra("rid",map.get("store_rid"));
                             startActivity(intent2);
+                            finish();
                             break;
                         case "3":
                             Intent intent3=new Intent(MipushTestActivity.this,ShowWindowDetailActivity.class);
                             intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent3.putExtra(ShowWindowDetailActivity.class.getSimpleName(),map.get("shop_window_id"));
                             startActivity(intent3);
+                            finish();
                             break;
+                        case "4":
+                            Intent intent4=new Intent(MipushTestActivity.this,TransactionOrderActivity.class);
+                            intent4.putExtra("rid",UserProfileUtil.storeId());
+                            startActivity(intent4);
+                            finish();
+                            break;
+                        case "5":
+                            Intent intent5=new Intent(MipushTestActivity.this,MainActivity.class);
+                            startActivity(intent5);
+                            finish();
                     }
                 }
             });

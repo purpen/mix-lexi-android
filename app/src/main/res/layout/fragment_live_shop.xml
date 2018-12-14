@@ -399,6 +399,224 @@
             </LinearLayout>
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            android:background="@android:color/white"
+            android:paddingRight="@dimen/dp15"
+            android:paddingLeft="@dimen/dp15"
+            android:layout_below="@+id/linearLayout4">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp45"
+                android:layout_marginTop="@dimen/dp15"
+                android:background="@drawable/bg_colorffe4e7_radius4"
+                >
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="邀好友开馆，赚现金"
+                    android:textSize="@dimen/sp13"
+                    android:textColor="@color/color_333"
+                    android:layout_marginTop="@dimen/dp6"
+                    android:layout_marginLeft="63dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text"
+                    android:textColor="@color/color_333"
+                    android:textSize="@dimen/sp13"
+                    android:text="组队赚钱，收益速增"
+                    android:layout_marginLeft="63dp"/>
+                <Button
+                    android:id="@+id/bt_invitation"
+                    android:layout_width="@dimen/dp66"
+                    android:layout_height="@dimen/dp25"
+                    style="@style/Base.Widget.AppCompat.Button.Borderless"
+                    android:text="@string/text_invitation"
+                    android:background="@drawable/bg_colorff6666_radius4"
+                    android:textColor="@android:color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp10"/>
+            </RelativeLayout>
+            <ImageView
+                android:layout_width="@dimen/dp45"
+                android:layout_height="@dimen/dp45"
+                android:background="@mipmap/icon_life_invitation"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recyclerView"
+            android:background="@android:color/white"
+            android:padding="@dimen/dp15">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我的朋友"
+                        android:textColor="@color/color_333" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="（人）"
+                        android:textColor="@color/color_999"
+                        android:textSize="@dimen/sp12" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_friend_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/icon_arrow_more"
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/color_333"
+                    android:textSize="@dimen/sp20"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_day_invitation"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp12" />
+
+                    <TextView
+                        android:id="@+id/tv_day_invitation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp12"
+                        android:text="0"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="@dimen/dp1"
+                android:layout_height="match_parent"
+                android:background="@color/color_e9e9e9" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp15"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_reward"
+                        android:textColor="@color/color_333" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="（元）"
+                        android:textColor="@color/color_999"
+                        android:textSize="@dimen/sp12" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_reward_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/icon_arrow_more"
+                    android:gravity="center_vertical"
+                    android:text="0.00"
+                    android:textColor="@color/color_ff9f22"
+                    android:textSize="@dimen/sp20"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_live_loading_money"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp12" />
+
+                    <TextView
+                        android:id="@+id/tv_reward_put"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_ff9f22"
+                        android:textSize="@dimen/sp12"
+                        android:text="0.00"/>
+                    <ImageView
+                        android:id="@+id/iv_reward_problem"
+                        android:layout_width="@dimen/dp18"
+                        android:layout_height="@dimen/dp18"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:background="@mipmap/icon_life_problem"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:layout_marginTop="@dimen/dp1"
+            android:layout_below="@+id/linearLayout5"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingRight="@dimen/dp20">
+            <LinearLayout
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp45"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginBottom="@dimen/dp35"
+                android:background="@drawable/bg_colorwhite_radiu4"
+                android:elevation="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_marginRight="@dimen/dp5"
+                android:orientation="vertical"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_live_hint4"
+                    android:textColor="@color/color_6ed7af"
+                    android:drawableEnd="@mipmap/icon_life_right"
+                    android:drawablePadding="@dimen/dp5"/>
+            </LinearLayout>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_invite"
             android:layout_width="match_parent"
@@ -408,7 +626,8 @@
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/dp15">
+            android:padding="@dimen/dp15"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="@dimen/dp15"
@@ -429,36 +648,7 @@
                 android:background="@mipmap/icon_arrow_more" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_invite"
-            android:layout_marginTop="@dimen/dp1"
-            android:background="@android:color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/dp15">
-
-            <ImageView
-                android:layout_width="@dimen/dp15"
-                android:layout_height="@dimen/dp15"
-                android:layout_marginRight="@dimen/dp10" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/text_live_hint4"
-                android:textColor="@color/color_333" />
-
-            <ImageView
-                android:layout_width="@dimen/dp9"
-                android:layout_height="@dimen/dp15"
-                android:background="@mipmap/icon_arrow_more" />
-        </LinearLayout>
-
-        <Button
+        <!--<Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp44"
@@ -471,6 +661,6 @@
             android:text="@string/text_phone"
             android:textColor="@color/color_6ed7af"
             android:textSize="@dimen/sp15"
-            android:visibility="gone"/>
+            android:visibility="gone"/>-->
     </RelativeLayout>
 </ScrollView>

@@ -64,8 +64,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     private TextView tv_put_money;
     private TextView tv_already_put;
     private LinearLayout ll_preserve_image;
-    private LinearLayout ll_invite;
-    private Button button;
+    private LinearLayout button;
     private TextView tv_status;
     private WaitingDialog dialog;
     private LifeShopPresenter presenter;
@@ -101,6 +100,11 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
     private LifeShopSaleBean saleBean;
     private LifeShopOrderBean orderBean;
     private LinearLayout linearLayout1;
+    private TextView tv_sales_volume;
+    private TextView tv_friend_num;
+    private TextView tv_reward_money;
+    private TextView tv_day_invitation;
+    private TextView tv_reward_put;
 
     public static LifeShopFragment newInstance(){
         LifeShopFragment lifeShopFragment=new LifeShopFragment();
@@ -134,15 +138,23 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
         tv_order_num = getView().findViewById(R.id.tv_order_num);
         tv_day_num = getView().findViewById(R.id.tv_day_num);
         tv_put_money = getView().findViewById(R.id.tv_put_money);
+        tv_sales_volume = getView().findViewById(R.id.tv_sales_volume);
         tv_already_put = getView().findViewById(R.id.tv_already_put);
         ll_preserve_image = getView().findViewById(R.id.ll_preserve_image);
         ll_gross_earnings = getView().findViewById(R.id.ll_gross_earnings);
-        ll_invite = getView().findViewById(R.id.ll_invite);
         button = getView().findViewById(R.id.button);
         tv_status = getView().findViewById(R.id.tv_status);
         linearLayout1 = getView().findViewById(R.id.linearLayout1);
-        LinearLayout linearLayout6=getView().findViewById(R.id.linearLayout6);
-        linearLayout6.setOnClickListener(this);
+        Button bt_invitation=getView().findViewById(R.id.bt_invitation);
+        bt_invitation.setOnClickListener(this);
+        tv_friend_num = getView().findViewById(R.id.tv_friend_num);
+        tv_friend_num.setOnClickListener(this);
+        tv_day_invitation = getView().findViewById(R.id.tv_day_invitation);
+        tv_reward_money = getView().findViewById(R.id.tv_reward_money);
+        tv_reward_money.setOnClickListener(this);
+        tv_reward_put = getView().findViewById(R.id.tv_reward_put);
+        ImageView iv_reward_problem=getView().findViewById(R.id.iv_reward_problem);
+        iv_reward_problem.setOnClickListener(this);
         iv_money_show.setOnClickListener(this);
         iv_problem.setOnClickListener(this);
         iv_show_put.setOnClickListener(this);
@@ -150,7 +162,6 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
         tv_order_num.setOnClickListener(this);
         tv_put_money.setOnClickListener(this);
         button.setOnClickListener(this);
-        ll_invite.setOnClickListener(this);
         ll_gross_earnings.setOnClickListener(this);
     }
 
@@ -161,6 +172,8 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
         presenter.loadData(rid, 1);
         presenter.loadData(rid, 2);
         presenter.loadData(rid, 3);
+        presenter.loadData(rid,4);
+        presenter.loadData(rid,5);
     }
 
     @Override
@@ -171,6 +184,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                     iv_money_show.setBackgroundResource(R.mipmap.icon_live_hidden_money);
                     isShowSale = false;
                     tv_gross_earnings.setText("***");
+                    tv_sales_volume.setText("***");
                     tv_day_money.setText("***");
                     tv_loading_money.setText("***");
                 } else {
@@ -178,10 +192,12 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                     isShowSale = true;
                     if (saleBean==null) {
                         tv_gross_earnings.setText("0.00");
+                        tv_sales_volume.setText("0.00");
                         tv_day_money.setText("0.00");
                         tv_loading_money.setText("0.00");
                     } else {
                         tv_gross_earnings.setText(saleBean.data.total_commission_price);
+                        tv_sales_volume.setText(saleBean.data.total_payed_amount);
                         tv_day_money.setText(saleBean.data.today_commission_price);
                         tv_loading_money.setText(String.valueOf(saleBean.data.pending_commission_price));
                     }
@@ -224,7 +240,7 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                 getActivity().startActivity(intent);
                 break;
             case R.id.button:
-                InquiryDialog inquiryDialog = new com.lexivip.lexi.dialog.InquiryDialog(getContext(),"确定拨打客服电话？","取消","拨打", new InquiryDialog.InquiryInterface() {
+                /*InquiryDialog inquiryDialog = new com.lexivip.lexi.dialog.InquiryDialog(getContext(),"确定拨打客服电话？","取消","拨打", new InquiryDialog.InquiryInterface() {
                     @Override
                     public void getCheck(boolean isCheck) {
                         if (!isCheck) {
@@ -234,14 +250,9 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                         }
                     }
                 });
-                inquiryDialog.show();
-                break;
-            case R.id.ll_invite:
-                share();
-                break;
-            case R.id.linearLayout6:
+                inquiryDialog.show();*/
                 ClipboardManager clip = (ClipboardManager)getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    //clip.getText(); // 粘贴
+                //clip.getText(); // 粘贴
                 //clip.setText("lexixiaoduo"); // 复制
                 //创建ClipData对象
                 ClipData clipData = ClipData.newPlainText("simple text copy", "lexixiaoduo");
@@ -250,10 +261,24 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                 InquiryDialog inquiryDialog1=new InquiryDialog(getContext(),"已复制到粘贴板，请添加管理员加群：\nlexixiaoduo");
                 inquiryDialog1.show();
                 break;
+            case R.id.bt_invitation:
+                share();
+                break;
             case R.id.ll_gross_earnings:
                 intent = new Intent(getContext(), TransactionRecordActivity.class);
                 intent.putExtra("rid", rid);
                 getActivity().startActivity(intent);
+                break;
+            case R.id.tv_friend_num:
+                startActivity(new Intent(getContext(),MyFriendActivity.class));
+                break;
+            case R.id.tv_reward_money:
+                startActivity(new Intent(getContext(),RewardActivity.class));
+                break;
+            case R.id.iv_reward_problem:
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                builder1.setMessage(Util.getString(R.string.text_pending_reward));
+                builder1.create().show();
                 break;
         }
     }
@@ -343,9 +368,22 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
         saleMoney = bean.data.total_commission_price;
         if (isShowSale) {
             tv_gross_earnings.setText(bean.data.total_commission_price);
+            tv_sales_volume.setText(bean.data.total_payed_amount);
             tv_day_money.setText(bean.data.today_commission_price);
             tv_loading_money.setText(String.valueOf(bean.data.pending_commission_price));
         }
+    }
+
+    @Override
+    public void setFriendData(LifeShopFriendBean bean) {
+        tv_friend_num.setText(bean.data.invite_count);
+        tv_day_invitation.setText(bean.data.today_count);
+    }
+
+    @Override
+    public void setRewardData(LifeShopRewardBean bean) {
+        tv_reward_money.setText(bean.data.reward_price);
+        tv_reward_put.setText(bean.data.pending_price);
     }
 
     @Override

@@ -1681,6 +1681,25 @@ public class ClientParamsAPI {
     }
 
     /**
+     * 35元分享提现
+     * @param cash_type
+     * @param open_id
+     * @param ali_account
+     * @param ali_name
+     * @param amount
+     * @return
+     */
+    public static HashMap<String,Object> getInvitationCash(String cash_type,String open_id,String ali_account,String ali_name,int amount){
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("cash_type",cash_type);
+        params.put("open_id", open_id);
+        params.put("ali_account", ali_account);
+        params.put("ali_name", ali_name);
+        params.put("amount", amount);
+        return params;
+    }
+
+    /**
      * 获取新品速递列表
      * @param page
      * @param sortType

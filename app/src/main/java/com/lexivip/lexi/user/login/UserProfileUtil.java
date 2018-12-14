@@ -97,4 +97,14 @@ public class UserProfileUtil {
         UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);
         return userProfileBean.data.profile.username;
     }
+
+    /**
+     * 返回用户数据
+     */
+    public static UserProfileBean getUserData(){
+        String read = SPUtil.read(Constants.USER_PROFILE);
+        if (TextUtils.isEmpty(read)) return null;
+        UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);
+        return userProfileBean;
+    }
 }

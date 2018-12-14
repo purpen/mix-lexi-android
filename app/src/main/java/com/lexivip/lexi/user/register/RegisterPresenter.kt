@@ -79,13 +79,13 @@ class RegisterPresenter(view: RegisterContract.View) : RegisterContract.Presente
     /**
      * 发送验证码
      */
-    override fun sendCheckCode(areaCode: String,phone: String) {
+    override fun sendCheckCode(type:Int,areaCode: String,phone: String) {
         if (TextUtils.isEmpty(phone)){
             view.showInfo(AppApplication.getContext().getString(R.string.text_phone_null))
             return
         }
 
-        dataSource.sendCheckCode(areaCode,phone,object : IDataSource.HttpRequestCallBack {
+        dataSource.sendCheckCode(type,areaCode,phone,object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 view.showLoadingView()
             }

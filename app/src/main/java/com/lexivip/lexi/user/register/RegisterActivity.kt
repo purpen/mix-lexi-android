@@ -91,7 +91,7 @@ class RegisterActivity : BaseActivity(), View.OnClickListener, RegisterContract.
             R.id.textViewCountryCode -> startActivity(Intent(this,SelectCountryOrAreaActivity::class.java))
 
             R.id.textViewGetCode -> {
-                presenter.sendCheckCode(textViewCountryCode.text.toString(),etPhone.text.toString())
+                presenter.sendCheckCode(type,textViewCountryCode.text.toString(),etPhone.text.toString())
             }
             R.id.textViewService -> {
                 val intent=Intent(this, OpenLifeHouseActivity::class.java)

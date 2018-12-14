@@ -207,6 +207,8 @@
         <activity android:name=".index.selection.applyForLifeHouse.ApplyForLifeHouseSuccessActivity" />
         <activity android:name=".index.lifehouse.SmallBRecommendGoodsListActivity" />
         <activity android:name=".index.explore.goodsClassify.GoodsClassifyActivity" />
+        <activity android:name=".lifeShop.MyFriendActivity"/>
+        <activity android:name=".lifeShop.RewardActivity"/>
     </application>
 
 </manifest>

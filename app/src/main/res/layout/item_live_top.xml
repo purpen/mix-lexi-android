@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_live_cumulative_income"
+                android:text="@string/text_life_sales_volume"
                 android:textColor="@android:color/white" />
 
             <TextView
@@ -39,15 +39,32 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_gross_earnings"
+        android:id="@+id/tv_sales_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp10"
         android:text="0.00"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp24"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/text_live_cumulative_income"/>
+        <TextView
+            android:id="@+id/tv_gross_earnings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:layout_marginLeft="@dimen/dp5"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"

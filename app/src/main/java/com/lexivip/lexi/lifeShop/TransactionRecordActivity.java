@@ -63,6 +63,7 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
     private String rId;
     private TransactionRecordPresenter presenter=new TransactionRecordPresenter(this);
     private LifeShopSaleBean saleBean;
+    private TextView tv_sales_volume;
 
     @Override
     protected int getLayout() {
@@ -92,6 +93,7 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
 
         iv_money_show = findViewById(R.id.iv_money_show);
         tv_gross_earnings = findViewById(R.id.tv_gross_earnings);
+        tv_sales_volume = findViewById(R.id.tv_sales_volume);
         tv_day_money = findViewById(R.id.tv_day_money);
         tv_loading_money = findViewById(R.id.tv_loading_money);
         iv_problem = findViewById(R.id.iv_problem);
@@ -241,6 +243,7 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
                     iv_money_show.setBackgroundResource(R.mipmap.icon_live_hidden_money);
                     isShowSale=false;
                     tv_gross_earnings.setText("***");
+                    tv_sales_volume.setText("***");
                     tv_day_money.setText("***");
                     tv_loading_money.setText("***");
                 }else{
@@ -248,10 +251,12 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
                     isShowSale=true;
                     if (saleBean==null){
                         tv_gross_earnings.setText("0.00");
+                        tv_sales_volume.setText("0.00");
                         tv_day_money.setText("0.00");
                         tv_loading_money.setText("0.00");
                     }else{
                         tv_gross_earnings.setText(saleBean.data.total_commission_price);
+                        tv_sales_volume.setText(saleBean.data.total_payed_amount);
                         tv_day_money.setText(String.valueOf(saleBean.data.today_commission_price));
                         tv_loading_money.setText(String.valueOf(saleBean.data.pending_commission_price));
                     }
@@ -321,6 +326,7 @@ public class TransactionRecordActivity extends BaseActivity implements View.OnCl
         saleBean = bean;
         if (isShowSale) {
             tv_gross_earnings.setText(bean.data.total_commission_price);
+            tv_sales_volume.setText(bean.data.total_payed_amount);
             tv_day_money.setText(bean.data.today_commission_price);
             tv_loading_money.setText(bean.data.pending_commission_price);
         }

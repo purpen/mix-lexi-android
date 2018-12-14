@@ -3,7 +3,7 @@ package com.lexivip.lexi.net
 object URL {
     //测试服务器
 //    const val BASE_URL = "https://wx.taihuoniao.com/v1.0/"
-    //正式服务器
+//    正式服务器
     const val BASE_URL = "https://wxapi.lexivip.com/v1.0/"
 
     /**
@@ -923,4 +923,28 @@ object URL {
      * 新品速递列表
      */
     const val NEW_GOODS_EXPRESS = "${BASE_URL}column/handpick_new_express"
+    /**
+     * 微信绑定手机号获取验证码接口
+     */
+    const val BIND_WX_MOBILE_CODE="${BASE_URL}users/wx_bind_mobile_verify_code"
+    /**
+     * 35元邀请好友提现
+     */
+    const val CASH_INVITATION="${BASE_URL}win_cash/cash_money"
+    /**
+     *获取我的邀请好友数量汇总
+     */
+    const val LIFE_FRIEND="${BASE_URL}invite_life_count"
+    /**
+     * 获取我的邀请好友奖励汇总
+     */
+    const val LIFE_REWARD="${BASE_URL}invite_life_reward"
+    /**
+     * 邀请好友-奖励列表
+     */
+    const val REWARD_LIST="${BASE_URL}invite_life/rewards"
+    /**
+     * 邀请好友-我的朋友
+     */
+    const val MY_FRIEND="${BASE_URL}invite_life/friends"
 }

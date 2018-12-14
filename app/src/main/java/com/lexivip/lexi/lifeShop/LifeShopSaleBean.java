@@ -21,6 +21,7 @@ public class LifeShopSaleBean {
         public String pending_commission_price;
         public String today_commission_price;
         public String total_commission_price;
+        public String total_payed_amount;
     }
 
     public static class StatusBean {

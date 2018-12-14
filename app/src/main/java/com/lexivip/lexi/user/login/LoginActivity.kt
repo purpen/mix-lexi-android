@@ -206,7 +206,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, LoginContract.View {
     }
 
     override fun onDestroy() {
-        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this)
         super.onDestroy()
     }
 

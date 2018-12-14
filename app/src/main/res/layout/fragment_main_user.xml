@@ -39,7 +39,6 @@
         tl:tl_indicator_height="2dp"
         tl:tl_indicator_width_equal_title="true"
         tl:tl_tab_padding="@dimen/dp15"
-        tl:tl_textBold="BOTH"
         tl:tl_textSelectColor="@color/color_6ed7af"
         tl:tl_textUnselectColor="@color/color_555"
         tl:tl_textsize="@dimen/sp17"

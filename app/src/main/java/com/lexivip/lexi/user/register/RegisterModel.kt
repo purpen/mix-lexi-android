@@ -11,9 +11,15 @@ open class RegisterModel {
     /**
      * 发送动态码
      */
-    fun sendCheckCode(areaCode:String,phone: String,callback: IDataSource.HttpRequestCallBack) {
+    fun sendCheckCode(type:Int,areaCode:String,phone: String,callback: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getCheckCodeRequestParams(areaCode,phone)
-        HttpRequest.sendRequest(HttpRequest.POST,URL.REGISTER_VERIFY_CODE,params, object : IDataSource.HttpRequestCallBack {
+        var url:String?=null
+        if (type==0){
+            url=URL.REGISTER_VERIFY_CODE
+        }else{
+            url=URL.LOGIN_SEND_CHECKCODE
+        }
+        HttpRequest.sendRequest(HttpRequest.POST,url,params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callback.onStart()
             }

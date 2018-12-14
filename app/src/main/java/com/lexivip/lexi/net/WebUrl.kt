@@ -23,6 +23,14 @@ object WebUrl{
      */
     const val WINDOW="${BASE_URL}shop/window?rid="
     /**
+     * 加载35元邀请好友
+     */
+    const val INVITATION="${BASE_URL}invitation?uid=14892617530"//https://h5.lexivip.com/invitation?uid=14892617530
+    /**
+     * 35元邀请好友分享链接
+     */
+    const val SHARE_INVITATION="${BASE_URL}redenvelope?uid="
+    /**
      * 品牌馆链接
      */
     const val BRAND_HOUSE="${BASE_URL}brand_pavilion?rid="

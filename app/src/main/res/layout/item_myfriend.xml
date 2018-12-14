@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/dp20"
+        android:paddingLeft="@dimen/dp20"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp15"
+        android:paddingBottom="@dimen/dp15">
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="@dimen/dp35"
+            android:layout_height="@dimen/dp35" />
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_333"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/image"
+            android:layout_marginLeft="@dimen/dp5" />
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_color2785fa_rectangle"
+            android:text="@string/text_internship"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp11"
+            android:paddingLeft="@dimen/dp8"
+            android:paddingRight="@dimen/dp8"
+            android:paddingBottom="@dimen/dp2"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_name"/>
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="￥"
+            android:textColor="@color/color_333"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp12"
+            android:layout_below="@id/tv_money"
+            android:layout_alignParentRight="true"
+            android:text="@string/text_life_sales_volume"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/color_e9e9e9"/>
+</LinearLayout>
