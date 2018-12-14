@@ -438,31 +438,35 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    public void finishActivity(AddressBean.DataBean data) {
-        UserAddressListBean.DataBean dataBean=new UserAddressListBean.DataBean();
-        dataBean.city=data.getCity();
-        dataBean.area=data.getArea().toString();
-        dataBean.area_id=data.getArea_id().toString();
-        dataBean.city_id=data.getCity_id();
-        dataBean.country_id=data.getCountry_id();
-        dataBean.first_name=data.getFirst_name();
-        dataBean.full_address=data.getFull_address();
-        dataBean.is_default=data.isIs_default();
-        dataBean.is_from_wx=data.isIs_from_wx();
-        dataBean.last_name=data.getLast_name().toString();
-        dataBean.mobile=data.getMobile();
-        dataBean.phone=data.getPhone().toString();
-        dataBean.full_name=data.getFull_name();
-        dataBean.province=data.getProvince();
-        dataBean.province_id=data.getProvince_id();
-        dataBean.rid=data.getRid();
-        dataBean.street_address=data.getStreet_address();
-        dataBean.street_address_two=data.getStreet_address();
-        dataBean.town=data.getTown().toString();
-        dataBean.town_id=data.getTown_id();
-        dataBean.zipcode=data.getZipcode();
+    public void finishActivity(AddressBean.DataBean data,boolean isDelete) {
         Intent intent = new Intent();
-        intent.putExtra(AddressActivity.class.getSimpleName(),dataBean);
+        if (isDelete){
+            intent.putExtra(AddressActivity.class.getSimpleName(), "");
+        }else {
+            UserAddressListBean.DataBean dataBean = new UserAddressListBean.DataBean();
+            dataBean.city = data.getCity();
+            dataBean.area = data.getArea().toString();
+            dataBean.area_id = data.getArea_id().toString();
+            dataBean.city_id = data.getCity_id();
+            dataBean.country_id = data.getCountry_id();
+            dataBean.first_name = data.getFirst_name();
+            dataBean.full_address = data.getFull_address();
+            dataBean.is_default = data.isIs_default();
+            dataBean.is_from_wx = data.isIs_from_wx();
+            dataBean.last_name = data.getLast_name().toString();
+            dataBean.mobile = data.getMobile();
+            dataBean.phone = data.getPhone().toString();
+            dataBean.full_name = data.getFull_name();
+            dataBean.province = data.getProvince();
+            dataBean.province_id = data.getProvince_id();
+            dataBean.rid = data.getRid();
+            dataBean.street_address = data.getStreet_address();
+            dataBean.street_address_two = data.getStreet_address();
+            dataBean.town = data.getTown().toString();
+            dataBean.town_id = data.getTown_id();
+            dataBean.zipcode = data.getZipcode();
+            intent.putExtra(AddressActivity.class.getSimpleName(), dataBean);
+        }
         if (isNew){
             setResult(Constants.REQUEST_CODE_REFRESH_ADDRESS, intent);
         }else {
