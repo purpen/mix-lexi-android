@@ -90,6 +90,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun initView() {
+        loadingView.setOffsetTop(DimenUtil.dp2px(103.0))
         EventBus.getDefault().register(this)
         val gridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
@@ -409,11 +410,14 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             refreshLayout.finishRefresh(1000/*,false*/);//传入false表示刷新失败
             presenter.getWelcomeInWeek(true)
             presenter.getNewProducts(true)
+            if (!UserProfileUtil.isLogin() || !UserProfileUtil.isSmallB()) presenter.getHeadLine()
             if (UserProfileUtil.isLogin()) {
-                presenter.loadData(true)
-                presenter.getLifeHouse(true)
-                presenter.getLookPeople(true)
                 presenter.getNewPublishProducts(true)
+                if (UserProfileUtil.isSmallB()) {
+                    presenter.loadData(true)
+                    presenter.getLifeHouse(true)
+                    presenter.getLookPeople(true)
+                }
             }
             //新品速递
         }
@@ -550,10 +554,12 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         presenter.getWelcomeInWeek(false)
         presenter.getNewProducts(false)
         if (UserProfileUtil.isLogin()) {
-            presenter.loadData(false)
-            presenter.getLifeHouse(false)
-            presenter.getLookPeople(false)
-            presenter.getNewPublishProducts(false)
+            if (UserProfileUtil.isSmallB()) {
+                presenter.getNewPublishProducts(false)
+                presenter.loadData(false)
+                presenter.getLifeHouse(false)
+                presenter.getLookPeople(false)
+            }
         }
 
     }
@@ -586,11 +592,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun showLoadingView() {
-        dialog.show()
+        loadingView.show()
     }
 
     override fun dismissLoadingView() {
-        dialog.dismiss()
+        loadingView.dismiss()
     }
 
     override fun showInfo(s: String) {
@@ -599,7 +605,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun showError(string: String) {
         ToastUtil.showInfo(string)
-//        adapter.loadMoreFail()
     }
 
     override fun goPage() {

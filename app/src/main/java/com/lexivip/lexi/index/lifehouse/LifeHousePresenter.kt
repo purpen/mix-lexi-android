@@ -135,7 +135,11 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     fun getWelcomeInWeek(isRefresh: Boolean) {
         if (isRefresh) page = 1
         dataSource.getWelcomeInWeek(page, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                if (!isRefresh) view.showLoadingView()
+            }
             override fun onSuccess(json: String) {
+                view.dismissLoadingView()
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
                 if (editorRecommendBean.success) {
                     view.setWelcomeInWeekData(editorRecommendBean.data.products)
@@ -146,6 +150,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
             }
 
             override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
@@ -363,7 +368,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
 
     /**
-     * 获取新发布的产品
+     * 获取新分销的产品
      */
     override fun getNewPublishProducts(isRefresh: Boolean) {
         dataSource.getNewPublishProducts(object : IDataSource.HttpRequestCallBack {
