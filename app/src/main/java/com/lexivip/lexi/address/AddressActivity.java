@@ -179,9 +179,22 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void installListener() {
         super.installListener();
+        customHeadView.setGoBackListener(new CustomHeadView.IGobackListener() {
+            @Override
+            public void goback() {
+                setResult(RESULT_CANCELED,new Intent());
+                finish();
+            }
+        });
         //如果是编辑地址，先请求网络获取地址
         if (!isNew || isForeign)
             presenter.loadData(addressId);
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED,new Intent());
+        super.onBackPressed();
     }
 
     @Override
@@ -441,7 +454,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     public void finishActivity(AddressBean.DataBean data,boolean isDelete) {
         Intent intent = new Intent();
         if (isDelete){
-            intent.putExtra(AddressActivity.class.getSimpleName(), "");
+//            intent.putExtra(AddressActivity.class.getSimpleName(), "");
         }else {
             UserAddressListBean.DataBean dataBean = new UserAddressListBean.DataBean();
             dataBean.city = data.getCity();
@@ -468,14 +481,13 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             intent.putExtra(AddressActivity.class.getSimpleName(), dataBean);
         }
         if (isNew){
-            setResult(Constants.REQUEST_CODE_REFRESH_ADDRESS, intent);
+            setResult(RESULT_OK, intent);
         }else {
-            setResult(Constants.REQUEST_CODE_EDIT_ADDRESS, intent);
-            //intent.putExtra(Constants.REQUEST_CODE_EDIT_ADDRESS,dataBean);
+            setResult(RESULT_OK, intent);
         }
-        //intent.putExtra("isRefresh", true);
         finish();
     }
+
 
     //相机
     @AfterPermissionGranted(Constants.REQUEST_CODE_CAPTURE_CAMERA)

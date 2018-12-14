@@ -92,6 +92,7 @@ public class UserAddressListBean implements Parcelable {
         public String first_name;
         public String full_address;
         public String full_name;
+        public Boolean isSelected;
         public boolean is_default;
         public boolean is_from_wx;
         public String last_name;
@@ -105,6 +106,9 @@ public class UserAddressListBean implements Parcelable {
         public String town;
         public int town_id;
         public String zipcode;
+
+        public DataBean() {
+        }
 
         @Override
         public int describeContents() {
@@ -121,6 +125,7 @@ public class UserAddressListBean implements Parcelable {
             dest.writeString(this.first_name);
             dest.writeString(this.full_address);
             dest.writeString(this.full_name);
+            dest.writeValue(this.isSelected);
             dest.writeByte(this.is_default ? (byte) 1 : (byte) 0);
             dest.writeByte(this.is_from_wx ? (byte) 1 : (byte) 0);
             dest.writeString(this.last_name);
@@ -136,9 +141,6 @@ public class UserAddressListBean implements Parcelable {
             dest.writeString(this.zipcode);
         }
 
-        public DataBean() {
-        }
-
         protected DataBean(Parcel in) {
             this.area = in.readString();
             this.area_id = in.readString();
@@ -148,6 +150,7 @@ public class UserAddressListBean implements Parcelable {
             this.first_name = in.readString();
             this.full_address = in.readString();
             this.full_name = in.readString();
+            this.isSelected = (Boolean) in.readValue(Boolean.class.getClassLoader());
             this.is_default = in.readByte() != 0;
             this.is_from_wx = in.readByte() != 0;
             this.last_name = in.readString();
