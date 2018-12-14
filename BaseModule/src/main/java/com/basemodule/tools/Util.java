@@ -19,6 +19,7 @@ import android.view.animation.RotateAnimation;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,5 +163,13 @@ public class Util {
         ClipboardManager clipboardManager = (ClipboardManager)BaseModuleContext.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText("text", content);
         if (clipboardManager!=null) clipboardManager.setPrimaryClip(clipData);
+    }
+
+    /**
+     *保留两位小数
+     */
+    public static String doubleRoundHalfUp(double num){
+        BigDecimal b = new BigDecimal(num);
+        return b.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
     }
 }

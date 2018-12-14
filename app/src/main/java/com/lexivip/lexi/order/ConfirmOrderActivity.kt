@@ -207,11 +207,9 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         for (store in createOrderBean.store_items) {
             if (TextUtils.equals(message.store_rid, store.store_rid)) {
                 for (product in store.items) {
-
                     if (TextUtils.equals(message.fid, product.fid)) {
                         product.express_id = message.express_id
                     }
-
                     if (TextUtils.equals(product.product_rid, message.product_rid)) {
                         for (express in product.express) {
                             express.is_default = TextUtils.equals(express.express_id, message.express_id)

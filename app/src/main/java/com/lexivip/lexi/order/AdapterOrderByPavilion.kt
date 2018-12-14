@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.TextView
+import com.basemodule.tools.DimenUtil
 import com.basemodule.tools.Util
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -38,11 +39,11 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
         } else {
             helper.setText(R.id.textViewPromotion, item.fullReductionText)
         }
-
+        val textViewFreight = helper.getView<TextView>(R.id.textViewFreight)
         if (item.expressExpense == 0.0) {
-            helper.setText(R.id.textViewFreight, "包邮")
+            textViewFreight.text = "包邮"
         } else {
-            helper.setText(R.id.textViewFreight, "${item.expressExpense}")
+            textViewFreight.text = "¥ ${item.expressExpense}"
         }
 
         val textViewPavilionCoupon = helper.getView<TextView>(R.id.textViewPavilionCoupon)

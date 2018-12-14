@@ -53,7 +53,7 @@ public class AutoScrollAdapter extends RecyclerView.Adapter<AutoScrollAdapter.Ba
         String content;
         switch (bean.event) {
             case 1:  //开通生活馆 人名蓝色
-                content = bean.time + bean.time_info + "前开了生活馆";
+                content = bean.time + bean.time_info + "开了生活馆";
                 textView.setText(content);
                 break;
             case 2://售出3单成为正式馆主

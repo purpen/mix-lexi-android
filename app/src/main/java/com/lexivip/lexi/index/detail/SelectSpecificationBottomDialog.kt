@@ -362,7 +362,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             storeList.add(storeItemBean)
 
             goods = ProductBean()
-
+            goods.store_rid = product.store_rid
             goods.quantity = 1
             goods.delivery_country = product.delivery_country
             goods.delivery_province = product.delivery_province

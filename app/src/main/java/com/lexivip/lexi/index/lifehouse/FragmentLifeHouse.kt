@@ -453,6 +453,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headerLifeHouse.buttonOpenShop.setOnClickListener {
+            LogUtil.e("=================")
             //我要开馆
             if (UserProfileUtil.isLogin()) {
                 PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide", R.string.title_open_life_house)
@@ -565,7 +566,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             listRecommend.add(SmallBRecommendAdapter.MultipleItem(item, SmallBRecommendAdapter.MultipleItem.ITEM_TYPE_GOODS))
         }
 
-        listRecommend.add(SmallBRecommendAdapter.MultipleItem(ProductBean(), SmallBRecommendAdapter.MultipleItem.ITEM_TYPE_END))
+        //如果没有数据则不加没有更多
+        if (listRecommend.isNotEmpty()) listRecommend.add(SmallBRecommendAdapter.MultipleItem(ProductBean(), SmallBRecommendAdapter.MultipleItem.ITEM_TYPE_END))
 
         adapterSmallBRecommend.setNewData(listRecommend)
     }

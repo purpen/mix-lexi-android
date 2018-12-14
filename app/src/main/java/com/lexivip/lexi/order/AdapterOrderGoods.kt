@@ -25,13 +25,13 @@ class AdapterOrderGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, Bas
         val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)
         textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit,R.dimen.dp8,R.dimen.dp10),null,null,null)
         if (item.sale_price == 0.0) {
-            textViewPrice.text = "${item.price}"
+            textViewPrice.text = Util.doubleRoundHalfUp(item.price)
             textViewOldPrice.visibility = View.GONE
         } else {
             textViewOldPrice.visibility = View.VISIBLE
-            textViewPrice.text = "${item.sale_price}"
+            textViewPrice.text = Util.doubleRoundHalfUp(item.sale_price)
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥${item.price}"
+            textViewOldPrice.text = "¥"+Util.doubleRoundHalfUp(item.price)
         }
 
         val relativeLayoutGoodsItemExpress = helper.getView<RelativeLayout>(R.id.relativeLayoutGoodsItemExpress)
