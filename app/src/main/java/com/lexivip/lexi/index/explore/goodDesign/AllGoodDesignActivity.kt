@@ -30,7 +30,7 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
     private val presenter: AllGoodDesignPresenter by lazy { AllGoodDesignPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
-
+    private var dialogBottomSynthesiseSort: DialogBottomSynthesiseSort? = null
     private var dialogBottomFilter: DialogBottomFilter? = null
     override val layout: Int = R.layout.acticity_all_editor_recommend
 
@@ -42,6 +42,7 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
     }
 
     override fun initView() {
+        linearLayout.visibility = View.VISIBLE
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         customHeadView.setHeadCenterTxtShow(true, R.string.text_good_design)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
@@ -64,7 +65,7 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
     private fun initHeaderView() {
         presenter.getLookPeople()
         headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
-        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_head_good_design,headerView.imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(153.0),ImageSizeConfig.DEFAULT)
+        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_head_good_design, headerView.imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(153.0), ImageSizeConfig.DEFAULT)
         headerView.textViewHeadTitle.text = Util.getString(R.string.text_good_design)
         headerView.textViewHeadTitle.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_good_design_head_title, 0, 0, 0)
         adapter.setHeaderView(headerView)
@@ -121,10 +122,10 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
 
 
     override fun installListener() {
-        linearLayoutSort.setOnClickListener { _ ->
+        linearLayoutSort.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
-            val dialog = DialogBottomSynthesiseSort(this, presenter)
-            dialog.setOnDismissListener {
+            if (dialogBottomSynthesiseSort == null) dialogBottomSynthesiseSort = DialogBottomSynthesiseSort(this, presenter)
+            dialogBottomSynthesiseSort?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
                 when (presenter.getSortType()) {
                     AllGoodDesignPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
@@ -132,12 +133,12 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
                     AllGoodDesignPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
                 }
             }
-            dialog.show()
+            dialogBottomSynthesiseSort?.show()
         }
 
-        linearLayoutFilter.setOnClickListener { _ ->
+        linearLayoutFilter.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(this, presenter)
+            if (dialogBottomFilter == null) dialogBottomFilter = DialogBottomFilter(this, presenter)
             dialogBottomFilter?.show()
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
