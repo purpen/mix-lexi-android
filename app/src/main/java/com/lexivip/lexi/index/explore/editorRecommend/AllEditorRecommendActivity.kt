@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.explore.editorRecommend
+
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -29,23 +30,24 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
     private val presenter: AllEditorRecommendPresenter by lazy { AllEditorRecommendPresenter(this) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val adapter: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
-
+    private var dialogBottomSynthesiseSort: DialogBottomSynthesiseSort? = null
     private var dialogBottomFilter: DialogBottomFilter? = null
     override val layout: Int = R.layout.acticity_all_editor_recommend
 
-    private lateinit var  headerView: View
-    private var goodsCount=0
+    private lateinit var headerView: View
+    private var goodsCount = 0
     override fun setPresenter(presenter: AllEditorRecommendContract.Presenter?) {
         setPresenter(presenter)
     }
+
     override fun initView() {
+        linearLayout.visibility = View.VISIBLE
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
-        customHeadView.setHeadCenterTxtShow(true,R.string.text_editor_recommend)
+        customHeadView.setHeadCenterTxtShow(true, R.string.text_editor_recommend)
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
         recyclerView.layoutManager = gridLayoutManager
         recyclerView.adapter = adapter
-//        recyclerView.setPadding(DimenUtil.dp2px(15.0), 0, DimenUtil.dp2px(15.0), 0)
         val colorWhite = Util.getColor(android.R.color.white)
         recyclerView.setBackgroundColor(colorWhite)
         adapter.setSpanSizeLookup { _, position ->
@@ -62,7 +64,7 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
     private fun initHeaderView() {
         presenter.getLookPeople()
         headerView = View.inflate(this, R.layout.header_all_editor_recommend, null)
-        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_editor_recommend,headerView.imageViewBg,0,ScreenUtil.getScreenWidth(),DimenUtil.dp2px(153.0),ImageSizeConfig.DEFAULT)
+        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_editor_recommend, headerView.imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(153.0), ImageSizeConfig.DEFAULT)
         adapter.setHeaderView(headerView)
     }
 
@@ -109,14 +111,14 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
 
     override fun setGoodsCount(count: Int) {
         goodsCount = count
-        if (dialogBottomFilter!=null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
+        if (dialogBottomFilter != null && dialogBottomFilter!!.isShowing) dialogBottomFilter!!.setGoodsCount(count)
     }
 
     override fun installListener() {
-        linearLayoutSort.setOnClickListener { _ ->
+        linearLayoutSort.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow0, 0f, 180f)
-            val dialog = DialogBottomSynthesiseSort(this, presenter)
-            dialog.setOnDismissListener {
+            if (dialogBottomSynthesiseSort == null) dialogBottomSynthesiseSort = DialogBottomSynthesiseSort(this, presenter)
+            dialogBottomSynthesiseSort?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow0, -180f, 0f)
                 when (presenter.getSortType()) {
                     AllEditorRecommendPresenter.SORT_TYPE_SYNTHESISE -> textViewSort.text = Util.getString(R.string.text_sort_synthesize)
@@ -124,12 +126,12 @@ class AllEditorRecommendActivity : BaseActivity(), AllEditorRecommendContract.Vi
                     AllEditorRecommendPresenter.SORT_TYPE_UP_LOW -> textViewSort.text = Util.getString(R.string.text_price_up_low)
                 }
             }
-            dialog.show()
+            dialogBottomSynthesiseSort?.show()
         }
 
-        linearLayoutFilter.setOnClickListener { _ ->
+        linearLayoutFilter.setOnClickListener {
             Util.startViewRotateAnimation(imageViewSortArrow2, 0f, 180f)
-            dialogBottomFilter = DialogBottomFilter(this, presenter)
+            if (dialogBottomFilter == null) dialogBottomFilter = DialogBottomFilter(this, presenter)
             dialogBottomFilter?.show()
             dialogBottomFilter?.setOnDismissListener {
                 Util.startViewRotateAnimation(imageViewSortArrow2, -180f, 0f)
