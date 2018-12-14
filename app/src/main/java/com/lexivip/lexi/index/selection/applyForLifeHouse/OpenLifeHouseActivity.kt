@@ -1,5 +1,6 @@
 package com.lexivip.lexi.index.selection.applyForLifeHouse
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -52,10 +53,6 @@ class OpenLifeHouseActivity : BaseActivity() {
             settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
         val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
-        if (titleId == R.string.title_open_life_house) {
-            relativeLayoutBottom.visibility = View.VISIBLE
-            layoutParams.addRule(RelativeLayout.ABOVE, R.id.relativeLayoutBottom)
-        }
         layoutParams.addRule(RelativeLayout.BELOW, R.id.customHeadView)
         webView.layoutParams = layoutParams
         relativeLayout.addView(webView)
@@ -89,12 +86,6 @@ class OpenLifeHouseActivity : BaseActivity() {
         webView.addJavascriptInterface(JsInterface(this), "android")
     }
 
-    override fun installListener() {
-        button.setOnClickListener {
-            startActivity(Intent(this, ApplyForLifeHouseActivity::class.java))
-        }
-    }
-
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
         val parent = webView.parent as ViewGroup
@@ -104,16 +95,13 @@ class OpenLifeHouseActivity : BaseActivity() {
         super.onDestroy()
     }
 
-    public class JsInterface(context: Context) {
+    public class JsInterface(context: Activity) {
+        private val context=context
         @JavascriptInterface
-        fun share(string: Object) {
-            LogUtil.e("js交互传值：" + string)
+        fun share() {
+            LogUtil.e("js交互传值：" )
         }
 
-        @JavascriptInterface
-        fun cashMoney(string: Object) {
-            LogUtil.e("js交互传值了")
-        }
         @JavascriptInterface
         fun cashMoney() {
             LogUtil.e("js交互传值了")
@@ -125,24 +113,11 @@ class OpenLifeHouseActivity : BaseActivity() {
         }
 
         @JavascriptInterface
-        fun applyLifeStore(string: String) {
+        fun applyLifeStore() {
             LogUtil.e("js交互传值了啊")
+            context.startActivity(Intent(context, ApplyForLifeHouseActivity::class.java))
         }
     }
-
-    /*private class JsInterface {
-        private Context mContext;
-
-        public JsInterface(Context context) {
-            this.mContext = context;
-        }
-
-        //在js中调用window.AndroidWebView.showInfoFromJs(name)，便会触发此方法。
-        @JavascriptInterface
-        public void showInfoFromJs(String name) {
-            //Toast.makeText(mContext, name, Toast.LENGTH_SHORT).show();
-        }
-    }*/
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(event: MessageClose) {
         LogUtil.e("$TAG be closed")
