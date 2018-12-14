@@ -33,6 +33,7 @@ import com.lexivip.lexi.album.PicturePickerUtils
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
+import com.lexivip.lexi.index.lifehouse.newProductExpress.NewProductExpressActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.search.AdapterSearchGoods
@@ -360,6 +361,10 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun installListener() {
+
+        headerLifeHouse.textViewAllNewGoodsExpress.setOnClickListener {//新品速递列表
+            startActivity(Intent(activity,NewProductExpressActivity::class.java))
+        }
 
         headerLifeHouse.textViewAllRecommend.setOnClickListener {//馆主推荐列表
             val intent = Intent(activity, SmallBRecommendGoodsListActivity::class.java)

@@ -918,4 +918,9 @@ object URL {
      * 新品速递
      */
     const val NEW_PRODUCTS_EXPRESS = "${BASE_URL}column/handpick_new_express"
+
+    /**
+     * 新品速递列表
+     */
+    const val NEW_GOODS_EXPRESS = "${BASE_URL}column/handpick_new_express"
 }
