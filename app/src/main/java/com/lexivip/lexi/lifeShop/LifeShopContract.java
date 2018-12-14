@@ -13,6 +13,8 @@ public class LifeShopContract {
         void setOrderData(LifeShopOrderBean bean);
         void setCashData(LifeShopCashBean bean);
         void setSaleData(LifeShopSaleBean bean);
+        void setFriendData(LifeShopFriendBean bean);
+        void setRewardData(LifeShopRewardBean bean);
     }
     interface Presenter extends BasePresenter{
         void loadData(String rid,int type);

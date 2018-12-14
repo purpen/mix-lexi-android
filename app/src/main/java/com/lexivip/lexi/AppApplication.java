@@ -15,8 +15,11 @@ import com.basemodule.tools.LogUtil;
 import com.example.myapp.MyEventBusIndex;
 import com.lexivip.lexi.brandHouse.BrandHouseActivity;
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowDetailActivity;
+import com.lexivip.lexi.lifeShop.TransactionOrderActivity;
 import com.lexivip.lexi.orderList.LogisticsActivity;
+import com.lexivip.lexi.orderList.OrderListActivity;
 import com.lexivip.lexi.user.login.LoginActivity;
+import com.lexivip.lexi.user.login.UserProfileUtil;
 import com.qiniu.android.common.AutoZone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
@@ -123,6 +126,16 @@ public class AppApplication extends MultiDexApplication {
                         intent3.putExtra(ShowWindowDetailActivity.class.getSimpleName(),map.get("shop_window_id"));
                         startActivity(intent3);
                         break;
+                    case "4":
+                        Intent intent4=new Intent(context,TransactionOrderActivity.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent4.putExtra("rid",UserProfileUtil.storeId());
+                        startActivity(intent4);
+                        break;
+                    case "5":
+                        Intent intent5=new Intent(context,MainActivity.class);
+                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent5);
                 }
             }
         };

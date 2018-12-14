@@ -83,6 +83,9 @@ public class UserProfileBean {
             public String username;
             public List<String> user_areacode;
             public boolean is_bind_wx;
+            public String nick_name;
+            public String wx_avatar;
+            public String openid;
         }
     }
 

@@ -36,7 +36,6 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
-                LogUtil.e("神火锅："+json);
                 view.dismissLoadingView();
                 switch (type){
                     case 0:
@@ -44,16 +43,15 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
                         if (bean.success){
                             view.setShopData(bean);
                         }else {
-                            view.showError(Util.getString(R.string.text_net_error));
+                            view.showError(bean.status.message);
                         }
                         break;
                     case 1:
                         LifeShopSaleBean saleBean=JsonUtil.fromJson(json,LifeShopSaleBean.class);
-//                        LogUtil.e(json);
                         if (saleBean.success){
                             view.setSaleData(saleBean);
                         }else {
-                            view.showError(Util.getString(R.string.text_net_error));
+                            view.showError(saleBean.status.message);
                         }
                         break;
                     case 2:
@@ -62,7 +60,7 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
                         if (orderBean.success){
                             view.setOrderData(orderBean);
                         }else {
-                            view.showError(Util.getString(R.string.text_net_error));
+                            view.showError(orderBean.status.message);
                         }
                         break;
                     case 3:
@@ -71,7 +69,23 @@ public class LifeShopPresenter implements LifeShopContract.Presenter {
                         if (cashBean.success){
                             view.setCashData(cashBean);
                         }else {
-                            view.showError(Util.getString(R.string.text_net_error));
+                            view.showError(cashBean.status.message);
+                        }
+                        break;
+                    case 4:
+                        LifeShopFriendBean friendBean=JsonUtil.fromJson(json,LifeShopFriendBean.class);
+                        if (friendBean.success){
+                            view.setFriendData(friendBean);
+                        }else {
+                            view.showError(friendBean.status.message);
+                        }
+                        break;
+                    case 5:
+                        LifeShopRewardBean rewardBean=JsonUtil.fromJson(json,LifeShopRewardBean.class);
+                        if (rewardBean.success){
+                            view.setRewardData(rewardBean);
+                        }else {
+                            view.showError(rewardBean.status.message);
                         }
                         break;
                 }

@@ -1,8 +1,8 @@
 package com.lexivip.lexi.lifeShop;
 
-public class LifeShopSaleBean {
+public class LifeShopRewardBean {
     /**
-     * data : {"pending_commission_price":7,"today_commission_price":0,"total_commission_price":"10 .00"}
+     * data : {"cash_amount":0,"cumulative_cash_amount":0,"pending_price":1,"reward_price":0}
      * status : {"code":200,"message":"Ok all right."}
      * success : true
      */
@@ -13,15 +13,16 @@ public class LifeShopSaleBean {
 
     public static class DataBean {
         /**
-         * pending_commission_price : 7.0
-         * today_commission_price : 0.0
-         * total_commission_price : 10.00
+         * cash_amount : 0
+         * cumulative_cash_amount : 0
+         * pending_price : 1
+         * reward_price : 0
          */
 
-        public String pending_commission_price;
-        public String today_commission_price;
-        public String total_commission_price;
-        public String total_payed_amount;
+        public String cash_amount;
+        public String cumulative_cash_amount;
+        public String pending_price;
+        public String reward_price;
     }
 
     public static class StatusBean {

@@ -205,6 +205,8 @@
         <activity android:name=".cashMoney.CashTimeActivity" />
         <activity android:name=".index.selection.applyForLifeHouse.ApplyForLifeHouseActivity" />
         <activity android:name=".index.selection.applyForLifeHouse.ApplyForLifeHouseSuccessActivity" />
+        <activity android:name=".lifeShop.MyFriendActivity"/>
+        <activity android:name=".lifeShop.RewardActivity"/>
     </application>
 
 </manifest>

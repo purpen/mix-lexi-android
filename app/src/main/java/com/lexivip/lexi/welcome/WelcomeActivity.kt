@@ -14,7 +14,9 @@ import com.lexivip.lexi.user.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_welcome.*
 import org.greenrobot.eventbus.EventBus
 import com.lexivip.lexi.eventBusMessge.MessageClose
+import com.lexivip.lexi.index.selection.applyForLifeHouse.OpenLifeHouseActivity
 import com.lexivip.lexi.mine.UserCenterBean
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.user.LoginWXBean
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import com.lexivip.lexi.user.setting.SettingContract
@@ -52,7 +54,7 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, WelcomeContract.Vi
     override fun onClick(v: View) {
         when (v.id) {
             R.id.textViewSkip -> {
-                startActivity(Intent(applicationContext, MainActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }
             R.id.button0 -> startActivity(Intent(this, RegisterActivity::class.java))

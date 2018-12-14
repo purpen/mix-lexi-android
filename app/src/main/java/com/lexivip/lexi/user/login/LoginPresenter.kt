@@ -162,6 +162,7 @@ class LoginPresenter(view: LoginContract.View) : LoginContract.Presenter {
     fun getUserProfile(isFirstLogin: Boolean) {
         dataSource.getUserProfile(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
+                LogUtil.e("用户信息："+json)
                 val userProfileBean = JsonUtil.fromJson(json, UserProfileBean::class.java)
                 if (userProfileBean.success) {
                     SPUtil.write(Constants.USER_PROFILE,json)
