@@ -54,8 +54,10 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener, WelcomeContract.Vi
     override fun onClick(v: View) {
         when (v.id) {
             R.id.textViewSkip -> {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                val intent=Intent(this, OpenLifeHouseActivity::class.java)
+                intent.putExtra("url",WebUrl.INVITATION)
+                intent.putExtra("title",R.string.text_service)
+                startActivity(intent)
             }
             R.id.button0 -> startActivity(Intent(this, RegisterActivity::class.java))
             R.id.button1 -> startActivity(Intent(this, LoginActivity::class.java))

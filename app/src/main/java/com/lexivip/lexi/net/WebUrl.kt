@@ -25,7 +25,7 @@ object WebUrl{
     /**
      * 加载35元邀请好友
      */
-    const val INVITATION="${BASE_URL}invitation?uid="//https://h5.lexivip.com/invitation?uid=14892617530
+    const val INVITATION="${BASE_URL}invitation?uid=14892617530"//https://h5.lexivip.com/invitation?uid=14892617530
     /**
      * 35元邀请好友分享链接
      */

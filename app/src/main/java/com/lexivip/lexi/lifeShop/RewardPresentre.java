@@ -55,4 +55,9 @@ public class RewardPresentre implements RewardContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void loadReward() {
+
+    }
 }

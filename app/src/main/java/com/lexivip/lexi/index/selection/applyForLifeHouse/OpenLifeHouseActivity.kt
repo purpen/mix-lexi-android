@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.acticity_open_life_house.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 class OpenLifeHouseActivity : BaseActivity() {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
@@ -103,10 +104,29 @@ class OpenLifeHouseActivity : BaseActivity() {
         super.onDestroy()
     }
 
-    public class JsInterface(context: Context){
+    public class JsInterface(context: Context) {
         @JavascriptInterface
-        fun share(string: String){
-            LogUtil.e("js交互传值："+string)
+        fun share(string: Object) {
+            LogUtil.e("js交互传值：" + string)
+        }
+
+        @JavascriptInterface
+        fun cashMoney(string: Object) {
+            LogUtil.e("js交互传值了")
+        }
+        @JavascriptInterface
+        fun cashMoney() {
+            LogUtil.e("js交互传值了")
+        }
+
+        @JavascriptInterface
+        fun handleShareFriend(type: Int) {
+            LogUtil.e("js交互传值了" + type)
+        }
+
+        @JavascriptInterface
+        fun applyLifeStore(string: String) {
+            LogUtil.e("js交互传值了啊")
         }
     }
 
