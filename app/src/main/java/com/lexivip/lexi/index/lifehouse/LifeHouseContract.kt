@@ -65,6 +65,10 @@ class LifeHouseContract {
 
         }
 
+        fun loadMoreFail() {
+
+        }
+
 
     }
 

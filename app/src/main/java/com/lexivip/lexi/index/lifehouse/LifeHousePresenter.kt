@@ -27,7 +27,8 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
      * 加载馆主推荐数据
      */
     override fun loadData(isRefresh: Boolean) {
-        dataSource.loadData(object : IDataSource.HttpRequestCallBack {
+        if (isRefresh) page = 1
+        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 if (!isRefresh) view.showLoadingView()
             }
@@ -37,6 +38,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                 val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
                 if (distributionGoodsBean.success) {
                     view.setNewData(distributionGoodsBean.data.products)
+                    page++
                 } else {
                     view.showError(distributionGoodsBean.status.message)
                 }
@@ -44,6 +46,34 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
             override fun onFailure(e: IOException) {
                 view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 加载更多分销商品
+     */
+    fun loadMoreOwnerGoodsData() {
+        dataSource.loadData(page, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val distributionGoodsBean = JsonUtil.fromJson(json, DistributionGoodsBean::class.java)
+                if (distributionGoodsBean.success) {
+                    val products = distributionGoodsBean.data.products
+                    if (products.isEmpty()) {
+                        view.loadMoreEnd()
+                    } else {
+                        view.loadMoreComplete()
+                        view.addData(products)
+                        page++
+                    }
+                } else {
+                    view.loadMoreFail()
+                    view.showError(distributionGoodsBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
@@ -82,8 +112,8 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
      * 获取本周最受欢迎
      */
     fun getWelcomeInWeek(isRefresh: Boolean) {
-        if (isRefresh) page =1
-        dataSource.getWelcomeInWeek(page,object : IDataSource.HttpRequestCallBack {
+        if (isRefresh) page = 1
+        dataSource.getWelcomeInWeek(page, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
                 if (editorRecommendBean.success) {

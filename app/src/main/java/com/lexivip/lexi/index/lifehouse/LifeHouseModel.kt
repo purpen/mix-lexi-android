@@ -25,12 +25,12 @@ open class LifeHouseModel {
     /**
      * 获取小B分销商品
      */
-    fun loadData(callBack: IDataSource.HttpRequestCallBack) {
+    fun loadData(page: Int,callBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
         params["sid"] = UserProfileUtil.storeId()
         params["is_distributed"] = "2"
         params["user_record"] = USER_RECORD
-        params["page"] = "1"
+        params["page"] = "$page"
         HttpRequest.sendRequest(HttpRequest.GET, URL.DISTRIBUTION_GOODS_LIST, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 callBack.onStart()

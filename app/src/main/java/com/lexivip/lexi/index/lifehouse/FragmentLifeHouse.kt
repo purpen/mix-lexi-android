@@ -38,6 +38,7 @@ import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.search.AdapterSearchGoods
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
+import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.smart.dialog.widget.ActionSheetDialog
 import com.yanyusong.y_divideritemdecoration.Y_Divider
@@ -60,17 +61,23 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
     private val adapterNewGoodsExpress: NewGoodsExpressAdapter by lazy { NewGoodsExpressAdapter(R.layout.adapter_editor_recommend) }
-    private val adapterSmallBRecommend: SmallBRecommendAdapter by lazy { SmallBRecommendAdapter(R.layout.adapter_editor_recommend) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
+    private val listRecommend: ArrayList<SmallBRecommendAdapter.MultipleItem> by lazy { ArrayList<SmallBRecommendAdapter.MultipleItem>() }
 
     /**
      * 本周最受欢迎加载更多
      */
     private val adapterWelcomeInWeek: AdapterSearchGoods by lazy { AdapterSearchGoods(list) }
 
+    /**
+     * 小B推荐
+     */
+    private val adapterSmallBRecommend: SmallBRecommendAdapter by lazy { SmallBRecommendAdapter(listRecommend) }
+
     private var price: String? = null
     private var goodsId: String? = null
     private var storeId: String? = null
+    private var logo: String = ""
     private lateinit var headerLifeHouse: View
 
     companion object {
@@ -179,6 +186,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      * 设置生活馆信息
      */
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
+        logo = data.logo
         GlideUtil.loadCircleImageWidthDimen(data.logo, headerLifeHouse.circleImageView, DimenUtil.dp2px(28.0), ImageSizeConfig.SIZE_AVA)
 
         GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
@@ -353,6 +361,12 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun installListener() {
 
+        headerLifeHouse.textViewAllRecommend.setOnClickListener {//馆主推荐列表
+            val intent = Intent(activity, SmallBRecommendGoodsListActivity::class.java)
+            intent.putExtra(SmallBRecommendGoodsListActivity::class.java.simpleName,logo)
+            startActivity(intent)
+        }
+
         refreshLayout.setRefreshHeader(CustomRefreshHeader(AppApplication.getContext()))
         refreshLayout.setEnableOverScrollDrag(false)
         refreshLayout.isEnableLoadMore = false
@@ -369,14 +383,21 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             //新品速递
         }
 
+        //小B推荐
         adapterSmallBRecommend.setOnItemClickListener { _, _, position ->
-            LogUtil.e("adapterSmallBRecommend=======$position======")
+            val size = adapterSmallBRecommend.data.size
+            if (size <= 10 && position == size - 1) return@setOnItemClickListener
+            if (size > 10 && position == size - 1) {
+                val intent = Intent(activity, SmallBRecommendGoodsListActivity::class.java)
+                intent.putExtra(SmallBRecommendGoodsListActivity::class.java.simpleName,logo)
+                startActivity(intent)
+                return@setOnItemClickListener
+            }
             val item = adapterSmallBRecommend.getItem(position) ?: return@setOnItemClickListener
-            PageUtil.jump2GoodsDetailActivity(item.rid)
+            PageUtil.jump2GoodsDetailActivity(item.product.rid)
         }
 
         adapterNewGoodsExpress.setOnItemClickListener { _, _, position ->
-            LogUtil.e("adapterNewGoodsExpress=======$position")
             val item = adapterNewGoodsExpress.getItem(position) ?: return@setOnItemClickListener
             PageUtil.jump2GoodsDetailActivity(item.rid)
         }
@@ -391,8 +412,18 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headerLifeHouse.buttonCpyNum.setOnClickListener {
+            //复制微信
             Util.setContent2ClipBoard(getString(R.string.text_wechat_num))
             ToastUtil.showInfo("复制成功去添加微信")
+        }
+
+        headerLifeHouse.buttonOpenShop.setOnClickListener {
+            //我要开馆
+            if (UserProfileUtil.isLogin()) {
+                PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide", R.string.title_open_life_house)
+            } else {
+                startActivity(Intent(activity, LoginActivity::class.java))
+            }
         }
 
         headerLifeHouse.imageViewEdit.setOnClickListener(this)
@@ -466,7 +497,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                LogUtil.e("${recyclerView.scrollState}onScrolled===================$dy")
                 if (!UserProfileUtil.isLogin() && recyclerView.scrollState != RecyclerView.SCROLL_STATE_IDLE) headerLifeHouse.linearLayoutNotice.stop()
                 if (recyclerView.scrollState == RecyclerView.SCROLL_STATE_SETTLING || recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) return
                 if (Math.abs(dy) < 20) return
@@ -479,34 +509,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         })
     }
 
-//    private fun showDeleteDialog(rid: String, position: Int) {
-//        val color333 = Util.getColor(R.color.color_333)
-//        val white = Util.getColor(android.R.color.white)
-//        val dialog = NormalDialog(activity)
-//        dialog.isTitleShow(false)
-//                .bgColor(white)
-//                .cornerRadius(4f)
-//                .content(Util.getString(R.string.text_unshelve_confirm))
-//                .contentGravity(Gravity.CENTER)
-//                .contentTextColor(color333)
-//                .contentTextSize(14f)
-//                .dividerColor(Util.getColor(R.color.color_ccc))
-//                .btnText(Util.getString(R.string.text_cancel), Util.getString(R.string.text_qd))
-//                .btnTextSize(18f, 18f)
-//                .setRightBtnBgColor(Util.getColor(R.color.color_6ed7af))
-//                .btnTextColor(color333, white)
-//                .btnPressColor(white)
-//                .widthScale(0.85f)
-//                .show()
-//        dialog.setOnBtnClickL(OnBtnClickL {
-//            dialog.dismiss()
-//        }, OnBtnClickL {
-//            presenter.deleteDistributeGoods(rid, position)
-//            //删除分销商品
-////            adapter.remove(position)
-//            dialog.dismiss()
-//        })
-//    }
+
 
     override fun loadData() {
         presenter.getWelcomeInWeek(false)
@@ -521,9 +524,16 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
 
-    override fun setNewData(data: List<ProductBean>) {
+    override fun setNewData(data: List<ProductBean>) {//设置小B推荐数据
         if (data.isNotEmpty()) headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
-        adapterSmallBRecommend.setNewData(data)
+        listRecommend.clear()
+        for (item in data) {
+            listRecommend.add(SmallBRecommendAdapter.MultipleItem(item, SmallBRecommendAdapter.MultipleItem.ITEM_TYPE_GOODS))
+        }
+
+        listRecommend.add(SmallBRecommendAdapter.MultipleItem(ProductBean(), SmallBRecommendAdapter.MultipleItem.ITEM_TYPE_END))
+
+        adapterSmallBRecommend.setNewData(listRecommend)
     }
 
 
