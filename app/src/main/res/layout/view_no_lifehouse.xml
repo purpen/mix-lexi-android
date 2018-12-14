@@ -74,13 +74,21 @@
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
+        <com.lexivip.lexi.view.AutoScrollRecyclerView
+            android:id="@+id/autoScrollRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            />
         <com.basemodule.ui.ContentScrollView
             android:id="@+id/linearLayoutNotice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:animateLayoutChanges="true"
             android:gravity="bottom|end"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:visibility="gone"
+            />
     </RelativeLayout>
 </RelativeLayout>
 

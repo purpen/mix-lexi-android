@@ -25,7 +25,6 @@ import android.view.animation.TranslateAnimation
 import android.widget.RelativeLayout
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
-import com.basemodule.ui.ItemBean
 import com.lexivip.lexi.*
 import com.lexivip.lexi.album.ImageCropActivity
 import com.lexivip.lexi.album.ImageUtils
@@ -35,12 +34,14 @@ import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.lifehouse.newProductExpress.NewProductExpressActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
+import com.lexivip.lexi.index.selection.HeadLineBean
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.search.AdapterSearchGoods
 import com.lexivip.lexi.selectionGoodsCenter.SelectionGoodsCenterActivity
 import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
+import com.lexivip.lexi.view.AutoScrollAdapter
 import com.smart.dialog.widget.ActionSheetDialog
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
@@ -61,6 +62,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
+    private val listNotice: ArrayList<HeadLineBean.DataBean.HeadlinesBean> by lazy { ArrayList<HeadLineBean.DataBean.HeadlinesBean>() }
+
     private val adapterNewGoodsExpress: NewGoodsExpressAdapter by lazy { NewGoodsExpressAdapter(R.layout.adapter_editor_recommend) }
     private val list: ArrayList<AdapterSearchGoods.MultipleItem> by lazy { ArrayList<AdapterSearchGoods.MultipleItem>() }
     private val listRecommend: ArrayList<SmallBRecommendAdapter.MultipleItem> by lazy { ArrayList<SmallBRecommendAdapter.MultipleItem>() }
@@ -132,18 +135,34 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         headerLifeHouse.recyclerViewNewGoodsExpress.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(10.0), Util.getColor(android.R.color.transparent)))
 
         if (!UserProfileUtil.isLogin() || !UserProfileUtil.isSmallB()) {//没有登录或者不是小B
+            presenter.getHeadLine()
             headerLifeHouse.relativeLayoutNoLifeHouse.visibility = View.VISIBLE
+            headerLifeHouse.autoScrollRecyclerView.visibility = View.VISIBLE
+            val linearLayoutManager = LinearLayoutManager(activity)
+            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+            headerLifeHouse.autoScrollRecyclerView.setHasFixedSize(true)
+            headerLifeHouse.autoScrollRecyclerView.layoutManager = linearLayoutManager
             GlideUtil.loadImageWithDimen(R.mipmap.icon_bg_no_lifehouse, headerLifeHouse.imageViewBgNoLifeHouse, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(215.0), ImageSizeConfig.DEFAULT)
             GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_tou_tiao, headerLifeHouse.imageViewOpenHouseGuide, DimenUtil.dp2px(4.0), ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0), DimenUtil.dp2px(100.0), ImageSizeConfig.DEFAULT)
-
-            val list = ArrayList<ItemBean>()
-            for (i in 0..5) {
-                val item = ItemBean()
-                item.avatar = "http://pic24.nipic.com/20121010/3798632_184253198370_2.jpg"
-                item.content = "测试fsadf$i"
-                list.add(item)
-            }
-            headerLifeHouse.linearLayoutNotice.setData(list)
+            //添加
+//            headerLifeHouse.autoScrollRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+//                    super.onScrollStateChanged(recyclerView, newState)
+//                }
+//
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    LogUtil.e("==============$dy")
+//                    val position = linearLayoutManager.findLastVisibleItemPosition()
+//                    for (i in 0 until recyclerView.layoutManager.childCount) {
+//                        val childAt = recyclerView.layoutManager.findViewByPosition(position);
+//                        if (i == position) {
+//                            childAt.setBackgroundResource(R.drawable.bg_colorccff5f9ce6_round)
+//                        } else {
+//                            childAt.setBackgroundResource(R.drawable.bg_colorcc000000_round)
+//                        }
+//                    }
+//                }
+//            })
         } else {
             headerLifeHouse.recyclerViewSmallBRecommend.visibility = View.VISIBLE
             headerLifeHouse.linearLayoutSmallB.visibility = View.VISIBLE
@@ -152,8 +171,17 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         if (SPUtil.readBool(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE)) {
             headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
         }
+    }
 
-
+    /**
+     * 设置通知数据
+     */
+    override fun setHeadLineData(headlines: List<HeadLineBean.DataBean.HeadlinesBean>) {
+        listNotice.clear()
+        listNotice.addAll(headlines)
+        if (headlines.isEmpty()) return
+        headerLifeHouse.autoScrollRecyclerView.adapter = AutoScrollAdapter(listNotice, headerLifeHouse.autoScrollRecyclerView)
+        headerLifeHouse.autoScrollRecyclerView.start()
     }
 
     /**
@@ -362,13 +390,15 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun installListener() {
 
-        headerLifeHouse.textViewAllNewGoodsExpress.setOnClickListener {//新品速递列表
-            startActivity(Intent(activity,NewProductExpressActivity::class.java))
+        headerLifeHouse.textViewAllNewGoodsExpress.setOnClickListener {
+            //新品速递列表
+            startActivity(Intent(activity, NewProductExpressActivity::class.java))
         }
 
-        headerLifeHouse.textViewAllRecommend.setOnClickListener {//馆主推荐列表
+        headerLifeHouse.textViewAllRecommend.setOnClickListener {
+            //馆主推荐列表
             val intent = Intent(activity, SmallBRecommendGoodsListActivity::class.java)
-            intent.putExtra(SmallBRecommendGoodsListActivity::class.java.simpleName,logo)
+            intent.putExtra(SmallBRecommendGoodsListActivity::class.java.simpleName, logo)
             startActivity(intent)
         }
 
@@ -394,7 +424,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             if (size <= 10 && position == size - 1) return@setOnItemClickListener
             if (size > 10 && position == size - 1) {
                 val intent = Intent(activity, SmallBRecommendGoodsListActivity::class.java)
-                intent.putExtra(SmallBRecommendGoodsListActivity::class.java.simpleName,logo)
+                intent.putExtra(SmallBRecommendGoodsListActivity::class.java.simpleName, logo)
                 startActivity(intent)
                 return@setOnItemClickListener
             }
@@ -495,14 +525,14 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.start()
+                    if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.start()
                 }
                 super.onScrollStateChanged(recyclerView, newState)
             }
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!UserProfileUtil.isLogin() && recyclerView.scrollState != RecyclerView.SCROLL_STATE_IDLE) headerLifeHouse.linearLayoutNotice.stop()
+                if (!UserProfileUtil.isLogin() && recyclerView.scrollState != RecyclerView.SCROLL_STATE_IDLE) headerLifeHouse.autoScrollRecyclerView.stop()
                 if (recyclerView.scrollState == RecyclerView.SCROLL_STATE_SETTLING || recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) return
                 if (Math.abs(dy) < 20) return
                 if (dy > 0) {
@@ -513,7 +543,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             }
         })
     }
-
 
 
     override fun loadData() {
@@ -717,17 +746,19 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun onResume() {
-        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.start()
+//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.start()
+        if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.start()
         super.onResume()
     }
 
     override fun onPause() {
-        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.stop()
+//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.stop()
+        if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.stop()
         super.onPause()
     }
 
     override fun onDestroy() {
-        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.destroy()
+//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.destroy()
         EventBus.getDefault().unregister(this)
         super.onDestroy()
     }

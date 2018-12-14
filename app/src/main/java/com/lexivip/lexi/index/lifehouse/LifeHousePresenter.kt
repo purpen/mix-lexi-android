@@ -10,6 +10,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.index.bean.FavoriteBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendBean
+import com.lexivip.lexi.index.selection.HeadLineBean
 import com.lexivip.lexi.net.NetStatusBean
 import com.lexivip.lexi.user.completeinfo.UploadTokenBean
 import org.json.JSONArray
@@ -46,6 +47,26 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
             override fun onFailure(e: IOException) {
                 view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 获取头条
+     */
+    override fun getHeadLine() {
+        dataSource.getHeadLine(object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val headLineBean = JsonUtil.fromJson(json, HeadLineBean::class.java)
+                if (headLineBean.success) {
+                    view.setHeadLineData(headLineBean.data.headlines)
+                } else {
+                    view.showError(headLineBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
