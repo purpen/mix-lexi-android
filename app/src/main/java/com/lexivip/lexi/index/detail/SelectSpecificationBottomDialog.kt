@@ -1,4 +1,5 @@
 package com.lexivip.lexi.index.detail
+
 import android.content.Context
 import android.content.Intent
 import android.text.Spannable
@@ -36,7 +37,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
     private var selectedColor: String? = null
     private var selectedSize: String? = null
     private lateinit var view: View
-    private var selectedSKU: GoodsAllSKUBean.DataBean.ItemsBean?=null
+    private var selectedSKU: GoodsAllSKUBean.DataBean.ItemsBean? = null
 
     private lateinit var adapterColor: TagAdapter<GoodsAllSKUBean.DataBean.ColorsBean>
     private lateinit var adapterSize: TagAdapter<GoodsAllSKUBean.DataBean.ModesBean>
@@ -101,13 +102,29 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
         colors.clear()
         modes.clear()
         val colorsList = goodsAllSKUBean.data.colors
-        for (item in colorsList){
+        val colorsSize = colorsList.size
+        for (item in colorsList) {
             item.selected = false
         }
 
+        //颜色只有一项
+        if (colorsSize == 1) {
+            colorsList[0].selected = true
+            selectedColor = colorsList[0].name
+        }
+
         val modesList = goodsAllSKUBean.data.modes
-        for (item in modesList){
+
+        val modeSize = modesList.size
+
+        LogUtil.e(modesList.toString())
+        for (item in modesList) {
             item.selected = false
+        }
+        //规格只有一项
+        if (modeSize == 1) {
+            modesList[0].selected = true
+            selectedSize = modesList[0].name
         }
 
         items.addAll(goodsAllSKUBean.data.items)
@@ -139,19 +156,19 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
         view.textViewPrice.setCompoundDrawables(Util.getDrawableWidthDimen(R.mipmap.icon_price_unit, R.dimen.dp10, R.dimen.dp12), null, null, null)
 
-        if (product.min_sale_price==0.0){
+        if (product.min_sale_price == 0.0) {
             view.textViewPrice.text = "${product.min_price}"
-        }else{
+        } else {
             view.textViewPrice.text = "${product.min_sale_price}"
         }
 
-        if (product.is_free_postage){
+        if (product.is_free_postage) {
             val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
             val span = CustomImageSpan(drawable)
             val spannable = SpannableString("   " + product.name)
             spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
             view.textViewName.text = spannable
-        }else{
+        } else {
             view.textViewName.text = product.name
         }
 
@@ -245,7 +262,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
         }
 
 
-        view.flowLayoutSize.setOnTagClickListener { view, position, parent ->
+        view.flowLayoutSize.setOnTagClickListener { _, position, _ ->
             if (modes[position].valid) {
                 val size = modes.size
                 var modesBean: GoodsAllSKUBean.DataBean.ModesBean
@@ -290,9 +307,6 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
                     present.addShopCart(selectedSKU!!.rid, 1)
                 }
             }
-//            val intent = Intent()
-//            intent.putExtra(GoodsAllSKUBean::class.java.simpleName, selectedSKU)
-//            context.startActivity(intent)
         }
 
         //添加购物车按钮
@@ -370,13 +384,13 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
             goods.cover = selectedSKU.cover
             goods.store_name = product.store_name
             goods.product_name = selectedSKU.product_name
-            goods.s_color  = selectedSKU.s_color
+            goods.s_color = selectedSKU.s_color
             goods.s_model = selectedSKU.s_model
             goods.rid = selectedSKU.rid
             goods.sku = selectedSKU.rid
-            if (selectedSKU.sale_price==0.0){
+            if (selectedSKU.sale_price == 0.0) {
                 goods.price = selectedSKU.price
-            }else{
+            } else {
                 goods.sale_price = selectedSKU.sale_price
             }
 
@@ -397,9 +411,9 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
         // 添加有所店铺
         createOrderBean.store_items = storeList
 
-        if (product.min_sale_price==0.0){
+        if (product.min_sale_price == 0.0) {
             createOrderBean.orderTotalPrice = product.min_price
-        }else{
+        } else {
             createOrderBean.orderTotalPrice = product.min_sale_price
         }
 
@@ -505,7 +519,7 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
      * @return
      */
     private fun setSkuSpecInfoByAttr() {
-       if (view.flowLayoutColor.isShown && !view.flowLayoutSize.isShown) { // 只有颜色列表
+        if (view.flowLayoutColor.isShown && !view.flowLayoutSize.isShown) { // 只有颜色列表
             if (TextUtils.isEmpty(selectedColor)) return
 
             for (item in items) {
