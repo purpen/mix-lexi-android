@@ -103,6 +103,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             adapterWelcomeInWeek.data[position].spanSize
         }
         recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        if (UserProfileUtil.isSmallB()) textViewShare.visibility = View.VISIBLE
         initLifeHouseHeader()
     }
 
