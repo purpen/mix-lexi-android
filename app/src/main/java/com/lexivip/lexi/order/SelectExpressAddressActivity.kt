@@ -70,10 +70,11 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     override fun installListener() {
 
-        footerView.setOnClickListener { //添加新地址
+        footerView.setOnClickListener {
+            //添加新地址
             val intent = Intent(this, AddressActivity::class.java)
             intent.putExtra(AddressActivity::class.java.simpleName, createOrderBean.address_rid)
-            startActivityForResult(intent,Constants.REQUEST_CODE_REFRESH_ADDRESS)
+            startActivityForResult(intent, Constants.REQUEST_CODE_REFRESH_ADDRESS)
         }
 
         //编辑地址
@@ -82,7 +83,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
             val intent = Intent(this, AddressActivity::class.java)
             intent.putExtra("isNew", false)
             intent.putExtra(AddressActivity::class.java.simpleName, item.rid)
-            startActivityForResult(intent,Constants.REQUEST_CODE_EDIT_ADDRESS)
+            startActivityForResult(intent, Constants.REQUEST_CODE_EDIT_ADDRESS)
         }
 
         //checkBox点击
@@ -121,7 +122,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
             //判断是否需要海关信息
             for (store in createOrderBean.store_items) {
                 for (product in store.items) {
-                    if (product.delivery_country_id != selectedItem.country_id){
+                    if (product.delivery_country_id != selectedItem.country_id) {
                         isNeedIdentify = true
                         break
                     }
@@ -130,9 +131,9 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
             createOrderBean.consigneeInfo = selectedItem
             //判断用户是否有上传海关信息
-            if (isNeedIdentify){
-                presenter.getUserIdentifyInfo(selectedItem.first_name,selectedItem.mobile,selectedItem)
-            }else{ //发货地与收货地同一个国家
+            if (isNeedIdentify) {
+                presenter.getUserIdentifyInfo(selectedItem.first_name, selectedItem.mobile, selectedItem)
+            } else { //发货地与收货地同一个国家
                 jump2ConfirmOrder()
             }
         }
@@ -149,7 +150,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
     /**
      * 去确认订单界面
      */
-    private fun jump2ConfirmOrder(){
+    private fun jump2ConfirmOrder() {
 
         val intent = Intent(this, ConfirmOrderActivity::class.java)
         intent.putExtra(ConfirmOrderActivity::class.java.simpleName, createOrderBean)
@@ -161,9 +162,9 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
      */
     override fun setUserIndentityInfo(data: JSONObject, selectedItem: UserAddressListBean.DataBean) {
         val identify = data.optString("id_card")
-        if (TextUtils.isEmpty(identify)){ //未上传身份信息
+        if (TextUtils.isEmpty(identify)) { //未上传身份信息
             showEditAddressDialog(selectedItem.rid)
-        }else{ //已上传身份信息
+        } else { //已上传身份信息
             jump2ConfirmOrder()
         }
     }
@@ -186,7 +187,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
                 .contentTextColor(color333)
                 .contentTextSize(13f)
                 .dividerColor(Util.getColor(R.color.color_ccc))
-                .btnText(Util.getString(R.string.text_cancel),Util.getString(R.string.text_go_add))
+                .btnText(Util.getString(R.string.text_cancel), Util.getString(R.string.text_go_add))
                 .btnTextSize(17f, 17f)
                 .btnTextColor(color007aaf, color007aaf)
                 .btnPressColor(white)
@@ -197,8 +198,8 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
         }, OnBtnClickL {
             val intent = Intent(this, AddressActivity::class.java)
             intent.putExtra("isForeign", true)
-            intent.putExtra(AddressActivity::class.java.simpleName,rid)
-            startActivityForResult(intent,Constants.REQUEST_CODE_REFRESH_ADDRESS)
+            intent.putExtra(AddressActivity::class.java.simpleName, rid)
+            startActivityForResult(intent, Constants.REQUEST_CODE_REFRESH_ADDRESS)
             dialog.dismiss()
         })
     }
@@ -262,12 +263,66 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         if (resultCode != Activity.RESULT_OK) return
-        if (requestCode == Constants.REQUEST_CODE_REFRESH_ADDRESS){ //添加成功新地址
-
+        when (requestCode) {
+            Constants.REQUEST_CODE_REFRESH_ADDRESS -> { //新建地址
+                for (item in adapter.data) {
+                    item.is_default = false
+                }
+                val dataBean = data.getParcelableExtra<UserAddressListBean.DataBean>(AddressActivity::class.java.simpleName)
+                dataBean.is_default = true
+                adapter.addData(0, dataBean)
+                adapter.notifyDataSetChanged()
+            }
+            Constants.REQUEST_CODE_EDIT_ADDRESS -> { //编辑地址
+                val dataBean = data.getParcelableExtra<UserAddressListBean.DataBean>(AddressActivity::class.java.simpleName)
+                if (dataBean == null) { //说明是删除
+                    presenter.loadData()
+                    return
+                }
+                val data = adapter.data
+                val iterator = data.iterator()
+                var editData: UserAddressListBean.DataBean = UserAddressListBean.DataBean()
+                while (iterator.hasNext()) {
+                    val item = iterator.next()
+                    if (TextUtils.equals(item.rid, dataBean.rid)) {
+                        item.isSelected = true
+                        item.city = dataBean.city
+                        item.area = dataBean.area
+                        item.area_id = dataBean.area_id
+                        item.city_id = dataBean.city_id
+                        item.country_id = dataBean.country_id
+                        item.first_name = dataBean.first_name
+                        item.full_address = dataBean.full_address
+                        item.is_default = dataBean.is_default
+                        item.is_from_wx = dataBean.is_from_wx
+                        item.last_name = dataBean.last_name
+                        item.mobile = dataBean.mobile
+                        item.phone = dataBean.phone
+                        item.full_name = dataBean.full_name
+                        item.province = dataBean.province
+                        item.province_id = dataBean.province_id
+                        item.rid = dataBean.rid
+                        item.street_address = dataBean.street_address
+                        item.street_address_two = dataBean.street_address_two
+                        item.town = dataBean.town
+                        item.town_id = dataBean.town_id
+                        item.zipcode = dataBean.zipcode
+                        item.is_default = true
+                        editData = item
+                        iterator.remove()
+                    } else {
+                        item.is_default = false
+                    }
+                }
+                adapter.addData(0, editData)
+                adapter.notifyDataSetChanged()
+            }
+            else -> { //删除了地址
+                presenter.loadData()
+            }
         }
-//        presenter.loadData()
     }
 
     override fun onDestroy() {

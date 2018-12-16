@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/imageViewBgNoLifeHouse"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="215dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:src="@mipmap/icon_bg_no_lifehouse" />
+        />
 
     <TextView
         android:layout_width="wrap_content"
