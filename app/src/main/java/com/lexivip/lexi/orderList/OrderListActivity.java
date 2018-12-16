@@ -1,5 +1,6 @@
 package com.lexivip.lexi.orderList;
 
+import com.basemodule.tools.SPUtil;
 import com.basemodule.ui.BaseActivity;
 import com.basemodule.ui.BaseFragment;
 import com.basemodule.ui.CustomFragmentPagerAdapter;
@@ -26,7 +27,7 @@ public class OrderListActivity extends BaseActivity {
     @Override
     public void initView() {
         super.initView();
-
+        SPUtil.write("fragment","12");
         CustomHeadView customHeadView=findViewById(R.id.customHeadView);
         SlidingTabLayout slidingTabLayout=findViewById(R.id.slidingTabLayout);
         CustomViewPager customViewPager=findViewById(R.id.customViewPager);

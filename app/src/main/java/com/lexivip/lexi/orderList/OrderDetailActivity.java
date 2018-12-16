@@ -84,6 +84,16 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         super.installListener();
     }
 
+    public void adsfasd(){
+
+    }
+
+    class ceshi{
+        public void sa(){
+            adsfasd();
+        }
+    }
+
     @Override
     public void setPresenter(OrderDetailContract.Presenter presenter) {
         setPresenter(presenter);

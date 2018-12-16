@@ -146,4 +146,31 @@ public class SharePresenter implements ShareContract.Presenter  {
             }
         });
     }
+
+    @Override
+    public void loadFriend() {
+        model.loadFriend(new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+            @Override
+            public void onSuccess(@NotNull String json) {
+                ShareBean shareBean=JsonUtil.fromJson(json,ShareBean.class);
+                if (shareBean.success){
+                }else {
+                    view.showError(shareBean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+            }
+        });
+    }
 }

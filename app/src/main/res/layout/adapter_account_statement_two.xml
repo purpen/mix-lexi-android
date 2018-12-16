@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/sp12"
             android:gravity="right"
+            android:text="大师傅"
             android:layout_below="@+id/tv_put_money"
             android:textColor="@color/color_fb9013" />
     </LinearLayout>

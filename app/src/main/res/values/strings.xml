@@ -431,6 +431,7 @@
     <string name="text_put">我要提现</string>
     <string name="text_need_attention">注意事项</string>
     <string name="text_need_one">提现申请将在1-3小时内审批到账；如遇高峰期，可能延迟到账，烦请耐心等待</string>
+    <string name="text_need_ones">提现申请将在24小时内审批到账；如遇高峰期，可能延迟到账，烦请耐心等待</string>
     <string name="text_need_two">请及时关注提现记录，查看提现状态</string>
     <string name="text_need_three">提现到账查询：支付宝 > 我的 > 账单，如果有名称为“乐喜提现成功”的数据，即提现成功到账</string>
     <string name="text_put_alipay_query">支付宝：我的 > 账单</string>
@@ -467,4 +468,5 @@
     <string name="text_my_friend">我的朋友</string>
     <string name="text_daren">达人</string>
     <string name="text_return">交易失败，已退款</string>
+    <string name="text_invitation_friend">邀请好友</string>
 </resources>

@@ -37,4 +37,76 @@ public class RewardModel {
             }
         });
     }
+    void loadReward(final IDataSource.HttpRequestCallBack callBack){
+        HashMap<String,Object> params=ClientParamsAPI.getDefaultParams();
+        HttpRequest.sendRequest(HttpRequest.GET, URL.LIFE_REWARD, params, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
+    void loadCashCount(final IDataSource.HttpRequestCallBack callBack){
+        HashMap<String,Object> params=ClientParamsAPI.getDefaultParams();
+        HttpRequest.sendRequest(HttpRequest.GET, URL.CASH_COUNT, params, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
+    void cashMoney(String open_id, final IDataSource.HttpRequestCallBack callBack){
+        HashMap<String,Object> params=ClientParamsAPI.getFriendCash("1",open_id,null,null);
+        HttpRequest.sendRequest(HttpRequest.POST, URL.REWARD_CASH, params, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
 }

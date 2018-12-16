@@ -1728,4 +1728,22 @@ public class ClientParamsAPI {
         params.put("sort_newest", sort_newest);
         return params;
     }
+
+    public static HashMap<String, Object> getUidParams(){
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("uid", UserProfileUtil.getUserId());
+        return params;
+    }
+
+    /**
+     * 邀请好友提现
+     */
+    public static HashMap<String,Object> getFriendCash(String cash_type,String open_id,String ali_account,String ali_name){
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("cash_type",cash_type);
+        params.put("open_id", open_id);
+        params.put("ali_account", ali_account);
+        params.put("ali_name", ali_name);
+        return params;
+    }
 }

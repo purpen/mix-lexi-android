@@ -11,13 +11,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.PageUtil;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.view.CustomHeadView;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 public class MyFriendActivity extends BaseActivity implements MyFriendContract.View{
 
     private AdapterMyFriend adapterMyFriend;
     private MyFriendPresenter presenter;
-    private WaitingDialog dialog;
     private int page=1;
+    private RecyclerView recyclerView;
 
 
     @Override
@@ -28,31 +29,41 @@ public class MyFriendActivity extends BaseActivity implements MyFriendContract.V
     @Override
     public void initView() {
         super.initView();
-        dialog = new WaitingDialog(this);
         presenter = new MyFriendPresenter(this);
         CustomHeadView customHeadView=findViewById(R.id.customHeadView);
         customHeadView.setHeadCenterTxtShow(true,R.string.text_my_friend);
-        RecyclerView recyclerView=findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapterMyFriend = new AdapterMyFriend(R.layout.item_myfriend);
         presenter.loadData(page);
+        recyclerView.setAdapter(adapterMyFriend);
+    }
+
+    @Override
+    public void installListener() {
+        super.installListener();
         adapterMyFriend.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 PageUtil.jump2OtherUserCenterActivity(adapterMyFriend.getData().get(position).user_sn);
             }
         });
-        recyclerView.setAdapter(adapterMyFriend);
+        adapterMyFriend.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                presenter.loadData(page);
+            }
+        },recyclerView);
     }
 
     @Override
     public void showLoadingView() {
-        dialog.show();
+
     }
 
     @Override
     public void dismissLoadingView() {
-        dialog.dismiss();
+
     }
 
     @Override
@@ -72,9 +83,6 @@ public class MyFriendActivity extends BaseActivity implements MyFriendContract.V
 
     @Override
     public void showError(String error) {
-        if (dialog!=null){
-            dismissLoadingView();
-        }
         ToastUtil.showError(error);
     }
 
@@ -85,6 +93,7 @@ public class MyFriendActivity extends BaseActivity implements MyFriendContract.V
         }else {
             adapterMyFriend.addData(bean.data.friends);
         }
+        page++;
     }
 
     @Override

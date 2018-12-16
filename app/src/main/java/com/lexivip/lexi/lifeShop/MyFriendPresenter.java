@@ -2,8 +2,11 @@ package com.lexivip.lexi.lifeShop;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.AppManager;
 import com.basemodule.tools.Util;
+import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.IDataSource;
+import com.lexivip.lexi.AppApplication;
 import com.lexivip.lexi.JsonUtil;
 import com.lexivip.lexi.R;
 
@@ -14,6 +17,7 @@ import java.io.IOException;
 public class MyFriendPresenter implements MyFriendContract.Presenter {
     private MyFriendContract.View view;
     private MyFriendModel myFriendModel=new MyFriendModel();
+    private WaitingDialog dialog=new WaitingDialog(AppManager.getAppManager().currentActivity());
 
     public MyFriendPresenter(MyFriendContract.View view) {
         this.view = view;
@@ -29,7 +33,7 @@ public class MyFriendPresenter implements MyFriendContract.Presenter {
 
             @Override
             public void onStart() {
-                view.showLoadingView();
+                dialog.show();
             }
 
             @Override
@@ -43,14 +47,16 @@ public class MyFriendPresenter implements MyFriendContract.Presenter {
                         view.dismissLoadingView();
                         view.setData(bean);
                     }
+                    dialog.dismiss();
                 }else {
-                    view.loadMoreFail();
+                    dialog.dismiss();
                     view.showError(bean.status.message);
                 }
             }
 
             @Override
             public void onFailure(@NotNull IOException e) {
+                dialog.dismiss();
                 view.showError(Util.getString(R.string.text_net_error));
             }
         });

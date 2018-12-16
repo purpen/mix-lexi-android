@@ -55,14 +55,19 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                 helper.setGone(R.id.bt_delete1, false);
                 helper.setGone(R.id.bt_confirm,false);
                 helper.setGone(R.id.bt_delete, false);
-                //todo 待测试评价
                 helper.setGone(R.id.bt_evaluate,false);
                 helper.setGone(R.id.bt_money, false);
+                helper.setGone(R.id.bt_logistics,false);
                 break;
             case 2:
                 helper.setText(R.id.tv_order_status,"待收货");
                 helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_6ed7af));
                 helper.setVisible(R.id.bt_confirm,true);
+                if (item.getItems().size()==1) {
+                    helper.setGone(R.id.bt_logistics, true);
+                }else {
+                    helper.setGone(R.id.bt_logistics, false);
+                }
                 helper.setGone(R.id.bt_delete1, false);
                 helper.setGone(R.id.bt_delete, false);
                 helper.setGone(R.id.bt_evaluate,false);
@@ -75,6 +80,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                 helper.setVisible(R.id.bt_evaluate,true);
                 helper.setGone(R.id.bt_delete1, false);
                 helper.setGone(R.id.bt_confirm,false);
+                helper.setGone(R.id.bt_logistics,false);
                 helper.setGone(R.id.bt_money, false);
                 break;
             case 4:
@@ -88,6 +94,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                     helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_6ed7af));
                     helper.setGone(R.id.bt_delete1, false);
                     helper.setGone(R.id.bt_confirm,false);
+                    helper.setGone(R.id.bt_logistics,false);
                     helper.setGone(R.id.bt_delete, false);
                     helper.setGone(R.id.bt_evaluate,false);
                     helper.setVisible(R.id.bt_money, true);
@@ -110,6 +117,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                     helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_ff6666));
                     helper.setVisible(R.id.bt_delete1, true);
                     helper.setGone(R.id.bt_confirm,false);
+                    helper.setGone(R.id.bt_logistics,false);
                     helper.setGone(R.id.bt_delete, false);
                     helper.setGone(R.id.bt_evaluate,false);
                     helper.setGone(R.id.bt_money, false);
@@ -119,7 +127,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                 helper.setText(R.id.tv_order_status,"交易成功");
                 helper.setTextColor(R.id.tv_order_status, Util.getColor(R.color.color_6ed7af));
                 helper.setVisible(R.id.bt_delete1, true);
-
+                helper.setGone(R.id.bt_logistics,false);
                 helper.setGone(R.id.bt_confirm,false);
                 helper.setGone(R.id.bt_delete, false);
                 helper.setGone(R.id.bt_evaluate,false);
@@ -131,6 +139,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                 helper.setVisible(R.id.bt_delete1, true);
                 //helper.setGone(R.id.bt_delete1, false);
                 helper.setGone(R.id.bt_confirm,false);
+                helper.setGone(R.id.bt_logistics,false);
                 helper.setGone(R.id.bt_delete, false);
                 helper.setGone(R.id.bt_evaluate,false);
                 //helper.setVisible(R.id.bt_evaluate,true );

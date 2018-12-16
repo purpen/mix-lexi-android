@@ -27,16 +27,13 @@ public class ShareUtil implements ShareContract.View{
     private SharePresenter presenter=new SharePresenter(this);
     private String scene;
     private UMImage image;
-    private String url;
-    private String content;
     private String pageUrl;
-    private String title;
     private UMMin umMin;
     private UMWeb web;
-    private int types;
     private String shareImageUrl;
     private String marketUrl;
     private String price=null;
+    private boolean isFriend;
 
     public ShareUtil(Activity context) {
         this.context = context;
@@ -51,6 +48,13 @@ public class ShareUtil implements ShareContract.View{
         setUmWeb(weburl+rid,title,content);
         LogUtil.e("图片链接地址"+imageURl);
         setSaveImage();
+    }
+
+    public void shareFriendInvitation(String weburl,int imageURl,String title,String content){
+        isFriend=true;
+        image = new UMImage(context, imageURl);
+        setUmWeb(weburl,title,content);
+        setUmShare();
     }
 
     public void shareInvitation(String weburl,String pageUrl,int imageURl,String title,String content,String scene){
@@ -164,6 +168,7 @@ public class ShareUtil implements ShareContract.View{
                     new ShareAction(context)
                             .withMedia(web)
                             .setPlatform(share_media)
+                            .setCallback(shareListener)
                             .share();
                 //}
             }else {
@@ -192,6 +197,8 @@ public class ShareUtil implements ShareContract.View{
         @Override
         public void onStart(SHARE_MEDIA platform) {
             LogUtil.e("回调开始了");
+            if (isFriend)
+            presenter.loadFriend();
         }
         /**
          * @descrption 分享成功的回调
@@ -199,7 +206,7 @@ public class ShareUtil implements ShareContract.View{
          */
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            LogUtil.e("回调成功了");
+            LogUtil.e("回调成功了"+platform.toString());
         }
         /**
          * @descrption 分享失败的回调

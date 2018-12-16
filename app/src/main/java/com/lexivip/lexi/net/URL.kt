@@ -930,7 +930,7 @@ object URL {
     /**
      * 35元邀请好友提现
      */
-    const val CASH_INVITATION="${BASE_URL}win_cash/cash_money"
+    const val LIFE_CASH_INVITATION="${BASE_URL}win_cash/cash_money"
     /**
      *获取我的邀请好友数量汇总
      */
@@ -947,4 +947,28 @@ object URL {
      * 邀请好友-我的朋友
      */
     const val MY_FRIEND="${BASE_URL}invite_life/friends"
+    /**
+     * 提现次数
+     */
+    const val CASH_COUNT="${BASE_URL}cash_money/count"
+    /**
+     * 35元邀请好友可提现金额
+     */
+    const val CASH_INVITATION="${BASE_URL}win_cash/get_real_friends_count"
+    /**
+     * 35元提现记录
+     */
+    const val CASH_RECORD="${BASE_URL}win_cash/withdrawal_record"
+    /**
+     * 35元提现详情
+     */
+    const val CASH_DETAIL="${BASE_URL}win_cash/withdrawal_detail"
+    /**
+     * 邀请好友开馆提现
+     */
+    const val REWARD_CASH="${BASE_URL}invite_life/cash_money"
+    /**
+     * 记录35元邀请分享
+     */
+    const val SHARE_FRIEND="${BASE_URL}win_cash/is_share"
 }

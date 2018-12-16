@@ -25,7 +25,7 @@ object WebUrl{
     /**
      * 加载35元邀请好友
      */
-    const val INVITATION="http://192.168.30.234:8080/invitation?uid=14892617530"//https://h5.lexivip.com/invitation?uid=14892617530
+    const val INVITATION="${BASE_URL}invitation?uid="//https://h5.lexivip.com/invitation?uid=14892617530
     /**
      * 35元邀请好友分享链接
      */
@@ -49,7 +49,7 @@ object WebUrl{
     /**
      * 开馆指引（邀请好友开馆）
      */
-    const val OPEN_SHOP="http://192.168.30.234:8080/shop/guide"
+    const val OPEN_SHOP="${BASE_URL}shop/guide"
     /**
      * 资质信息
      */

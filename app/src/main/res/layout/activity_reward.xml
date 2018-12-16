@@ -78,7 +78,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/sp12"/>
             </LinearLayout>
-            <view
+            <View
                 android:layout_width="@dimen/dp1"
                 android:layout_height="@dimen/dp20"
                 android:background="@color/color_e9e9e9"/>
