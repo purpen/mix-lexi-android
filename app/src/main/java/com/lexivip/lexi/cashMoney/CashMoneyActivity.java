@@ -177,7 +177,6 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
                 tv_select_alipay.setVisibility(View.VISIBLE);
                 break;
             case R.id.bt_put:
-                LogUtil.e("laladf拉的屎："+(cashMoney<Double.valueOf(tv_money.getText().toString())));
                 if (cashMoney>Double.valueOf(tv_money.getText().toString())){
                     ToastUtil.showError("您的可提现金额大于要提现的金额，请重新选择");
                 }else {
