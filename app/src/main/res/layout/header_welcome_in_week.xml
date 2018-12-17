@@ -14,9 +14,9 @@
         android:visibility="gone"
         >
         <ImageView
+            android:id="@+id/imageViewHasOpenHouse"
             android:layout_width="match_parent"
             android:layout_height="142dp"
-            android:src="@mipmap/icon_bg_has_open_house"
             android:scaleType="fitXY"
             />
 

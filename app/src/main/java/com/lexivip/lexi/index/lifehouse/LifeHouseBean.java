@@ -20,6 +20,7 @@ public class LifeHouseBean {
          */
         public String description;
         public String logo;
+        public String bgcover;
         public String phases_description;
         public String name;
         public int phases;

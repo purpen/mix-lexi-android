@@ -9,6 +9,7 @@ import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.index.bean.FavoriteBean
+import com.lexivip.lexi.index.explore.ExploreBannerBean
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendBean
 import com.lexivip.lexi.index.selection.HeadLineBean
 import com.lexivip.lexi.net.NetStatusBean
@@ -23,6 +24,58 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     private var page = 1
 
     private val dataSource: LifeHouseModel by lazy { LifeHouseModel() }
+
+    /**
+     * 获取未开通生活馆头部背景
+     */
+    override fun getNotSmallBHeaderImage(isRefresh: Boolean) {
+        dataSource.getNotSmallBHeaderImage(object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val exploreBannerBean = JsonUtil.fromJson(json, ExploreBannerBean::class.java)
+                if (exploreBannerBean.success) {
+                    val banner_images = exploreBannerBean.data.banner_images
+                    if (banner_images == null || banner_images.isEmpty()) return
+                    view.setNotSmallBHeaderImage(banner_images[0])
+                } else {
+                    view.showError(exploreBannerBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     *  开馆头条背景图
+     */
+    override fun getOpenStoreHeadLineImage(isRefresh: Boolean) {
+        dataSource.getOpenStoreHeadLineImage(object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                if (!isRefresh) view.showLoadingView()
+            }
+
+            override fun onSuccess(json: String) {
+                view.dismissLoadingView()
+                val bannerImageBean = JsonUtil.fromJson(json, ExploreBannerBean::class.java)
+                if (bannerImageBean.success) {
+                    val banner_images = bannerImageBean.data.banner_images
+                    if (banner_images == null || banner_images.isEmpty()) return
+                    view.setOpenStoreHeadLineImage(banner_images[0])
+                    page++
+                } else {
+                    view.showError(bannerImageBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 
     /**
      * 加载馆主推荐数据
@@ -138,6 +191,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
             override fun onStart() {
                 if (!isRefresh) view.showLoadingView()
             }
+
             override fun onSuccess(json: String) {
                 view.dismissLoadingView()
                 val editorRecommendBean = JsonUtil.fromJson(json, EditorRecommendBean::class.java)
@@ -204,8 +258,9 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
         dataSource.editLifeHouse(title, description, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
-                view.setEditLifeHouseData(title,description)
+                view.setEditLifeHouseData(title, description)
             }
+
             override fun onSuccess(json: String) {
                 val lifeHouseBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
                 if (lifeHouseBean.success) {
