@@ -5,8 +5,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
 import com.basemodule.tools.Constants
-import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.JsonUtil
@@ -34,7 +34,7 @@ class DialogBottomFilter(context: Activity, presenter: BrandHouseGoodsPresenter,
     }
 
     private fun setRangeSeekBar(): View {
-        val list = listOf("￥0", "￥150", "￥300", "￥400", "￥500", "￥800", "不限")
+        val list = Util.getStringArray(R.array.strings_goods_range_price).asList()
         view.rangeSeekBarView.setData(list) { leftPostion, rightPostion ->
 
             val page = 1

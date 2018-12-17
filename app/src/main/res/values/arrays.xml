@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string-array name="strings_goods_range_price">
+        <item>¥0</item>
+        <item>¥150</item>
+        <item>¥300</item>
+        <item>¥400</item>
+        <item>¥500</item>
+        <item>¥800</item>
+        <item>不限</item>
+    </string-array>
+
     <string-array name="strings_main_titles">
         <item>生活馆</item>
         <item>精选</item>
