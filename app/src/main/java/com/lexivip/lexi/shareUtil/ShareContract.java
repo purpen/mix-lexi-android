@@ -18,5 +18,6 @@ public class ShareContract {
         void loadShareWindow(String rid,String scene);
         void loadShareInvitation(String scene);
         void loadShareMarket(String rid,int type);
+        void loadFriend();
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.lexivip.lexi.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.lexivip.lexi.view.CustomHeadView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="@dimen/dp210"
+            android:layout_height="@dimen/dp155"
+            android:background="@mipmap/icon_cash_list_null"
+            android:layout_marginTop="@dimen/dp62"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无提现记录"
+            android:textColor="@color/color_333"/>
+    </LinearLayout>
+</LinearLayout>

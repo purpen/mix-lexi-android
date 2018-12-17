@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.basemodule.tools.Constants;
+import com.basemodule.tools.DateUtil;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.SPUtil;
 import com.basemodule.ui.BaseFragment;
@@ -25,8 +26,10 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -47,6 +50,7 @@ public class MainFragmentUser extends BaseFragment {
     @Override
     public void initView() {
         super.initView();
+        LogUtil.e("初始化视图");
         slidingTabLayout = getView().findViewById(R.id.slidingTabLayout);
         viewPager = getView().findViewById(R.id.customViewPager);
         ImageView imageViewShare=getView().findViewById(R.id.imageViewShare);
@@ -99,6 +103,41 @@ public class MainFragmentUser extends BaseFragment {
     public static BaseFragment newInstance(){
         MainFragmentUser mainFragmentUser=new MainFragmentUser();
         return mainFragmentUser;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        LogUtil.e("是否记载"+hidden);
+        if (!hidden) {
+            long time = System.currentTimeMillis();
+            Calendar mCalendar = Calendar.getInstance();
+            mCalendar.setTimeInMillis(time);
+            int house = mCalendar.get(Calendar.HOUR_OF_DAY);
+            LogUtil.e("当前小时数"+house);
+            String date = DateUtil.getDateByTimestamp(time);
+            if (18 <= house && house <= 23) {
+                if (!"1".equals(SPUtil.read("18"))) {
+                    InvitationDialog dialog = new InvitationDialog(getContext());
+                    dialog.show();
+                    SPUtil.write("18", "1");
+                    SPUtil.write("date", date);
+                }
+            } else {
+                if (!date.equals(SPUtil.read("date"))) {
+                    InvitationDialog dialog = new InvitationDialog(getContext());
+                    dialog.show();
+                    SPUtil.write("day", "1");
+                    SPUtil.write("date", date);
+                } else {
+                    if (!"1".equals(SPUtil.read("day"))) {
+                        InvitationDialog dialog = new InvitationDialog(getContext());
+                        dialog.show();
+                        SPUtil.write("day", "1");
+                    }
+                }
+            }
+        }
     }
 
     /*@Override

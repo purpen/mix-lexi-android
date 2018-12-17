@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
+import com.basemodule.tools.SPUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
@@ -62,6 +63,7 @@ public class EvaluateActivity extends BaseActivity implements EasyPermissions.Pe
     private Button button;
     private String order_rid;
     private List<EvaluateBean> items=new ArrayList<EvaluateBean>();
+    private int status;
 
     @Override
     protected int getLayout() {
@@ -73,6 +75,7 @@ public class EvaluateActivity extends BaseActivity implements EasyPermissions.Pe
         super.initView();
         EventBus.getDefault().register(this);
         Intent intent=getIntent();
+        status=intent.getIntExtra("status",0);
         if (intent.hasExtra(EvaluateActivity.class.getSimpleName())) {
             LogUtil.e("数据为空");
             ordersBean = intent.getParcelableExtra(EvaluateActivity.class.getSimpleName());
@@ -147,6 +150,13 @@ public class EvaluateActivity extends BaseActivity implements EasyPermissions.Pe
                 dialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        LogUtil.e("返回");
+        SPUtil.write("fragment",String.valueOf(status));
+        super.onBackPressed();
     }
 
     //相机

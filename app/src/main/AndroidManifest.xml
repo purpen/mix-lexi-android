@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -209,6 +208,8 @@
         <activity android:name=".index.explore.goodsClassify.GoodsClassifyActivity" />
         <activity android:name=".lifeShop.MyFriendActivity"/>
         <activity android:name=".lifeShop.RewardActivity"/>
+        <activity android:name=".cashMoney.CashRecordActivity"/>
+        <activity android:name=".cashMoney.CashDetailActivity"/>
     </application>
 
 </manifest>

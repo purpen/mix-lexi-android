@@ -24,7 +24,7 @@ public class AdapterOrderListTow extends BaseQuickAdapter<MyOrderListBean.DataBe
         helper.setText(R.id.tv_order_shoping_name, item.getProduct_name());
         helper.setText(R.id.tv_order_shoping_num,"x"+item.getQuantity());
         if (status==2||status==3){
-            if (helper.getAdapterPosition()!=getData().size()-1) {
+            /*if (helper.getAdapterPosition()!=getData().size()-1) {
                 if (item.getExpress_no().equals(getData().get(helper.getAdapterPosition()+1).getExpress_no())){
                     helper.setGone(R.id.bt_logistics, false);
                 }else {
@@ -38,6 +38,11 @@ public class AdapterOrderListTow extends BaseQuickAdapter<MyOrderListBean.DataBe
                         helper.setGone(R.id.bt_logistics, false);
                     }
                 }
+            }*/
+            if (getData().size()==1){
+                helper.setGone(R.id.bt_logistics, true);
+            }else {
+                helper.setGone(R.id.bt_logistics, false);
             }
         }
         helper.addOnClickListener(R.id.bt_logistics);

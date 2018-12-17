@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
@@ -21,6 +23,7 @@ import com.lexivip.lexi.R;
 import com.lexivip.lexi.dialog.InquiryDialog;
 import com.lexivip.lexi.user.login.UserProfileBean;
 import com.lexivip.lexi.user.login.UserProfileUtil;
+import com.lexivip.lexi.user.setting.SettingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +39,12 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
     private ImageView tv_select_alipay;
     private Button button;
     private int cashType=1;
-    private int cashMoney;
+    private int cashMoney=1;
     private CashMoneyPresenter presenter;
     private WaitingDialog dialog;
+    private TextView textView;
+    private SpannableStringBuilder builder;
+    private SpannableStringBuilder builder1;
 
     @Override
     protected int getLayout() {
@@ -66,13 +72,17 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
         tv_select_alipay = findViewById(R.id.tv_select_alipay);
         button = findViewById(R.id.bt_put);
         button.setOnClickListener(this);
-        TextView textView=findViewById(R.id.textView);
-        SpannableStringBuilder builder=new SpannableStringBuilder(Util.getString(R.string.text_need_one));
-        builder.setSpan(new ForegroundColorSpan(Util.getColor(R.color.color_ff6666)),6,9,Spanned.SPAN_COMPOSING);
+        textView = findViewById(R.id.textView);
+        builder = new SpannableStringBuilder(Util.getString(R.string.text_need_one));
+        builder.setSpan(new ForegroundColorSpan(Util.getColor(R.color.color_ff6666)),6,11,Spanned.SPAN_COMPOSING);
+        builder1 = new SpannableStringBuilder(Util.getString(R.string.text_need_ones));
+        builder1.setSpan(new ForegroundColorSpan(Util.getColor(R.color.color_ff6666)),6,10,Spanned.SPAN_COMPOSING);
         textView.setText(builder);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,4));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
         setList();
         adapterCashMoney = new AdapterCashMoney(R.layout.item_cash_money,list);
+        recyclerView.setAdapter(adapterCashMoney);
+        presenter.loadData();
     }
 
     @Override
@@ -101,6 +111,11 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
                     case 5:
                         cashMoney=20;
                         break;
+                }
+                if (cashMoney==1){
+                    textView.setText(builder);
+                }else {
+                    textView.setText(builder1);
                 }
                 adapterCashMoney.notifyDataSetChanged();
             }
@@ -147,6 +162,7 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.tv_cash:
+                startActivity(new Intent(this,CashRecordActivity.class));
                 break;
             case R.id.rl_select_wx:
                 cashType=1;
@@ -161,19 +177,10 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
                 tv_select_alipay.setVisibility(View.VISIBLE);
                 break;
             case R.id.bt_put:
-                if (cashType==1){
-                    final UserProfileBean.DataBean.ProfileBean bean=UserProfileUtil.getUserData().data.profile;
-                    InquiryDialog inquiryDialog=new InquiryDialog(this, bean.nick_name, bean.wx_avatar, "确定", "取消", new InquiryDialog.InquiryInterface() {
-                        @Override
-                        public void getCheck(boolean isCheck) {
-                            if (!isCheck){
-                                presenter.loadCash("1",bean.openid,null,null,cashMoney);
-                            }
-                        }
-                    });
-                    inquiryDialog.show();
+                if (cashMoney>Double.valueOf(tv_money.getText().toString())){
+                    ToastUtil.showError("您的可提现金额大于要提现的金额，请重新选择");
                 }else {
-
+                    presenter.loadCashCount();
                 }
                 break;
         }
@@ -209,6 +216,50 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
         Intent intent=new Intent(this,CashTimeActivity.class);
         intent.putExtra("data",bean);
         startActivity(intent);
+    }
+
+    @Override
+    public void setCashCount(int count) {
+        if (count>3){
+            InquiryDialog inquiryDialog1=new InquiryDialog(this,"你今日提现已达三次\n明日再来吧！");
+            inquiryDialog1.show();
+        }else {
+            if (cashType==1){
+                final UserProfileBean.DataBean.ProfileBean bean=UserProfileUtil.getUserData().data.profile;
+                if (!UserProfileUtil.isBindWX()){
+                    InquiryDialog inquiryDialog=new InquiryDialog(this, "您还未绑定微信", "取消", "去绑定", new InquiryDialog.InquiryInterface() {
+                        @Override
+                        public void getCheck(boolean isCheck) {
+                            if (!isCheck){
+                                //startActivity(new Intent(CashMoneyActivity.this,SettingActivity.class));
+                            }
+                        }
+                    });
+                    inquiryDialog.show();
+                }else {
+                    InquiryDialog inquiryDialog=new InquiryDialog(this, bean.nick_name, bean.wx_avatar, "取消", "确定", new InquiryDialog.InquiryInterface() {
+                        @Override
+                        public void getCheck(boolean isCheck) {
+                            if (!isCheck){
+                                presenter.loadCash("1",bean.openid,null,null,cashMoney);
+                            }
+                        }
+                    },1);
+                    inquiryDialog.show();
+                }
+
+            }else {
+                Intent intent=new Intent(this,CashAlipayActivity.class);
+                intent.putExtra("amount",String.valueOf(cashMoney));
+                intent.putExtra("type",1);
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    public void setData(CashBean bean) {
+        tv_money.setText(bean.data.amount);
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.basemodule.tools.LogUtil;
+import com.basemodule.tools.SPUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseFragment;
@@ -98,6 +99,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         LogUtil.e("评价订单啊啊啊啊啊啊啊");
                         intent=new Intent(getActivity(),EvaluateActivity.class);
                         intent.putExtra(EvaluateActivity.class.getSimpleName(),adapterOrderList.getData().get(position));
+                        intent.putExtra("status",status);
                         getActivity().startActivity(intent);
                         break;
                     case R.id.bt_confirm:
@@ -149,6 +151,17 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                 isData=true;
                 presenter.getData(status, page,dialog);
             }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtil.e("返回的："+SPUtil.read("fragment")+"当前的："+status);
+        if (String.valueOf(status).equals(SPUtil.read("fragment"))){
+            page=1;
+            presenter.getData(status, page,dialog);
+            SPUtil.write("fragment","12");
         }
     }
 

@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <com.lexivip.lexi.view.CustomHeadView
+        android:id="@+id/customHeadView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.lexivip.lexi.view.CustomHeadView>
     <LinearLayout
@@ -43,8 +44,8 @@
             android:text="@string/text_alipay_account"/>
         <EditText
             android:id="@+id/et_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:hint="请输入您的支付宝账号"
             android:background="@null"
             android:textSize="@dimen/sp16"
@@ -66,8 +67,8 @@
             android:text="@string/text_alipay_name"/>
         <EditText
             android:id="@+id/et_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:hint="请输入您的真实姓名"
             android:background="@null"
             android:textSize="@dimen/sp16"

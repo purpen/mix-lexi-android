@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.basemodule.tools.GlideUtil;
+import com.basemodule.tools.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lexivip.lexi.ImageSizeConfig;
@@ -22,10 +23,11 @@ public class AdapterOrderDetail extends BaseQuickAdapter<MyOrderListBean.DataBea
 
     @Override
     protected void convert(BaseViewHolder helper, MyOrderListBean.DataBean.OrdersBean.ItemsBean item) {
-        if (!item.isShow||1==status||4==status){
+        LogUtil.e("显示物流"+status+item.isShow);
+        if (item.isShow||1==status||4==status){
             helper.setGone(R.id.relativeLayout,false);
         }else{
-
+            LogUtil.e("显示物流");
             helper.setVisible(R.id.relativeLayout,true);
             helper.setText(R.id.tv_logistics_name,item.getExpress_name());
         }

@@ -138,4 +138,29 @@ public class ShareModel {
             }
         });
     }
+
+    public void loadFriend(final IDataSource.HttpRequestCallBack callBack){
+        HashMap<String,Object> params=ClientParamsAPI.getUidParams();
+        HttpRequest.sendRequest(HttpRequest.POST, URL.SHARE_FRIEND, params, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
 }

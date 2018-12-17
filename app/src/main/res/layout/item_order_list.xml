@@ -1,160 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dp10"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/iv_shop"
             android:layout_width="@dimen/dp23"
             android:layout_height="@dimen/dp23"
-            android:scaleType="fitXY"
-            android:layout_margin="15dp"/>
+            android:layout_margin="15dp"
+            android:scaleType="fitXY" />
+
         <TextView
             android:id="@+id/tv_shop_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_shop"
             android:layout_alignTop="@+id/iv_shop"
+            android:layout_toRightOf="@+id/iv_shop"
             android:text="@string/text_loading"
-            android:textSize="@dimen/sp13"
             android:textColor="@android:color/black"
-            />
+            android:textSize="@dimen/sp13" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="@color/color_999"
-            android:textSize="@dimen/sp12"
-            android:text="@string/order_total"
             android:layout_marginTop="@dimen/dp15"
-            android:layout_marginBottom="@dimen/dp10"
             android:layout_marginRight="@dimen/dp15"
-            />
+            android:layout_marginBottom="@dimen/dp10"
+            android:text="@string/order_total"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp12" />
+
         <TextView
             android:id="@+id/tv_order_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView"
-            android:text="0"
-            android:textSize="@dimen/sp14"
-            android:textColor="@android:color/black"
             android:layout_alignRight="@+id/textView"
-            android:textStyle="bold"
-            />
+            android:text="0"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp14"
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¥"
-            android:textColor="@android:color/black"
             android:layout_below="@+id/textView"
             android:layout_marginRight="@dimen/dp3"
-            android:textSize="@dimen/sp12"
-            android:layout_toLeftOf="@+id/tv_order_money"/>
+            android:layout_toLeftOf="@+id/tv_order_money"
+            android:text="¥"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp12" />
+
         <TextView
             android:id="@+id/tv_order_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp11"
-            android:textColor="@color/color_b2b2b2"
-            android:text="@string/text_loading"
             android:layout_below="@+id/tv_shop_name"
             android:layout_alignLeft="@+id/tv_shop_name"
-            android:layout_marginTop="@dimen/dp6"/>
+            android:layout_marginTop="@dimen/dp6"
+            android:text="@string/text_loading"
+            android:textColor="@color/color_b2b2b2"
+            android:textSize="@dimen/sp11" />
+
         <TextView
             android:id="@+id/textView0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="•"
-            android:textSize="@dimen/sp11"
             android:layout_alignTop="@+id/tv_order_time"
-            android:layout_toRightOf="@+id/tv_order_time"
-            android:textColor="@color/color_b2b2b2"
             android:layout_marginLeft="@dimen/dp5"
-            android:layout_marginRight="@dimen/dp5"/>
+            android:layout_marginRight="@dimen/dp5"
+            android:layout_toRightOf="@+id/tv_order_time"
+            android:text="•"
+            android:textColor="@color/color_b2b2b2"
+            android:textSize="@dimen/sp11" />
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp11"
-            android:textColor="@color/color_b2b2b2"
-            android:text="@string/order_status"
             android:layout_alignTop="@+id/textView0"
-            android:layout_toRightOf="@+id/textView0"/>
+            android:layout_toRightOf="@+id/textView0"
+            android:text="@string/order_status"
+            android:textColor="@color/color_b2b2b2"
+            android:textSize="@dimen/sp11" />
+
         <TextView
             android:id="@+id/tv_order_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp11"
-            android:textColor="@color/color_6ed7af"
-            android:layout_marginLeft="@dimen/dp5"
             android:layout_alignTop="@+id/textView1"
-            android:layout_toRightOf="@+id/textView1"/>
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_toRightOf="@+id/textView1"
+            android:textColor="@color/color_6ed7af"
+            android:textSize="@dimen/sp11" />
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/dp10"
+        android:paddingTop="@dimen/dp15"
         android:paddingRight="@dimen/dp15"
-        android:paddingTop="@dimen/dp15">
-    <Button
-        android:id="@+id/bt_money"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp29"
-        android:background="@drawable/bg_colorff6666_radius4"
-        android:layout_alignParentRight="true"
-        android:textSize="@dimen/sp12"
-        android:visibility="gone"
-        android:textColor="@android:color/white"/>
+        android:paddingBottom="@dimen/dp10">
+
+        <Button
+            android:id="@+id/bt_money"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp29"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_colorff6666_radius4"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp12"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/bt_logistics"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp29"
+            android:background="@drawable/bg_stroke_color_999"
+            android:text="@string/order_logistics"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp12"
+            android:layout_toLeftOf="@id/bt_confirm"
+            android:layout_marginRight="@dimen/dp15"
+            android:visibility="gone"/>
+
         <Button
             android:id="@+id/bt_confirm"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp29"
-            android:background="@drawable/shape_radiu4_bgcolor_5fe4b1"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_alignParentRight="true"
-            android:textSize="@dimen/sp12"
+            android:background="@drawable/shape_radiu4_bgcolor_5fe4b1"
             android:text="@string/order_confirm"
             android:textColor="@android:color/white"
+            android:textSize="@dimen/sp12"
             android:visibility="gone"/>
+
         <Button
             android:id="@+id/bt_evaluate"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp29"
-            android:background="@drawable/shape_radiu4_bgcolor_5fe4b1"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_alignParentRight="true"
-            android:textSize="@dimen/sp12"
+            android:layout_marginLeft="@dimen/dp15"
+            android:background="@drawable/shape_radiu4_bgcolor_5fe4b1"
             android:text="@string/order_evaluate"
             android:textColor="@android:color/white"
-            android:layout_marginLeft="@dimen/dp15"
-            android:visibility="gone"/>
+            android:textSize="@dimen/sp12" />
+
         <Button
             android:id="@+id/bt_delete"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp29"
-            android:background="@drawable/bg_stroke_color_999"
-            android:textSize="@dimen/sp12"
-            android:text="@string/order_delete"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_toLeftOf="@+id/bt_evaluate"
+            android:background="@drawable/bg_stroke_color_999"
+            android:text="@string/order_delete"
             android:textColor="@color/color_999"
-            android:visibility="gone"/>
+            android:textSize="@dimen/sp12" />
+
         <Button
             android:id="@+id/bt_delete1"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp29"
-            android:background="@drawable/bg_stroke_color_999"
-            android:textSize="@dimen/sp12"
-            android:text="@string/order_delete"
-            android:textColor="@color/color_999"
             android:layout_alignParentRight="true"
-            android:visibility="gone"/>
+            android:background="@drawable/bg_stroke_color_999"
+            android:text="@string/order_delete"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@color/color_999"
+            android:textSize="@dimen/sp12"
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

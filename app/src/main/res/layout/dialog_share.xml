@@ -8,10 +8,16 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp300"
+        android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/iv_cancel"
-        android:layout_marginTop="@dimen/dp25"/>
+        android:layout_marginTop="@dimen/dp25"
+        android:layout_marginRight="@dimen/dp30"
+        android:layout_marginLeft="@dimen/dp30"
+        android:layout_above="@id/recyclerView"
+        android:layout_marginBottom="@dimen/dp20"
+        android:scaleType="fitXY"
+        android:src="@drawable/default_load"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"
