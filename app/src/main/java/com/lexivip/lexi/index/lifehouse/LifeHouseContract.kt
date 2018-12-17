@@ -50,7 +50,7 @@ class LifeHouseContract {
 
         }
 
-        fun setEditLifeHouseData(bean: LifeHouseBean) {
+        fun setEditLifeHouseData(title: String, description: String) {
 
         }
 

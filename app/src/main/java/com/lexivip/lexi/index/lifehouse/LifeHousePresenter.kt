@@ -203,10 +203,13 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     fun editLifeHouse(title: String, description: String) {
 
         dataSource.editLifeHouse(title, description, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                view.setEditLifeHouseData(title,description)
+            }
             override fun onSuccess(json: String) {
                 val lifeHouseBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
                 if (lifeHouseBean.success) {
-                    view.setEditLifeHouseData(lifeHouseBean)
+                    LogUtil.e("修改生活馆信息成功")
                 } else {
                     view.showError(lifeHouseBean.status.message)
                 }

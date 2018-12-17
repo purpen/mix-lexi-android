@@ -59,7 +59,6 @@ import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 
 class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickListener, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
     private val listNotice: ArrayList<HeadLineBean.DataBean.HeadlinesBean> by lazy { ArrayList<HeadLineBean.DataBean.HeadlinesBean>() }
@@ -208,9 +207,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     /**
      * 设置编辑生活馆数据
      */
-    override fun setEditLifeHouseData(bean: LifeHouseBean) {
-        headerLifeHouse.textViewTitle.text = bean.data.name
-        headerLifeHouse.textViewDesc.text = bean.data.description
+    override fun setEditLifeHouseData(title: String, description: String) {
+        headerLifeHouse.textViewTitle.text = title
+        headerLifeHouse.textViewDesc.text = description
     }
 
     /**
