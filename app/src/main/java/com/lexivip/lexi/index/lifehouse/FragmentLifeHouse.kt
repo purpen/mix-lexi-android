@@ -584,7 +584,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
 
     override fun setNewData(data: List<ProductBean>) {//设置小B推荐数据
-        if (data.isNotEmpty()) headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
+        if (data.isNotEmpty()) {
+            headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
+        }else{
+            headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.GONE
+        }
         listRecommend.clear()
         for (item in data) {
             listRecommend.add(SmallBRecommendAdapter.MultipleItem(item, SmallBRecommendAdapter.MultipleItem.ITEM_TYPE_GOODS))
