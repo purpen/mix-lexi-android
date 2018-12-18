@@ -1,5 +1,6 @@
 package com.lexivip.lexi.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -8,8 +9,12 @@ import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.DividerItemDecoration
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.UserBean
+import com.lexivip.lexi.user.OtherUserCenterActivity
+import com.lexivip.lexi.user.login.LoginActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 
@@ -61,17 +66,17 @@ class FragmentSearchUserList : BaseFragment(), SearchUserListContract.View {
 
 
         adapter.setOnItemChildClickListener { adapter, v, position ->
-            val usersBean = adapter.getItem(position) as UserBean
-
-            presenter.focusUser(usersBean.uid, v, usersBean.follow_status, position)
+            if (UserProfileUtil.isLogin()) {
+                val usersBean = adapter.getItem(position) as UserBean
+                presenter.focusUser(usersBean.uid, v, usersBean.follow_status, position)
+            } else {
+                startActivity(Intent(activity, LoginActivity::class.java))
+            }
         }
 
-        adapter.setOnItemClickListener { adapter, view, position ->
-            //            ToastUtil.showInfo("跳转用户")
-//            val showWindowBean = adapter.getItem(position) as ShowWindowListBean.DataBean.ShopWindowsBean
-//            val intent = Intent(context, ShowWindowDetailActivity::class.java)
-//            intent.putExtra(ShowWindowDetailActivity::class.java.simpleName, showWindowBean)
-//            startActivity(intent)
+        adapter.setOnItemClickListener { _, _, position ->
+            val item = adapter.getItem(position) ?: return@setOnItemClickListener
+            PageUtil.jump2OtherUserCenterActivity(item.uid)
         }
     }
 

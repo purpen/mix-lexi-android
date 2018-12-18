@@ -393,20 +393,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
 
-    /**
-     * 设置是否喜欢
-     */
-    override fun setFavorite(b: Boolean, position: Int) {
-//        val item = adapter.getItem(position) as ProductBean
-//        if (b) {
-//            item.like_count += 1
-//        } else {
-//            item.like_count -= 1
-//        }
-//        item.is_like = b
-//        adapter.notifyItemChanged(position + 1)
-    }
-
     override fun installListener() {
 
         headerLifeHouse.textViewAllNewGoodsExpress.setOnClickListener {
@@ -584,7 +570,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
 
     override fun setNewData(data: List<ProductBean>) {//设置小B推荐数据
-        if (data.isNotEmpty()) headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
+        if (data.isNotEmpty()) {
+            headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
+        }else{
+            headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.GONE
+        }
         listRecommend.clear()
         for (item in data) {
             listRecommend.add(SmallBRecommendAdapter.MultipleItem(item, SmallBRecommendAdapter.MultipleItem.ITEM_TYPE_GOODS))

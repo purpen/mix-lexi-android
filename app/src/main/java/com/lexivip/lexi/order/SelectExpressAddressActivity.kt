@@ -73,6 +73,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
         footerView.setOnClickListener {
             //添加新地址
             val intent = Intent(this, AddressActivity::class.java)
+            intent.putStringArrayListExtra("countries", getDeliveryCountries())
             intent.putExtra(AddressActivity::class.java.simpleName, createOrderBean.address_rid)
             startActivityForResult(intent, Constants.REQUEST_CODE_REFRESH_ADDRESS)
         }
@@ -81,6 +82,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
         adapter.setOnItemClickListener { _, _, position ->
             val item = adapter.getItem(position) as UserAddressListBean.DataBean
             val intent = Intent(this, AddressActivity::class.java)
+            intent.putStringArrayListExtra("countries", getDeliveryCountries())
             intent.putExtra("isNew", false)
             intent.putExtra(AddressActivity::class.java.simpleName, item.rid)
             startActivityForResult(intent, Constants.REQUEST_CODE_EDIT_ADDRESS)
@@ -118,26 +120,47 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
                 return@setOnClickListener
             }
 
-            var isNeedIdentify = false
-            //判断是否需要海关信息
-            for (store in createOrderBean.store_items) {
-                for (product in store.items) {
-                    if (product.delivery_country_id != selectedItem.country_id) {
-                        isNeedIdentify = true
-                        break
-                    }
-                }
-            }
-
             createOrderBean.consigneeInfo = selectedItem
+
             //判断用户是否有上传海关信息
-            if (isNeedIdentify) {
+            if (isNeedIdentify(selectedItem)) {
                 presenter.getUserIdentifyInfo(selectedItem.first_name, selectedItem.mobile, selectedItem)
             } else { //发货地与收货地同一个国家
                 jump2ConfirmOrder()
             }
         }
     }
+
+    /**
+     * 获取商品发货地址列表
+     */
+    private fun getDeliveryCountries(): ArrayList<String> {
+        val list = ArrayList<String>()
+        for (store in createOrderBean.store_items) {
+            for (product in store.items) {
+                list.add(product.delivery_country)
+            }
+        }
+        return list
+    }
+
+    /**
+     * 用户操作地址判断是否需要上传身份证
+     */
+    private fun isNeedIdentify(selectedItem: UserAddressListBean.DataBean): Boolean {
+        var isNeedIdentify = false
+        //判断是否需要海关信息
+        for (store in createOrderBean.store_items) {
+            for (product in store.items) {
+                if (product.delivery_country_id != selectedItem.country_id) {
+                    isNeedIdentify = true
+                    break
+                }
+            }
+        }
+        return isNeedIdentify
+    }
+
 
     /**
      * //订单提交成功关闭本界面

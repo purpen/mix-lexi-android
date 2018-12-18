@@ -158,6 +158,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@+id/imageView"
                             android:layout_marginTop="@dimen/dp5"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             android:layout_toRightOf="@+id/imageView"
                             android:textColor="@android:color/white"
                             android:textStyle="bold" />

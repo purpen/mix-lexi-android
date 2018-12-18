@@ -18,7 +18,7 @@ class GoodsImagePagerAdapter(data: GoodsAllDetailBean.DataBean):PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val photoView = PhotoView(AppApplication.getContext())
-        GlideUtil.loadImage(assets[position].view_url,photoView,ImageSizeConfig.SIZE_P50)
+        GlideUtil.loadImage(assets[position].view_url,photoView,ImageSizeConfig.DEFAULT)
         container.addView(photoView)
         return photoView
     }

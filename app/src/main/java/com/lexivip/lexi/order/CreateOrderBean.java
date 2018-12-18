@@ -83,8 +83,11 @@ public class CreateOrderBean implements Parcelable {
         dest.writeInt(this.payWay);
         dest.writeString(this.order_rid);
         dest.writeParcelable(this.consigneeInfo, flags);
+        dest.writeDouble(this.firstOrderDiscountPrice);
         dest.writeInt(this.officialCouponPrice);
+        dest.writeDouble(this.fullReductionTotalPrice);
         dest.writeByte(this.officialCouponCanSelected ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.shopCouponTotalPrice);
         dest.writeByte(this.notUsingOfficialCoupon ? (byte) 1 : (byte) 0);
         dest.writeString(this.officialCouponCode);
         dest.writeDouble(this.orderTotalPrice);
@@ -105,8 +108,11 @@ public class CreateOrderBean implements Parcelable {
         this.payWay = in.readInt();
         this.order_rid = in.readString();
         this.consigneeInfo = in.readParcelable(UserAddressListBean.DataBean.class.getClassLoader());
+        this.firstOrderDiscountPrice = in.readDouble();
         this.officialCouponPrice = in.readInt();
+        this.fullReductionTotalPrice = in.readDouble();
         this.officialCouponCanSelected = in.readByte() != 0;
+        this.shopCouponTotalPrice = in.readInt();
         this.notUsingOfficialCoupon = in.readByte() != 0;
         this.officialCouponCode = in.readString();
         this.orderTotalPrice = in.readDouble();

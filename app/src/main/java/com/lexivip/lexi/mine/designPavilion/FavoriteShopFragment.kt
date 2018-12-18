@@ -1,5 +1,4 @@
 package com.lexivip.lexi.mine.designPavilion
-
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -85,7 +84,11 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData()
+            if (TextUtils.isEmpty(uid)) {
+                presenter.loadMoreData()
+            } else {
+                presenter.loadMoreData(uid!!)
+            }
         }, recyclerView)
     }
 
@@ -104,9 +107,9 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
     }
 
     fun refreshData() {
-        if (TextUtils.isEmpty(uid)){
+        if (TextUtils.isEmpty(uid)) {
             presenter.loadData(true)
-        }else{
+        } else {
             presenter.loadData(true, uid!!)
         }
     }

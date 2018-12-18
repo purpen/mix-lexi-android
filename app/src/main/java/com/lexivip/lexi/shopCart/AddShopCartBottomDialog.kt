@@ -122,6 +122,31 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
         colors.addAll(goodsAllSKUBean.data.colors)
         modes.addAll(goodsAllSKUBean.data.modes)
 
+        val colorsSize = colors.size
+        for (item in colors) {
+            item.selected = false
+        }
+
+        //颜色只有一项
+        if (colorsSize == 1) {
+            colors[0].selected = true
+            selectedColor = colors[0].name
+        }
+
+
+        val modeSize = modes.size
+
+        for (item in modes) {
+            item.selected = false
+        }
+        //规格只有一项
+        if (modeSize == 1) {
+            modes[0].selected = true
+            selectedSize = modes[0].name
+        }
+
+        selectedSKU = items[0]
+
         initColorListState()
         initSpecListState()
 
@@ -275,6 +300,10 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
 
         //确认按钮
         view.buttonConfirm.setOnClickListener {
+            if (selectedSKU!!.stock_count==0){
+                ToastUtil.showInfo(Util.getString(R.string.text_sku_goods_soldout))
+                return@setOnClickListener
+            }
             if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
                 ToastUtil.showInfo("请选择颜色分类")
                 return@setOnClickListener
@@ -294,6 +323,10 @@ class AddShopCartBottomDialog(context: Context, presenter: ShopCartPresenter, pr
 
         //添加购物车按钮
         view.buttonAddShopCart.setOnClickListener {
+            if (selectedSKU!!.stock_count==0){
+                ToastUtil.showInfo(Util.getString(R.string.text_sku_goods_soldout))
+                return@setOnClickListener
+            }
             if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
                 ToastUtil.showInfo("请选择颜色分类")
                 return@setOnClickListener
