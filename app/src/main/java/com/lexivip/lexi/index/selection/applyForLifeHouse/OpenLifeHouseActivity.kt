@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Build
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.RelativeLayout
@@ -40,7 +41,6 @@ import java.util.*
 class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     override val layout: Int = R.layout.acticity_open_life_house
-    private lateinit var webView: WebView
     private lateinit var url: String
     private var titleId: Int = 0
     var types:Int?=0
@@ -54,7 +54,7 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
     override fun initView() {
         EventBus.getDefault().register(this)
         customHeadView.setHeadCenterTxtShow(true, titleId)
-        webView = WebView(AppApplication.getContext())
+        //webView = WebView(AppApplication.getContext())
         webView.overScrollMode = WebView.OVER_SCROLL_NEVER
         val settings = webView.settings
         settings.setAppCacheEnabled(true)
@@ -70,10 +70,11 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
-        val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
+        /*val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
+        layoutParams.addRule(RelativeLayout.ABOVE, R.id.linearLayout)
         layoutParams.addRule(RelativeLayout.BELOW, R.id.customHeadView)
         webView.layoutParams = layoutParams
-        relativeLayout.addView(webView)
+        relativeLayout.addView(webView)*/
         webView.webViewClient = object : WebViewClient() {
 
             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
@@ -96,12 +97,37 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
             override fun onPageFinished(view: WebView?, url: String?) {
                 dialog.dismiss()
                 super.onPageFinished(view, url)
+                if(url.equals(WebUrl.INVITATION_OPEN)){
+                    linearLayout.visibility = View.VISIBLE
+                    LogUtil.e("是否显示："+linearLayout.visibility)
+                }
             }
         }
         webView.loadUrl(url)
 
         //js调用本地方法
         webView.addJavascriptInterface(JsInterface(this), "android")
+    }
+
+    override fun installListener() {
+        super.installListener()
+        button.setOnClickListener{
+            share()
+        }
+    }
+
+    /**
+     * 邀请好友开馆
+     */
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE_INVITATION)
+    private fun share() {
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            val shareUtil = ShareUtil(this)
+            shareUtil.shareInvitation(WebUrl.OPEN_SHOP, WebUrl.AUTH_GUIDE, R.mipmap.ic_launcher, "邀请你开馆", "", UserProfileUtil.storeId())
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_INVITATION, *perms)
+        }
     }
 
     override fun onDestroy() {
@@ -177,7 +203,7 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
             LogUtil.e(title)
             shareUtil.shareFriendInvitation(WebUrl.SHARE_INVITATION + UserProfileUtil.getUserId(), image!!, title, content)
         }else{
-            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_GOODS, *perms)
         }
     }
 

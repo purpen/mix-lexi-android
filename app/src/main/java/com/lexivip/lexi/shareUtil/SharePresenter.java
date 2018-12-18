@@ -2,8 +2,10 @@ package com.lexivip.lexi.shareUtil;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.AppManager;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.Util;
+import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.JsonUtil;
 import com.lexivip.lexi.R;
@@ -15,6 +17,7 @@ import java.io.IOException;
 public class SharePresenter implements ShareContract.Presenter  {
     private ShareContract.View view;
     private ShareModel model=new ShareModel();
+    private WaitingDialog dialog=new WaitingDialog(AppManager.getAppManager().currentActivity());
 
     public SharePresenter(ShareContract.View view) {
         this.view = view;
@@ -30,7 +33,7 @@ public class SharePresenter implements ShareContract.Presenter  {
 
             @Override
             public void onStart() {
-                view.showLoadingView();
+                dialog.show();
             }
 
             @Override
@@ -39,15 +42,16 @@ public class SharePresenter implements ShareContract.Presenter  {
                 ShareBean shareBean=JsonUtil.fromJson(json,ShareBean.class);
                 if (shareBean.success){
                     view.setImage(shareBean.data.image_url);
-                    view.dismissLoadingView();
+                    dialog.dismiss();
                 }else {
-                    view.dismissLoadingView();
+                    dialog.dismiss();
                     view.showError(shareBean.status.message);
                 }
             }
 
             @Override
             public void onFailure(@NotNull IOException e) {
+                dialog.dismiss();
                 view.showError(Util.getString(R.string.text_net_error));
             }
         });

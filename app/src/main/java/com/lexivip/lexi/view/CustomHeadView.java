@@ -30,7 +30,7 @@ public class CustomHeadView extends RelativeLayout {
     private Button buttonRight;
 
     private OnViewClickListener viewClickListener;
-    interface OnViewClickListener{
+    public interface OnViewClickListener{
         void onClick(View view);
     }
 

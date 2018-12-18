@@ -18,7 +18,7 @@ public class AdapterReceiveVoucherOfficial extends BaseQuickAdapter<VoucherOffic
     protected void convert(BaseViewHolder helper, VoucherOfficialBean.DataBean.OfficialCouponsBean item) {
         helper.setText(R.id.tv_price, item.amount);
         helper.setText(R.id.tv_full,"满"+item.min_amount+"元使用");
-        helper.setText(R.id.tv_type,"·"+item.code+"·");
+        helper.setText(R.id.tv_type,"·"+item.category_name+"·");
         if (item.is_grant){
             helper.setBackgroundRes(R.id.button,R.drawable.border_image_round);
             helper.setTextColor(R.id.button,Util.getColor(android.R.color.white));

@@ -96,7 +96,7 @@ public class MainFragmentUser extends BaseFragment {
                 ,"快来看看吧",WebUrl.AUTH_PAGE+UserProfileUtil.getUserId(),SPUtil.read(Constants.USER_IMAGE));*/
         ShareUtil shareUtil=new ShareUtil(getActivity());
         shareUtil.shareNoImage(WebUrl.USER+UserProfileUtil.getUserId(),WebUrl.AUTH_PAGE+UserProfileUtil.getUserId()
-                ,SPUtil.read(Constants.USER_IMAGE),"在#乐喜#悄悄收藏了一些原创精品好物"
+                ,SPUtil.read(Constants.USER_IMAGE),UserProfileUtil.getUserName()+"在#乐喜#悄悄收藏了一些原创精品好物"
                 ,"快来看看吧");
     }
 
