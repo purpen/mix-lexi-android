@@ -11,6 +11,8 @@ import com.lexivip.lexi.DividerItemDecoration
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.BrandPavilionBean
 import com.lexivip.lexi.brandHouse.BrandHouseActivity
+import com.lexivip.lexi.user.login.LoginActivity
+import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_favorite_shop.*
 
 class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.View {
@@ -72,11 +74,15 @@ class FragmentSearchBrandPavilion : BaseFragment(), SearchBrandPavilionContract.
 
         //关注品牌馆
         adapter.setOnItemChildClickListener { _, _, position ->
-            val pavilionBean = adapter.getItem(position) ?: return@setOnItemChildClickListener
-            if (pavilionBean.is_follow_store) { //点击取消关注
-                presenter.focusBrandPavilion(pavilionBean.rid, false, position)
-            } else {
-                presenter.focusBrandPavilion(pavilionBean.rid, true, position)
+            if (UserProfileUtil.isLogin()){
+                val pavilionBean = adapter.getItem(position) ?: return@setOnItemChildClickListener
+                if (pavilionBean.is_follow_store) { //点击取消关注
+                    presenter.focusBrandPavilion(pavilionBean.rid, false, position)
+                } else {
+                    presenter.focusBrandPavilion(pavilionBean.rid, true, position)
+                }
+            }else{
+                startActivity(Intent(activity,LoginActivity::class.java))
             }
         }
 

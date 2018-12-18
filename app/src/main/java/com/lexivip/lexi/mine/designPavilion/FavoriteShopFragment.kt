@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseFragment
@@ -85,7 +86,11 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
         }
 
         adapter.setOnLoadMoreListener({
-            presenter.loadMoreData()
+            if (TextUtils.isEmpty(uid)) {
+                presenter.loadMoreData()
+            } else {
+                presenter.loadMoreData(uid!!)
+            }
         }, recyclerView)
     }
 
@@ -104,9 +109,9 @@ class FavoriteShopFragment : BaseFragment(), FavoriteDesignContract.View, Scroll
     }
 
     fun refreshData() {
-        if (TextUtils.isEmpty(uid)){
+        if (TextUtils.isEmpty(uid)) {
             presenter.loadData(true)
-        }else{
+        } else {
             presenter.loadData(true, uid!!)
         }
     }
