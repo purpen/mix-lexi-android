@@ -1,9 +1,12 @@
 package com.lexivip.lexi.beans;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 import com.lexivip.lexi.order.StoreItemBean;
 
-public class CouponBean {
+public class CouponBean implements Parcelable {
     /**
      * amount : 10
      * code : UHAOSIWFUVZ
@@ -49,4 +52,87 @@ public class CouponBean {
     public String category_name;
     public int category_id;
     public CouponBean coupon;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.amount);
+        dest.writeString(this.code);
+        dest.writeParcelable(this.storeItemBean, flags);
+        dest.writeInt(this.count);
+        dest.writeInt(this.created_at);
+        dest.writeInt(this.days);
+        dest.writeInt(this.min_amount);
+        dest.writeInt(this.reach_amount);
+        dest.writeInt(this.status);
+        dest.writeInt(this.source);
+        dest.writeInt(this.type);
+        dest.writeString(this.type_text);
+        dest.writeString(this.store_logo);
+        dest.writeString(this.store_name);
+        dest.writeString(this.store_rid);
+        dest.writeLong(this.end_date);
+        dest.writeLong(this.start_date);
+        dest.writeLong(this.expired_at);
+        dest.writeLong(this.start_at);
+        dest.writeLong(this.get_at);
+        dest.writeLong(this.end_at);
+        dest.writeTypedList(this.products);
+        dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.is_expired ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.is_used ? (byte) 1 : (byte) 0);
+        dest.writeString(this.category_name);
+        dest.writeInt(this.category_id);
+        dest.writeParcelable(this.coupon, flags);
+    }
+
+    public CouponBean() {
+    }
+
+    protected CouponBean(Parcel in) {
+        this.amount = in.readInt();
+        this.code = in.readString();
+        this.storeItemBean = in.readParcelable(StoreItemBean.class.getClassLoader());
+        this.count = in.readInt();
+        this.created_at = in.readInt();
+        this.days = in.readInt();
+        this.min_amount = in.readInt();
+        this.reach_amount = in.readInt();
+        this.status = in.readInt();
+        this.source = in.readInt();
+        this.type = in.readInt();
+        this.type_text = in.readString();
+        this.store_logo = in.readString();
+        this.store_name = in.readString();
+        this.store_rid = in.readString();
+        this.end_date = in.readLong();
+        this.start_date = in.readLong();
+        this.expired_at = in.readLong();
+        this.start_at = in.readLong();
+        this.get_at = in.readLong();
+        this.end_at = in.readLong();
+        this.products = in.createTypedArrayList(ProductBean.CREATOR);
+        this.selected = in.readByte() != 0;
+        this.is_expired = in.readByte() != 0;
+        this.is_used = in.readByte() != 0;
+        this.category_name = in.readString();
+        this.category_id = in.readInt();
+        this.coupon = in.readParcelable(CouponBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<CouponBean> CREATOR = new Parcelable.Creator<CouponBean>() {
+        @Override
+        public CouponBean createFromParcel(Parcel source) {
+            return new CouponBean(source);
+        }
+
+        @Override
+        public CouponBean[] newArray(int size) {
+            return new CouponBean[size];
+        }
+    };
 }
