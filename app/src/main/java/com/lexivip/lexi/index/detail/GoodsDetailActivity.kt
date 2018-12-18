@@ -335,7 +335,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         designPavilionProductAdapter.setNewData(imgUrls)
 
         //跳转相似商品详情
-        designPavilionProductAdapter.setOnItemClickListener { _, view, position ->
+        designPavilionProductAdapter.setOnItemClickListener { _, _, position ->
             val productBean = data[position]
             val intent = Intent(this, GoodsDetailActivity::class.java)
             intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)

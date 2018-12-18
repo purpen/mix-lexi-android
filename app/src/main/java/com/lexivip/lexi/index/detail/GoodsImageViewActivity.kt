@@ -36,12 +36,12 @@ class GoodsImageViewActivity : BaseActivity(), GoodsDetailContract.View , EasyPe
 
         //设置初始喜欢状态
         if (goodsData.is_like) {
-            buttonLike.setBackgroundResource(R.drawable.border_round_2d343a)
+            buttonLike.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
             buttonLike.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             buttonLike.setPadding(DimenUtil.dp2px(2.0), 0, 0, 0)
             buttonLike.text = Util.getString(R.string.text_already_like)
         } else {
-            buttonLike.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
+            buttonLike.setBackgroundResource(R.drawable.border_round_2d343a)
             buttonLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_like_white, 0, 0, 0)
             buttonLike.compoundDrawablePadding = DimenUtil.dp2px(5.0)
             buttonLike.text = Util.getString(R.string.text_like)
@@ -93,12 +93,12 @@ class GoodsImageViewActivity : BaseActivity(), GoodsDetailContract.View , EasyPe
     override fun updateFavoriteState(favorite: Boolean) {
         goodsData.is_like = favorite
         if (favorite) {
-            buttonLike.setBackgroundResource(R.drawable.border_round_2d343a)
+            buttonLike.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
             buttonLike.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             buttonLike.setPadding(DimenUtil.dp2px(2.0), 0, 0, 0)
             buttonLike.text = Util.getString(R.string.text_already_like)
         } else {
-            buttonLike.setBackgroundResource(R.drawable.bg_round_color5fe4b1)
+            buttonLike.setBackgroundResource(R.drawable.border_round_2d343a)
             buttonLike.compoundDrawablePadding = DimenUtil.dp2px(5.0)
             buttonLike.setCompoundDrawablesWithIntrinsicBounds(R.mipmap.icon_like_white, 0, 0, 0)
             buttonLike.text = Util.getString(R.string.text_like)
