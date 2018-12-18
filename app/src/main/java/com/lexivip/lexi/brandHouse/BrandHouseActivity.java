@@ -290,7 +290,7 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         tv_goods_num.setText(String.valueOf(bean.data.product_count));
         tv_article_num.setText(String.valueOf(bean.data.life_record_count));
         tv_name.setText(bean.data.name);
-        tv_location.setText(bean.data.delivery_country+"."+bean.data.delivery_province);
+        tv_location.setText(bean.data.country+"."+bean.data.province);
         tv_fans.setText(String.valueOf(bean.data.fans_count));
         fansCount = bean.data.fans_count;
         tv_description.setText(bean.data.tag_line);

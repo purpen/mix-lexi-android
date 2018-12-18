@@ -80,7 +80,11 @@ public class AboutBrandHouseActivity extends BaseActivity implements AboutBrandH
         GlideUtil.loadImageAsBitmap(houseBean.data.logo,imageView);
         tv_name.setText(houseBean.data.name);
         tv_time.setText("开馆时间："+DateUtil.getDateByTimestamp(houseBean.data.created_at,DateUtil.PATTERN_DOT));
-        tv_description.setText(houseBean.data.delivery_country+"."+houseBean.data.delivery_province + "." + houseBean.data.delivery_city);
+        if (houseBean.data.delivery_country.contains("香港") || houseBean.data.delivery_country.contains("澳门") || houseBean.data.delivery_country.contains("台湾")) {
+            tv_description.setText(houseBean.data.country + "." + houseBean.data.city);
+        }else {
+            tv_description.setText(houseBean.data.country + "." + houseBean.data.province + "." + houseBean.data.city);
+        }
         presenter.loadOwnerData(rid);
         presenter.loadDetailData(rid);
     }
