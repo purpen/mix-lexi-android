@@ -31,6 +31,7 @@ import com.lexivip.lexi.album.ImageUtils
 import com.lexivip.lexi.album.PicturePickerUtils
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
+import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.lifehouse.newProductExpress.NewProductExpressActivity
 import com.lexivip.lexi.index.selection.HeadImageAdapter
@@ -59,7 +60,6 @@ import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 
 class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickListener, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
-    private val dialog: WaitingDialog by lazy { WaitingDialog(activity) }
     private val presenter: LifeHousePresenter by lazy { LifeHousePresenter(this) }
     override val layout: Int = R.layout.fragment_life_house
     private val listNotice: ArrayList<HeadLineBean.DataBean.HeadlinesBean> by lazy { ArrayList<HeadLineBean.DataBean.HeadlinesBean>() }
@@ -137,6 +137,8 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         headerLifeHouse.recyclerViewNewGoodsExpress.addItemDecoration(RecyclerViewDivider(AppApplication.getContext(), LinearLayoutManager.HORIZONTAL, DimenUtil.dp2px(10.0), Util.getColor(android.R.color.transparent)))
 
         if (!UserProfileUtil.isLogin() || !UserProfileUtil.isSmallB()) {//没有登录或者不是小B
+            presenter.getNotSmallBHeaderImage(false)
+            presenter.getOpenStoreHeadLineImage(false)
             presenter.getHeadLine()
             headerLifeHouse.relativeLayoutNoLifeHouse.visibility = View.VISIBLE
             headerLifeHouse.autoScrollRecyclerView.visibility = View.VISIBLE
@@ -144,8 +146,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             headerLifeHouse.autoScrollRecyclerView.setHasFixedSize(true)
             headerLifeHouse.autoScrollRecyclerView.layoutManager = linearLayoutManager
-            GlideUtil.loadImageWithDimen(R.mipmap.icon_bg_no_lifehouse, headerLifeHouse.imageViewBgNoLifeHouse, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(215.0), ImageSizeConfig.DEFAULT)
-            GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_tou_tiao, headerLifeHouse.imageViewOpenHouseGuide, DimenUtil.dp2px(4.0), ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0), DimenUtil.dp2px(100.0), ImageSizeConfig.DEFAULT)
+
             //添加
 //            headerLifeHouse.autoScrollRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 //                override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -173,6 +174,21 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         if (SPUtil.readBool(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE)) {
             headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
         }
+    }
+
+    /**
+     * 没有生活馆头部
+     */
+    override fun setNotSmallBHeaderImage(bannerImageBean: BannerImageBean) {
+        GlideUtil.loadImageWithDimen(bannerImageBean.image, headerLifeHouse.imageViewBgNoLifeHouse, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(215.0), ImageSizeConfig.DEFAULT)
+
+    }
+
+    /**
+     * 设置开馆指引背景图
+     */
+    override fun setOpenStoreHeadLineImage(bannerImageBean: BannerImageBean) {
+        GlideUtil.loadImageWithDimenAndRadius(bannerImageBean.image, headerLifeHouse.imageViewOpenHouseGuide, DimenUtil.dp2px(4.0), ScreenUtil.getScreenWidth() - DimenUtil.dp2px(30.0), DimenUtil.dp2px(100.0), ImageSizeConfig.DEFAULT)
     }
 
     /**
@@ -208,9 +224,9 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     /**
      * 设置编辑生活馆数据
      */
-    override fun setEditLifeHouseData(bean: LifeHouseBean) {
-        headerLifeHouse.textViewTitle.text = bean.data.name
-        headerLifeHouse.textViewDesc.text = bean.data.description
+    override fun setEditLifeHouseData(title: String, description: String) {
+        headerLifeHouse.textViewTitle.text = title
+        headerLifeHouse.textViewDesc.text = description
     }
 
     /**
@@ -218,6 +234,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
      */
     override fun setLifeHouseData(data: LifeHouseBean.DataBean) {
         logo = data.logo
+        GlideUtil.loadImageWithDimen(data.bgcover, headerLifeHouse.imageViewHasOpenHouse, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(142.0), ImageSizeConfig.DEFAULT)
         GlideUtil.loadCircleImageWidthDimen(data.logo, headerLifeHouse.circleImageView, DimenUtil.dp2px(28.0), ImageSizeConfig.SIZE_AVA)
 
         GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))

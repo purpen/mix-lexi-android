@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.basemodule.tools.DimenUtil;
+import com.basemodule.tools.LogUtil;
 import com.lexivip.lexi.R;
 
 import java.util.List;
@@ -25,9 +26,9 @@ public class RangeSeekBarView extends View {
     private static final float SEEK_TEXT_SCALE = 2F / 3F;
     private static final int DEF_HEIGHT = 80; //控件高度
 
-    private int DEF_PADDING = 20; //左边间距
+    private int DEF_PADDING; //左边间距
 
-    private int BG_HEIGHT = 10; //进度条高度
+    private int BG_HEIGHT; //进度条高度
 
     private static final int SEEK_STROKE_SIZE = 1;
 
@@ -132,8 +133,7 @@ public class RangeSeekBarView extends View {
         viewHeight = h;
         viewWidth = w;
 
-        seekBallRadio = 30;
-//        seekBallY = (int) (viewHeight * SEEK_BG_SCALE + BG_HEIGHT / 2.F);
+        seekBallRadio = DimenUtil.dp2px(10.0);
         seekBallY = (int) (viewHeight * SEEK_BG_SCALE);
         seekTextY = (int) (viewHeight * SEEK_TEXT_SCALE);
         leftSeekBallX = seekBallRadio + DEF_PADDING;
@@ -172,13 +172,13 @@ public class RangeSeekBarView extends View {
         int unitWidth = getUnitWidth(size - 1);
         for (int i = 0; i < size; i++) {
             String tempDesc = data.get(i);
-            float measureTextWidth = seekPbPaint.measureText(tempDesc);
+            float measureTextWidth = seekTextPaint.measureText(tempDesc);
             if (i == leftPosition || i == rightPosition) {
                 seekTextPaint.setColor(seekTextSelectedColor);
             } else {
                 seekTextPaint.setColor(seekTextColor);
             }
-            canvas.drawText(tempDesc, DEF_PADDING + unitWidth * i - measureTextWidth / 2, seekTextY, seekTextPaint);
+            canvas.drawText(tempDesc, DEF_PADDING + seekBallRadio + unitWidth * i - measureTextWidth * 0.5f, seekTextY, seekTextPaint);
         }
     }
 

@@ -304,6 +304,67 @@ open class LifeHouseModel {
         })
     }
 
+    /**
+     * 获取小B头部图
+     */
+    fun getSmallBHeaderImage(callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+
+        HttpRequest.sendRequest(HttpRequest.GET,URL.SMALLB_HEADER_IMAGE,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
+    /**
+     * 不是小B头图
+     */
+    fun getNotSmallBHeaderImage(callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+
+        HttpRequest.sendRequest(HttpRequest.GET,URL.NOT_SMALLB_HEADER_IMAGE,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
+    /**
+     * 开馆头条背景图
+     */
+    fun getOpenStoreHeadLineImage(callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET,URL.OPEN_LIFE_HOUSE_BG_IMAGE,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
 
 }
 

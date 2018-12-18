@@ -4,6 +4,7 @@ import android.support.annotation.NonNull
 import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.lexivip.lexi.beans.ProductBean
+import com.lexivip.lexi.index.bean.BannerImageBean
 import com.lexivip.lexi.index.selection.HeadLineBean
 import org.json.JSONArray
 
@@ -21,7 +22,7 @@ class LifeHouseContract {
 
         }
 
-        fun loadMoreEnd(){}
+        fun loadMoreEnd() {}
         fun loadMoreComplete() {
 
         }
@@ -50,7 +51,7 @@ class LifeHouseContract {
 
         }
 
-        fun setEditLifeHouseData(bean: LifeHouseBean) {
+        fun setEditLifeHouseData(title: String, description: String) {
 
         }
 
@@ -73,11 +74,24 @@ class LifeHouseContract {
         fun setHeadLineData(headlines: List<HeadLineBean.DataBean.HeadlinesBean>) {
 
         }
+
+        fun setOpenStoreHeadLineImage(bannerImageBean: BannerImageBean) {
+
+        }
+
+        fun setNotSmallBHeaderImage(bannerImageBean: BannerImageBean) {
+
+        }
     }
 
     interface Presenter : BasePresenter {
+        fun getNotSmallBHeaderImage(isRefresh: Boolean)
+
+        fun getOpenStoreHeadLineImage(isRefresh: Boolean)
+
         fun getHeadLine()
-        fun loadData(isRefresh:Boolean)
+
+        fun loadData(isRefresh: Boolean)
 
         fun loadMoreData()
 

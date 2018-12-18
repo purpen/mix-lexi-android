@@ -971,4 +971,19 @@ object URL {
      * 记录35元邀请分享
      */
     const val SHARE_FRIEND="${BASE_URL}win_cash/is_share"
+
+    /**
+     * 小B头图
+     */
+    const val SMALLB_HEADER_IMAGE = "${BASE_URL}banners/wxa_lifestore_index_head"
+
+    /**
+     * 非小B头图
+     */
+    const val NOT_SMALLB_HEADER_IMAGE = "${BASE_URL}banners/wxa_lifestore_head"
+
+    /**
+     * 开馆头条背景图
+     */
+    const val OPEN_LIFE_HOUSE_BG_IMAGE = "${BASE_URL}banners/wxa_lifestore_bg"
 }

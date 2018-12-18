@@ -7,6 +7,7 @@ import android.view.View
 import com.basemodule.tools.Constants
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.tools.ToastUtil
+import com.basemodule.tools.Util
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
@@ -35,7 +36,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: GoodsClassifyPre
     }
 
     private fun setRangeSeekBar(): View {
-        val list = listOf("￥0", "￥150", "￥300", "￥400", "￥500", "￥800", "不限")
+        val list = Util.getStringArray(R.array.strings_goods_range_price).asList()
         view.rangeSeekBarView.setData(list) { leftPostion, rightPostion ->
 
             val page = 1
