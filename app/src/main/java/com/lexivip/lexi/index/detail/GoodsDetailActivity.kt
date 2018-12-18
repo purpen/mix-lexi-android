@@ -598,8 +598,12 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
             headerView.textViewCount.text = "数量：${data.total_stock}件"
         }
 
+        if (data.delivery_country.contains("香港") || data.delivery_country.contains("澳门") || data.delivery_country.contains("台湾")) {
+            headerView.textViewSendAddress.text = data.delivery_country + data.delivery_province
+        } else {
+            headerView.textViewSendAddress.text = data.delivery_country + data.delivery_province + data.delivery_city
+        }
 
-        headerView.textViewSendAddress.text = data.delivery_country + data.delivery_province + data.delivery_city
 
         if (TextUtils.isEmpty(data.return_policy_title)) {
             headerView.textViewReturnPolicy.visibility = View.GONE
