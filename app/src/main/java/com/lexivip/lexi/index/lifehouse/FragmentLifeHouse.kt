@@ -393,20 +393,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
 
-    /**
-     * 设置是否喜欢
-     */
-    override fun setFavorite(b: Boolean, position: Int) {
-//        val item = adapter.getItem(position) as ProductBean
-//        if (b) {
-//            item.like_count += 1
-//        } else {
-//            item.like_count -= 1
-//        }
-//        item.is_like = b
-//        adapter.notifyItemChanged(position + 1)
-    }
-
     override fun installListener() {
 
         headerLifeHouse.textViewAllNewGoodsExpress.setOnClickListener {
