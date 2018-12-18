@@ -64,8 +64,11 @@ class LookGoodsAllDetailDialog(context: FragmentActivity?, goodsData: GoodsAllDe
             view.textViewCount.text = "数量：${data.total_stock}件"
         }
 
-
-        view.textViewSendAddress.text = data.delivery_country + data.delivery_province + data.delivery_city
+        if (data.delivery_country.contains("香港") || data.delivery_country.contains("澳门") || data.delivery_country.contains("台湾")) {
+            view.textViewSendAddress.text = data.delivery_country + data.delivery_province
+        } else {
+            view.textViewSendAddress.text = data.delivery_country + data.delivery_province + data.delivery_city
+        }
 
         if (TextUtils.isEmpty(data.return_policy_title)) {
             view.textViewReturnPolicy.visibility = View.GONE
