@@ -469,4 +469,5 @@
     <string name="text_daren">达人</string>
     <string name="text_return">交易失败，已退款</string>
     <string name="text_invitation_friend">邀请好友</string>
+    <string name="text_sku_goods_soldout">很抱歉商品已售罄</string>
 </resources>

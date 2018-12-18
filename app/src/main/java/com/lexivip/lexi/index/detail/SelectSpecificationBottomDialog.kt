@@ -117,7 +117,6 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
         val modeSize = modesList.size
 
-        LogUtil.e(modesList.toString())
         for (item in modesList) {
             item.selected = false
         }
@@ -287,6 +286,10 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
         //确认按钮
         view.buttonConfirm.setOnClickListener {
+            if (selectedSKU!!.stock_count == 0) {
+                ToastUtil.showInfo(Util.getString(R.string.text_sku_goods_soldout))
+                return@setOnClickListener
+            }
             if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
                 ToastUtil.showInfo("请选择颜色分类")
                 return@setOnClickListener
@@ -311,6 +314,11 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
         //添加购物车按钮
         view.buttonAddShopCart.setOnClickListener {
+            if (selectedSKU!!.stock_count == 0) {
+                ToastUtil.showInfo(Util.getString(R.string.text_sku_goods_soldout))
+                return@setOnClickListener
+            }
+
             if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
                 ToastUtil.showInfo("请选择颜色分类")
                 return@setOnClickListener
@@ -327,6 +335,11 @@ class SelectSpecificationBottomDialog(context: Context, presenter: GoodsDetailPr
 
         //购买->跳转确认订单
         view.buttonGoOrderConfirm.setOnClickListener {
+            if (selectedSKU!!.stock_count == 0) {
+                ToastUtil.showInfo(Util.getString(R.string.text_sku_goods_soldout))
+                return@setOnClickListener
+            }
+
             if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
                 ToastUtil.showInfo("请选择颜色分类")
                 return@setOnClickListener

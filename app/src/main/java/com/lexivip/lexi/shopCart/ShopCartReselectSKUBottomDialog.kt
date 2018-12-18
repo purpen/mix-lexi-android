@@ -83,6 +83,7 @@ class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPrese
             override fun onStart() {
                 view.progressBar.visibility = View.VISIBLE
             }
+
             override fun onSuccess(json: String) {
                 view.progressBar.visibility = View.GONE
                 val goodsAllSKUBean = JsonUtil.fromJson(json, GoodsAllSKUBean::class.java)
@@ -111,6 +112,31 @@ class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPrese
         items.addAll(goodsAllSKUBean.data.items)
         colors.addAll(goodsAllSKUBean.data.colors)
         modes.addAll(goodsAllSKUBean.data.modes)
+
+        val colorsSize = colors.size
+        for (item in colors) {
+            item.selected = false
+        }
+
+        //颜色只有一项
+        if (colorsSize == 1) {
+            colors[0].selected = true
+            selectedColor = colors[0].name
+        }
+
+
+        val modeSize = modes.size
+
+        for (item in modes) {
+            item.selected = false
+        }
+        //规格只有一项
+        if (modeSize == 1) {
+            modes[0].selected = true
+            selectedSize = modes[0].name
+        }
+
+        selectedSKU = items[0]
 
         initColorListState()
         initSpecListState()
@@ -142,13 +168,13 @@ class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPrese
             view.textViewPrice.text = "${goods.min_sale_price}"
         }
 
-        if (goods.is_free_postage){
+        if (goods.is_free_postage) {
             val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_free_express, DimenUtil.dp2px(20.0), DimenUtil.dp2px(12.0))
             val span = CustomImageSpan(drawable)
             val spannable = SpannableString("   " + goods.name)
             spannable.setSpan(span, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
             view.textViewName.text = spannable
-        }else{
+        } else {
             view.textViewName.text = goods.name
         }
 
@@ -264,6 +290,10 @@ class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPrese
 
         //确认按钮
         view.buttonConfirm.setOnClickListener {
+            if (selectedSKU!!.stock_count == 0) {
+                ToastUtil.showInfo(Util.getString(R.string.text_sku_goods_soldout))
+                return@setOnClickListener
+            }
             if (colors.size > 0 && TextUtils.isEmpty(selectedColor)) {
                 ToastUtil.showInfo("请选择颜色分类")
                 return@setOnClickListener
@@ -273,7 +303,7 @@ class ShopCartReselectSKUBottomDialog(context: Context, presenter: ShopCartPrese
                 ToastUtil.showInfo("请选择规格")
                 return@setOnClickListener
             }
-            present.updateReselectSKU(selectedSKU!!.rid,goods.rid,1)
+            present.updateReselectSKU(selectedSKU!!.rid, goods.rid, 1)
             dismiss()
         }
 
