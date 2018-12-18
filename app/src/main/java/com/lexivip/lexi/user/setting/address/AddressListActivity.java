@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseActivity;
@@ -67,11 +68,11 @@ public class AddressListActivity extends BaseActivity implements AddressListCont
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        LogUtil.e("返回的打："+resultCode);
+        LogUtil.e("dsafa:"+requestCode);
         if (resultCode==RESULT_OK){
             if (requestCode==1){
-                if(data.getBooleanExtra("isRefresh",false)){
                     presenter.loadData();
-                }
 
             }
         }

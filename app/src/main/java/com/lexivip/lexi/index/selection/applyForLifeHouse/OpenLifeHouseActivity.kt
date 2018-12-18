@@ -2,12 +2,10 @@ package com.lexivip.lexi.index.selection.applyForLifeHouse
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Build
-import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.RelativeLayout
@@ -46,7 +44,8 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
     private lateinit var url: String
     private var titleId: Int = 0
     var types:Int?=0
-    private val shareModel=ShareModel()
+    private val shareUtil = ShareUtil(this)
+    private val shareModel= ShareModel()
     override fun getIntentData() {
         url = intent.getStringExtra("url")
         titleId = intent.getIntExtra("title", R.string.title_open_life_house)
@@ -116,29 +115,10 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
 
     internal inner class JsInterface(context: Activity) {
         private val context=context
-        private var title:String?=null
-        private var cotent:String?=null
-        private var image:Int?=0
-        private val shareModel=ShareModel()
         @JavascriptInterface
         fun share() {//35元分享
-            val rand = Random()
-            val i = rand.nextInt(4)
-            if (i==1){
-                title="你还没有参加吗？"
-                cotent="安装乐喜app，挑全球原创手作好物，每天都可以赚现金。"
-                image=R.drawable.icon_share_invitation1
-            }else if (i==2){
-                title="做颗喜糖"
-                cotent="拿35元现金，边玩边赚钱，逛全球优质设计师手作人社群。"
-                image=R.drawable.icon_share_invitation
-            }else{
-                title="安利个我很喜欢的应用"
-                cotent="报道先拿35元，汇聚了全球原创手作的暖心好设计。"
-                image=R.drawable.icon_share_invation2
-            }
-            val shareUtil=ShareUtil(context)
-            shareUtil.shareFriendInvitation(WebUrl.SHARE_INVITATION+UserProfileUtil.getUserId(), image!!,title,cotent)
+            LogUtil.e("邀请好友分享")
+            shared()
         }
 
         @JavascriptInterface
@@ -162,34 +142,83 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
         LogUtil.e("$TAG be closed")
         finish()
     }
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE_GOODS)
+    fun shared(){
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            var title: String?
+            var content: String?
+            var image: Int?
+            var titles: String?
+            val rands = Random()
+            val i = rands.nextInt(3)
+            val j = rands.nextInt(3)
+            LogUtil.e("谁是：" + i)
+            if (i == 0) {
+                title = "安利个我很喜欢的应用给你，报道先拿35元"
+                content = "挑选全球原创手作好物"
+                titles = "安利个我很喜欢的应用，报道先拿35元，汇聚了全球原创手作的暖心好设计"
+            } else if (i == 1) {
+                title = "你还没有参加吗？安装乐喜app，挑全球原创手作好物"
+                content = "每天都可以赚现金"
+                titles = "你还没有参加吗？安装乐喜app，挑全球原创手作好物，每天都可以赚现金。"
+            } else {
+                title = "做颗喜糖，拿35元现金，逛全球优质设计师手作社群"
+                content = "边玩边赚钱"
+                titles = "做颗喜糖，拿35元现金，边玩边赚钱，逛全球优质设计师手作人社群。"
+            }
+            if (j == 0) {
+                image = R.drawable.icon_share_invitation1
+            } else if (j == 1) {
+                image = R.drawable.icon_share_invitation
+            } else {
+                image = R.drawable.icon_share_invation2
+            }
+            LogUtil.e(title)
+            shareUtil.shareFriendInvitation(WebUrl.SHARE_INVITATION + UserProfileUtil.getUserId(), image!!, title, content)
+        }else{
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
+        }
+    }
 
     @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
-    public fun shareInvation() {
+    fun shareInvation() {
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(this, *perms)) {
             var title:String?
             var cotent:String?
             var images:Int?
             val rand = Random()
-            val i = rand.nextInt(4)
-            if (i==1){
-                title="你还没有参加吗？"
-                cotent="安装乐喜app，挑全球原创手作好物，每天都可以赚现金。"
+            var titles:String?
+            val i = rand.nextInt(3)
+            val j = rand.nextInt(3)
+            if (i==0){
+                title="安利个我很喜欢的应用给你，报道先拿35元"
+                cotent="挑选全球原创手作好物"
+                titles="安利个我很喜欢的应用，报道先拿35元，汇聚了全球原创手作的暖心好设计"
+            }else if (i==1){
+                title="你还没有参加吗？安装乐喜app，挑全球原创手作好物"
+                cotent="每天都可以赚现金"
+                titles="你还没有参加吗？安装乐喜app，挑全球原创手作好物，每天都可以赚现金。"
+            }else{
+                title="做颗喜糖，拿35元现金，逛全球优质设计师手作社群"
+                cotent="边玩边赚钱"
+                titles="做颗喜糖，拿35元现金，边玩边赚钱，逛全球优质设计师手作人社群。"
+            }
+            if (j==0){
                 images=R.drawable.icon_share_invitation1
-            }else if (i==2){
-                title="做颗喜糖"
-                cotent="拿35元现金，边玩边赚钱，逛全球优质设计师手作人社群。"
+            }else if (j==1){
                 images=R.drawable.icon_share_invitation
             }else{
-                title="安利个我很喜欢的应用"
-                cotent="报道先拿35元，汇聚了全球原创手作的暖心好设计。"
                 images=R.drawable.icon_share_invation2
             }
             val image = UMImage(this, images!!)
             val web = UMWeb(WebUrl.SHARE_INVITATION+UserProfileUtil.getUserId())
             web.title = title//标题
             web.setThumb(image)  //缩略图
-            web.description = cotent//描述
+            if (types!=1) {
+                web.description = cotent//描述
+            }
             when(types){
                 0-> {
                     ShareAction(this)

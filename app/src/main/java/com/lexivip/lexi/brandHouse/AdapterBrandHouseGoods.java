@@ -1,8 +1,11 @@
 package com.lexivip.lexi.brandHouse;
 
+import android.graphics.Paint;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.basemodule.tools.DimenUtil;
 import com.basemodule.tools.GlideUtil;
@@ -16,6 +19,8 @@ import com.lexivip.lexi.beans.ProductBean;
 import com.lexivip.lexi.search.AdapterSearchGoods;
 
 import java.util.List;
+
+import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
 public class AdapterBrandHouseGoods extends BaseMultiItemQuickAdapter<AdapterSearchGoods.MultipleItem,BaseViewHolder> {
     /**
@@ -55,5 +60,17 @@ public class AdapterBrandHouseGoods extends BaseMultiItemQuickAdapter<AdapterSea
         helper.setText(R.id.textViewTitle,bean.name);
         helper.setText(R.id.textViewPrice, String.valueOf(bean.min_price));
         helper.setText(R.id.textViewLike,"喜欢 +"+bean.like_count);
+        TextView textViewOldPrice=helper.getView(R.id.textViewOldPrice);
+
+        if (item.getProduct().min_sale_price ==0.0){ //折扣价为0,显示真实价格
+            helper.setText(R.id.textViewPrice, String.valueOf(item.getProduct().min_price));
+            textViewOldPrice.setVisibility(View.GONE);
+        }else{ //折扣价不为0显示折扣价格和带划线的真实价格
+            textViewOldPrice.setVisibility(View.VISIBLE);
+            helper.setText(R.id.textViewPrice, String.valueOf(item.getProduct().min_sale_price));
+            //textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
+            textViewOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
+            textViewOldPrice.setText("￥" + String.valueOf(item.getProduct().min_price));
+        }
     }
 }

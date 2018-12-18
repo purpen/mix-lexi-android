@@ -71,7 +71,7 @@ public class AddressPresenter implements AddressContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
-                // LogUtil.e("数据形式："+json);
+                 LogUtil.e("数据形式："+json);
                 view.dismissLoadingView();
                 HashMap<String,ArrayList<CityBean.CityNameBean>> map=JsonUtil.fromJson(json,CityBean.class).getData();
                 view.setCityData(map);
@@ -208,6 +208,11 @@ public class AddressPresenter implements AddressContract.Presenter {
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error));
             }
         },bean, rid,is_overseas,id_card,id_card_front,id_card_back,type);
+    }
+
+    @Override
+    public void loadForeign(String user_name, String mobile) {
+
     }
 
     public void getToken(){

@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
 import com.lexivip.lexi.coupon.UserCouponActivity
 import com.lexivip.lexi.index.detail.FavoriteUserListActivity
+import com.lexivip.lexi.index.selection.applyForLifeHouse.OpenLifeHouseActivity
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.user.setting.userData.EditUserDataActivity
@@ -73,7 +75,7 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         buttonActivity.visibility = View.VISIBLE
         setUpViewPager()
         adapter0 = MineFavoritesAdapter(R.layout.adapter_goods_layout)
-
+        linearLayoutRedPacket.visibility=View.VISIBLE
         appBarLayout.post {
             val behavior = (appBarLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior as AppBarLayout.Behavior
             behavior.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
@@ -161,6 +163,13 @@ class MainFragment3 : BaseFragment(), MineContract.View, View.OnClickListener {
         buttonOrder.setOnClickListener(this)
         linearLayoutFocus.setOnClickListener(this)
         linearLayoutFans.setOnClickListener(this)
+
+        linearLayoutRedPacket.setOnClickListener{
+            val intent=Intent(activity,OpenLifeHouseActivity::class.java)
+            intent.putExtra("title", R.string.text_invitation_friend)
+            intent.putExtra("url", WebUrl.INVITATION + UserProfileUtil.getUserId())
+            startActivity(intent)
+        }
 
         linearLayoutLike.setOnClickListener {
             customViewPager.setCurrentItem(0, true)

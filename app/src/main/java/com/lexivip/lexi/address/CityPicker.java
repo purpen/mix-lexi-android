@@ -109,8 +109,8 @@ public class CityPicker extends LinearLayout {
             for (int k = 0; k < adList.size(); k++) {
                 aList.add(adList.get(k).getName());
             }
+            aId=adList.get(0).getOid();
         }
-        aId=adList.get(0).getOid();
     }
 
     // 设置城市信息

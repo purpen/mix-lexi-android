@@ -115,7 +115,7 @@ public class MainFragmentUser extends BaseFragment {
             mCalendar.setTimeInMillis(time);
             int house = mCalendar.get(Calendar.HOUR_OF_DAY);
             LogUtil.e("当前小时数"+house);
-            String date = DateUtil.getDateByTimestamp(time);
+            String date = DateUtil.getDateByTimestamp(time/1000);
             if (18 <= house && house <= 23) {
                 if (!"1".equals(SPUtil.read("18"))) {
                     InvitationDialog dialog = new InvitationDialog(getContext());
@@ -125,12 +125,16 @@ public class MainFragmentUser extends BaseFragment {
                 }
             } else {
                 if (!date.equals(SPUtil.read("date"))) {
+                    LogUtil.e("日期："+SPUtil.read("date"));
+                    LogUtil.e("day："+SPUtil.read("day"));
                     InvitationDialog dialog = new InvitationDialog(getContext());
                     dialog.show();
                     SPUtil.write("day", "1");
                     SPUtil.write("date", date);
                 } else {
                     if (!"1".equals(SPUtil.read("day"))) {
+                        LogUtil.e("日期1："+SPUtil.read("date"));
+                        LogUtil.e("day1："+SPUtil.read("day"));
                         InvitationDialog dialog = new InvitationDialog(getContext());
                         dialog.show();
                         SPUtil.write("day", "1");

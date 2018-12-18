@@ -51,6 +51,10 @@ object WebUrl{
      */
     const val OPEN_SHOP="${BASE_URL}shop/guide"
     /**
+     * 邀请好友开馆链接
+     */
+    const val INVITATION_OPEN="${BASE_URL}propaganda_team"
+    /**
      * 资质信息
      */
     const val QUALIFICAIONS="${BASE_URL}shop/qualification_validation?rid="
