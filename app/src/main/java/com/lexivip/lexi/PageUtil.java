@@ -3,6 +3,8 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.SparseArray;
+
+import com.basemodule.tools.Constants;
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
@@ -22,6 +24,10 @@ import com.lexivip.lexi.publishShopWindow.RelateShopWindowActivity;
 import com.lexivip.lexi.publishShopWindow.SelectShopWindowGoodsImageActivity;
 import com.lexivip.lexi.user.OtherUserCenterActivity;
 import com.lexivip.lexi.user.login.LoginActivity;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,6 +72,21 @@ public class PageUtil {
                 seedingBean.rid = bean.link;
                 seedingBean.channel_name = Util.getString(R.string.text_seeding_note);
                 jump2ArticleDetailActivity(seedingBean);
+                break;
+            case "8": //小程序链接
+                String appId = Constants.WX_ID; // 填应用AppId
+                IWXAPI api = WXAPIFactory.createWXAPI(context, appId);
+                WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+                req.userName = Constants.AUTHAPPID; // 填小程序原始id
+                req.path = bean.link;                  //拉起小程序页面的可带参路径，不填默认拉起小程序首页
+                req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开 开发版，体验版和正式版
+                api.sendReq(req);
+                break;
+            case "9": //跳转集合详情
+                jump2CollectionDetailActivity(bean.link);
+                break;
+            case "10": //跳转橱窗
+                jump2ShopWindowDetailActivity(bean.link);
                 break;
         }
     }

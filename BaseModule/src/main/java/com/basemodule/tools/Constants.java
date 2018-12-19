@@ -19,6 +19,9 @@ public class Constants {
 
     public static final String PAGE_SIZE20= "20";
 
+    /**
+     * app应用ID
+     */
     public static final String WX_ID="wx456e2f0cb22db269";
     public static final String WX_KEY ="8eddb55d39cbfdb9fee1afa93a495db1";
     public static final String QQ_ID="1106125719";
@@ -26,7 +29,11 @@ public class Constants {
     public static final String SINA_ID="146542115";
     public static final String SINA_KEY="3d2cff91e7e95529e97aa6a2320c940e";
 
+    /**
+     * 小程序原始ID
+     */
     public static final String AUTHAPPID="wx60ed17bfd850985d";
+
     public static final String HOMEPATH="pages/index/index";
     public static final String PRODUCTPATH="pages/product/product";
     public static final String WINDOWPATH="pages/windowDetail/windowDetail";

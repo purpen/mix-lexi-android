@@ -63,33 +63,30 @@ class MainFragment0 : BaseFragment() {
 
 //        LogUtil.e("currentActivity.switch2LifeHouseTab()"+currentActivity.switch2LifeHouseTab())
 
-        slidingTabLayout.currentTab = 0
-        slidingTabLayout.getTitleView(0).textSize = 19f
-//        if (!currentActivity.switch2LifeHouseTab()) {//不是刚开生活馆显示精选
-//            slidingTabLayout.currentTab = 0
-//            slidingTabLayout.getTitleView(0).textSize = 19f
-//        } else { //默认显示生活馆
-//            slidingTabLayout.currentTab = 1
-//            slidingTabLayout.getTitleView(1).textSize = 19f
-//        }
-
+        if (currentActivity.switch2SelectionTab()){
+            slidingTabLayout.currentTab = 1
+            slidingTabLayout.getTitleView(1).textSize = 19f
+        }else{
+            slidingTabLayout.currentTab = 0
+            slidingTabLayout.getTitleView(0).textSize = 19f
+        }
     }
 
     /**
      * 去掉生活馆界面
      */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun removeLifeHouseFragment(message: String) {
-        if (TextUtils.equals(FragmentLifeHouse::class.java.simpleName, message)) {
-            //移除fragment
-            childFragmentManager.beginTransaction().remove(fragmentLifeHouse).commit()
-            fragments.remove(fragmentLifeHouse)
-            listTitle.remove(Util.getString(R.string.text_life_pavilion))
-            adapter.notifyDataSetChanged()
-            slidingTabLayout.notifyDataSetChanged()
-        }
-
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun removeLifeHouseFragment(message: String) {
+//        if (TextUtils.equals(FragmentLifeHouse::class.java.simpleName, message)) {
+//            //移除fragment
+//            childFragmentManager.beginTransaction().remove(fragmentLifeHouse).commit()
+//            fragments.remove(fragmentLifeHouse)
+//            listTitle.remove(Util.getString(R.string.text_life_pavilion))
+//            adapter.notifyDataSetChanged()
+//            slidingTabLayout.notifyDataSetChanged()
+//        }
+//
+//    }
 
     override fun installListener() {
         relativeLayout.setOnClickListener {

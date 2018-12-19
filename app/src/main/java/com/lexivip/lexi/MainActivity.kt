@@ -9,6 +9,7 @@ import com.basemodule.tools.AppManager
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
+import com.lexivip.lexi.coupon.UserCouponActivity
 import com.lexivip.lexi.eventBusMessge.MessageChangePage
 import com.lexivip.lexi.index.selection.applyForLifeHouse.ApplyForLifeHouseSuccessActivity
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
@@ -31,6 +32,10 @@ class MainActivity : BaseActivity() {
      * 是否切换到生活馆界面
      */
     private var showLifeHouseTab:Boolean= false
+    /**
+     * 显示精选
+     */
+    private var showSelectionTab:Boolean= false
 
     override fun onResume() {
         super.onResume()
@@ -139,6 +144,13 @@ class MainActivity : BaseActivity() {
     }
 
     /**
+     * 是否展示精选
+     */
+    fun switch2SelectionTab():Boolean{
+        return showSelectionTab
+    }
+
+    /**
      * 是否展示生活馆
      */
     fun switch2LifeHouseTab():Boolean{
@@ -156,6 +168,11 @@ class MainActivity : BaseActivity() {
         if (TextUtils.isEmpty(str)) { //跳转首页
             showIndexPage()
             return
+        }
+
+        if (TextUtils.equals(str,UserCouponActivity::class.java.simpleName)){
+            showSelectionTab = true
+            showIndexPage()
         }
 
 //        LogUtil.e("TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName)=="+TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName))

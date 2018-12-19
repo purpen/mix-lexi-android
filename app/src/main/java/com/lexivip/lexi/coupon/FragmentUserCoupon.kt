@@ -118,6 +118,7 @@ class FragmentUserCoupon : BaseFragment(), UserCouponContract.View {
                     adapter.setOnItemClickListener { _, _, position ->
                         val multipleItem = adapter.getItem(position) ?: return@setOnItemClickListener
                         val intent = Intent(activity,MainActivity::class.java)
+                        intent.putExtra(MainActivity::class.java.simpleName,UserCouponActivity::class.java.simpleName)
                         startActivity(intent)
                     }
                 }
