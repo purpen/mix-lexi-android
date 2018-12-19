@@ -32,10 +32,6 @@ class MainActivity : BaseActivity() {
      * 是否切换到生活馆界面
      */
     private var showLifeHouseTab:Boolean= false
-    /**
-     * 显示精选
-     */
-    private var showSelectionTab:Boolean= false
 
     override fun onResume() {
         super.onResume()
@@ -143,12 +139,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    /**
-     * 是否展示精选
-     */
-    fun switch2SelectionTab():Boolean{
-        return showSelectionTab
-    }
 
     /**
      * 是否展示生活馆
@@ -170,9 +160,11 @@ class MainActivity : BaseActivity() {
             return
         }
 
-        if (TextUtils.equals(str,UserCouponActivity::class.java.simpleName)){
-            showSelectionTab = true
+        if (TextUtils.equals(str,UserCouponActivity::class.java.simpleName)){ //官方优惠券跳转精选
             showIndexPage()
+            if (fragment0 is MainFragment0){
+                (fragment0 as MainFragment0).getViewPager().currentItem = 1
+            }
         }
 
 //        LogUtil.e("TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName)=="+TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName))

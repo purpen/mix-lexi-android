@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SimpleItemAnimator
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
@@ -461,7 +462,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headerLifeHouse.buttonOpenShop.setOnClickListener {
-            LogUtil.e("=================")
             //我要开馆
             if (UserProfileUtil.isLogin()) {
                 PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide", R.string.title_open_life_house)
@@ -572,7 +572,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     override fun setNewData(data: List<ProductBean>) {//设置小B推荐数据
         if (data.isNotEmpty()) {
             headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
-        }else{
+        } else {
             headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.GONE
         }
         listRecommend.clear()
@@ -745,9 +745,11 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
 
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onClipComplete(message: ImageCropActivity.MessageCropComplete) {
-        if (FragmentLifeHouse::class.java.simpleName.equals(message.simpleName)) {
+        if (FragmentLifeHouse::class.java.simpleName == message.simpleName) {
             val byteArray = ImageUtils.bitmap2ByteArray(message.bitmap)
             presenter.getUploadToken(byteArray)
             setLifeHouseLogo(byteArray)
@@ -761,19 +763,17 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun onResume() {
-//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.start()
         if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.start()
+        if (UserProfileUtil.isSmallB()) presenter.loadData(true)
         super.onResume()
     }
 
     override fun onPause() {
-//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.stop()
         if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.stop()
         super.onPause()
     }
 
     override fun onDestroy() {
-//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.destroy()
         EventBus.getDefault().unregister(this)
         super.onDestroy()
     }
