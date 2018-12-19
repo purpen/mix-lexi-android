@@ -228,9 +228,9 @@
         android:layout_marginTop="@dimen/dp15"
         android:layout_width="@dimen/dp30"
         android:layout_height="@dimen/dp30"
-        android:layout_marginEnd="15dp"
         android:background="@drawable/bg_oval_red_packet"
         android:gravity="center"
+        android:layout_marginStart="@dimen/dp15"
         android:visibility="gone">
         <ImageView
             android:layout_width="18dp"

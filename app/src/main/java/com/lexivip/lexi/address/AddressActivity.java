@@ -310,7 +310,7 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         isNew = intent.getBooleanExtra("isNew", true);
         isForeign = intent.getBooleanExtra("isForeign", false);
         addressId = intent.getStringExtra(AddressActivity.class.getSimpleName());
-
+        LogUtil.e("首付："+isForeign);
     }
 
     private boolean setDataBean() {
@@ -486,6 +486,11 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             setResult(RESULT_OK, intent);
         }
         finish();
+    }
+
+    @Override
+    public void setForeign(ForeignBean bean) {
+
     }
 
 

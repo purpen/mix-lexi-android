@@ -97,19 +97,19 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
                         cashMoney=1;
                         break;
                     case 1:
-                        cashMoney=2;
+                        cashMoney=5;
                         break;
                     case 2:
-                        cashMoney=3;
+                        cashMoney=20;
                         break;
                     case 3:
-                        cashMoney=4;
+                        cashMoney=30;
                         break;
                     case 4:
-                        cashMoney=10;
+                        cashMoney=50;
                         break;
                     case 5:
-                        cashMoney=20;
+                        cashMoney=100;
                         break;
                 }
                 if (cashMoney==1){
@@ -129,19 +129,19 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
         cashItemBean.name="1元";
         list.add(cashItemBean);
         CashItemBean cashItemBean1=new CashItemBean();
-        cashItemBean1.name="2元";
+        cashItemBean1.name="5元";
         list.add(cashItemBean1);
         CashItemBean cashItemBean2=new CashItemBean();
-        cashItemBean2.name="3元";
+        cashItemBean2.name="10元";
         list.add(cashItemBean2);
         CashItemBean cashItemBean3=new CashItemBean();
-        cashItemBean3.name="4元";
+        cashItemBean3.name="30元";
         list.add(cashItemBean3);
         CashItemBean cashItemBean4=new CashItemBean();
-        cashItemBean4.name="10元";
+        cashItemBean4.name="50元";
         list.add(cashItemBean4);
         CashItemBean cashItemBean5=new CashItemBean();
-        cashItemBean5.name="20元";
+        cashItemBean5.name="100元";
         list.add(cashItemBean5);
     }
 
@@ -178,7 +178,7 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.bt_put:
                 if (cashMoney>Double.valueOf(tv_money.getText().toString())){
-                    ToastUtil.showError("您的可提现金额大于要提现的金额，请重新选择");
+                    ToastUtil.showError("余额不足，请重新选择");
                 }else {
                     presenter.loadCashCount();
                 }

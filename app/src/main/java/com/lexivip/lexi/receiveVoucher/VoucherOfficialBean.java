@@ -24,7 +24,7 @@ public class VoucherOfficialBean {
              * created_at : 1535433969
              * end_date : 1536422400
              * min_amount : 5
-             * pickup_count : 0
+             * pickup_count : 0-
              * start_date : 1535385600
              * type_text : 满5减5元
              * use_count : 0
@@ -33,6 +33,8 @@ public class VoucherOfficialBean {
              */
 
             public String amount;
+            public String category_name;
+            public int days;
             public String code;
             public int count;
             public int created_at;

@@ -22,6 +22,7 @@ public class AddressContract {
         void setImageId(JSONArray ids) throws JSONException;
         void setCountry(CountryAreaCodeBean bean);
         void finishActivity(AddressBean.DataBean data,boolean isDelete);
+        void setForeign(ForeignBean bean);
     }
     interface Presenter extends BasePresenter{
         void loadData(String rid);
@@ -30,6 +31,7 @@ public class AddressContract {
         void loadCountry();
         void deleteAddress(String rid);
         void saveAddress(AddressBean.DataBean bean,String rid, boolean is_overseas, String id_card, String id_card_front, String id_card_back,int type);
+        void loadForeign(String user_name,String mobile);
     }
 
 }

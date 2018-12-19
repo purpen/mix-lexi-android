@@ -38,8 +38,7 @@ public class ShareUtil implements ShareContract.View{
     public ShareUtil(Activity context) {
         this.context = context;
     }
-
-    public void shareWindow(String weburl,String pageUrl,String imageURl,String title,String content,String rid ,String scene){
+    public void shareWindow(String weburl, String pageUrl, String imageURl, String title, String content, String rid , String scene){
         this.rid = rid;
         this.scene = scene;
         type=1;
@@ -51,9 +50,11 @@ public class ShareUtil implements ShareContract.View{
     }
 
     public void shareFriendInvitation(String weburl,int imageURl,String title,String content){
+        LogUtil.e("是否走到这一步");
         isFriend=true;
         image = new UMImage(context, imageURl);
         setUmWeb(weburl,title,content);
+        LogUtil.e("图片链接地址"+imageURl);
         setUmShare();
     }
 
@@ -62,9 +63,9 @@ public class ShareUtil implements ShareContract.View{
         type=2;
         this.pageUrl=pageUrl;
         image = new UMImage(context, imageURl);
-        setUmMin(weburl+rid,pageUrl+rid,title,content);
-        setUmWeb(weburl+rid,title,content);
-        LogUtil.e("图片链接地址"+imageURl);
+        setUmMin(weburl,pageUrl+rid,title,content);
+        setUmWeb(weburl,title,content);
+        LogUtil.e("图片链接地址"+weburl+rid);
         setSaveImage();
         //presenter.loadShareInvitation(scene);
     }
@@ -164,12 +165,22 @@ public class ShareUtil implements ShareContract.View{
                             .setPlatform(share_media)
                             .share();
                 }else{*/
-                    LogUtil.e("微信朋友圈"+share_media.toString());
+                /*if (share_media==SHARE_MEDIA.SINA){
+                    LogUtil.e("新浪微博" + share_media.toString());
+                    new ShareAction(context)
+                            .withMedia(image)
+                            //.withText("测试的发斯蒂芬阿斯顿发撒的发阿斯顿发https://h5.lexivip.com/shop/guide")
+                            .setPlatform(share_media)
+                            .setCallback(shareListener)
+                            .share();
+                }else {*/
+                    LogUtil.e("微信朋友圈" + share_media.toString());
                     new ShareAction(context)
                             .withMedia(web)
                             .setPlatform(share_media)
                             .setCallback(shareListener)
                             .share();
+                //}
                 //}
             }else {
                 if (snsPlatform.mKeyword.equals("save")){

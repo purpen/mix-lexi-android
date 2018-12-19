@@ -73,7 +73,6 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
         recyclerViewOfficial.setAdapter(voucherOfficial);
         recyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerViewGoods.setAdapter(voucherGoods);
-        voucherGoods.addHeaderView(hander);
         //voucherGoods.addHeaderView(handerImage);
         voucherGoods.addHeaderView(handerBrand);
 
@@ -174,7 +173,11 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
 
     @Override
     public void getOfficial(VoucherOfficialBean bean) {
-        voucherOfficial.setNewData(bean.data.official_coupons);
+        if (!bean.data.official_coupons.isEmpty()){
+            voucherGoods.addHeaderView(hander);
+            voucherOfficial.setNewData(bean.data.official_coupons);
+        }
+
     }
 
     @Override

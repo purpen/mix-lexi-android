@@ -54,6 +54,7 @@ public class Constants {
     //分享所需权限
     public static final int REQUEST_CODE_SHARE=0x000110;
     public static final int REQUEST_CODE_SHARE_GOODS=0x000111;
+    public static final int REQUEST_CODE_SHARE_INVITATION=0x000101;
 
     //添加新地址
     public static final int REQUEST_CODE_REFRESH_ADDRESS = 0x0000012;

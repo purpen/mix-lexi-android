@@ -21,11 +21,17 @@ import com.lexivip.lexi.mine.designPavilion.FavoriteShopFragment
 import com.lexivip.lexi.mine.dynamic.DynamicActivity
 import com.lexivip.lexi.mine.enshrine.EnshrineFragment
 import com.lexivip.lexi.mine.like.FavoriteFragment
+import com.lexivip.lexi.net.WebUrl
+import com.lexivip.lexi.shareUtil.ShareUtil
+import com.lexivip.lexi.user.login.UserProfileUtil
+import com.lexivip.lexi.view.CustomHeadView
 import kotlinx.android.synthetic.main.activity_other_user_center.*
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
-class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickListener {
+class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickListener{
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     private val presenter: MinePresenter by lazy { MinePresenter(this) }
     private lateinit var adapter0: MineFavoritesAdapter
@@ -33,6 +39,8 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
     override val layout: Int = R.layout.activity_other_user_center
     private lateinit var userId: String
     private var followedStatus: Int = -1
+    private lateinit var imageUrl:String
+    private lateinit var name:String
 
     private var firstInPage = true
 
@@ -42,6 +50,12 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
 
     override fun initView() {
         customHeadView.setRightImgBtnShow(true)
+        customHeadView.setOnViewClickListener { view ->
+            val id = view.id
+            if (id==R.id.ib_right){
+                share()
+            }
+        }
         buttonActivity.visibility = View.VISIBLE
         buttonFocus.visibility = View.VISIBLE
         setUpViewPager()
@@ -163,12 +177,16 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
         linearLayoutCoupon.visibility = View.GONE
     }
 
+    private fun share() {
+        /* ShareUtil shareUtil=new ShareUtil(getActivity(),WebUrl.USER+UserProfileUtil.getUserId(),SPUtil.read(Constants.USER_NAME)+"在#乐喜#悄悄收藏了一些原创精品好物"
+                ,"快来看看吧",WebUrl.AUTH_PAGE+UserProfileUtil.getUserId(),SPUtil.read(Constants.USER_IMAGE));*/
+        val shareUtil = ShareUtil(this)
+        shareUtil.shareNoImage(WebUrl.USER + userId, WebUrl.AUTH_PAGE + userId, imageUrl, name+"在#乐喜#悄悄收藏了一些原创精品好物", "快来看看吧")
+    }
+
     override fun onClick(v: View) {
         val id = v.id
         when (id) {
-            R.id.imageViewShare -> {
-
-            }
             R.id.buttonFocus -> {
                 if (followedStatus == -1) return
                 presenter.focusUser(userId, v, followedStatus)
@@ -210,6 +228,7 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
         textViewDesignNum.text = data.followed_stores_counts
         textViewFocusNum.text = data.followed_users_counts
         textViewFansNum.text = data.fans_counts
+        name=data.username
         textViewName.text = data.username
         setFocusState(data.followed_status)
         if (TextUtils.isEmpty(data.about_me)) {
@@ -218,6 +237,7 @@ class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickL
             textViewSignature.visibility = View.VISIBLE
             textViewSignature.text = data.about_me
         }
+        imageUrl=data.avatar
         GlideUtil.loadCircleImageWidthDimen(data.avatar, imageView, DimenUtil.getDimensionPixelSize(R.dimen.dp70), ImageSizeConfig.SIZE_AVA)
     }
 

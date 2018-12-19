@@ -92,10 +92,10 @@ public class UserProfileUtil {
      * @return
      */
     public static String getUserName() {
-        String read = SPUtil.read(Constants.USER_PROFILE);
-        if (TextUtils.isEmpty(read)) return "";
-        UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);
-        return userProfileBean.data.profile.username;
+        String name = SPUtil.read(Constants.USER_NAME);
+        if (TextUtils.isEmpty(name)) return "";
+        //UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);
+        return name;
     }
 
     /**

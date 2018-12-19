@@ -30,6 +30,7 @@ import com.lexivip.lexi.R;
 import com.lexivip.lexi.address.AddressActivity;
 import com.lexivip.lexi.dialog.InquiryDialog;
 import com.lexivip.lexi.index.lifehouse.LifeHouseBean;
+import com.lexivip.lexi.index.selection.applyForLifeHouse.OpenLifeHouseActivity;
 import com.lexivip.lexi.net.WebUrl;
 import com.lexivip.lexi.shareUtil.ShareUtil;
 import com.lexivip.lexi.user.login.UserProfileUtil;
@@ -262,7 +263,10 @@ public class LifeShopFragment extends BaseFragment implements View.OnClickListen
                 inquiryDialog1.show();
                 break;
             case R.id.bt_invitation:
-                share();
+                intent=new Intent(getContext(),OpenLifeHouseActivity.class);
+                intent.putExtra("title",R.string.text_invitation_friend_open);
+                intent.putExtra("url",WebUrl.INVITATION_OPEN);
+                startActivity(intent);
                 break;
             case R.id.ll_gross_earnings:
                 intent = new Intent(getContext(), TransactionRecordActivity.class);
