@@ -366,6 +366,26 @@ open class LifeHouseModel {
         })
     }
 
+
+
+    fun changeNoticeStatus(storeId: String,callBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["rid"] = storeId
+        HttpRequest.sendRequest(HttpRequest.POST,URL.OPEN_LIFE_HOUSE_HEADLINE_STATUS,params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                callBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
+            }
+        })
+    }
+
 }
 
 

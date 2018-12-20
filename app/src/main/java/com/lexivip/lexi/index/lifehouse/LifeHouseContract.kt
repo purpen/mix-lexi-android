@@ -82,6 +82,10 @@ class LifeHouseContract {
         fun setNotSmallBHeaderImage(bannerImageBean: BannerImageBean) {
 
         }
+
+        fun setOpenStoreTipsStatus(status: Int) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

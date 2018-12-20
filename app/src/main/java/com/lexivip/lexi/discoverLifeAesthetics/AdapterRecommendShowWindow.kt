@@ -91,8 +91,18 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
             viewDot.visibility = View.GONE
         }
 
+//        val textViewTitle1 = helper.getView<TextView>(R.id.textViewTitle1)
         helper.setText(R.id.textViewTitle1, item.title)
+//        LogUtil.e("textViewTitle2==lineCount==="+textViewTitle1.lineCount)
+
+
         helper.setText(R.id.textViewTitle2, item.description)
+
+//        val treeObserver = textViewTitle1.viewTreeObserver
+
+//        treeObserver.addOnPreDrawListener {
+
+//        }
 
         val textViewFocus = helper.getView<TextView>(R.id.textViewFocus)
 

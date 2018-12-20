@@ -986,4 +986,9 @@ object URL {
      * 开馆头条背景图
      */
     const val OPEN_LIFE_HOUSE_BG_IMAGE = "${BASE_URL}banners/wxa_lifestore_bg"
+
+    /**
+     * 更改开馆提示语状态
+     */
+    const val OPEN_LIFE_HOUSE_HEADLINE_STATUS = "${BASE_URL}store/close_phases_description"
 }
