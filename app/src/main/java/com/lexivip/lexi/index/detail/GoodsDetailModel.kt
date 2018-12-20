@@ -340,5 +340,23 @@ class GoodsDetailModel : IDataSource {
         })
     }
 
+    fun removeProductFromWishOrder(list: ArrayList<String>, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["rids"] = list
+        HttpRequest.sendRequest(HttpRequest.DELETE, URL.WISH_ORDER, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
 
 }

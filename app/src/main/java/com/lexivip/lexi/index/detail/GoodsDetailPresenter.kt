@@ -337,7 +337,6 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
             override fun onSuccess(json: String) {
                 val shopCartProductNumBean = JsonUtil.fromJson(json, ShopCartProductNumBean::class.java)
                 if (shopCartProductNumBean.success) {
-                    LogUtil.e(json)
                     view.setShopCartNum(shopCartProductNumBean.data.item_count)
                 } else {
                     view.showError(shopCartProductNumBean.status.message)
@@ -361,6 +360,24 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
 
             override fun onSuccess(json: String) {
                 callBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 将商品从心愿单移除
+     */
+    fun removeProductFromWishOrder(list: ArrayList<String>) {
+        dataSource.removeProductFromWishOrder(list,object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success){
+                    LogUtil.e("removeProductFromWishOrder==商品已从心愿单移除")
+                }
             }
 
             override fun onFailure(e: IOException) {

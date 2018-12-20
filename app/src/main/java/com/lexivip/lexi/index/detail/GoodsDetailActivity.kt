@@ -424,7 +424,9 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 .show()
         dialog.setCancelable(false)
         dialog.setOnBtnClickL(OnBtnClickL {
-            //TODO 移除心愿单 在我的心愿单并且下架，调接口移出我的心愿单
+            val list = ArrayList<String>()
+            list.add(productId)
+            presenter.removeProductFromWishOrder(list)
             dialog.dismiss()
             finish()
         })
