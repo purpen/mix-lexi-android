@@ -52,6 +52,7 @@ public class ProductBean implements Parcelable {
      * total_stock : 库存数
      */
 
+    public String fromType;
     //商品默认快递id
     public String express_id;
     public boolean isRight;
@@ -125,6 +126,7 @@ public class ProductBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.fromType);
         dest.writeString(this.express_id);
         dest.writeByte(this.isRight ? (byte) 1 : (byte) 0);
         dest.writeSerializable(this.map);
@@ -179,6 +181,7 @@ public class ProductBean implements Parcelable {
         dest.writeString(this.sticked);
         dest.writeString(this.store_name);
         dest.writeString(this.store_rid);
+        dest.writeString(this.store_logo);
         dest.writeString(this.top_category_id);
         dest.writeInt(this.total_stock);
         dest.writeStringList(this.modes);
@@ -186,6 +189,7 @@ public class ProductBean implements Parcelable {
     }
 
     protected ProductBean(Parcel in) {
+        this.fromType = in.readString();
         this.express_id = in.readString();
         this.isRight = in.readByte() != 0;
         this.map = (HashMap<String, String>) in.readSerializable();
@@ -240,6 +244,7 @@ public class ProductBean implements Parcelable {
         this.sticked = in.readString();
         this.store_name = in.readString();
         this.store_rid = in.readString();
+        this.store_logo = in.readString();
         this.top_category_id = in.readString();
         this.total_stock = in.readInt();
         this.modes = in.createStringArrayList();

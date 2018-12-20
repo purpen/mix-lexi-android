@@ -92,13 +92,28 @@ public class PageUtil {
     }
 
     /**
+     * 跳转商品详情
      * 商品rid
-     *
      * @param rid
      */
     public static void jump2GoodsDetailActivity(String rid) {
         Intent intent = new Intent(AppApplication.getContext(), GoodsDetailActivity.class);
         ProductBean productBean = new ProductBean();
+        productBean.rid = rid;
+        intent.putExtra(GoodsDetailActivity.class.getSimpleName(), productBean);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        AppApplication.getContext().startActivity(intent);
+    }
+
+    /**
+     * 跳转商品详情
+     * 商品rid
+     * @param rid
+     */
+    public static void jump2GoodsDetailActivity(String rid,String fromType) {
+        Intent intent = new Intent(AppApplication.getContext(), GoodsDetailActivity.class);
+        ProductBean productBean = new ProductBean();
+        productBean.fromType = fromType;
         productBean.rid = rid;
         intent.putExtra(GoodsDetailActivity.class.getSimpleName(), productBean);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -369,14 +369,14 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
     }
 
     /**
-     * 将商品从心愿单移除
+     * 将下架商品从对应列表删除
      */
-    fun removeProductFromWishOrder(list: ArrayList<String>) {
-        dataSource.removeProductFromWishOrder(list,object : IDataSource.HttpRequestCallBack {
+    fun removeUnshelveProductFromList(list: ArrayList<String>, fromType: String) {
+        dataSource.removeUnshelveProductFromList(list, fromType, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
-                if (netStatusBean.success){
-                    LogUtil.e("removeProductFromWishOrder==商品已从心愿单移除")
+                if (netStatusBean.success) {
+                    LogUtil.e("removeUnshelveProductFromList==商品已从${fromType}移除")
                 }
             }
 

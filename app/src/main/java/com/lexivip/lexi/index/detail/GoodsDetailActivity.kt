@@ -1,5 +1,4 @@
 package com.lexivip.lexi.index.detail
-
 import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
@@ -426,7 +425,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         dialog.setOnBtnClickL(OnBtnClickL {
             val list = ArrayList<String>()
             list.add(productId)
-            presenter.removeProductFromWishOrder(list)
+            presenter.removeUnshelveProductFromList(list,product.fromType)
             dialog.dismiss()
             finish()
         })
@@ -643,7 +642,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
     override fun setOfficialCouponData(coupons: List<CouponBean>) {
         if (coupons.isEmpty()) {
             headerView.relativeLayoutOfficialCoupon.visibility = View.GONE
-        }else{
+        } else {
             headerView.relativeLayoutOfficialCoupon.visibility = View.VISIBLE
         }
         officialCouponList.addAll(coupons)
@@ -960,7 +959,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 }
             }
 
-            R.id.buttonGetOfficialCoupon ->{//获取官方券
+            R.id.buttonGetOfficialCoupon -> {//获取官方券
                 if (UserProfileUtil.isLogin()) {
                     if (brandPavilionData == null) return
                     val couponBottomDialog = OfficialCouponBottomDialog(this, officialCouponList, presenter, brandPavilionData!!.rid)
