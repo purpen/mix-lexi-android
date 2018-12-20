@@ -51,7 +51,9 @@ public class AddressListActivity extends BaseActivity implements AddressListCont
         footerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(AddressListActivity.this,AddressActivity.class),1);
+                Intent intent=new Intent(AddressListActivity.this,AddressActivity.class);
+                intent.putExtra("isNew", true);
+                startActivityForResult(intent,1);
             }
         });
         adapterList.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -59,6 +61,7 @@ public class AddressListActivity extends BaseActivity implements AddressListCont
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent=new Intent(AddressListActivity.this,AddressActivity.class);
                 intent.putExtra("isNew", false);
+                intent.putExtra("type",1);
                 intent.putExtra(AddressActivity.class.getSimpleName(), adapterList.getItem(position).rid);
                 startActivityForResult(intent,1);
             }

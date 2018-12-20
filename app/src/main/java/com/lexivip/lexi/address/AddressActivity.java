@@ -51,6 +51,7 @@ import org.json.JSONException;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +102,11 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     private int countryID;
     private int newCountryID;
     private byte[] data;
+    private int type;
+    private List<String> countries;
+    private RelativeLayout rl_photo;
+    private LinearLayout ll_id;
+    private TextView tv_remind;
 
     @Override
     protected int getLayout() {
@@ -141,17 +147,17 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             bt_delete.setVisibility(View.VISIBLE);
         }
 
-        RelativeLayout rl_photo = findViewById(R.id.rl_photo);
-        LinearLayout ll_ID = findViewById(R.id.ll_ID);
-        TextView tv_remind = findViewById(R.id.tv_remind);
+        rl_photo = findViewById(R.id.rl_photo);
+        ll_id = findViewById(R.id.ll_ID);
+        tv_remind = findViewById(R.id.tv_remind);
 
         if (isForeign) {
             rl_photo.setVisibility(View.VISIBLE);
-            ll_ID.setVisibility(View.VISIBLE);
+            ll_id.setVisibility(View.VISIBLE);
             tv_remind.setVisibility(View.VISIBLE);
         } else {
             rl_photo.setVisibility(View.GONE);
-            ll_ID.setVisibility(View.GONE);
+            ll_id.setVisibility(View.GONE);
             tv_remind.setVisibility(View.GONE);
         }
 
@@ -310,6 +316,8 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         isNew = intent.getBooleanExtra("isNew", true);
         isForeign = intent.getBooleanExtra("isForeign", false);
         addressId = intent.getStringExtra(AddressActivity.class.getSimpleName());
+        type = intent.getIntExtra("type",0);
+        countries = intent.getStringArrayListExtra("countries");
         LogUtil.e("首付："+isForeign);
     }
 
@@ -396,6 +404,15 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
         cityId=data.getCity_id();
         areaId=data.getTown_id();
         dataBean = data;
+
+        LogUtil.e("类型："+type);
+        if (type!=0){
+            presenter.loadForeign(data.getFull_name(), data.getMobile());
+        }else {
+                if (!isSame(data.getCountry_name())) {
+                    presenter.loadForeign(data.getFull_name(), data.getMobile());
+                }
+        }
     }
 
     @Override
@@ -444,10 +461,29 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 tv_country.setText(countryList.get(options1));
                 newCountryID=bean.data.area_codes.get(options1).id;
+                if (type==0){
+                        if (!isSame(countryList.get(options1))) {
+                            presenter.loadForeign(et_name.getText().toString(), et_mobile.getText().toString());
+                            return;
+                        }else {
+                            rl_photo.setVisibility(View.GONE);
+                            ll_id.setVisibility(View.GONE);
+                            tv_remind.setVisibility(View.GONE);
+                        }
+                }
             }
         }).build();
         pvOptions1.setPicker(countryList);
         pvOptions1.show();
+    }
+
+    private boolean isSame(String countyName){
+        for (String country : countries) {
+            if (!countyName.equals(country)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -490,7 +526,30 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void setForeign(ForeignBean bean) {
-
+        if (type==0) {
+            rl_photo.setVisibility(View.VISIBLE);
+            ll_id.setVisibility(View.VISIBLE);
+            tv_remind.setVisibility(View.VISIBLE);
+        }else {
+            if (bean.data.id_card_back!=null){
+                rl_photo.setVisibility(View.VISIBLE);
+                ll_id.setVisibility(View.VISIBLE);
+                tv_remind.setVisibility(View.VISIBLE);
+            }else {
+                rl_photo.setVisibility(View.GONE);
+                ll_id.setVisibility(View.GONE);
+                tv_remind.setVisibility(View.GONE);
+            }
+        }
+        if (bean.data.id_card_back!=null){
+            et_id.setText(bean.data.id_card);
+            GlideUtil.loadImageWithFading(bean.data.id_card_front.view_url,iv_position);
+            GlideUtil.loadImageWithFading(bean.data.id_card_back.view_url,iv_opposion);
+            id_card_back=bean.data.id_card_back.id;
+            id_card_front=bean.data.id_card_front.id;
+            /*id_card_back=
+            !TextUtils.isEmpty(id_card_back) && !TextUtils.isEmpty(id_card_front)*/
+        }
     }
 
 
@@ -613,6 +672,4 @@ public class AddressActivity extends BaseActivity implements View.OnClickListene
     public void onRationaleDenied(int requestCode) {
 
     }
-
-
 }

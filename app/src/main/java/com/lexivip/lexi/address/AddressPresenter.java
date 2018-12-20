@@ -212,7 +212,35 @@ public class AddressPresenter implements AddressContract.Presenter {
 
     @Override
     public void loadForeign(String user_name, String mobile) {
+        model.loadForeign(user_name, mobile, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
 
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                LogUtil.e("海关信息"+json);
+                ForeignBean bean=JsonUtil.fromJson(json,ForeignBean.class);
+                if (bean.success){
+                    view.setForeign(bean);
+                }else{
+                    view.showError(bean.status.message);
+                }
+                view.dismissLoadingView();
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.dismissLoadingView();
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error));
+            }
+        });
     }
 
     public void getToken(){

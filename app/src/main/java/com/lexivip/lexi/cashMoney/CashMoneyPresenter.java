@@ -67,10 +67,11 @@ public class CashMoneyPresenter implements CashMoneyContract.Presenter{
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("是否实名认证："+json);
                 CashCountBean bean=JsonUtil.fromJson(json,CashCountBean.class);
                 if (bean.success){
                     view.dismissLoadingView();
-                    view.setCashCount(bean.data.cash_count);
+                    view.setCashCount(bean.data);
                 }else {
                     view.showError(bean.status.message);
                 }

@@ -9,7 +9,7 @@ public class CashMoneyContract {
         void dismissLoadingView();
         void showError(String error);
         void setCashResult(CashMoneyBean bean);
-        void setCashCount(int count);
+        void setCashCount(CashCountBean.DataBean bean);
         void setData(CashBean bean);
     }
     interface Presenter extends BasePresenter{

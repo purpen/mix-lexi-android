@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,13 +30,23 @@ public class ShareImageDialog extends BottomBaseDialog {
     private View view;
     private Activity activity;
     private String price;
+    private ImageView imageView;
+    private ImageView imageView1;
 
-    public ShareImageDialog(Activity context, String marketUrl, String imageUrl,String price) {
+    public ShareImageDialog(Activity context,String price) {
         super(context);
         activity=context;
-        this.marketUrl=marketUrl;
-        this.imageUrl=imageUrl;
         this.price=price;
+    }
+
+    public void setMarketUrl(String marketUrl){
+        this.marketUrl=marketUrl;
+        GlideUtil.loadImageWithFading(marketUrl,imageView);
+    }
+
+    public void setImageUrl(String imageUrl){
+        this.imageUrl=imageUrl;
+        GlideUtil.loadImageWithFading(imageUrl,imageView1);
     }
 
     @Override
@@ -48,8 +59,8 @@ public class ShareImageDialog extends BottomBaseDialog {
     public void setUiBeforShow() {
         LogUtil.e("marketUrl:"+marketUrl);
         LogUtil.e("imageUrl:"+imageUrl);
-        ImageView imageView=view.findViewById(R.id.imageView1);
-        ImageView imageView1=view.findViewById(R.id.imageView2);
+        imageView = view.findViewById(R.id.imageView1);
+        imageView1 = view.findViewById(R.id.imageView2);
         LinearLayout ll_title=view.findViewById(R.id.ll_title);
         TextView textViewPrice=view.findViewById(R.id.textViewPrice);
         TextView textViewWechatShare=view.findViewById(R.id.textViewWechatShare);
@@ -61,8 +72,6 @@ public class ShareImageDialog extends BottomBaseDialog {
                 dismiss();
             }
         });
-        GlideUtil.loadImageWithFading(marketUrl,imageView);
-        GlideUtil.loadImageWithFading(imageUrl,imageView1);
         if (price!=null){
             //ll_title.setVisibility(View.VISIBLE);
             textViewPrice.setText(price);
@@ -72,18 +81,22 @@ public class ShareImageDialog extends BottomBaseDialog {
         textViewSavePoster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(runnable).start();
+                if (!TextUtils.isEmpty(imageUrl)) {
+                    new Thread(runnable).start();
+                }
             }
         });
         textViewWechatShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final UMImage image = new UMImage(activity, imageUrl);
-                new ShareAction(activity)
-                        .setPlatform(SHARE_MEDIA.WEIXIN)
-                        .withMedia(image)
-                        .setCallback(shareListener)
-                        .share();
+                if (!TextUtils.isEmpty(imageUrl)) {
+                    final UMImage image = new UMImage(activity, imageUrl);
+                    new ShareAction(activity)
+                            .setPlatform(SHARE_MEDIA.WEIXIN)
+                            .withMedia(image)
+                            .setCallback(shareListener)
+                            .share();
+                }
             }
         });
     }

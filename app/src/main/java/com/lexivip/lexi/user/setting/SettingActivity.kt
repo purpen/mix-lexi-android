@@ -98,7 +98,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
                 startActivity(intent)
             }
             R.id.customItemLayout6 -> { //拨打客服电话
-                val phoneNumber = "400-2345-0000"
+                val phoneNumber = "400-8459-9328"
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                 startActivity(intent)
 
@@ -150,7 +150,6 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
     }
 
     override fun setBind(bean: LoginWXBean) {
-        // TODO 绑定待测试
         if(bean.data.is_bind){
             customItemLayout0.setTvArrowLeftStrle(true,"已绑定",R.color.color_999,12)
             UserProfileUtil.setBindWX(bean.data.is_bind)

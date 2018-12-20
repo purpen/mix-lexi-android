@@ -201,7 +201,13 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
                 image = R.drawable.icon_share_invation2
             }
             LogUtil.e(title)
-            shareUtil.shareFriendInvitation(WebUrl.SHARE_INVITATION + UserProfileUtil.getUserId(), image!!, title, content)
+            try {
+                shareUtil.shareFriendInvitation(dialog,WebUrl.SHARE_INVITATION + UserProfileUtil.getUserId(), image!!, title, content)
+            } catch (e: Exception) {
+
+            }
+
+
         }else{
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_GOODS, *perms)
         }

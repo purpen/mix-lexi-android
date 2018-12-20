@@ -9,6 +9,7 @@ import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.R
 import com.lexivip.lexi.address.AddressActivity
+import com.lexivip.lexi.cashMoney.NameAuthenticationActivity
 import com.lexivip.lexi.index.lifehouse.FragmentLifeHouse
 import com.lexivip.lexi.orderList.EvaluateActivity
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
@@ -43,6 +44,9 @@ class ImageCropActivity : BaseActivity(), View.OnClickListener {
         } else if (intent.hasExtra(EditUserDataActivity::class.java.simpleName)) {
             uri = intent.getParcelableExtra(EditUserDataActivity::class.java.simpleName)
             key = EditUserDataActivity::class.java.simpleName
+        } else if (intent.hasExtra(NameAuthenticationActivity::class.java.simpleName)){
+            uri = intent.getParcelableExtra(NameAuthenticationActivity::class.java.simpleName)
+            key = NameAuthenticationActivity::class.java.simpleName
         }
     }
 

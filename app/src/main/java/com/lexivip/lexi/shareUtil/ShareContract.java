@@ -19,5 +19,7 @@ public class ShareContract {
         void loadShareInvitation(String scene);
         void loadShareMarket(String rid,int type);
         void loadFriend();
+        void loadBrand(String rid);
+        void loadInvitation();
     }
 }

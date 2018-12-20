@@ -986,4 +986,16 @@ object URL {
      * 开馆头条背景图
      */
     const val OPEN_LIFE_HOUSE_BG_IMAGE = "${BASE_URL}banners/wxa_lifestore_bg"
+    /**
+     * 提现实名认证
+     */
+    const val AUTHENTICATION="${BASE_URL}users/cash_id_card"
+    /**
+     * 邀请好友海报
+     */
+    const val MARKET_INVITATION="${BASE_URL}market/invitation/user"
+    /**
+     * 分享品牌馆
+     */
+    const val SAHRE_BRAND="${BASE_URL}market/share/store_poster"
 }

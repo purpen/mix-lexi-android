@@ -15,7 +15,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.PageUtil;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.index.discover.ArticleDetailActivity;
-//TODO 文章待测试
 public class BrandHouseArticleFragment extends BaseFragment implements BrandHouseArticleContract.View{
 
     private WaitingDialog dialog;

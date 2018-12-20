@@ -203,4 +203,28 @@ public class AddressModel implements IDataSource {
             }
         });
     }
+    public void loadForeign(String user_name, String mobile, final HttpRequestCallBack callBack) {
+        HashMap<String,Object> params=ClientParamsAPI.getUserIdentifyParams(user_name,mobile);
+        HttpRequest.sendRequest(HttpRequest.GET, URL.GET_USER_IDENTITY, params, new HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
 }

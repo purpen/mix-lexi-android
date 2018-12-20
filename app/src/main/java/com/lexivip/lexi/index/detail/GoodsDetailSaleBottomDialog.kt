@@ -21,11 +21,12 @@ import kotlinx.android.synthetic.main.dialog_share_goods_bottom.view.*
 import java.io.File
 import java.io.IOException
 
-class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean) : BottomBaseDialog<GoodsDetailSaleBottomDialog>(context) {
+class GoodsDetailSaleBottomDialog(context: Activity, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean) : BottomBaseDialog<GoodsDetailSaleBottomDialog>(context) {
     private lateinit var view: View
     private var posterUrl:String? = null
     private val present: GoodsDetailPresenter by lazy { presenter }
     private val product: GoodsAllDetailBean.DataBean by lazy { goodsData }
+    private val context=context
     override fun onCreateView(): View {
         view = View.inflate(context, R.layout.dialog_share_goods_bottom, null)
         GlideUtil.loadImageWithDimen(product.assets[0].view_url,view.imageView1,DimenUtil.dp2px(145.0),DimenUtil.dp2px(124.0),ImageSizeConfig.SIZE_P30X2)
@@ -67,6 +68,7 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
         }
         view.textViewWechatShare.setOnClickListener {
             val image=UMImage(context,product!!.assets.get(0).view_url)
+
             val umMin = UMMin(WebUrl.GOODS+product!!.rid)//兼容低版本的网页链接
             // 小程序消息封面图片
             umMin.setThumb(image)
@@ -78,11 +80,16 @@ class GoodsDetailSaleBottomDialog(context: Context, presenter: GoodsDetailPresen
             umMin.path = WebUrl.AUTH_GOODS
             // 小程序原始id,在微信平台查询
             umMin.userName = Constants.AUTHAPPID
-            ShareAction(context as Activity?)
-                    .withMedia(umMin)
-                    .setPlatform(SHARE_MEDIA.WEIXIN)
-                    .share()
-            //ToastUtil.showInfo("微信分享")
+            if (TextUtils.isEmpty(posterUrl)) {
+                return@setOnClickListener
+            }else {
+                val images = UMImage(context, posterUrl)
+                ShareAction(context)
+                        .withMedia(images)
+                        .setPlatform(SHARE_MEDIA.WEIXIN)
+                        .share()
+                //ToastUtil.showInfo("微信分享")
+            }
         }
 
         view.textViewSavePoster.setOnClickListener { //保存海报到相册

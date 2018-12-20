@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
@@ -40,6 +41,7 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
     private int goodsPosition;
     private RecyclerView recyclerViewGoods;
     private View handerGoods;
+    private LinearLayout linearLayout;
 
     @Override
     protected int getLayout() {
@@ -59,6 +61,7 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
         View handerBrand=View.inflate(getContext(),R.layout.fragment_receive_voucher_recommend_header_brand,null);
         handerGoods = View.inflate(getContext(),R.layout.fragment_receive_voucher_recommend_header_goods,null);
         View handerImage=View.inflate(getContext(),R.layout.fragment_receive_voucher_recommend_header_image,null);
+        linearLayout = hander.findViewById(R.id.linearLayout);
         RecyclerView recyclerViewOfficial=hander.findViewById(R.id.recyclerViewOfficial);
         RecyclerView recyclerViewBrand=handerBrand.findViewById(R.id.recyclerViewBrand);
         ImageView imageView=handerImage.findViewById(R.id.imageView);
@@ -74,6 +77,7 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
         recyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerViewGoods.setAdapter(voucherGoods);
         //voucherGoods.addHeaderView(handerImage);
+        voucherGoods.addHeaderView(hander);
         voucherGoods.addHeaderView(handerBrand);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -174,7 +178,7 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
     @Override
     public void getOfficial(VoucherOfficialBean bean) {
         if (!bean.data.official_coupons.isEmpty()){
-            voucherGoods.addHeaderView(hander);
+            linearLayout.setVisibility(View.VISIBLE);
             voucherOfficial.setNewData(bean.data.official_coupons);
         }
 

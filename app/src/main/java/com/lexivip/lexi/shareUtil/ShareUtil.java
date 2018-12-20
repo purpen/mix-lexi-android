@@ -1,5 +1,7 @@
 package com.lexivip.lexi.shareUtil;
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import com.basemodule.tools.AppManager;
 import com.basemodule.tools.Constants;
@@ -10,6 +12,7 @@ import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BasePresenter;
 import com.lexivip.lexi.ImageSizeConfig;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.net.WebUrl;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -30,10 +33,18 @@ public class ShareUtil implements ShareContract.View{
     private String pageUrl;
     private UMMin umMin;
     private UMWeb web;
-    private String shareImageUrl;
-    private String marketUrl;
     private String price=null;
     private boolean isFriend;
+    private boolean isMarket;
+    private ShareImageDialog imageDialog;
+
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            presenter.loadInvitation();
+        }
+    };
 
     public ShareUtil(Activity context) {
         this.context = context;
@@ -49,13 +60,15 @@ public class ShareUtil implements ShareContract.View{
         setSaveImage();
     }
 
-    public void shareFriendInvitation(String weburl,int imageURl,String title,String content){
+    public void shareFriendInvitation(WaitingDialog dialog,String weburl,int imageURl,String title,String content){
         LogUtil.e("是否走到这一步");
         isFriend=true;
+        type=6;
         image = new UMImage(context, imageURl);
+        this.dialog=dialog;
         setUmWeb(weburl,title,content);
         LogUtil.e("图片链接地址"+imageURl);
-        setUmShare();
+        setSaveImage();
     }
 
     public void shareInvitation(String weburl,String pageUrl,int imageURl,String title,String content,String scene){
@@ -82,7 +95,7 @@ public class ShareUtil implements ShareContract.View{
         setSaveImage();
     }
 
-    public void shareGoods(String pageUrl,String rid ,String scene,String price,int types){
+    public void shareGoods(String webUrl,String rid ,String scene,String price,int types){
         /*this.rid = rid;
         this.types = types;// 1=品牌馆, 2=生活馆, 4=分享商品
         this.scene = scene;
@@ -93,18 +106,31 @@ public class ShareUtil implements ShareContract.View{
         LogUtil.e("图片链接地址"+imageURl);
         setSaveImage();*/
         this.price=price;
-        presenter.loadShareImage(pageUrl,types,rid,scene);
+        presenter.loadShareImage(webUrl,types,rid,scene);
         presenter.loadShareMarket(rid,2);
+        imageDialog = new ShareImageDialog(context,price);
+        imageDialog.show();
+        isMarket=true;
     }
 
     public void shareLife(String pageUrl,String rid ,String scene,int types){
         presenter.loadShareImage(pageUrl,types,rid,scene);
         presenter.loadShareMarket(rid,1);
+        imageDialog = new ShareImageDialog(context,price);
+        imageDialog.show();
+        isMarket=true;
     }
 
-    public void shareBrand(String pageUrl,String rid ,String scene,int types){
-        presenter.loadShareImage(pageUrl,types,rid,scene);
-        presenter.loadShareMarket(rid,4);
+    public void shareBrand(String weburl,String pageUrl,String rid ,int types,String imageUrl,String title,String content){
+        this.rid=rid;
+        type=types;
+        this.
+        image = new UMImage(context, imageUrl);
+        /*presenter.loadShareImage(pageUrl,types,rid,scene);
+        presenter.loadShareMarket(rid,4);*/
+        setUmMin(weburl+rid,pageUrl+rid,title,content);
+        setUmWeb(weburl+rid,title,content);
+        setSaveImage();
     }
 
     public void shareNoImage(String weburl,String pageUrl,String imageURl,String title,String content){
@@ -194,6 +220,12 @@ public class ShareUtil implements ShareContract.View{
                         case 4:
                             presenter.loadShareImage(pageUrl,type,rid,scene);
                             break;
+                        case 5:
+                            presenter.loadBrand(rid);
+                            break;
+                        case 6:
+                            handler.sendEmptyMessage(1);
+                            break;
                     }
                 }
             }
@@ -241,25 +273,26 @@ public class ShareUtil implements ShareContract.View{
     @Override
     public void setImage(String imageUrl) {
         LogUtil.e("图片地址："+imageUrl);
-        shareImageUrl=imageUrl;
-        if (type==1||type==2||type==4) {
+        if (isMarket){
+            imageDialog.setImageUrl(imageUrl);
+        }else {
             ShareDialog shareDialog = new ShareDialog(context, imageUrl);
             shareDialog.show();
-        }
-        if (marketUrl!=null){
-            ShareImageDialog imageDialog = new ShareImageDialog(context, marketUrl, shareImageUrl,price);
-            imageDialog.show();
         }
     }
 
     @Override
     public void showLoadingView() {
+        LogUtil.e("是否走到这步");
         dialog.show();
     }
 
     @Override
     public void dismissLoadingView() {
-        dialog.dismiss();
+        LogUtil.e("销毁的步骤");
+        if (dialog!=null) {
+            dialog.dismiss();
+        }
     }
 
     @Override
@@ -272,11 +305,7 @@ public class ShareUtil implements ShareContract.View{
 
     @Override
     public void setMarket(String marketUrl) {
-        this.marketUrl=marketUrl;
-        if (shareImageUrl!=null) {
-            ShareImageDialog imageDialog = new ShareImageDialog(context, marketUrl, shareImageUrl,price);
-            imageDialog.show();
-        }
+        imageDialog.setMarketUrl(marketUrl);
     }
 
     @Override

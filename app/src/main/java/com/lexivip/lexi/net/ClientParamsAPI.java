@@ -1746,4 +1746,16 @@ public class ClientParamsAPI {
         params.put("ali_name", ali_name);
         return params;
     }
+
+    /**
+     * 提现实名认证
+     */
+    public static HashMap<String,Object> getAuthentication(String name, String id_card, int id_card_front, int id_card_back){
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("name",name);
+        params.put("id_card", id_card);
+        params.put("id_card_front", id_card_front);
+        params.put("id_card_back", id_card_back);
+        return params;
+    }
 }

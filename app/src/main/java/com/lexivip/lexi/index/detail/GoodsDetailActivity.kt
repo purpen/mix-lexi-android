@@ -842,9 +842,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 }
             }
             R.id.buttonSaleDistribution -> { //卖
-                if (goodsData == null) return
-                val dialog = GoodsDetailSaleBottomDialog(this, presenter, goodsData!!)
-                dialog.show()
+                shareGoods()
             }
             R.id.buttonOrderMake -> { //接单订制
                 if (UserProfileUtil.isLogin()) {
@@ -950,6 +948,18 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                     startActivity(Intent(this, LoginActivity::class.java))
                 }
             }
+        }
+    }
+
+    @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE_GOODS)
+    private fun shareGoods() {
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(this, *perms)) {
+            if (goodsData == null) return
+            val dialog = GoodsDetailSaleBottomDialog(this, presenter, goodsData!!)
+            dialog.show()
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_GOODS, *perms)
         }
     }
 

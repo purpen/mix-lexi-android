@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -259,7 +260,8 @@ public class BrandHouseActivity extends BaseActivity implements View.OnClickList
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
             ShareUtil shareUtil=new ShareUtil(this);
-            shareUtil.shareBrand(WebUrl.AUTH_LIFE,rid,rid,1);
+            if (dataBean!=null)
+            shareUtil.shareBrand(WebUrl.BRAND_HOUSE,WebUrl.AUTH_BRAND,rid,5,dataBean.data.logo,dataBean.data.tag_line,"");
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, perms);
         }

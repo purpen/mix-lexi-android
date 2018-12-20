@@ -1,5 +1,6 @@
 package com.lexivip.lexi.index.detail
 
+import com.basemodule.tools.Constants
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.net.ClientParamsAPI
 import com.lexivip.lexi.net.HttpRequest
@@ -282,10 +283,9 @@ class GoodsDetailModel : IDataSource {
 
 
     fun loadPoster(goodId:String,scene:String,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val auth_app_id = "wx60ed17bfd850985d"
         val path = "pages/product/product"
         val type = "4"
-        val params = ClientParamsAPI.getLoadPosterParams(auth_app_id,path,type,scene,goodId)
+        val params = ClientParamsAPI.getLoadPosterParams(Constants.AUTHAPPID,path,type,scene,goodId)
         HttpRequest.sendRequest(HttpRequest.POST, URL.MARKET_WXA_POSTER, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()

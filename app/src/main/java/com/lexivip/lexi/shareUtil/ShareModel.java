@@ -163,4 +163,54 @@ public class ShareModel {
             }
         });
     }
+
+    public void loadBrand(String rid, final IDataSource.HttpRequestCallBack callBack) {
+        HashMap<String,Object> params=ClientParamsAPI.getRidParams(rid);
+        HttpRequest.sendRequest(HttpRequest.POST, URL.SAHRE_BRAND, params, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
+
+    public void loadInvitation(final IDataSource.HttpRequestCallBack callBack) {
+        HashMap<String,Object> params=ClientParamsAPI.getDefaultParams();
+        HttpRequest.sendRequest(HttpRequest.POST, URL.MARKET_INVITATION, params, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                callBack.onStart();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                callBack.onSuccess(json);
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                callBack.onFailure(e);
+            }
+        });
+    }
 }

@@ -177,4 +177,66 @@ public class SharePresenter implements ShareContract.Presenter  {
             }
         });
     }
+
+    @Override
+    public void loadBrand(String rid) {
+        model.loadBrand(rid, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+            @Override
+            public void onSuccess(@NotNull String json) {
+                ShareBean shareBean=JsonUtil.fromJson(json,ShareBean.class);
+                if (shareBean.success){
+                    view.setImage(shareBean.data.image_url);
+                    view.dismissLoadingView();
+                }else {
+                    view.dismissLoadingView();
+                    view.showError(shareBean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.showError(Util.getString(R.string.text_net_error));
+            }
+        });
+    }
+
+    @Override
+    public void loadInvitation() {
+        model.loadInvitation(new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+            @Override
+            public void onSuccess(@NotNull String json) {
+                ShareBean shareBean=JsonUtil.fromJson(json,ShareBean.class);
+                if (shareBean.success){
+                    view.setImage(shareBean.data.image_url);
+                    view.dismissLoadingView();
+                }else {
+                    view.dismissLoadingView();
+                    view.showError(shareBean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.showError(Util.getString(R.string.text_net_error));
+            }
+        });
+    }
 }

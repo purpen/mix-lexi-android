@@ -23,7 +23,7 @@ public class AdapterOrderListTow extends BaseQuickAdapter<MyOrderListBean.DataBe
         GlideUtil.loadImageWithFading(item.getCover()+ImageSizeConfig.SIZE_P30X2,(ImageView) helper.getView(R.id.iv_order_shoping));
         helper.setText(R.id.tv_order_shoping_name, item.getProduct_name());
         helper.setText(R.id.tv_order_shoping_num,"x"+item.getQuantity());
-        if (status==2||status==3){
+        if (status==2){
             /*if (helper.getAdapterPosition()!=getData().size()-1) {
                 if (item.getExpress_no().equals(getData().get(helper.getAdapterPosition()+1).getExpress_no())){
                     helper.setGone(R.id.bt_logistics, false);
@@ -44,6 +44,8 @@ public class AdapterOrderListTow extends BaseQuickAdapter<MyOrderListBean.DataBe
             }else {
                 helper.setGone(R.id.bt_logistics, false);
             }
+        }else {
+            helper.setGone(R.id.bt_logistics, false);
         }
         helper.addOnClickListener(R.id.bt_logistics);
     }

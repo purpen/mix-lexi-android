@@ -110,7 +110,7 @@ public class RewardPresentre implements RewardContract.Presenter {
                 CashCountBean bean = JsonUtil.fromJson(json, CashCountBean.class);
                 if (bean.success) {
                     view.dismissLoadingView();
-                    view.setCashCount(bean.data.cash_count);
+                    view.setCashCount(bean.data);
                 } else {
                     view.showError(bean.status.message);
                 }

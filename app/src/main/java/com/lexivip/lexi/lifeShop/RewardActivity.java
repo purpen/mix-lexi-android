@@ -17,9 +17,11 @@ import com.basemodule.ui.BaseActivity;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.cashMoney.CashAlipayActivity;
+import com.lexivip.lexi.cashMoney.CashCountBean;
 import com.lexivip.lexi.cashMoney.CashMoneyActivity;
 import com.lexivip.lexi.cashMoney.CashMoneyBean;
 import com.lexivip.lexi.cashMoney.CashTimeActivity;
+import com.lexivip.lexi.cashMoney.NameAuthenticationActivity;
 import com.lexivip.lexi.dialog.InquiryDialog;
 import com.lexivip.lexi.user.login.UserProfileBean;
 import com.lexivip.lexi.user.login.UserProfileUtil;
@@ -93,7 +95,19 @@ public class RewardActivity extends BaseActivity implements View.OnClickListener
                 if (10>Double.valueOf(tv_cash.getText().toString())){
                     ToastUtil.showError("可提现金额超过10元才可提现");
                 }else {
-                    presentre.loadCashCount();
+                    if (!UserProfileUtil.isBindWX()){
+                        InquiryDialog inquiryDialog=new InquiryDialog(RewardActivity.this, "您还未绑定微信", "取消", "去绑定", new InquiryDialog.InquiryInterface() {
+                            @Override
+                            public void getCheck(boolean isCheck) {
+                                if (!isCheck){
+                                    startActivity(new Intent(RewardActivity.this,SettingActivity.class));
+                                }
+                            }
+                        });
+                        inquiryDialog.show();
+                    }else {
+                        presentre.loadCashCount();
+                    }
                 }
                 break;
             case R.id.iv_money_show:
@@ -174,48 +188,40 @@ public class RewardActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void setCashCount(int count) {
-        LogUtil.e("次数"+count);
-            if (count>3){
-                InquiryDialog inquiryDialog1=new InquiryDialog(this,"你今日提现已达三次\n明日再来吧！");
+    public void setCashCount(CashCountBean.DataBean bean) {
+        LogUtil.e("次数"+bean.cash_count);
+        if (bean.id_card!=null){
+            startActivity(new Intent(this,NameAuthenticationActivity.class));
+        }else {
+            if (bean.cash_count > 3) {
+                InquiryDialog inquiryDialog1 = new InquiryDialog(this, "你今日提现已达三次\n明日再来吧！");
                 inquiryDialog1.show();
-            }else {
-                RewardDialog rewardDialog=new RewardDialog(this, new RewardDialog.InquiryInterface() {
+            } else {
+                RewardDialog rewardDialog = new RewardDialog(this, new RewardDialog.InquiryInterface() {
                     @Override
                     public void getType(int type) {
-                        if (type==1){
-                            final UserProfileBean.DataBean.ProfileBean bean=UserProfileUtil.getUserData().data.profile;
-                            if (!UserProfileUtil.isBindWX()){
-                                InquiryDialog inquiryDialog=new InquiryDialog(RewardActivity.this, "您还未绑定微信", "取消", "去绑定", new InquiryDialog.InquiryInterface() {
-                                    @Override
-                                    public void getCheck(boolean isCheck) {
-                                        if (!isCheck){
-                                            startActivity(new Intent(RewardActivity.this,SettingActivity.class));
-                                        }
+                        if (type == 1) {
+                            final UserProfileBean.DataBean.ProfileBean bean = UserProfileUtil.getUserData().data.profile;
+                            InquiryDialog inquiryDialog = new InquiryDialog(RewardActivity.this, bean.nick_name, bean.wx_avatar, "取消", "确定", new InquiryDialog.InquiryInterface() {
+                                @Override
+                                public void getCheck(boolean isCheck) {
+                                    if (!isCheck) {
+                                        presentre.cashMoney(bean.openid);
                                     }
-                                });
-                                inquiryDialog.show();
-                            }else {
-                                InquiryDialog inquiryDialog=new InquiryDialog(RewardActivity.this, bean.nick_name, bean.wx_avatar, "取消", "确定", new InquiryDialog.InquiryInterface() {
-                                    @Override
-                                    public void getCheck(boolean isCheck) {
-                                        if (!isCheck){
-                                            presentre.cashMoney(bean.openid);
-                                        }
-                                    }
-                                },1);
-                                inquiryDialog.show();
-                            }
-                        }else {
-                            Intent intent=new Intent(RewardActivity.this,CashAlipayActivity.class);
-                            intent.putExtra("amount",tv_cash.getText().toString());
-                            intent.putExtra("type",2);
+                                }
+                            }, 1);
+                            inquiryDialog.show();
+                        } else {
+                            Intent intent = new Intent(RewardActivity.this, CashAlipayActivity.class);
+                            intent.putExtra("amount", tv_cash.getText().toString());
+                            intent.putExtra("type", 2);
                             startActivity(intent);
                         }
                     }
                 });
                 rewardDialog.show();
             }
+        }
     }
 
     @Override

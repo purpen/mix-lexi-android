@@ -210,6 +210,8 @@
         <activity android:name=".lifeShop.RewardActivity"/>
         <activity android:name=".cashMoney.CashRecordActivity"/>
         <activity android:name=".cashMoney.CashDetailActivity"/>
+        <activity android:name=".cashMoney.AuthenticationSuccessActivity"/>
+        <activity android:name=".cashMoney.NameAuthenticationActivity"/>
     </application>
 
 </manifest>

@@ -41,7 +41,7 @@ public class ForeignBean {
             public int created_at;
             public String filename;
             public String filepath;
-            public int id;
+            public String id;
             public int type;
             public String view_url;
         }

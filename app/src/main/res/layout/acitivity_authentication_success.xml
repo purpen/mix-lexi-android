@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal">
+    <com.lexivip.lexi.view.CustomHeadView
+        android:id="@+id/customHeadView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></com.lexivip.lexi.view.CustomHeadView>
+    <ImageView
+        android:layout_width="@dimen/dp60"
+        android:layout_height="@dimen/dp60"
+        android:background="@mipmap/icon_put_finish"
+        android:layout_marginTop="@dimen/dp60"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="身份信息提交成功"
+        android:textSize="@dimen/sp16"
+        android:textColor="@color/color_333"
+        android:layout_marginTop="@dimen/dp15"/>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:background="@drawable/bg_color5fe4b1_radius4"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp25"
+        android:textColor="@android:color/white"
+        android:text="去提现"
+        android:textSize="@dimen/sp16"/>
+</LinearLayout>

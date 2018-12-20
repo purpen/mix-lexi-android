@@ -2,6 +2,7 @@ package com.lexivip.lexi.lifeShop;
 
 import com.basemodule.ui.BasePresenter;
 import com.basemodule.ui.BaseView;
+import com.lexivip.lexi.cashMoney.CashCountBean;
 import com.lexivip.lexi.cashMoney.CashMoneyBean;
 
 public class RewardContract {
@@ -14,7 +15,7 @@ public class RewardContract {
         void showError(String error);
         void setData(RewardBean bean);
         void setReward(LifeShopRewardBean bean);
-        void setCashCount(int count);
+        void setCashCount(CashCountBean.DataBean bean);
         void setCash(CashMoneyBean bean);
     }
     interface Presenter extends BasePresenter{

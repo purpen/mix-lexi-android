@@ -180,7 +180,19 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
                 if (cashMoney>Double.valueOf(tv_money.getText().toString())){
                     ToastUtil.showError("余额不足，请重新选择");
                 }else {
-                    presenter.loadCashCount();
+                    if (!UserProfileUtil.isBindWX()){
+                        InquiryDialog inquiryDialog=new InquiryDialog(this, "您还未绑定微信", "取消", "去绑定", new InquiryDialog.InquiryInterface() {
+                            @Override
+                            public void getCheck(boolean isCheck) {
+                                if (!isCheck){
+                                    startActivity(new Intent(CashMoneyActivity.this,SettingActivity.class));
+                                }
+                            }
+                        });
+                        inquiryDialog.show();
+                    }else {
+                        presenter.loadCashCount();
+                    }
                 }
                 break;
         }
@@ -219,40 +231,32 @@ public class CashMoneyActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    public void setCashCount(int count) {
-        if (count>3){
-            InquiryDialog inquiryDialog1=new InquiryDialog(this,"你今日提现已达三次\n明日再来吧！");
-            inquiryDialog1.show();
+    public void setCashCount(CashCountBean.DataBean beans) {
+        if (beans.id_card!=null){
+            startActivity(new Intent(this,NameAuthenticationActivity.class));
         }else {
-            if (cashType==1){
-                final UserProfileBean.DataBean.ProfileBean bean=UserProfileUtil.getUserData().data.profile;
-                if (!UserProfileUtil.isBindWX()){
-                    InquiryDialog inquiryDialog=new InquiryDialog(this, "您还未绑定微信", "取消", "去绑定", new InquiryDialog.InquiryInterface() {
+            if (beans.cash_count > 3) {
+                InquiryDialog inquiryDialog1 = new InquiryDialog(this, "你今日提现已达三次\n明日再来吧！");
+                inquiryDialog1.show();
+            } else {
+                if (cashType == 1) {
+                    final UserProfileBean.DataBean.ProfileBean bean = UserProfileUtil.getUserData().data.profile;
+                    InquiryDialog inquiryDialog = new InquiryDialog(this, bean.nick_name, bean.wx_avatar, "取消", "确定", new InquiryDialog.InquiryInterface() {
                         @Override
                         public void getCheck(boolean isCheck) {
-                            if (!isCheck){
-                                //startActivity(new Intent(CashMoneyActivity.this,SettingActivity.class));
+                            if (!isCheck) {
+                                presenter.loadCash("1", bean.openid, null, null, cashMoney);
                             }
                         }
-                    });
+                    }, 1);
                     inquiryDialog.show();
-                }else {
-                    InquiryDialog inquiryDialog=new InquiryDialog(this, bean.nick_name, bean.wx_avatar, "取消", "确定", new InquiryDialog.InquiryInterface() {
-                        @Override
-                        public void getCheck(boolean isCheck) {
-                            if (!isCheck){
-                                presenter.loadCash("1",bean.openid,null,null,cashMoney);
-                            }
-                        }
-                    },1);
-                    inquiryDialog.show();
-                }
 
-            }else {
-                Intent intent=new Intent(this,CashAlipayActivity.class);
-                intent.putExtra("amount",String.valueOf(cashMoney));
-                intent.putExtra("type",1);
-                startActivity(intent);
+                } else {
+                    Intent intent = new Intent(this, CashAlipayActivity.class);
+                    intent.putExtra("amount", String.valueOf(cashMoney));
+                    intent.putExtra("type", 1);
+                    startActivity(intent);
+                }
             }
         }
     }
