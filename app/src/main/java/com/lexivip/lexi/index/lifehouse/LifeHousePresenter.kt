@@ -490,7 +490,6 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
                 }
             }
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (netStatusBean.success) {
                     LogUtil.e("改变开馆提示成功")

@@ -22,6 +22,7 @@ import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LayoutAnimationController
 import android.view.animation.TranslateAnimation
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
@@ -240,15 +241,16 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
 
-        headerLifeHouse.imageViewTipsClose.setOnClickListener {//点击关闭提示改变提示状态
-            presenter.changeNoticeStatus(UserProfileUtil.storeId(),data.close_status)
+        headerLifeHouse.imageViewTipsClose.setOnClickListener {
+            //点击关闭提示改变提示状态
+            presenter.changeNoticeStatus(UserProfileUtil.storeId(), data.close_status)
         }
     }
 
     /**
      * 设置开馆提示数据
      */
-    private fun setOpenStoreTipsViewData(status: Int){
+    private fun setOpenStoreTipsViewData(status: Int) {
         val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.leftMargin = DimenUtil.dp2px(13.0)
         layoutParams.rightMargin = DimenUtil.dp2px(13.0)
@@ -581,8 +583,18 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun setNewData(data: List<ProductBean>) {//设置小B推荐数据
         if (data.isNotEmpty()) {
+            val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DimenUtil.dp2px(160.0))
+            layoutParams.topMargin = DimenUtil.dp2px(20.0)
+            layoutParams.leftMargin = DimenUtil.dp2px(15.0)
+            headerLifeHouse.recyclerViewSmallBRecommend.setBackgroundResource(android.R.color.white)
             headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
+            headerLifeHouse.recyclerViewSmallBRecommend.layoutParams = layoutParams
         } else {
+            val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            layoutParams.topMargin = 0
+            layoutParams.rightMargin = 0
+            headerLifeHouse.recyclerViewSmallBRecommend.setBackgroundResource(R.color.color_f5f7f9)
+            headerLifeHouse.recyclerViewSmallBRecommend.layoutParams = layoutParams
             headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.GONE
         }
         listRecommend.clear()
