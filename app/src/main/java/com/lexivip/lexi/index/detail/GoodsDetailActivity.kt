@@ -424,7 +424,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 .show()
         dialog.setCancelable(false)
         dialog.setOnBtnClickL(OnBtnClickL {
-
             //TODO 移除心愿单 在我的心愿单并且下架，调接口移出我的心愿单
             dialog.dismiss()
             finish()
@@ -640,7 +639,6 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
      * 设置官方券列表
      */
     override fun setOfficialCouponData(coupons: List<CouponBean>) {
-        //TODO
         if (coupons.isEmpty()) {
             headerView.relativeLayoutOfficialCoupon.visibility = View.GONE
         }else{
