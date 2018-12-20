@@ -62,6 +62,10 @@ class GoodsDetailContract {
         fun setSKUData(goodsAllSKUBean: GoodsAllSKUBean) {
 
         }
+
+        fun setOfficialCouponData(coupons: List<CouponBean>) {
+
+        }
     }
 
     interface Presenter : BasePresenter {

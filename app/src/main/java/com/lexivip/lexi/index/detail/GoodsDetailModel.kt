@@ -83,6 +83,27 @@ class GoodsDetailModel : IDataSource {
     }
 
     /**
+     *
+     */
+    fun getOfficialCouponsByStoreId(store_rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_DETAIL_OFFICIAL_COUPONS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    /**
      * 根据用户是否登录调不同接口
      */
     fun getCouponsByStoreId(store_rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
@@ -94,6 +115,24 @@ class GoodsDetailModel : IDataSource {
             url = URL.SHOP_STORE_UNLOGIN_COUPONS
         }
         HttpRequest.sendRequest(HttpRequest.GET, url, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun clickGetOfficialCoupon(code: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["rid"] = code
+        HttpRequest.sendRequest(HttpRequest.POST, URL.CLICK_GET_OFFICIAL_COUPON, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
@@ -300,5 +339,6 @@ class GoodsDetailModel : IDataSource {
             }
         })
     }
+
 
 }

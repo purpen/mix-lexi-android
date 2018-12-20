@@ -107,6 +107,26 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
         })
     }
 
+    /**
+     * 获取商品可用官方券
+     */
+    fun getOfficialCouponsByStoreId(store_rid: String) {
+        dataSource.getOfficialCouponsByStoreId(store_rid, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val shopCouponListBean = JsonUtil.fromJson(json, OfficialCouponBean::class.java)
+                if (shopCouponListBean.success) {
+                    if (shopCouponListBean.data != null) view.setOfficialCouponData(shopCouponListBean.data.official_coupons)
+                } else {
+                    view.showError(shopCouponListBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
 
     /**
      * 获取商品所在店铺优惠券列表
@@ -123,6 +143,28 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
             }
 
             override fun onFailure(e: IOException) {
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 领取官方优惠券
+     */
+    fun clickGetOfficialCoupon(code: String, callBack: IDataSource.HttpRequestCallBack) {
+        dataSource.clickGetOfficialCoupon(code, object : IDataSource.HttpRequestCallBack {
+            override fun onSuccess(json: String) {
+                val getCouponBean = JsonUtil.fromJson(json, GetCouponBean::class.java)
+                if (getCouponBean.success) {
+                    callBack.onSuccess(json)
+                    ToastUtil.showInfo(R.string.text_get_coupon_success)
+                } else {
+                    view.showError(getCouponBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
+                callBack.onFailure(e)
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

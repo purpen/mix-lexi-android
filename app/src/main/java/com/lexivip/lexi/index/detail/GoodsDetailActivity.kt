@@ -75,6 +75,8 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
     private lateinit var couponList: ArrayList<CouponBean>
 
+    private val officialCouponList: ArrayList<CouponBean> by lazy { ArrayList<CouponBean>() }
+
     private lateinit var productId: String
 
     private var lookGoodsAllDetailDialog: LookGoodsAllDetailDialog? = null
@@ -624,11 +626,27 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
         // 获取交货时间
         presenter.getExpressTime(data.fid, data.store_rid, productId)
 
-        //获取优惠券
+        //获取店铺优惠券
         presenter.getCouponsByStoreId(data.store_rid)
+
+        //获取官方券
+        presenter.getOfficialCouponsByStoreId(data.store_rid)
 
         //获取商品所在品牌馆信息
         presenter.loadBrandPavilionInfo(data.store_rid)
+    }
+
+    /**
+     * 设置官方券列表
+     */
+    override fun setOfficialCouponData(coupons: List<CouponBean>) {
+        //TODO
+        if (coupons.isEmpty()) {
+            headerView.relativeLayoutOfficialCoupon.visibility = View.GONE
+        }else{
+            headerView.relativeLayoutOfficialCoupon.visibility = View.VISIBLE
+        }
+        officialCouponList.addAll(coupons)
     }
 
     /**
@@ -743,6 +761,7 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
 
 
     override fun installListener() {
+        headerView.buttonGetOfficialCoupon.setOnClickListener(this)
 
         headerView.linearLayoutPavilion.setOnClickListener {
             if (goodsData == null) return@setOnClickListener
@@ -935,6 +954,16 @@ class GoodsDetailActivity : BaseActivity(), GoodsDetailContract.View, View.OnCli
                 if (UserProfileUtil.isLogin()) {
                     if (brandPavilionData == null) return
                     val couponBottomDialog = CouponBottomDialog(this, couponList, presenter, brandPavilionData!!.rid)
+                    couponBottomDialog.show()
+                } else {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                }
+            }
+
+            R.id.buttonGetOfficialCoupon ->{//获取官方券
+                if (UserProfileUtil.isLogin()) {
+                    if (brandPavilionData == null) return
+                    val couponBottomDialog = OfficialCouponBottomDialog(this, officialCouponList, presenter, brandPavilionData!!.rid)
                     couponBottomDialog.show()
                 } else {
                     startActivity(Intent(this, LoginActivity::class.java))
