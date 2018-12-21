@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    >
 
     <com.lexivip.lexi.view.CustomHeadView
         android:id="@+id/customHeadView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include layout="@layout/header_classify_goods" />
+    <include
+        android:id="@+id/includeContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/customHeadView"
+        layout="@layout/header_classify_goods" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
+        android:layout_below="@id/includeContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -22,4 +28,17 @@
             android:layout_height="wrap_content"
             android:overScrollMode="never" />
     </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:background="@null"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@mipmap/icon_back_top"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="80dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>
