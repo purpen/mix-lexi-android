@@ -51,7 +51,6 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
         when (item.itemType) {
             MultipleItem.TEXT_ITEM_TYPE -> {
                 val content = item.content.optString("content")
-                LogUtil.e("content========="+content)
                 val textView = helper.getView<TextView>(R.id.textView)
                 textView.text = Html.fromHtml(content)
             }

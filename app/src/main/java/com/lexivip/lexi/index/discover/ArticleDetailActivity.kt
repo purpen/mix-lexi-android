@@ -292,6 +292,13 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
         }
 
         textViewPraiseCount.text = Util.getNumberString(bean.praise_count)
+
+        if (bean.is_user){
+            headerView.textViewFocus.visibility = View.VISIBLE
+        }else{
+            headerView.textViewFocus.visibility = View.GONE
+        }
+
         GlideUtil.loadImageWithDimenAndRadius(cover, headerView.imageViewCover, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(250.0), ImageSizeConfig.SIZE_AVABG)
         headerView.textViewArticleType.text = channelName
 
