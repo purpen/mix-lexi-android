@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.ScreenUtil
-import com.basemodule.tools.Util
+import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity
@@ -54,6 +51,7 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
         when (item.itemType) {
             MultipleItem.TEXT_ITEM_TYPE -> {
                 val content = item.content.optString("content")
+                LogUtil.e("content========="+content)
                 val textView = helper.getView<TextView>(R.id.textView)
                 textView.text = Html.fromHtml(content)
             }

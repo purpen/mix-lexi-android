@@ -41,7 +41,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
-class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View , EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
+class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }
     override val layout: Int = R.layout.acticity_artical_detail
     private val presenter: ArticleDetailPresenter by lazy { ArticleDetailPresenter(this) }
@@ -59,9 +59,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View , EasyP
     //父级评论id
     private var pid: String = "0"
     private var emotionMainFragment: EmotionMainFragment? = null
-    private var isGoods:Boolean=false
-    private var cover:String?=null
-    private var title:String?=null
+    private var isGoods: Boolean = false
+    private var cover: String? = null
+    private var title: String? = null
     override fun getIntentData() {
         rid = intent.getStringExtra(TAG)
         channelName = intent.getStringExtra(ArticleDetailActivity::class.java.name)
@@ -220,8 +220,8 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View , EasyP
     override fun setRecommendProductsData(products: List<ProductBean>) {
         if (products.isEmpty()) {
             footerView.linearLayoutRecommendProduct.visibility = View.GONE
-        }else{
-            isGoods=true
+        } else {
+            isGoods = true
         }
         adapterRecommend.setNewData(products)
     }
@@ -309,7 +309,19 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View , EasyP
             val isBigProduct = item.optBoolean("big_picture")
             when (type) {
                 "text" -> {
-                    listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.TEXT_ITEM_TYPE))
+                    val content = item.optString("content")
+                    LogUtil.e("$$$$$$$$$$$$$===" + content)
+                    if (!TextUtils.isEmpty(content) && !TextUtils.isEmpty(content.trim()) && !TextUtils.equals("<br/>", content)) {
+                        if (content.contains("</")) {
+                            val start = content.indexOf(">")
+                            val end = content.indexOf("</")
+                            if (!TextUtils.isEmpty(content.substring(start + 1, end).trim())) {
+                                listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.TEXT_ITEM_TYPE))
+                            }
+                        } else {
+                            listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.TEXT_ITEM_TYPE))
+                        }
+                    }
                 }
                 "image" -> {
                     listDescription.add(AdapterArticleDetail.MultipleItem(item, AdapterArticleDetail.MultipleItem.IMAGE_ITEM_TYPE))
@@ -508,7 +520,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View , EasyP
         }
 
         //分享
-        textViewShare.setOnClickListener{
+        textViewShare.setOnClickListener {
             share()
         }
 
@@ -602,11 +614,11 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View , EasyP
     private fun share() {
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(this, *perms)) {
-            val shareUtil=ShareUtil(this)
-            if(isGoods){
-                shareUtil.shareNoImage(WebUrl.GRASS+rid,WebUrl.AUTH_ARTICLE+rid,cover,title,"")
-            }else{
-                shareUtil.shareNoImage(WebUrl.GRASS+rid,WebUrl.AUTH_ARTICLE_GOODS+rid,cover,title,"")
+            val shareUtil = ShareUtil(this)
+            if (isGoods) {
+                shareUtil.shareNoImage(WebUrl.GRASS + rid, WebUrl.AUTH_ARTICLE + rid, cover, title, "")
+            } else {
+                shareUtil.shareNoImage(WebUrl.GRASS + rid, WebUrl.AUTH_ARTICLE_GOODS + rid, cover, title, "")
             }
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
