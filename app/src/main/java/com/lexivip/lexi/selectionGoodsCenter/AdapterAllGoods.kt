@@ -29,14 +29,14 @@ class AdapterAllGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
         helper.setText(R.id.textView0, item.name)
 
         if (item.real_sale_price == 0.0) { //折扣价为0,显示真实价格
-            helper.setText(R.id.textView1, "￥${item.real_price}")
+            helper.setText(R.id.textView1, "¥${item.real_price}")
         } else { //折扣价不为0显示折扣价格和带划线的真实价格
-            helper.setText(R.id.textView1, "￥${item.real_sale_price}")
+            helper.setText(R.id.textView1, "¥${item.real_sale_price}")
         }
 
         helper.setText(R.id.textView3, "喜欢 +${item.like_count}")
 
-        helper.setText(R.id.textViewEarn, "赚 ￥${item.commission_price}")
+        helper.setText(R.id.textViewEarn, "赚 ¥${item.commission_price}")
 
         val imageViewStatus = helper.getView<ImageView>(R.id.imageViewStatus)
         if (item.is_sold_out) {
