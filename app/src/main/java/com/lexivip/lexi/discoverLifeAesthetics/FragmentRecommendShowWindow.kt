@@ -174,8 +174,10 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View, Eas
         if (TextUtils.equals(PublishShopWindowActivity::class.java.simpleName, message.PAGE_TAG)) return
         if (TextUtils.equals(TAG, message.PAGE_TAG)) return
         val data = adapter.data
+        var isContain = false
         for (item in data) {
             if (TextUtils.equals(item.rid, message.rid)) {
+                isContain = true
                 item.followed_status = message.followed_status
                 item.is_expert = message.is_expert
                 item.is_official = message.is_official
@@ -185,6 +187,11 @@ class FragmentRecommendShowWindow : BaseFragment(), ShowWindowContract.View, Eas
                 adapter.notifyDataSetChanged()
                 break
             }
+        }
+
+        if (!isContain){ //列表不包含
+            adapter.addData(0,message)
+            adapter.notifyDataSetChanged()
         }
     }
 
