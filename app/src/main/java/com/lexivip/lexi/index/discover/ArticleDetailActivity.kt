@@ -310,7 +310,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
             when (type) {
                 "text" -> {
                     val content = item.optString("content")
-                    LogUtil.e("$$$$$$$$$$$$$===" + content)
                     if (!TextUtils.isEmpty(content) && !TextUtils.isEmpty(content.trim()) && !TextUtils.equals("<br/>", content)) {
                         if (content.contains("</")) {
                             val start = content.indexOf(">")
