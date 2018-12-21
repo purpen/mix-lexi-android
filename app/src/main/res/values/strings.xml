@@ -472,4 +472,6 @@
     <string name="text_invitation_friend_open">邀请好友开馆</string>
     <string name="text_sku_goods_soldout">很抱歉商品已售罄</string>
     <string name="text_lx_official_coupon">乐喜官方优惠券</string>
+    <string name="to_expand_hint"> 展开</string>
+    <string name="to_shrink_hint"> 收起</string>
 </resources>

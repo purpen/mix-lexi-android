@@ -1,5 +1,7 @@
 package com.lexivip.lexi.discoverLifeAesthetics
 
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
@@ -8,14 +10,12 @@ import android.widget.TextView
 import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.lexivip.lexi.ImageSizeConfig
-import com.lexivip.lexi.PageUtil
-import com.lexivip.lexi.R
+import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.ShopWindowBean
 import com.lexivip.lexi.user.login.UserProfileUtil
 import me.gujun.android.taggroup.TagGroup
 
-class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean, BaseViewHolder>(layoutResId) {
+class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindowBean, BaseViewHolder>(layoutResId),ExpandableTextView.OnExpandListener {
     private val dp124: Int by lazy { ScreenUtil.getScreenWidth() / 3 }
     private val dp250: Int by lazy { dp124 * 2 + 1 }
     private val dp13: Int by lazy { DimenUtil.dp2px(13.0) }
@@ -26,7 +26,6 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
     private val layoutParams31: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
     private val layoutParams32: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
     override fun convert(helper: BaseViewHolder, item: ShopWindowBean) {
-
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30), ImageSizeConfig.SIZE_AVA)
 
@@ -91,17 +90,28 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
             viewDot.visibility = View.GONE
         }
 
-//        val textViewTitle1 = helper.getView<TextView>(R.id.textViewTitle1)
         helper.setText(R.id.textViewTitle1, item.title)
-//        LogUtil.e("textViewTitle2==lineCount==="+textViewTitle1.lineCount)
+        val textViewTitle2 = helper.getView<ExpandableTextView>(R.id.textViewTitle2)
+//        val imageLookMore = helper.getView<TextView>(R.id.imageLookMore)
 
+        textViewTitle2.updateForRecyclerView(item.description,ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0),item.state)
 
-        helper.setText(R.id.textViewTitle2, item.description)
-
-//        val treeObserver = textViewTitle1.viewTreeObserver
-
-//        treeObserver.addOnPreDrawListener {
-
+//        helper.setText(R.id.textViewTitle2, item.description)
+//
+//        val treeObserver = textViewTitle2.viewTreeObserver
+//
+//        treeObserver.addOnGlobalLayoutListener {
+//            if (textViewTitle2.lineCount >= 3) {
+//                imageLookMore.visibility = View.VISIBLE
+//                val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_shop_window_look_more, DimenUtil.dp2px(13.0), DimenUtil.dp2px(8.0))
+//                val span = CustomImageSpan(drawable)
+//                val spannable = SpannableString("展开 吧")
+//                val length = spannable.length
+//                spannable.setSpan(span, 3, length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+//                imageLookMore.text = spannable
+//            }else{
+//                imageLookMore.visibility = View.GONE
+//            }
 //        }
 
         val textViewFocus = helper.getView<TextView>(R.id.textViewFocus)
@@ -192,5 +202,13 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         mTagGroup.setOnTagClickListener { tag ->
             PageUtil.jump2RelateShopWindowActivity(tag.removePrefix("#"))
         }
+    }
+
+    override fun onExpand(view: ExpandableTextView) {
+
+    }
+
+    override fun onShrink(view: ExpandableTextView) {
+
     }
 }

@@ -21,7 +21,7 @@ public class ShopWindowBean {
      * user_avatar : https://s3.lexivip.com/20181018/4321Ft9xHLYnD7_nq_iOnHbu8yE_Ac3b.jpg
      * user_name : 乐喜
      */
-
+    public int state;
     public int comment_count;
     public long updated_at;
     public String description;
