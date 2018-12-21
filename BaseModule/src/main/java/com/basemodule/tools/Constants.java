@@ -89,7 +89,7 @@ public class Constants {
     @Nullable
     public static final String SEARCH_HISTORY = "SEARCH_HISTORY";
 
-    public static final long GUIDE_INTERVAL = 1500;
+    public static final long GUIDE_INTERVAL = 2000;
     @Nullable
     public static final String GUIDE_TAG = "GUIDE_TAG";
 
