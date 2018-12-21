@@ -89,7 +89,6 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         } else {
             viewDot.visibility = View.GONE
         }
-
         helper.setText(R.id.textViewTitle1, item.title)
         val textViewTitle2 = helper.getView<ExpandableTextView>(R.id.textViewTitle2)
 //        val imageLookMore = helper.getView<TextView>(R.id.imageLookMore)
