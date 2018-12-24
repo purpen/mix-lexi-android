@@ -16,11 +16,13 @@ package com.lexivip.lexi;
  */
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.DynamicLayout;
 import android.text.Layout;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -32,6 +34,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
+
+import com.basemodule.tools.DimenUtil;
+import com.basemodule.tools.Util;
 
 import java.lang.reflect.Field;
 
@@ -149,10 +154,10 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
 
     /**
      *
-     * @param spannable
+     * @param expandHint
      */
-    public void setToExpandHint(Spannable spannable){
-        mToExpandHint = spannable.toString();
+    public void setToExpandHint(String expandHint){
+        mToExpandHint = expandHint;
     }
 
     private void init() {
@@ -308,6 +313,9 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
                 if (mShowToExpandHint) {
                     ssbShrink.append(getContentOfString(mGapToExpandHint) + getContentOfString(mToExpandHint));
                     ssbShrink.setSpan(mTouchableSpan, ssbShrink.length() - getLengthOfString(mToExpandHint), ssbShrink.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    Drawable drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_shop_window_look_more, DimenUtil.dp2px(13.0), DimenUtil.dp2px(8.0));
+                    CustomImageSpan span = new CustomImageSpan(drawable);
+                    ssbShrink.setSpan(span, ssbShrink.length() - getLengthOfString(mToExpandHint)+3, ssbShrink.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 return ssbShrink;
             }

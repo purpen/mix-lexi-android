@@ -91,27 +91,8 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         }
         helper.setText(R.id.textViewTitle1, item.title)
         val textViewTitle2 = helper.getView<ExpandableTextView>(R.id.textViewTitle2)
-//        val imageLookMore = helper.getView<TextView>(R.id.imageLookMore)
-
-        textViewTitle2.updateForRecyclerView(item.description,ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0),item.state)
-
-//        helper.setText(R.id.textViewTitle2, item.description)
-//
-//        val treeObserver = textViewTitle2.viewTreeObserver
-//
-//        treeObserver.addOnGlobalLayoutListener {
-//            if (textViewTitle2.lineCount >= 3) {
-//                imageLookMore.visibility = View.VISIBLE
-//                val drawable = Util.getDrawableWidthPxDimen(R.mipmap.icon_shop_window_look_more, DimenUtil.dp2px(13.0), DimenUtil.dp2px(8.0))
-//                val span = CustomImageSpan(drawable)
-//                val spannable = SpannableString("展开 吧")
-//                val length = spannable.length
-//                spannable.setSpan(span, 3, length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-//                imageLookMore.text = spannable
-//            }else{
-//                imageLookMore.visibility = View.GONE
-//            }
-//        }
+        textViewTitle2.setToExpandHint("展开  ")
+        textViewTitle2.updateForRecyclerView(item.description,TextView.BufferType.NORMAL,ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))
 
         val textViewFocus = helper.getView<TextView>(R.id.textViewFocus)
 
