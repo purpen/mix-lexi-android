@@ -31,7 +31,7 @@ class MainActivity : BaseActivity() {
     /**
      * 是否切换到生活馆界面
      */
-    private var showLifeHouseTab:Boolean= false
+    private var showLifeHouseTab: Boolean = false
 
     override fun onResume() {
         super.onResume()
@@ -47,7 +47,7 @@ class MainActivity : BaseActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         //EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
         LogUtil.e("activity的回电")
-        if(fragment3!=null){
+        if (fragment3 != null) {
             LogUtil.e("activity传到fragment")
             fragment3!!.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -68,10 +68,37 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
-            fragment0 = supportFragmentManager.getFragment(savedInstanceState, MainFragment0::class.java.simpleName) as BaseFragment
-            fragment1 = supportFragmentManager.getFragment(savedInstanceState, MainFragment2::class.java.simpleName) as BaseFragment
-            fragment2 = supportFragmentManager.getFragment(savedInstanceState, MainFragment1::class.java.simpleName) as BaseFragment
-            fragment3 = supportFragmentManager.getFragment(savedInstanceState, MainFragmentUser::class.java.simpleName) as BaseFragment
+            val mainFragment0 = supportFragmentManager.getFragment(savedInstanceState, MainFragment0::class.java.simpleName)
+            if (mainFragment0 == null) {
+                initIndexPage()
+            } else {
+                fragment0 = mainFragment0 as BaseFragment
+            }
+
+            val mainFragment2 = supportFragmentManager.getFragment(savedInstanceState, MainFragment2::class.java.simpleName)
+
+            if (mainFragment2 == null) {
+                initDiscoverPage()
+            } else {
+                fragment1 = mainFragment2 as BaseFragment
+            }
+
+            val mainFragment1 = supportFragmentManager.getFragment(savedInstanceState, MainFragment1::class.java.simpleName)
+
+            if (mainFragment1 == null) {
+                initShopCart()
+            } else {
+                fragment2 = mainFragment1 as BaseFragment
+            }
+
+            val mainFragmentUser = supportFragmentManager.getFragment(savedInstanceState, MainFragmentUser::class.java.simpleName)
+
+            if (mainFragmentUser == null) {
+                initUserCenter()
+            } else {
+                fragment3 = mainFragmentUser as BaseFragment
+            }
+
         } else {
             initFragments()
         }
@@ -143,7 +170,7 @@ class MainActivity : BaseActivity() {
     /**
      * 是否展示生活馆
      */
-    fun switch2LifeHouseTab():Boolean{
+    fun switch2LifeHouseTab(): Boolean {
         return showLifeHouseTab
     }
 
@@ -160,15 +187,15 @@ class MainActivity : BaseActivity() {
             return
         }
 
-        if (TextUtils.equals(str,UserCouponActivity::class.java.simpleName)){ //官方优惠券跳转精选
+        if (TextUtils.equals(str, UserCouponActivity::class.java.simpleName)) { //官方优惠券跳转精选
             showIndexPage()
-            if (fragment0 is MainFragment0){
+            if (fragment0 is MainFragment0) {
                 (fragment0 as MainFragment0).getViewPager().currentItem = 1
             }
         }
 
 //        LogUtil.e("TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName)=="+TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName))
-        if (TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName)) showLifeHouseTab = true
+        if (TextUtils.equals(str, ApplyForLifeHouseSuccessActivity::class.java.simpleName)) showLifeHouseTab = true
 
         when (str) { //MainActivity存在时刷新fragment
             LoginActivity::class.java.simpleName, CompleteInfoActivity::class.java.simpleName,
@@ -326,7 +353,7 @@ class MainActivity : BaseActivity() {
             supportFragmentManager.putFragment(outState, MainFragment1::class.java.simpleName, fragment2)
         }
 
-        if (fragment3 != null &&fragments.contains(fragment3)) {
+        if (fragment3 != null && fragments.contains(fragment3)) {
             supportFragmentManager.putFragment(outState, MainFragmentUser::class.java.simpleName, fragment3)
         }
         super.onSaveInstanceState(outState)

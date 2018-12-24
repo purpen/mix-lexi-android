@@ -2,6 +2,7 @@ package com.lexivip.lexi
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -10,10 +11,14 @@ import android.view.View
 import com.basemodule.tools.*
 
 import com.basemodule.ui.BaseActivity
+import com.basemodule.ui.IDataSource
+import com.lexivip.lexi.net.HttpRequest
+import com.lexivip.lexi.net.URL
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.view.autoScrollViewpager.ViewPagerAdapter
 import com.lexivip.lexi.welcome.WelcomeActivity
 import kotlinx.android.synthetic.main.activity_user_guide.*
+import java.io.IOException
 
 /**
  * @author lilin
@@ -21,14 +26,8 @@ import kotlinx.android.synthetic.main.activity_user_guide.*
  */
 class UserGuideActivity : BaseActivity() {
 
-    private val flag = false
-    private val currentPosition: Int = 0
-    private val mediaPlayer: MediaPlayer? = null
     private var empty: Boolean = false
-    private val readBool: Boolean = false
-    private val fromPage:String = ""
     override val layout: Int = R.layout.activity_user_guide
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +37,13 @@ class UserGuideActivity : BaseActivity() {
                 finish()
             }
         }
+//        this.window.decorView.background
+
+//        GlideUtil.loadImageAsDrawable(,)
     }
 
     override fun getIntentData() {
         super.getIntentData()
-
 //        if (intent!!.hasExtra(MineFragment::class.java!!.getSimpleName())) {
 //            fromPage = intent!!.getStringExtra(MineFragment::class.java!!.getSimpleName())
 //        }
@@ -57,21 +58,39 @@ class UserGuideActivity : BaseActivity() {
 //        imageView.setImageBitmap(scaleImage)
 //        bitmap.recycle()
 //        imageView.visibility = View.VISIBLE
-            Handler().postDelayed({
-//                imageView.visibility = View.GONE
+        Handler().postDelayed({
+            //                imageView.visibility = View.GONE
 //                scaleImage.recycle()
-                if (empty) {
-                    initGuide()
-                } else {
-                    if (isTaskRoot) {
-                        goMainPage()
-                    }
+            if (empty) {
+                initGuide()
+            } else {
+                if (isTaskRoot) {
+                    goMainPage()
                 }
-            }, Constants.GUIDE_INTERVAL)
+            }
+        }, Constants.GUIDE_INTERVAL)
 //        } else {
 //            initGuide()
 //        }
     }
+
+//    override fun requestNet() {
+//        val url = URL.BASE_URL + "market/guide/android"
+//        HttpRequest.sendRequest(HttpRequest.GET, url, object : IDataSource.HttpRequestCallBack {
+//            override fun onSuccess(json: String) {
+//                val welcomeBean = JsonUtil.fromJson(json, WelcomeBean::class.java)
+//                if (welcomeBean.success) {
+//                    if (TextUtils.isEmpty(welcomeBean.data.small)) return
+//                    imageView.visibility = View.VISIBLE
+//                    GlideUtil.loadImageWithDimen(welcomeBean.data.small, imageView, ScreenUtil.getScreenWidth(), ScreenUtil.getScreenHeight(), R.mipmap.welcome, ImageSizeConfig.DEFAULT)
+//                }
+//            }
+//
+//            override fun onFailure(e: IOException) {
+//                LogUtil.e("请求远程欢迎页失败")
+//            }
+//        })
+//    }
 
     private fun initGuide() {
         scrollableView.visibility = View.VISIBLE
@@ -80,7 +99,7 @@ class UserGuideActivity : BaseActivity() {
         list.add(R.mipmap.guide1)
         list.add(R.mipmap.guide2)
         list.add(R.mipmap.guide3)
-        scrollableView.setAdapter(ViewPagerAdapter(this, list),list.size)
+        scrollableView.setAdapter(ViewPagerAdapter(this, list), list.size)
         SPUtil.write(Constants.GUIDE_TAG, Constants.GUIDE_TAG)
     }
 

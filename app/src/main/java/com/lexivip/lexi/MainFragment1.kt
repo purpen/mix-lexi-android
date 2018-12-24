@@ -452,6 +452,7 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     }
 
     override fun setNewData(products: MutableList<ProductBean>) {
+        adapterWish.data.clear()
         if (products.isEmpty()) {
             adapterWish.removeHeaderView(headerViewWishOrder)
         } else {

@@ -191,8 +191,10 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPe
         //就是自己
         if (TextUtils.equals(TAG,message.PAGE_TAG)) return
         val data = adapter.data
+        var isContain = false
         for (item in data){
             if (TextUtils.equals(item.rid,message.rid)){
+                isContain = true
                 item.followed_status = message.followed_status
                 item.is_expert = message.is_expert
                 item.is_official = message.is_official
@@ -202,6 +204,11 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPe
                 adapter.notifyDataSetChanged()
                 break
             }
+        }
+
+        if (!isContain){ //列表不包含
+            adapter.addData(0,message)
+            adapter.notifyDataSetChanged()
         }
     }
 

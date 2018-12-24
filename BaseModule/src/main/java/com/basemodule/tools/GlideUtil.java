@@ -1,11 +1,15 @@
 package com.basemodule.tools;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
@@ -18,13 +22,19 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.lexivip.basemodule.R;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.util.concurrent.ExecutionException;
+
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 import static com.bumptech.glide.request.RequestOptions.bitmapTransform;
 
 /**
@@ -204,6 +214,19 @@ public class GlideUtil {
     }
 
     /**
+     * 加载指定宽高图片
+     *
+     * @param t
+     * @param imageView
+     * @param width
+     * @param height
+     * @param <T>
+     */
+    public static <T> void loadImageWithDimen(T t, ImageView imageView, int width, int height, int placeHolder, String imageSizeConfig) {
+        loadImageWithDimenAndRadius(t, imageView, 0, width, height, placeHolder, imageSizeConfig);
+    }
+
+    /**
      * 使加载图片带有圆角
      *
      * @param t
@@ -267,6 +290,31 @@ public class GlideUtil {
     }
 
     /**
+     * 加载图片原始图
+     *
+     * @param t
+     * @param <T>
+     */
+    public static <T> void loadImageAsDrawable(T t, final View view) {
+        RequestOptions requestOptions = new RequestOptions()
+                .format(DecodeFormat.PREFER_RGB_565)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(DEFAULT_ERROR_HOLDER).placeholder(DEFAULT_PLACE_HOLDER);
+        Context context = view.getContext();
+        if (!isValidContextForGlide(context)) return;
+        SimpleTarget target = new SimpleTarget<Drawable>() {
+
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                view.setBackground(resource);
+            }
+        };
+        Glide.with(context).asDrawable().load(t).into(target);
+
+
+    }
+
+    /**
      * By default you get a Drawable RequestBuilder
      * if you call asBitmap() you will get a Bitmap RequestBuilder
      *
@@ -319,11 +367,12 @@ public class GlideUtil {
     }
 
     public static <T> void loadCircleImageWidthDimen(@NotNull T t, @NotNull ImageView imageView, int size) {
-        loadCircleImageWidthDimen(t,imageView,size,"");
+        loadCircleImageWidthDimen(t, imageView, size, "");
     }
 
     /**
      * 加载圆形图片
+     *
      * @param t
      * @param imageView
      * @param size
@@ -340,8 +389,8 @@ public class GlideUtil {
         Context context = imageView.getContext();
         if (!isValidContextForGlide(context)) return;
         if (t instanceof String) {
-            Glide.with(context).asDrawable().load(t+imageSizeConfig).apply(requestOptions).into(imageView);
-        }else {
+            Glide.with(context).asDrawable().load(t + imageSizeConfig).apply(requestOptions).into(imageView);
+        } else {
             Glide.with(context).asDrawable().load(t).apply(requestOptions).into(imageView);
         }
     }

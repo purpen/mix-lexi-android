@@ -68,6 +68,11 @@ class GoodsClassifyActivity : BaseActivity(), GoodsClassifyContract.View {
     }
 
     override fun installListener() {
+
+        imageButton.setOnClickListener { //返回顶部
+            recyclerView.smoothScrollToPosition(0)
+        }
+
         //点击搜索
         customHeadView.headRightShop.setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))

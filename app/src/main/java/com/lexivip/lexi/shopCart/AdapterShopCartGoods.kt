@@ -46,7 +46,7 @@ class AdapterShopCartGoods(@LayoutRes res: Int) : BaseQuickAdapter<ShopCartBean.
             textViewOldPrice.visibility = View.VISIBLE
             textViewPrice.text = "${product.sale_price}"
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥${product.price}"
+            textViewOldPrice.text = "¥${product.price}"
         }
 
         if (!TextUtils.isEmpty(product.s_color) && !TextUtils.isEmpty(product.s_model)){

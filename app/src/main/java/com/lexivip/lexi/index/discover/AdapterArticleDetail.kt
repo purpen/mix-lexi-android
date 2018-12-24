@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.basemodule.tools.DimenUtil
-import com.basemodule.tools.GlideUtil
-import com.basemodule.tools.ScreenUtil
-import com.basemodule.tools.Util
+import com.basemodule.tools.*
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.entity.MultiItemEntity

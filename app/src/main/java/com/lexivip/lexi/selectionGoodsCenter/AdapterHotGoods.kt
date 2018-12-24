@@ -34,17 +34,17 @@ class AdapterHotGoods(@LayoutRes res: Int) : BaseQuickAdapter<ProductBean, BaseV
         val textView2 = helper.getView<TextView>(R.id.textView2)
 
         if (item.real_sale_price == 0.0) { //折扣价为0,显示真实价格
-            helper.setText(R.id.textView1, "￥${item.real_price}")
+            helper.setText(R.id.textView1, "¥${item.real_price}")
         } else { //折扣价不为0显示折扣价格和带划线的真实价格
-            helper.setText(R.id.textView1, "￥${item.real_sale_price}")
+            helper.setText(R.id.textView1, "¥${item.real_sale_price}")
             textView2.visibility = View.VISIBLE
             textView2.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textView2.text = "￥${item.real_price}"
+            textView2.text = "¥${item.real_price}"
         }
 
         helper.setText(R.id.textView3, "喜欢 +${item.like_count}")
 
-        helper.setText(R.id.textViewEarn, "赚 ￥${item.commission_price}")
+        helper.setText(R.id.textViewEarn, "赚 ¥${item.commission_price}")
 
         val imageViewStatus = helper.getView<ImageView>(R.id.imageViewStatus)
         if (item.is_sold_out) {

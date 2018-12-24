@@ -168,7 +168,7 @@ class AllGoodsIn100Presenter(view: AllGoodIn100Contract.View) : AllGoodIn100Cont
             override fun onSuccess(json: String) {
                 val lookPeopleBean = JsonUtil.fromJson(json, LookPeopleBean::class.java)
                 if (lookPeopleBean.success) {
-                    view.setLookPeopleData(lookPeopleBean.data.users)
+                    view.setLookPeopleData(lookPeopleBean.data)
                 } else {
                     view.showError(lookPeopleBean.status.message)
                 }

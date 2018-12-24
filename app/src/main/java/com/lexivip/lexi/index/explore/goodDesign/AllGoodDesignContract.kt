@@ -5,7 +5,7 @@ import com.basemodule.ui.BasePresenter
 import com.basemodule.ui.BaseView
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.beans.ProductBean
-import com.lexivip.lexi.beans.UserBean
+import com.lexivip.lexi.index.lifehouse.LookPeopleBean
 
 class AllGoodDesignContract {
     interface View : BaseView<Presenter> {
@@ -23,7 +23,7 @@ class AllGoodDesignContract {
         fun loadMoreComplete() {}
         fun loadMoreFail() {}
 
-        fun setLookPeopleData(users: List<UserBean>)
+        fun setLookPeopleData(data: LookPeopleBean.DataBean)
         fun setGoodsCount(count: Int) {
 
         }
