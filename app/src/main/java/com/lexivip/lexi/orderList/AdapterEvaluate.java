@@ -86,8 +86,9 @@ public class AdapterEvaluate extends BaseQuickAdapter<MyOrderListBean.DataBean.O
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.iv_delete:
+                        LogUtil.e("剩余几个"+adapterEvaluateImage.getData().size());
                         adapterEvaluateImage.remove(position);
-                        item.asset_image.remove(position);
+                        //item.asset_image.remove(position);
                         adapter.notifyDataSetChanged();
                         notifyDataSetChanged();
                         break;

@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.basemodule.tools.GlideUtil;
+import com.basemodule.tools.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lexivip.lexi.ImageSizeConfig;
@@ -40,9 +41,9 @@ public class AdapterOrderListTow extends BaseQuickAdapter<MyOrderListBean.DataBe
                 }
             }*/
             if (getData().size()==1){
-                helper.setGone(R.id.bt_logistics, true);
-            }else {
                 helper.setGone(R.id.bt_logistics, false);
+            }else {
+                helper.setGone(R.id.bt_logistics, true);
             }
         }else {
             helper.setGone(R.id.bt_logistics, false);

@@ -5,9 +5,10 @@
     android:background="@color/color_ffbd9f"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewGoods"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_ffb28f"></android.support.v7.widget.RecyclerView>
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/recyclerViewGoods"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/color_ffb28f"
+      ></android.support.v7.widget.RecyclerView>
 </LinearLayout>

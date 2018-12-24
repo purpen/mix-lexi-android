@@ -235,6 +235,8 @@ public class EvaluateActivity extends BaseActivity implements EasyPermissions.Pe
 
     @Override
     protected void onDestroy() {
+        LogUtil.e("返回");
+        SPUtil.write("fragment",String.valueOf(status));
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }

@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:background="@color/color_ffbd9f"
     android:gravity="center_horizontal"
-    android:visibility="gone"
-    android:id="@+id/linearLayout">
+    android:id="@+id/linearLayout"
+    android:visibility="gone">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,10 +18,22 @@
         android:textSize="@dimen/sp20" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewOfficialAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:paddingLeft="@dimen/dp15"></android.support.v7.widget.RecyclerView>
+    <ImageView
+        android:id="@+id/iv_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@mipmap/icon_receive_coucher_official_line"/>
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewOfficial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp25"
+        android:layout_marginTop="@dimen/dp20"
         android:paddingLeft="@dimen/dp15"></android.support.v7.widget.RecyclerView>
 
 

@@ -120,7 +120,7 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(this, *perms)) {
             val shareUtil = ShareUtil(this)
-            shareUtil.shareInvitation(WebUrl.OPEN_SHOP, WebUrl.AUTH_GUIDE, R.mipmap.ic_launcher, "邀请你开馆", "", UserProfileUtil.storeId())
+            shareUtil.shareInvitation(WebUrl.OPEN_SHOP, WebUrl.AUTH_GUIDE, R.mipmap.ic_launcher, UserProfileUtil.getUserName()+"邀请你一起开馆来赚钱", "", UserProfileUtil.storeId())
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_INVITATION, *perms)
         }
@@ -198,7 +198,7 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
             }
             LogUtil.e(title)
             try {
-                shareUtil.shareFriendInvitation(dialog,WebUrl.SHARE_INVITATION + UserProfileUtil.getUserId(), image!!, title, content)
+                shareUtil.shareFriendInvitation(dialog,WebUrl.SHARE_INVITATION + UserProfileUtil.getUserId(), image!!,R.drawable.share_invitation_sina,titles, title, content)
             } catch (e: Exception) {
 
             }
@@ -241,6 +241,7 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
                 images=R.drawable.icon_share_invation2
             }
             val image = UMImage(this, images!!)
+            val imageSina=UMImage(this,R.drawable.share_invitation_sina)
             val web = UMWeb(WebUrl.SHARE_INVITATION+UserProfileUtil.getUserId())
             web.title = title//标题
             web.setThumb(image)  //缩略图
@@ -264,7 +265,8 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
                 }
                 2-> {
                     ShareAction(this)
-                            .withMedia(web)
+                            .withMedia(imageSina)
+                            .withText(titles+WebUrl.SHARE_INVITATION+UserProfileUtil.getUserId())
                             .setPlatform(SHARE_MEDIA.SINA)
                             .setCallback(shareListener)
                             .share()

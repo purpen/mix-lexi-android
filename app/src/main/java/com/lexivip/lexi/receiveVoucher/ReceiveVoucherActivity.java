@@ -97,7 +97,7 @@ public class ReceiveVoucherActivity extends BaseActivity implements ReceiveVouch
         for (int i=0;i<bean.data.categories.size();i++){
             fragments.add(ReceiveVoucherFragment.newInstance(String.valueOf(bean.data.categories.get(i).id)));
             titles.add(bean.data.categories.get(i).name);
-            LogUtil.e(bean.data.categories.get(i).name);
+            LogUtil.e(bean.data.categories.get(i).name+bean.data.categories.get(i).id);
         }
         OrderPagerAdapter adapter=new OrderPagerAdapter(getSupportFragmentManager(),fragments,titles);
         viewPager.setAdapter(adapter);

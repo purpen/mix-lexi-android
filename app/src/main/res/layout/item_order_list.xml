@@ -163,7 +163,8 @@
             android:background="@drawable/shape_radiu4_bgcolor_5fe4b1"
             android:text="@string/order_evaluate"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/sp12" />
+            android:textSize="@dimen/sp12"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/bt_delete"
@@ -174,7 +175,8 @@
             android:background="@drawable/bg_stroke_color_999"
             android:text="@string/order_delete"
             android:textColor="@color/color_999"
-            android:textSize="@dimen/sp12" />
+            android:textSize="@dimen/sp12"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/bt_delete1"

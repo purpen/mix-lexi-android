@@ -35,7 +35,7 @@ public class ReceiveVoucherFragmentPresenter implements ReceiveVoucherFragmentCo
 
             @Override
             public void onSuccess(@NotNull String json) {
-                LogUtil.e("共享券1："+json);
+                //LogUtil.e("共享券1："+json);
                 VoucherBrandBean bean=JsonUtil.fromJson(json,VoucherBrandBean.class);
                 if (bean.success){
                     view.getBrand(bean);
@@ -73,7 +73,7 @@ public class ReceiveVoucherFragmentPresenter implements ReceiveVoucherFragmentCo
 
             @Override
             public void onSuccess(@NotNull String json) {
-                LogUtil.e("商品券："+json);
+                //LogUtil.e("商品券："+json);
                 VoucherGoodsBean bean=JsonUtil.fromJson(json,VoucherGoodsBean.class);
                 if (bean.success){
                     view.getGoods(bean);
@@ -114,6 +114,70 @@ public class ReceiveVoucherFragmentPresenter implements ReceiveVoucherFragmentCo
                 VoucherReceiveGoodsBean bean=JsonUtil.fromJson(json,VoucherReceiveGoodsBean.class);
                 if (bean.success){
                     view.getReceive(true);
+                    view.dismissLoadingView();
+                }else {
+                    view.showError(bean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.showError(Util.getString(R.string.text_net_error));
+            }
+        });
+    }
+
+    @Override
+    public void loadOfficial(String category_id) {
+        model.loadTypeOfficical(category_id, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                LogUtil.e("官方券："+json);
+                VoucherOfficialBean bean=JsonUtil.fromJson(json,VoucherOfficialBean.class);
+                if (bean.success){
+                    view.getOfficial(bean);
+                    view.dismissLoadingView();
+                }else {
+                    view.showError(bean.status.message);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull IOException e) {
+                view.showError(Util.getString(R.string.text_net_error));
+            }
+        });
+    }
+
+    @Override
+    public void receiveOfficial(String rid) {
+        model.receiveOfficial(rid, new IDataSource.HttpRequestCallBack() {
+            @Override
+            public void onSuccess(@NotNull Bitmap json) {
+
+            }
+
+            @Override
+            public void onStart() {
+                view.showLoadingView();
+            }
+
+            @Override
+            public void onSuccess(@NotNull String json) {
+                LogUtil.e("领取："+json);
+                VoucherReceiveOfficialBean bean=JsonUtil.fromJson(json,VoucherReceiveOfficialBean.class);
+                if (bean.success){
+                    view.getReceiveOfficial(true);
                     view.dismissLoadingView();
                 }else {
                     view.showError(bean.status.message);

@@ -1,6 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="@dimen/dp140"
+        android:layout_height="159dp"
+        android:background="@mipmap/icon_receive_voucher_official_type"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginRight="@dimen/dp10">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <View
+                android:layout_width="@dimen/dp16"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/color_80fff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp3"
+                android:layout_marginRight="@dimen/dp3"
+                android:text="@string/text_lexi_coupon"
+                android:textColor="@color/color_80fff"
+                android:textSize="@dimen/sp9" />
+
+            <View
+                android:layout_width="@dimen/dp16"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/color_80fff" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="¥"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp17" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="0"
+                android:maxLines="1"
+                android:layout_marginBottom="@dimen/dp5"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp30" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp05"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@color/color_33fff" />
+
+        <TextView
+            android:id="@+id/tv_full"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginBottom="@dimen/dp5"
+            android:includeFontPadding="false"
+            android:text="满0元可用"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp11" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp05"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@color/color_33fff" />
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp10"
+            android:text="·全场通用·"
+            android:layout_marginTop="@dimen/dp5"/>
+        <Button
+            android:id="@+id/button"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/dp80"
+            android:layout_height="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@drawable/bg_radius_round_white"
+            android:text="@string/text_immediately_receive"
+            android:textColor="@color/color_fd7162"
+            android:textSize="@dimen/sp12" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_null_bg"
+        android:layout_width="@dimen/dp140"
+        android:layout_height="159dp"
+        android:background="#2973261e"
+        android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/iv_null"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/icon_receive_voucher_null" />
+</RelativeLayout>

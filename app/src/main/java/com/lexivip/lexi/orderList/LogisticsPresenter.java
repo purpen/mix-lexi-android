@@ -35,6 +35,7 @@ public class LogisticsPresenter implements LogisticsContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("问题件："+json);
                 view.dismissLoadingView();
                 LogisticsBean bean= JsonUtil.fromJson(json,LogisticsBean.class);
                 if (bean.isSuccess()){

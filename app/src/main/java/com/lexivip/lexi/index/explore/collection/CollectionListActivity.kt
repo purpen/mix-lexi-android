@@ -24,8 +24,6 @@ class CollectionListActivity : BaseActivity(), CollectionListContract.View {
 
     override fun initView() {
         customHeadView.setHeadCenterTxtShow(true, R.string.title_collection)
-        customHeadView.shopImg.setImageResource(R.mipmap.icon_share_44px)
-        customHeadView.setHeadShopShow(true)
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -39,10 +37,6 @@ class CollectionListActivity : BaseActivity(), CollectionListContract.View {
     }
 
     override fun installListener() {
-        customHeadView.headRightShop.setOnClickListener {
-            //TODO
-            ToastUtil.showInfo("分享")
-        }
 
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true

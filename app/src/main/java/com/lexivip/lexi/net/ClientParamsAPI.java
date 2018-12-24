@@ -1451,6 +1451,12 @@ public class ClientParamsAPI {
         params.put("per_page","50");
         return params;
     }
+    public static HashMap<String,Object> getVoucherBrandParams(String store_category){
+        HashMap<String,Object> params=generateCommonParams();
+        params.put("store_category",store_category);
+        params.put("per_page","50");
+        return params;
+    }
     /**
      * 同享券分类页
      * @param store_category
@@ -1756,6 +1762,15 @@ public class ClientParamsAPI {
         params.put("id_card", id_card);
         params.put("id_card_front", id_card_front);
         params.put("id_card_back", id_card_back);
+        return params;
+    }
+
+    /**
+     * 分类官方推荐券
+     */
+    public static HashMap<String,Object> getOffici(String category_id){
+        HashMap<String, Object> params = generateCommonParams();
+        params.put("category_id",category_id);
         return params;
     }
 }

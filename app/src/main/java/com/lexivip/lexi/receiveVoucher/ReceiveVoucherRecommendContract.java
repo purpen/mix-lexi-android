@@ -21,7 +21,7 @@ public class ReceiveVoucherRecommendContract {
         void loadMoreComplete();
     }
     interface Presenter extends BasePresenter{
-        void loadBrand(String store_category, String page);
+        void loadBrand(String store_category);
         void loadGoods(String store_category, String rid,String page);
         void loadImage();
         void loadOfficial();

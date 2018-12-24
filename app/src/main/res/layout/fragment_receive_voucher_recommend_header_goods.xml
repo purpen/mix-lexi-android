@@ -4,16 +4,16 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:background="@color/color_ffbd9f">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp15"
-        android:layout_marginTop="@dimen/dp30"
-        android:background="@mipmap/icon_receive_voucher_separate" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_ffb28f"
-        android:gravity="center_horizontal">
+  <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/dp15"
+      android:layout_marginTop="@dimen/dp30"
+      android:background="@mipmap/icon_receive_voucher_separate" />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/color_ffb28f"
+      android:gravity="center_horizontal">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,5 +25,5 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp20"
         />
-    </LinearLayout>
+  </LinearLayout>
 </LinearLayout>

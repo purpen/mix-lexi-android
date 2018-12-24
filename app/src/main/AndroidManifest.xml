@@ -21,6 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--android:largeHeap="true"android:alwaysRetainTaskState="true"-->
+        <!--value的值填写渠道名称，例如yingyongbao。这里设置动态渠道变量-->
+        <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
         <!--android8.0需要的配置，主要是调用相机-->
         <provider
             android:name="android.support.v4.content.FileProvider"

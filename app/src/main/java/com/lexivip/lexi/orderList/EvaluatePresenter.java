@@ -103,13 +103,14 @@ public class EvaluatePresenter implements EvaluateContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("评价成功返回结果："+json);
                 view.dismissLoadingView();
                 MyOrderListBean myOrderListBean=JsonUtil.fromJson(json,MyOrderListBean.class);
                 if (myOrderListBean.isSuccess()){
                     view.finishActivity();
                     ToastUtil.showInfo("评价成功");
                 }else{
-                    view.showError(Util.getString(R.string.text_net_error));
+                    view.showError(myOrderListBean.getStatus().getMessage());
                 }
             }
 

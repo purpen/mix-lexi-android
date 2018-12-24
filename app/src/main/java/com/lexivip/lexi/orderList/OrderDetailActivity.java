@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseActivity;
@@ -120,17 +121,24 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             adapterOrderList = new AdapterOrderDetail(R.layout.item_order_detail, bean.data.getItems(),bean.data.getUser_order_status());
             adapterOrderList.addHeaderView(headerView);
             adapterOrderList.addFooterView(footerView);
-            if (0==bean.data.getUser_order_status()||5==bean.data.getUser_order_status()||!bean.data.isIs_many_express()){
+            LogUtil.e("订单状态："+bean.data.getUser_order_status());
+            // 1、待发货 2、待收货 3、待评价 4、待付款 5、已完成 6、已取消
+            if (0==bean.data.getUser_order_status()||6==bean.data.getUser_order_status()){
                 // for (int i=0;i<bean.data.getItems().size();i++)
                 // bean.data.getItems().get(i).isShow=false;
             }else{
-                for (int i=0;i<bean.data.getItems().size();i++){
-                    if (bean.data.getItems().get(i+1).getExpress()==bean.data.getItems().get(i).getExpress()) {
-                        //  bean.data.getItems().get(i).isShow=false;
-                    } else {
-                        bean.data.getItems().get(i).isShow = true;
+                if(bean.data.isIs_many_express()){
+                    bean.data.getItems().get(bean.data.getItems().size()-1).isShow = true;
+                }else {
+                    for (int i=0;i<bean.data.getItems().size();i++){
+                        if (bean.data.getItems().get(i+1).getExpress()==bean.data.getItems().get(i).getExpress()) {
+                            //  bean.data.getItems().get(i).isShow=false;
+                        } else {
+                            bean.data.getItems().get(i).isShow = true;
+                        }
                     }
                 }
+
             }
             tv_order_code.setText(String.valueOf(bean.data.getRid()));
             tv_order_subtotal.setText("¥"+bean.data.getTotal_amount());
@@ -148,7 +156,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
             String dateString = sdf.format(c.getTime());
             tv_order_time.setText(dateString);
-            // 1、待发货 2、待收货 3、待评价 4、待付款
+            // 1、待发货 2、待收货 3、待评价 4、待付款 5、已完成 6、已取消
             switch (bean.data.getUser_order_status()){
                 case 1:
                     tv_order_status.setText("待发货");
@@ -158,6 +166,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                     break;
                 case 3:
                     tv_order_status.setText("待评价");
+                    break;
+                case 5:
+                    tv_order_status.setText("已完成");
+                    break;
+                case 6:
+                    tv_order_status.setText("已取消");
                     break;
                 case 4:
                     tv_order_status.setText("待付款");
@@ -184,9 +198,14 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                 public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                     if (view.getId()==R.id.bt_logistics){
                         Intent intent=new Intent(OrderDetailActivity.this,LogisticsActivity.class);
-                        intent.putExtra("logistic_code", String.valueOf(adapterOrderList.getData().get(position).getExpress_no()));
+                        /*intent.putExtra("logistic_code", String.valueOf(adapterOrderList.getData().get(position).getExpress_no()));
                         intent.putExtra("kdn_company_code", String.valueOf(adapterOrderList.getData().get(position).getExpress()));
-                        intent.putExtra("order_rid",adapterOrderList.getData().get(position).getRid());
+                        intent.putExtra("order_rid",adapterOrderList.getData().get(position).getRid());*/
+
+                        intent.putExtra("logistic_code",String.valueOf(adapterOrderList.getData().get(position).getExpress_no()));
+                        intent.putExtra("kdn_company_code",String.valueOf(adapterOrderList.getData().get(position).getExpress_code()));
+                        intent.putExtra("order_rid",adapterOrderList.getItem(position).getRid());
+                        intent.putExtra("express_name",adapterOrderList.getData().get(position).getExpress_name());
                         startActivity(intent);
                     }
                 }

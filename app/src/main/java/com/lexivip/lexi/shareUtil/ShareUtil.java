@@ -37,6 +37,10 @@ public class ShareUtil implements ShareContract.View{
     private boolean isFriend;
     private boolean isMarket;
     private ShareImageDialog imageDialog;
+    private boolean isSinaImage;
+    private String title;
+    private UMImage imageSina;
+    private String webUrl;
 
     Handler handler=new Handler(){
         @Override
@@ -60,11 +64,15 @@ public class ShareUtil implements ShareContract.View{
         setSaveImage();
     }
 
-    public void shareFriendInvitation(WaitingDialog dialog,String weburl,int imageURl,String title,String content){
+    public void shareFriendInvitation(WaitingDialog dialog,String weburl,int imageURl,int imageSina,String titles,String title,String content){
         LogUtil.e("是否走到这一步");
         isFriend=true;
         type=6;
         image = new UMImage(context, imageURl);
+        this.webUrl=weburl;
+        this.title=titles;
+        isSinaImage=true;
+        this.imageSina=new UMImage(context,imageSina);
         this.dialog=dialog;
         setUmWeb(weburl,title,content);
         LogUtil.e("图片链接地址"+imageURl);
@@ -83,12 +91,28 @@ public class ShareUtil implements ShareContract.View{
         //presenter.loadShareInvitation(scene);
     }
 
+    public void shareCollection(String weburl,String pageUrl,String imageURl,String title,String content){
+        image = new UMImage(context, imageURl+ImageSizeConfig.SIZE_SM);
+        this.webUrl=weburl;
+        this.title=title;
+        isSinaImage=true;
+        imageSina=image;
+        setUmMin(weburl,pageUrl,title,content);
+        setUmWeb(weburl,title,content);
+        LogUtil.e("图片链接地址"+imageURl);
+        setUmShare();
+    }
+
     public void shareGoods(String weburl,String pageUrl,String imageURl,String title,String content,String rid ,String scene,int types){
         this.scene = scene;
         this.rid=rid;
         type=types;
         this.pageUrl=pageUrl;
         image = new UMImage(context, imageURl);
+        this.webUrl=weburl+rid;
+        this.title=title;
+        isSinaImage=true;
+        imageSina=image;
         setUmMin(weburl+rid,pageUrl+rid,title,content);
         setUmWeb(weburl+rid,title,content);
         LogUtil.e("图片链接地址"+imageURl);
@@ -131,6 +155,19 @@ public class ShareUtil implements ShareContract.View{
         setUmMin(weburl+rid,pageUrl+rid,title,content);
         setUmWeb(weburl+rid,title,content);
         setSaveImage();
+    }
+
+    public void shareArticle(String weburl,String pageUrl,String imageURl,String title,String content){
+        LogUtil.e("分享链接："+weburl);
+        image = new UMImage(context, imageURl+ImageSizeConfig.SIZE_SM);
+        this.webUrl=weburl;
+        this.title=title;
+        isSinaImage=true;
+        imageSina=image;
+        setUmMin(weburl,pageUrl,title,content);
+        setUmWeb(weburl,title,content);
+        LogUtil.e("图片链接地址"+imageURl);
+        setUmShare();
     }
 
     public void shareNoImage(String weburl,String pageUrl,String imageURl,String title,String content){
@@ -191,22 +228,32 @@ public class ShareUtil implements ShareContract.View{
                             .setPlatform(share_media)
                             .share();
                 }else{*/
-                /*if (share_media==SHARE_MEDIA.SINA){
-                    LogUtil.e("新浪微博" + share_media.toString());
-                    new ShareAction(context)
-                            .withMedia(image)
-                            //.withText("测试的发斯蒂芬阿斯顿发撒的发阿斯顿发https://h5.lexivip.com/shop/guide")
-                            .setPlatform(share_media)
-                            .setCallback(shareListener)
-                            .share();
-                }else {*/
+                if (isSinaImage){
+                    if (share_media==SHARE_MEDIA.SINA){
+                        LogUtil.e("新浪微博" + share_media.toString());
+                        new ShareAction(context)
+                                .withMedia(imageSina)
+                                .withText(title+webUrl)
+                                .setPlatform(share_media)
+                                .setCallback(shareListener)
+                                .share();
+                    }else {
+                        LogUtil.e("微信朋友圈" + share_media.toString());
+                        new ShareAction(context)
+                                .withMedia(web)
+                                .setPlatform(share_media)
+                                .setCallback(shareListener)
+                                .share();
+                    }
+                }else {
                     LogUtil.e("微信朋友圈" + share_media.toString());
                     new ShareAction(context)
                             .withMedia(web)
                             .setPlatform(share_media)
                             .setCallback(shareListener)
                             .share();
-                //}
+                }
+
                 //}
             }else {
                 if (snsPlatform.mKeyword.equals("save")){

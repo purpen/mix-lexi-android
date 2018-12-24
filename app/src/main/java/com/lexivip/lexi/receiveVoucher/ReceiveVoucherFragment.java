@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -16,9 +17,11 @@ import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
 import com.basemodule.ui.BaseFragment;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.lexivip.lexi.MainActivity;
 import com.lexivip.lexi.PageUtil;
 import com.lexivip.lexi.R;
 import com.lexivip.lexi.brandHouse.BrandHouseActivity;
+import com.lexivip.lexi.user.login.LoginActivity;
 import com.lexivip.lexi.user.login.UserProfileUtil;
 
 import java.util.ArrayList;
@@ -47,6 +50,13 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
     private boolean isCommenNull;
     private boolean isSingleNull;
     private int goodsPosition;
+    private LinearLayout linearLayout;
+    private RecyclerView recyclerViewOfficialAll;
+    private AdapterReceiveVoucherOfficial official;
+    private AdapterReceiveVoucherOfficialTransverse adapterReceiveVoucherOfficialTransverse;
+    private RecyclerView recyclerViewOfficial;
+    private int officialPosition;
+    private boolean isAll;
 
     @Override
     protected int getLayout() {
@@ -72,7 +82,14 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
         ll_null = getView().findViewById(R.id.ll_null);
         bt_common.setOnClickListener(this);
         bt_single.setOnClickListener(this);
+        linearLayout = getView().findViewById(R.id.linearLayout);
         recyclerView = getView().findViewById(R.id.recyclerView);
+        recyclerViewOfficialAll = getView().findViewById(R.id.recyclerViewOfficialAll);
+        recyclerViewOfficial = getView().findViewById(R.id.recyclerViewOfficial);
+        recyclerViewOfficial.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager manager=new LinearLayoutManager(getContext());
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerViewOfficialAll.setLayoutManager(manager);
         recyclerViewSingle = getView().findViewById(R.id.recyclerViewSingle);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerViewSingle.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -88,7 +105,13 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
         recyclerView.setAdapter(voucherBrands);
         recyclerViewSingle.setAdapter(voucherGoods);
 
+        official = new AdapterReceiveVoucherOfficial(R.layout.adapter_voucher_official,null);
+        adapterReceiveVoucherOfficialTransverse = new AdapterReceiveVoucherOfficialTransverse(R.layout.adapter_voucher_official_transverse);
+        recyclerViewOfficialAll.setAdapter(official);
+        recyclerViewOfficial.setAdapter(adapterReceiveVoucherOfficialTransverse);
+
         rid = UserProfileUtil.getUserId();
+        presenter.loadOfficial(key);
         presenter.loadBrand(key,String.valueOf(page));
         presenter.loadGoods(key, rid,String.valueOf(pageSingle));
     }
@@ -135,6 +158,43 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
                 Intent intent=new Intent(getActivity(),BrandHouseActivity.class);
                 intent.putExtra("rid",voucherBrands.getData().get(position).getBean().store_rid);
                 getActivity().startActivity(intent);
+            }
+        });
+
+        adapterReceiveVoucherOfficialTransverse.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                officialPosition = position;
+                isAll=false;
+                if (UserProfileUtil.isLogin()) {
+                    if (adapterReceiveVoucherOfficialTransverse.getData().get(position).is_grant){
+                        if (0!=adapterReceiveVoucherOfficialTransverse.getData().get(position).surplus_count){
+                            startActivity(new Intent(getActivity(),MainActivity.class));
+                        }
+                    }else {
+                        presenter.receiveOfficial(adapterReceiveVoucherOfficialTransverse.getData().get(position).code);
+                    }
+                }else {
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                }
+            }
+        });
+        official.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                officialPosition = position;
+                isAll=true;
+                if (UserProfileUtil.isLogin()) {
+                    if (official.getData().get(position).is_grant){
+                        if (0!=official.getData().get(position).surplus_count){
+                            startActivity(new Intent(getActivity(),MainActivity.class));
+                        }
+                    }else {
+                        presenter.receiveOfficial(official.getData().get(position).code);
+                    }
+                }else {
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                }
             }
         });
     }
@@ -233,6 +293,37 @@ public class ReceiveVoucherFragment extends BaseFragment implements ReceiveVouch
     public void getReceive(boolean isReceive) {
         voucherGoods.getData().get(goodsPosition).is_grant=isReceive;
         voucherGoods.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getOfficial(VoucherOfficialBean bean) {
+        if (bean.data!=null&&bean.data.official_coupons.size()!=0){
+            LogUtil.e("数据的长度："+bean.data.official_coupons.size()+"      "+key);
+            linearLayout.setVisibility(View.VISIBLE);
+            if (bean.data.official_coupons.size()<3){
+                LogUtil.e("显示");
+                recyclerViewOfficialAll.setVisibility(View.GONE);
+                recyclerViewOfficial.setVisibility(View.VISIBLE);
+                adapterReceiveVoucherOfficialTransverse.setNewData(bean.data.official_coupons);
+            }else {
+                recyclerViewOfficialAll.setVisibility(View.VISIBLE);
+                recyclerViewOfficial.setVisibility(View.GONE);
+                official.setNewData(bean.data.official_coupons);
+            }
+        }else {
+            linearLayout.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void getReceiveOfficial(boolean is_grant) {
+        if (isAll){
+            adapterReceiveVoucherOfficialTransverse.getData().get(officialPosition).is_grant = is_grant;
+            adapterReceiveVoucherOfficialTransverse.notifyDataSetChanged();
+        }else {
+            official.getData().get(officialPosition).is_grant = is_grant;
+            official.notifyDataSetChanged();
+        }
     }
 
     @Override

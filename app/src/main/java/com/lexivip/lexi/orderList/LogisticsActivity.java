@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.tools.ToastUtil;
 import com.basemodule.tools.Util;
 import com.basemodule.tools.WaitingDialog;
@@ -29,7 +30,8 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
     private TextView tv_freight_type;
     private TextView tv_state;
     private WaitingDialog dialog;
-    private LogisticsPresenter presenter=new LogisticsPresenter(this);
+    private LogisticsPresenter presenter = new LogisticsPresenter(this);
+    private String express_name;
 
     @Override
     protected int getLayout() {
@@ -39,16 +41,20 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
     @Override
     public void initView() {
         super.initView();
-        Intent intent=getIntent();
+        Intent intent = getIntent();
         logistic_code = intent.getStringExtra("logistic_code");
-        String kdn_company_code=intent.getStringExtra("kdn_company_code");
-        String order_rid=intent.getStringExtra("order_rid");
+        LogUtil.e("logistic_code：" + logistic_code);
+        String kdn_company_code = intent.getStringExtra("kdn_company_code");
+        LogUtil.e("kdn_company_code：" + kdn_company_code);
+        String order_rid = intent.getStringExtra("order_rid");
+        String express_name= intent.getStringExtra("express_name");
+        LogUtil.e("order_rid：" + order_rid);
         dialog = new WaitingDialog(this);
 
-        CustomHeadView customHeadView=findViewById(R.id.customHeadView);
+        CustomHeadView customHeadView = findViewById(R.id.customHeadView);
         customHeadView.setBackgroundColor(Util.getColor(R.color.color_2d343a));
         customHeadView.setLeftImageButton(R.mipmap.icon_return_white);
-        customHeadView.setHeadCenterTxtShow(true,R.string.order_logistics,R.color.color_white);
+        customHeadView.setHeadCenterTxtShow(true, R.string.order_logistics, R.color.color_white);
         clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         recyclerView = findViewById(R.id.recyclerView);
         ll_null = findViewById(R.id.ll_null);
@@ -56,9 +62,10 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         tv_code = findViewById(R.id.tv_code);
         tv_freight_type = findViewById(R.id.tv_freight_type);
+        tv_freight_type.setText(express_name);
         tv_state = findViewById(R.id.tv_state);
 
-        presenter.getData(logistic_code,kdn_company_code,order_rid);
+        presenter.getData(logistic_code, kdn_company_code, order_rid);
     }
 
     @Override
@@ -96,8 +103,7 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
         ll_null.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
         tv_code.setText(bean.getLogisticCode());
-        tv_freight_type.setText(bean.getShipperCode());
-        switch (bean.getState()){
+        switch (bean.getState()) {
             case "2":
                 tv_state.setText("运送中");
                 break;
@@ -107,9 +113,12 @@ public class LogisticsActivity extends BaseActivity implements LogisticsContract
             case "4":
                 tv_state.setText("问题件");
                 break;
+            default:
+                tv_state.setText("配送中");
+                break;
         }
         Collections.reverse(bean.getTraces());
-        AdapterLogistics adapterLogistics=new AdapterLogistics(R.layout.item_logistics,bean.getTraces(),bean.getTraces().size(),this);
+        AdapterLogistics adapterLogistics = new AdapterLogistics(R.layout.item_logistics, bean.getTraces(), bean.getTraces().size(), this);
         recyclerView.setAdapter(adapterLogistics);
     }
 

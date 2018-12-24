@@ -98,7 +98,7 @@ class SettingActivity : BaseActivity(), SettingContract.View, View.OnClickListen
                 startActivity(intent)
             }
             R.id.customItemLayout6 -> { //拨打客服电话
-                val phoneNumber = "400-8459-9328"
+                val phoneNumber = "18511730665"
                 val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                 startActivity(intent)
 

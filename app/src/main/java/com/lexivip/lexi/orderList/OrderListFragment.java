@@ -120,6 +120,12 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                     case R.id.bt_logistics:
                         //todo 物流跟踪
                         LogUtil.e("物流订单啊啊啊啊啊啊啊");
+                        intent = new Intent(getActivity(),LogisticsActivity.class);
+                        intent.putExtra("logistic_code",String.valueOf(adapterOrderList.getItem(position).getItems().get(0).getExpress_no()));
+                        intent.putExtra("kdn_company_code",String.valueOf(adapterOrderList.getItem(position).getItems().get(0).getExpress_code()));
+                        intent.putExtra("order_rid",adapterOrderList.getItem(position).getRid());
+                        intent.putExtra("express_name",adapterOrderList.getItem(position).getItems().get(0).getExpress_name());
+                        startActivity(intent);
                         break;
                 }
             }
@@ -237,7 +243,11 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
 
     @Override
     public void getFinish() {
-        adapterOrderList.getData().get(positions).setUser_order_status(5);
+        if (status==2){
+            adapterOrderList.remove(positions);
+        }else {
+            adapterOrderList.getData().get(positions).setUser_order_status(5);
+        }
         adapterOrderList.notifyDataSetChanged();
     }
 

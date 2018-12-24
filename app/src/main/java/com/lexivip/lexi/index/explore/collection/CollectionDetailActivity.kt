@@ -11,7 +11,9 @@ import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
+import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.search.AdapterSearchGoods
+import com.lexivip.lexi.shareUtil.ShareUtil
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -32,6 +34,8 @@ class CollectionDetailActivity : BaseActivity(), CollectionDetailContract.View {
 
     private lateinit var headerView: View
     private lateinit var collectionId: String
+    private lateinit var imageUrl:String
+    private lateinit var title:String
 
     override fun getIntentData() {
         collectionId = intent.getStringExtra(TAG)
@@ -39,6 +43,8 @@ class CollectionDetailActivity : BaseActivity(), CollectionDetailContract.View {
 
     override fun initView() {
         customHeadView.setHeadCenterTxtShow(true, R.string.title_collection)
+        customHeadView.setHeadShopShow(true)
+        customHeadView.shopImg.setImageResource(R.mipmap.icon_share_44px)
         swipeRefreshLayout.setColorSchemeColors(Util.getColor(R.color.color_6ed7af))
         val gridLayoutManager = GridLayoutManager(AppApplication.getContext(), 2)
         gridLayoutManager.orientation = GridLayoutManager.VERTICAL
@@ -67,6 +73,11 @@ class CollectionDetailActivity : BaseActivity(), CollectionDetailContract.View {
     }
 
     override fun installListener() {
+        customHeadView.headRightShop.setOnClickListener{
+            val share=ShareUtil(this)
+            share.shareCollection(WebUrl.COLLECTION+collectionId,WebUrl.AUTH_GATHER,imageUrl,title,"")
+        }
+
         swipeRefreshLayout.setOnRefreshListener {
             swipeRefreshLayout.isRefreshing = true
             adapter.setEnableLoadMore(false)
@@ -108,6 +119,8 @@ class CollectionDetailActivity : BaseActivity(), CollectionDetailContract.View {
     override fun setNewData(data: CollectionDetailBean.DataBean) {
         swipeRefreshLayout.isRefreshing = false
         adapter.setNewData(formatData(data.products))
+        imageUrl=data.cover
+        title=data.name
         GlideUtil.loadImageWithDimenAndRadius(data.cover, headerView.imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(192.0),ImageSizeConfig.SIZE_P500)
         headerView.textViewHeadTitle.text = data.name
         headerView.textViewNum.text = "${data.count}件商品"

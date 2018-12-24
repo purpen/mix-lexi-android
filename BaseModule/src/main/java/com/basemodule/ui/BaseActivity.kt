@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.basemodule.tools.AppManager
 import com.basemodule.tools.LogUtil
+import com.umeng.analytics.MobclickAgent
 import com.umeng.message.PushAgent
 
 /**
@@ -51,11 +52,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        MobclickAgent.onPause(this)
     }
 
     override fun onResume() {
         super.onResume()
-
+        MobclickAgent.onResume(this)
     }
 
     override fun onDestroy() {

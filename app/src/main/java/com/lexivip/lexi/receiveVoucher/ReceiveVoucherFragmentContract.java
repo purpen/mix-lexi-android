@@ -16,10 +16,14 @@ public class ReceiveVoucherFragmentContract {
         void loadMoreEnd();
         void loadMoreComplete();
         void getReceive(boolean isReceive);
+        void getOfficial(VoucherOfficialBean bean);
+        void getReceiveOfficial(boolean is_grant);
     }
     interface Presenter extends BasePresenter{
         void loadBrand(String store_category, String page);
         void loadGoods(String store_category, String rid,String page);
         void receiveVoucher(String rid,String store_rid);
+        void loadOfficial(String category_id);
+        void receiveOfficial(String rid);
     }
 }

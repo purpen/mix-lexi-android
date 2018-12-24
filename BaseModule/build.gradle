@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.umeng.sdk:push:4.2.0'
+    api 'com.umeng.umsdk:analytics:7.5.4'
 }
 repositories {
     mavenCentral()

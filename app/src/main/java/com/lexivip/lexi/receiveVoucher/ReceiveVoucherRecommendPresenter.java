@@ -22,8 +22,8 @@ public class ReceiveVoucherRecommendPresenter implements ReceiveVoucherRecommend
     }
 
     @Override
-    public void loadBrand(String store_category, String page) {
-        model.loadBrandRecommend(store_category, page, new IDataSource.HttpRequestCallBack() {
+    public void loadBrand(String store_category) {
+        model.loadBrandRecommend(store_category, new IDataSource.HttpRequestCallBack() {
             @Override
             public void onSuccess(@NotNull Bitmap json) {
 
@@ -39,6 +39,7 @@ public class ReceiveVoucherRecommendPresenter implements ReceiveVoucherRecommend
                 LogUtil.e("共享券："+json);
                 VoucherBrandBean bean=JsonUtil.fromJson(json,VoucherBrandBean.class);
                 if (bean.success){
+                    LogUtil.e("品牌券的废了："+json);
                     view.getBrand(bean);
                     view.dismissLoadingView();
                 }else {

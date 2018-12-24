@@ -604,9 +604,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View , EasyP
         if (EasyPermissions.hasPermissions(this, *perms)) {
             val shareUtil=ShareUtil(this)
             if(isGoods){
-                shareUtil.shareNoImage(WebUrl.GRASS+rid,WebUrl.AUTH_ARTICLE+rid,cover,title,"")
+                shareUtil.shareArticle(WebUrl.GRASS+rid,WebUrl.AUTH_ARTICLE+rid,cover,title,"")
             }else{
-                shareUtil.shareNoImage(WebUrl.GRASS+rid,WebUrl.AUTH_ARTICLE_GOODS+rid,cover,title,"")
+                shareUtil.shareArticle(WebUrl.GRASS+rid,WebUrl.AUTH_ARTICLE_GOODS+rid,cover,title,"")
             }
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)

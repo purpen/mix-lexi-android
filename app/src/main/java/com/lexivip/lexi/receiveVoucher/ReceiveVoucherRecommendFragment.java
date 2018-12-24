@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lexivip.lexi.MainActivity;
 import com.lexivip.lexi.PageUtil;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.address.ForeignBean;
 import com.lexivip.lexi.brandHouse.BrandHouseActivity;
 import com.lexivip.lexi.user.login.LoginActivity;
 import com.lexivip.lexi.user.login.UserProfileUtil;
@@ -42,6 +43,11 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
     private RecyclerView recyclerViewGoods;
     private View handerGoods;
     private LinearLayout linearLayout;
+    private AdapterReceiveVoucherOfficialType voucherOfficialType;
+    private ImageView iv_line;
+    private List<VoucherOfficialBean.DataBean.OfficialCouponsBean> list1;
+    private List<VoucherOfficialBean.DataBean.OfficialCouponsBean> list2;
+    private boolean isAll;
 
     @Override
     protected int getLayout() {
@@ -64,15 +70,22 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
         linearLayout = hander.findViewById(R.id.linearLayout);
         RecyclerView recyclerViewOfficial=hander.findViewById(R.id.recyclerViewOfficial);
         RecyclerView recyclerViewBrand=handerBrand.findViewById(R.id.recyclerViewBrand);
+        RecyclerView recyclerViewOfficialAll=hander.findViewById(R.id.recyclerViewOfficialAll);
         ImageView imageView=handerImage.findViewById(R.id.imageView);
         recyclerViewGoods = getView().findViewById(R.id.recyclerViewGoods);
         list = new ArrayList<>();
         voucherBrand = new AdapterReceiveVoucherBrand(list,getActivity());
         voucherGoods = new AdapterReceiveVoucherGoods(R.layout.adapter_voucher_goods,null);
         voucherOfficial = new AdapterReceiveVoucherOfficial(R.layout.adapter_voucher_official,null);
+        voucherOfficialType = new AdapterReceiveVoucherOfficialType(R.layout.adapter_voucher_official_type);
+        iv_line = hander.findViewById(R.id.iv_line);
         LinearLayoutManager manager=new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        LinearLayoutManager manager1=new LinearLayoutManager(getContext());
+        manager1.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerViewOfficial.setLayoutManager(manager);
+        recyclerViewOfficialAll.setLayoutManager(manager1);
+        recyclerViewOfficialAll.setAdapter(voucherOfficialType);
         recyclerViewOfficial.setAdapter(voucherOfficial);
         recyclerViewGoods.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerViewGoods.setAdapter(voucherGoods);
@@ -89,7 +102,7 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
             }
         });
         recyclerViewBrand.setAdapter(voucherBrand);
-        presenter.loadBrand("0",String.valueOf(page));
+        presenter.loadBrand("0");
         presenter.loadGoods("0",UserProfileUtil.getUserId(),String.valueOf(page));
         presenter.loadOfficial();
         //presenter.loadImage();
@@ -108,11 +121,30 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 officialPosition = position;
+                isAll=false;
                 if (UserProfileUtil.isLogin()) {
                     if (voucherOfficial.getData().get(position).is_grant){
                             if (0!=voucherOfficial.getData().get(position).surplus_count){
                                 startActivity(new Intent(getActivity(),MainActivity.class));
                             }
+                    }else {
+                        presenter.receiveOfficial(voucherOfficial.getData().get(position).code);
+                    }
+                }else {
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                }
+            }
+        });
+        voucherOfficialType.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                officialPosition = position;
+                isAll=true;
+                if (UserProfileUtil.isLogin()) {
+                    if (voucherOfficial.getData().get(position).is_grant){
+                        if (0!=voucherOfficial.getData().get(position).surplus_count){
+                            startActivity(new Intent(getActivity(),MainActivity.class));
+                        }
                     }else {
                         presenter.receiveOfficial(voucherOfficial.getData().get(position).code);
                     }
@@ -177,9 +209,20 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
 
     @Override
     public void getOfficial(VoucherOfficialBean bean) {
+        list1 = new ArrayList<>();
+        list2 = new ArrayList();
         if (!bean.data.official_coupons.isEmpty()){
             linearLayout.setVisibility(View.VISIBLE);
-            voucherOfficial.setNewData(bean.data.official_coupons);
+            //voucherOfficial.setNewData(bean.data.official_coupons);
+            for (VoucherOfficialBean.DataBean.OfficialCouponsBean beans :bean.data.official_coupons){
+                if ("全平台通用".equals(beans.category_name)){
+                    list1.add(beans);
+                }else {
+                    list2.add(beans);
+                }
+            }
+            voucherOfficialType.setNewData(list1);
+            voucherOfficial.setNewData(list2);
         }
 
     }
@@ -217,9 +260,15 @@ public class ReceiveVoucherRecommendFragment extends BaseFragment implements Rec
 
     @Override
     public void getReceiveOfficial(boolean is_grant) {
-        voucherOfficial.getData().get(officialPosition).is_grant=is_grant;
-        LogUtil.e("是否："+voucherOfficial.getData().get(officialPosition).is_grant);
-        voucherOfficial.notifyDataSetChanged();
+        if (isAll){
+            voucherOfficialType.getData().get(officialPosition).is_grant = is_grant;
+            LogUtil.e("是否：" + voucherOfficial.getData().get(officialPosition).is_grant);
+            voucherOfficialType.notifyDataSetChanged();
+        }else {
+            voucherOfficial.getData().get(officialPosition).is_grant = is_grant;
+            LogUtil.e("是否：" + voucherOfficial.getData().get(officialPosition).is_grant);
+            voucherOfficial.notifyDataSetChanged();
+        }
     }
 
     @Override

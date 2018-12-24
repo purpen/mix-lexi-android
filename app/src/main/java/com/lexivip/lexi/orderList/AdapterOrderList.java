@@ -165,7 +165,8 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
                     case R.id.bt_logistics:
                         intent = new Intent(activity,LogisticsActivity.class);
                         intent.putExtra("logistic_code",String.valueOf(item.getItems().get(position).getExpress_no()));
-                        intent.putExtra("kdn_company_code",String.valueOf(item.getItems().get(position).getExpress()));
+                        intent.putExtra("kdn_company_code",String.valueOf(item.getItems().get(position).getExpress_code()));
+                        intent.putExtra("express_name",item.getItems().get(position).getExpress_name());
                         intent.putExtra("order_rid",item.getRid());
                         activity.startActivity(intent);
                         break;
