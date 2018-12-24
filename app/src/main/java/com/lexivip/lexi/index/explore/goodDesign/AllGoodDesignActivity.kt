@@ -15,6 +15,7 @@ import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
 import com.lexivip.lexi.beans.UserBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
+import com.lexivip.lexi.index.lifehouse.LookPeopleBean
 import com.lexivip.lexi.index.selection.HeadImageAdapter
 import com.lexivip.lexi.search.AdapterSearchGoods
 import com.yanyusong.y_divideritemdecoration.Y_Divider
@@ -74,18 +75,15 @@ class AllGoodDesignActivity : BaseActivity(), AllGoodDesignContract.View {
     /**
      * 设置看过的用户信息
      */
-    override fun setLookPeopleData(users: List<UserBean>) {
-        val count = users.size
-
-        if (count == 0) return
-        if (count < 999) {
-            headerView.textViewHeaders.text = "$count"
+    override fun setLookPeopleData(data: LookPeopleBean.DataBean) {
+        if (data.count < 999) {
+            headerView.textViewHeaders.text = "${data.count}"
         } else {
             headerView.textViewHeaders.textViewHeaders.text = "+999"
         }
 
         val urlList = ArrayList<String>()
-        for (item in users) {
+        for (item in data.users) {
             urlList.add(item.avatar)
         }
 
