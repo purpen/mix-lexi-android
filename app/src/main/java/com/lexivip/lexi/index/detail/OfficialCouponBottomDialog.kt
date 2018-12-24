@@ -11,8 +11,10 @@ import com.basemodule.tools.Util
 import com.basemodule.ui.IDataSource
 import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.DividerItemDecoration
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CouponBean
+import com.lexivip.lexi.user.login.UserProfileUtil
 import com.smart.dialog.widget.base.BottomBaseDialog
 import kotlinx.android.synthetic.main.dialog_coupon_bottom.view.*
 import kotlinx.android.synthetic.main.header_coupon_bottom_dialog.view.*
@@ -98,17 +100,22 @@ class OfficialCouponBottomDialog(context: Context?) : BottomBaseDialog<OfficialC
 
         //领取官方券
         adapterDialogCoupon.setOnItemClickListener { _, _, position ->
-            val couponBean = adapterDialogCoupon.getItem(position) ?: return@setOnItemClickListener
-            if (present == null) return@setOnItemClickListener
-            present!!.clickGetOfficialCoupon(couponBean.code, object : IDataSource.HttpRequestCallBack {
-                override fun onSuccess(json: String) {
-                    couponBean.status = 1
-                    adapterDialogCoupon.notifyDataSetChanged()
-                }
+            if (UserProfileUtil.isLogin()){
+                val couponBean = adapterDialogCoupon.getItem(position)
+                        ?: return@setOnItemClickListener
+                if (present == null) return@setOnItemClickListener
+                present!!.clickGetOfficialCoupon(couponBean.code, object : IDataSource.HttpRequestCallBack {
+                    override fun onSuccess(json: String) {
+                        couponBean.is_grant = true
+                        adapterDialogCoupon.notifyDataSetChanged()
+                    }
 
-                override fun onFailure(e: IOException) {
-                }
-            })
+                    override fun onFailure(e: IOException) {
+                    }
+                })
+            }else{
+                PageUtil.jump2LoginActivity()
+            }
         }
     }
 }

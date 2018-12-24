@@ -51,7 +51,11 @@ public class CouponBean implements Parcelable {
     public boolean is_used;
     public String category_name;
     public int category_id;
+    public boolean is_grant;
     public CouponBean coupon;
+
+    public CouponBean() {
+    }
 
     @Override
     public int describeContents() {
@@ -87,10 +91,8 @@ public class CouponBean implements Parcelable {
         dest.writeByte(this.is_used ? (byte) 1 : (byte) 0);
         dest.writeString(this.category_name);
         dest.writeInt(this.category_id);
+        dest.writeByte(this.is_grant ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.coupon, flags);
-    }
-
-    public CouponBean() {
     }
 
     protected CouponBean(Parcel in) {
@@ -121,10 +123,11 @@ public class CouponBean implements Parcelable {
         this.is_used = in.readByte() != 0;
         this.category_name = in.readString();
         this.category_id = in.readInt();
+        this.is_grant = in.readByte() != 0;
         this.coupon = in.readParcelable(CouponBean.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<CouponBean> CREATOR = new Parcelable.Creator<CouponBean>() {
+    public static final Creator<CouponBean> CREATOR = new Creator<CouponBean>() {
         @Override
         public CouponBean createFromParcel(Parcel source) {
             return new CouponBean(source);

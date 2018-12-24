@@ -53,6 +53,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
 
     //官方券最大面额
     private var maxOfficialCouponPrice: Int = 0
+    private var maxOfficialCouponCode: String = ""
 
     //店铺券最大面额总和
     private var sumMaxShopCouponPrice: Int = 0
@@ -191,6 +192,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             //设置为官方优惠券
             headerView.textViewCouponPrice.text = "-￥${createOrderBean.officialCouponPrice}"
             footerView.textViewOfficialCoupon.text = "已抵￥${createOrderBean.officialCouponPrice}"
+
             footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
         }
 
@@ -361,6 +363,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             }
             createOrderBean.shopCouponTotalPrice = sumMaxShopCouponPrice
             createOrderBean.officialCouponPrice = 0
+            createOrderBean.officialCouponCode = ""
             headerView.textViewCouponPrice.text = "-￥${createOrderBean.shopCouponTotalPrice}"
         } else { //使用乐喜优惠券
             createOrderBean.officialCouponCanSelected = true
@@ -372,6 +375,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             }
             createOrderBean.shopCouponTotalPrice = 0
             createOrderBean.officialCouponPrice = maxOfficialCouponPrice
+            createOrderBean.officialCouponCode = maxOfficialCouponCode
             footerView.textViewOfficialCoupon.text = "已抵￥${createOrderBean.officialCouponPrice}"
             footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
             headerView.textViewCouponPrice.text = "-￥${createOrderBean.officialCouponPrice}"
@@ -610,6 +614,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         } else {
             coupons[0].selected = true
             maxOfficialCouponPrice = coupons[0].amount
+            maxOfficialCouponCode = coupons[0].code
         }
         officialCoupons = coupons
         setAllCouponSelectedState()

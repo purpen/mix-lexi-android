@@ -998,6 +998,11 @@ object URL {
     const val GOODS_DETAIL_OFFICIAL_COUPONS = "${BASE_URL}market/official_coupons"
 
     /**
+     * 商品详情登录时
+     */
+    const val GOODS_DETAIL_OFFICIAL_COUPONS_LOGIN = "${BASE_URL}market/official_coupons/recommend"
+
+    /**
      * 领取官方优惠券
      */
     const val CLICK_GET_OFFICIAL_COUPON = "${BASE_URL}market/official_coupons/grant"

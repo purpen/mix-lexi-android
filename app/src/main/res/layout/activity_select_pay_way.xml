@@ -20,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp9"
             android:layout_marginStart="47dp"
+            android:layout_marginBottom="@dimen/dp9"
             android:includeFontPadding="false"
             android:text="@string/text_delivery_send"
             android:textColor="@color/color_6ed7af"
@@ -45,10 +45,10 @@
             android:id="@+id/textViewPay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="@dimen/dp9"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="47dp"
+            android:layout_marginBottom="@dimen/dp9"
             android:includeFontPadding="false"
             android:text="@string/text_pay"
             android:textColor="@color/color_6ed7af"
@@ -75,8 +75,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp2"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/line0"
             android:layout_toStartOf="@+id/line2"
+            android:layout_toEndOf="@+id/line0"
             android:background="@color/color_6ed7af" />
 
         <View
@@ -105,405 +105,427 @@
         <View
             android:layout_width="8dp"
             android:layout_height="8dp"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginEnd="56dp"
             android:background="@drawable/bg__oval_colorfff_stroke_6ed7af" />
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayoutPayInfo"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/relativeLayoutLine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp13"
-        android:background="@android:color/white"
-        android:paddingBottom="20dp"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp"
-        android:paddingTop="20dp"
-        >
+        android:layout_above="@id/linearLayoutConfirmOrder">
 
-        <TextView
-            android:id="@+id/textViewSubtotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:text="@string/text_subtotal"
-            android:textColor="@color/color_9099a6"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/textViewSubtotalPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:drawablePadding="5dp"
-            android:drawableStart="@mipmap/icon_price_unit"
-            android:includeFontPadding="false"
-            android:text="0"
-            android:textColor="@color/color_333"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/textViewDelivery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewSubtotal"
-            android:layout_marginTop="13dp"
-            android:includeFontPadding="false"
-            android:text="@string/text_delivery"
-            android:textColor="@color/color_9099a6"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/textViewDeliveryPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/textViewDelivery"
-            android:includeFontPadding="false"
-            android:text="@string/text_loading"
-            android:textColor="@color/color_c2a67d"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/textViewFirstOrderDiscount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewDelivery"
-            android:layout_marginTop="13dp"
-            android:includeFontPadding="false"
-            android:text="@string/text_first_order_discount"
-            android:textColor="@color/color_9099a6"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/textViewFirstOrderDiscountPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/textViewFirstOrderDiscount"
-            android:includeFontPadding="false"
-            android:text="@string/text_loading"
-            android:textColor="@color/color_9099a6"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/textViewFullReduce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewFirstOrderDiscount"
-            android:layout_marginTop="13dp"
-            android:includeFontPadding="false"
-            android:text="@string/text_full_reduce"
-            android:textColor="@color/color_9099a6"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/textViewFullReducePrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/textViewFullReduce"
-            android:includeFontPadding="false"
-            android:text="@string/text_loading"
-            android:textColor="@color/color_9099a6"
-            android:textSize="12sp" />
-
-        <!--优惠券-->
-        <TextView
-            android:id="@+id/textViewCoupon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewFullReduce"
-            android:layout_marginTop="13dp"
-            android:includeFontPadding="false"
-            android:text="@string/text_coupon"
-            android:textColor="@color/color_9099a6"
-            android:textSize="12sp" />
-
-        <TextView
-            android:id="@+id/textViewCouponPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/textViewCoupon"
-            android:includeFontPadding="false"
-            android:text="未使用"
-            android:textColor="@color/color_9099a6"
-            android:textSize="12sp"
-            />
-
-        <!--订单总计-->
-        <TextView
-            android:id="@+id/textViewTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewCoupon"
-            android:layout_marginTop="13dp"
-            android:includeFontPadding="false"
-            android:text="@string/text_order_total"
-            android:textStyle="bold"
-            android:textColor="@color/color_333"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/textViewTotalPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:includeFontPadding="false"
-            android:drawableStart="@mipmap/icon_price_unit_ff6666"
-            android:layout_alignBottom="@+id/textViewTotal"
-            android:text="0"
-            android:textColor="@color/color_ff6666"
-            android:textSize="17sp" />
-    </RelativeLayout>
-
-    <include layout="@layout/line_color_eee" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayoutPayInfo"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/white"
-        android:orientation="vertical"
-        android:paddingTop="19dp">
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:paddingEnd="0dp"
-            android:paddingStart="15dp"
-            android:text="@string/text_select_pay_way"
-            android:textColor="@color/color_333"
-            android:textSize="13sp" />
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
 
-        <!--微信支付-->
-        <RelativeLayout
-            android:id="@+id/relativeLayoutWeChatPay"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@android:color/white">
-
-            <View
+            <RelativeLayout
+                android:id="@+id/relativeLayoutPayInfo"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
-                android:background="@color/color_e9e9e9" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp13"
+                android:background="@android:color/white"
+                android:paddingStart="15dp"
+                android:paddingTop="20dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/textViewSubtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_subtotal"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewSubtotalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:drawableStart="@mipmap/icon_price_unit"
+                    android:drawablePadding="5dp"
+                    android:includeFontPadding="false"
+                    android:text="0"
+                    android:textColor="@color/color_333"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textViewDelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewSubtotal"
+                    android:layout_marginTop="13dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_delivery"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewDeliveryPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textViewDelivery"
+                    android:layout_alignParentEnd="true"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_loading"
+                    android:textColor="@color/color_c2a67d"
+                    android:textSize="12sp" />
+
+                <!--首单满减-->
+
+                <TextView
+                    android:id="@+id/textViewFirstOrderDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewDelivery"
+                    android:layout_marginTop="13dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_first_order_discount"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewFirstOrderDiscountPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textViewFirstOrderDiscount"
+                    android:layout_alignParentEnd="true"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_loading"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    />
+
+                <!--满减-->
+                <TextView
+                    android:id="@+id/textViewFullReduce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewFirstOrderDiscount"
+                    android:layout_marginTop="13dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_full_reduce"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewFullReducePrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textViewFullReduce"
+                    android:layout_alignParentEnd="true"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_loading"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    />
+
+                <!--优惠券-->
+                <TextView
+                    android:id="@+id/textViewCoupon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewFullReduce"
+                    android:layout_marginTop="13dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_coupon"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textViewCouponPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textViewCoupon"
+                    android:layout_alignParentEnd="true"
+                    android:includeFontPadding="false"
+                    android:text="未使用"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="12sp" />
+
+                <!--订单总计-->
+                <TextView
+                    android:id="@+id/textViewTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewCoupon"
+                    android:layout_marginTop="13dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_order_total"
+                    android:textColor="@color/color_333"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewTotalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/textViewTotal"
+                    android:layout_alignParentEnd="true"
+                    android:drawableStart="@mipmap/icon_price_unit_ff6666"
+                    android:includeFontPadding="false"
+                    android:text="0"
+                    android:textColor="@color/color_ff6666"
+                    android:textSize="17sp" />
+            </RelativeLayout>
+
+            <include layout="@layout/line_color_eee" />
 
             <LinearLayout
-                android:id="@+id/linearLayoutWeChatPay"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/border_radius4_ddd"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/imageViewWeChatPay"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@mipmap/icon_wechat_pay" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textViewWechatName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="14dp"
-                android:layout_toEndOf="@+id/linearLayoutWeChatPay"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/text_wechat_pay"
-                android:textColor="@color/color_333"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textViewWechatDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textViewWechatName"
-                android:layout_below="@+id/textViewWechatName"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp5"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/text_wechat_pay_desc"
-                android:textColor="@color/color_999"
-                android:textSize="11sp" />
-
-            <CheckBox
-                android:id="@+id/checkBoxWechat"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="15dp"
-                android:background="@null"
-                android:button="@drawable/check_box_style"
-                android:checked="true"
-                android:clickable="false" />
-
-            <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
-                android:layout_alignParentBottom="true"
-                android:background="@color/color_e9e9e9" />
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayoutPayInfo"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:paddingTop="19dp">
 
-        <!--支付宝支付-->
-        <RelativeLayout
-            android:id="@+id/relativeLayoutAliPay"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@android:color/white">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="0dp"
+                    android:text="@string/text_select_pay_way"
+                    android:textColor="@color/color_333"
+                    android:textSize="13sp" />
 
-            <LinearLayout
-                android:id="@+id/linearLayoutAliPay"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/border_radius4_ddd"
-                android:gravity="center">
+                <!--微信支付-->
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutWeChatPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@android:color/white">
 
-                <ImageView
-                    android:id="@+id/imageViewAliPay"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@mipmap/icon_alipay" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp1"
+                        android:background="@color/color_e9e9e9" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutWeChatPay"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:background="@drawable/border_radius4_ddd"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageViewWeChatPay"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@mipmap/icon_wechat_pay" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewWechatName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp15"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="@dimen/dp15"
+                        android:layout_toEndOf="@+id/linearLayoutWeChatPay"
+                        android:ellipsize="end"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@string/text_wechat_pay"
+                        android:textColor="@color/color_333"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewWechatDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewWechatName"
+                        android:layout_alignStart="@+id/textViewWechatName"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:layout_marginEnd="@dimen/dp15"
+                        android:ellipsize="end"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@string/text_wechat_pay_desc"
+                        android:textColor="@color/color_999"
+                        android:textSize="11sp" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxWechat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="15dp"
+                        android:background="@null"
+                        android:button="@drawable/check_box_style"
+                        android:checked="true"
+                        android:clickable="false" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp1"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/color_e9e9e9" />
+                </RelativeLayout>
+
+                <!--支付宝支付-->
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutAliPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@android:color/white">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutAliPay"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:background="@drawable/border_radius4_ddd"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageViewAliPay"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@mipmap/icon_alipay" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewAliPay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp15"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="@dimen/dp15"
+                        android:layout_toEndOf="@+id/linearLayoutAliPay"
+                        android:ellipsize="end"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@string/text_ali_pay"
+                        android:textColor="@color/color_333"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewAliDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewAliPay"
+                        android:layout_alignStart="@+id/textViewAliPay"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:layout_marginEnd="@dimen/dp15"
+                        android:ellipsize="end"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@string/text_alipay_desc"
+                        android:textColor="@color/color_999"
+                        android:textSize="11sp" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxAli"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="15dp"
+                        android:background="@null"
+                        android:button="@drawable/check_box_style"
+                        android:checked="false"
+                        android:clickable="false" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp1"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/color_e9e9e9" />
+                </RelativeLayout>
+
+                <!--蚂蚁花呗支付-->
+                <RelativeLayout
+                    android:id="@+id/relativeLayoutAntPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@android:color/white">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutAntPay"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:background="@drawable/border_radius4_ddd"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageViewAntPay"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@mipmap/icon_ant_pay" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textViewAntPay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp15"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="@dimen/dp15"
+                        android:layout_toEndOf="@+id/linearLayoutAntPay"
+                        android:ellipsize="end"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@string/text_ant_pay"
+                        android:textColor="@color/color_333"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewAntDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewAntPay"
+                        android:layout_alignStart="@+id/textViewAntPay"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:layout_marginEnd="@dimen/dp15"
+                        android:ellipsize="end"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@string/text_ant_pay_desc"
+                        android:textColor="@color/color_999"
+                        android:textSize="11sp" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxAnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="15dp"
+                        android:background="@null"
+                        android:button="@drawable/check_box_style"
+                        android:checked="false"
+                        android:clickable="false" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp1"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/color_e9e9e9" />
+                </RelativeLayout>
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/textViewAliPay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="14dp"
-                android:layout_toEndOf="@+id/linearLayoutAliPay"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/text_ali_pay"
-                android:textColor="@color/color_333"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textViewAliDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textViewAliPay"
-                android:layout_below="@+id/textViewAliPay"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp5"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/text_alipay_desc"
-                android:textColor="@color/color_999"
-                android:textSize="11sp" />
-
-            <CheckBox
-                android:id="@+id/checkBoxAli"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="15dp"
-                android:background="@null"
-                android:button="@drawable/check_box_style"
-                android:checked="false"
-                android:clickable="false" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
-                android:layout_alignParentBottom="true"
-                android:background="@color/color_e9e9e9" />
-        </RelativeLayout>
-
-        <!--蚂蚁花呗支付-->
-        <RelativeLayout
-            android:id="@+id/relativeLayoutAntPay"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@android:color/white">
-
-            <LinearLayout
-                android:id="@+id/linearLayoutAntPay"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:background="@drawable/border_radius4_ddd"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/imageViewAntPay"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@mipmap/icon_ant_pay" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textViewAntPay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginStart="@dimen/dp15"
-                android:layout_marginTop="14dp"
-                android:layout_toEndOf="@+id/linearLayoutAntPay"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/text_ant_pay"
-                android:textColor="@color/color_333"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textViewAntDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textViewAntPay"
-                android:layout_below="@+id/textViewAntPay"
-                android:layout_marginEnd="@dimen/dp15"
-                android:layout_marginTop="@dimen/dp5"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/text_ant_pay_desc"
-                android:textColor="@color/color_999"
-                android:textSize="11sp" />
-
-            <CheckBox
-                android:id="@+id/checkBoxAnt"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="15dp"
-                android:background="@null"
-                android:button="@drawable/check_box_style"
-                android:checked="false"
-                android:clickable="false" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp1"
-                android:layout_alignParentBottom="true"
-                android:background="@color/color_e9e9e9" />
-        </RelativeLayout>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <RelativeLayout
         android:id="@+id/linearLayoutConfirmOrder"
@@ -520,8 +542,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/dp15"
             android:layout_marginStart="@dimen/dp15"
+            android:layout_marginEnd="@dimen/dp15"
             android:background="@drawable/selector_5fe4b1_alpha50"
             android:text="@string/title_pay_now"
             android:textColor="@android:color/white"
