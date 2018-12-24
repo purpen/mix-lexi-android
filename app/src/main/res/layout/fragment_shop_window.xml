@@ -30,12 +30,12 @@
                     <RelativeLayout
                         android:id="@+id/relativeLayoutBox"
                         android:layout_width="match_parent"
-                        android:layout_height="255dp">
+                        android:layout_height="248dp">
 
                         <ImageView
                             android:id="@+id/imageViewBg"
                             android:layout_width="match_parent"
-                            android:layout_height="255dp" />
+                            android:layout_height="248dp" />
 
                         <TextView
                             android:id="@+id/textViewTitle"

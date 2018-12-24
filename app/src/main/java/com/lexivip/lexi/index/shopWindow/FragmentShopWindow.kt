@@ -27,7 +27,7 @@ class FragmentShopWindow : BaseFragment() {
     private val fragments: ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
     private var isFirstLoad = true
     override fun initView() {
-        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_shop_window, imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(255.0), ImageSizeConfig.DEFAULT)
+        GlideUtil.loadImageWithDimenAndRadius(R.mipmap.icon_bg_header_shop_window, imageViewBg, 0, ScreenUtil.getScreenWidth(), DimenUtil.dp2px(248.0), ImageSizeConfig.DEFAULT)
         appBarLayout.post {
             val behavior = (appBarLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior as AppBarLayout.Behavior
             behavior.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
