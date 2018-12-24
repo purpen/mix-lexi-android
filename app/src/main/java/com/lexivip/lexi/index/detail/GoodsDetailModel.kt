@@ -270,7 +270,7 @@ class GoodsDetailModel : IDataSource {
 
     //根据UI加载7位
     fun getFavoriteUsers(goodsId: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getFavoriteUsers(goodsId, "7")
+        val params = ClientParamsAPI.getFavoriteUsers(goodsId, "13")
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_FAVORITE_USERS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
