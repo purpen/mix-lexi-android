@@ -13,7 +13,6 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
-import com.lexivip.lexi.beans.UserBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.lifehouse.LookPeopleBean
 import com.lexivip.lexi.index.selection.HeadImageAdapter
