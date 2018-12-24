@@ -113,6 +113,7 @@ class GoodsDetailPresenter(view: GoodsDetailContract.View) : GoodsDetailContract
     fun getOfficialCouponsByStoreId(store_rid: String) {
         dataSource.getOfficialCouponsByStoreId(store_rid, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
+                LogUtil.e("getOfficialCouponsByStoreId==="+json)
                 val shopCouponListBean = JsonUtil.fromJson(json, OfficialCouponBean::class.java)
                 if (shopCouponListBean.success) {
                     if (shopCouponListBean.data != null) view.setOfficialCouponData(shopCouponListBean.data.official_coupons)

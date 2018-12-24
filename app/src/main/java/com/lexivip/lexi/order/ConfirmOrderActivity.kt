@@ -191,6 +191,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             //设置为官方优惠券
             headerView.textViewCouponPrice.text = "-￥${createOrderBean.officialCouponPrice}"
             footerView.textViewOfficialCoupon.text = "已抵￥${createOrderBean.officialCouponPrice}"
+
             footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
         }
 
@@ -610,6 +611,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
         } else {
             coupons[0].selected = true
             maxOfficialCouponPrice = coupons[0].amount
+            createOrderBean.officialCouponCode = coupons[0].code
         }
         officialCoupons = coupons
         setAllCouponSelectedState()

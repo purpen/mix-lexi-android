@@ -1,6 +1,7 @@
 package com.lexivip.lexi.pay
 
 import android.os.Handler
+import android.view.View
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
@@ -47,9 +48,23 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
             textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_333))
         }
 
-        textViewFirstOrderDiscountPrice.text = "-￥${createOrderBean.firstOrderDiscountPrice}"
+        if (createOrderBean.firstOrderDiscountPrice == 0.0) {//首单满减
+            textViewFirstOrderDiscountPrice.visibility = View.GONE
+            textViewFirstOrderDiscount.visibility = View.GONE
+        } else {
+            textViewFirstOrderDiscountPrice.visibility = View.VISIBLE
+            textViewFirstOrderDiscount.visibility = View.VISIBLE
+            textViewFirstOrderDiscountPrice.text = "-￥${createOrderBean.firstOrderDiscountPrice}"
+        }
 
-        textViewFullReducePrice.text = "-￥${createOrderBean.fullReductionTotalPrice}"
+        if (createOrderBean.fullReductionTotalPrice==0.0){ //满减
+            textViewFullReduce.visibility = View.GONE
+            textViewFullReducePrice.visibility = View.GONE
+        }else{
+            textViewFullReduce.visibility = View.VISIBLE
+            textViewFullReducePrice.visibility = View.VISIBLE
+            textViewFullReducePrice.text = "-￥${createOrderBean.fullReductionTotalPrice}"
+        }
 
         if (createOrderBean.notUsingOfficialCoupon) {
             textViewCouponPrice.text = "-￥${createOrderBean.shopCouponTotalPrice}"
@@ -104,6 +119,7 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
 
         customHeadView.setGoBackListener { showConfirmDialog() }
     }
+
     override fun dismissLoadingView() {
         dialog.dismiss()
     }

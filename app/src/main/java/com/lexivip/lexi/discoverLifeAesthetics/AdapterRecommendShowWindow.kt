@@ -1,7 +1,4 @@
 package com.lexivip.lexi.discoverLifeAesthetics
-
-import android.text.Spannable
-import android.text.SpannableString
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
