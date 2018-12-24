@@ -85,11 +85,18 @@ class GoodsDetailModel : IDataSource {
     }
 
     /**
-     *
+     *  获取官方优惠券
      */
     fun getOfficialCouponsByStoreId(store_rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getDefaultParams()
-        HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_DETAIL_OFFICIAL_COUPONS, params, object : IDataSource.HttpRequestCallBack {
+        val url:String
+        if (UserProfileUtil.isLogin()) {
+            url = URL.GOODS_DETAIL_OFFICIAL_COUPONS_LOGIN
+            params["rid"] = UserProfileUtil.getUserId()
+        } else {
+            url = URL.GOODS_DETAIL_OFFICIAL_COUPONS
+        }
+        HttpRequest.sendRequest(HttpRequest.GET, url, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
