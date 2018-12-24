@@ -236,6 +236,7 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
     fun getLifeHouse(isRefresh: Boolean) {
         dataSource.getLifeHouse(object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
+                LogUtil.e(json)
                 val lifeHouseBean = JsonUtil.fromJson(json, LifeHouseBean::class.java)
                 if (lifeHouseBean.success) {
                     view.setLifeHouseData(lifeHouseBean.data)
@@ -468,6 +469,36 @@ class LifeHousePresenter(view: LifeHouseContract.View) : LifeHouseContract.Prese
 
             override fun onFailure(e: IOException) {
                 view.dismissLoadingView()
+                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+            }
+        })
+    }
+
+    /**
+     * 改变开馆提示状态
+     */
+    fun changeNoticeStatus(storeId: String, close_status: Int) {
+        dataSource.changeNoticeStatus(storeId,object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                when(close_status){
+                    0->{
+                        view.setOpenStoreTipsStatus(1)
+                    }
+                    1->{
+                        view.setOpenStoreTipsStatus(2)
+                    }
+                }
+            }
+            override fun onSuccess(json: String) {
+                val netStatusBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
+                if (netStatusBean.success) {
+                    LogUtil.e("改变开馆提示成功")
+                } else {
+                    view.showInfo(netStatusBean.status.message)
+                }
+            }
+
+            override fun onFailure(e: IOException) {
                 view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })

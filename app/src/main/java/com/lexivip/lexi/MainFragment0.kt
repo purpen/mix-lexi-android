@@ -4,19 +4,16 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.support.v4.view.ViewPager
-import android.text.TextUtils
 import android.widget.FrameLayout
-import com.basemodule.tools.AppManager
-import com.basemodule.tools.Util
 import com.basemodule.ui.BaseFragment
 import com.basemodule.ui.CustomFragmentPagerAdapter
+import com.basemodule.ui.CustomViewPager
 import com.lexivip.lexi.eventBusMessge.MessageUpDown
 import com.lexivip.lexi.index.explore.FragmentExplore
 import com.lexivip.lexi.index.lifehouse.FragmentLifeHouse
 import com.lexivip.lexi.index.selection.FragmentSelection
 import com.lexivip.lexi.index.shopWindow.FragmentShopWindow
 import com.lexivip.lexi.search.SearchActivity
-import com.lexivip.lexi.user.login.UserProfileUtil
 import kotlinx.android.synthetic.main.fragment_main0.*
 import kotlinx.android.synthetic.main.view_head_search_box.*
 import org.greenrobot.eventbus.EventBus
@@ -59,37 +56,33 @@ class MainFragment0 : BaseFragment() {
         customViewPager.setPagingEnabled(false)
         slidingTabLayout.setViewPager(customViewPager)
 
-        val currentActivity = AppManager.getAppManager().getActivity(MainActivity::class.java) as MainActivity
+//        val currentActivity = AppManager.getAppManager().getActivity(MainActivity::class.java) as MainActivity
 
 //        LogUtil.e("currentActivity.switch2LifeHouseTab()"+currentActivity.switch2LifeHouseTab())
 
         slidingTabLayout.currentTab = 0
         slidingTabLayout.getTitleView(0).textSize = 19f
-//        if (!currentActivity.switch2LifeHouseTab()) {//不是刚开生活馆显示精选
-//            slidingTabLayout.currentTab = 0
-//            slidingTabLayout.getTitleView(0).textSize = 19f
-//        } else { //默认显示生活馆
-//            slidingTabLayout.currentTab = 1
-//            slidingTabLayout.getTitleView(1).textSize = 19f
-//        }
+    }
 
+    fun getViewPager():CustomViewPager{
+        return customViewPager
     }
 
     /**
      * 去掉生活馆界面
      */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun removeLifeHouseFragment(message: String) {
-        if (TextUtils.equals(FragmentLifeHouse::class.java.simpleName, message)) {
-            //移除fragment
-            childFragmentManager.beginTransaction().remove(fragmentLifeHouse).commit()
-            fragments.remove(fragmentLifeHouse)
-            listTitle.remove(Util.getString(R.string.text_life_pavilion))
-            adapter.notifyDataSetChanged()
-            slidingTabLayout.notifyDataSetChanged()
-        }
-
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun removeLifeHouseFragment(message: String) {
+//        if (TextUtils.equals(FragmentLifeHouse::class.java.simpleName, message)) {
+//            //移除fragment
+//            childFragmentManager.beginTransaction().remove(fragmentLifeHouse).commit()
+//            fragments.remove(fragmentLifeHouse)
+//            listTitle.remove(Util.getString(R.string.text_life_pavilion))
+//            adapter.notifyDataSetChanged()
+//            slidingTabLayout.notifyDataSetChanged()
+//        }
+//
+//    }
 
     override fun installListener() {
         relativeLayout.setOnClickListener {

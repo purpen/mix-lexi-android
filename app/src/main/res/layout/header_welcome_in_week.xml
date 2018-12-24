@@ -134,6 +134,7 @@
             android:layout_marginEnd="@dimen/dp15"
             android:layout_marginBottom="20dp"
             android:background="@drawable/corner_bg_f5f7f9"
+            android:visibility="gone"
             >
             <ImageView
                 android:id="@+id/imageViewPractice"
@@ -317,7 +318,6 @@
         android:id="@+id/recyclerViewSmallBRecommend"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:layout_marginStart="@dimen/dp15"
         android:layout_marginTop="20dp"
         android:overScrollMode="never"
         android:visibility="gone"

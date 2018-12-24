@@ -986,6 +986,21 @@ object URL {
      * 开馆头条背景图
      */
     const val OPEN_LIFE_HOUSE_BG_IMAGE = "${BASE_URL}banners/wxa_lifestore_bg"
+
+    /**
+     * 更改开馆提示语状态
+     */
+    const val OPEN_LIFE_HOUSE_HEADLINE_STATUS = "${BASE_URL}store/close_phases_description"
+
+    /**
+     * 获取商品详情官方券
+     */
+    const val GOODS_DETAIL_OFFICIAL_COUPONS = "${BASE_URL}market/official_coupons"
+
+    /**
+     * 领取官方优惠券
+     */
+    const val CLICK_GET_OFFICIAL_COUPON = "${BASE_URL}market/official_coupons/grant"
     /**
      * 提现实名认证
      */

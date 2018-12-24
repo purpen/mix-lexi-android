@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.empty_user_center.*
 import kotlinx.android.synthetic.main.fragment_user_favorite.*
 
 class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper.ScrollableContainer {
+
     private val dialog: WaitingDialog by lazy { WaitingDialog(AppManager.getAppManager().currentActivity()) }
 
     private val adapterLikeGoods: AdapterLikeGoods by lazy { AdapterLikeGoods(R.layout.adapter_pure_imageview) }
@@ -58,6 +59,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper
             fragment.arguments = bundle
             return fragment
         }
+        const val FROM_LIKE_GOODS = "FROM_LIKE_GOODS"
     }
 
     override fun initView() {
@@ -161,7 +163,7 @@ class FavoriteFragment : BaseFragment(), FavoriteContract.View, ScrollableHelper
 
         adapterLikeGoods.setOnItemClickListener { _, _, position ->
             val item = adapterLikeGoods.getItem(position) ?: return@setOnItemClickListener
-            PageUtil.jump2GoodsDetailActivity(item.rid)
+            PageUtil.jump2GoodsDetailActivity(item.rid,FROM_LIKE_GOODS)
         }
     }
 

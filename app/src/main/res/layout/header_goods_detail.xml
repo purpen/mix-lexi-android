@@ -172,16 +172,69 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayoutOfficialCoupon"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/dp15"
+        android:layout_marginEnd="@dimen/dp15"
+        android:background="@drawable/bg_colord4af86_radius4"
+        android:visibility="gone"
+        >
+        <TextView
+            android:id="@+id/textViewOfficial"
+            android:layout_width="36dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:includeFontPadding="false"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:background="@drawable/bg_colordab867_radius2"
+            android:text="@string/text_lx_coupon"
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            />
+
+        <TextView
+            android:id="@+id/textViewOfficialCoupon"
+            android:layout_toEndOf="@id/textViewOfficial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginBottom="@dimen/dp5"
+            android:layout_centerVertical="true"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:text="领取乐喜官方优惠券"
+            android:textColor="@color/color_555"
+            android:textSize="@dimen/sp12" />
+
+        <Button
+            android:id="@+id/buttonGetOfficialCoupon"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="@dimen/dp45"
+            android:layout_height="@dimen/dp26"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp10"
+            android:background="@drawable/bg_round_colordab867"
+            android:text="领取"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp12" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/relativeLayoutCoupon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp15"
         android:layout_marginEnd="@dimen/dp15"
-        android:layout_marginBottom="@dimen/dp15"
         android:background="@drawable/bg_colord4af86_radius4"
         android:paddingTop="@dimen/dp10"
         android:paddingBottom="@dimen/dp10"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <TextView
             android:id="@+id/textViewCoupon"
@@ -233,6 +286,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="@dimen/dp15"
         android:layout_marginEnd="@dimen/dp15"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="@dimen/dp15"
         android:background="@drawable/bg_coloref0f4f7_radius4"
         android:drawableEnd="@mipmap/icon_spec_size_arrow_down"

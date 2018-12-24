@@ -53,19 +53,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="93dp"
-        android:layout_alignTop="@+id/textViewValue"
+        android:layout_marginTop="11dp"
         android:includeFontPadding="false"
         android:text="满"
         android:textColor="@color/color_6ed7af"
         android:textSize="@dimen/sp13"
         />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutType"
+        android:layout_below="@+id/textViewContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="93dp"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:id="@+id/textViewOfficial"
+            android:layout_width="33dp"
+            android:layout_height="13dp"
+            android:includeFontPadding="false"
+            android:gravity="center"
+            android:background="@drawable/bg_colordab867_radius2"
+            android:text="@string/text_lx_coupon"
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            />
+
+        <TextView
+            android:id="@+id/textViewDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:layout_marginStart="5dp"
+            android:text="@string/text_can_user_for_all_goods"
+            android:textColor="@color/color_333"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/textViewTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewContent"
+        android:layout_below="@id/linearLayoutType"
         android:layout_alignStart="@+id/textViewContent"
-        android:layout_marginTop="@dimen/dp4"
         android:includeFontPadding="false"
         android:text="有效期"
         android:textColor="@color/color_666"

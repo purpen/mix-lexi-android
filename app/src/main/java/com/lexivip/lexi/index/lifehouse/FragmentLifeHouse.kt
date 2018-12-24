@@ -22,6 +22,7 @@ import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LayoutAnimationController
 import android.view.animation.TranslateAnimation
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
@@ -170,10 +171,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
             headerLifeHouse.recyclerViewSmallBRecommend.visibility = View.VISIBLE
             headerLifeHouse.linearLayoutSmallB.visibility = View.VISIBLE
         }
-
-        if (SPUtil.readBool(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE)) {
-            headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
-        }
     }
 
     /**
@@ -239,23 +236,27 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         GlideUtil.loadImageWithRadius(data.logo, headerLifeHouse.imageViewCover, DimenUtil.getDimensionPixelSize(R.dimen.dp4))
 
+        setOpenStoreTipsViewData(data.close_status)
+
         headerLifeHouse.textViewTitle.text = data.name
         headerLifeHouse.textViewDesc.text = data.description
 
-//        LogUtil.e("${data.phases};;;;" + data.phases_description)
+        headerLifeHouse.imageViewTipsClose.setOnClickListener {
+            //点击关闭提示改变提示状态
+            presenter.changeNoticeStatus(UserProfileUtil.storeId(), data.close_status)
+        }
+    }
 
+    /**
+     * 设置开馆提示数据
+     */
+    private fun setOpenStoreTipsViewData(status: Int) {
         val layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.leftMargin = DimenUtil.dp2px(13.0)
         layoutParams.rightMargin = DimenUtil.dp2px(13.0)
-        when (data.phases) {
-            1 -> {//实习馆主
-                headerLifeHouse.imageViewPractice.visibility = View.VISIBLE
-                layoutParams.topMargin = DimenUtil.dp2px(25.0)
-                headerLifeHouse.textViewContent.layoutParams = layoutParams
-                headerLifeHouse.textViewContent.text = "成功在30天内销售3笔订单即可成为正式的达人馆主哦，如一个月内未达标准生活馆将被关闭，如重新申请需单独联系乐喜辅导员申请。"
-            }
-
-            2 -> { //正式馆主
+        when (status) {
+            0 -> { //恭喜开馆成功
+                headerLifeHouse.relativeLayoutOpenTips.visibility = View.VISIBLE
                 headerLifeHouse.buttonCpyNum.visibility = View.VISIBLE
                 headerLifeHouse.textViewName.visibility = View.VISIBLE
                 headerLifeHouse.imageViewPractice.visibility = View.GONE
@@ -265,7 +266,29 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                 headerLifeHouse.textViewContent.layoutParams = layoutParams
                 headerLifeHouse.textViewContent.text = "如何快速成交订单获取攻略，请搜索关注乐喜官网公众号，添加乐喜辅导员微信，加入生活馆店主群。"
             }
+
+            1 -> {//实习馆主
+                headerLifeHouse.relativeLayoutOpenTips.visibility = View.VISIBLE
+                headerLifeHouse.imageViewPractice.visibility = View.VISIBLE
+                headerLifeHouse.buttonCpyNum.visibility = View.GONE
+                headerLifeHouse.textViewName.visibility = View.GONE
+                layoutParams.topMargin = DimenUtil.dp2px(25.0)
+                headerLifeHouse.textViewContent.layoutParams = layoutParams
+                headerLifeHouse.textViewContent.text = "成功在30天内销售3笔订单即可成为正式的达人馆主哦，如一个月内未达标准生活馆将被关闭，如重新申请需单独联系乐喜辅导员申请。"
+            }
+
+            2 -> {//不显示开馆提示信息
+                headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
+            }
         }
+    }
+
+
+    /**
+     * 设置开馆状态
+     */
+    override fun setOpenStoreTipsStatus(status: Int) {
+        setOpenStoreTipsViewData(status)
     }
 
     /**
@@ -280,8 +303,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         string.setSpan(boldSpan, 8, string.length - 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         string.setSpan(ForegroundColorSpan(Util.getColor(R.color.color_333)), 8, string.length - 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         headerLifeHouse.textViewLook.text = string
-
-
         headerLifeHouse.relativeLayoutHeaders.visibility = View.VISIBLE
 
 
@@ -377,13 +398,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
                     dialog.dismiss()
                 }
             }
-
-            R.id.imageViewTipsClose -> { //关闭提示
-                headerLifeHouse.relativeLayoutOpenTips.visibility = View.GONE
-                SPUtil.write(Constants.TIPS_LIFE_HOUSE_GRADE_CLOSE, true)
-            }
-
-
             R.id.textViewSelectGoodsCenter -> { //选品中心
                 startActivity(Intent(activity, SelectionGoodsCenterActivity::class.java))
             }
@@ -461,7 +475,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
         }
 
         headerLifeHouse.buttonOpenShop.setOnClickListener {
-            LogUtil.e("=================")
             //我要开馆
             if (UserProfileUtil.isLogin()) {
                 PageUtil.jump2OpenLifeHouseActivity("https://h5.lexivip.com/shop/guide", R.string.title_open_life_house)
@@ -475,7 +488,6 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
         headerLifeHouse.imageViewCover.setOnClickListener(this)
 
-        headerLifeHouse.imageViewTipsClose.setOnClickListener(this)
 
         headerLifeHouse.textViewSelectGoodsCenter.setOnClickListener(this)
 
@@ -571,8 +583,18 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     override fun setNewData(data: List<ProductBean>) {//设置小B推荐数据
         if (data.isNotEmpty()) {
+            val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DimenUtil.dp2px(160.0))
+            layoutParams.topMargin = DimenUtil.dp2px(20.0)
+            layoutParams.leftMargin = DimenUtil.dp2px(15.0)
+            headerLifeHouse.recyclerViewSmallBRecommend.setBackgroundResource(android.R.color.white)
             headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.VISIBLE
-        }else{
+            headerLifeHouse.recyclerViewSmallBRecommend.layoutParams = layoutParams
+        } else {
+            val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            layoutParams.topMargin = 0
+            layoutParams.rightMargin = 0
+            headerLifeHouse.recyclerViewSmallBRecommend.setBackgroundResource(R.color.color_f5f7f9)
+            headerLifeHouse.recyclerViewSmallBRecommend.layoutParams = layoutParams
             headerLifeHouse.relativeLayoutSmallBHeader.visibility = View.GONE
         }
         listRecommend.clear()
@@ -747,7 +769,7 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onClipComplete(message: ImageCropActivity.MessageCropComplete) {
-        if (FragmentLifeHouse::class.java.simpleName.equals(message.simpleName)) {
+        if (FragmentLifeHouse::class.java.simpleName == message.simpleName) {
             val byteArray = ImageUtils.bitmap2ByteArray(message.bitmap)
             presenter.getUploadToken(byteArray)
             setLifeHouseLogo(byteArray)
@@ -761,19 +783,17 @@ class FragmentLifeHouse : BaseFragment(), LifeHouseContract.View, View.OnClickLi
     }
 
     override fun onResume() {
-//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.start()
         if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.start()
+        if (UserProfileUtil.isSmallB()) presenter.loadData(true)
         super.onResume()
     }
 
     override fun onPause() {
-//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.stop()
         if (!UserProfileUtil.isLogin()) headerLifeHouse.autoScrollRecyclerView.stop()
         super.onPause()
     }
 
     override fun onDestroy() {
-//        if (!UserProfileUtil.isLogin()) headerLifeHouse.linearLayoutNotice.destroy()
         EventBus.getDefault().unregister(this)
         super.onDestroy()
     }

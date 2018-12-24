@@ -26,6 +26,7 @@ public class LifeHouseBean {
         public int phases;
         public long created_at;
         public String ID;
+        public int close_status;
     }
 
     public static class StatusBean {

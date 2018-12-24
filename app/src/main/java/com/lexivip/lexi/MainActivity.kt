@@ -9,6 +9,7 @@ import com.basemodule.tools.AppManager
 import com.basemodule.tools.LogUtil
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.BaseFragment
+import com.lexivip.lexi.coupon.UserCouponActivity
 import com.lexivip.lexi.eventBusMessge.MessageChangePage
 import com.lexivip.lexi.index.selection.applyForLifeHouse.ApplyForLifeHouseSuccessActivity
 import com.lexivip.lexi.user.completeinfo.CompleteInfoActivity
@@ -138,6 +139,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
+
     /**
      * 是否展示生活馆
      */
@@ -156,6 +158,13 @@ class MainActivity : BaseActivity() {
         if (TextUtils.isEmpty(str)) { //跳转首页
             showIndexPage()
             return
+        }
+
+        if (TextUtils.equals(str,UserCouponActivity::class.java.simpleName)){ //官方优惠券跳转精选
+            showIndexPage()
+            if (fragment0 is MainFragment0){
+                (fragment0 as MainFragment0).getViewPager().currentItem = 1
+            }
         }
 
 //        LogUtil.e("TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName)=="+TextUtils.equals(str,ApplyForLifeHouseSuccessActivity::class.java.simpleName))

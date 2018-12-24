@@ -12,6 +12,7 @@ import com.lexivip.lexi.beans.ProductBean
 import com.smart.dialog.listener.OnBtnClickL
 import com.smart.dialog.widget.NormalDialog
 import kotlinx.android.synthetic.main.acticity_header_recyclerview.*
+import org.greenrobot.eventbus.EventBus
 
 class SmallBRecommendGoodsListActivity : BaseActivity(), LifeHouseContract.View {
 

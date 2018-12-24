@@ -9,13 +9,11 @@ import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import android.widget.RelativeLayout
 import com.basemodule.tools.Constants
 import com.basemodule.tools.LogUtil
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
 import com.basemodule.ui.IDataSource
-import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.R
 import com.lexivip.lexi.cashMoney.CashMoneyActivity
 import com.lexivip.lexi.eventBusMessge.MessageClose
@@ -54,11 +52,9 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
     override fun initView() {
         EventBus.getDefault().register(this)
         customHeadView.setHeadCenterTxtShow(true, titleId)
-        //webView = WebView(AppApplication.getContext())
         webView.overScrollMode = WebView.OVER_SCROLL_NEVER
         val settings = webView.settings
         settings.setAppCacheEnabled(true)
-        settings.setJavaScriptEnabled(true);
         settings.javaScriptCanOpenWindowsAutomatically = true
         settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
         settings.builtInZoomControls = false

@@ -14,6 +14,8 @@ import com.lexivip.lexi.eventBusMessge.MessageOrderSuccess
 import com.lexivip.lexi.eventBusMessge.MessageUpdate
 import com.lexivip.lexi.index.detail.AddShopCartBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
+import com.lexivip.lexi.mine.enshrine.EnshrineFragment
+import com.lexivip.lexi.mine.like.FavoriteFragment
 import com.lexivip.lexi.order.*
 import com.lexivip.lexi.shopCart.*
 import com.lexivip.lexi.user.login.UserProfileUtil
@@ -253,11 +255,9 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         }
 
         // 心愿单点击进入详情
-        adapterWish.setOnItemClickListener { adapter, _, position ->
-            val productBean = adapter.getItem(position) as ProductBean
-            val intent = Intent(activity, GoodsDetailActivity::class.java)
-            intent.putExtra(GoodsDetailActivity::class.java.simpleName, productBean)
-            startActivity(intent)
+        adapterWish.setOnItemClickListener { _, _, position ->
+            val productBean = adapterWish.getItem(position)?:return@setOnItemClickListener
+            PageUtil.jump2GoodsDetailActivity(productBean.rid,EnshrineFragment.FROM_WISH_ORDER)
         }
 
         // 心愿单添加购物车
@@ -466,6 +466,11 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
     override fun addData(products: List<ProductBean>) {
         adapterWish.addData(products)
         adapterWish.setEnableLoadMore(true)
+    }
+
+    override fun onResume() {
+        if (UserProfileUtil.isLogin()) presenter.loadData(true)
+        super.onResume()
     }
 
     /**

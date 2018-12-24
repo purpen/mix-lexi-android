@@ -64,6 +64,10 @@ class EnshrineFragment : BaseFragment(), EnshrineContract.View, ScrollableHelper
             fragment.arguments = bundle
             return fragment
         }
+
+        const val FROM_RECENT_GOODS = "FROM_RECENT_GOODS"
+
+        const val FROM_WISH_ORDER = "FROM_WISH_ORDER"
     }
 
     override fun initView() {

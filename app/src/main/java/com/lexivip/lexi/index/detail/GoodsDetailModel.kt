@@ -2,6 +2,8 @@ package com.lexivip.lexi.index.detail
 
 import com.basemodule.tools.Constants
 import com.basemodule.ui.IDataSource
+import com.lexivip.lexi.mine.enshrine.EnshrineFragment
+import com.lexivip.lexi.mine.like.FavoriteFragment
 import com.lexivip.lexi.net.ClientParamsAPI
 import com.lexivip.lexi.net.HttpRequest
 import com.lexivip.lexi.net.URL
@@ -84,6 +86,27 @@ class GoodsDetailModel : IDataSource {
     }
 
     /**
+     *
+     */
+    fun getOfficialCouponsByStoreId(store_rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_DETAIL_OFFICIAL_COUPONS, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+
+    /**
      * 根据用户是否登录调不同接口
      */
     fun getCouponsByStoreId(store_rid: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
@@ -95,6 +118,24 @@ class GoodsDetailModel : IDataSource {
             url = URL.SHOP_STORE_UNLOGIN_COUPONS
         }
         HttpRequest.sendRequest(HttpRequest.GET, url, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
+
+    fun clickGetOfficialCoupon(code: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["rid"] = code
+        HttpRequest.sendRequest(HttpRequest.POST, URL.CLICK_GET_OFFICIAL_COUPON, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
             }
@@ -230,7 +271,7 @@ class GoodsDetailModel : IDataSource {
 
     //根据UI加载7位
     fun getFavoriteUsers(goodsId: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getFavoriteUsers(goodsId,"7")
+        val params = ClientParamsAPI.getFavoriteUsers(goodsId, "7")
         HttpRequest.sendRequest(HttpRequest.GET, URL.GOODS_FAVORITE_USERS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
@@ -248,7 +289,7 @@ class GoodsDetailModel : IDataSource {
 
 
     fun addShopCart(rid: String, quantity: Int, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.addShopCartParams(rid,quantity)
+        val params = ClientParamsAPI.addShopCartParams(rid, quantity)
         HttpRequest.sendRequest(HttpRequest.POST, URL.ADD_SHOP_CART, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()
@@ -282,7 +323,7 @@ class GoodsDetailModel : IDataSource {
     }
 
 
-    fun loadPoster(goodId:String,scene:String,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+    fun loadPoster(goodId: String, scene: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val path = "pages/product/product"
         val type = "4"
         val params = ClientParamsAPI.getLoadPosterParams(Constants.AUTHAPPID,path,type,scene,goodId)
@@ -301,4 +342,35 @@ class GoodsDetailModel : IDataSource {
         })
     }
 
+
+    fun removeUnshelveProductFromList(list: ArrayList<String>, fromPage: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getDefaultParams()
+        params["rids"] = list
+        var url = ""
+        when (fromPage) {
+            EnshrineFragment.FROM_WISH_ORDER -> {
+                url = URL.WISH_ORDER
+            }
+            EnshrineFragment.FROM_RECENT_GOODS -> {
+                url = URL.RECENT_LOOK_GOODS
+            }
+            FavoriteFragment.FROM_LIKE_GOODS -> {
+                url = URL.FAVORITE_GOODS_URL
+            }
+        }
+
+        HttpRequest.sendRequest(HttpRequest.DELETE, url, params, object : IDataSource.HttpRequestCallBack {
+            override fun onStart() {
+                httpRequestCallBack.onStart()
+            }
+
+            override fun onSuccess(json: String) {
+                httpRequestCallBack.onSuccess(json)
+            }
+
+            override fun onFailure(e: IOException) {
+                httpRequestCallBack.onFailure(e)
+            }
+        })
+    }
 }
