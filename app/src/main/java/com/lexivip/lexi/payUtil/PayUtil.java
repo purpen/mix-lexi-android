@@ -85,6 +85,13 @@ public class PayUtil implements WXPayEntryActivity.PayLinstener, PayContract.Vie
         presenter = new PayPresenter(this);
         presenter.loadWXPayOrder(rid, pay_type, type);//type字段：0.订单支付 1.订单列表支付
     }
+    public PayUtil( String rid, int pay_type, int type) {
+        dialog=new WaitingDialog(AppManager.getAppManager().currentActivity());
+        this.rid = rid;
+        this.pay_type = pay_type;//1.微信支付 2.支付宝支付  4.蚂蚁花呗
+        presenter = new PayPresenter(this);
+        presenter.loadWXPayOrder(rid, pay_type, type);//type字段：0.订单支付 1.订单列表支付
+    }
 
     @Override
     public void paySuccess(int code) {

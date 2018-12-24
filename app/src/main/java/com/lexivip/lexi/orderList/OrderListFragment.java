@@ -118,7 +118,6 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
                         presenter.isMerge(rid);
                         break;
                     case R.id.bt_logistics:
-                        //todo 物流跟踪
                         LogUtil.e("物流订单啊啊啊啊啊啊啊");
                         intent = new Intent(getActivity(),LogisticsActivity.class);
                         intent.putExtra("logistic_code",String.valueOf(adapterOrderList.getItem(position).getItems().get(0).getExpress_no()));
@@ -254,7 +253,7 @@ public class OrderListFragment extends BaseFragment implements OrderListContract
     @Override
     public void getMerge(MergeBean bean) {
         if (bean.data.is_merge){
-            PayDialog payDialog=new PayDialog(getContext(),bean,rid,1);
+            PayDialog payDialog=new PayDialog(getContext(),bean,rid,adapterOrderList.getData().get(positions).getPay_type());
             dialog.show();
         }else {
             PayUtil payUtil=new PayUtil(dialog,rid,adapterOrderList.getData().get(positions).getPay_type(),1);

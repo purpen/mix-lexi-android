@@ -10,9 +10,9 @@ import android.widget.Button;
 
 import com.basemodule.tools.DateUtil;
 import com.lexivip.lexi.R;
+import com.lexivip.lexi.payUtil.PayUtil;
 import com.smart.dialog.widget.base.BottomBaseDialog;
 
-//TODO 支付dialog待完成
 public class PayDialog extends BottomBaseDialog<PayDialog> {
 
     private View view;
@@ -55,11 +55,10 @@ public class PayDialog extends BottomBaseDialog<PayDialog> {
                 button.setText("付款 00:00");
             }
         };
-        //TODO 付款待完成
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                PayUtil payUtil=new PayUtil(rid,pay_type,1);
             }
         });
     }

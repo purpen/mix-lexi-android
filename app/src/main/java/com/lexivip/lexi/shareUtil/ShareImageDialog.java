@@ -91,6 +91,8 @@ public class ShareImageDialog extends BottomBaseDialog {
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(imageUrl)) {
                     final UMImage image = new UMImage(activity, imageUrl);
+                    UMImage thumb =  new UMImage(activity, imageUrl);
+                    image.setThumb(thumb);
                     new ShareAction(activity)
                             .setPlatform(SHARE_MEDIA.WEIXIN)
                             .withMedia(image)

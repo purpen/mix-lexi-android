@@ -53,8 +53,8 @@ public class ShareDialog extends BottomBaseDialog<ShareDialog> {
     @Override
     public void setUiBeforShow() {
         ImageView imageView=view.findViewById(R.id.imageView);
-        int w=ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp60);
-        int h= (int) (w*1.53);
+        int w=ScreenUtil.getScreenWidth()-DimenUtil.getDimensionPixelSize(R.dimen.dp100);
+        int h= (int) (w*1.77);
         ViewGroup.LayoutParams layoutParams=new RelativeLayout.LayoutParams(w,h);
         imageView.setLayoutParams(layoutParams);
         Button button=view.findViewById(R.id.button);
@@ -73,6 +73,8 @@ public class ShareDialog extends BottomBaseDialog<ShareDialog> {
         AdapterShare adapterShare=new AdapterShare(R.layout.item_share,list);
         recyclerView.setAdapter(adapterShare);
         final UMImage image = new UMImage(context, url);
+        UMImage thumb =  new UMImage(context, url);
+        image.setThumb(thumb);
         adapterShare.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

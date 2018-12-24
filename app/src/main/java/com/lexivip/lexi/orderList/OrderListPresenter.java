@@ -39,6 +39,7 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("订单数据："+json);
                 MyOrderListBean bean= JsonUtil.fromJson(json,MyOrderListBean.class);
                 //view.dismissLoadingView();
                 dialog.dismiss();
@@ -144,6 +145,7 @@ public class OrderListPresenter implements OrderListContract.Presenter {
 
             @Override
             public void onSuccess(@NotNull String json) {
+                LogUtil.e("支付订单："+json);
                 view.dismissLoadingView();
                 MergeBean bean=JsonUtil.fromJson(json,MergeBean.class);
                 if (bean.success){

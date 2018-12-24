@@ -99,6 +99,7 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
             startActivity(intent)
             finish()*/
             LogUtil.e("订单编号：" + createOrderBean.order_rid)
+            presenter.savePayWay(createOrderBean.order_rid, "${createOrderBean.payWay}")
             val payUtil = PayUtil(dialog, createOrderBean.order_rid, createOrderBean.payWay, 0)
         }
 

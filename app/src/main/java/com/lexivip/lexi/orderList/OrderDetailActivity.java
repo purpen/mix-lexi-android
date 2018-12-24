@@ -131,10 +131,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
                     bean.data.getItems().get(bean.data.getItems().size()-1).isShow = true;
                 }else {
                     for (int i=0;i<bean.data.getItems().size();i++){
-                        if (bean.data.getItems().get(i+1).getExpress()==bean.data.getItems().get(i).getExpress()) {
-                            //  bean.data.getItems().get(i).isShow=false;
-                        } else {
-                            bean.data.getItems().get(i).isShow = true;
+                        if (bean.data.getItems().size()!=(i+1)){
+                            if (bean.data.getItems().get(i + 1).getExpress() == bean.data.getItems().get(i).getExpress()) {
+                                //  bean.data.getItems().get(i).isShow=false;
+                            } else {
+                                bean.data.getItems().get(i).isShow = true;
+                            }
                         }
                     }
                 }

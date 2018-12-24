@@ -40,7 +40,7 @@ public class AdapterOrderList extends BaseQuickAdapter<MyOrderListBean.DataBean.
     protected void convert(BaseViewHolder helper, final MyOrderListBean.DataBean.OrdersBean item) {
         helper.setText(R.id.tv_shop_name,item.getStore().getStore_name());
         GlideUtil.loadImageWithFading(item.getStore().getStore_logo()+ImageSizeConfig.SIZE_AVA50,(ImageView)helper.getView(R.id.iv_shop));
-        helper.setText(R.id.tv_order_money, String.valueOf(item.getPay_amount()));
+        helper.setText(R.id.tv_order_money, String.valueOf(item.getUser_pay_amount()));
         long millions=new Long(item.getCreated_at()).longValue()*1000;
         c.setTimeInMillis(millions);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");

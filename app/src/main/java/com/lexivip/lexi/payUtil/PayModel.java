@@ -2,6 +2,7 @@ package com.lexivip.lexi.payUtil;
 
 import android.graphics.Bitmap;
 
+import com.basemodule.tools.LogUtil;
 import com.basemodule.ui.IDataSource;
 import com.lexivip.lexi.net.ClientParamsAPI;
 import com.lexivip.lexi.net.HttpRequest;
@@ -20,6 +21,7 @@ public class PayModel {
         }else {
             url=URL.WX_PAY_ORDER;
         }
+        LogUtil.e("支付方式："+pay_type);
         HashMap<String,Object> params=ClientParamsAPI.getWXPayParams(rid,pay_type);
         HttpRequest.sendRequest(HttpRequest.POST, url, params, new IDataSource.HttpRequestCallBack() {
             @Override

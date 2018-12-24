@@ -218,6 +218,16 @@ public class MyOrderListBean implements Parcelable{
             private double total_amount;
             private int total_quantity;
             private int user_order_status;
+            private String user_pay_amount;
+
+            public String getUser_pay_amount() {
+                return user_pay_amount;
+            }
+
+            public void setUser_pay_amount(String user_pay_amount) {
+                this.user_pay_amount = user_pay_amount;
+            }
+
             private List<ItemsBean> items;
 
             protected OrdersBean(Parcel in) {
@@ -256,6 +266,7 @@ public class MyOrderListBean implements Parcelable{
                 total_amount = in.readDouble();
                 total_quantity = in.readInt();
                 user_order_status = in.readInt();
+                user_pay_amount = in.readString();
                 items = in.createTypedArrayList(ItemsBean.CREATOR);
             }
 
@@ -641,6 +652,7 @@ public class MyOrderListBean implements Parcelable{
                 dest.writeDouble(total_amount);
                 dest.writeInt(total_quantity);
                 dest.writeInt(user_order_status);
+                dest.writeString(user_pay_amount);
                 dest.writeTypedList(items);
             }
 

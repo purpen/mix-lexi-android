@@ -1,106 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="105dp"
-    android:background="@android:color/white"
-    >
-
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:button="@drawable/check_box_style"
-        android:layout_marginStart="@dimen/dp15"
-        android:clickable="false"
-        android:checked="false"
-        android:background="@null"
-        />
-
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/checkBox"
-        android:layout_marginTop="@dimen/dp15"
-        android:layout_marginStart="@dimen/dp15"
-        android:layout_marginEnd="@dimen/dp15"
-        android:includeFontPadding="false"
-        android:text="@string/app_name"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:textColor="@color/color_333"
-        />
-
-    <TextView
-        android:id="@+id/textViewFullAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textViewName"
-        android:layout_below="@+id/textViewName"
-        android:layout_marginEnd="@dimen/dp15"
-        android:includeFontPadding="false"
-        android:text="@string/app_name"
-        android:layout_marginTop="@dimen/dp5"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="@dimen/sp12"
-        android:textColor="@color/color_333"
-        />
-
-    <TextView
-        android:id="@+id/textViewProvinceCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textViewName"
-        android:layout_below="@+id/textViewFullAddress"
-        android:layout_marginTop="@dimen/dp5"
-        android:includeFontPadding="false"
-        android:layout_marginEnd="@dimen/dp10"
-        android:text="@string/app_name"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="@dimen/sp12"
-        android:textColor="@color/color_333"
-        />
-
-    <TextView
-        android:id="@+id/textViewZip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textViewProvinceCity"
-        android:layout_toEndOf="@+id/textViewProvinceCity"
-        android:includeFontPadding="false"
-        android:layout_marginEnd="@dimen/dp15"
-        android:text="@string/app_name"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="@dimen/sp12"
-        android:textColor="@color/color_333"
-        android:visibility="gone"
-        />
-
-    <TextView
-        android:id="@+id/textViewPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textViewName"
-        android:layout_marginTop="@dimen/dp5"
-        android:layout_below="@+id/textViewProvinceCity"
-        android:layout_marginEnd="@dimen/dp15"
-        android:includeFontPadding="false"
-        android:text="@string/app_name"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textSize="@dimen/sp12"
-        android:textColor="@color/color_333"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp1"
-        android:background="@color/color_e9e9e9"
-        android:layout_alignParentBottom="true"
-        />
-</RelativeLayout>
+<?xml version="1.0" encoding="utf-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"    android:layout_width="match_parent"    android:layout_height="105dp"    android:background="@android:color/white"    >    <CheckBox        android:id="@+id/checkBox"        android:layout_width="wrap_content"        android:layout_height="match_parent"        android:button="@drawable/check_box_style"        android:layout_marginStart="@dimen/dp15"        android:clickable="false"        android:checked="false"        android:background="@null"        />    <TextView        android:id="@+id/textViewName"        android:layout_width="match_parent"        android:layout_height="wrap_content"        android:layout_toEndOf="@+id/checkBox"        android:layout_marginTop="@dimen/dp15"        android:layout_marginStart="@dimen/dp15"        android:layout_marginEnd="@dimen/dp15"        android:includeFontPadding="false"        android:text="@string/app_name"        android:maxLines="1"        android:ellipsize="end"        android:textStyle="bold"        android:textSize="14sp"        android:textColor="@color/color_333"        />    <TextView        android:id="@+id/textViewFullAddress"        android:layout_width="match_parent"        android:layout_height="wrap_content"        android:layout_alignStart="@+id/textViewName"        android:layout_below="@+id/textViewName"        android:layout_marginEnd="@dimen/dp15"        android:includeFontPadding="false"        android:text="@string/app_name"        android:layout_marginTop="@dimen/dp5"        android:maxLines="1"        android:ellipsize="end"        android:textSize="@dimen/sp12"        android:textColor="@color/color_333"        />    <TextView        android:id="@+id/textViewProvinceCity"        android:layout_width="wrap_content"        android:layout_height="wrap_content"        android:layout_alignStart="@+id/textViewName"        android:layout_below="@+id/textViewFullAddress"        android:layout_marginTop="@dimen/dp5"        android:includeFontPadding="false"        android:layout_marginEnd="@dimen/dp10"        android:text="@string/app_name"        android:maxLines="1"        android:ellipsize="end"        android:textSize="@dimen/sp12"        android:textColor="@color/color_333"        />    <TextView        android:id="@+id/textViewZip"        android:layout_width="wrap_content"        android:layout_height="wrap_content"        android:layout_alignTop="@+id/textViewProvinceCity"        android:layout_toEndOf="@+id/textViewProvinceCity"        android:includeFontPadding="false"        android:layout_marginEnd="@dimen/dp15"        android:text="@string/app_name"        android:maxLines="1"        android:ellipsize="end"        android:textSize="@dimen/sp12"        android:textColor="@color/color_333"        android:visibility="gone"        />    <TextView        android:id="@+id/textViewPhone"        android:layout_width="wrap_content"        android:layout_height="wrap_content"        android:layout_alignStart="@+id/textViewName"        android:layout_marginTop="@dimen/dp5"        android:layout_below="@+id/textViewProvinceCity"        android:layout_marginEnd="@dimen/dp15"        android:includeFontPadding="false"        android:text="@string/app_name"        android:maxLines="1"        android:ellipsize="end"        android:textSize="@dimen/sp12"        android:textColor="@color/color_333"        />    <View        android:layout_width="match_parent"        android:layout_height="@dimen/dp1"        android:background="@color/color_e9e9e9"        android:layout_alignParentBottom="true"        /></RelativeLayout>
