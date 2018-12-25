@@ -1,6 +1,7 @@
 package com.lexivip.lexi
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import com.basemodule.tools.*
 import com.basemodule.ui.BaseFragment
@@ -47,22 +48,22 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
      * 初始化精彩故事
      */
     private fun initWonderfulStory() {
-        val customGridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(),2)
+        val customGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         customGridLayoutManager.setScrollEnabled(false)
         recyclerViewWonderfulStory.layoutManager = customGridLayoutManager
         recyclerViewWonderfulStory.adapter = adapterWonderfulStory
-        recyclerViewWonderfulStory.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
+        recyclerViewWonderfulStory.addItemDecoration(StaggeredDividerItemDecoration(DimenUtil.dp2px(20.0),DimenUtil.dp2px(10.0)))
     }
 
     /**
      * 初始化猜你喜欢
      */
     private fun initGuessLike() {
-        val customGridLayoutManager = CustomGridLayoutManager(AppApplication.getContext(),2)
+        val customGridLayoutManager = CustomStaggerGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         customGridLayoutManager.setScrollEnabled(false)
         recyclerViewGuess.layoutManager = customGridLayoutManager
         recyclerViewGuess.adapter = adapterGuessLike
-        recyclerViewGuess.addItemDecoration(GridSpacingItemDecoration(2,DimenUtil.dp2px(10.0),DimenUtil.dp2px(20.0),false))
+        recyclerViewGuess.addItemDecoration(StaggeredDividerItemDecoration(DimenUtil.dp2px(20.0),DimenUtil.dp2px(10.0)))
     }
 
     /**
@@ -201,9 +202,5 @@ class MainFragment2 : BaseFragment(), DiscoverContract.View {
 
     override fun showError(string: String) {
         ToastUtil.showError(string)
-    }
-
-    override fun goPage() {
-
     }
 }

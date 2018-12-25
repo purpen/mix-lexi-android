@@ -1,6 +1,4 @@
 package com.lexivip.lexi.index.discover
-
-import android.content.Context
 import android.content.Intent
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
@@ -9,14 +7,11 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
-import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.CustomStaggerGridLayoutManager
 import com.lexivip.lexi.R
+import com.lexivip.lexi.StaggeredDividerItemDecoration
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.index.selection.ZCManifestAdapter
-import com.yanyusong.y_divideritemdecoration.Y_Divider
-import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
-import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 import kotlinx.android.synthetic.main.acticity_header_recyclerview.*
 
 class ComposerStoryActivity : BaseActivity(), ComposerStoryContract.View {
@@ -58,9 +53,9 @@ class ComposerStoryActivity : BaseActivity(), ComposerStoryContract.View {
         recyclerView.setBackgroundColor(Util.getColor(android.R.color.white))
         recyclerView.layoutManager = staggeredGridLayoutManager
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+        recyclerView.addItemDecoration(StaggeredDividerItemDecoration(DimenUtil.dp2px(20.0),DimenUtil.dp2px(10.0)))
         val view = View(this)
-        view.setPadding(0,DimenUtil.dp2px(15.0),0,0)
+        view.setPadding(0, DimenUtil.dp2px(15.0), 0, 0)
         adapter.setHeaderView(view)
     }
 
@@ -94,7 +89,7 @@ class ComposerStoryActivity : BaseActivity(), ComposerStoryContract.View {
             val item = adapter.getItem(position) ?: return@setOnItemClickListener
             val intent = Intent(this, ArticleDetailActivity::class.java)
             intent.putExtra(ArticleDetailActivity::class.java.simpleName, item.rid)
-            intent.putExtra(ArticleDetailActivity::class.java.name,item.channel_name)
+            intent.putExtra(ArticleDetailActivity::class.java.name, item.channel_name)
             startActivity(intent)
         }
     }
@@ -130,24 +125,5 @@ class ComposerStoryActivity : BaseActivity(), ComposerStoryContract.View {
 
     override fun setPresenter(presenter: ComposerStoryContract.Presenter?) {
         setPresenter(presenter)
-    }
-
-    private inner class DividerItemDecoration constructor(context: Context) : Y_DividerItemDecoration(context) {
-        private val color: Int = Util.getColor(android.R.color.white)
-        private val height = 20f
-        override fun getDivider(itemPosition: Int): Y_Divider? {
-            val divider: Y_Divider?
-            if (itemPosition % 2 == 0) {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .setLeftSideLine(true, color, 10f, 0f, 0f)
-                        .create()
-            } else {
-                divider = Y_DividerBuilder()
-                        .setBottomSideLine(true, color, height, 0f, 0f)
-                        .create()
-            }
-            return divider
-        }
     }
 }
