@@ -110,7 +110,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
         emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment!!.bindToContentView(recyclerView)
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frameLayoutEmotion, emotionMainFragment)
+        transaction.replace(R.id.frameLayoutEmotion, emotionMainFragment!!)
         transaction.addToBackStack(null)
         //提交修改
         transaction.commit()

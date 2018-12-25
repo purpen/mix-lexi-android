@@ -84,7 +84,7 @@ class FragmentFocusShowWindow : BaseFragment(), ShowWindowContract.View , EasyPe
 
         //添加监听
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
             }
 
