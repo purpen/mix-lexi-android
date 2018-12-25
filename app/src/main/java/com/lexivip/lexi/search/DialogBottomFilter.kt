@@ -32,7 +32,7 @@ class DialogBottomFilter(context: FragmentActivity?, presenter: SearchGoodsPrese
     }
 
     private fun setRangeSeekBar(): View {
-        val list = listOf("￥0", "￥150", "￥300", "￥400", "￥500", "￥800", "不限")
+        val list = listOf("¥0", "¥150", "¥300", "¥400", "¥500", "¥800", "不限")
         view.rangeSeekBarView.setData(list) { leftPostion, rightPostion ->
 
             val page = 1

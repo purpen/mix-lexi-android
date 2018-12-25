@@ -59,7 +59,7 @@ class WelcomeInWeekAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, Bas
 //            textViewOldPrice.visibility = View.VISIBLE
             helper.setText(R.id.textViewPrice, "${item.min_sale_price}")
 //            textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-//            textViewOldPrice.text = "￥" + item.real_price
+//            textViewOldPrice.text = "¥" + item.real_price
         }
 
 

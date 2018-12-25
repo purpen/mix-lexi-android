@@ -16,7 +16,7 @@ public class AdapterPay extends BaseQuickAdapter<MergeBean.DataBean.OrderListBea
     @Override
     protected void convert(BaseViewHolder helper, MergeBean.DataBean.OrderListBean item) {
         helper.setText(R.id.tv_name,item.store_name);
-        helper.setText(R.id.tv_price,"￥"+item.user_pay_amount);
+        helper.setText(R.id.tv_price,"¥"+item.user_pay_amount);
         helper.setText(R.id.tv_num,"共"+item.total_quantity+"件");
     }
 }

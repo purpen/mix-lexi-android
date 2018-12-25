@@ -370,7 +370,7 @@ class GoodsSpecPopupWindow(activity: FragmentActivity?, item: GoodsData.DataBean
     private fun setSkuInfo(dataBean: SKUListData.DataBean.ItemsBean?) {
         this.dataBean = dataBean
         GlideUtil.loadImageWithFading(dataBean?.cover, view.findViewById(R.id.imageView))
-        view.findViewById<TextView>(R.id.dialog_cart_price).text = "￥" + dataBean?.sale_price
+        view.findViewById<TextView>(R.id.dialog_cart_price).text = "¥" + dataBean?.sale_price
         view.findViewById<TextView>(R.id.dialog_cart_producttitle).text = dataBean?.product_name
         view.findViewById<TextView>(R.id.dialog_cart_skusnumber).text = "库存：" + dataBean?.stock_count
     }

@@ -54,7 +54,7 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
         } else {
             textViewFirstOrderDiscountPrice.visibility = View.VISIBLE
             textViewFirstOrderDiscount.visibility = View.VISIBLE
-            textViewFirstOrderDiscountPrice.text = "-￥${createOrderBean.firstOrderDiscountPrice}"
+            textViewFirstOrderDiscountPrice.text = "-¥${createOrderBean.firstOrderDiscountPrice}"
         }
 
         if (createOrderBean.fullReductionTotalPrice==0.0){ //满减
@@ -63,13 +63,13 @@ class SelectPayWayActivity : BaseActivity(), SelectPayWayContract.View {
         }else{
             textViewFullReduce.visibility = View.VISIBLE
             textViewFullReducePrice.visibility = View.VISIBLE
-            textViewFullReducePrice.text = "-￥${createOrderBean.fullReductionTotalPrice}"
+            textViewFullReducePrice.text = "-¥${createOrderBean.fullReductionTotalPrice}"
         }
 
         if (createOrderBean.notUsingOfficialCoupon) {
-            textViewCouponPrice.text = "-￥${createOrderBean.shopCouponTotalPrice}"
+            textViewCouponPrice.text = "-¥${createOrderBean.shopCouponTotalPrice}"
         } else {
-            textViewCouponPrice.text = "-￥${createOrderBean.officialCouponPrice}"
+            textViewCouponPrice.text = "-¥${createOrderBean.officialCouponPrice}"
         }
 
         textViewTotalPrice.text = "${createOrderBean.userPayTotalPrice}"

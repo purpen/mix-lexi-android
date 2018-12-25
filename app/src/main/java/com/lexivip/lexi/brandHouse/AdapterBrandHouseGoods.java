@@ -70,7 +70,7 @@ public class AdapterBrandHouseGoods extends BaseMultiItemQuickAdapter<AdapterSea
             helper.setText(R.id.textViewPrice, String.valueOf(item.getProduct().min_sale_price));
             //textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
             textViewOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
-            textViewOldPrice.setText("￥" + String.valueOf(item.getProduct().min_price));
+            textViewOldPrice.setText("¥" + String.valueOf(item.getProduct().min_price));
         }
     }
 }

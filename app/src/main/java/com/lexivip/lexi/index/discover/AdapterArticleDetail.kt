@@ -105,13 +105,13 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)
 
                 if (min_sale_price == 0.0) { //折扣价为0,显示真实价格
-                    helper.setText(R.id.textViewPrice, "￥${min_price}")
+                    helper.setText(R.id.textViewPrice, "¥${min_price}")
                     textViewOldPrice.visibility = View.GONE
                 } else { //折扣价不为0显示折扣价格和带划线的真实价格
-                    helper.setText(R.id.textViewPrice, "￥${min_sale_price}")
+                    helper.setText(R.id.textViewPrice, "¥${min_sale_price}")
                     textViewOldPrice.visibility = View.VISIBLE
                     textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-                    textViewOldPrice.text = "￥" + min_price
+                    textViewOldPrice.text = "¥" + min_price
                 }
 
                 val textViewJump = helper.getView<TextView>(R.id.textViewJump)
@@ -155,13 +155,13 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
                 val textViewOldPrice = helper.getView<TextView>(R.id.textViewOldPrice)
 
                 if (min_sale_price == 0.0) { //折扣价为0,显示真实价格
-                    helper.setText(R.id.textViewPrice, "￥${min_price}")
+                    helper.setText(R.id.textViewPrice, "¥${min_price}")
                     textViewOldPrice.visibility = View.GONE
                 } else { //折扣价不为0显示折扣价格和带划线的真实价格
-                    helper.setText(R.id.textViewPrice, "￥${min_sale_price}")
+                    helper.setText(R.id.textViewPrice, "¥${min_sale_price}")
                     textViewOldPrice.visibility = View.VISIBLE
                     textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-                    textViewOldPrice.text = "￥" + min_price
+                    textViewOldPrice.text = "¥" + min_price
                 }
 
                 helper.setText(R.id.textViewLikeNum, "喜欢 +$like_count")

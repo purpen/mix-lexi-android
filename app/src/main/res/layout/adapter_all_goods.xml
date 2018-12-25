@@ -64,7 +64,7 @@
             android:layout_marginTop="@dimen/dp5"
             android:drawablePadding="@dimen/dp2"
             android:layout_marginEnd="@dimen/dp10"
-            android:text="￥1"
+            android:text="¥1"
             android:textColor="@color/color_333"
             android:textStyle="bold"
             android:textSize="@dimen/sp12" />
@@ -77,7 +77,7 @@
             android:layout_alignBottom="@id/textView1"
             android:drawablePadding="@dimen/dp2"
             android:layout_marginEnd="@dimen/dp10"
-            android:text="￥1"
+            android:text="¥1"
             android:textColor="@color/color_999"
             android:textSize="@dimen/sp12"
             android:visibility="gone"
@@ -103,7 +103,7 @@
             android:layout_marginTop="@dimen/dp10"
             android:layout_alignStart="@+id/textView1"
             android:gravity="center_vertical"
-            android:text="赚 ￥10"
+            android:text="赚 ¥10"
             android:textColor="@color/color_ff6666"
             android:textSize="@dimen/sp12"
             />

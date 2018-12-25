@@ -82,7 +82,7 @@ class AdapterSearchGoods(list: List<MultipleItem>) : BaseMultiItemQuickAdapter<A
             textViewOldPrice.visibility = View.VISIBLE
             helper.setText(R.id.textViewPrice, "${product.min_sale_price}")
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥" + product.min_price
+            textViewOldPrice.text = "¥" + product.min_price
         }
 
     }

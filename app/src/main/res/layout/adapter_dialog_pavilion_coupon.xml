@@ -33,7 +33,7 @@
         android:includeFontPadding="false"
         android:layout_alignTop="@+id/textViewValue"
         android:layout_marginTop="5dp"
-        android:text="￥"
+        android:text="¥"
         android:textColor="@android:color/white"
         android:textSize="@dimen/sp13"
         />
