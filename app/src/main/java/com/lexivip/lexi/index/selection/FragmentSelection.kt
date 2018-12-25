@@ -463,7 +463,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         })
 
         buttonOpenShop.setOnClickListener(this)
-        textViewGuessPic.setOnClickListener(this)
+        textViewCustomMade.setOnClickListener(this)
         textViewCouponCenter.setOnClickListener(this)
         textViewExemptionMail.setOnClickListener(this)
         textViewMoreDiscoverLife.setOnClickListener(this)
@@ -528,7 +528,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
                 intent.putExtra(ComposerStoryActivity::class.java.simpleName, R.mipmap.icon_image_seeding)
                 startActivity(intent)
             }
-            R.id.textViewGuessPic -> ToastUtil.showInfo("猜图")
+            R.id.textViewCustomMade -> startActivity(Intent(activity, AllCustomMadeActivity::class.java))
             R.id.textViewCouponCenter -> startActivity(Intent(activity, ReceiveVoucherActivity::class.java))
             R.id.textViewExemptionMail -> startActivity(Intent(activity, AllFreePostageActivity::class.java))
 //            R.id.textViewMoreDiscoverLife -> startActivity(Intent(context, DiscoverLifeAestheticsActivity::class.java))

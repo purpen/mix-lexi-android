@@ -310,8 +310,6 @@ public class GlideUtil {
             }
         };
         Glide.with(context).asDrawable().load(t).into(target);
-
-
     }
 
     /**
