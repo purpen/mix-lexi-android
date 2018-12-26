@@ -32,11 +32,8 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
     private val fragment0: BaseFragment by lazy { FragmentHotGoods.newInstance() }
     private val fragment1: BaseFragment by lazy { FragmentOfficialRecommend.newInstance() }
     private val fragment2: BaseFragment by lazy { FragmentFirstPublish.newInstance() }
-    private var banners: ArrayList<String> = ArrayList()
     private val fragments: ArrayList<BaseFragment> by lazy { ArrayList<BaseFragment>() }
     private var page: Int = 1
-
-    private lateinit var adapterGoodsRecommendBanner: AdapterGoodsRecommendBanner
 
     companion object {
         @JvmStatic
@@ -149,7 +146,6 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
      * 初始化banner
      */
     private fun initBanner() {
-//        val with = ScreenUtil.getScreenWidth() * 290 / 375
         val height = ScreenUtil.getScreenWidth() * 140 / 375
         linearLayoutViewPager.clipChildren = false
         mzBannerView.clipChildren = false
@@ -160,11 +156,6 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
         mzBannerView.layoutParams = layoutParams
         linearLayoutViewPager.addView(mzBannerView)
         presenter.getBanners()
-//        val with = ScreenUtil.getScreenWidth() * 290 / 375
-//        val height = ScreenUtil.getScreenWidth() * 140 / 375
-//        linearLayoutViewPager.clipChildren = false
-//        viewPager.clipChildren = false
-//        viewPager.layoutParams = LinearLayout.LayoutParams(with, height)
     }
 
     /**
@@ -175,10 +166,9 @@ class FragmentGoodsRecommend : BaseFragment(), GoodsRecommendContract.View, View
 
             PageUtil.jump2GoodsDetailActivity(banner_images[i].link)
         }
-        mzBannerView.start()
-
         // 设置数据
         mzBannerView.setPages(banner_images) { BannerViewHolder() }
+        mzBannerView.start()
     }
 
     class BannerViewHolder : MZViewHolder<BannerImageBean> {
