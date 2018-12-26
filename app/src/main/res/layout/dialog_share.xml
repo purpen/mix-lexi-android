@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/iv_cancel"
         android:layout_marginTop="@dimen/dp25"
         android:layout_marginRight="@dimen/dp30"
         android:layout_marginLeft="@dimen/dp30"
@@ -28,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        android:layout_above="@id/button"></android.support.v7.widget.RecyclerView>
+        android:layout_above="@id/button"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"

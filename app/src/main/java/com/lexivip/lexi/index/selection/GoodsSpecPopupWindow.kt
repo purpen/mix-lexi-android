@@ -122,7 +122,7 @@ class GoodsSpecPopupWindow(activity: FragmentActivity?, item: GoodsData.DataBean
 
             dismiss()
             val intent = Intent()
-            intent.putExtra(SKUListData::class.java!!.simpleName, dataBean)
+            intent.putExtra(SKUListData::class.java.simpleName, dataBean)
             //TODO 跳转购物车界面
         }
 

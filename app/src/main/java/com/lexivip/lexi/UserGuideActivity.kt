@@ -32,7 +32,7 @@ class UserGuideActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        GlideUtil.loadImageAsDrawable("",this.window.decorView)
+//        GlideUtil.loadImageAsDrawable("",this.window.decorView)
         if (!isTaskRoot) {
             if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && TextUtils.equals(Intent.ACTION_MAIN, intent.action)) {
                 finish()

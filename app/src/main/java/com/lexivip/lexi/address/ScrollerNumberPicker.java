@@ -676,7 +676,6 @@ public class ScrollerNumberPicker extends View {
 		/**
 		 * 是否在可视界面内
 		 * 
-		 * @param rect
 		 * @return
 		 */
 		public boolean isInView() {
@@ -698,7 +697,6 @@ public class ScrollerNumberPicker extends View {
 		/**
 		 * 设置新的坐标
 		 * 
-		 * @param move
 		 */
 		public void newY(int _move) {
 			this.move = 0;

@@ -15,7 +15,6 @@ public class WaitingDialog extends Dialog {
     private int resInfo                 = R.drawable.img_thn_default_info;
     private int resSuccess              = R.drawable.img_thn_default_success;
     private int resError                = R.drawable.img_thn_default_error;
-    private ImageView ivBigLoading;
 
     public WaitingDialog(Activity activity) {
         this(activity, R.style.THN_custom_progress_dialog);
@@ -30,7 +29,7 @@ public class WaitingDialog extends Dialog {
         initViews();
     }
     private void initViews() {
-        ivBigLoading = (ImageView) findViewById(R.id.ivBigLoading);
+        ImageView ivBigLoading = (ImageView) findViewById(R.id.ivBigLoading);
         GlideUtil.loadingImage(resBigLoading, ivBigLoading);
     }
 

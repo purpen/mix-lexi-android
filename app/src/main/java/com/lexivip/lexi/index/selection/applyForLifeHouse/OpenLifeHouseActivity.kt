@@ -197,7 +197,7 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
                 image = R.drawable.icon_share_invation2
             }
             LogUtil.e(title)
-            shareUtil.shareFriendInvitation(WebUrl.SHARE_INVITATION + UserProfileUtil.getUserId(), image!!, title, content)
+            shareUtil.shareFriendInvitation(WebUrl.SHARE_INVITATION + UserProfileUtil.getUserId(), image, title, content)
         }else{
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_GOODS, *perms)
         }
@@ -234,7 +234,7 @@ class OpenLifeHouseActivity : BaseActivity() , EasyPermissions.PermissionCallbac
             }else{
                 images=R.drawable.icon_share_invation2
             }
-            val image = UMImage(this, images!!)
+            val image = UMImage(this, images)
             val web = UMWeb(WebUrl.SHARE_INVITATION+UserProfileUtil.getUserId())
             web.title = title//标题
             web.setThumb(image)  //缩略图

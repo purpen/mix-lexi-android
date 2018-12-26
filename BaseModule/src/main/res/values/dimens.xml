@@ -85,7 +85,7 @@
 
     <!--waiting dialog-->
     <dimen name="padding_waiting_dialog">15dp</dimen>
-    <dimen name="radius_waiting_dialog">25px</dimen>
+    <dimen name="radius_waiting_dialog">25dp</dimen>
     <dimen name="size_image_bigloading">80dp</dimen>
     <dimen name="size_image_smallloading">60dp</dimen>
     <dimen name="size_minwidth_waiting_dialog">120dp</dimen>
@@ -96,7 +96,7 @@
 
 
     <!--进界面动画-->
-    <dimen name="radius_svprogresshuddefault">25px</dimen>
+    <dimen name="radius_svprogresshuddefault">25dp</dimen>
     <dimen name="margintop_svprogresshuddefault_msg">10dp</dimen>
     <dimen name="padding_svprogresshuddefault">15dp</dimen>
     <dimen name="size_minwidth_svprogresshuddefault">120dp</dimen>
