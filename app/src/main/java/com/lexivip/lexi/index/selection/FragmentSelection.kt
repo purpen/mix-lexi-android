@@ -418,7 +418,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         viewPager.startAutoScroll()
         viewPager.setAutoScrollDurationFactor(4.0)
         viewPager.pageMargin = -bannerWidth / 8
-        viewPager.setPageTransformer(true, OnePageThreeViewTransformer())
+        viewPager.setPageTransformer(true, OnePageTwoViewTransformer())
     }
 
 

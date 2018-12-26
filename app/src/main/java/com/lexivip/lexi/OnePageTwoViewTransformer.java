@@ -3,7 +3,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 
-public class OnePageThreeViewTransformer implements ViewPager.PageTransformer {
+public class OnePageTwoViewTransformer implements ViewPager.PageTransformer {
     private static final float min_scale = 0.75f;
     @Override
     public void transformPage(View page, float position) {
