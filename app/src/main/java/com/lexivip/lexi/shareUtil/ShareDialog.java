@@ -64,7 +64,7 @@ public class ShareDialog extends BottomBaseDialog<ShareDialog> {
                 dismiss();
             }
         });
-        GlideUtil.loadImageWithFading(url,imageView);
+        GlideUtil.loadImageWithFading(url,imageView,R.drawable.poster_load);
         RecyclerView recyclerView=view.findViewById(R.id.recyclerView);
         LinearLayoutManager manager=new LinearLayoutManager(context);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);

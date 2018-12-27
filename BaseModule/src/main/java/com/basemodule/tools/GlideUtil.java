@@ -267,6 +267,18 @@ public class GlideUtil {
         Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
     }
 
+    public static <T> void loadImageWithFading(T t, ImageView imageView,int backImage) {
+        RequestOptions requestOptions = new RequestOptions()
+                .format(DecodeFormat.PREFER_RGB_565)
+                //.centerCrop()
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(DEFAULT_ERROR_HOLDER).placeholder(backImage);
+        Context context = imageView.getContext();
+        if (!isValidContextForGlide(context)) return;
+        Glide.with(context).asDrawable().load(t).transition(DrawableTransitionOptions.withCrossFade(FADING_DURING)).apply(requestOptions).into(imageView);
+    }
+
     /**
      * 加载图片原始图
      *
