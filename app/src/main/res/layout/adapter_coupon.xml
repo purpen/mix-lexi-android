@@ -13,8 +13,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/color_333"
-            android:textSize="@dimen/dp16"
-            android:text="￥"
+            android:textSize="16sp"
+            android:text="¥"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/tv_money"
@@ -23,7 +23,7 @@
             android:layout_toRightOf="@id/textView"
             android:text="0"
             android:textStyle="bold"
-            android:textSize="@dimen/dp32"
+            android:textSize="32sp"
             android:textColor="@color/color_333"
             android:includeFontPadding="false"/>
         <TextView

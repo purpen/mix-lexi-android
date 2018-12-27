@@ -110,8 +110,8 @@ class GoodsImageViewActivity : BaseActivity(), GoodsDetailContract.View , EasyPe
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(this, *perms)) {
             val shareUtil = ShareUtil(this)
-            shareUtil.shareGoods(WebUrl.GOODS, WebUrl.AUTH_GOODS,goodsData!!.assets[0].view_url,
-                    goodsData!!.name,"",goodsData.rid, goodsData.rid+"-"+ goodsData!!.store_rid,4)
+            shareUtil.shareGoods(WebUrl.GOODS, WebUrl.AUTH_GOODS, goodsData.assets[0].view_url,
+                    goodsData.name,"",goodsData.rid, goodsData.rid+"-"+ goodsData.store_rid,4)
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }

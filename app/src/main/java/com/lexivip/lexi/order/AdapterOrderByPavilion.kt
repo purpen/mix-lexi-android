@@ -68,7 +68,7 @@ class AdapterOrderByPavilion(@LayoutRes res: Int, address_rid: String) : BaseQui
             } else if (!item.notUsingCoupon) {
                 textViewPavilionCoupon.isEnabled = true
                 textViewPavilionCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
-                helper.setText(R.id.textViewPavilionCoupon, "已抵￥${item.couponPrice}")
+                helper.setText(R.id.textViewPavilionCoupon, "已抵¥${item.couponPrice}")
             }
         }
 

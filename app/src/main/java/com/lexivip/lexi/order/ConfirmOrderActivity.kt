@@ -144,7 +144,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             createOrderBean.officialCouponCanSelected = true
             headerView.textViewCouponPrice.text = "未使用"
         } else {
-            headerView.textViewCouponPrice.text = "-￥${createOrderBean.shopCouponTotalPrice}"
+            headerView.textViewCouponPrice.text = "-¥${createOrderBean.shopCouponTotalPrice}"
         }
         //选择店铺券则不用官方券
         createOrderBean.notUsingOfficialCoupon = true
@@ -190,8 +190,8 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
                 store.coupon_codes = ""
             }
             //设置为官方优惠券
-            headerView.textViewCouponPrice.text = "-￥${createOrderBean.officialCouponPrice}"
-            footerView.textViewOfficialCoupon.text = "已抵￥${createOrderBean.officialCouponPrice}"
+            headerView.textViewCouponPrice.text = "-¥${createOrderBean.officialCouponPrice}"
+            footerView.textViewOfficialCoupon.text = "已抵¥${createOrderBean.officialCouponPrice}"
 
             footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
         }
@@ -364,7 +364,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             createOrderBean.shopCouponTotalPrice = sumMaxShopCouponPrice
             createOrderBean.officialCouponPrice = 0
             createOrderBean.officialCouponCode = ""
-            headerView.textViewCouponPrice.text = "-￥${createOrderBean.shopCouponTotalPrice}"
+            headerView.textViewCouponPrice.text = "-¥${createOrderBean.shopCouponTotalPrice}"
         } else { //使用乐喜优惠券
             createOrderBean.officialCouponCanSelected = true
             createOrderBean.notUsingOfficialCoupon = false
@@ -376,9 +376,9 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             createOrderBean.shopCouponTotalPrice = 0
             createOrderBean.officialCouponPrice = maxOfficialCouponPrice
             createOrderBean.officialCouponCode = maxOfficialCouponCode
-            footerView.textViewOfficialCoupon.text = "已抵￥${createOrderBean.officialCouponPrice}"
+            footerView.textViewOfficialCoupon.text = "已抵¥${createOrderBean.officialCouponPrice}"
             footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
-            headerView.textViewCouponPrice.text = "-￥${createOrderBean.officialCouponPrice}"
+            headerView.textViewCouponPrice.text = "-¥${createOrderBean.officialCouponPrice}"
         }
         adapter.notifyDataSetChanged()
         calculateUserPayTotalPrice(false)
@@ -449,7 +449,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             headerView.textViewDeliveryPrice.text = "包邮"
             headerView.textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_c2a67d))
         } else {
-            headerView.textViewDeliveryPrice.text = "￥${createOrderBean.expressTotalPrice}"
+            headerView.textViewDeliveryPrice.text = "¥${createOrderBean.expressTotalPrice}"
             headerView.textViewDeliveryPrice.setTextColor(Util.getColor(R.color.color_9099a6))
         }
         calculateUserPayTotalPrice(true)
@@ -552,13 +552,13 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
                 if (reduction.has("type_text")) {
                     fullReductionText = reduction.optString("type_text")
                 } else {
-                    fullReductionText = "￥0"
+                    fullReductionText = "¥0"
                 }
                 item.fullReductionText = fullReductionText
             }
         }
 
-        headerView.textViewFullReducePrice.text = "-￥${createOrderBean.fullReductionTotalPrice}"
+        headerView.textViewFullReducePrice.text = "-¥${createOrderBean.fullReductionTotalPrice}"
 
         calculateUserPayTotalPrice(true)
     }
@@ -577,7 +577,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
             userPayPrice *= newUserDiscountBean!!.discount_ratio
         }
 
-        headerView.textViewFirstOrderDiscountPrice.text = "-￥${createOrderBean.firstOrderDiscountPrice}"
+        headerView.textViewFirstOrderDiscountPrice.text = "-¥${createOrderBean.firstOrderDiscountPrice}"
 
         //设置用户应付总金额
         createOrderBean.userPayTotalPrice = userPayPrice
@@ -640,7 +640,7 @@ class ConfirmOrderActivity : BaseActivity(), ConfirmOrderContract.View {
                 }
             } else {
                 footerView.isEnabled = true
-                footerView.textViewOfficialCoupon.text = "已抵￥${createOrderBean.officialCouponPrice}"
+                footerView.textViewOfficialCoupon.text = "已抵¥${createOrderBean.officialCouponPrice}"
                 footerView.textViewOfficialCoupon.setTextColor(Util.getColor(R.color.color_ff6666))
             }
         } else {

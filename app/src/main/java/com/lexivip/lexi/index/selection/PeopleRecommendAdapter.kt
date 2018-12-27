@@ -93,7 +93,7 @@ class PeopleRecommendAdapter(list: List<MultipleItem>) : BaseMultiItemQuickAdapt
             textViewOldPrice.visibility = View.VISIBLE
             helper.setText(R.id.textViewPrice, "${itemProduct.min_sale_price}")
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥" + itemProduct.min_price
+            textViewOldPrice.text = "¥" + itemProduct.min_price
         }
     }
 }

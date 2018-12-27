@@ -109,7 +109,6 @@ public abstract class RecyclingPagerAdapter extends PagerAdapter {
      *        Heterogeneous lists can specify their number of view_selection_goods_center_recommend types, so that this View is
      *        always of the img_button_right_normal type (see {@link #getViewTypeCount()} and
      *        {@link #getItemViewType(int)}).
-     * @param parent The parent that this view_selection_goods_center_recommend will eventually be attached to
      * @return A View corresponding to the data at the specified position.
      */
     public abstract View getView(int position, View convertView, ViewGroup container);

@@ -20,16 +20,17 @@ import com.umeng.socialize.media.UMMin
 import kotlinx.android.synthetic.main.dialog_share_goods_bottom.view.*
 import java.io.File
 import java.io.IOException
+import java.lang.ref.WeakReference
 
-class GoodsDetailSaleBottomDialog(context: Activity, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean) : BottomBaseDialog<GoodsDetailSaleBottomDialog>(context) {
+class GoodsDetailSaleBottomDialog(activity: Activity, presenter: GoodsDetailPresenter, goodsData: GoodsAllDetailBean.DataBean) : BottomBaseDialog<GoodsDetailSaleBottomDialog>(activity) {
     private lateinit var view: View
-    private var posterUrl:String? = null
+    private var posterUrl: String? = null
+    private var curActivity = activity
     private val present: GoodsDetailPresenter by lazy { presenter }
     private val product: GoodsAllDetailBean.DataBean by lazy { goodsData }
-    private val context=context
     override fun onCreateView(): View {
-        view = View.inflate(context, R.layout.dialog_share_goods_bottom, null)
-        GlideUtil.loadImageWithDimen(product.assets[0].view_url,view.imageView1,DimenUtil.dp2px(145.0),DimenUtil.dp2px(124.0),ImageSizeConfig.SIZE_P30X2)
+        view = View.inflate(curActivity, R.layout.dialog_share_goods_bottom, null)
+        GlideUtil.loadImageWithDimen(product.assets[0].view_url, view.imageView1, DimenUtil.dp2px(145.0), DimenUtil.dp2px(124.0), ImageSizeConfig.SIZE_P30X2)
         view.textViewPrice.text = "${product.commission_price}"
         loadData()
         return view
@@ -41,7 +42,7 @@ class GoodsDetailSaleBottomDialog(context: Activity, presenter: GoodsDetailPrese
     private fun loadData() {
         val goodsId = product.rid
         val scene = "${product.rid}-${product.store_rid}"
-        present.loadPoster(goodsId,scene,object : IDataSource.HttpRequestCallBack {
+        present.loadPoster(goodsId, scene, object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
                 val posterBean = JsonUtil.fromJson(json, PosterBean::class.java)
                 if (posterBean.success) {
@@ -67,9 +68,8 @@ class GoodsDetailSaleBottomDialog(context: Activity, presenter: GoodsDetailPrese
             dismiss()
         }
         view.textViewWechatShare.setOnClickListener {
-            val image=UMImage(context,product!!.assets.get(0).view_url)
-
-            val umMin = UMMin(WebUrl.GOODS+product!!.rid)//兼容低版本的网页链接
+            val image = UMImage(curActivity, product.assets.get(0).view_url)
+            val umMin = UMMin(WebUrl.GOODS + product.rid)//兼容低版本的网页链接
             // 小程序消息封面图片
             umMin.setThumb(image)
             // 小程序消息title
@@ -80,6 +80,11 @@ class GoodsDetailSaleBottomDialog(context: Activity, presenter: GoodsDetailPrese
             umMin.path = WebUrl.AUTH_GOODS
             // 小程序原始id,在微信平台查询
             umMin.userName = Constants.AUTHAPPID
+            ShareAction(curActivity)
+                    .withMedia(umMin)
+                    .setPlatform(SHARE_MEDIA.WEIXIN)
+                    .share()
+            //ToastUtil.showInfo("微信分享")
             if (TextUtils.isEmpty(posterUrl)) {
                 return@setOnClickListener
             }else {
@@ -92,23 +97,26 @@ class GoodsDetailSaleBottomDialog(context: Activity, presenter: GoodsDetailPrese
             }
         }
 
-        view.textViewSavePoster.setOnClickListener { //保存海报到相册
+        view.textViewSavePoster.setOnClickListener {
+            //保存海报到相册
             if (TextUtils.isEmpty(posterUrl)) return@setOnClickListener
             //保存相册
-            GetImageCacheAsyncTask( view.linearLayoutSave).execute(posterUrl)
+            GetImageCacheAsyncTask(view.linearLayoutSave).execute(posterUrl)
         }
     }
 
-    internal class GetImageCacheAsyncTask(val v: View) : AsyncTask<String, Void, File>() {
+    internal class GetImageCacheAsyncTask(v: View) : AsyncTask<String, Void, File>() {
+        private val reference: WeakReference<View> by lazy { WeakReference<View>(v) }
+        private val view: View? by lazy { reference.get() }
 
         override fun onPreExecute() {
-            v.isEnabled = false
+            view?.isEnabled = false
         }
 
         override fun doInBackground(vararg params: String): File? {
             val imgUrl = params[0]
             try {
-                return GlideUtil.downLoadOriginalImage(imgUrl,v.context)
+                return GlideUtil.downLoadOriginalImage(imgUrl, view?.context)
             } catch (ex: Exception) {
                 return null
             }
@@ -116,7 +124,7 @@ class GoodsDetailSaleBottomDialog(context: Activity, presenter: GoodsDetailPrese
         }
 
         override fun onPostExecute(result: File?) {
-            v.isEnabled = true
+            view?.isEnabled = true
             if (result == null) return
             //此path就是对应文件的缓存路径
             val path = result.path

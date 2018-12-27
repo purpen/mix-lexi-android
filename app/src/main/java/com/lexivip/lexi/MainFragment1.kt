@@ -469,10 +469,10 @@ class MainFragment1 : BaseFragment(), ShopCartContract.View {
         adapterWish.setEnableLoadMore(true)
     }
 
-    override fun onResume() {
-        if (UserProfileUtil.isLogin()) presenter.loadData(true)
-        super.onResume()
-    }
+//    override fun onResume() {
+//        if (UserProfileUtil.isLogin()) presenter.loadData(true)
+//        super.onResume()
+//    }
 
     /**
      * 可见状态发生变化时

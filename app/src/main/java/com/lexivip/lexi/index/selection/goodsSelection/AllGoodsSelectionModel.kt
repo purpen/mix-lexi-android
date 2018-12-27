@@ -1,6 +1,7 @@
 package com.lexivip.lexi.index.selection.goodsSelection
 
 import com.basemodule.ui.IDataSource
+import com.lexivip.lexi.index.selection.AllCustomMadeActivity
 import com.lexivip.lexi.index.selection.freePostage.AllFreePostageActivity
 import com.lexivip.lexi.net.ClientParamsAPI
 import com.lexivip.lexi.net.HttpRequest
@@ -14,8 +15,13 @@ open class AllGoodsSelectionModel {
         var params: HashMap<String, Any>? = null
         var url = ""
         when (whichPage) {
+            AllCustomMadeActivity::class.java.simpleName -> {
+                params = ClientParamsAPI.getDefaultParams()
+                params["page"] = "$page"
+                url = URL.PRODUCTS_CUSTOM_MADE
+            }
             AllFreePostageActivity::class.java.simpleName -> {
-                params = ClientParamsAPI.getAllFreePostageParams(page, sortType, minePrice, maxPrice, cids,sort_newest)
+                params = ClientParamsAPI.getAllFreePostageParams(page, sortType, minePrice, maxPrice, cids, sort_newest)
                 url = URL.GOODS_FREE_POSTAGE
             }
 

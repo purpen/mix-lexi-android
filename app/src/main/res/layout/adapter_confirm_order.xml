@@ -193,7 +193,7 @@
         android:includeFontPadding="false"
         android:paddingEnd="15dp"
         android:paddingStart="0dp"
-        android:text="已抵￥25元"
+        android:text="已抵¥25元"
         android:textColor="@color/color_ff6666"
         android:textSize="12sp" />
 </RelativeLayout>

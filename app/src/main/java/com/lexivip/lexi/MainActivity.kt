@@ -255,33 +255,33 @@ class MainActivity : BaseActivity() {
         when (id) {
             R.id.button0 -> { //首页
                 if (!fragment0!!.isAdded) {
-                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment0).show(fragment0).commitAllowingStateLoss()
+                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment0!!).show(fragment0!!).commitAllowingStateLoss()
                 } else {
-                    supportFragmentManager.beginTransaction().show(fragment0).commitAllowingStateLoss()
+                    supportFragmentManager.beginTransaction().show(fragment0!!).commitAllowingStateLoss()
                 }
             }
             R.id.button1 -> { //发现
                 if (!fragment1!!.isAdded) {
-                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment1).show(fragment1).commitAllowingStateLoss()
+                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment1!!).show(fragment1!!).commitAllowingStateLoss()
                 } else {
-                    supportFragmentManager.beginTransaction().show(fragment1).commitAllowingStateLoss()
+                    supportFragmentManager.beginTransaction().show(fragment1!!).commitAllowingStateLoss()
                 }
 
             }
             R.id.button2 -> { //购物车
                 if (!fragment2!!.isAdded) {
-                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment2).show(fragment2).commitAllowingStateLoss()
+                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment2!!).show(fragment2!!).commitAllowingStateLoss()
                 } else {
-                    supportFragmentManager.beginTransaction().show(fragment2).commitAllowingStateLoss()
+                    supportFragmentManager.beginTransaction().show(fragment2!!).commitAllowingStateLoss()
                     //购物车每次点击都加载
 //                    EventBus.getDefault().post(MainFragment1::class.java.simpleName)
                 }
             }
             R.id.button3 -> {
                 if (!fragment3!!.isAdded) {
-                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment3).show(fragment3).commitAllowingStateLoss()
+                    supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment3!!).show(fragment3!!).commitAllowingStateLoss()
                 } else {
-                    supportFragmentManager.beginTransaction().show(fragment3).commitAllowingStateLoss()
+                    supportFragmentManager.beginTransaction().show(fragment3!!).commitAllowingStateLoss()
                 }
 
             }
@@ -292,10 +292,10 @@ class MainActivity : BaseActivity() {
      * fragment当前事务只能提交一次，否则报错，解决方法是每次提交后重新获取事务
      */
     private fun hideFragments() {
-        supportFragmentManager.beginTransaction().hide(fragment0).commitAllowingStateLoss()
-        supportFragmentManager.beginTransaction().hide(fragment1).commitAllowingStateLoss()
-        supportFragmentManager.beginTransaction().hide(fragment2).commitAllowingStateLoss()
-        supportFragmentManager.beginTransaction().hide(fragment3).commitAllowingStateLoss()
+        if (fragment0 != null) supportFragmentManager.beginTransaction().hide(fragment0!!).commitAllowingStateLoss()
+        if (fragment1 != null) supportFragmentManager.beginTransaction().hide(fragment1!!).commitAllowingStateLoss()
+        if (fragment2 != null) supportFragmentManager.beginTransaction().hide(fragment2!!).commitAllowingStateLoss()
+        if (fragment3 != null) supportFragmentManager.beginTransaction().hide(fragment3!!).commitAllowingStateLoss()
     }
 
 
@@ -339,22 +339,22 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         val fragments = supportFragmentManager.fragments
 
         if (fragment0 != null && fragments.contains(fragment0)) {
-            supportFragmentManager.putFragment(outState, MainFragment0::class.java.simpleName, fragment0)
+            supportFragmentManager.putFragment(outState, MainFragment0::class.java.simpleName, fragment0!!)
         }
         if (fragment1 != null && fragments.contains(fragment1)) {
-            supportFragmentManager.putFragment(outState, MainFragment2::class.java.simpleName, fragment1)
+            supportFragmentManager.putFragment(outState, MainFragment2::class.java.simpleName, fragment1!!)
         }
 
         if (fragment2 != null && fragments.contains(fragment2)) {
-            supportFragmentManager.putFragment(outState, MainFragment1::class.java.simpleName, fragment2)
+            supportFragmentManager.putFragment(outState, MainFragment1::class.java.simpleName, fragment2!!)
         }
 
         if (fragment3 != null && fragments.contains(fragment3)) {
-            supportFragmentManager.putFragment(outState, MainFragmentUser::class.java.simpleName, fragment3)
+            supportFragmentManager.putFragment(outState, MainFragmentUser::class.java.simpleName, fragment3!!)
         }
         super.onSaveInstanceState(outState)
     }

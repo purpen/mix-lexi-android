@@ -32,6 +32,6 @@ public class AdapterMyFriend extends BaseQuickAdapter<MyFriendBean.DataBean.Frie
             tv_type.setText(Util.getString(R.string.text_daren));
             tv_type.setBackgroundResource(R.drawable.bg_colorffa22a_radius20);
         }
-        helper.setText(R.id.tv_money,"￥"+item.amount);
+        helper.setText(R.id.tv_money,"¥"+item.amount);
     }
 }

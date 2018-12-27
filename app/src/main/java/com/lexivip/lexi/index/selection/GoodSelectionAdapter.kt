@@ -58,7 +58,7 @@ class GoodSelectionAdapter(layoutResId: Int) : BaseQuickAdapter<ProductBean, Bas
             textViewOldPrice.visibility = View.VISIBLE
             helper.setText(R.id.textViewPrice, "${item.min_sale_price}")
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥" + item.min_price
+            textViewOldPrice.text = "¥" + item.min_price
         }
 
         val imageView = helper.getView<ImageView>(R.id.imageView)

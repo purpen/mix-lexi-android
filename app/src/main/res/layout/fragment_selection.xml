@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -14,11 +13,10 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/white"
             android:focusableInTouchMode="true"
             android:overScrollMode="never"
-            android:scrollbars="none"
-            android:background="@android:color/white"
-            >
+            android:scrollbars="none">
 
 
             <LinearLayout
@@ -57,8 +55,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/textViewTitle0"
@@ -201,58 +198,47 @@
                         android:textColor="@color/color_999"
                         android:textSize="@dimen/sp12" />
 
-                    <!--TODO android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/textViewSlogan"
-                            android:layout_alignTop="@+id/textViewGuessPic"
-                    -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/textViewCustomMade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewSlogan"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/dp35"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:drawableTop="@mipmap/icon_custom_made"
+                        android:drawablePadding="@dimen/dp10"
+                        android:text="@string/text_order_make"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp12" />
+
+
+                    <TextView
+                        android:id="@+id/textViewCouponCenter"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="20dp"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:id="@+id/textViewGuessPic"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/dp10"
-                            android:drawableTop="@mipmap/icon_order_make"
-                            android:drawablePadding="@dimen/dp10"
-                            android:text="@string/text_order_make"
-                            android:textColor="@color/color_333"
-                            android:textSize="@dimen/sp12" />
-                        <TextView
-                            android:id="@+id/textViewCouponCenter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:drawableTop="@mipmap/icon_coupon_center"
-                            android:drawablePadding="@dimen/dp10"
-                            android:text="@string/text_coupon_center"
-                            android:textColor="@color/color_333"
-                            android:textSize="@dimen/sp12" />
-                        <!--TODO android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/textViewCustomMade"
+                        android:drawableTop="@mipmap/icon_coupon_center"
+                        android:drawablePadding="@dimen/dp10"
+                        android:text="@string/text_coupon_center"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp12" />
+
+                    <TextView
+                        android:id="@+id/textViewExemptionMail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/textViewSlogan"
-                            android:layout_alignTop="@+id/textViewGuessPic"
-                            android:layout_marginEnd="@dimen/dp35"
-                        -->
-                        <TextView
-                            android:id="@+id/textViewExemptionMail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
-                            android:drawableTop="@mipmap/icon_exemption_mail"
-                            android:drawablePadding="@dimen/dp10"
-                            android:text="@string/text_exemption_mail"
-                            android:textColor="@color/color_333"
-                            android:textSize="@dimen/sp12" />
-                    </LinearLayout>
+                        android:layout_alignTop="@+id/textViewCustomMade"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="93dp"
+                        android:layout_marginEnd="@dimen/dp35"
+                        android:drawableTop="@mipmap/icon_exemption_mail"
+                        android:drawablePadding="@dimen/dp10"
+                        android:text="@string/text_exemption_mail"
+                        android:textColor="@color/color_333"
+                        android:textSize="@dimen/sp12" />
                 </RelativeLayout>
 
                 <include
@@ -496,7 +482,6 @@
         <com.basemodule.ui.LoadingView
             android:id="@+id/loadingView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
     </FrameLayout>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

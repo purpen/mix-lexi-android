@@ -12,7 +12,6 @@ class DiscoverContract {
         fun showLoadingView()
         fun dismissLoadingView()
         fun showError(@NonNull string: String)
-        fun goPage()
         fun setBannerData(banner_images: List<BannerImageBean>) {
 
         }

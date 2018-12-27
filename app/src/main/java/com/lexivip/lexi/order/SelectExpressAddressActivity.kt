@@ -286,10 +286,11 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_OK) return
         when (requestCode) {
             Constants.REQUEST_CODE_REFRESH_ADDRESS -> { //新建地址
+                if (data==null) return
                 for (item in adapter.data) {
                     item.is_default = false
                 }
@@ -299,6 +300,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
                 adapter.notifyDataSetChanged()
             }
             Constants.REQUEST_CODE_EDIT_ADDRESS -> { //编辑地址
+                if (data==null) return
                 val dataBean = data.getParcelableExtra<UserAddressListBean.DataBean>(AddressActivity::class.java.simpleName)
                 if (dataBean == null) { //说明是删除
                     presenter.loadData()

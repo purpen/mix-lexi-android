@@ -92,7 +92,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment!!.bindToContentView(scrollViewGoodsDetail)
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frameLayoutEmotion, emotionMainFragment)
+        transaction.replace(R.id.frameLayoutEmotion, emotionMainFragment!!)
         transaction.addToBackStack(null)
         //提交修改
         transaction.commit()

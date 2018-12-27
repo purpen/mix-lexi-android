@@ -29,7 +29,6 @@ import com.lexivip.lexi.index.discover.ComposerStoryActivity
 import com.lexivip.lexi.index.selection.freePostage.AllFreePostageActivity
 import com.lexivip.lexi.index.selection.goodsSelection.AllGoodsSelectionActivity
 import com.lexivip.lexi.receiveVoucher.ReceiveVoucherActivity
-import com.lexivip.lexi.search.OrderCustomMadeGoodsActivity
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
 import com.lexivip.lexi.view.autoScrollViewpager.RecyclerViewPagerAdapter
@@ -419,7 +418,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         viewPager.startAutoScroll()
         viewPager.setAutoScrollDurationFactor(4.0)
         viewPager.pageMargin = -bannerWidth / 8
-        viewPager.setPageTransformer(true, OnePageThreeViewTransformer())
+        viewPager.setPageTransformer(true, OnePageTwoViewTransformer())
     }
 
 
@@ -464,7 +463,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
         })
 
         buttonOpenShop.setOnClickListener(this)
-        textViewGuessPic.setOnClickListener(this)
+        textViewCustomMade.setOnClickListener(this)
         textViewCouponCenter.setOnClickListener(this)
         textViewExemptionMail.setOnClickListener(this)
         textViewMoreDiscoverLife.setOnClickListener(this)
@@ -529,7 +528,7 @@ class FragmentSelection : BaseFragment(), SelectionContract.View, View.OnClickLi
                 intent.putExtra(ComposerStoryActivity::class.java.simpleName, R.mipmap.icon_image_seeding)
                 startActivity(intent)
             }
-            R.id.textViewGuessPic -> startActivity(Intent(activity, OrderCustomMadeGoodsActivity::class.java))
+            R.id.textViewCustomMade -> startActivity(Intent(activity, AllCustomMadeActivity::class.java))
             R.id.textViewCouponCenter -> startActivity(Intent(activity, ReceiveVoucherActivity::class.java))
             R.id.textViewExemptionMail -> startActivity(Intent(activity, AllFreePostageActivity::class.java))
 //            R.id.textViewMoreDiscoverLife -> startActivity(Intent(context, DiscoverLifeAestheticsActivity::class.java))

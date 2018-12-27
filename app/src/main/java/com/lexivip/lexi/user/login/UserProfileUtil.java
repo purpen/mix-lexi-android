@@ -13,7 +13,7 @@ public class UserProfileUtil {
      * 获取店铺Id
      * @return
      */
-    public static final String storeId(){
+    public static String storeId(){
         String read = SPUtil.read(Constants.USER_PROFILE);
         if (TextUtils.isEmpty(read)) return "";
         UserProfileBean userProfileBean = JsonUtil.fromJson(read, UserProfileBean.class);

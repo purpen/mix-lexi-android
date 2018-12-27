@@ -8,6 +8,7 @@ import com.basemodule.tools.Constants
 import com.basemodule.tools.Util
 import com.basemodule.ui.BaseActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.ProductBean
@@ -16,6 +17,8 @@ import com.lexivip.lexi.shareUtil.ShareUtil
 import com.smart.dialog.listener.OnBtnClickL
 import com.smart.dialog.widget.NormalDialog
 import kotlinx.android.synthetic.main.acticity_header_recyclerview.*
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import org.greenrobot.eventbus.EventBus
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -103,10 +106,8 @@ class SmallBRecommendGoodsListActivity : BaseActivity(), LifeHouseContract.View 
                     }
                 }
                 R.id.textView5 -> {
-                    positions=position
-                    share()
-                    /*val dialog = DistributeShareDialog(this)
-                    dialog.show()*/
+                    val dialog = DistributeShareDialog(this)
+                    dialog.show()
                 }
             }
         }
@@ -130,6 +131,25 @@ class SmallBRecommendGoodsListActivity : BaseActivity(), LifeHouseContract.View 
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }
     }
+
+    /**
+     * 分享商品
+     */
+    /*@AfterPermissionGranted(Constants.REQUEST_CODE_SHARE_GOODS)
+    private fun shareGoods(productsBean: ProductBean) {
+        val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
+            val shareUtil: ShareUtil = ShareUtil(this)
+            shareUtil.shareGoods(WebUrl.AUTH_GOODS, productsBean.rid, productsBean.rid + "-" + productsBean.store_rid, "${productsBean.commission_price}", 4)
+        } else {
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE_GOODS, *perms)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }*/
 
     /**
      * 显示删除对话框

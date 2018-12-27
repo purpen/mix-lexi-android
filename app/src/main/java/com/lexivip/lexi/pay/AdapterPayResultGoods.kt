@@ -26,7 +26,7 @@ class AdapterPayResultGoods(@LayoutRes res: Int) : BaseQuickAdapter<PayResultBea
             textViewOldPrice.visibility = View.VISIBLE
             textViewPrice.text = "${item.sale_price}"
             textViewOldPrice.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG or Paint.ANTI_ALIAS_FLAG
-            textViewOldPrice.text = "￥${item.price}"
+            textViewOldPrice.text = "¥${item.price}"
         }
 
 

@@ -32,14 +32,13 @@ class UserGuideActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        GlideUtil.loadImageAsDrawable("",this.window.decorView)
         if (!isTaskRoot) {
             if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && TextUtils.equals(Intent.ACTION_MAIN, intent.action)) {
                 finish()
             }
         }
-//        this.window.decorView.background
 
-//        GlideUtil.loadImageAsDrawable(,)
     }
 
     override fun getIntentData() {
@@ -82,6 +81,7 @@ class UserGuideActivity : BaseActivity() {
 //                if (welcomeBean.success) {
 //                    if (TextUtils.isEmpty(welcomeBean.data.small)) return
 //                    imageView.visibility = View.VISIBLE
+//                    GlideUtil.loadImageAsDrawable("",.window.decorView)
 //                    GlideUtil.loadImageWithDimen(welcomeBean.data.small, imageView, ScreenUtil.getScreenWidth(), ScreenUtil.getScreenHeight(), R.mipmap.welcome, ImageSizeConfig.DEFAULT)
 //                }
 //            }
