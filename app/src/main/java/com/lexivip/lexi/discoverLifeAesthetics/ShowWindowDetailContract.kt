@@ -54,6 +54,6 @@ class ShowWindowDetailContract {
         fun getGuessLike(rid: String)
         fun praiseComment(comment_id: String, isPraise:Boolean, position: Int, view1: android.view.View, isSubAdapter: Boolean)
         fun loadMoreSubComments(item: CommentBean, view1: android.view.View, adapter: ShopWindowDetailCommentListAdapter)
-        fun submitComment(rid: String, pid: String, content: String, sendButton: Button)
+        fun submitComment(rid: String, pid: String,replyId:String, content: String, sendButton: Button)
     }
 }

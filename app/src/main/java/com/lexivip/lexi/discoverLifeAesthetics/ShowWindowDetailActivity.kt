@@ -47,8 +47,12 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     private val adapter: ShopWindowDetailCommentListAdapter by lazy { ShopWindowDetailCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
     private var emotionMainFragment: EmotionMainFragment? = null
-    //父级评论id
+    /**
+     * 父级id
+     */
     private var pid: String = "0"
+    //回复哪条评论
+    private var replyId: String = "0"
 
     private var imagrUrl:String?=null
     private var title:String?=null
@@ -105,7 +109,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
                         ToastUtil.showInfo("请先输入评论")
                         return
                     }
-                    presenter.submitComment(shopWindow!!.rid, pid, content, sendButton)
+                    presenter.submitComment(shopWindow!!.rid, pid,replyId, content, sendButton)
                     editText.text.clear()
                     emotionMainFragment!!.hideKeyBoard()
                     relativeLayoutBar.visibility = View.VISIBLE
@@ -501,7 +505,8 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
             when (view.id) {
                 R.id.textViewReply -> { //将被回复的评论id最为pid
                     emotionMainFragment!!.showKeyBoard()
-                    pid = commentsBean.comment_id
+                    replyId = commentsBean.comment_id
+                    pid = commentsBean.pid
                     emotionMainFragment!!.setEditTextHint("回复${commentsBean.user_name}:")
                 }
 
@@ -587,6 +592,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
      */
     private fun resetInputState() {
         if (emotionMainFragment!!.isUserInputEmpty()) {
+            replyId = "0"
             pid = "0"
             emotionMainFragment!!.setEditTextHint(getString(R.string.text_add_comment))
         }
@@ -618,6 +624,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
         if (shopWindow == null) return
         textViewComment.text = "${shopWindow!!.comment_count++}"
+
         EventBus.getDefault().post(shopWindow)
     }
 

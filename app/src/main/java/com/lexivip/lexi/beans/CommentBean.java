@@ -2,8 +2,6 @@ package com.lexivip.lexi.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommentBean implements Parcelable {
@@ -30,6 +28,7 @@ public class CommentBean implements Parcelable {
     public int sub_comment_count;
     public String user_avatar;
     public String user_name;
+    public String reply_user_name;
     public List<CommentBean> sub_comments;
 
     public CommentBean() {
@@ -52,6 +51,7 @@ public class CommentBean implements Parcelable {
         dest.writeInt(this.sub_comment_count);
         dest.writeString(this.user_avatar);
         dest.writeString(this.user_name);
+        dest.writeString(this.reply_user_name);
         dest.writeTypedList(this.sub_comments);
     }
 
@@ -66,6 +66,7 @@ public class CommentBean implements Parcelable {
         this.sub_comment_count = in.readInt();
         this.user_avatar = in.readString();
         this.user_name = in.readString();
+        this.reply_user_name = in.readString();
         this.sub_comments = in.createTypedArrayList(CommentBean.CREATOR);
     }
 

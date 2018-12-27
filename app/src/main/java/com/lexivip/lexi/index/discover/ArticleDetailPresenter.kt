@@ -38,7 +38,6 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e(json)
                 view.dismissLoadingView()
                 val response = JSONObject(json)
                 val isSuccess = response.optBoolean("success")
@@ -175,6 +174,7 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
         val pageSize = "3"
         dataSource.getArticleComments(page,rid,pageSize,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
+                LogUtil.e("============="+json)
                 val commentListBean = JsonUtil.fromJson(json, ShowWindowCommentListBean::class.java)
                 if (commentListBean.success) {
                     view.setCommentListData(commentListBean.data)
@@ -339,8 +339,8 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
     /**
      * 提交评论
      */
-    override fun submitComment(rid: String, pid: String, content: String, sendButton: Button) {
-        dataSource.submitComment(rid, pid, content, object : IDataSource.HttpRequestCallBack {
+    override fun submitComment(rid: String,pid:String, replyId: String, content: String, sendButton: Button) {
+        dataSource.submitComment(rid, pid,replyId, content, object : IDataSource.HttpRequestCallBack {
 
             override fun onStart() {
                 sendButton.isEnabled = false

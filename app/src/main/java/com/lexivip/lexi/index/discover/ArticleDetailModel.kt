@@ -187,8 +187,8 @@ class ArticleDetailModel : IDataSource {
     /**
      * 提交文章评论
      */
-    fun submitComment(rid: String, pid: String, content: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getSubmitCommentsParams(rid,pid,content)
+    fun submitComment(rid: String,pid: String,replyId: String, content: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getSubmitCommentsParams(rid,pid,replyId,content)
         HttpRequest.sendRequest(HttpRequest.POST, URL.ARTICLE_DETAIL_COMMENTS, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.widget.*
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
@@ -34,8 +35,11 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     private lateinit var shopWindowData: ShowWindowDetailBean.DataBean
     private lateinit var emotionMainFragment: EmotionMainFragment
 
-    //父级评论id
+   // 父级评论
     private var pid: String = "0"
+
+    //回复哪条评论
+    private var replyId: String = "0"
 
     override fun setPresenter(presenter: ShowWindowCommentContract.Presenter?) {
         setPresenter(presenter)
@@ -103,7 +107,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
                         ToastUtil.showInfo("请先输入评论")
                         return
                     }
-                    presenter.submitComment(shopWindowData.rid, pid, content, sendButton)
+                    presenter.submitComment(shopWindowData.rid,pid,replyId, content, sendButton)
                     editText.text.clear()
                     emotionMainFragment.hideKeyBoard()
                 } else {
@@ -126,6 +130,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         //点击输入框外部关闭键盘
         adapter.setOnItemClickListener { _, _, _ ->
             if (emotionMainFragment.isUserInputEmpty()) {
+                replyId = "0"
                 pid = "0"
                 emotionMainFragment.setEditTextHint(getString(R.string.text_add_comment))
             }
@@ -143,15 +148,22 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         }, recyclerView)
 
 
+        /**
+         * 子评论点击时
+         */
+        adapter.setOnSubCommentClickListener(object :ShowWindowCommentListAdapter.OnSubCommentClickListener{
+            override fun onClick(commentBean: CommentBean) {
+                showKeyboardAndReplyWho(commentBean)
+            }
+        })
+
         adapter.setOnItemChildClickListener { adapter, view, position ->
 
             val commentsBean = adapter.getItem(position) as CommentBean
 
             when (view.id) {
                 R.id.textViewReply -> { //将被回复的评论id最为pid
-                    emotionMainFragment.showKeyBoard()
-                    pid = commentsBean.comment_id
-                    emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
+                    showKeyboardAndReplyWho(commentsBean)
                 }
 
                 R.id.textViewPraise -> {
@@ -162,9 +174,20 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     }
 
     /**
+     * 显示键盘和回复谁
+     */
+    fun showKeyboardAndReplyWho(commentsBean:CommentBean){
+        emotionMainFragment.showKeyBoard()
+        replyId = commentsBean.comment_id
+        pid = commentsBean.pid
+        emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
+    }
+
+    /**
      * 重置输入框为默认状态
      */
     private fun resetInputBarState() {
+        replyId = "0"
         pid = "0"
         emotionMainFragment.resetInputBarState()
     }

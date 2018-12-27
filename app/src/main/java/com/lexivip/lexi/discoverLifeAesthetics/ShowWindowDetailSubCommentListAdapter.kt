@@ -27,7 +27,7 @@ class ShowWindowDetailSubCommentListAdapter(res: Int, present: ShowWindowDetailP
 //            textViewSubPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_normal, dp13), null, null, null)
 //        }
 
-        helper.setText(R.id.textViewName, item.user_name+" :")
+        helper.setText(R.id.textViewName, item.user_name+"@ :")
         helper.setText(R.id.textViewComment, item.content)
 //        textViewSubPraise.setOnClickListener { //点赞
 //            presenter.praiseComment(item.comment_id, item.is_praise, helper.adapterPosition, textViewSubPraise, true)

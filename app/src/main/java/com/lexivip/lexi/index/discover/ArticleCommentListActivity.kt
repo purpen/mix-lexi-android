@@ -45,6 +45,9 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
     //父级评论id
     private var pid: String = "0"
 
+    //回复哪条评论
+    private var replyId: String = "0"
+
     override fun setPresenter(presenter: ArticleDetailContract.Presenter?) {
         setPresenter(presenter)
     }
@@ -119,7 +122,7 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
                         ToastUtil.showInfo("请先输入评论")
                         return
                     }
-                    presenter.submitComment(articleId, pid, content, sendButton)
+                    presenter.submitComment(articleId, pid,replyId,content, sendButton)
                     editText.text.clear()
                     emotionMainFragment.hideKeyBoard()
                 } else {
@@ -132,6 +135,7 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
         adapter.setOnItemClickListener { _, _, _ ->
             if (emotionMainFragment.isUserInputEmpty()) {
                 pid = "0"
+                replyId ="0"
                 emotionMainFragment.setEditTextHint(getString(R.string.text_add_comment))
             }
             emotionMainFragment.hideKeyBoard()
@@ -155,7 +159,8 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
             when (view.id) {
                 R.id.textViewReply -> { //将被回复的评论id最为pid
                     emotionMainFragment.showKeyBoard()
-                    pid = commentsBean.comment_id
+                    replyId = commentsBean.comment_id
+                    pid = commentsBean.pid
                     emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
                 }
 
@@ -171,6 +176,7 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
      */
     private fun resetInputBarState() {
         pid = "0"
+        replyId = "0"
         emotionMainFragment.resetInputBarState()
     }
 
