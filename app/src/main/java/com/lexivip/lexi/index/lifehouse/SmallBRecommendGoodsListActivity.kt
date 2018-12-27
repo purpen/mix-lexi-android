@@ -17,8 +17,6 @@ import com.lexivip.lexi.shareUtil.ShareUtil
 import com.smart.dialog.listener.OnBtnClickL
 import com.smart.dialog.widget.NormalDialog
 import kotlinx.android.synthetic.main.acticity_header_recyclerview.*
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
 import org.greenrobot.eventbus.EventBus
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog

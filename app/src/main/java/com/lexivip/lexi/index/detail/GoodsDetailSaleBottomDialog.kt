@@ -80,16 +80,16 @@ class GoodsDetailSaleBottomDialog(activity: Activity, presenter: GoodsDetailPres
             umMin.path = WebUrl.AUTH_GOODS
             // 小程序原始id,在微信平台查询
             umMin.userName = Constants.AUTHAPPID
-            ShareAction(curActivity)
+            /*ShareAction(curActivity)
                     .withMedia(umMin)
                     .setPlatform(SHARE_MEDIA.WEIXIN)
-                    .share()
+                    .share()*/
             //ToastUtil.showInfo("微信分享")
             if (TextUtils.isEmpty(posterUrl)) {
                 return@setOnClickListener
             }else {
                 val images = UMImage(context, posterUrl)
-                ShareAction(context)
+                ShareAction(curActivity)
                         .withMedia(images)
                         .setPlatform(SHARE_MEDIA.WEIXIN)
                         .share()

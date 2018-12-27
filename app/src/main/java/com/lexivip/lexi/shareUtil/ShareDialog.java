@@ -75,6 +75,7 @@ public class ShareDialog extends BottomBaseDialog<ShareDialog> {
         final UMImage image = new UMImage(context, url);
         UMImage thumb =  new UMImage(context, url);
         image.setThumb(thumb);
+
         adapterShare.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
