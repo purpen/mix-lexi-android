@@ -174,7 +174,6 @@ class ArticleDetailPresenter(view: ArticleDetailContract.View) : ArticleDetailCo
         val pageSize = "3"
         dataSource.getArticleComments(page,rid,pageSize,object : IDataSource.HttpRequestCallBack {
             override fun onSuccess(json: String) {
-                LogUtil.e("============="+json)
                 val commentListBean = JsonUtil.fromJson(json, ShowWindowCommentListBean::class.java)
                 if (commentListBean.success) {
                     view.setCommentListData(commentListBean.data)

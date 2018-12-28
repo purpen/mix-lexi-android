@@ -108,10 +108,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
         //隐藏控件
         bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
 
-//        if (data != null) {
-//        bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindowData.is_like)
-//        bundle.putInt(EmotionMainFragment.LIKE_COUNTS, shopWindowData.like_count)
-//        }
 
         emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment!!.bindToContentView(recyclerView)
@@ -131,7 +127,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
                     }
                     presenter.submitComment(data!!.rid, pid, replyId, content, sendButton)
                     editText.text.clear()
-                    emotionMainFragment!!.hideKeyBoard()
+                    emotionMainFragment!!.clearFocus()
                     relativeLayoutBar.visibility = View.VISIBLE
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
@@ -144,7 +140,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
      * 发布文章评论成功
      */
     override fun noticeCommentSuccess(commentBean: CommentBean) {
-        emotionMainFragment!!.hideKeyBoard()
         if (TextUtils.equals(commentBean.pid, "0")) { //评论橱窗
             adapterArticleCommentList.addData(0, commentBean)
         } else {//添加到子评论列表开头,刷新子评论列表
