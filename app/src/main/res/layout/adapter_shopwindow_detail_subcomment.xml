@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:paddingTop="6dp"
     android:focusableInTouchMode="true"
     android:focusable="true"
     >
+
 
     <TextView
         android:id="@+id/textViewName"
@@ -21,12 +22,20 @@
         android:textColor="@color/color_555"
         android:textSize="@dimen/sp12" />
 
+    <TextView
+        android:id="@+id/textViewCommentWho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:includeFontPadding="false"
+        android:text="回复@"
+        android:textColor="@color/color_333"
+        android:textSize="@dimen/sp12" />
 
     <TextView
         android:id="@+id/textViewComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/textViewName"
         android:layout_marginStart="3dp"
         android:layout_marginEnd="0dp"
         android:includeFontPadding="false"
@@ -35,4 +44,4 @@
         android:textColor="@color/color_555"
         android:textSize="@dimen/sp12" />
 
-</RelativeLayout>
+</LinearLayout>

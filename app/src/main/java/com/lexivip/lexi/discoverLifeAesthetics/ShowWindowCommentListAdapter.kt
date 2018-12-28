@@ -75,9 +75,9 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
             adapter!!.setNewData(item.sub_comments)
             if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
 
+            //子评论点击
             adapter!!.setOnItemChildClickListener { _, _, position ->
-                LogUtil.e("${adapter!!.data.size}============"+position)
-                val commentBean = adapter!!.getItem(position) ?: return@setOnItemChildClickListener
+                val commentBean = item.sub_comments[position]
                 subCommentClickListener?.onClick(commentBean)
             }
 

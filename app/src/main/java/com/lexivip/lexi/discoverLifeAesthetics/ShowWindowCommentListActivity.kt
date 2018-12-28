@@ -203,7 +203,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         resetInputBarState()
         if (TextUtils.equals(commentBean.pid, "0")) { //评论橱窗
             adapter.addData(0, commentBean)
-            adapter.notifyDataSetChanged()
         } else {//添加到子评论列表开头,刷新子评论列表
             val list = adapter.data
             for (item in list) {
@@ -216,7 +215,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
             }
             adapter.notifySubCommentList()
         }
-
+        adapter.notifyDataSetChanged()
     }
 
     /**

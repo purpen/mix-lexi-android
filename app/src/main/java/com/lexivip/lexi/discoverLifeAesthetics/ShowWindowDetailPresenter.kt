@@ -33,6 +33,7 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e("==========="+json)
                 view.dismissLoadingView()
                 val showWindowDetailBean = JsonUtil.fromJson(json, ShowWindowDetailBean::class.java)
                 if (showWindowDetailBean.success) {
