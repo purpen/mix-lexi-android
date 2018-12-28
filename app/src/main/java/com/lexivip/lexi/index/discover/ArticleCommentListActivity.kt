@@ -8,15 +8,14 @@ import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
-import com.basemodule.tools.ScreenUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.discoverLifeAesthetics.CommentSuccessBean
 import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListAdapter
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListBean
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
@@ -157,11 +156,11 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
             val commentsBean = adapter.getItem(position) as CommentBean
 
             when (view.id) {
-                R.id.textViewReply -> { //将被回复的评论id最为pid
-                    emotionMainFragment.showKeyBoard()
-                    replyId = commentsBean.comment_id
-                    pid = commentsBean.pid
-                    emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
+                R.id.imageViewAvatar, R.id.textViewName -> {
+                    PageUtil.jump2OtherUserCenterActivity(commentsBean.uid)
+                }
+                R.id.textViewReply, R.id.textViewComment -> { //将被回复的评论id最为pid
+                    showKeyboardAndReplyWho(commentsBean)
                 }
 
                 R.id.textViewPraise -> {
@@ -169,6 +168,26 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
                 }
             }
         }
+
+        /**
+         * 子评论点击时
+         */
+        adapter.setOnSubCommentClickListener(object : ShowWindowCommentListAdapter.OnSubCommentClickListener {
+            override fun onClick(commentBean: CommentBean) {
+                showKeyboardAndReplyWho(commentBean)
+            }
+        })
+    }
+
+    /**
+     * 显示键盘和回复谁
+     */
+    fun showKeyboardAndReplyWho(commentsBean: CommentBean) {
+        emotionMainFragment.showKeyBoard()
+        replyId = commentsBean.comment_id
+        pid = commentsBean.pid
+        LogUtil.e("pid===$pid;;;;;;replyId==$replyId")
+        emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
     }
 
     /**
@@ -188,16 +207,6 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
         commentCount++
         customHeadView.setHeadCenterTxtShow(true, "${commentCount}条评论")
         resetInputBarState()
-        //当前提交成功的评论内容
-//        val commentBean = CommentBean()
-//        commentBean.pid = data.pid
-//        commentBean.created_at = data.created_at
-//        commentBean.user_avatar = data.user_avatar
-//        commentBean.user_name = data.user_name
-//        commentBean.comment_id = data.comment_id
-//        commentBean.praise_count = data.praise_count
-//        commentBean.is_praise = data.is_praise
-//        commentBean.content = data.content
         if (TextUtils.equals(commentBean.pid, "0")) { //评论橱窗
             adapter.addData(0, commentBean)
         } else {//子评论,添加到评论列表最后
@@ -210,6 +219,7 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
                     break
                 }
             }
+            adapter.notifySubCommentList()
         }
         adapter.notifyDataSetChanged()
     }
