@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.*
 import com.lexivip.lexi.beans.CommentBean
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListAdapter
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -24,6 +25,11 @@ class ArticleDetailCommentListAdapter(res: Int, presenter: ArticleDetailPresente
     private val size30 by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp30) }
     private val dp13 by lazy { DimenUtil.dp2px(13.0) }
     private var articleId:String?=null
+    private var subCommentClickListener: ShowWindowCommentListAdapter.OnSubCommentClickListener? = null
+
+    fun setOnSubCommentClickListener(subCommentClickListener: ShowWindowCommentListAdapter.OnSubCommentClickListener){
+        this.subCommentClickListener = subCommentClickListener
+    }
     override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, size30,ImageSizeConfig.SIZE_AVA)
@@ -47,6 +53,7 @@ class ArticleDetailCommentListAdapter(res: Int, presenter: ArticleDetailPresente
 
         helper.addOnClickListener(R.id.textViewPraise)
         helper.addOnClickListener(R.id.textViewReply)
+        helper.addOnClickListener(R.id.textViewComment)
 
         helper.setText(R.id.textViewName, item.user_name)
         helper.setText(R.id.textViewComment, item.content)
@@ -65,7 +72,11 @@ class ArticleDetailCommentListAdapter(res: Int, presenter: ArticleDetailPresente
             recyclerView.adapter = adapter
             adapter!!.setNewData(item.sub_comments)
             if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
-
+            //子评论点击
+            adapter!!.setOnItemChildClickListener { _, _, position ->
+                val commentBean = item.sub_comments[position]
+                subCommentClickListener?.onClick(commentBean)
+            }
             if (item.sub_comment_count > 0) {
                 footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment, null)
                 val textViewName = footerView!!.findViewById<TextView>(R.id.textViewName)
@@ -103,6 +114,10 @@ class ArticleDetailCommentListAdapter(res: Int, presenter: ArticleDetailPresente
 
     fun setArticleData(articleId: String) {
         this.articleId = articleId
+    }
+
+    fun notifySubCommentList() {
+        adapter?.notifyDataSetChanged()
     }
 
 

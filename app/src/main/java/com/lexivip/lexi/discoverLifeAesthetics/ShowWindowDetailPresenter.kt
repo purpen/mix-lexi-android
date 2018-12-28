@@ -291,7 +291,6 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
             }
 
             override fun onSuccess(json: String) {
-                LogUtil.e("========="+json)
                 sendButton.isEnabled = true
                 val commentSuccessBean = JsonUtil.fromJson(json, CommentSuccessBean::class.java)
                 if (commentSuccessBean.success) {

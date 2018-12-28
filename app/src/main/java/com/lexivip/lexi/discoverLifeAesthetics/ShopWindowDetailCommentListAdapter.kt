@@ -133,7 +133,7 @@ class ShopWindowDetailCommentListAdapter(res: Int, presenter: ShowWindowDetailPr
         private val color: Int = Util.getColor(android.R.color.transparent)
         override fun getDivider(itemPosition: Int): Y_Divider? {
             val count = adapter!!.itemCount
-            var divider: Y_Divider? = null
+            val divider: Y_Divider?
             when (itemPosition) {
                 count - 2 -> {
 
