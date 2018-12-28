@@ -13,7 +13,6 @@ import com.basemodule.ui.BaseActivity
 import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
-import com.lexivip.lexi.discoverLifeAesthetics.CommentSuccessBean
 import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListAdapter
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListBean
