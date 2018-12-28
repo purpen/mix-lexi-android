@@ -50,7 +50,7 @@ class ArticleDetailContract {
 
         }
 
-        fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+        fun noticeCommentSuccess(commentBean: CommentBean) {
 
         }
 

@@ -143,9 +143,8 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
     /**
      * 发布文章评论成功
      */
-    override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+    override fun noticeCommentSuccess(commentBean: CommentBean) {
         if (this.data == null) return
-
         textViewCommentCount.text = "${this.data!!.comment_count++}"
     }
 

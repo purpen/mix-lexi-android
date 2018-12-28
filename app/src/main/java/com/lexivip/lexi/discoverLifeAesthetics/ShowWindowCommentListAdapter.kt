@@ -53,6 +53,9 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
 
         helper.addOnClickListener(R.id.textViewPraise)
         helper.addOnClickListener(R.id.textViewReply)
+        helper.addOnClickListener(R.id.imageViewAvatar)
+        helper.addOnClickListener(R.id.textViewName)
+        helper.addOnClickListener(R.id.textViewComment)
 
         helper.setText(R.id.textViewName, item.user_name)
         helper.setText(R.id.textViewComment, item.content)
@@ -73,6 +76,7 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
             if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
 
             adapter!!.setOnItemChildClickListener { _, _, position ->
+                LogUtil.e("${adapter!!.data.size}============"+position)
                 val commentBean = adapter!!.getItem(position) ?: return@setOnItemChildClickListener
                 subCommentClickListener?.onClick(commentBean)
             }
@@ -101,8 +105,13 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
                 footerView = null
             }
         }
+    }
 
-
+    /**
+     * 刷新子评论adapter
+     */
+    fun notifySubCommentList(){
+        adapter?.notifyDataSetChanged()
     }
 
 

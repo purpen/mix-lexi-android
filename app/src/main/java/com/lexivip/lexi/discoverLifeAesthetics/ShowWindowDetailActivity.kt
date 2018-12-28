@@ -621,7 +621,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     /**
      * 重新设置评论数
      */
-    override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+    override fun noticeCommentSuccess(data: CommentBean) {
         if (shopWindow == null) return
         textViewComment.text = "${shopWindow!!.comment_count++}"
 

@@ -45,7 +45,7 @@ class ShowWindowCommentContract {
 
         }
 
-        fun noticeCommentSucess(data: CommentSuccessBean.DataBean) {
+        fun noticeCommentSuccess(commentBean: CommentBean) {
 
         }
     }

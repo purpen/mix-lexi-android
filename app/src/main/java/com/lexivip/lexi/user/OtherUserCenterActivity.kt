@@ -24,12 +24,9 @@ import com.lexivip.lexi.mine.like.FavoriteFragment
 import com.lexivip.lexi.net.WebUrl
 import com.lexivip.lexi.shareUtil.ShareUtil
 import com.lexivip.lexi.user.login.UserProfileUtil
-import com.lexivip.lexi.view.CustomHeadView
 import kotlinx.android.synthetic.main.activity_other_user_center.*
 import kotlinx.android.synthetic.main.fragment_main3.*
 import kotlinx.android.synthetic.main.view_mine_head.*
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
 
 class OtherUserCenterActivity : BaseActivity(), MineContract.View, View.OnClickListener{
     private val dialog: WaitingDialog by lazy { WaitingDialog(this) }

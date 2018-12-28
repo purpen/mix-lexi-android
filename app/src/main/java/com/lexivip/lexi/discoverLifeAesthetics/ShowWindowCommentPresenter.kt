@@ -176,7 +176,7 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
      * 提交评论
      */
     override fun submitComment(rid: String, pid: String, replyId: String, content: String, sendButton: Button) {
-        dataSource.submitComment(rid, pid,replyId, content, object : IDataSource.HttpRequestCallBack {
+        dataSource.submitComment(rid, pid, replyId, content, object : IDataSource.HttpRequestCallBack {
 
             override fun onStart() {
                 sendButton.isEnabled = false
@@ -186,7 +186,7 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                 sendButton.isEnabled = true
                 val commentSuccessBean = JsonUtil.fromJson(json, CommentSuccessBean::class.java)
                 if (commentSuccessBean.success) {
-                    view.noticeCommentSucess(commentSuccessBean.data)
+                    view.noticeCommentSuccess(commentSuccessBean.data)
                     ToastUtil.showSuccess("发送评论成功")
                 } else {
                     view.showError(commentSuccessBean.status.message)
@@ -195,7 +195,8 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
 
             override fun onFailure(e: IOException) {
                 sendButton.isEnabled = true
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+                LogUtil.e("submitComment发送评论失败")
+//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
     }

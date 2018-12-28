@@ -184,29 +184,29 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
     /**
      * 当评论提交成功
      */
-    override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+    override fun noticeCommentSuccess(commentBean: CommentBean) {
         commentCount++
         customHeadView.setHeadCenterTxtShow(true, "${commentCount}条评论")
         resetInputBarState()
         //当前提交成功的评论内容
-        val commentBean = CommentBean()
-        commentBean.pid = data.pid
-        commentBean.created_at = data.created_at
-        commentBean.user_avatar = data.user_avatar
-        commentBean.user_name = data.user_name
-        commentBean.comment_id = data.comment_id
-        commentBean.praise_count = data.praise_count
-        commentBean.is_praise = data.is_praise
-        commentBean.content = data.content
-        if (TextUtils.equals(data.pid, "0")) { //评论橱窗
+//        val commentBean = CommentBean()
+//        commentBean.pid = data.pid
+//        commentBean.created_at = data.created_at
+//        commentBean.user_avatar = data.user_avatar
+//        commentBean.user_name = data.user_name
+//        commentBean.comment_id = data.comment_id
+//        commentBean.praise_count = data.praise_count
+//        commentBean.is_praise = data.is_praise
+//        commentBean.content = data.content
+        if (TextUtils.equals(commentBean.pid, "0")) { //评论橱窗
             adapter.addData(0, commentBean)
         } else {//子评论,添加到评论列表最后
             val list = adapter.data
             for (item in list) {
-                if (TextUtils.equals(item.comment_id, data.pid)) { //子评论数+1
+                if (TextUtils.equals(item.comment_id, commentBean.pid)) { //子评论数+1
                     item.sub_comment_count += 1
                     if (item.sub_comments == null) item.sub_comments = ArrayList<CommentBean>()
-                    item.sub_comments.add(commentBean)
+                    item.sub_comments.add(0,commentBean)
                     break
                 }
             }

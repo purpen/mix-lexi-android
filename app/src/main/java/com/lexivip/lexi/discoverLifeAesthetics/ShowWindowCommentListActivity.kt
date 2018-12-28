@@ -11,6 +11,7 @@ import com.basemodule.tools.ToastUtil
 import com.basemodule.tools.Util
 import com.basemodule.tools.WaitingDialog
 import com.basemodule.ui.BaseActivity
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.user.login.LoginActivity
@@ -35,7 +36,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     private lateinit var shopWindowData: ShowWindowDetailBean.DataBean
     private lateinit var emotionMainFragment: EmotionMainFragment
 
-   // 父级评论
+    // 父级评论
     private var pid: String = "0"
 
     //回复哪条评论
@@ -98,7 +99,6 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
 //        }
 
 
-
         emotionMainFragment.setOnSendCommentListener(object : IOnSendCommentListener {
             override fun onSend(sendButton: Button, editText: EditText) {
                 if (UserProfileUtil.isLogin()) {
@@ -107,7 +107,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
                         ToastUtil.showInfo("请先输入评论")
                         return
                     }
-                    presenter.submitComment(shopWindowData.rid,pid,replyId, content, sendButton)
+                    presenter.submitComment(shopWindowData.rid, pid, replyId, content, sendButton)
                     editText.text.clear()
                     emotionMainFragment.hideKeyBoard()
                 } else {
@@ -151,7 +151,7 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
         /**
          * 子评论点击时
          */
-        adapter.setOnSubCommentClickListener(object :ShowWindowCommentListAdapter.OnSubCommentClickListener{
+        adapter.setOnSubCommentClickListener(object : ShowWindowCommentListAdapter.OnSubCommentClickListener {
             override fun onClick(commentBean: CommentBean) {
                 showKeyboardAndReplyWho(commentBean)
             }
@@ -162,7 +162,10 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
             val commentsBean = adapter.getItem(position) as CommentBean
 
             when (view.id) {
-                R.id.textViewReply -> { //将被回复的评论id最为pid
+                R.id.imageViewAvatar, R.id.textViewName -> {
+                    PageUtil.jump2OtherUserCenterActivity(commentsBean.uid)
+                }
+                R.id.textViewReply, R.id.textViewComment -> { //将被回复的评论id最为pid
                     showKeyboardAndReplyWho(commentsBean)
                 }
 
@@ -176,10 +179,11 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     /**
      * 显示键盘和回复谁
      */
-    fun showKeyboardAndReplyWho(commentsBean:CommentBean){
+    fun showKeyboardAndReplyWho(commentsBean: CommentBean) {
         emotionMainFragment.showKeyBoard()
         replyId = commentsBean.comment_id
         pid = commentsBean.pid
+        LogUtil.e("pid===$pid;;;;;;replyId==$replyId")
         emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
     }
 
@@ -195,32 +199,24 @@ class ShowWindowCommentListActivity : BaseActivity(), ShowWindowCommentContract.
     /**
      * 当评论提交成功
      */
-    override fun noticeCommentSucess(data: CommentSuccessBean.DataBean) {
+    override fun noticeCommentSuccess(commentBean: CommentBean) {
         resetInputBarState()
-        //当前提交成功的评论内容
-        val commentBean = CommentBean()
-        commentBean.pid = data.pid
-        commentBean.created_at = data.created_at
-        commentBean.user_avatar = data.user_avatar
-        commentBean.user_name = data.user_name
-        commentBean.comment_id = data.comment_id
-        commentBean.praise_count = data.praise_count
-        commentBean.is_praise = data.is_praise
-        commentBean.content = data.content
-        if (TextUtils.equals(data.pid, "0")) { //评论橱窗
+        if (TextUtils.equals(commentBean.pid, "0")) { //评论橱窗
             adapter.addData(0, commentBean)
-        } else {//子评论,添加到评论列表最后
+            adapter.notifyDataSetChanged()
+        } else {//添加到子评论列表开头,刷新子评论列表
             val list = adapter.data
             for (item in list) {
-                if (TextUtils.equals(item.comment_id, data.pid)) { //子评论数+1
+                if (TextUtils.equals(item.comment_id, commentBean.pid)) { //子评论数+1
                     item.sub_comment_count += 1
                     if (item.sub_comments == null) item.sub_comments = ArrayList<CommentBean>()
-                    item.sub_comments.add(commentBean)
+                    item.sub_comments.add(0, commentBean)
                     break
                 }
             }
+            adapter.notifySubCommentList()
         }
-        adapter.notifyDataSetChanged()
+
     }
 
     /**
