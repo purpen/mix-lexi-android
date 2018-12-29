@@ -14,7 +14,6 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.lexivip.lexi.ImageSizeConfig
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
-import com.lexivip.lexi.user.login.UserProfileUtil
 
 class ArticleSubCommentListAdapter(res: Int, present: ArticleDetailPresenter) : BaseQuickAdapter<CommentBean, BaseViewHolder>(res) {
     private val dp13 by lazy { DimenUtil.dp2px(13.0) }
@@ -44,14 +43,15 @@ class ArticleSubCommentListAdapter(res: Int, present: ArticleDetailPresenter) : 
         }
 
         val textViewCommentWho = helper.getView<TextView>(R.id.textViewCommentWho)
-        if (TextUtils.equals(item.reply_user_uid, UserProfileUtil.getUserId())|| TextUtils.isEmpty(item.reply_user_name)){
-            textViewCommentWho.text = ""
-        }else{
+        if (item.is_reply_other){
             val spannableString = SpannableString("回复@${item.reply_user_name}:")
             val colorSpan = ForegroundColorSpan(Util.getColor(R.color.color_666))
             spannableString.setSpan(colorSpan, 2, spannableString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
             textViewCommentWho.text = spannableString
+        }else{
+            textViewCommentWho.text = ""
         }
+
 
         helper.setText(R.id.textViewName,item.user_name)
         helper.setText(R.id.textViewComment,item.content)

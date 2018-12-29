@@ -31,6 +31,7 @@ public class CommentBean implements Parcelable {
     public String user_name;
     public String reply_user_name;
     public String reply_user_uid;
+    public Boolean is_reply_other;
     public List<CommentBean> sub_comments;
 
     public CommentBean() {
@@ -56,6 +57,7 @@ public class CommentBean implements Parcelable {
         dest.writeString(this.user_name);
         dest.writeString(this.reply_user_name);
         dest.writeString(this.reply_user_uid);
+        dest.writeValue(this.is_reply_other);
         dest.writeTypedList(this.sub_comments);
     }
 
@@ -73,6 +75,7 @@ public class CommentBean implements Parcelable {
         this.user_name = in.readString();
         this.reply_user_name = in.readString();
         this.reply_user_uid = in.readString();
+        this.is_reply_other = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.sub_comments = in.createTypedArrayList(CommentBean.CREATOR);
     }
 

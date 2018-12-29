@@ -39,14 +39,15 @@ class ShowWindowSubCommentListAdapter(res: Int, present: ShowWindowCommentPresen
             textViewSubPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_normal, dp13), null, null, null)
         }
 
+
         val textViewCommentWho = helper.getView<TextView>(R.id.textViewCommentWho)
-        if (TextUtils.equals(item.reply_user_uid,UserProfileUtil.getUserId())|| TextUtils.isEmpty(item.reply_user_name)){
-            textViewCommentWho.text = ""
-        }else{
+        if (item.is_reply_other){
             val spannableString = SpannableString("回复@${item.reply_user_name}:")
             val colorSpan = ForegroundColorSpan(Util.getColor(R.color.color_666))
             spannableString.setSpan(colorSpan, 2, spannableString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
             textViewCommentWho.text = spannableString
+        }else{
+            textViewCommentWho.text = ""
         }
 
         val textViewName = helper.getView<TextView>(R.id.textViewName)
