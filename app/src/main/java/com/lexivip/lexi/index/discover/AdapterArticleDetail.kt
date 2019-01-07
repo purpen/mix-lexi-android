@@ -172,4 +172,5 @@ class AdapterArticleDetail(list: List<MultipleItem>,channelName:String) : BaseMu
             }
         }
     }
+
 }

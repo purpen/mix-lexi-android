@@ -1425,15 +1425,17 @@ public class ClientParamsAPI {
     /**
      * 提交评论
      * @param rid
+     * @param replyId
      * @param pid
      * @param content
      * @return
      */
     @Nullable
-    public static HashMap<String,Object> getSubmitCommentsParams(@NotNull String rid, @NotNull String pid, @NotNull String content) {
+    public static HashMap<String,Object> getSubmitCommentsParams(@NotNull String rid,@NotNull String pid,@NotNull String replyId,@NotNull String content) {
         HashMap<String,Object> params=generateCommonParams();
         params.put("rid", rid);
         params.put("pid", pid);
+        params.put("reply_id", replyId);
         params.put("content", content);
         return params;
     }

@@ -2,8 +2,6 @@ package com.lexivip.lexi.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommentBean implements Parcelable {
@@ -26,10 +24,14 @@ public class CommentBean implements Parcelable {
     public long created_at;
     public boolean is_praise;
     public String pid;
+    public String uid;
     public int praise_count;
     public int sub_comment_count;
     public String user_avatar;
     public String user_name;
+    public String reply_user_name;
+    public String reply_user_uid;
+    public Boolean is_reply_other;
     public List<CommentBean> sub_comments;
 
     public CommentBean() {
@@ -48,10 +50,14 @@ public class CommentBean implements Parcelable {
         dest.writeLong(this.created_at);
         dest.writeByte(this.is_praise ? (byte) 1 : (byte) 0);
         dest.writeString(this.pid);
+        dest.writeString(this.uid);
         dest.writeInt(this.praise_count);
         dest.writeInt(this.sub_comment_count);
         dest.writeString(this.user_avatar);
         dest.writeString(this.user_name);
+        dest.writeString(this.reply_user_name);
+        dest.writeString(this.reply_user_uid);
+        dest.writeValue(this.is_reply_other);
         dest.writeTypedList(this.sub_comments);
     }
 
@@ -62,10 +68,14 @@ public class CommentBean implements Parcelable {
         this.created_at = in.readLong();
         this.is_praise = in.readByte() != 0;
         this.pid = in.readString();
+        this.uid = in.readString();
         this.praise_count = in.readInt();
         this.sub_comment_count = in.readInt();
         this.user_avatar = in.readString();
         this.user_name = in.readString();
+        this.reply_user_name = in.readString();
+        this.reply_user_uid = in.readString();
+        this.is_reply_other = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.sub_comments = in.createTypedArrayList(CommentBean.CREATOR);
     }
 

@@ -50,7 +50,7 @@ class ArticleDetailContract {
 
         }
 
-        fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+        fun noticeCommentSuccess(commentBean: CommentBean) {
 
         }
 
@@ -99,7 +99,7 @@ class ArticleDetailContract {
         /**
          * 提交评论
          */
-        fun submitComment(rid: String, pid: String, content: String, sendButton: Button)
+        fun submitComment(rid: String, pid: String,replyId:String, content: String, sendButton: Button)
 
         /**
          * 文章点赞

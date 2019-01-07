@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
@@ -32,6 +33,7 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e("==========="+json)
                 view.dismissLoadingView()
                 val showWindowDetailBean = JsonUtil.fromJson(json, ShowWindowDetailBean::class.java)
                 if (showWindowDetailBean.success) {
@@ -281,8 +283,8 @@ class ShowWindowDetailPresenter(view: ShowWindowDetailContract.View) : ShowWindo
     /**
      * 提交评论
      */
-    override fun submitComment(rid: String, pid: String, content: String, sendButton: Button) {
-        dataSource.submitComment(rid, pid, content, object : IDataSource.HttpRequestCallBack {
+    override fun submitComment(rid: String, pid: String,replyId:String, content: String, sendButton: Button) {
+        dataSource.submitComment(rid, pid,replyId, content, object : IDataSource.HttpRequestCallBack {
 
             override fun onStart() {
                 sendButton.isEnabled = false

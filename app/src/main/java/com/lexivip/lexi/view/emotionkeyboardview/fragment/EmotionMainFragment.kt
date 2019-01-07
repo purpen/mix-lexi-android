@@ -394,6 +394,13 @@ class EmotionMainFragment : BaseFragment() {
         buttonSend.visibility = View.GONE
     }
 
+    fun clearFocus() {
+        if (::editTextComment.isInitialized) {
+            hideKeyBoard()
+            editTextComment.clearFocus()
+        }
+    }
+
 }
 
 

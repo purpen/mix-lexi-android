@@ -34,7 +34,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
-class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks{
+class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View, EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
     private val presenter: ShowWindowDetailPresenter by lazy { ShowWindowDetailPresenter(this) }
 
     private lateinit var rid: String
@@ -47,11 +47,17 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     private val adapter: ShopWindowDetailCommentListAdapter by lazy { ShopWindowDetailCommentListAdapter(R.layout.adapter_comment_list, presenter) }
 
     private var emotionMainFragment: EmotionMainFragment? = null
-    //父级评论id
-    private var pid: String = "0"
 
-    private var imagrUrl:String?=null
-    private var title:String?=null
+    private var footerView: View?=null
+    /**
+     * 父级id
+     */
+    private var pid: String = "0"
+    //回复哪条评论
+    private var replyId: String = "0"
+
+    private var imagrUrl: String? = null
+    private var title: String? = null
 
     override val layout: Int = R.layout.activity_show_window_detail
 
@@ -105,7 +111,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
                         ToastUtil.showInfo("请先输入评论")
                         return
                     }
-                    presenter.submitComment(shopWindow!!.rid, pid, content, sendButton)
+                    presenter.submitComment(shopWindow!!.rid, pid, replyId, content, sendButton)
                     editText.text.clear()
                     emotionMainFragment!!.hideKeyBoard()
                     relativeLayoutBar.visibility = View.VISIBLE
@@ -138,12 +144,11 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
             recyclerViewComment.adapter = adapter
             recyclerViewComment.addItemDecoration(DividerItemDecoration(applicationContext))
             adapter.setNewData(data.comments)
-
             adapter.setWindowData(data)
-            val view = View.inflate(this, R.layout.footer_comment_count, null)
-            view.textViewCommentCount.text = "查看全部" + data.comment_count + "条评论"
-            adapter.addFooterView(view)
-            view.setOnClickListener {
+            footerView = View.inflate(this, R.layout.footer_comment_count, null)
+            setCommentFooterCount(data.comment_count)
+            adapter.addFooterView(footerView)
+            footerView?.setOnClickListener {
                 if (shopWindow == null) return@setOnClickListener
                 PageUtil.jump2ShopWindowCommentListActivity(shopWindow!!)
             }
@@ -153,7 +158,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
             recyclerViewComment.visibility = View.GONE
         }
 
-        GlideUtil.loadCircleImageWidthDimen(data.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30),ImageSizeConfig.SIZE_AVA)
+        GlideUtil.loadCircleImageWidthDimen(data.user_avatar, imageViewAvatar, DimenUtil.getDimensionPixelSize(R.dimen.dp30), ImageSizeConfig.SIZE_AVA)
         textViewName.text = data.user_name
         if (data.is_official) {
             textViewName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.icon_show_window_official, 0)
@@ -180,7 +185,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         }
 
         textViewTitle1.text = data.title
-        this.title=data.title
+        this.title = data.title
 
         textViewTitle2.text = data.description
 
@@ -212,6 +217,13 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         }
     }
 
+    /**
+     * 设置footer评论数
+     */
+    private fun setCommentFooterCount(count:Int) {
+        footerView?.textViewCommentCount?.text = "查看全部" + count + "条评论"
+    }
+
 
     /**
      * 设置橱窗产品图片
@@ -229,7 +241,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
         for (product in products) {
             list.add(product.cover)
         }
-        imagrUrl=list[0]
+        imagrUrl = list[0]
         val screenW = ScreenUtil.getScreenWidth()
         val dp2: Int by lazy { DimenUtil.dp2px(2.0) }
         when (size) {
@@ -241,9 +253,9 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
                 val layoutParams32: RelativeLayout.LayoutParams by lazy { RelativeLayout.LayoutParams(dp124, dp124) }
                 val view = View.inflate(this, R.layout.view_show_window_image3, null)
                 linearLayoutBox.addView(view)
-                GlideUtil.loadImageWithDimen(list[0], view.imageView30,dp250,ImageSizeConfig.SIZE_P500)
-                GlideUtil.loadImageWithDimen(list[1], view.imageView31,dp124,ImageSizeConfig.SIZE_P30X2)
-                GlideUtil.loadImageWithDimen(list[2], view.imageView32,dp124,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[0], view.imageView30, dp250, ImageSizeConfig.SIZE_P500)
+                GlideUtil.loadImageWithDimen(list[1], view.imageView31, dp124, ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[2], view.imageView32, dp124, ImageSizeConfig.SIZE_P30X2)
                 view.imageView30.layoutParams = layoutParams250
                 view.imageView31.layoutParams = layoutParams31
                 layoutParams31.addRule(RelativeLayout.END_OF, R.id.imageView30)
@@ -298,11 +310,11 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
                 layoutParams54.leftMargin = dp2
                 view.imageView54.layoutParams = layoutParams54
                 linearLayoutBox.addView(view)
-                GlideUtil.loadImageWithDimen(list[0], view.imageView50,dp230,ImageSizeConfig.SIZE_P500)
-                GlideUtil.loadImageWithDimen(list[1], view.imageView51,dp143,dp114,ImageSizeConfig.SIZE_P30X2)
-                GlideUtil.loadImageWithDimen(list[2], view.imageView52,dp143,dp114,ImageSizeConfig.SIZE_P30X2)
-                GlideUtil.loadImageWithDimen(list[3], view.imageView53,dp215,dp161,ImageSizeConfig.SIZE_P30X2)
-                GlideUtil.loadImageWithDimen(list[4], view.imageView54,dp158,dp161,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[0], view.imageView50, dp230, ImageSizeConfig.SIZE_P500)
+                GlideUtil.loadImageWithDimen(list[1], view.imageView51, dp143, dp114, ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[2], view.imageView52, dp143, dp114, ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[3], view.imageView53, dp215, dp161, ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[4], view.imageView54, dp158, dp161, ImageSizeConfig.SIZE_P30X2)
                 view.imageView50.setOnClickListener {
                     if (products[0] == null) return@setOnClickListener
                     PageUtil.jump2GoodsDetailActivity(products[0].rid)
@@ -368,13 +380,13 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
                 layoutParamsImageView76.leftMargin = dp2
                 view.imageView76.layoutParams = layoutParamsImageView76
                 linearLayoutBox.addView(view)
-                GlideUtil.loadImageWithDimen(list[0], view.imageView70,dp78,ImageSizeConfig.SIZE_P500)
-                GlideUtil.loadImageWithDimen(list[1], view.imageView71,dp78,ImageSizeConfig.SIZE_P30X2)
-                GlideUtil.loadImageWithDimen(list[2], view.imageView72,dp215,ImageSizeConfig.SIZE_P30X2)
-                GlideUtil.loadImageWithDimen(list[3], view.imageView73,dp158,dp136,ImageSizeConfig.SIZE_P30X2)
-                GlideUtil.loadImageWithDimen(list[4], view.imageView74,oneThirdScreenW,ImageSizeConfig.SIZE_P30X2)
-                GlideUtil.loadImageWithDimen(list[5], view.imageView75,oneThirdScreenW,ImageSizeConfig.SIZE_P30X2)
-                GlideUtil.loadImageWithDimen(list[6], view.imageView76,oneThirdScreenW,ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[0], view.imageView70, dp78, ImageSizeConfig.SIZE_P500)
+                GlideUtil.loadImageWithDimen(list[1], view.imageView71, dp78, ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[2], view.imageView72, dp215, ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[3], view.imageView73, dp158, dp136, ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[4], view.imageView74, oneThirdScreenW, ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[5], view.imageView75, oneThirdScreenW, ImageSizeConfig.SIZE_P30X2)
+                GlideUtil.loadImageWithDimen(list[6], view.imageView76, oneThirdScreenW, ImageSizeConfig.SIZE_P30X2)
 
                 view.imageView70.setOnClickListener {
                     if (products[0] == null) return@setOnClickListener
@@ -474,6 +486,16 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
 
 
     override fun installListener() {
+        /**
+         * 子评论点击时
+         */
+        adapter.setOnSubCommentClickListener(object : ShowWindowCommentListAdapter.OnSubCommentClickListener {
+            override fun onClick(commentBean: CommentBean) {
+                LogUtil.e("setOnSubCommentClickListener==============comment_id=${commentBean.comment_id}==========pid==${commentBean.pid}")
+                showKeyboardAndReplyWho(commentBean)
+            }
+        })
+
         //点击输入框获取焦点
         textViewInput.setOnClickListener {
             emotionMainFragment!!.requestFocus()
@@ -499,16 +521,14 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
             val commentsBean = adapter.getItem(position) ?: return@setOnItemChildClickListener
 
             when (view.id) {
-                R.id.textViewReply -> { //将被回复的评论id最为pid
-                    emotionMainFragment!!.showKeyBoard()
-                    pid = commentsBean.comment_id
-                    emotionMainFragment!!.setEditTextHint("回复${commentsBean.user_name}:")
+                R.id.textViewReply, R.id.textViewComment -> { //将被回复的评论id最为pid
+                    showKeyboardAndReplyWho(commentsBean)
                 }
 
                 R.id.textViewPraise -> { //点赞
                     if (UserProfileUtil.isLogin()) {
                         presenter.praiseComment(commentsBean.comment_id, commentsBean.is_praise, position, view, false)
-                    }else{
+                    } else {
                         PageUtil.jump2LoginActivity()
                     }
                 }
@@ -549,7 +569,7 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
             if (shopWindow == null) return@setOnClickListener
             if (UserProfileUtil.isLogin()) {
                 presenter.favoriteShowWindow(shopWindow!!.rid, imageViewLike, shopWindow!!.is_like, textViewLikeCount)
-            }else{
+            } else {
                 PageUtil.jump2LoginActivity()
             }
         }
@@ -583,10 +603,22 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     }
 
     /**
+     * 显示键盘和回复谁
+     */
+    fun showKeyboardAndReplyWho(commentsBean: CommentBean) {
+        emotionMainFragment?.showKeyBoard()
+        replyId = commentsBean.comment_id
+        pid = commentsBean.pid
+        LogUtil.e("pid===$pid;;;;;;replyId==$replyId===" + commentsBean.content)
+        emotionMainFragment?.setEditTextHint("回复${commentsBean.user_name}:")
+    }
+
+    /**
      * 重置输入状态
      */
     private fun resetInputState() {
         if (emotionMainFragment!!.isUserInputEmpty()) {
+            replyId = "0"
             pid = "0"
             emotionMainFragment!!.setEditTextHint(getString(R.string.text_add_comment))
         }
@@ -615,11 +647,34 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     /**
      * 重新设置评论数
      */
-    override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+    override fun noticeCommentSuccess(commentBean: CommentBean) {
+
+        if (TextUtils.equals(commentBean.pid, "0")) { //评论橱窗
+            adapter.addData(0, commentBean)
+        } else {//添加到子评论列表开头,刷新子评论列表
+            val list = adapter.data
+            for (item in list) {
+                if (TextUtils.equals(item.comment_id, commentBean.pid)) { //子评论数+1
+                    item.sub_comment_count += 1
+                    if (item.sub_comments == null) item.sub_comments = ArrayList<CommentBean>()
+                    item.sub_comments.add(0, commentBean)
+                    break
+                }
+            }
+            adapter.notifySubCommentList()
+        }
+        adapter.notifyDataSetChanged()
+
         if (shopWindow == null) return
-        textViewComment.text = "${shopWindow!!.comment_count++}"
+
+        shopWindow!!.comment_count++
+
+        setCommentFooterCount(shopWindow!!.comment_count)
+        textViewComment.text = "${shopWindow!!.comment_count}"
+
         EventBus.getDefault().post(shopWindow)
     }
+
 
     /**
      * 设置用户关注状态
@@ -717,12 +772,12 @@ class ShowWindowDetailActivity : BaseActivity(), ShowWindowDetailContract.View ,
     }
 
     @AfterPermissionGranted(Constants.REQUEST_CODE_SHARE)
-    private fun share(){
+    private fun share() {
         val perms = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         if (EasyPermissions.hasPermissions(AppApplication.getContext(), *perms)) {
             LogUtil.e("有么有调用塞")
-            val share= ShareUtil(this)
-            share.shareWindow(WebUrl.WINDOW,WebUrl.AUTH_WINDOW,imagrUrl,title,"",rid,rid)
+            val share = ShareUtil(this)
+            share.shareWindow(WebUrl.WINDOW, WebUrl.AUTH_WINDOW, imagrUrl, title, "", rid, rid)
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_photo), Constants.REQUEST_CODE_SHARE, *perms)
         }

@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.basemodule.tools.LogUtil
 import com.basemodule.tools.ToastUtil
 import com.lexivip.lexi.JsonUtil
 import com.basemodule.ui.IDataSource
@@ -33,6 +34,7 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
             }
 
             override fun onSuccess(json: String) {
+                LogUtil.e("" + json)
                 view.dismissLoadingView()
                 val showWindowCommentBean = JsonUtil.fromJson(json, ShowWindowCommentListBean::class.java)
                 if (showWindowCommentBean.success) {
@@ -173,8 +175,8 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
     /**
      * 提交评论
      */
-    override fun submitComment(rid: String, pid: String, content: String, sendButton: Button) {
-        dataSource.submitComment(rid, pid, content, object : IDataSource.HttpRequestCallBack {
+    override fun submitComment(rid: String, pid: String, replyId: String, content: String, sendButton: Button) {
+        dataSource.submitComment(rid, pid, replyId, content, object : IDataSource.HttpRequestCallBack {
 
             override fun onStart() {
                 sendButton.isEnabled = false
@@ -184,7 +186,7 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                 sendButton.isEnabled = true
                 val commentSuccessBean = JsonUtil.fromJson(json, CommentSuccessBean::class.java)
                 if (commentSuccessBean.success) {
-                    view.noticeCommentSucess(commentSuccessBean.data)
+                    view.noticeCommentSuccess(commentSuccessBean.data)
                     ToastUtil.showSuccess("发送评论成功")
                 } else {
                     view.showError(commentSuccessBean.status.message)
@@ -193,13 +195,14 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
 
             override fun onFailure(e: IOException) {
                 sendButton.isEnabled = true
-                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
+                LogUtil.e("submitComment发送评论失败")
+//                view.showError(AppApplication.getContext().getString(R.string.text_net_error))
             }
         })
     }
 
     fun favoriteShowWindow(rid: String, view1: ImageView, isFavorite: Boolean, textViewLikeCount: TextView) {
-        dataSource.favoriteShowWindow(rid,isFavorite,object : IDataSource.HttpRequestCallBack {
+        dataSource.favoriteShowWindow(rid, isFavorite, object : IDataSource.HttpRequestCallBack {
 
             override fun onStart() {
                 view1.isEnabled = false
@@ -209,7 +212,7 @@ class ShowWindowCommentPresenter(view: ShowWindowCommentContract.View) : ShowWin
                 view1.isEnabled = true
                 val favoriteBean = JsonUtil.fromJson(json, NetStatusBean::class.java)
                 if (favoriteBean.success) {
-                    view.setFavorite(!isFavorite,view1,textViewLikeCount)
+                    view.setFavorite(!isFavorite, view1, textViewLikeCount)
                 } else {
                     view.showError(favoriteBean.status.message)
                 }

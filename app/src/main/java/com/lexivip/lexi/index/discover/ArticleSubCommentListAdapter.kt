@@ -1,4 +1,8 @@
 package com.lexivip.lexi.index.discover
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
 import android.widget.ImageView
 import android.widget.TextView
 import com.basemodule.tools.DateUtil
@@ -38,9 +42,20 @@ class ArticleSubCommentListAdapter(res: Int, present: ArticleDetailPresenter) : 
             textViewSubPraise.setCompoundDrawables(Util.getDrawableWidthPxDimen(R.mipmap.icon_praise_normal, dp13), null, null, null)
         }
 
+        val textViewCommentWho = helper.getView<TextView>(R.id.textViewCommentWho)
+        if (item.is_reply_other){
+            val spannableString = SpannableString("回复@${item.reply_user_name}:")
+            val colorSpan = ForegroundColorSpan(Util.getColor(R.color.color_666))
+            spannableString.setSpan(colorSpan, 2, spannableString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+            textViewCommentWho.text = spannableString
+        }else{
+            textViewCommentWho.text = ""
+        }
+
+
         helper.setText(R.id.textViewName,item.user_name)
         helper.setText(R.id.textViewComment,item.content)
-
+        helper.addOnClickListener(R.id.textViewComment)
         textViewSubPraise.setOnClickListener {//点赞
             presenter.praiseComment(textViewSubPraise, item,this)
         }

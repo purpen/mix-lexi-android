@@ -19,8 +19,8 @@ import com.lexivip.lexi.beans.BrandPavilionBean
 import com.lexivip.lexi.beans.CommentBean
 import com.lexivip.lexi.beans.LifeWillBean
 import com.lexivip.lexi.beans.ProductBean
-import com.lexivip.lexi.discoverLifeAesthetics.CommentSuccessBean
 import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListAdapter
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListBean
 import com.lexivip.lexi.index.detail.GoodsDetailActivity
 import com.lexivip.lexi.index.explore.editorRecommend.EditorRecommendAdapter
@@ -56,8 +56,14 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
     private lateinit var headerView: View
     private lateinit var footerView: View
     private var brandPavilionBean: BrandPavilionBean? = null
-    //父级评论id
+    private var commentFooterView: View?=null
+    /**
+     * 父级评论
+     */
     private var pid: String = "0"
+    //回复哪条评论
+    private var replyId: String = "0"
+
     private var emotionMainFragment: EmotionMainFragment? = null
     private var isGoods: Boolean = false
     private var cover: String? = null
@@ -102,10 +108,6 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
         //隐藏控件
         bundle.putBoolean(EmotionMainFragment.HIDE_BAR_EDITTEXT_AND_BTN, false)
 
-//        if (data != null) {
-//        bundle.putBoolean(EmotionMainFragment.IS_LIKE, shopWindowData.is_like)
-//        bundle.putInt(EmotionMainFragment.LIKE_COUNTS, shopWindowData.like_count)
-//        }
 
         emotionMainFragment = EmotionMainFragment.newInstance(bundle)
         emotionMainFragment!!.bindToContentView(recyclerView)
@@ -123,9 +125,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
                         ToastUtil.showInfo("请先输入评论")
                         return
                     }
-                    presenter.submitComment(data!!.rid, pid, content, sendButton)
+                    presenter.submitComment(data!!.rid, pid, replyId, content, sendButton)
                     editText.text.clear()
-                    emotionMainFragment!!.hideKeyBoard()
+                    emotionMainFragment!!.clearFocus()
                     relativeLayoutBar.visibility = View.VISIBLE
                 } else {
                     startActivity(Intent(applicationContext, LoginActivity::class.java))
@@ -137,11 +139,35 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
     /**
      * 发布文章评论成功
      */
-    override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+    override fun noticeCommentSuccess(commentBean: CommentBean) {
+        if (TextUtils.equals(commentBean.pid, "0")) { //评论橱窗
+            adapterArticleCommentList.addData(0, commentBean)
+        } else {//添加到子评论列表开头,刷新子评论列表
+            val list = adapterArticleCommentList.data
+            for (item in list) {
+                if (TextUtils.equals(item.comment_id, commentBean.pid)) { //子评论数+1
+                    item.sub_comment_count += 1
+                    if (item.sub_comments == null) item.sub_comments = ArrayList<CommentBean>()
+                    item.sub_comments.add(0, commentBean)
+                    break
+                }
+            }
+            adapterArticleCommentList.notifySubCommentList()
+        }
+        adapterArticleCommentList.notifyDataSetChanged()
+
         if (this.data == null) return
-        textViewCommentCount.text = "${this.data!!.comment_count++}"
+        data!!.comment_count++
+        setCommentFooterCount(data!!.comment_count)
+        textViewCommentCount.text = "${data!!.comment_count}"
     }
 
+    /**
+     * 设置footer评论数
+     */
+    private fun setCommentFooterCount(count:Int) {
+        commentFooterView?.textViewCommentCount?.text = "查看全部" + count + "条评论"
+    }
 
     /**
      * 初始化评论详情
@@ -199,11 +225,14 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
             footerView.recyclerViewComment.visibility = View.VISIBLE
             footerView.line15Comment.visibility = View.VISIBLE
             adapterArticleCommentList.setNewData(data.comments)
-            val view = View.inflate(this, R.layout.footer_comment_count, null)
-            view.textViewCommentCount.text = "查看全部" + data.count + "条评论"
-            adapterArticleCommentList.addFooterView(view)
+            commentFooterView = View.inflate(this, R.layout.footer_comment_count, null)
+            this.data?.comment_count = data.count
+            setCommentFooterCount(data.count)
+            if (adapterArticleCommentList.footerLayoutCount == 0) {
+                adapterArticleCommentList.addFooterView(commentFooterView)
+            }
             adapterArticleCommentList.setArticleData(rid!!)
-            view.setOnClickListener {
+            commentFooterView?.setOnClickListener {
                 if (TextUtils.isEmpty(rid)) return@setOnClickListener
                 PageUtil.jump2ShopArticleCommentListActivity(rid!!)
             }
@@ -293,9 +322,9 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
 
         textViewPraiseCount.text = Util.getNumberString(bean.praise_count)
 
-        if (bean.is_user){
+        if (bean.is_user) {
             headerView.textViewFocus.visibility = View.VISIBLE
-        }else{
+        } else {
             headerView.textViewFocus.visibility = View.GONE
         }
 
@@ -440,6 +469,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
     private fun resetInputState() {
         if (emotionMainFragment!!.isUserInputEmpty()) {
             pid = "0"
+            replyId = "0"
             emotionMainFragment!!.setEditTextHint(getString(R.string.text_add_comment))
         }
         emotionMainFragment!!.hideKeyBoard()
@@ -462,8 +492,27 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
         }
     }
 
-    override fun installListener() {
+    /**
+     * 显示键盘和回复谁
+     */
+    fun showKeyboardAndReplyWho(commentsBean: CommentBean) {
+        emotionMainFragment?.showKeyBoard()
+        replyId = commentsBean.comment_id
+        pid = commentsBean.pid
+        LogUtil.e("pid===$pid;;;;;;replyId==$replyId===" + commentsBean.content)
+        emotionMainFragment?.setEditTextHint("回复${commentsBean.user_name}:")
+    }
 
+    override fun installListener() {
+        /**
+         * 子评论点击时
+         */
+        adapterArticleCommentList.setOnSubCommentClickListener(object : ShowWindowCommentListAdapter.OnSubCommentClickListener {
+            override fun onClick(commentBean: CommentBean) {
+                LogUtil.e("setOnSubCommentClickListener==============comment_id=${commentBean.comment_id}==========pid==${commentBean.pid}")
+                showKeyboardAndReplyWho(commentBean)
+            }
+        })
         //点击输入框获取焦点
         textViewInput.setOnClickListener {
             emotionMainFragment!!.requestFocus()
@@ -509,10 +558,8 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
                     ?: return@setOnItemChildClickListener
 
             when (view.id) {
-                R.id.textViewReply -> { //将被回复的评论id最为pid
-                    emotionMainFragment!!.showKeyBoard()
-                    pid = commentsBean.comment_id
-                    emotionMainFragment!!.setEditTextHint("回复${commentsBean.user_name}:")
+                R.id.textViewReply,R.id.textViewComment -> { //将被回复的评论id最为pid
+                    showKeyboardAndReplyWho(commentsBean)
                 }
 
                 R.id.textViewPraise -> { //点赞
@@ -529,6 +576,7 @@ class ArticleDetailActivity : BaseActivity(), ArticleDetailContract.View, EasyPe
         textViewShare.setOnClickListener {
             share()
         }
+
 
         //用户点赞文章
         relativeLayoutPraise.setOnClickListener {

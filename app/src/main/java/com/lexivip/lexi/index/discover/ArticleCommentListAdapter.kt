@@ -14,6 +14,7 @@ import com.lexivip.lexi.AppApplication
 import com.lexivip.lexi.CustomLinearLayoutManager
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListAdapter
 import com.yanyusong.y_divideritemdecoration.Y_Divider
 import com.yanyusong.y_divideritemdecoration.Y_DividerBuilder
 import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
@@ -21,6 +22,11 @@ import com.yanyusong.y_divideritemdecoration.Y_DividerItemDecoration
 class ArticleCommentListAdapter(res: Int, presenter: ArticleDetailPresenter) : BaseQuickAdapter<CommentBean, BaseViewHolder>(res) {
     private val present: ArticleDetailPresenter = presenter
     private var adapter: ArticleSubCommentListAdapter? = null
+    private var subCommentClickListener: ShowWindowCommentListAdapter.OnSubCommentClickListener? = null
+
+    fun setOnSubCommentClickListener(subCommentClickListener: ShowWindowCommentListAdapter.OnSubCommentClickListener){
+        this.subCommentClickListener = subCommentClickListener
+    }
     private var footerView: View? = null
     private val size30 by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp30) }
     private val dp13 by lazy { DimenUtil.dp2px(13.0) }
@@ -47,6 +53,9 @@ class ArticleCommentListAdapter(res: Int, presenter: ArticleDetailPresenter) : B
 
         helper.addOnClickListener(R.id.textViewPraise)
         helper.addOnClickListener(R.id.textViewReply)
+        helper.addOnClickListener(R.id.imageViewAvatar)
+        helper.addOnClickListener(R.id.textViewName)
+        helper.addOnClickListener(R.id.textViewComment)
 
         helper.setText(R.id.textViewName, item.user_name)
         helper.setText(R.id.textViewComment, item.content)
@@ -65,6 +74,12 @@ class ArticleCommentListAdapter(res: Int, presenter: ArticleDetailPresenter) : B
             recyclerView.adapter = adapter
             adapter!!.setNewData(item.sub_comments)
             if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+
+            //子评论点击
+            adapter!!.setOnItemChildClickListener { _, _, position ->
+                val commentBean = item.sub_comments[position]
+                subCommentClickListener?.onClick(commentBean)
+            }
 
             if (item.sub_comment_count > 0) {
                 footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment, null)
@@ -92,6 +107,10 @@ class ArticleCommentListAdapter(res: Int, presenter: ArticleDetailPresenter) : B
         }
 
 
+    }
+
+    fun notifySubCommentList() {
+        adapter?.notifyDataSetChanged()
     }
 
 

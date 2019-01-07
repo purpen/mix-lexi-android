@@ -8,15 +8,13 @@ import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
-import com.basemodule.tools.ScreenUtil
-import com.basemodule.tools.ToastUtil
-import com.basemodule.tools.Util
-import com.basemodule.tools.WaitingDialog
+import com.basemodule.tools.*
 import com.basemodule.ui.BaseActivity
+import com.lexivip.lexi.PageUtil
 import com.lexivip.lexi.R
 import com.lexivip.lexi.beans.CommentBean
-import com.lexivip.lexi.discoverLifeAesthetics.CommentSuccessBean
 import com.lexivip.lexi.discoverLifeAesthetics.IOnSendCommentListener
+import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListAdapter
 import com.lexivip.lexi.discoverLifeAesthetics.ShowWindowCommentListBean
 import com.lexivip.lexi.user.login.LoginActivity
 import com.lexivip.lexi.user.login.UserProfileUtil
@@ -44,6 +42,9 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
 
     //父级评论id
     private var pid: String = "0"
+
+    //回复哪条评论
+    private var replyId: String = "0"
 
     override fun setPresenter(presenter: ArticleDetailContract.Presenter?) {
         setPresenter(presenter)
@@ -119,7 +120,7 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
                         ToastUtil.showInfo("请先输入评论")
                         return
                     }
-                    presenter.submitComment(articleId, pid, content, sendButton)
+                    presenter.submitComment(articleId, pid,replyId,content, sendButton)
                     editText.text.clear()
                     emotionMainFragment.hideKeyBoard()
                 } else {
@@ -132,6 +133,7 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
         adapter.setOnItemClickListener { _, _, _ ->
             if (emotionMainFragment.isUserInputEmpty()) {
                 pid = "0"
+                replyId ="0"
                 emotionMainFragment.setEditTextHint(getString(R.string.text_add_comment))
             }
             emotionMainFragment.hideKeyBoard()
@@ -153,10 +155,11 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
             val commentsBean = adapter.getItem(position) as CommentBean
 
             when (view.id) {
-                R.id.textViewReply -> { //将被回复的评论id最为pid
-                    emotionMainFragment.showKeyBoard()
-                    pid = commentsBean.comment_id
-                    emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
+                R.id.imageViewAvatar, R.id.textViewName -> {
+                    PageUtil.jump2OtherUserCenterActivity(commentsBean.uid)
+                }
+                R.id.textViewReply, R.id.textViewComment -> { //将被回复的评论id最为pid
+                    showKeyboardAndReplyWho(commentsBean)
                 }
 
                 R.id.textViewPraise -> {
@@ -164,6 +167,26 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
                 }
             }
         }
+
+        /**
+         * 子评论点击时
+         */
+        adapter.setOnSubCommentClickListener(object : ShowWindowCommentListAdapter.OnSubCommentClickListener {
+            override fun onClick(commentBean: CommentBean) {
+                showKeyboardAndReplyWho(commentBean)
+            }
+        })
+    }
+
+    /**
+     * 显示键盘和回复谁
+     */
+    fun showKeyboardAndReplyWho(commentsBean: CommentBean) {
+        emotionMainFragment.showKeyBoard()
+        replyId = commentsBean.comment_id
+        pid = commentsBean.pid
+        LogUtil.e("pid===$pid;;;;;;replyId==$replyId")
+        emotionMainFragment.setEditTextHint("回复${commentsBean.user_name}:")
     }
 
     /**
@@ -171,6 +194,7 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
      */
     private fun resetInputBarState() {
         pid = "0"
+        replyId = "0"
         emotionMainFragment.resetInputBarState()
     }
 
@@ -178,32 +202,23 @@ class ArticleCommentListActivity : BaseActivity(), ArticleDetailContract.View {
     /**
      * 当评论提交成功
      */
-    override fun noticeCommentSuccess(data: CommentSuccessBean.DataBean) {
+    override fun noticeCommentSuccess(commentBean: CommentBean) {
         commentCount++
         customHeadView.setHeadCenterTxtShow(true, "${commentCount}条评论")
         resetInputBarState()
-        //当前提交成功的评论内容
-        val commentBean = CommentBean()
-        commentBean.pid = data.pid
-        commentBean.created_at = data.created_at
-        commentBean.user_avatar = data.user_avatar
-        commentBean.user_name = data.user_name
-        commentBean.comment_id = data.comment_id
-        commentBean.praise_count = data.praise_count
-        commentBean.is_praise = data.is_praise
-        commentBean.content = data.content
-        if (TextUtils.equals(data.pid, "0")) { //评论橱窗
+        if (TextUtils.equals(commentBean.pid, "0")) { //评论橱窗
             adapter.addData(0, commentBean)
         } else {//子评论,添加到评论列表最后
             val list = adapter.data
             for (item in list) {
-                if (TextUtils.equals(item.comment_id, data.pid)) { //子评论数+1
+                if (TextUtils.equals(item.comment_id, commentBean.pid)) { //子评论数+1
                     item.sub_comment_count += 1
                     if (item.sub_comments == null) item.sub_comments = ArrayList<CommentBean>()
-                    item.sub_comments.add(commentBean)
+                    item.sub_comments.add(0,commentBean)
                     break
                 }
             }
+            adapter.notifySubCommentList()
         }
         adapter.notifyDataSetChanged()
     }

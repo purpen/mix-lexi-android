@@ -29,7 +29,7 @@ open class ShowWindowCommentModel{
 
     fun favoriteShowWindow(rid: String,isFavorite:Boolean,httpRequestCallBack: IDataSource.HttpRequestCallBack) {
         val params = ClientParamsAPI.getFavoriteShowWindowParams(rid)
-        var method=""
+        val method:String
         if (isFavorite){
             method = HttpRequest.DELETE
         }else{
@@ -112,8 +112,8 @@ open class ShowWindowCommentModel{
     }
 
 
-    fun submitComment(rid: String, pid: String, content: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
-        val params = ClientParamsAPI.getSubmitCommentsParams(rid,pid,content)
+    fun submitComment(rid: String, pid: String,replyId: String, content: String, httpRequestCallBack: IDataSource.HttpRequestCallBack) {
+        val params = ClientParamsAPI.getSubmitCommentsParams(rid,pid,replyId,content)
         HttpRequest.sendRequest(HttpRequest.POST, URL.SHOW_WINDOW_COMMENTS_LIST, params, object : IDataSource.HttpRequestCallBack {
             override fun onStart() {
                 httpRequestCallBack.onStart()

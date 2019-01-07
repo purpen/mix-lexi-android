@@ -89,7 +89,7 @@ class AdapterRecommendShowWindow(layoutResId: Int) : BaseQuickAdapter<ShopWindow
         helper.setText(R.id.textViewTitle1, item.title)
         val textViewTitle2 = helper.getView<ExpandableTextView>(R.id.textViewTitle2)
         textViewTitle2.setToExpandHint("展开  ")
-        textViewTitle2.updateForRecyclerView(item.description,TextView.BufferType.NORMAL,ScreenUtil.getScreenWidth()-DimenUtil.dp2px(40.0))
+        textViewTitle2.updateForRecyclerView(item.description,TextView.BufferType.NORMAL,ScreenUtil.getScreenWidth()-DimenUtil.dp2px(30.0))
 
         val textViewFocus = helper.getView<TextView>(R.id.textViewFocus)
 

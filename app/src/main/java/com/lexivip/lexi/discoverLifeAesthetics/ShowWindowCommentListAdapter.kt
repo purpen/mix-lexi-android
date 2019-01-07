@@ -24,11 +24,17 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
     private var footerView: View? = null
     private val size30 by lazy { DimenUtil.getDimensionPixelSize(R.dimen.dp30) }
     private val dp13 by lazy { DimenUtil.dp2px(13.0) }
+    private var subCommentClickListener:OnSubCommentClickListener? = null
+
+    fun setOnSubCommentClickListener(subCommentClickListener:OnSubCommentClickListener){
+        this.subCommentClickListener = subCommentClickListener
+    }
+
     override fun convert(helper: BaseViewHolder, item: CommentBean) {
         val imageViewAvatar = helper.getView<ImageView>(R.id.imageViewAvatar)
         GlideUtil.loadCircleImageWidthDimen(item.user_avatar, imageViewAvatar, size30)
         val textViewPraise = helper.getView<TextView>(R.id.textViewPraise)
-        helper.setText(R.id.textViewTime, DateUtil.getSpaceTime(item.created_at*1000L))
+        helper.setText(R.id.textViewTime, DateUtil.getSpaceTime(item.created_at * 1000L))
         if (item.praise_count > 0) {
             if (item.is_praise) { //我已点赞
                 textViewPraise.setTextColor(Util.getColor(R.color.color_ff6666))
@@ -47,6 +53,9 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
 
         helper.addOnClickListener(R.id.textViewPraise)
         helper.addOnClickListener(R.id.textViewReply)
+        helper.addOnClickListener(R.id.imageViewAvatar)
+        helper.addOnClickListener(R.id.textViewName)
+        helper.addOnClickListener(R.id.textViewComment)
 
         helper.setText(R.id.textViewName, item.user_name)
         helper.setText(R.id.textViewComment, item.content)
@@ -65,6 +74,12 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
             recyclerView.adapter = adapter
             adapter!!.setNewData(item.sub_comments)
             if (recyclerView.itemDecorationCount == 0) recyclerView.addItemDecoration(DividerItemDecoration(AppApplication.getContext()))
+
+            //子评论点击
+            adapter!!.setOnItemChildClickListener { _, _, position ->
+                val commentBean = item.sub_comments[position]
+                subCommentClickListener?.onClick(commentBean)
+            }
 
             if (item.sub_comment_count > 0) {
                 footerView = LayoutInflater.from(AppApplication.getContext()).inflate(R.layout.view_footer_sub_comment, null)
@@ -90,8 +105,13 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
                 footerView = null
             }
         }
+    }
 
-
+    /**
+     * 刷新子评论adapter
+     */
+    fun notifySubCommentList(){
+        adapter?.notifyDataSetChanged()
     }
 
 
@@ -112,6 +132,10 @@ class ShowWindowCommentListAdapter(res: Int, presenter: ShowWindowCommentPresent
 //        notifyDataSetChanged()
 //    }
 
+
+    interface OnSubCommentClickListener{
+        fun onClick(commentBean: CommentBean)
+    }
 
     internal inner class DividerItemDecoration(context: Context) : Y_DividerItemDecoration(context) {
         private val color: Int = Util.getColor(android.R.color.transparent)
