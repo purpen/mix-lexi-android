@@ -191,6 +191,7 @@ public class MyOrderListBean implements Parcelable{
             private String buyer_town;
             private String buyer_zipcode;
             private double coupon_amount;
+            private double official_bonus_amount;
             private int created_at;
             private String current_time;
             private Object customer_order_id;
@@ -243,6 +244,7 @@ public class MyOrderListBean implements Parcelable{
                 buyer_town = in.readString();
                 buyer_zipcode = in.readString();
                 coupon_amount = in.readDouble();
+                official_bonus_amount=in.readDouble();
                 created_at = in.readInt();
                 current_time = in.readString();
                 discount_amount = in.readDouble();
@@ -376,6 +378,14 @@ public class MyOrderListBean implements Parcelable{
 
             public void setCoupon_amount(double coupon_amount) {
                 this.coupon_amount = coupon_amount;
+            }
+
+            public double getOfficial_bonus_amount() {
+                return official_bonus_amount;
+            }
+
+            public void setOfficial_bonus_amount(double official_bonus_amount) {
+                this.official_bonus_amount = official_bonus_amount;
             }
 
             public int getCreated_at() {
@@ -629,6 +639,7 @@ public class MyOrderListBean implements Parcelable{
                 dest.writeString(buyer_town);
                 dest.writeString(buyer_zipcode);
                 dest.writeDouble(coupon_amount);
+                dest.writeDouble(official_bonus_amount);
                 dest.writeInt(created_at);
                 dest.writeString(current_time);
                 dest.writeDouble(discount_amount);

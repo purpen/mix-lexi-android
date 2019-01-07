@@ -16,8 +16,8 @@ android {
         applicationId "com.lexivip.lexi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.3.20"
+        versionCode 10
+        versionName "1.3.30"
         /*flavorDimensions "versionCode"*/
         flavorDimensions ""
         multiDexEnabled true
@@ -46,7 +46,7 @@ android {
     }
 
     /*配置渠道*/
-    productFlavors {
+    /*productFlavors {
         yingyongbao {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yingyongbao"]
         }
@@ -65,7 +65,7 @@ android {
         baidu {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
         }
-    }
+    }*/
 
     buildTypes {
         release {

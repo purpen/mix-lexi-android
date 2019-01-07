@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.basemodule.tools.LogUtil;
@@ -42,6 +43,12 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
     private TextView tv_zipcode;
     private TextView tv_mobile;
     private AdapterOrderDetail adapterOrderList;
+    private LinearLayout ll_coupon_amount;
+    private TextView tv_coupon_amount;
+    private LinearLayout ll_reach_minus;
+    private TextView tv_reach_minus;
+    private LinearLayout ll_first_discount;
+    private TextView tv_first_discount;
 
     @Override
     protected int getLayout() {
@@ -68,6 +75,13 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
         tv_order_time = headerView.findViewById(R.id.tv_order_time);
         tv_order_status = headerView.findViewById(R.id.tv_order_status);
         tv_delivery_city = headerView.findViewById(R.id.tv_delivery_city);
+
+        ll_coupon_amount = headerView.findViewById(R.id.ll_coupon_amount);
+        tv_coupon_amount = headerView.findViewById(R.id.tv_coupon_amount);
+        ll_reach_minus = headerView.findViewById(R.id.ll_reach_minus);
+        tv_reach_minus = headerView.findViewById(R.id.tv_reach_minus);
+        ll_first_discount = headerView.findViewById(R.id.ll_first_discount);
+        tv_first_discount = headerView.findViewById(R.id.tv_first_discount);
 
         tv_name = footerView.findViewById(R.id.tv_name);
         tv_address = footerView.findViewById(R.id.tv_address);
@@ -149,8 +163,25 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailCont
             }else{
                 tv_order_freight.setText(String.valueOf(bean.data.getFreight()));
             }
-            tv_order_amount.setText("¥"+bean.data.getPay_amount());
+            tv_order_amount.setText("¥"+bean.data.getUser_pay_amount());
             tv_shop_name.setText(bean.data.getStore().getStore_name());
+
+            if(0.00!=bean.data.getCoupon_amount()||0.00!=bean.data.getOfficial_bonus_amount()){
+                ll_coupon_amount.setVisibility(View.VISIBLE);
+                if (0.00!=bean.data.getCoupon_amount()) {
+                    tv_coupon_amount.setText("￥-"+bean.data.getCoupon_amount());
+                }else {
+                    tv_coupon_amount.setText("￥-"+bean.data.getOfficial_bonus_amount());
+                }
+            }
+            if (0.00!=bean.data.getFirst_discount()){
+                ll_first_discount.setVisibility(View.VISIBLE);
+                tv_first_discount.setText("￥-"+bean.data.getFirst_discount());
+            }
+            if (0.00!=bean.data.getReach_minus()){
+                ll_reach_minus.setVisibility(View.VISIBLE);
+                tv_reach_minus.setText("￥-"+bean.data.getFirst_discount());
+            }
 
             Calendar c= Calendar.getInstance();
             long millions=new Long(bean.data.getCreated_at()).longValue()*1000;

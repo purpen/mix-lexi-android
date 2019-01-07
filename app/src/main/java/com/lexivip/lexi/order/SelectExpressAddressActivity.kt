@@ -97,7 +97,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
 
             val item = adapter.getItem(position) as UserAddressListBean.DataBean
             item.is_default = true
-
+            createOrderBean.address_rid = item.rid
             adapter.notifyDataSetChanged()
 
             setConfirmOrderButtonState()
@@ -296,6 +296,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
                 }
                 val dataBean = data.getParcelableExtra<UserAddressListBean.DataBean>(AddressActivity::class.java.simpleName)
                 dataBean.is_default = true
+                createOrderBean.address_rid = dataBean.rid
                 adapter.addData(0, dataBean)
                 adapter.notifyDataSetChanged()
             }
@@ -313,6 +314,7 @@ class SelectExpressAddressActivity : BaseActivity(), SelectExpressAddressContrac
                     val item = iterator.next()
                     if (TextUtils.equals(item.rid, dataBean.rid)) {
                         item.isSelected = true
+                        createOrderBean.address_rid = dataBean.rid
                         item.city = dataBean.city
                         item.area = dataBean.area
                         item.area_id = dataBean.area_id

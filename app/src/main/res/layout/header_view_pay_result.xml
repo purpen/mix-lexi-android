@@ -180,13 +180,96 @@
             android:textColor="@color/color_333"
             android:textSize="17sp" />
 
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:orientation="vertical"
+            android:layout_below="@+id/textViewDelivery">
+            <LinearLayout
+                android:id="@+id/ll_first_discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:visibility="gone"
+                android:layout_below="@+id/textViewDelivery">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_first_order_discount"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="@dimen/sp12"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/tv_first_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_9299a5"
+                    android:textSize="@dimen/sp15"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_reach_minus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:visibility="gone"
+                android:layout_below="@+id/ll_first_discount">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_full_reduce"
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="@dimen/sp12"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/tv_reach_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_9299a5"
+                    android:textSize="@dimen/sp15"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_coupon_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:visibility="gone"
+                android:layout_below="@+id/ll_reach_minus">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="优惠券："
+                    android:textColor="@color/color_9099a6"
+                    android:textSize="@dimen/sp12"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/tv_coupon_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_9299a5"
+                    android:textSize="@dimen/sp15"
+                    />
+            </LinearLayout>
+        </LinearLayout>
 
         <!--订单总计-->
         <TextView
             android:id="@+id/textViewTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewDelivery"
+            android:layout_below="@+id/ll"
             android:layout_marginTop="13dp"
             android:includeFontPadding="false"
             android:text="@string/text_order_total"
